@@ -1,0 +1,38 @@
+{
+    "IVideoFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserver",
+        "namespaces": "agora::media",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_event_compare",
+        "excludeMethods": [
+            "getVideoFrameProcessMode",
+            "getVideoFormatPreference",
+            "getRotationApplied",
+            "getObservedFramePosition",
+            "isExternal",
+            "getMirrorApplied"
+        ],
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "pecialMembersTemplate": "",
+        "trackBackFather": 1
+    },
+    "method_event_compare": "public bool ${-unMETHOD_NAME}_be_trigger = false;\n${METHOD_PARAM_JOIN:param_join1}\n\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:param_join2})\n{\n   ${-unMETHOD_NAME}_be_trigger = true;\n   ${METHOD_PARAM_JOIN:param_join3}\n   ${SPECIAL_METHOD_LOGIC:cSharpSDK_UTEventReturnValue}\n}\n\npublic bool ${-uMETHOD_NAME}Passed(${METHOD_PARAM_JOIN:param_join2})\n{\n        \n  if (${-unMETHOD_NAME}_be_trigger == false)\n        return false;\n\n   ${METHOD_PARAM_JOIN:param_join4}\n\n   return true;\n}\n\n /////////////////////////////////",
+    "param_join1": {
+        "format": "public ${-fPARAM_TYPE} ${-unMETHOD_NAME}_${-oPARAM_NAME_FORMAL};",
+        "split": "\n"
+    },
+    "param_join2": {
+        "format": "${-oPARAM_TYPE} ${-oPARAM_NAME_FORMAL}",
+        "split": ","
+    },
+    "param_join3": {
+        "format": "${-unMETHOD_NAME}_${-oPARAM_NAME_FORMAL} = ${-oPARAM_NAME_FORMAL};",
+        "split": "\n"
+    },
+    "param_join4": {
+        "format": "// if (ParamsHelper.Compare<${-fPARAM_TYPE}>(${-unMETHOD_NAME}_${-oPARAM_NAME_FORMAL}, ${-oPARAM_NAME_FORMAL}) == false)\n    //return false;",
+        "split": "\n"
+    }
+}

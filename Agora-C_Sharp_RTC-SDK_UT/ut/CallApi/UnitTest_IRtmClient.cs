@@ -23,12 +23,11 @@ namespace Agora.Rtm
             RtmClient.Dispose();
         }
 
-        #region terr
+        #region terra IRtmClient
         [Test]
         public void Test_Login()
         {
-            string token;
-            ParamsHelper.InitParam(out token);
+            string token = ParamsHelper.CreateParam<string>();
             var nRet = RtmClient.Login(token);
 
             Assert.AreEqual(0, nRet);
@@ -46,8 +45,7 @@ namespace Agora.Rtm
         [Test]
         public void Test_RenewToken()
         {
-            string token;
-            ParamsHelper.InitParam(out token);
+            string token = ParamsHelper.CreateParam<string>();
             var nRet = RtmClient.RenewToken(token);
 
             Assert.AreEqual(0, nRet);
@@ -56,34 +54,23 @@ namespace Agora.Rtm
         [Test]
         public void Test_Publish()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            string message;
-            ParamsHelper.InitParam(out message);
-            int  length;
-            ParamsHelper.InitParam(out length);
-            Internal.PublishOptions option;
-            ParamsHelper.InitParam(out option);
-             ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            string message = ParamsHelper.CreateParam<string>();
+            int length = ParamsHelper.CreateParam<int>();
+            Internal.PublishOptions option = ParamsHelper.CreateParam<Internal.PublishOptions>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmClient.Publish(channelName, message, length, option, ref requestId);
-
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_Publish2()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            byte[] message;
-            ParamsHelper.InitParam(out message);
-            int length;
-            ParamsHelper.InitParam(out length);
-            Internal.PublishOptions option;
-            ParamsHelper.InitParam(out option);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            byte[] message = ParamsHelper.CreateParam<byte[]>();
+            int length = ParamsHelper.CreateParam<int>();
+            Internal.PublishOptions option = ParamsHelper.CreateParam<Internal.PublishOptions>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmClient.Publish(channelName, message, length, option, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -92,12 +79,9 @@ namespace Agora.Rtm
         [Test]
         public void Test_Subscribe()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            SubscribeOptions options;
-            ParamsHelper.InitParam(out options);
-             ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            SubscribeOptions options = ParamsHelper.CreateParam<SubscribeOptions>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmClient.Subscribe(channelName, options, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -106,8 +90,7 @@ namespace Agora.Rtm
         [Test]
         public void Test_Unsubscribe()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
             var nRet = RtmClient.Unsubscribe(channelName);
 
             Assert.AreEqual(0, nRet);
@@ -116,14 +99,13 @@ namespace Agora.Rtm
         [Test]
         public void Test_SetParameters()
         {
-            string parameters;
-            ParamsHelper.InitParam(out parameters);
+            string parameters = ParamsHelper.CreateParam<string>();
             var nRet = RtmClient.SetParameters(parameters);
 
             Assert.AreEqual(0, nRet);
         }
 
-        #endregion
+        #endregion terra IRtmClient
 
 
     }

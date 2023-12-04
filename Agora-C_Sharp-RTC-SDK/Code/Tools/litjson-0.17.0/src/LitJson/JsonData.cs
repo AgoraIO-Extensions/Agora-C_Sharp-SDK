@@ -103,7 +103,8 @@ namespace Agora.Rtm.LitJson
 
         public bool IsULong
         {
-            get {
+            get
+            {
                 if (type == JsonType.ULong)
                     return true;
 

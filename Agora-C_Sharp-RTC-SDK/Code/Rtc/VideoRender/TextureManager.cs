@@ -224,7 +224,7 @@ namespace Agora.Rtc
             }
         }
 
-        private void FreeMemory()
+        protected virtual void FreeMemory()
         {
             if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
             {

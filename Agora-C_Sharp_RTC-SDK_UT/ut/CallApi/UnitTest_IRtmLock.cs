@@ -30,16 +30,11 @@ namespace Agora.Rtm
         [Test]
         public void Test_SetLock()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            int ttl;
-            ParamsHelper.InitParam(out ttl);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            int ttl = ParamsHelper.CreateParam<int>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmLock.SetLock(channelName, channelType, lockName, ttl, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -48,13 +43,10 @@ namespace Agora.Rtm
         [Test]
         public void Test_GetLocks()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.GetLocks(channelName, channelType,ref requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmLock.GetLocks(channelName, channelType, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -62,15 +54,11 @@ namespace Agora.Rtm
         [Test]
         public void Test_RemoveLock()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.RemoveLock(channelName, channelType, lockName,ref requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmLock.RemoveLock(channelName, channelType, lockName, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -78,17 +66,12 @@ namespace Agora.Rtm
         [Test]
         public void Test_AcquireLock()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            bool retry;
-            ParamsHelper.InitParam(out retry);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.AcquireLock(channelName, channelType, lockName, retry,ref requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            bool retry = ParamsHelper.CreateParam<bool>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmLock.AcquireLock(channelName, channelType, lockName, retry, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -96,15 +79,11 @@ namespace Agora.Rtm
         [Test]
         public void Test_ReleaseLock()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.ReleaseLock(channelName, channelType, lockName,ref requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmLock.ReleaseLock(channelName, channelType, lockName, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -112,17 +91,12 @@ namespace Agora.Rtm
         [Test]
         public void Test_RevokeLock()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            string owner;
-            ParamsHelper.InitParam(out owner);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.RevokeLock(channelName, channelType, lockName, owner,ref requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            string owner = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmLock.RevokeLock(channelName, channelType, lockName, owner, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }

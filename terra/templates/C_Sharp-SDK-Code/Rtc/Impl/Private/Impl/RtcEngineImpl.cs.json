@@ -1,0 +1,107 @@
+{
+    "IRtcEngine": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngine",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_interface_impl",
+        "includeMembers": [],
+        "excludeMethods": [
+            "release",
+            "initialize",
+            "getScreenCaptureSources",
+            "queryInterface",
+            "registerPacketObserver",
+            "registerEventHandler",
+            "unregisterEventHandler",
+            "joinChannelWithUserAccountEx",
+            "createMediaPlayer",
+            "destroyMediaPlayer",
+            "createMediaRecorder",
+            "destroyMediaRecorder",
+            "registerAudioSpectrumObserver",
+            "unregisterAudioSpectrumObserver",
+            "registerMediaMetadataObserver",
+            "unregisterMediaMetadataObserver",
+            "registerAudioEncodedFrameObserver",
+            "startDirectCdnStreaming"
+        ],
+        "specialMethodsTemplate": {
+            "queryCodecCapability": "method_interface_impl_queryCodecCapability",
+            "sendStreamMessage": "method_interface_impl_sendStreamMessage",
+            "setupLocalVideo": "method_interface_videoCanvas",
+            "setupRemoteVideo": "method_interface_videoCanvas",
+            "startDirectCdnStreaming": "method_interface_impl_startDirectCdnStreaming"
+        },
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "specialMembersTemplate": ""
+    },
+    "IRtcEngineEx": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEx",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_interface_impl",
+        "includeMembers": [],
+        "excludeMethods": [
+            "release",
+            "queryInterface",
+            "registerPacketObserver",
+            "registerEventHandler",
+            "unregisterEventHandler",
+            "joinChannelWithUserAccountEx"
+        ],
+        "specialMethodsTemplate": {
+            "sendStreamMessageEx": "method_interface_impl_sendStreamMessage",
+            "setupLocalVideoEx": "method_interface_videoCanvas",
+            "setupRemoteVideoEx": "method_interface_videoCanvas"
+        },
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "specialMembersTemplate": ""
+    },
+    "IMediaEngine": {
+        "type": "ClazzStruct",
+        "name": "IMediaEngine",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_interface_impl",
+        "includeMembers": [],
+        "excludeMethods": [
+            "release",
+            "enableCustomAudioLocalPlayback",
+            "registerAudioFrameObserver",
+            "registerVideoFrameObserver",
+            "registerVideoEncodedFrameObserver",
+            "addVideoFrameRenderer",
+            "removeVideoFrameRenderer",
+            "pushAudioFrame",
+            "pushVideoFrame",
+            "pushEncodedVideoImage",
+            "pullAudioFrame"
+        ],
+        "specialMethodsTemplate": {},
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "specialMembersTemplate": ""
+    },
+    "method_interface_impl": "public ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join})\n{\n_param.Clear();\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplJsonAdd}\nvar json = AgoraJson.ToJson(_param);\nvar nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, ${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKey},\n\tjson, (UInt32)json.Length,\n\tIntPtr.Zero, 0,\n\tref _apiParam);\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplResultGet}\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplRefGet}\nreturn result;\n}",
+    "method_interface_impl_queryCodecCapability": "public ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join})\n{\n_param.Clear();\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplJsonAdd}\n_param.Add(\"size\", size);\nvar json = AgoraJson.ToJson(_param);\nvar nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, ${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKey},\n\tjson, (UInt32)json.Length,\n\tIntPtr.Zero, 0,\n\tref _apiParam);\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplResultGet}\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplRefGet}\nreturn result;\n}",
+    "method_interface_impl_sendStreamMessage": "public ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join})\n{\n_param.Clear();\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplJsonAdd}\nvar json = AgoraJson.ToJson(_param); IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);\nIntPtr[] arrayPtr = new IntPtr[] { bufferPtr };\nvar nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, ${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKey},\n\tjson, (UInt32)json.Length,\nMarshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,\n\tref _apiParam);\n\t${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplResultGet}\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplRefGet}\nreturn result;\n}",
+    "method_interface_videoCanvas": "public ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join})\n{\n_param.Clear();\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplJsonAdd}\nvar json = AgoraJson.ToJson(_param);\nIntPtr[] arrayPtr = new IntPtr[] { (IntPtr)canvas.view };\nvar nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, ${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKey},\n\tjson, (UInt32)json.Length,\n\tMarshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,\n\tref _apiParam);\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplResultGet}\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplRefGet}\nreturn result;\n}",
+    "method_interface_impl_startDirectCdnStreaming": "public ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join})\n{\nCreateDirectCdnStreamingEventHandle();\n\n_param.Clear();\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplJsonAdd}\nvar json = AgoraJson.ToJson(_param);\nvar nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, ${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKey},\n\tjson, (UInt32)json.Length,\n\tIntPtr.Zero, 0,\n\tref _apiParam);\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplResultGet}\n${SPECIAL_METHOD_LOGIC:cSharpSDK_ImplRefGet}\nreturn result;\n}",
+    "method_interface_param_join": {
+        "format": "${-oPARAM_TYPE} ${-oPARAM_NAME_FORMAL} ${-ePARAM_NAME_FORMAL_DEFAULT}",
+        "split": ", "
+    },
+    "method_interface_param_join2": {
+        "format": "${-oPARAM_NAME_ACTUAL}",
+        "split": ", "
+    },
+    "PullAudioFrame_Assignment": {
+        "type": "ClazzStruct",
+        "name": "AudioFrame",
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "audioFrame_member_assignment",
+        "specialMembersTemplate": "\n"
+    },
+    "audioFrame_member_assignment": "${SPECIAL_MEMBER_LOGIC:cSharpSDK_ImplPullAudioFrameAssignment}"
+}

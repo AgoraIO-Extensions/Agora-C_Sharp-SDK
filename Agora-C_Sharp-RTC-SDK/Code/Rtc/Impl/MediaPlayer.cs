@@ -2,6 +2,7 @@ using System;
 
 namespace Agora.Rtc
 {
+    using view_t = Int64;
     public sealed class MediaPlayer : IMediaPlayer
     {
         private IRtcEngine _rtcEngineInstance = null;
@@ -22,7 +23,6 @@ namespace Agora.Rtc
             _mediaPlayerImpl = null;
             _rtcEngineInstance = null;
         }
-
 
         public override void Dispose()
         {
@@ -59,52 +59,8 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
-        }
-
-        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode; 
-            }
-            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
-        }
-
-        public override int UnregisterAudioFrameObserver()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode; 
-            }
-            return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
-        }
-
-        public override int RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
-        }
-
-        public override int UnregisterMediaPlayerAudioSpectrumObserver()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
-        }
-
-        public override int Open(string url, Int64 startPos)
+        #region terra IMediaPlayer
+        public override int Open(string url, long startPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -113,8 +69,8 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.Open(playerId, url, startPos);
         }
 
-        [Obsolete]
-        public override int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider)
+        [Obsolete("")]
+        public override int OpenWithCustomSource(long startPos, IMediaPlayerCustomDataProvider provider)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -130,15 +86,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _mediaPlayerImpl.OpenWithMediaSource(playerId, source);
-        }
-
-        public override int SetSoundPositionParams(float pan, float gain)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.SetSoundPositionParams(playerId, pan, gain);
         }
 
         public override int Play()
@@ -177,7 +124,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.Resume(playerId);
         }
 
-        public override int Seek(Int64 newPos)
+        public override int Seek(long newPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -186,7 +133,16 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.Seek(playerId, newPos);
         }
 
-        public override int GetDuration(ref Int64 duration)
+        public override int SetAudioPitch(int pitch)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
+        }
+
+        public override int GetDuration(ref long duration)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -195,7 +151,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetDuration(playerId, ref duration);
         }
 
-        public override int GetPlayPosition(ref Int64 pos)
+        public override int GetPlayPosition(ref long pos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -204,7 +160,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetPlayPosition(playerId, ref pos);
         }
 
-        public override int GetStreamCount(ref Int64 count)
+        public override int GetStreamCount(ref long count)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -213,7 +169,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetStreamCount(playerId, ref count);
         }
 
-        public override int GetStreamInfo(Int64 index, ref PlayerStreamInfo info)
+        public override int GetStreamInfo(long index, ref PlayerStreamInfo info)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -247,6 +203,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SelectAudioTrack(playerId, index);
+        }
+
+        public override int SelectMultiAudioTrack(int playoutTrackIndex, int publishTrackIndex)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.SelectMultiAudioTrack(playerId, playoutTrackIndex, publishTrackIndex);
         }
 
         public override int SetPlayerOption(string key, int value)
@@ -357,13 +322,13 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetPublishSignalVolume(playerId, ref volume);
         }
 
-        public override int SetView()
+        public override int SetView(view_t view)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SetView(playerId);
+            return _mediaPlayerImpl.SetView(playerId, view);
         }
 
         public override int SetRenderMode(RENDER_MODE_TYPE renderMode)
@@ -375,6 +340,51 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetRenderMode(playerId, renderMode);
         }
 
+        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
+        }
+
+        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
+        }
+
+        public override int UnregisterAudioFrameObserver()
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
+        }
+
+        public override int RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
+        }
+
+        public override int UnregisterMediaPlayerAudioSpectrumObserver()
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
+        }
+
         public override int SetAudioDualMonoMode(AUDIO_DUAL_MONO_MODE mode)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
@@ -384,11 +394,12 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetAudioDualMonoMode(playerId, mode);
         }
 
+        [Obsolete("This method is deprecated.")]
         public override string GetPlayerSdkVersion()
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return null;
+                return "";
             }
             return _mediaPlayerImpl.GetPlayerSdkVersion(playerId);
         }
@@ -397,30 +408,12 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return null;
+                return "";
             }
             return _mediaPlayerImpl.GetPlaySrc(playerId);
         }
 
-        public override int SetAudioPitch(int pitch)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
-        }
-
-        public override int SetSpatialAudioParams(SpatialAudioParams spatial_audio_params)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.SetSpatialAudioParams(playerId, spatial_audio_params);
-        }
-
-        public override int OpenWithAgoraCDNSrc(string src, Int64 startPos)
+        public override int OpenWithAgoraCDNSrc(string src, long startPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -465,7 +458,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.EnableAutoSwitchAgoraCDN(playerId, enable);
         }
 
-        public override int RenewAgoraCDNSrcToken(string token, Int64 ts)
+        public override int RenewAgoraCDNSrcToken(string token, long ts)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -492,7 +485,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SwitchSrc(playerId, src, syncPts);
         }
 
-        public override int PreloadSrc(string src, Int64 startPos)
+        public override int PreloadSrc(string src, long startPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -518,5 +511,24 @@ namespace Agora.Rtc
             }
             return _mediaPlayerImpl.UnloadSrc(playerId, src);
         }
+
+        public override int SetSpatialAudioParams(SpatialAudioParams @params)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.SetSpatialAudioParams(playerId, @params);
+        }
+
+        public override int SetSoundPositionParams(float pan, float gain)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.SetSoundPositionParams(playerId, pan, gain);
+        }
+        #endregion terra IMediaPlayer
     }
 }

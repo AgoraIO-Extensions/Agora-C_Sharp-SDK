@@ -6,6 +6,24 @@ namespace Agora.Rtc
 {
     using IrisVideoFrameBufferHandle = IntPtr;
 
+     ///
+    /// @ignore
+    ///
+    public enum VideoSurfaceType
+    {
+        ///
+        /// @ignore
+        ///
+        Renderer = 0,
+        ///
+        /// @ignore
+        ///
+        RawImage = 1,
+    };
+
+    public delegate void OnTextureSizeModifyHandler(int width, int height);
+
+
     public abstract class IVideoStreamManager : IDisposable
     {
         internal abstract int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string key,
@@ -103,7 +121,7 @@ namespace Agora.Rtc
                 _videoFrameConfig.video_frame_format = (int)frameType;
                 _videoFrameConfig.uid = uid;
                 _videoFrameConfig.channelId = key;
-                return AgoraRtcNative.GetVideoFrameCache(rtcRenderingHandle,  ref _videoFrameConfig, ref video_frame, out is_new_frame);
+                return AgoraRtcNative.GetVideoFrameCache(rtcRenderingHandle, ref _videoFrameConfig, ref video_frame, out is_new_frame);
             }
             return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
         }

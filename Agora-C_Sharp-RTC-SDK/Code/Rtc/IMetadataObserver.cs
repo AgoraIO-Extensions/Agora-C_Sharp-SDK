@@ -7,9 +7,11 @@
     ///
     public abstract class IMetadataObserver
     {
+
         ///
         /// <summary>
         /// Occurs when the SDK requests the maximum size of the metadata.
+        /// 
         /// After successfully complete the registration by calling RegisterMediaMetadataObserver, the SDK triggers this callback once every video frame is sent. You need to specify the maximum size of the metadata in the return value of this callback.
         /// </summary>
         ///
@@ -23,15 +25,17 @@
             return 0;
         }
 #endif
+
         ///
         /// <summary>
         /// Occurs when the SDK is ready to send metadata.
+        /// 
         /// This callback is triggered when the SDK is ready to send metadata.
         /// </summary>
         ///
-        /// <param name="source_type"> Video data type. See VIDEO_SOURCE_TYPE.</param>
+        /// <param name="source_type"> Video data type. See VIDEO_SOURCE_TYPE. </param>
         ///
-        /// <param name="metadata"> The metadata that the user wants to send. See Metadata.</param>
+        /// <param name="metadata"> The metadata that the user wants to send. See Metadata. </param>
         ///
         /// <returns>
         /// true : Send the video frame. false : Do not send the video frame.
@@ -49,11 +53,10 @@
         /// Occurs when the local user receives the metadata.
         /// </summary>
         ///
-        /// <param name="metadata"> The metadata received. See Metadata.</param>
+        /// <param name="metadata"> The metadata received. See Metadata. </param>
         ///
         public virtual void OnMetadataReceived(Metadata metadata)
         {
-
         }
     }
 }

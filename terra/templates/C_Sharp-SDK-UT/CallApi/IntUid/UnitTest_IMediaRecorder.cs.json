@@ -1,0 +1,26 @@
+{
+    "IMediaRecorder": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorder",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_unitTest_compare_0",
+        "excludeMethods": [
+            "setMediaRecorderObserver",
+            "AddRef",
+            "HasOneRef",
+            "Release"
+        ],
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "trackBackFather": 1
+    },
+    "method_unitTest_compare_0": "[Test]\npublic void Test_${-unMETHOD_NAME}()\n{\n   ${METHOD_PARAM_JOIN:param_init}\n\n   var nRet = ${-rCLAZZ_STRUCT_NAME}.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:param_join});\n   Assert.AreEqual(0, nRet);\n}",
+    "param_init": {
+        "format": "${-fPARAM_TYPE}  ${-oPARAM_NAME_FORMAL} = ParamsHelper.CreateParam<${-fPARAM_TYPE}>();",
+        "split": "\n"
+    },
+    "param_join": {
+        "format": "${-oPARAM_NAME_ACTUAL}",
+        "split": ", "
+    }
+}

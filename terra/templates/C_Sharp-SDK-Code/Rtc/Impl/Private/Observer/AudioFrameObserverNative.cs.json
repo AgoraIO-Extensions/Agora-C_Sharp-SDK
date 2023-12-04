@@ -1,0 +1,59 @@
+{
+    "IAudioFrameObserverBase": {
+        "type": "ClazzStruct",
+        "name": "IAudioFrameObserverBase",
+        "excludeMethods": [
+            "onRecordAudioFrame",
+            "onPlaybackAudioFrame",
+            "onMixedAudioFrame",
+            "onEarMonitoringAudioFrame",
+            "onPlaybackAudioFrameBeforeMixing",
+            "getObservedAudioFramePosition",
+            "getPlaybackAudioParams",
+            "getRecordAudioParams",
+            "getMixedAudioParams",
+            "getEarMonitoringAudioParams",
+            "onPlaybackAudioFrameBeforeMixing"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IAudioFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IAudioFrameObserver",
+        "excludeMethods": [
+            "onPlaybackAudioFrameBeforeMixing"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IAudioFrameObserverBase_CreateDefaultReturn": {
+        "type": "ClazzStruct",
+        "name": "IAudioFrameObserverBase",
+        "excludeMethods": [
+            "onRecordAudioFrame",
+            "onPlaybackAudioFrame",
+            "onMixedAudioFrame",
+            "onEarMonitoringAudioFrame",
+            "onPlaybackAudioFrameBeforeMixing",
+            "getObservedAudioFramePosition",
+            "getPlaybackAudioParams",
+            "getRecordAudioParams",
+            "getMixedAudioParams",
+            "getEarMonitoringAudioParams",
+            "onPlaybackAudioFrameBeforeMixing"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IAudioFrameObserver_CreateDefaultReturn": {
+        "type": "ClazzStruct",
+        "name": "IAudioFrameObserver",
+        "excludeMethods": [
+            "onPlaybackAudioFrameBeforeMixing"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "method_callback_impl": "case \"${-rCLAZZ_STRUCT_NAME}_${-oMETHOD_NAME}\":{ImplMe and Exclude Me}break;"
+}

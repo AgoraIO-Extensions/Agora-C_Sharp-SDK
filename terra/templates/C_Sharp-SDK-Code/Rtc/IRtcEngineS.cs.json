@@ -1,0 +1,44 @@
+{
+    "IRtcEngineS": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineS",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_interface",
+        "includeMembers": [],
+        "excludeMethods": [
+            "release",
+            "queryInterface",
+            "registerPacketObserver",
+            "registerEventHandler",
+            "unregisterEventHandler",
+            "JoinChannelWithUserAccountEx"
+        ],
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "specialMembersTemplate": ""
+    },
+    "method_interface": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}public abstract ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join});",
+    "method_interface_param_join": {
+        "format": "${-oPARAM_TYPE} ${-oPARAM_NAME_FORMAL} ${-ePARAM_NAME_FORMAL_DEFAULT}",
+        "split": ", "
+    },
+    "IMediaEngineS": {
+        "type": "ClazzStruct",
+        "name": "IMediaEngineS",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_interface",
+        "includeMembers": [],
+        "excludeMethods": [
+            "release",
+            "enableCustomAudioLocalPlayback",
+            "registerAudioFrameObserver",
+            "registerVideoFrameObserver",
+            "registerVideoEncodedFrameObserver",
+            "addVideoFrameRenderer",
+            "removeVideoFrameRenderer"
+        ],
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "specialMembersTemplate": ""
+    }
+}

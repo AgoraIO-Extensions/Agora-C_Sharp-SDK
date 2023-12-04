@@ -1,0 +1,13 @@
+{
+    "IH265TranscoderObserver": {
+        "type": "ClazzStruct",
+        "name": "IH265TranscoderObserver",
+        "commonMethodTemplate": "method_callback_common",
+        "methodSplitSymbol": "\n\n",
+        "excludeMethods": [
+            "onMetaData",
+            "onPlayerInfoUpdated"
+        ]
+    },
+    "method_callback_common": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateMusicContentCenterEventHandlerNative}"
+}

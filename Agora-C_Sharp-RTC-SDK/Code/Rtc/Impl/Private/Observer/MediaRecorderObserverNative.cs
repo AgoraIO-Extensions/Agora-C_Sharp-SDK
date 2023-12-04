@@ -9,9 +9,9 @@ namespace Agora.Rtc
 {
     internal static class MediaRecorderObserverNative
     {
-        private static Dictionary<string, IMediaRecorderObserver> mediaRecorderObserverDic = new Dictionary<string, IMediaRecorderObserver>();
+        private static Dictionary<string, object> mediaRecorderObserverDic = new Dictionary<string, object>();
 
-        internal static void AddMediaRecorderObserver(string nativeHandle, IMediaRecorderObserver observer)
+        internal static void AddMediaRecorderObserver(string nativeHandle, object observer)
         {
 
             if (mediaRecorderObserverDic.ContainsKey(nativeHandle))
@@ -63,42 +63,43 @@ namespace Agora.Rtc
             switch (@event)
             {
                 case "MediaRecorderObserver_onRecorderStateChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
                     {
-#endif
-                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
-                    mediaRecorderObserverDic[nativeHandle].OnRecorderStateChanged(
-                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
-                        (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
-                        (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
-                    );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
+CallbackObject._CallbackQueue.EnQueue(() =>{
 #endif
-                    break;
+                        if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                        ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderStateChanged(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                            (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
+                            (RecorderReasonCode)AgoraJson.GetData<int>(jsonData, "reason")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+});
+#endif
+                        break;
+                    }
 
                 case "MediaRecorderObserver_onRecorderInfoUpdated":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
                     {
-#endif
-                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
-                    mediaRecorderObserverDic[nativeHandle].OnRecorderInfoUpdated(
-                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
-                        AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
-                    );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
+CallbackObject._CallbackQueue.EnQueue(() =>{
 #endif
-                    break;
+                        if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                        ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderInfoUpdated(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                            AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+});
+#endif
+                        break;
+                    }
             }
+
+
         }
 
     }
-
-
-
 }
