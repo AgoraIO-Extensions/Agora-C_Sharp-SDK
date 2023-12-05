@@ -9,7 +9,7 @@ import { ParseEngine } from "./PraseEngine";
 import { Tool } from "./Tool";
 import { AddAllDocTag, AddAllDocContetnt, DeleteAllOldDoc } from "./DocHelper";
 
-let jsonPath = "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/node/.terra/cxx_parser/dump_json_6c3fcce3b1a318e3549f3d0307d4175e.json";
+let jsonPath = "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/node/.terra/cxx_parser/dump_json_1badd74f95b820d20bfdf6bf20d98a96.json";
 
 let cxxiles = JSON.parse(fs.readFileSync(jsonPath, { encoding: 'utf-8' }));
 

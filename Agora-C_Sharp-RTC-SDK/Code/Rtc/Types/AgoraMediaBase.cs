@@ -353,6 +353,8 @@ namespace Agora.Rtc
     {
         public string extraInfo;
 
+        public string serverConfig;
+
         public ContentInspectModule[] modules;
 
         public int moduleCount;
@@ -360,12 +362,14 @@ namespace Agora.Rtc
         public ContentInspectConfig()
         {
             this.extraInfo = "";
+            this.serverConfig = "";
             this.moduleCount = 0;
         }
 
-        public ContentInspectConfig(string extraInfo, ContentInspectModule[] modules, int moduleCount)
+        public ContentInspectConfig(string extraInfo, string serverConfig, ContentInspectModule[] modules, int moduleCount)
         {
             this.extraInfo = extraInfo;
+            this.serverConfig = serverConfig;
             this.modules = modules;
             this.moduleCount = moduleCount;
         }

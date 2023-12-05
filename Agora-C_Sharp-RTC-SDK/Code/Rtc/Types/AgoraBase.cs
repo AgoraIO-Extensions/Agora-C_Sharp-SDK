@@ -735,7 +735,7 @@ namespace Agora.Rtc
         public SenderOptions()
         {
             this.ccMode = TCcMode.CC_ENABLED;
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
             this.targetBitrate = 6500;
         }
 
@@ -1149,7 +1149,7 @@ namespace Agora.Rtc
 
         public VideoEncoderConfiguration(VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
         {
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
             this.dimensions = d;
             this.frameRate = f;
             this.bitrate = b;
@@ -1162,7 +1162,7 @@ namespace Agora.Rtc
 
         public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
         {
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
             this.dimensions = new VideoDimensions(width, height);
             this.frameRate = f;
             this.bitrate = b;
@@ -1188,7 +1188,7 @@ namespace Agora.Rtc
 
         public VideoEncoderConfiguration()
         {
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
             this.dimensions = new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_960, (int)FRAME_HEIGHT.FRAME_HEIGHT_540);
             this.frameRate = (int)FRAME_RATE.FRAME_RATE_FPS_15;
             this.bitrate = (int)BITRATE.STANDARD_BITRATE;
@@ -1873,7 +1873,7 @@ namespace Agora.Rtc
             this.trackId = 0;
             this.channelId = "";
             this.streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
             this.encodedFrameOnly = false;
             this.sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             this.observationPosition = (uint)VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
@@ -3898,6 +3898,18 @@ namespace Agora.Rtc
 
         public uint videoState;
 
+        public VideoLayout()
+        {
+            this.channelId = "";
+            this.uid = 0;
+            this.strUid = "";
+            this.x = 0;
+            this.y = 0;
+            this.width = 0;
+            this.height = 0;
+            this.videoState = 0;
+        }
+
         public VideoLayout(string channelId, uint uid, string strUid, uint x, uint y, uint width, uint height, uint videoState)
         {
             this.channelId = channelId;
@@ -3909,10 +3921,6 @@ namespace Agora.Rtc
             this.height = height;
             this.videoState = videoState;
         }
-        public VideoLayout()
-        {
-        }
-
     }
 
 

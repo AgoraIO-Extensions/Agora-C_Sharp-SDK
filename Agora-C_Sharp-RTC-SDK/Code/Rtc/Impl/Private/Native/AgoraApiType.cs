@@ -12,8 +12,8 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETNATIVEHANDLE = "RtcEngine_getNativeHandle";
         internal const string FUNC_RTCENGINE_SETMAXMETADATASIZE = "RtcEngine_setMaxMetadataSize";
         internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetaData";
-        #region terra IRtcEngine
         internal const string FUNC_RTCENGINE_RELEASE = "RtcEngine_release";
+        #region terra IRtcEngine
         internal const string FUNC_RTCENGINE_INITIALIZE = "RtcEngine_initialize";
         internal const string FUNC_RTCENGINE_QUERYINTERFACE = "RtcEngine_queryInterface";
         internal const string FUNC_RTCENGINE_GETVERSION = "RtcEngine_getVersion";
