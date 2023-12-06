@@ -18,7 +18,7 @@
         "VideoFrame.VideoFrame.metadata_buffer:NULL": "IntPtr.Zero",
         "VideoFrame.VideoFrame.sharedContext:0": "IntPtr.Zero",
         "VideoFrame.VideoFrame.d3d11Texture2d:NULL": "IntPtr.Zero",
-        "VideoFrame.VideoFrame.metaInfo:NULL": "new Dictionary<string, string>()",
+        "VideoFrame.VideoFrame.metaInfo:NULL": "null",
         "VideoCompositingLayout.VideoCompositingLayout.backgroundColor:NULL": "\"\"",
         "VideoCompositingLayout.VideoCompositingLayout.appData:NULL": "\"\"",
         "VideoCompositingLayout.VideoCompositingLayout.regions:NULL": "new Region[0]",
