@@ -217,7 +217,7 @@
         "agora::media::RecorderInfo const&": "RecorderInfo",
         "agora::rtc::IMetadataObserver::Metadata const&": "Metadata",
         "agora::rtc::IMetadataObserverS::MetadataS const&": "MetadataS",
-        "agora::media::base::IVideoFrameMetaInfo*": "Dictionary<string, string>",
+        "agora::media::base::IVideoFrameMetaInfo*": "IVideoFrameMetaInfo",
         "agora::VideoLayout const*": "VideoLayout[]",
         "agora::rtc::IH265TranscoderObserver*": "IH265TranscoderObserver"
     },

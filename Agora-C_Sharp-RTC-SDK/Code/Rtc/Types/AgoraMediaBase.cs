@@ -65,7 +65,7 @@ namespace Agora.Rtc
 
         public IntPtr alphaBufferPtr;
 
-        public Dictionary<string, string> metaInfo;
+        public IVideoFrameMetaInfo metaInfo;
         #endregion terra VideoFrame_Member_List
 
         #region terra VideoFrame_Constructor
@@ -95,7 +95,7 @@ namespace Agora.Rtc
             this.d3d11Texture2d = IntPtr.Zero;
             this.alphaBuffer = new byte[0];
             this.alphaBufferPtr = IntPtr.Zero;
-            this.metaInfo = new Dictionary<string, string>();
+            this.metaInfo = null;
             this.matrix = new float[16];
         }
 
