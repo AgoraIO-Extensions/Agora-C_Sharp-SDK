@@ -145,6 +145,9 @@ echo "[Unity CI] start creating unity project"
 $UNITY_DIR/Unity -quit -batchmode -nographics -createProject "project"
 echo "[Unity CI] finish creating unity project"
 
+# make allowUnsafeCode true
+python3 set_allowUnsafeCode_true.py ${ROOT}/tempDir/project
+
 #--------------------------------------
 # Copy files to the Unity project
 #--------------------------------------
