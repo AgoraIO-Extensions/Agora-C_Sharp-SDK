@@ -1,6 +1,11 @@
+#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using System;
 using System.Runtime.InteropServices;
+#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
+using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
+#endif
 using UnityEngine;
 
 namespace Agora.Rtc
@@ -44,6 +49,10 @@ namespace Agora.Rtc
                 return _vTexture;
             }
         }
+#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
+        protected NativeArray<byte> _uTextureNative;
+        protected NativeArray<byte> _vTextureNative;
+#endif
 
         public float YStrideScale = 1.0f;
 
@@ -71,18 +80,31 @@ namespace Agora.Rtc
 
         internal override void InitIrisVideoFrame()
         {
+
             _cachedVideoFrame = new IrisCVideoFrame
             {
                 type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420,
                 yStride = _videoPixelWidth,
                 height = _videoPixelHeight,
                 width = _videoPixelWidth,
-                yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight),
                 uStride = _videoPixelWidth / 2,
-                uBuffer = Marshal.AllocHGlobal(_videoPixelWidth / 2 * _videoPixelHeight / 2),
                 vStride = _videoPixelWidth / 2,
-                vBuffer = Marshal.AllocHGlobal(_videoPixelWidth / 2 * _videoPixelHeight / 2),
             };
+#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
+            _textureNative = _texture.GetRawTextureData<byte>();
+            _uTextureNative = _uTexture.GetRawTextureData<byte>();
+            _vTextureNative = _vTexture.GetRawTextureData<byte>();
+            unsafe
+            {
+                _cachedVideoFrame.yBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_textureNative);
+                _cachedVideoFrame.uBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_uTextureNative);
+                _cachedVideoFrame.vBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_vTextureNative);
+            }
+#else
+            _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight);
+            _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_videoPixelWidth / 2 * _videoPixelHeight / 2);
+            _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_videoPixelWidth / 2 * _videoPixelHeight / 2);
+#endif
         }
 
 
@@ -101,16 +123,34 @@ namespace Agora.Rtc
             }
             else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_RESIZED)
             {
+                _videoPixelWidth = _cachedVideoFrame.width;
+                _videoPixelHeight = _cachedVideoFrame.height;
+
+#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
+                _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                _texture.Apply();
+                _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+                _uTexture.Apply();
+                _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+                _vTexture.Apply();
+                _textureNative = _texture.GetRawTextureData<byte>();
+                _uTextureNative = _uTexture.GetRawTextureData<byte>();
+                _vTextureNative = _vTexture.GetRawTextureData<byte>();
+                unsafe
+                {
+                    _cachedVideoFrame.yBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_textureNative);
+                    _cachedVideoFrame.uBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_uTextureNative);
+                    _cachedVideoFrame.vBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_vTextureNative);
+                }
+#else
+
                 _needResize = true;
-
                 FreeMemory();
-
                 _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-
                 _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
                 _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
                 _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
-
+#endif
                 if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
                 {
                     YStrideScale = 1.0f;
@@ -134,6 +174,11 @@ namespace Agora.Rtc
 
             try
             {
+#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
+                _texture.Apply();
+                _uTexture.Apply();
+                _vTexture.Apply();
+#else
                 if (_needResize)
                 {
                     _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
@@ -143,8 +188,7 @@ namespace Agora.Rtc
                     _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
                     _vTexture.Apply();
 
-                    _videoPixelWidth = _cachedVideoFrame.width;
-                    _videoPixelHeight = _cachedVideoFrame.height;
+                   
                     _needResize = false;
                 }
 
@@ -157,6 +201,7 @@ namespace Agora.Rtc
                 _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
                     (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
                 _vTexture.Apply();
+#endif
 
             }
             catch (Exception e)
@@ -185,8 +230,14 @@ namespace Agora.Rtc
             }
         }
 
-        protected override void FreeMemory()
+        private void FreeMemory()
         {
+#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
+            _cachedVideoFrame.yBuffer = IntPtr.Zero;
+            _cachedVideoFrame.uBuffer = IntPtr.Zero;
+            _cachedVideoFrame.vBuffer = IntPtr.Zero;
+#else
+
             if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
             {
                 Marshal.FreeHGlobal(_cachedVideoFrame.yBuffer);
@@ -204,6 +255,7 @@ namespace Agora.Rtc
                 Marshal.FreeHGlobal(_cachedVideoFrame.vBuffer);
                 _cachedVideoFrame.vBuffer = IntPtr.Zero;
             }
+#endif
         }
 
         override internal void Attach()
