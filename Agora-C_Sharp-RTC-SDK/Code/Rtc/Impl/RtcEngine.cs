@@ -3392,5 +3392,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
 
+        public override int SendAudioMetadata(byte[] metadata, uint length)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SendAudioMetadata(metadata, length);
+        }
+
+        public override int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, uint length)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SendAudioMetadataEx(connection, metadata, length);
+        }
     }
 }

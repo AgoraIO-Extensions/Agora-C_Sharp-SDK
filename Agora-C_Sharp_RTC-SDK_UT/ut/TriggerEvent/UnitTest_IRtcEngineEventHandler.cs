@@ -910,6 +910,41 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnStreamMessagePassed(connection, remoteUid, streamId, data, length, sentTs));
         }
 
+
+        [Test]
+        public void Test_OnAudioMetadataReceived()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOMETADATARECEIVED;
+
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+
+            uint uid;
+            ParamsHelper.InitParam(out uid);
+
+            byte[] metadata;
+            ParamsHelper.InitParam(out metadata);
+
+            uint length;
+            ParamsHelper.InitParam(out length);
+
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("metadata", metadata);
+            jsonObj.Add("length", length);
+
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnAudioMetadataReceivedPassed(connection, uid, metadata, length));
+        }
+
         [Test]
         public void Test_OnStreamMessageError()
         {
@@ -2711,7 +2746,7 @@ namespace Agora.Rtc.Event
             VideoLayout[] layoutlist;
             ParamsHelper.InitParam(out layoutlist);
 
-           
+
             jsonObj.Clear();
             jsonObj.Add("connection", connection);
             jsonObj.Add("uid", uid);

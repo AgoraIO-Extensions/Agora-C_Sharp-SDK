@@ -294,6 +294,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_ENABLEINSTANTMEDIARENDERING = "RtcEngine_enableInstantMediaRendering";
         internal const string FUNC_RTCENGINE_GETNTPWALLTIMEINMS = "RtcEngine_getNtpWallTimeInMs";
         internal const string FUNC_RTCENGINE_ISFEATUREAVAILABLEONDEVICE = "RtcEngine_isFeatureAvailableOnDevice";
+        internal const string FUNC_RTCENGINE_SENDAUDIOMETADATA = "RtcEngine_sendAudioMetadata";
 
         #endregion
 
@@ -350,7 +351,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX = "RtcEngineEx_takeSnapshotEx";
         internal const string FUNC_RTCENGINEEX_ENABLECONTENTINSPECTEX = "RtcEngineEx_enableContentInspectEx";
         internal const string FUNC_RTCENGINEEX_STARTMEDIARENDERINGTRACINGEX = "RtcEngineEx_startMediaRenderingTracingEx";
-
+        internal const string FUNC_RTCENGINEEX_SENDAUDIOMETADATAEX = "RtcEngineEx_sendAudioMetadataEx";
         #endregion
 
         #region IMediaPlayer start

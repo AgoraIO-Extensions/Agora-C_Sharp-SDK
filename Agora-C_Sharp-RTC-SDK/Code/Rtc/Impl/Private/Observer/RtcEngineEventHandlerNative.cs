@@ -1615,29 +1615,57 @@ namespace Agora.Rtc
 
                 #region withBuffer start
                 case "RtcEngineEventHandler_onStreamMessageEx":
-                    var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
-                    var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
-                    var byteData = new byte[byteLength];
-                    if (byteLength != 0)
                     {
-                        Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
-                    }
+                        var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
+                        var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
+                        var byteData = new byte[byteLength];
+                        if (byteLength != 0)
+                        {
+                            Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
+                        }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                    if (rtcEngineEventHandler == null) return;
-                    rtcEngineEventHandler.OnStreamMessage(
-                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(jsonData, "streamId"),
-                        byteData,
-                        byteLength,
-                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "sentTs"));
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnStreamMessage(
+                            AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                            (int)AgoraJson.GetData<int>(jsonData, "streamId"),
+                            byteData,
+                            byteLength,
+                            (UInt64)AgoraJson.GetData<UInt64>(jsonData, "sentTs"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
+                    }
+                    break;
+
+                case "RtcEngineEventHandler_onAudioMetadataReceivedEx":
+                    {
+                        var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
+                        var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "metadata");
+                        var byteData = new byte[byteLength];
+                        if (byteLength != 0)
+                        {
+                            Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
+                        }
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnAudioMetadataReceived(
+                            AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                            byteData,
+                            byteLength);
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    }
                     break;
                     #endregion withBuffer end
             }

@@ -132,6 +132,7 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONINTERRUPTED = "RtcEngineEventHandlerEx_onConnectionInterrupted";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONBANNED = "RtcEngineEventHandlerEx_onConnectionBanned";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONSTREAMMESSAGE = "RtcEngineEventHandlerEx_onStreamMessage";
+        internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOMETADATARECEIVED = "RtcEngineEventHandlerEx_onAudioMetadataReceived";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONSTREAMMESSAGEERROR = "RtcEngineEventHandlerEx_onStreamMessageError";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONREQUESTTOKEN = "RtcEngineEventHandlerEx_onRequestToken";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONLICENSEVALIDATIONFAILURE = "RtcEngineEventHandlerEx_onLicenseValidationFailure";

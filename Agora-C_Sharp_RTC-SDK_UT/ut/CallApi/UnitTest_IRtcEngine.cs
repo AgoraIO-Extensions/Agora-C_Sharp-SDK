@@ -3056,6 +3056,20 @@ namespace Agora.Rtc
             Assert.AreEqual(true, nRet);
         }
 
+        [Test]
+        public void Test_SendAudioMetadata()
+        {
+            byte[] metadata;
+            ParamsHelper.InitParam(out metadata);
+
+            uint length;
+            ParamsHelper.InitParam(out length);
+
+            var nRet = Engine.SendAudioMetadata(metadata, length);
+
+            Assert.AreEqual(0, nRet);
+        }
+
 
 
         #region mediaEngine
