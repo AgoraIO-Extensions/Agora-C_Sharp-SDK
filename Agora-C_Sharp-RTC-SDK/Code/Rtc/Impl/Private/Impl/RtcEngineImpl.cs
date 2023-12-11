@@ -6070,6 +6070,43 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int SendAudioMetadata(byte[] metadata, uint length)
+        {
+            _param.Clear();
+            _param.Add("length", length);
+        
+            var json = AgoraJson.ToJson(_param);
+
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(metadata, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDAUDIOMETADATA,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam, length);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, uint length)
+        {
+            _param.Clear();
+            _param.Add("connection", connection);
+            _param.Add("length", length);
+
+            var json = AgoraJson.ToJson(_param);
+
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(metadata, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDAUDIOMETADATAEX,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam, length);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
         {
             _param.Clear();

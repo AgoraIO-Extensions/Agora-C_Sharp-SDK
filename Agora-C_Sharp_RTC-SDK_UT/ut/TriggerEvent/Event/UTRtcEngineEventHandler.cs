@@ -913,6 +913,41 @@ namespace Agora.Rtc
 
         ///////////////////////////////////
 
+        public bool OnAudioMetadataReceived_be_trigger = false;
+        public RtcConnection OnAudioMetadataReceived_connection = null;
+        public uint OnAudioMetadataReceived_uid = 0;
+        public byte[] OnAudioMetadataReceived_metadata = null;
+        public uint OnAudioMetadataReceived_length = 0;
+
+
+        public override void OnAudioMetadataReceived(RtcConnection connection, uid_t uid, byte[] metadata, uint length)
+        {
+            OnAudioMetadataReceived_be_trigger = true;
+            OnAudioMetadataReceived_connection = connection;
+            OnAudioMetadataReceived_uid = uid;
+            OnAudioMetadataReceived_metadata = metadata;
+            OnAudioMetadataReceived_length = length;
+        }
+
+        public bool OnAudioMetadataReceivedPassed(RtcConnection connection, uid_t uid, byte[] metadata, uint length)
+        {
+            if (OnAudioMetadataReceived_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareRtcConnection(OnAudioMetadataReceived_connection, connection) == false)
+                return false;
+            if (ParamsHelper.compareUid_t(OnAudioMetadataReceived_uid, uid) == false)
+                return false;
+            //if (ParamsHelper.compareString(OnAudioMetadataReceived_metadata, metadata) == false)
+            //    return false;
+            if (ParamsHelper.compareUint(OnAudioMetadataReceived_length, length) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
         public bool OnStreamMessageError_be_trigger = false;
         public RtcConnection OnStreamMessageError_connection = null;
         public uid_t OnStreamMessageError_remoteUid = 0;
@@ -2773,7 +2808,7 @@ namespace Agora.Rtc
         }
 
         ///////////////////////////////////
-     
+
         public bool OnLocalVideoTranscoderError_be_trigger = false;
         public TranscodingVideoStream OnLocalVideoTranscoderError_stream = null;
         public VIDEO_TRANSCODER_ERROR OnLocalVideoTranscoderError_error;
@@ -2802,7 +2837,7 @@ namespace Agora.Rtc
 
         public bool OnTranscodedStreamLayoutInfo_be_trigger = false;
         public RtcConnection OnTranscodedStreamLayoutInfo_connection = null;
-        public uint OnTranscodedStreamLayoutInfo_uid =0;
+        public uint OnTranscodedStreamLayoutInfo_uid = 0;
         public int OnTranscodedStreamLayoutInfo_width = 0;
         public int OnTranscodedStreamLayoutInfo_height = 0;
         public int OnTranscodedStreamLayoutInfo_layoutCount = 0;

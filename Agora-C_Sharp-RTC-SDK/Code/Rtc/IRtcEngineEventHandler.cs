@@ -1168,5 +1168,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
+
+        public virtual void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, uint length) { }
     };
 }

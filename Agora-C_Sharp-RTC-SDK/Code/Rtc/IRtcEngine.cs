@@ -4033,6 +4033,8 @@ namespace Agora.Rtc
         public abstract UInt64 GetNtpWallTimeInMs();
 
         public abstract bool IsFeatureAvailableOnDevice(FeatureType type);
+
+        public abstract int SendAudioMetadata(byte[] metadata, uint length);
         ///
         /// <summary>
         /// Gets the C++ handle of the native SDK.
@@ -4802,5 +4804,8 @@ namespace Agora.Rtc
 
 
         public abstract int StartMediaRenderingTracingEx(RtcConnection connection);
+
+
+        public abstract int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, uint length);
     }
 }
