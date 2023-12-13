@@ -3161,6 +3161,21 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int SetCameraStabilizationMode(CAMERA_STABILIZATION_MODE mode)
+        {
+            _param.Clear();
+            _param.Add("mode", mode);
+
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERASTABILIZATIONMODE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker)
         {
             _param.Clear();
@@ -3214,6 +3229,31 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETROUTEINCOMMUNICATIONMODE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public bool IsSupportPortraitCenterStage()
+        {
+            _param.Clear();
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISSUPPORTPORTRAITCENTERSTAGE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+        }
+
+        public int EnablePortraitCenterStage(bool enabled)
+        {
+            _param.Clear();
+            _param.Add("enabled", enabled);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEPORTRAITCENTERSTAGE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

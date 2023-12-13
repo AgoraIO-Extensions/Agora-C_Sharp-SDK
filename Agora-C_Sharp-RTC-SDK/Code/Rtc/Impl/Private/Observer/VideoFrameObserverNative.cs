@@ -129,6 +129,14 @@ namespace Agora.Rtc
             localVideoFrame.textureId = videoFrameConverted.textureId;
             localVideoFrame.alphaBufferPtr = videoFrameConverted.alphaBuffer;
             localVideoFrame.d3d11Texture2d = videoFrameConverted.d3d11Texture2d;
+            if (videoFrameConverted.metaInfo != null && videoFrameConverted.metaInfo.Keys.Count > 0)
+            {
+                localVideoFrame.metaInfo = new VideoFrameMetaInfo(videoFrameConverted.metaInfo);
+            }
+            else
+            {
+                localVideoFrame.metaInfo = null;
+            }
         }
 
 

@@ -2235,6 +2235,16 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_SetCameraStabilizationMode()
+        {
+            CAMERA_STABILIZATION_MODE mode;
+            ParamsHelper.InitParam(out mode);
+            var nRet = Engine.SetCameraStabilizationMode(mode);
+
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
+        }
+
+        [Test]
         public void Test_SetDefaultAudioRouteToSpeakerphone()
         {
             bool defaultToSpeaker;
@@ -2272,6 +2282,24 @@ namespace Agora.Rtc
 
             Assert.AreEqual(-4, nRet);
         }
+
+        [Test]
+        public void Test_IsSupportPortraitCenterStage()
+        {
+            var nRet = Engine.IsSupportPortraitCenterStage();
+            Assert.AreEqual(true, nRet);
+        }
+
+        [Test]
+        public void Test_EnablePortraitCenterStage()
+        {
+            bool enabled;
+            ParamsHelper.InitParam(out enabled);
+            var nRet = Engine.EnablePortraitCenterStage(enabled);
+
+            Assert.AreEqual(0, nRet);
+        }
+
 
         [Test]
         public void Test_SetAudioSessionOperationRestriction()

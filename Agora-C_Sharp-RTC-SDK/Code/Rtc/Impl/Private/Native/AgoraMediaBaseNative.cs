@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace Agora.Rtc
 {
@@ -67,6 +68,7 @@ namespace Agora.Rtc
         public IntPtr alphaBuffer;
         public uint alpha_buffer_length;
         public IntPtr d3d11Texture2d;
+        public Dictionary<string, string> metaInfo;
     }
 
 

@@ -434,6 +434,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_INVALID_USER_ID = 121,
+
+
+        ERR_DATASTREAM_DECRYPTION_FAILED = 122,
         ///
         /// <summary>
         /// 123: The user is banned from the server.
@@ -3169,7 +3172,27 @@ namespace Agora.Rtc
         CAPTURE_BRIGHTNESS_LEVEL_DARK = 2,
     };
 
-
+    public enum CAMERA_STABILIZATION_MODE
+    {
+        /** The camera stabilization mode is disabled. 
+        */
+        CAMERA_STABILIZATION_MODE_OFF = -1,
+        /** device choose stabilization mode automatically. 
+        */
+        CAMERA_STABILIZATION_MODE_AUTO = 0,
+        /** stabilization mode level 1. 
+        */
+        CAMERA_STABILIZATION_MODE_LEVEL_1 = 1,
+        /** stabilization mode level 2. 
+        */
+        CAMERA_STABILIZATION_MODE_LEVEL_2 = 2,
+        /** stabilization mode level 3. 
+        */
+        CAMERA_STABILIZATION_MODE_LEVEL_3 = 3,
+        /** The maximum level of the camera stabilization mode.
+         */
+        CAMERA_STABILIZATION_MODE_MAX_LEVEL = CAMERA_STABILIZATION_MODE_LEVEL_3,
+    };
     ///
     /// <summary>
     /// The state of the local audio.
@@ -7676,6 +7699,7 @@ namespace Agora.Rtc
             encryptionMode = ENCRYPTION_MODE.MODE_END;
             encryptionKey = "";
             encryptionKdfSalt = new byte[32];
+            datastreamEncryptionEnabled = false;
         }
 
         public EncryptionConfig(ENCRYPTION_MODE encryptionMode, string encryptionKey, byte[] encryptionKdfSalt)
@@ -7683,6 +7707,7 @@ namespace Agora.Rtc
             this.encryptionMode = encryptionMode;
             this.encryptionKey = encryptionKey;
             this.encryptionKdfSalt = encryptionKdfSalt;
+            this.datastreamEncryptionEnabled = false;
         }
 
         public string getEncryptionString()
@@ -7732,6 +7757,8 @@ namespace Agora.Rtc
 
             get { return encryptionKdfSalt32; }
         }
+
+        public bool datastreamEncryptionEnabled;
     };
 
     ///
@@ -7761,6 +7788,15 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ENCRYPTION_ERROR_ENCRYPTION_FAILURE = 2,
+
+        /**
+         * 3: DataStream decryption errors. Ensure that the receiver and the sender use the same encryption mode and key.
+        */
+        ENCRYPTION_ERROR_DATASTREAM_DECRYPTION_FAILURE = 3,
+        /**
+         * 4: DataStream encryption errors.
+         */
+        ENCRYPTION_ERROR_DATASTREAM_ENCRYPTION_FAILURE = 4,
     };
 
     ///

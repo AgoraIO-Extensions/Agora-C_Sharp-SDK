@@ -1874,6 +1874,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetCameraAutoExposureFaceModeEnabled(enabled);
         }
 
+        public override int SetCameraStabilizationMode(CAMERA_STABILIZATION_MODE mode)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetCameraStabilizationMode(mode);
+        }
+
         public override int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker)
         {
             if (_rtcEngineImpl == null)
@@ -1908,6 +1917,24 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRouteInCommunicationMode(route);
+        }
+
+        public override bool IsSupportPortraitCenterStage()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return false;
+            }
+            return _rtcEngineImpl.IsSupportPortraitCenterStage();
+        }
+
+        public override int EnablePortraitCenterStage(bool enabled)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnablePortraitCenterStage(enabled);
         }
 
         public override int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams)
