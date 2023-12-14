@@ -955,10 +955,10 @@ namespace Agora.Rtc
         {
             param = FeatureType.VIDEO_VIRTUAL_BACKGROUND;
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out CAMERA_STABILIZATION_MODE param)
+        {
+            param = CAMERA_STABILIZATION_MODE.CAMERA_STABILIZATION_MODE_AUTO;
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =

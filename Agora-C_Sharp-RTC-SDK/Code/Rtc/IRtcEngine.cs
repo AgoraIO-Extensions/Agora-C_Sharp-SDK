@@ -4126,6 +4126,9 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);
+
+
+        public abstract int SetCameraStabilizationMode(CAMERA_STABILIZATION_MODE mode);
         #endregion
 
         #region Audio route : This group of methods are for Android and iOS only.
@@ -4199,6 +4202,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetRouteInCommunicationMode(int route);
+
+        public abstract bool IsSupportPortraitCenterStage();
+
+        public abstract int EnablePortraitCenterStage(bool enabled);
+
         #endregion
 
         #region Volume indication

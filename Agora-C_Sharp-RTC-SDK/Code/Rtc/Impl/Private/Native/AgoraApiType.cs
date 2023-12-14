@@ -202,10 +202,13 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETCAMERAEXPOSUREFACTOR = "RtcEngine_setCameraExposureFactor";
         internal const string FUNC_RTCENGINE_ISCAMERAAUTOEXPOSUREFACEMODESUPPORTED = "RtcEngine_isCameraAutoExposureFaceModeSupported";
         internal const string FUNC_RTCENGINE_SETCAMERAAUTOEXPOSUREFACEMODEENABLED = "RtcEngine_setCameraAutoExposureFaceModeEnabled";
+        internal const string FUNC_RTCENGINE_SETCAMERASTABILIZATIONMODE = "RtcEngine_setCameraStabilizationMode";
         internal const string FUNC_RTCENGINE_SETDEFAULTAUDIOROUTETOSPEAKERPHONE = "RtcEngine_setDefaultAudioRouteToSpeakerphone";
         internal const string FUNC_RTCENGINE_SETENABLESPEAKERPHONE = "RtcEngine_setEnableSpeakerphone";
         internal const string FUNC_RTCENGINE_ISSPEAKERPHONEENABLED = "RtcEngine_isSpeakerphoneEnabled";
         internal const string FUNC_RTCENGINE_SETROUTEINCOMMUNICATIONMODE = "RtcEngine_setRouteInCommunicationMode";
+        internal const string FUNC_RTCENGINE_ISSUPPORTPORTRAITCENTERSTAGE = "RtcEngine_isSupportPortraitCenterStage";
+        internal const string FUNC_RTCENGINE_ENABLEPORTRAITCENTERSTAGE = "RtcEngine_enablePortraitCenterStage";
         internal const string FUNC_RTCENGINE_GETSCREENCAPTURESOURCES = "RtcEngine_getScreenCaptureSources";
         internal const string FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION = "RtcEngine_setAudioSessionOperationRestriction";
         internal const string FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID = "RtcEngine_startScreenCaptureByDisplayId";

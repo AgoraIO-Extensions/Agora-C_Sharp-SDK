@@ -654,6 +654,10 @@ namespace Agora.Rtc
         VIDEO_SOURCE_UNSPECIFIED = 2,
     };
 
+    public enum META_INFO_KEY
+    {
+        KEY_FACE_CAPTURE = 0,
+    };
 
     ///
     /// @ignore
@@ -922,6 +926,7 @@ namespace Agora.Rtc
             textureId = 0;
             matrix = new float[16];
             d3d11Texture2d = IntPtr.Zero;
+            metaInfo = null;
         }
 
         ///
@@ -1072,6 +1077,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public IntPtr d3d11Texture2d;
+
+        public IVideoFrameMetaInfo metaInfo;
     };
 
     ///
