@@ -223,7 +223,24 @@ namespace Agora.Rtm
         /// </summary>
         ///
         INSTANCE_ALREADY_RELEASED = -10018,
-
+        ///
+        /// <summary>
+        /// -10019: The channel type is invalid.
+        /// </summary>
+        ///
+        INVALID_CHANNEL_TYPE = -10019,
+        ///
+        /// <summary>
+        /// -10020: The encryption parameter is invalid.
+        /// </summary>
+        ///
+        INVALID_ENCRYPTION_PARAMETER = -10020,
+        ///
+        /// <summary>
+        /// -10021: The operation is too frequent.
+        /// </summary>
+        ///
+        OPERATION_RATE_EXCEED_LIMITATION = -10021,
         ///
         /// <summary>
         /// -11001 ~ -12000 : reserved for channel error.
@@ -417,7 +434,12 @@ namespace Agora.Rtm
         /// </summary>
         ///
         CHANNEL_PRESENCE_NOT_READY = -11032,
-
+        ///
+        /// <summary>
+        /// -11033: The destination user of publish message is offline.
+        /// </summary>
+        ///
+        CHANNEL_RECEIVER_OFFLINE = -11033,
         ///
         /// <summary>
         /// -12001 ~ -13000 : reserved for storage error.
@@ -883,6 +905,12 @@ namespace Agora.Rtm
         /// </summary>
         ///
         STREAM = 2,
+        ///
+        /// <summary>
+        /// 3: User.
+        /// </summary>
+        ///
+        USER = 3,
     }
 
     public enum RTM_MESSAGE_TYPE
@@ -1469,6 +1497,47 @@ namespace Agora.Rtm
 
     ///
     /// <summary>
+    /// The option to query user presence.
+    /// </summary>
+    ///
+    public class GetOnlineUsersOptions
+    {
+        ///
+        /// <summary>
+        /// Whether to display user id in query result
+        /// </summary>
+        ///
+        public bool includeUserId;
+        ///
+        /// <summary>
+        /// Whether to display user state in query result
+        /// </summary>
+        ///
+        public bool includeState;
+        ///
+        /// <summary>
+        /// The paging object used for pagination.
+        /// </summary>
+        ///
+        public string page;
+
+        public GetOnlineUsersOptions()
+        {
+            includeUserId = true;
+            includeState = false;
+            page = "";
+        }
+
+        public GetOnlineUsersOptions(bool includeUserId, bool includeState, string page)
+        {
+            this.includeUserId = includeUserId;
+            this.includeState = includeState;
+            this.page = page;
+        }
+    }
+
+    ///
+    /// <summary>
     /// Publish message option
     /// </summary>
     ///
@@ -1476,12 +1545,10 @@ namespace Agora.Rtm
     {
         ///
         /// <summary>
-        /// The time to calibrate data with media,
-        /// only valid when user join topic with syncWithMedia in stream channel
+        /// The channel type.
         /// </summary>
         ///
-        public UInt64 sendTs;
-
+        public RTM_CHANNEL_TYPE channelType;
         ///
         /// <summary>
         /// The custom type of the message, up to 32 bytes for customize
@@ -1491,11 +1558,45 @@ namespace Agora.Rtm
 
         public PublishOptions()
         {
+            channelType = RTM_CHANNEL_TYPE.MESSAGE;
+            customType = "";
+        }
+
+        public PublishOptions(RTM_CHANNEL_TYPE channelType, string customType)
+        {
+            this.channelType = channelType;
+            this.customType = customType;
+        }
+    };
+
+    ///
+    /// <summary>
+    /// topic message option
+    /// </summary>
+    ///
+    public class TopicMessageOptions
+    {
+        ///
+        /// <summary>
+        /// The time to calibrate data with media,
+        /// only valid when user join topic with syncWithMedia in stream channel
+        /// </summary>
+        ///
+        public UInt64 sendTs;
+        ///
+        /// <summary>
+        /// The custom type of the message, up to 32 bytes for customize
+        /// </summary>
+        ///
+        public string customType;
+
+        public TopicMessageOptions()
+        {
             sendTs = 0;
             customType = "";
         }
 
-        public PublishOptions(UInt64 sendTs, string customType)
+        public TopicMessageOptions(UInt64 sendTs, string customType)
         {
             this.sendTs = sendTs;
             this.customType = customType;

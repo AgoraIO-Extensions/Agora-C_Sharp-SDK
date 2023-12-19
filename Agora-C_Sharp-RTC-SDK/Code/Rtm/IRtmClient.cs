@@ -57,7 +57,7 @@ namespace Agora.Rtm
     /// <param name="state"> The new connection state.</param>
     /// <param name="reason"> The reason for the connection state change.</param>
     ///
-    public delegate void OnConnectionStateChangeHandler(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason);
+    public delegate void OnConnectionStateChangedHandler(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason);
 
     ///
     /// <summary>
@@ -120,7 +120,7 @@ namespace Agora.Rtm
         /// Occurs when the connection state changes between rtm sdk and agora service.
         /// </summary>
         ///
-        event OnConnectionStateChangeHandler OnConnectionStateChange;
+        event OnConnectionStateChangedHandler OnConnectionStateChanged;
 
         ///
         /// <summary>

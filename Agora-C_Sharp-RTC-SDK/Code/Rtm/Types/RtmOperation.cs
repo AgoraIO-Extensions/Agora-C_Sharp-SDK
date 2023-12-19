@@ -30,6 +30,8 @@ namespace Agora.Rtm
 
         public static string RTMWhoNowOperation = "RTMWhoNowOperation";
         public static string RTMWhereNowOperation = "RTMWhereNowOperation";
+        public static string RTMGetOnlineUsersOperation = "RTMGetOnlineUsersOperation";
+        public static string RTMGetUserChannelsOperation = "RTMGetUserChannelsOperation";
         public static string RTMSetStateOperation = "RTMSetStateOperation";
         public static string RTMRemoveStateOperation = "RTMRemoveStateOperation";
         public static string RTMGetStateOperation = "RTMGetStateOperation";

@@ -72,6 +72,8 @@
         internal const string FUNC_RTMPRESENCE_SETSTATE = "RtmPresence_setState";
         internal const string FUNC_RTMPRESENCE_REMOVESTATE = "RtmPresence_removeState";
         internal const string FUNC_RTMPRESENCE_GETSTATE = "RtmPresence_getState";
+        internal const string FUNC_RTMPRESENCE_GETONLINEUSERS = "RtmPresence_getOnlineUsers";
+        internal const string FUNC_RTMPRESENCE_GETUSERCHANNELS = "RtmPresence_getUserChannels";
         #endregion
     }
 }

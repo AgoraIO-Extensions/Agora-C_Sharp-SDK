@@ -91,9 +91,9 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option)
+        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, TopicMessageOptions option)
         {
-            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.BINARY);
+            Internal.TopicMessageOptions internalOptions = new Internal.TopicMessageOptions(option, RTM_MESSAGE_TYPE.BINARY);
             // fake async
             int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
@@ -109,9 +109,9 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option)
+        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, TopicMessageOptions option)
         {
-            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.STRING);
+            Internal.TopicMessageOptions internalOptions = new Internal.TopicMessageOptions(option, RTM_MESSAGE_TYPE.STRING);
             // fake async
             int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
@@ -166,7 +166,7 @@ namespace Agora.Rtm
         public Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options)
         {
             // fake async
-            int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, new Internal.TopicOptions(options)); ;
+            int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, new Internal.TopicOptions(options));
 
             RtmResult<UnsubscribeTopicResult> rtmResult = new RtmResult<UnsubscribeTopicResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeTopicOperation, this.internalRtmClient);

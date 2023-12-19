@@ -42,6 +42,38 @@ namespace Agora.Rtm
 
         ///
         /// <summary>
+        /// To query who joined this channel
+        /// </summary>
+        ///
+        /// <param name="channelName"> The name of the channel.</param>
+        /// <param name="channelType"> The type of the channel.</param>
+        /// <param name="options"> The query option.</param>
+        ///
+        /// <returns>
+        ///
+        /// - 0: Success.
+        /// - < 0: Failure.
+        /// </returns>
+        ///
+        Task<RtmResult<GetOnlineUsersResult>> GetOnlineUsersAsync(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options);
+
+        ///
+        /// <summary>
+        /// To query which channels the user joined
+        /// </summary>
+        ///
+        /// <param name="userId"> The id of the user.</param>
+        ///
+        /// <returns>
+        ///
+        /// - 0: Success.
+        /// - < 0: Failure.
+        /// </returns>
+        ///
+        Task<RtmResult<GetUserChannelsResult>> GetUserChannelsAsync(string userId);
+
+        ///
+        /// <summary>
         /// Set user state
         /// </summary>
         ///

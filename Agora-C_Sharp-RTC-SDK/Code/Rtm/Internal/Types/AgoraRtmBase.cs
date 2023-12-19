@@ -3,9 +3,9 @@ namespace Agora.Rtm.Internal
 {
     public class PublishOptions
     {
-        public RTM_MESSAGE_TYPE type;
+        public RTM_CHANNEL_TYPE channelType;
 
-        public UInt64 sendTs;
+        public RTM_MESSAGE_TYPE messageType;
 
         public string customType;
 
@@ -13,9 +13,30 @@ namespace Agora.Rtm.Internal
         {
         }
 
-        public PublishOptions(Agora.Rtm.PublishOptions options, RTM_MESSAGE_TYPE type)
+        public PublishOptions(Agora.Rtm.PublishOptions options, RTM_MESSAGE_TYPE messageType)
         {
-            this.type = type;
+            this.messageType = messageType;
+            this.channelType = options.channelType;
+            this.customType = options.customType;
+        }
+    };
+
+    public class TopicMessageOptions
+    {
+        public RTM_MESSAGE_TYPE messageType;
+
+        public UInt64 sendTs;
+
+        public string customType;
+
+        public TopicMessageOptions()
+        {
+
+        }
+
+        public TopicMessageOptions(Agora.Rtm.TopicMessageOptions options, RTM_MESSAGE_TYPE messageType)
+        {
+            this.messageType = messageType;
             this.sendTs = options.sendTs;
             this.customType = options.customType;
         }

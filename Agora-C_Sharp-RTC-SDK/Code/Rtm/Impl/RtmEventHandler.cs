@@ -43,6 +43,8 @@ namespace Agora.Rtm
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetLocksResult>>> getLocksResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetLocksResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<WhoNowResult>>> whoNowResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<WhoNowResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<WhereNowResult>>> whereNowResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<WhereNowResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetOnlineUsersResult>>> getOnlineUsersResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetOnlineUsersResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetUserChannelsResult>>> getUserChannelsTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetUserChannelsResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<SetStateResult>>> presenceSetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SetStateResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>> presenceRemoveStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>> presenceGetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>>();
@@ -173,9 +175,19 @@ namespace Agora.Rtm
             whoNowResultTaskMap.Add(requestId, task);
         }
 
+        public void PutGetOnlineUsersTask(UInt64 requestId, TaskCompletionSource<RtmResult<GetOnlineUsersResult>> task)
+        {
+            getOnlineUsersResultTaskMap.Add(requestId, task);
+        }
+
         public void PutWhereNowResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<WhereNowResult>> task)
         {
             whereNowResultTaskMap.Add(requestId, task);
+        }
+
+        public void PutGetUserChannelsResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<GetUserChannelsResult>> task)
+        {
+            getUserChannelsTaskMap.Add(requestId, task);
         }
 
         public void PutPresenceSetStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SetStateResult>> task)
@@ -220,9 +232,9 @@ namespace Agora.Rtm
             rtmClient.InvokeOnStorageEvent(@event);
         }
 
-        public override void OnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
+        public override void OnConnectionStateChanged(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
-            rtmClient.InvokeOnConnectionStateChange(channelName, state, reason);
+            rtmClient.InvokeOnConnectionStateChanged(channelName, state, reason);
         }
 
         public override void OnTokenPrivilegeWillExpire(string channelName)
@@ -818,6 +830,16 @@ namespace Agora.Rtm
                 whoNowResult.UserStateList = userStateList;
                 whoNowResult.NextPage = nextPage;
 
+                // jira RTM2-832
+                if (userStateList == null || userStateList.Length == 0)
+                {
+                    whoNowResult.TotalOccupancy = (int)count;
+                }
+                else
+                {
+                    whoNowResult.TotalOccupancy = -1;
+                }
+
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMWhoNowOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<WhoNowResult> rtmResult = new RtmResult<WhoNowResult>();
@@ -832,6 +854,41 @@ namespace Agora.Rtm
             else
             {
                 AgoraLog.LogWarning("WhoNowResult unrecorded requestId: " + requestId);
+            }
+        }
+
+        public override void OnGetOnlineUsersResult(ulong requestId, UserState[] userStateList, ulong count, string nextPage, RTM_ERROR_CODE errorCode)
+        {
+            if (getOnlineUsersResultTaskMap.ContainsKey(requestId))
+            {
+                GetOnlineUsersResult getOnlineUsersResult = new GetOnlineUsersResult();
+                getOnlineUsersResult.UserStateList = userStateList;
+                getOnlineUsersResult.NextPage = nextPage;
+
+                // jira RTM2-832
+                if (userStateList == null || userStateList.Length == 0)
+                {
+                    getOnlineUsersResult.TotalOccupancy = (int)count;
+                }
+                else
+                {
+                    getOnlineUsersResult.TotalOccupancy = -1;
+                }
+
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMGetOnlineUsersOperation, this.rtmClient.GetInternalRtmClient());
+
+                RtmResult<GetOnlineUsersResult> rtmResult = new RtmResult<GetOnlineUsersResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = getOnlineUsersResult;
+
+                var task = getOnlineUsersResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+
+                getOnlineUsersResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnGetOnlineUsersResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -856,6 +913,30 @@ namespace Agora.Rtm
             else
             {
                 AgoraLog.LogWarning("WhereNowResult unrecorded requestId: " + requestId);
+            }
+        }
+
+        public override void OnGetUserChannelsResult(ulong requestId, ChannelInfo[] channels, ulong count, RTM_ERROR_CODE errorCode)
+        {
+            if (getUserChannelsTaskMap.ContainsKey(requestId))
+            {
+                GetUserChannelsResult result = new GetUserChannelsResult();
+                result.Channels = channels;
+
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMGetUserChannelsOperation, this.rtmClient.GetInternalRtmClient());
+
+                RtmResult<GetUserChannelsResult> rtmResult = new RtmResult<GetUserChannelsResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = result;
+
+                var task = getUserChannelsTaskMap[requestId];
+                task.SetResult(rtmResult);
+
+                getUserChannelsTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnGetUserChannelsResult unrecorded requestId: " + requestId);
             }
         }
 

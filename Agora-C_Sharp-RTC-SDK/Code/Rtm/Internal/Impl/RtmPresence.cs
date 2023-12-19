@@ -68,5 +68,23 @@ namespace Agora.Rtm.Internal
             }
             return _rtmPresenceImpl.GetState(channelName, channelType, userId, ref requestId);
         }
+
+        public override int GetOnlineUsers(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options, ref ulong requestId)
+        {
+            if (_rtmPresenceImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtmPresenceImpl.GetOnlineUsers(channelName, channelType, options, ref requestId);
+        }
+
+        public override int GetUserChannels(string userId, ref ulong requestId)
+        {
+            if (_rtmPresenceImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtmPresenceImpl.GetUserChannels(userId, ref requestId);
+        }
     }
 }

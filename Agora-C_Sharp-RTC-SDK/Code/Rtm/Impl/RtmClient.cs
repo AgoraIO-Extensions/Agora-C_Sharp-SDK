@@ -10,7 +10,7 @@ namespace Agora.Rtm
         public event OnTopicEventHandler OnTopicEvent;
         public event OnLockEventHandler OnLockEvent;
         public event OnStorageEventHandler OnStorageEvent;
-        public event OnConnectionStateChangeHandler OnConnectionStateChange;
+        public event OnConnectionStateChangedHandler OnConnectionStateChanged;
         public event OnTokenPrivilegeWillExpireHandler OnTokenPrivilegeWillExpire;
 
         private Internal.IRtmClient internalRtmClient;
@@ -100,11 +100,11 @@ namespace Agora.Rtm
             }
         }
 
-        internal void InvokeOnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
+        internal void InvokeOnConnectionStateChanged(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
-            if (this.OnConnectionStateChange != null)
+            if (this.OnConnectionStateChanged != null)
             {
-                this.OnConnectionStateChange.Invoke(channelName, state, reason);
+                this.OnConnectionStateChanged.Invoke(channelName, state, reason);
             }
         }
         internal void InvokeOnTokenPrivilegeWillExpire(string channelName)

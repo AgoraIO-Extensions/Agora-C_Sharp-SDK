@@ -556,9 +556,50 @@ namespace Agora.Rtm
         /// </summary>
         ///
         public string NextPage;
+
+        ///
+        /// <summary>
+        /// count of members in channel
+        /// </summary>
+        ///
+        public int TotalOccupancy;
     };
 
     public class WhereNowResult
+    {
+        ///
+        /// <summary>
+        /// The channel informations.
+        /// </summary>
+        ///
+        public ChannelInfo[] Channels;
+    };
+
+    public class GetOnlineUsersResult
+    {
+        ///
+        /// <summary>
+        /// The states the users.
+        /// </summary>
+        ///
+        public UserState[] UserStateList;
+
+        ///
+        /// <summary>
+        /// The next page.
+        /// </summary>
+        ///
+        public string NextPage;
+
+        ///
+        /// <summary>
+        /// count of members in channel
+        /// </summary>
+        ///
+        public int TotalOccupancy;
+    };
+
+    public class GetUserChannelsResult
     {
         ///
         /// <summary>

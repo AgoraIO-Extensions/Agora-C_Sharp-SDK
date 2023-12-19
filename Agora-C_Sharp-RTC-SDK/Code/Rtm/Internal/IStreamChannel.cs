@@ -13,9 +13,9 @@ namespace Agora.Rtm.Internal
 
         public abstract int JoinTopic(string topic, JoinTopicOptions options, ref UInt64 requestId);
 
-        public abstract int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option);
+        public abstract int PublishTopicMessage(string topic, byte[] message, int length, TopicMessageOptions option);
 
-        public abstract int PublishTopicMessage(string topic, string message, int length, PublishOptions option);
+        public abstract int PublishTopicMessage(string topic, string message, int length, TopicMessageOptions option);
 
         public abstract int LeaveTopic(string topic, ref UInt64 requestId);
 

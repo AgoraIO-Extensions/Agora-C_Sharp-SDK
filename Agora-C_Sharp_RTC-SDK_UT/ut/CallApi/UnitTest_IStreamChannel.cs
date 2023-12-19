@@ -82,7 +82,7 @@ namespace Agora.Rtm
             string topic = ParamsHelper.CreateParam<string>();
             string message = ParamsHelper.CreateParam<string>();
             int length = ParamsHelper.CreateParam<int>();
-            Internal.PublishOptions option = ParamsHelper.CreateParam<Internal.PublishOptions>();
+            Internal.TopicMessageOptions option = ParamsHelper.CreateParam<Internal.TopicMessageOptions>();
 
             var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option);
 
@@ -95,7 +95,7 @@ namespace Agora.Rtm
             string topic = ParamsHelper.CreateParam<string>();
             byte[] message = ParamsHelper.CreateParam<byte[]>();
             int length = ParamsHelper.CreateParam<int>();
-            Internal.PublishOptions option = ParamsHelper.CreateParam<Internal.PublishOptions>();
+            Internal.TopicMessageOptions option = ParamsHelper.CreateParam<Internal.TopicMessageOptions>();
             var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option);
 
             Assert.AreEqual(0, nRet);
