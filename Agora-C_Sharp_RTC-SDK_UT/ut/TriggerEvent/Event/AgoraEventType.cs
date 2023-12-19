@@ -269,7 +269,7 @@ namespace Agora.Rtc
         internal const string EVENT_RTMEVENTHANDLER_ONJOINTOPICRESULT = "RtmEventHandler_onJoinTopicResult";
         internal const string EVENT_RTMEVENTHANDLER_ONLEAVETOPICRESULT = "RtmEventHandler_onLeaveTopicResult";
         internal const string EVENT_RTMEVENTHANDLER_ONSUBSCRIBETOPICRESULT = "RtmEventHandler_onSubscribeTopicResult";
-        internal const string EVENT_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGE = "RtmEventHandler_onConnectionStateChange";
+        internal const string EVENT_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGED = "RtmEventHandler_onConnectionStateChanged";
         internal const string EVENT_RTMEVENTHANDLER_ONTOKENPRIVILEGEWILLEXPIRE = "RtmEventHandler_onTokenPrivilegeWillExpire";
         internal const string EVENT_RTMEVENTHANDLER_ONSUBSCRIBERESULT = "RtmEventHandler_onSubscribeResult";
         internal const string EVENT_RTMEVENTHANDLER_ONPUBLISHRESULT = "RtmEventHandler_onPublishResult";

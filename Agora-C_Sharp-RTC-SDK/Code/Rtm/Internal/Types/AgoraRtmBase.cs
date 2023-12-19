@@ -29,6 +29,11 @@ namespace Agora.Rtm.Internal
 
         public string customType;
 
+        public TopicMessageOptions()
+        {
+
+        }
+
         public TopicMessageOptions(Agora.Rtm.TopicMessageOptions options, RTM_MESSAGE_TYPE messageType)
         {
             this.messageType = messageType;

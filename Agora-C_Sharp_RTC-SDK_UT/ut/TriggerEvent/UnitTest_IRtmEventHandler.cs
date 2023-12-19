@@ -42,7 +42,8 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONMESSAGEEVENT;
 
-            MessageEvent @event = ParamsHelper.CreateParam<MessageEvent>();
+            MessageEvent @event;
+            ParamsHelper.InitParam(out @event);
 
             jsonObj.Clear();
             jsonObj.Add("@event", @event);
@@ -318,7 +319,7 @@ namespace Agora.Rtm.Event
         [Test]
         public void Test_OnConnectionStateChange()
         {
-            ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGE;
+            ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGED;
 
             string channelName = ParamsHelper.CreateParam<string>();
 

@@ -20,8 +20,8 @@ namespace Agora.Rtm
             if (OnMessageEvent_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<MessageEvent>(OnMessageEvent_event, @event) == false)
-                return false;
+            //if (ParamsHelper.Compare<MessageEvent>(OnMessageEvent_event, @event) == false)
+            //    return false;
 
             return true;
         }
@@ -43,8 +43,8 @@ namespace Agora.Rtm
             if (OnPresenceEvent_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<Internal.PresenceEvent>(OnPresenceEvent_event, @event) == false)
-                return false;
+            //if (ParamsHelper.Compare<Internal.PresenceEvent>(OnPresenceEvent_event, @event) == false)
+            //    return false;
 
             return true;
         }
@@ -86,8 +86,8 @@ namespace Agora.Rtm
             if (OnLockEvent_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<LockEvent>(OnLockEvent_event, @event) == false)
-                return false;
+            //if (ParamsHelper.Compare<LockEvent>(OnLockEvent_event, @event) == false)
+            //    return false;
 
             return true;
         }
@@ -109,8 +109,8 @@ namespace Agora.Rtm
             if (OnStorageEvent_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<StorageEvent>(OnStorageEvent_event, @event) == false)
-                return false;
+            //if (ParamsHelper.Compare<StorageEvent>(OnStorageEvent_event, @event) == false)
+            //    return false;
 
             return true;
         }
@@ -138,14 +138,14 @@ namespace Agora.Rtm
             if (OnJoinResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnJoinResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnJoinResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnJoinResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnJoinResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnJoinResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnJoinResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnJoinResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnJoinResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -173,14 +173,14 @@ namespace Agora.Rtm
             if (OnLeaveResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnLeaveResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLeaveResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLeaveResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnLeaveResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnLeaveResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnLeaveResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnLeaveResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnLeaveResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -212,18 +212,18 @@ namespace Agora.Rtm
             if (OnJoinTopicResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnJoinTopicResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnJoinTopicResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnJoinTopicResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnJoinTopicResult_topic, topic) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnJoinTopicResult_meta, meta) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnJoinTopicResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnJoinTopicResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnJoinTopicResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnJoinTopicResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnJoinTopicResult_topic, topic) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnJoinTopicResult_meta, meta) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnJoinTopicResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -255,18 +255,18 @@ namespace Agora.Rtm
             if (OnLeaveTopicResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnLeaveTopicResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLeaveTopicResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLeaveTopicResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLeaveTopicResult_topic, topic) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLeaveTopicResult_meta, meta) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnLeaveTopicResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnLeaveTopicResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnLeaveTopicResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnLeaveTopicResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnLeaveTopicResult_topic, topic) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnLeaveTopicResult_meta, meta) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnLeaveTopicResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -300,16 +300,16 @@ namespace Agora.Rtm
             if (OnSubscribeTopicResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnSubscribeTopicResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSubscribeTopicResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSubscribeTopicResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSubscribeTopicResult_topic, topic) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSubscribeTopicResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnSubscribeTopicResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSubscribeTopicResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSubscribeTopicResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSubscribeTopicResult_topic, topic) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSubscribeTopicResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -335,12 +335,12 @@ namespace Agora.Rtm
             if (OnConnectionStateChanged_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnConnectionStateChanged_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CONNECTION_STATE>(OnConnectionStateChanged_state, state) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CONNECTION_CHANGE_REASON>(OnConnectionStateChanged_reason, reason) == false)
-                return false;
+            //if (ParamsHelper.Compare<string>(OnConnectionStateChanged_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CONNECTION_STATE>(OnConnectionStateChanged_state, state) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CONNECTION_CHANGE_REASON>(OnConnectionStateChanged_reason, reason) == false)
+            //    return false;
 
             return true;
         }
@@ -389,12 +389,12 @@ namespace Agora.Rtm
             if (OnSubscribeResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnSubscribeResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSubscribeResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSubscribeResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnSubscribeResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSubscribeResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSubscribeResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -418,10 +418,10 @@ namespace Agora.Rtm
             if (OnPublishResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnPublishResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPublishResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnPublishResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPublishResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -440,11 +440,11 @@ namespace Agora.Rtm
 
         public bool OnLoginResultPassed(RTM_ERROR_CODE errorCode)
         {
-            if (OnLoginResult_be_trigger == false)
-                return false;
+            //if (OnLoginResult_be_trigger == false)
+            //    return false;
 
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnLoginResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnLoginResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -472,14 +472,14 @@ namespace Agora.Rtm
             if (OnSetChannelMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnSetChannelMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSetChannelMetadataResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnSetChannelMetadataResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSetChannelMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnSetChannelMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSetChannelMetadataResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnSetChannelMetadataResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSetChannelMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -507,14 +507,14 @@ namespace Agora.Rtm
             if (OnUpdateChannelMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnUpdateChannelMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnUpdateChannelMetadataResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnUpdateChannelMetadataResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnUpdateChannelMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnUpdateChannelMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnUpdateChannelMetadataResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnUpdateChannelMetadataResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnUpdateChannelMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -542,14 +542,14 @@ namespace Agora.Rtm
             if (OnRemoveChannelMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnRemoveChannelMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnRemoveChannelMetadataResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnRemoveChannelMetadataResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRemoveChannelMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnRemoveChannelMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnRemoveChannelMetadataResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnRemoveChannelMetadataResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRemoveChannelMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -579,16 +579,16 @@ namespace Agora.Rtm
             if (OnGetChannelMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnGetChannelMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnGetChannelMetadataResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnGetChannelMetadataResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<RtmMetadata>(OnGetChannelMetadataResult_data, data) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetChannelMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetChannelMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnGetChannelMetadataResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnGetChannelMetadataResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RtmMetadata>(OnGetChannelMetadataResult_data, data) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetChannelMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -614,12 +614,12 @@ namespace Agora.Rtm
             if (OnSetUserMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnSetUserMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSetUserMetadataResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSetUserMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnSetUserMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSetUserMetadataResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSetUserMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -645,12 +645,12 @@ namespace Agora.Rtm
             if (OnUpdateUserMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnUpdateUserMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnUpdateUserMetadataResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnUpdateUserMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnUpdateUserMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnUpdateUserMetadataResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnUpdateUserMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -676,12 +676,12 @@ namespace Agora.Rtm
             if (OnRemoveUserMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnRemoveUserMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnRemoveUserMetadataResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRemoveUserMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnRemoveUserMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnRemoveUserMetadataResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRemoveUserMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -709,14 +709,14 @@ namespace Agora.Rtm
             if (OnGetUserMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnGetUserMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnGetUserMetadataResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<RtmMetadata>(OnGetUserMetadataResult_data, data) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetUserMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetUserMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnGetUserMetadataResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RtmMetadata>(OnGetUserMetadataResult_data, data) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetUserMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -742,12 +742,12 @@ namespace Agora.Rtm
             if (OnSubscribeUserMetadataResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnSubscribeUserMetadataResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSubscribeUserMetadataResult_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSubscribeUserMetadataResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnSubscribeUserMetadataResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSubscribeUserMetadataResult_userId, userId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSubscribeUserMetadataResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -777,16 +777,16 @@ namespace Agora.Rtm
             if (OnSetLockResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnSetLockResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSetLockResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnSetLockResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSetLockResult_lockName, lockName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSetLockResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnSetLockResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSetLockResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnSetLockResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnSetLockResult_lockName, lockName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSetLockResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -816,16 +816,16 @@ namespace Agora.Rtm
             if (OnRemoveLockResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnRemoveLockResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnRemoveLockResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnRemoveLockResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnRemoveLockResult_lockName, lockName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRemoveLockResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnRemoveLockResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnRemoveLockResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnRemoveLockResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnRemoveLockResult_lockName, lockName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRemoveLockResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -855,16 +855,16 @@ namespace Agora.Rtm
             if (OnReleaseLockResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnReleaseLockResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnReleaseLockResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnReleaseLockResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnReleaseLockResult_lockName, lockName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnReleaseLockResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnReleaseLockResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnReleaseLockResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnReleaseLockResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnReleaseLockResult_lockName, lockName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnReleaseLockResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -896,18 +896,18 @@ namespace Agora.Rtm
             if (OnAcquireLockResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnAcquireLockResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnAcquireLockResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnAcquireLockResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnAcquireLockResult_lockName, lockName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnAcquireLockResult_errorCode, errorCode) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnAcquireLockResult_errorDetails, errorDetails) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnAcquireLockResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnAcquireLockResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnAcquireLockResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnAcquireLockResult_lockName, lockName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnAcquireLockResult_errorCode, errorCode) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnAcquireLockResult_errorDetails, errorDetails) == false)
+            //    return false;
 
             return true;
         }
@@ -937,16 +937,16 @@ namespace Agora.Rtm
             if (OnRevokeLockResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnRevokeLockResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnRevokeLockResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnRevokeLockResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnRevokeLockResult_lockName, lockName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRevokeLockResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnRevokeLockResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnRevokeLockResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnRevokeLockResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnRevokeLockResult_lockName, lockName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnRevokeLockResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -978,18 +978,18 @@ namespace Agora.Rtm
             if (OnGetLocksResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnGetLocksResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnGetLocksResult_channelName, channelName) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnGetLocksResult_channelType, channelType) == false)
-                return false;
-            if (ParamsHelper.Compare<LockDetail[]>(OnGetLocksResult_lockDetailList, lockDetailList) == false)
-                return false;
-            if (ParamsHelper.Compare<ulong>(OnGetLocksResult_count, count) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetLocksResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetLocksResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnGetLocksResult_channelName, channelName) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_CHANNEL_TYPE>(OnGetLocksResult_channelType, channelType) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<LockDetail[]>(OnGetLocksResult_lockDetailList, lockDetailList) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetLocksResult_count, count) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetLocksResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -1019,14 +1019,14 @@ namespace Agora.Rtm
             if (OnWhoNowResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnWhoNowResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<ulong>(OnWhoNowResult_count, count) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnWhoNowResult_nextPage, nextPage) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnWhoNowResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnWhoNowResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<ulong>(OnWhoNowResult_count, count) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnWhoNowResult_nextPage, nextPage) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnWhoNowResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -1041,12 +1041,12 @@ namespace Agora.Rtm
 
         public override void OnGetOnlineUsersResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode)
         {
-            OnWhoNowResult_be_trigger = true;
-            OnWhoNowResult_requestId = requestId;
-            OnWhoNowResult_userStateList = userStateList;
-            OnWhoNowResult_count = count;
-            OnWhoNowResult_nextPage = nextPage;
-            OnWhoNowResult_errorCode = errorCode;
+            OnGetOnlineUsersResult_be_trigger = true;
+            OnGetOnlineUsersResult_requestId = requestId;
+            OnGetOnlineUsersResult_userStateList = userStateList;
+            OnGetOnlineUsersResult_count = count;
+            OnGetOnlineUsersResult_nextPage = nextPage;
+            OnGetOnlineUsersResult_errorCode = errorCode;
         }
 
         public bool OnGetOnlineUsersResultPassed(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode)
@@ -1054,14 +1054,14 @@ namespace Agora.Rtm
             if (OnGetOnlineUsersResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnGetOnlineUsersResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<ulong>(OnGetOnlineUsersResult_count, count) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnGetOnlineUsersResult_nextPage, nextPage) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetOnlineUsersResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetOnlineUsersResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetOnlineUsersResult_count, count) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<string>(OnGetOnlineUsersResult_nextPage, nextPage) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetOnlineUsersResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -1089,14 +1089,14 @@ namespace Agora.Rtm
             if (OnWhereNowResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnWhereNowResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<ChannelInfo[]>(OnWhereNowResult_channels, channels) == false)
-                return false;
-            if (ParamsHelper.Compare<ulong>(OnWhereNowResult_count, count) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnWhereNowResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnWhereNowResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<ChannelInfo[]>(OnWhereNowResult_channels, channels) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<ulong>(OnWhereNowResult_count, count) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnWhereNowResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -1124,14 +1124,14 @@ namespace Agora.Rtm
             if (OnGetUserChannelsResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnGetUserChannelsResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<ChannelInfo[]>(OnGetUserChannelsResult_channels, channels) == false)
-                return false;
-            if (ParamsHelper.Compare<ulong>(OnGetUserChannelsResult_count, count) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetUserChannelsResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetUserChannelsResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<ChannelInfo[]>(OnGetUserChannelsResult_channels, channels) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<ulong>(OnGetUserChannelsResult_count, count) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetUserChannelsResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -1157,10 +1157,10 @@ namespace Agora.Rtm
             if (OnPresenceSetStateResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnPresenceSetStateResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPresenceSetStateResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnPresenceSetStateResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPresenceSetStateResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -1184,10 +1184,10 @@ namespace Agora.Rtm
             if (OnPresenceRemoveStateResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnPresenceRemoveStateResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPresenceRemoveStateResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnPresenceRemoveStateResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPresenceRemoveStateResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
@@ -1213,12 +1213,12 @@ namespace Agora.Rtm
             if (OnPresenceGetStateResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<ulong>(OnPresenceGetStateResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<UserState>(OnPresenceGetStateResult_state, state) == false)
-                return false;
-            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPresenceGetStateResult_errorCode, errorCode) == false)
-                return false;
+            //if (ParamsHelper.Compare<ulong>(OnPresenceGetStateResult_requestId, requestId) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<UserState>(OnPresenceGetStateResult_state, state) == false)
+            //    return false;
+            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnPresenceGetStateResult_errorCode, errorCode) == false)
+            //    return false;
 
             return true;
         }
