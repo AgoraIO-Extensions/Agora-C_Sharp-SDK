@@ -830,12 +830,13 @@ namespace Agora.Rtm
                 whoNowResult.UserStateList = userStateList;
                 whoNowResult.NextPage = nextPage;
 
-                //jira RTM2-832
+                // jira RTM2-832
                 if (userStateList == null || userStateList.Length == 0)
                 {
                     whoNowResult.TotalOccupancy = (int)count;
                 }
-                else {
+                else
+                {
                     whoNowResult.TotalOccupancy = -1;
                 }
 
@@ -864,7 +865,7 @@ namespace Agora.Rtm
                 getOnlineUsersResult.UserStateList = userStateList;
                 getOnlineUsersResult.NextPage = nextPage;
 
-                //jira RTM2-832
+                // jira RTM2-832
                 if (userStateList == null || userStateList.Length == 0)
                 {
                     getOnlineUsersResult.TotalOccupancy = (int)count;

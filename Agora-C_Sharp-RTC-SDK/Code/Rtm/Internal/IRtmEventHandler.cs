@@ -92,9 +92,9 @@ namespace Agora.Rtm.Internal
 
         public virtual void OnWhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode) { }
 
-        public virtual void OnGetOnlineUsersResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode) {}
+        public virtual void OnGetOnlineUsersResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode) { }
 
-        public virtual void OnGetUserChannelsResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode) {}
+        public virtual void OnGetUserChannelsResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnPresenceSetStateResult(UInt64 requestId, RTM_ERROR_CODE errorCode) { }
 

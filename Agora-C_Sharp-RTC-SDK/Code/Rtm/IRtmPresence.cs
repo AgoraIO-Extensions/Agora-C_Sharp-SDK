@@ -40,31 +40,36 @@ namespace Agora.Rtm
         ///
         Task<RtmResult<WhereNowResult>> WhereNowAsync(string userId);
 
-
-        /**
-  * To query who joined this channel
-  *
-  * @param [in] channelName The name of the channel.
-  * @param [in] channelType The type of the channel.
-  * @param [in] options The query option.
-  * @param [out] requestId The related request id of this operation.
-  * @return
-  * - 0: Success.
-  * - < 0: Failure.
-  */
+        ///
+        /// <summary>
+        /// To query who joined this channel
+        /// </summary>
+        ///
+        /// <param name="channelName"> The name of the channel.</param>
+        /// <param name="channelType"> The type of the channel.</param>
+        /// <param name="options"> The query option.</param>
+        ///
+        /// <returns>
+        ///
+        /// - 0: Success.
+        /// - < 0: Failure.
+        /// </returns>
+        ///
         Task<RtmResult<GetOnlineUsersResult>> GetOnlineUsersAsync(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options);
 
-
-
-        /**
-         * To query which channels the user joined
-         *
-         * @param [in] userId The id of the user.
-         * @param [out] requestId The related request id of this operation.
-         * @return
-         * - 0: Success.
-         * - < 0: Failure.
-         */
+        ///
+        /// <summary>
+        /// To query which channels the user joined
+        /// </summary>
+        ///
+        /// <param name="userId"> The id of the user.</param>
+        ///
+        /// <returns>
+        ///
+        /// - 0: Success.
+        /// - < 0: Failure.
+        /// </returns>
+        ///
         Task<RtmResult<GetUserChannelsResult>> GetUserChannelsAsync(string userId);
 
         ///

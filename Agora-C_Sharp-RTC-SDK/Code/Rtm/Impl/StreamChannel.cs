@@ -167,7 +167,7 @@ namespace Agora.Rtm
         {
             // fake async
             int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, new Internal.TopicOptions(options));
-            
+
             RtmResult<UnsubscribeTopicResult> rtmResult = new RtmResult<UnsubscribeTopicResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeTopicOperation, this.internalRtmClient);
             if (errorCode == 0)

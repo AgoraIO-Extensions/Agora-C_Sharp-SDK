@@ -21,13 +21,12 @@ namespace Agora.Rtm.Internal
         }
     };
 
-
     public class TopicMessageOptions
     {
         public RTM_MESSAGE_TYPE messageType;
-       
+
         public UInt64 sendTs;
-     
+
         public string customType;
 
         public TopicMessageOptions(Agora.Rtm.TopicMessageOptions options, RTM_MESSAGE_TYPE messageType)

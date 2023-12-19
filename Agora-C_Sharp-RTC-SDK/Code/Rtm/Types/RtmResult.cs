@@ -557,9 +557,11 @@ namespace Agora.Rtm
         ///
         public string NextPage;
 
-        /**
-        *  count of members in channel
-        */
+        ///
+        /// <summary>
+        /// count of members in channel
+        /// </summary>
+        ///
         public int TotalOccupancy;
     };
 
@@ -589,10 +591,11 @@ namespace Agora.Rtm
         ///
         public string NextPage;
 
-
-        /**
-       *  count of members in channel
-       */
+        ///
+        /// <summary>
+        /// count of members in channel
+        /// </summary>
+        ///
         public int TotalOccupancy;
     };
 

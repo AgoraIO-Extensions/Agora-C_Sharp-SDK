@@ -223,17 +223,23 @@ namespace Agora.Rtm
         /// </summary>
         ///
         INSTANCE_ALREADY_RELEASED = -10018,
-        /**
-        * -10019: The channel type is invalid.
-        */
+        ///
+        /// <summary>
+        /// -10019: The channel type is invalid.
+        /// </summary>
+        ///
         INVALID_CHANNEL_TYPE = -10019,
-        /**
-         * -10020: The encryption parameter is invalid.
-         */
+        ///
+        /// <summary>
+        /// -10020: The encryption parameter is invalid.
+        /// </summary>
+        ///
         INVALID_ENCRYPTION_PARAMETER = -10020,
-        /**
-         * -10021: The operation is too frequent.
-         */
+        ///
+        /// <summary>
+        /// -10021: The operation is too frequent.
+        /// </summary>
+        ///
         OPERATION_RATE_EXCEED_LIMITATION = -10021,
         ///
         /// <summary>
@@ -428,9 +434,11 @@ namespace Agora.Rtm
         /// </summary>
         ///
         CHANNEL_PRESENCE_NOT_READY = -11032,
-        /**
-        * -11033: The destination user of publish message is offline.
-        */
+        ///
+        /// <summary>
+        /// -11033: The destination user of publish message is offline.
+        /// </summary>
+        ///
         CHANNEL_RECEIVER_OFFLINE = -11033,
         ///
         /// <summary>
@@ -897,9 +905,11 @@ namespace Agora.Rtm
         /// </summary>
         ///
         STREAM = 2,
-        /**
-        * 3: User.
-        */
+        ///
+        /// <summary>
+        /// 3: User.
+        /// </summary>
+        ///
         USER = 3,
     }
 
@@ -1485,22 +1495,30 @@ namespace Agora.Rtm
         }
     };
 
-    /**
-    *  The option to query user presence.
-    */
+    ///
+    /// <summary>
+    /// The option to query user presence.
+    /// </summary>
+    ///
     public class GetOnlineUsersOptions
     {
-        /**
-         * Whether to display user id in query result
-         */
+        ///
+        /// <summary>
+        /// Whether to display user id in query result
+        /// </summary>
+        ///
         public bool includeUserId;
-        /**
-         * Whether to display user state in query result
-         */
+        ///
+        /// <summary>
+        /// Whether to display user state in query result
+        /// </summary>
+        ///
         public bool includeState;
-        /**
-         * The paging object used for pagination.
-         */
+        ///
+        /// <summary>
+        /// The paging object used for pagination.
+        /// </summary>
+        ///
         public string page;
 
         public GetOnlineUsersOptions()
@@ -1525,9 +1543,11 @@ namespace Agora.Rtm
     ///
     public class PublishOptions
     {
-        /*
-        The channel type.
-        */
+        ///
+        /// <summary>
+        /// The channel type.
+        /// </summary>
+        ///
         public RTM_CHANNEL_TYPE channelType;
         ///
         /// <summary>
@@ -1549,19 +1569,25 @@ namespace Agora.Rtm
         }
     };
 
-    /**
-    @brief topic message option
-    */
+    ///
+    /// <summary>
+    /// topic message option
+    /// </summary>
+    ///
     public class TopicMessageOptions
     {
-        /**
-          The time to calibrate data with media,
-          only valid when user join topic with syncWithMedia in stream channel
-        */
+        ///
+        /// <summary>
+        /// The time to calibrate data with media,
+        /// only valid when user join topic with syncWithMedia in stream channel
+        /// </summary>
+        ///
         public UInt64 sendTs;
-        /**
-          The custom type of the message, up to 32 bytes for customize
-        */
+        ///
+        /// <summary>
+        /// The custom type of the message, up to 32 bytes for customize
+        /// </summary>
+        ///
         public string customType;
 
         public TopicMessageOptions()
@@ -1575,7 +1601,6 @@ namespace Agora.Rtm
             this.sendTs = sendTs;
             this.customType = customType;
         }
-
     };
 
     ///
