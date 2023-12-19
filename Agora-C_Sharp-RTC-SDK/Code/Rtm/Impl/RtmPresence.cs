@@ -105,5 +105,41 @@ namespace Agora.Rtm
             }
             return taskCompletionSource.Task;
         }
+
+        public Task<RtmResult<GetUserChannelsResult>> GetUserChannelsAsync(string userId)
+        {
+            TaskCompletionSource<RtmResult<GetUserChannelsResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetUserChannelsResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmPresence.GetUserChannels(userId, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<GetUserChannelsResult> result = new RtmResult<GetUserChannelsResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetUserChannelsOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutGetUserChannelsResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
+
+        public Task<RtmResult<GetOnlineUsersResult>> GetOnlineUsersAsync(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options)
+        {
+            TaskCompletionSource<RtmResult<GetOnlineUsersResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetOnlineUsersResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmPresence.GetOnlineUsers(channelName, channelType, options, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<GetOnlineUsersResult> result = new RtmResult<GetOnlineUsersResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetOnlineUsersOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutGetOnlineUsersTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
     }
 }

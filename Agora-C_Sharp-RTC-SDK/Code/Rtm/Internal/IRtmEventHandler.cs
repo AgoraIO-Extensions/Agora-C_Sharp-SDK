@@ -27,7 +27,7 @@ namespace Agora.Rtm.Internal
         {
         }
 
-        public virtual void OnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason) { }
+        public virtual void OnConnectionStateChanged(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason) { }
 
         public virtual void OnTokenPrivilegeWillExpire(string channelName) { }
 
@@ -91,6 +91,10 @@ namespace Agora.Rtm.Internal
         public virtual void OnWhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnWhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode) { }
+
+        public virtual void OnGetOnlineUsersResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode) {}
+
+        public virtual void OnGetUserChannelsResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode) {}
 
         public virtual void OnPresenceSetStateResult(UInt64 requestId, RTM_ERROR_CODE errorCode) { }
 

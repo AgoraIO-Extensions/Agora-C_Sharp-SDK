@@ -98,7 +98,7 @@ namespace Agora.Rtm.Internal
             return _streamChannelImpl.JoinTopic(channelName, topic, options, ref requestId);
         }
 
-        public override int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
+        public override int PublishTopicMessage(string topic, byte[] message, int length, TopicMessageOptions option)
         {
             if (_selfCreator == null || _streamChannelImpl == null)
             {
@@ -107,7 +107,7 @@ namespace Agora.Rtm.Internal
             return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option);
         }
 
-        public override int PublishTopicMessage(string topic, string message, int length, PublishOptions option)
+        public override int PublishTopicMessage(string topic, string message, int length, TopicMessageOptions option)
         {
             if (_selfCreator == null || _streamChannelImpl == null)
             {

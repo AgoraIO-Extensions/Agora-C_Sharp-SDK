@@ -149,5 +149,41 @@ namespace Agora.Rtm.Internal
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
+
+        public int GetOnlineUsers(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options, ref UInt64 requestId)
+        {
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("channelType", channelType);
+            _param.Add("options", options);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_GETONLINEUSERS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int GetUserChannels(string userId, ref UInt64 requestId)
+        {
+            _param.Clear();
+            _param.Add("userId", userId);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_GETUSERCHANNELS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
     }
 }

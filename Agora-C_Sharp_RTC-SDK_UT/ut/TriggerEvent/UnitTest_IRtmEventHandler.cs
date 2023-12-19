@@ -939,6 +939,41 @@ namespace Agora.Rtm.Event
             Assert.AreEqual(true, EventHandler.OnWhoNowResultPassed(requestId, userStateList, count, nextPage, errorCode));
         }
 
+        [Test]
+        public void Test_OnGetOnlineUsersResult()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONGETONLINEUSERSRESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+
+            UserState[] userStateList = ParamsHelper.CreateParam<UserState[]>();
+
+            ulong count = ParamsHelper.CreateParam<ulong>();
+
+            string nextPage = ParamsHelper.CreateParam<string>();
+
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("userStateList", userStateList);
+            jsonObj.Add("count", count);
+            jsonObj.Add("nextPage", nextPage);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnGetOnlineUsersResultPassed(requestId, userStateList, count, nextPage, errorCode));
+        }
+
 
         [Test]
         public void Test_OnWhereNowResult()
@@ -967,6 +1002,36 @@ namespace Agora.Rtm.Event
             int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnWhereNowResultPassed(requestId, channels, count, errorCode));
+        }
+
+
+        [Test]
+        public void Test_OnGetUserChannelsResult()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONGETUSERCHANNELSRESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+
+            ChannelInfo[] channels = ParamsHelper.CreateParam<ChannelInfo[]>();
+
+            ulong count = ParamsHelper.CreateParam<ulong>();
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("channels", channels);
+            jsonObj.Add("count", count);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnGetUserChannelsResultPassed(requestId, channels, count, errorCode));
         }
 
 

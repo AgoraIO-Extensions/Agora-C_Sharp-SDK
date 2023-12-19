@@ -80,13 +80,13 @@ namespace Agora.Rtm
         ///
         /// <param name="topic"> The name of the topic.</param>
         /// <param name="message"> The content of the message.</param>
-        /// <param name="length"> The length of the message.</param>
+        /// <param name="option"> The option of the message.</param>
         ///
         /// <returns>
         /// The name of PublishTopicMessage
         /// </returns>
         ///
-        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option);
+        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, TopicMessageOptions option);
 
         ///
         /// <summary>
@@ -95,13 +95,13 @@ namespace Agora.Rtm
         ///
         /// <param name="topic"> The name of the topic.</param>
         /// <param name="message"> The content of the message.</param>
-        /// <param name="length"> The length of the message.</param>
+        /// <param name="option"> The option of the message.</param>
         ///
         /// <returns>
         /// The name of PublishTopicMessage
         /// </returns>
         ///
-        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option);
+        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, TopicMessageOptions option);
 
         ///
         /// <summary>

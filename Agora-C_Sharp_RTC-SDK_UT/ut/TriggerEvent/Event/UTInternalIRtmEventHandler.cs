@@ -317,29 +317,29 @@ namespace Agora.Rtm
         ///////////////////////////////////
 
 
-        public bool OnConnectionStateChange_be_trigger = false;
-        public string OnConnectionStateChange_channelName = null;
-        public RTM_CONNECTION_STATE OnConnectionStateChange_state = RTM_CONNECTION_STATE.CONNECTING;
-        public RTM_CONNECTION_CHANGE_REASON OnConnectionStateChange_reason = RTM_CONNECTION_CHANGE_REASON.BANNED_BY_SERVER;
+        public bool OnConnectionStateChanged_be_trigger = false;
+        public string OnConnectionStateChanged_channelName = null;
+        public RTM_CONNECTION_STATE OnConnectionStateChanged_state = RTM_CONNECTION_STATE.CONNECTING;
+        public RTM_CONNECTION_CHANGE_REASON OnConnectionStateChanged_reason = RTM_CONNECTION_CHANGE_REASON.BANNED_BY_SERVER;
 
-        public override void OnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
+        public override void OnConnectionStateChanged(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
-            OnConnectionStateChange_be_trigger = true;
-            OnConnectionStateChange_channelName = channelName;
-            OnConnectionStateChange_state = state;
-            OnConnectionStateChange_reason = reason;
+            OnConnectionStateChanged_be_trigger = true;
+            OnConnectionStateChanged_channelName = channelName;
+            OnConnectionStateChanged_state = state;
+            OnConnectionStateChanged_reason = reason;
         }
 
         public bool OnConnectionStateChangePassed(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
-            if (OnConnectionStateChange_be_trigger == false)
+            if (OnConnectionStateChanged_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnConnectionStateChange_channelName, channelName) == false)
+            if (ParamsHelper.Compare<string>(OnConnectionStateChanged_channelName, channelName) == false)
                 return false;
-            if (ParamsHelper.Compare<RTM_CONNECTION_STATE>(OnConnectionStateChange_state, state) == false)
+            if (ParamsHelper.Compare<RTM_CONNECTION_STATE>(OnConnectionStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<RTM_CONNECTION_CHANGE_REASON>(OnConnectionStateChange_reason, reason) == false)
+            if (ParamsHelper.Compare<RTM_CONNECTION_CHANGE_REASON>(OnConnectionStateChanged_reason, reason) == false)
                 return false;
 
             return true;
@@ -1032,6 +1032,41 @@ namespace Agora.Rtm
         }
 
         ///////////////////////////////////
+        public bool OnGetOnlineUsersResult_be_trigger = false;
+        public UInt64 OnGetOnlineUsersResult_requestId = 0;
+        public UserState[] OnGetOnlineUsersResult_userStateList = null;
+        public UInt64 OnGetOnlineUsersResult_count = 0;
+        public string OnGetOnlineUsersResult_nextPage = null;
+        public RTM_ERROR_CODE OnGetOnlineUsersResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnGetOnlineUsersResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode)
+        {
+            OnWhoNowResult_be_trigger = true;
+            OnWhoNowResult_requestId = requestId;
+            OnWhoNowResult_userStateList = userStateList;
+            OnWhoNowResult_count = count;
+            OnWhoNowResult_nextPage = nextPage;
+            OnWhoNowResult_errorCode = errorCode;
+        }
+
+        public bool OnGetOnlineUsersResultPassed(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode)
+        {
+            if (OnGetOnlineUsersResult_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<ulong>(OnGetOnlineUsersResult_requestId, requestId) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnGetOnlineUsersResult_count, count) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnGetOnlineUsersResult_nextPage, nextPage) == false)
+                return false;
+            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetOnlineUsersResult_errorCode, errorCode) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
 
 
         public bool OnWhereNowResult_be_trigger = false;
@@ -1067,6 +1102,43 @@ namespace Agora.Rtm
         }
 
         ///////////////////////////////////
+
+
+        public bool OnGetUserChannelsResult_be_trigger = false;
+        public UInt64 OnGetUserChannelsResult_requestId = 0;
+        public ChannelInfo[] OnGetUserChannelsResult_channels = null;
+        public UInt64 OnGetUserChannelsResult_count = 0;
+        public RTM_ERROR_CODE OnGetUserChannelsResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnGetUserChannelsResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode)
+        {
+            OnGetUserChannelsResult_be_trigger = true;
+            OnGetUserChannelsResult_requestId = requestId;
+            OnGetUserChannelsResult_channels = channels;
+            OnGetUserChannelsResult_count = count;
+            OnGetUserChannelsResult_errorCode = errorCode;
+        }
+
+        public bool OnGetUserChannelsResultPassed(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode)
+        {
+            if (OnGetUserChannelsResult_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<ulong>(OnGetUserChannelsResult_requestId, requestId) == false)
+                return false;
+            if (ParamsHelper.Compare<ChannelInfo[]>(OnGetUserChannelsResult_channels, channels) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnGetUserChannelsResult_count, count) == false)
+                return false;
+            if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnGetUserChannelsResult_errorCode, errorCode) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+
 
 
         public bool OnPresenceSetStateResult_be_trigger = false;

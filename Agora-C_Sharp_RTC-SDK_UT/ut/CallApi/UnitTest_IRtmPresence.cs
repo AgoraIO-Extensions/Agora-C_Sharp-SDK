@@ -40,11 +40,33 @@ namespace Agora.Rtm
         }
 
         [Test]
+        public void Test_GetOnlineUsers()
+        {
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            GetOnlineUsersOptions options = ParamsHelper.CreateParam<GetOnlineUsersOptions>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmPresence.GetOnlineUsers(channelName, channelType, options, ref requestId);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_WhereNow()
         {
             string userId = ParamsHelper.CreateParam<string>();
             ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmPresence.WhereNow(userId, ref requestId);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetUserChannels()
+        {
+            string userId = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmPresence.GetUserChannels(userId, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }

@@ -223,7 +223,18 @@ namespace Agora.Rtm
         /// </summary>
         ///
         INSTANCE_ALREADY_RELEASED = -10018,
-
+        /**
+        * -10019: The channel type is invalid.
+        */
+        INVALID_CHANNEL_TYPE = -10019,
+        /**
+         * -10020: The encryption parameter is invalid.
+         */
+        INVALID_ENCRYPTION_PARAMETER = -10020,
+        /**
+         * -10021: The operation is too frequent.
+         */
+        OPERATION_RATE_EXCEED_LIMITATION = -10021,
         ///
         /// <summary>
         /// -11001 ~ -12000 : reserved for channel error.
@@ -417,7 +428,10 @@ namespace Agora.Rtm
         /// </summary>
         ///
         CHANNEL_PRESENCE_NOT_READY = -11032,
-
+        /**
+        * -11033: The destination user of publish message is offline.
+        */
+        CHANNEL_RECEIVER_OFFLINE = -11033,
         ///
         /// <summary>
         /// -12001 ~ -13000 : reserved for storage error.
@@ -883,6 +897,10 @@ namespace Agora.Rtm
         /// </summary>
         ///
         STREAM = 2,
+        /**
+        * 3: User.
+        */
+        USER = 3,
     }
 
     public enum RTM_MESSAGE_TYPE
@@ -1467,6 +1485,39 @@ namespace Agora.Rtm
         }
     };
 
+    /**
+    *  The option to query user presence.
+    */
+    public class GetOnlineUsersOptions
+    {
+        /**
+         * Whether to display user id in query result
+         */
+        public bool includeUserId;
+        /**
+         * Whether to display user state in query result
+         */
+        public bool includeState;
+        /**
+         * The paging object used for pagination.
+         */
+        public string page;
+
+        public GetOnlineUsersOptions()
+        {
+            includeUserId = true;
+            includeState = false;
+            page = "";
+        }
+
+        public GetOnlineUsersOptions(bool includeUserId, bool includeState, string page)
+        {
+            this.includeUserId = includeUserId;
+            this.includeState = includeState;
+            this.page = page;
+        }
+    }
+
     ///
     /// <summary>
     /// Publish message option
@@ -1474,14 +1525,10 @@ namespace Agora.Rtm
     ///
     public class PublishOptions
     {
-        ///
-        /// <summary>
-        /// The time to calibrate data with media,
-        /// only valid when user join topic with syncWithMedia in stream channel
-        /// </summary>
-        ///
-        public UInt64 sendTs;
-
+        /*
+        The channel type.
+        */
+        public RTM_CHANNEL_TYPE channelType;
         ///
         /// <summary>
         /// The custom type of the message, up to 32 bytes for customize
@@ -1491,15 +1538,44 @@ namespace Agora.Rtm
 
         public PublishOptions()
         {
+            channelType = RTM_CHANNEL_TYPE.MESSAGE;
+            customType = "";
+        }
+
+        public PublishOptions(RTM_CHANNEL_TYPE channelType, string customType)
+        {
+            this.channelType = channelType;
+            this.customType = customType;
+        }
+    };
+
+    /**
+    @brief topic message option
+    */
+    public class TopicMessageOptions
+    {
+        /**
+          The time to calibrate data with media,
+          only valid when user join topic with syncWithMedia in stream channel
+        */
+        public UInt64 sendTs;
+        /**
+          The custom type of the message, up to 32 bytes for customize
+        */
+        public string customType;
+
+        public TopicMessageOptions()
+        {
             sendTs = 0;
             customType = "";
         }
 
-        public PublishOptions(UInt64 sendTs, string customType)
+        public TopicMessageOptions(UInt64 sendTs, string customType)
         {
             this.sendTs = sendTs;
             this.customType = customType;
         }
+
     };
 
     ///

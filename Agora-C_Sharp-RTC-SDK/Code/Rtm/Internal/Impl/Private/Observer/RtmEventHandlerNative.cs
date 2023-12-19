@@ -220,14 +220,14 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onConnectionStateChange":
+                case "RtmEventHandler_onConnectionStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
                     if (rtmEventHandler == null)
                         return;
-                    rtmEventHandler.OnConnectionStateChange(
+                    rtmEventHandler.OnConnectionStateChanged(
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CONNECTION_STATE)AgoraJson.GetData<int>(jsonData, "state"),
                         (RTM_CONNECTION_CHANGE_REASON)AgoraJson.GetData<int>(jsonData, "reason"));
@@ -574,6 +574,24 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
+                case "RtmEventHandler_onGetOnlineUsersResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                                                          {
+#endif
+                    if (rtmEventHandler == null)
+                        return;
+                    rtmEventHandler.OnGetOnlineUsersResult(
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
+                        AgoraJson.JsonToStructArray<UserState>(jsonData, "userStateList"),
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
+                        (string)AgoraJson.GetData<string>(jsonData, "nextPage"),
+                        (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                                                          });
+#endif
+                    break;
+
                 case "RtmEventHandler_onWhereNowResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
@@ -582,6 +600,23 @@ namespace Agora.Rtm.Internal
                     if (rtmEventHandler == null)
                         return;
                     rtmEventHandler.OnWhereNowResult(
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
+                        AgoraJson.JsonToStructArray<ChannelInfo>(jsonData, "channels"),
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
+                        (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                                                          });
+#endif
+                    break;
+
+                case "RtmEventHandler_onGetUserChannelsResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                                                          {
+#endif
+                    if (rtmEventHandler == null)
+                        return;
+                    rtmEventHandler.OnGetUserChannelsResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         AgoraJson.JsonToStructArray<ChannelInfo>(jsonData, "channels"),
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),

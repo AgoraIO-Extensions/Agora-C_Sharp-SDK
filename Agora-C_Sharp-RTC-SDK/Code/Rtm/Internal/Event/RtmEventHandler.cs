@@ -91,7 +91,7 @@ namespace Agora.Rtm.Internal
 
         public event OnSubscribeTopicResultHandler EventOnSubscribeTopicResult;
 
-        public event OnConnectionStateChangeHandler EventOnConnectionStateChange;
+        public event OnConnectionStateChangedHandler EventOnConnectionStateChanged;
 
         public event OnTokenPrivilegeWillExpireHandler EventOnTokenPrivilegeWillExpire;
 
@@ -211,11 +211,11 @@ namespace Agora.Rtm.Internal
             EventOnSubscribeTopicResult.Invoke(requestId, channelName, userId, topic, succeedUsers, failedUsers, errorCode);
         }
 
-        public override void OnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
+        public override void OnConnectionStateChanged(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
-            if (EventOnConnectionStateChange == null)
+            if (EventOnConnectionStateChanged == null)
                 return;
-            EventOnConnectionStateChange.Invoke(channelName, state, reason);
+            EventOnConnectionStateChanged.Invoke(channelName, state, reason);
         }
 
         public override void OnTokenPrivilegeWillExpire(string channelName)
