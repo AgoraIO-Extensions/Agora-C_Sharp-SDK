@@ -11,14 +11,14 @@ namespace Agora.Rtm
 
         ///
         /// <summary>
-        /// Indicates whether or not to notify server update the modify timestamp of metadata
+        /// Indicates whether to notify server update the modify timestamp of metadata
         /// </summary>
         ///
         public bool recordTs;
 
         ///
         /// <summary>
-        /// Indicates whether or not to notify server update the modify user id of metadata
+        /// Indicates whether to notify server update the modify user id of metadata
         /// </summary>
         ///
         public bool recordUserId;

@@ -3,13 +3,13 @@ namespace Agora.Rtm
 {
     public class RtmMessage : IRtmMessage
     {
-        private byte[] binaryMessage;
-        private string stringMessage;
+        private byte[] _binaryMessage;
+        private string _stringMessage;
 
         public RtmMessage(byte[] binaryMessage)
         {
-            this.binaryMessage = binaryMessage;
-            this.stringMessage = null;
+            this._binaryMessage = binaryMessage;
+            this._stringMessage = null;
         }
 
         public T GetData<T>()
@@ -17,16 +17,16 @@ namespace Agora.Rtm
             Type t = typeof(T);
             if (t == typeof(byte[]))
             {
-                return (T)(System.Object)this.binaryMessage;
+                return (T)(System.Object)this._binaryMessage;
             }
             else if (t == typeof(string))
             {
                 // Convert only when a string is needed. to save performance
-                if (this.stringMessage == null && this.binaryMessage != null && this.binaryMessage.Length > 0)
+                if (this._stringMessage == null && this._binaryMessage != null && this._binaryMessage.Length > 0)
                 {
-                    this.stringMessage = System.Text.Encoding.UTF8.GetString(this.binaryMessage);
+                    this._stringMessage = System.Text.Encoding.UTF8.GetString(this._binaryMessage);
                 }
-                return (T)(System.Object)this.stringMessage;
+                return (T)(System.Object)this._stringMessage;
             }
             else
             {
