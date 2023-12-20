@@ -29,7 +29,7 @@ namespace Agora.Rtm
         /// You should generate a new token on your server, call this method to renew it.
         /// </summary>
         ///
-        /// <param name="token"> Token used renew.</param>
+        /// <param name="token"> New token.</param>
         ///
         /// <returns>
         /// The result of RenewToken

@@ -13,20 +13,19 @@ namespace Agora.Rtm
         public event OnConnectionStateChangedHandler OnConnectionStateChanged;
         public event OnTokenPrivilegeWillExpireHandler OnTokenPrivilegeWillExpire;
 
-        private Internal.IRtmClient internalRtmClient;
-        private RtmEventHandler rtmEventHandler;
+        private Internal.IRtmClient _internalRtmClient;
+        private RtmEventHandler _rtmEventHandler;
 
-        private static IRtmClient instance = null;
+        private static IRtmClient _instance = null;
 
         public static IRtmClient CreateAgoraRtmClient(RtmConfig config)
         {
-            RtmClient rtmClient = (RtmClient)(instance ?? (instance = new RtmClient()));
+            RtmClient rtmClient = (RtmClient)(_instance ?? (_instance = new RtmClient()));
 
             RtmStatus status = rtmClient.Initialize(config);
             if (status.Error)
             {
                 throw new RTMException(status);
-                return null;
             }
             else
             {
@@ -34,30 +33,30 @@ namespace Agora.Rtm
             }
         }
 
-        public static IRtmClient Get()
+        public static IRtmClient GetInstance()
         {
-            return instance;
+            return _instance;
         }
 
         public RtmClient()
         {
-            internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient();
-            rtmEventHandler = new RtmEventHandler(this);
+            _internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient();
+            _rtmEventHandler = new RtmEventHandler(this);
         }
 
         public string GetVersion()
         {
-            return internalRtmClient.GetVersion();
+            return _internalRtmClient.GetVersion();
         }
 
         internal RtmEventHandler GetRtmEventHandler()
         {
-            return this.rtmEventHandler;
+            return this._rtmEventHandler;
         }
 
         internal Internal.IRtmClient GetInternalRtmClient()
         {
-            return this.internalRtmClient;
+            return this._internalRtmClient;
         }
 
         internal void InvokeOnMessageEvent(MessageEvent @event)
@@ -117,65 +116,65 @@ namespace Agora.Rtm
 
         public IStreamChannel CreateStreamChannel(string channelName)
         {
-            Internal.IStreamChannel internalStreamChannel = this.internalRtmClient.CreateStreamChannel(channelName);
+            Internal.IStreamChannel internalStreamChannel = this._internalRtmClient.CreateStreamChannel(channelName);
             if (internalStreamChannel == null)
             {
                 return null;
             }
             else
             {
-                return new StreamChannel(internalStreamChannel, rtmEventHandler, internalRtmClient);
+                return new StreamChannel(internalStreamChannel, _rtmEventHandler, _internalRtmClient);
             }
         }
 
         public RtmStatus Dispose()
         {
-            int errorCode = internalRtmClient.Dispose();
+            int errorCode = _internalRtmClient.Dispose();
             if (errorCode == 0)
             {
-                instance = null;
+                _instance = null;
             }
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMDisposeOperation, this.internalRtmClient);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMDisposeOperation, this._internalRtmClient);
         }
 
         public IRtmLock GetLock()
         {
-            Internal.IRtmLock internalRtmLock = this.internalRtmClient.GetLock();
-            return new RtmLock(internalRtmLock, rtmEventHandler, internalRtmClient);
+            Internal.IRtmLock internalRtmLock = this._internalRtmClient.GetLock();
+            return new RtmLock(internalRtmLock, _rtmEventHandler, _internalRtmClient);
         }
 
         public IRtmPresence GetPresence()
         {
-            Internal.IRtmPresence internalRtmPresence = this.internalRtmClient.GetPresence();
-            return new RtmPresence(internalRtmPresence, rtmEventHandler, internalRtmClient);
+            Internal.IRtmPresence internalRtmPresence = this._internalRtmClient.GetPresence();
+            return new RtmPresence(internalRtmPresence, _rtmEventHandler, _internalRtmClient);
         }
 
         public IRtmStorage GetStorage()
         {
-            Internal.IRtmStorage internalRtmStorage = this.internalRtmClient.GetStorage();
-            return new RtmStorage(internalRtmStorage, rtmEventHandler, internalRtmClient);
+            Internal.IRtmStorage internalRtmStorage = this._internalRtmClient.GetStorage();
+            return new RtmStorage(internalRtmStorage, _rtmEventHandler, _internalRtmClient);
         }
 
         private RtmStatus Initialize(RtmConfig config)
         {
-            Internal.RtmConfig internalConfig = new Internal.RtmConfig(config, rtmEventHandler);
-            int errorCode = internalRtmClient.Initialize(internalConfig);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMInitializeOperation, this.internalRtmClient);
+            Internal.RtmConfig internalConfig = new Internal.RtmConfig(config, _rtmEventHandler);
+            int errorCode = _internalRtmClient.Initialize(internalConfig);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMInitializeOperation, this._internalRtmClient);
         }
 
         public Task<RtmResult<LoginResult>> LoginAsync(string token)
         {
             TaskCompletionSource<RtmResult<LoginResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LoginResult>>();
-            int errorCode = internalRtmClient.Login(token);
+            int errorCode = _internalRtmClient.Login(token);
             if (errorCode != 0)
             {
                 RtmResult<LoginResult> result = new RtmResult<LoginResult>();
-                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLoginOperation, this.internalRtmClient);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLoginOperation, this._internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
             {
-                rtmEventHandler.PutLoginResultTask(taskCompletionSource);
+                _rtmEventHandler.PutLoginResultTask(taskCompletionSource);
             }
             return taskCompletionSource.Task;
         }
@@ -183,9 +182,9 @@ namespace Agora.Rtm
         public Task<RtmResult<LogoutResult>> LogoutAsync()
         {
             // fake async
-            int errorCode = internalRtmClient.Logout();
+            int errorCode = _internalRtmClient.Logout();
             RtmResult<LogoutResult> rtmResult = new RtmResult<LogoutResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this.internalRtmClient);
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this._internalRtmClient);
             if (errorCode == 0)
             {
                 rtmResult.Response = new LogoutResult();
@@ -201,16 +200,16 @@ namespace Agora.Rtm
             TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
             UInt64 requestId = 0;
             Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.BINARY);
-            int errorCode = internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
+            int errorCode = _internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<PublishResult> result = new RtmResult<PublishResult>();
-                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishOperation, this.internalRtmClient);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishOperation, this._internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
             {
-                rtmEventHandler.PutPublishResultTask(requestId, taskCompletionSource);
+                _rtmEventHandler.PutPublishResultTask(requestId, taskCompletionSource);
             }
             return taskCompletionSource.Task;
         }
@@ -220,16 +219,16 @@ namespace Agora.Rtm
             TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
             UInt64 requestId = 0;
             Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.STRING);
-            int errorCode = internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
+            int errorCode = _internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<PublishResult> result = new RtmResult<PublishResult>();
-                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishOperation, this.internalRtmClient);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishOperation, this._internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
             {
-                rtmEventHandler.PutPublishResultTask(requestId, taskCompletionSource);
+                _rtmEventHandler.PutPublishResultTask(requestId, taskCompletionSource);
             }
             return taskCompletionSource.Task;
         }
@@ -237,9 +236,9 @@ namespace Agora.Rtm
         public Task<RtmResult<RenewTokenResult>> RenewTokenAsync(string token)
         {
             // fake async
-            int errorCode = internalRtmClient.RenewToken(token);
+            int errorCode = _internalRtmClient.RenewToken(token);
             RtmResult<RenewTokenResult> rtmResult = new RtmResult<RenewTokenResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this.internalRtmClient);
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this._internalRtmClient);
             if (errorCode == 0)
             {
                 rtmResult.Response = new RenewTokenResult();
@@ -252,24 +251,24 @@ namespace Agora.Rtm
 
         public RtmStatus SetParameters(string parameters)
         {
-            int errorCode = internalRtmClient.SetParameters(parameters);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetParametersOperation, this.internalRtmClient);
+            int errorCode = _internalRtmClient.SetParameters(parameters);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetParametersOperation, this._internalRtmClient);
         }
 
         public Task<RtmResult<SubscribeResult>> SubscribeAsync(string channelName, SubscribeOptions options)
         {
             TaskCompletionSource<RtmResult<SubscribeResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SubscribeResult>>();
             UInt64 requestId = 0;
-            int errorCode = internalRtmClient.Subscribe(channelName, options, ref requestId);
+            int errorCode = _internalRtmClient.Subscribe(channelName, options, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<SubscribeResult> result = new RtmResult<SubscribeResult>();
-                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSubscribeOperation, this.internalRtmClient);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSubscribeOperation, this._internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
             {
-                rtmEventHandler.PutSubscribeResultTask(requestId, taskCompletionSource);
+                _rtmEventHandler.PutSubscribeResultTask(requestId, taskCompletionSource);
             }
             return taskCompletionSource.Task;
         }
@@ -277,10 +276,10 @@ namespace Agora.Rtm
         public Task<RtmResult<UnsubscribeResult>> UnsubscribeAsync(string channelName)
         {
             // fake async
-            int errorCode = internalRtmClient.Unsubscribe(channelName);
+            int errorCode = _internalRtmClient.Unsubscribe(channelName);
 
             RtmResult<UnsubscribeResult> rtmResult = new RtmResult<UnsubscribeResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeOperation, this.internalRtmClient);
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeOperation, this._internalRtmClient);
             if (errorCode == 0)
             {
                 rtmResult.Response = new UnsubscribeResult();
@@ -293,20 +292,20 @@ namespace Agora.Rtm
 
         public RtmStatus SetLogFile(string filePath)
         {
-            int errorCode = internalRtmClient.SetLogFile(filePath);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetLogFileOperation, this.internalRtmClient);
+            int errorCode = _internalRtmClient.SetLogFile(filePath);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetLogFileOperation, this._internalRtmClient);
         }
 
         public RtmStatus SetLogLevel(LOG_LEVEL level)
         {
-            int errorCode = internalRtmClient.SetLogLevel(level);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetLogLevelOperation, this.internalRtmClient);
+            int errorCode = _internalRtmClient.SetLogLevel(level);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetLogLevelOperation, this._internalRtmClient);
         }
 
         public RtmStatus SetLogFileSize(uint fileSizeInKBytes)
         {
-            int errorCode = internalRtmClient.SetLogFileSize(fileSizeInKBytes);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetLogFileSizeOperation, this.internalRtmClient);
+            int errorCode = _internalRtmClient.SetLogFileSize(fileSizeInKBytes);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetLogFileSizeOperation, this._internalRtmClient);
         }
     }
 }

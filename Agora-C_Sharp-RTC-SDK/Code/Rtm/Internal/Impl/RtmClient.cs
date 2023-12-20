@@ -7,7 +7,7 @@ namespace Agora.Rtm.Internal
     {
         private bool _disposed = false;
         private RtmClientImpl _rtmClientImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = (int)RTM_ERROR_CODE.NOT_INITIALIZED;
         internal Dictionary<string, StreamChannel> _streamChannelDic = new Dictionary<string, StreamChannel>();
 
         private RtmLock _rtmLock = null;
@@ -39,7 +39,7 @@ namespace Agora.Rtm.Internal
             return instance ?? (instance = new RtmClient(engine_ptr));
         }
 
-        public static IRtmClient Get()
+        public static IRtmClient GetInstance()
         {
             return instance;
         }

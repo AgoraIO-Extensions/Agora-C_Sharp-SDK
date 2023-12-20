@@ -21,6 +21,8 @@ namespace Agora.Rtm.Internal
             this.appId = appId;
             this.userId = userId;
             this.areaCode = areaCode;
+            this.presenceTimeout = 300;
+            this.useStringUserId = true;
             this.eventHandler = eventHandler;
             this.logConfig = logConfig;
             this.proxyConfig = proxyConfig;

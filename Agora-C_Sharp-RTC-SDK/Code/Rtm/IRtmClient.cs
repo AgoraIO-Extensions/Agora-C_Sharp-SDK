@@ -213,7 +213,7 @@ namespace Agora.Rtm
         /// You should generate a new token on your server, call this method to renew it.
         /// </summary>
         ///
-        /// <param name="token"> Token used renew.</param>
+        /// <param name="token"> New token.</param>
         ///
         /// <returns>
         /// The result of renewToken
@@ -336,7 +336,7 @@ namespace Agora.Rtm
         /// Set  the max log file size
         /// </summary>
         ///
-        /// <param name="fileSizeInKBytes"> The size of log file</param>
+        /// <param name="fileSizeInKBytes"> The size of the log file in kilobytes (KB).</param>
         ///
         /// <returns>
         /// The result of SetLogFileSize
