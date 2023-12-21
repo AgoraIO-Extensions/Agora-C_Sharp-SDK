@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Agora.Rtm
 {
-    internal class RtmClient : IRtmClient
+    public class RtmClient : IRtmClient
     {
         public event OnMessageEventHandler OnMessageEvent;
         public event OnPresenceEventHandler OnPresenceEvent;

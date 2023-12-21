@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Agora.Rtm
 {
-    public class RtmMessage : IRtmMessage
+    internal class RtmMessage : IRtmMessage
     {
         private byte[] _binaryMessage;
         private string _stringMessage;
