@@ -71,7 +71,10 @@ namespace Agora.Rtc
 
                     if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != this._textureManagerYUV.YStrideScale)
                     {
-                        _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+                        if (_material != null)
+                        {
+                            _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+                        }
                         //AgoraLog.Log("_yStrideScale" + _textureManagerYUV.YStrideScale);
                         this.YStrideScale = this._textureManagerYUV.YStrideScale;
                     }
@@ -184,6 +187,8 @@ namespace Agora.Rtc
                 rd.material = new Material(Shader.Find("UI/RendererShader601"));
                 _material = rd.material;
             }
+
+            _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
         }
 
     }
