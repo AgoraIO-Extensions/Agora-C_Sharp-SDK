@@ -13,24 +13,24 @@
 
 Enabled by Agora’s Video SDK, Video Calling gives you full control over a rich set of features within your app. You can extend the SDK with functionality like recording and content moderation or use Extensions Marketplace to quickly activate background removal, face filters, and more.</Description>
     <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK</PackageProjectUrl>
-    <PackageId>agora_rtc_sdk_test</PackageId>
+    <PackageId>agora_rtc_sdk</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <OutputPath>bin\x86\Debug\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>bin\x86\Debug</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutputPath>bin\x64\Debug\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>bin\x64\Debug</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <OutputPath>bin\x86\Release\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>bin\x86\Release</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutputPath>bin\x64\Release\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>bin\x64\Release</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
