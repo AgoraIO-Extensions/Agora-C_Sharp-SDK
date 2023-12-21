@@ -107,8 +107,11 @@ def remove_key_word_in_path(file_path, key_word):
             f = open(file_name, 'r', encoding='UTF-8')
             content = f.read()
             content = content.replace(key_word, '')
+            content.encode('UTF-8')
+
             f.close()
-            f = open(file_name, 'w')
+            f = open(file_name, 'w', encoding='UTF-8')
+            
             f.write(content)
             f.close()
 
@@ -121,8 +124,10 @@ def replace_key_word_in_path(file_path, key_word, replace_word):
             f = open(file_name, 'r', encoding='UTF-8')
             content = f.read()
             content = content.replace(key_word, replace_word)
+            content.encode('UTF-8')
             f.close()
-            f = open(file_name, 'w')
+
+            f = open(file_name, 'w', encoding='UTF-8')
             f.write(content)
             f.close()
 
