@@ -31,34 +31,34 @@ namespace Agora.Rtc
     };
 
     #region terra IAgoraMusicContentCenter.h
-    public enum PreloadStatusCode
+    public enum PreloadState
     {
-        kPreloadStatusCompleted = 0,
+        kPreloadStateCompleted = 0,
 
-        kPreloadStatusFailed = 1,
+        kPreloadStateFailed = 1,
 
-        kPreloadStatusPreloading = 2,
+        kPreloadStatePreloading = 2,
 
-        kPreloadStatusRemoved = 3,
+        kPreloadStateRemoved = 3,
     }
 
-    public enum MusicContentCenterStatusCode
+    public enum MusicContentCenterStateReason
     {
-        kMusicContentCenterStatusOk = 0,
+        kMusicContentCenterReasonOk = 0,
 
-        kMusicContentCenterStatusError = 1,
+        kMusicContentCenterReasonError = 1,
 
-        kMusicContentCenterStatusGateway = 2,
+        kMusicContentCenterReasonGateway = 2,
 
-        kMusicContentCenterStatusPermissionAndResource = 3,
+        kMusicContentCenterReasonPermissionAndResource = 3,
 
-        kMusicContentCenterStatusInternalDataParse = 4,
+        kMusicContentCenterReasonInternalDataParse = 4,
 
-        kMusicContentCenterStatusMusicLoading = 5,
+        kMusicContentCenterReasonMusicLoading = 5,
 
-        kMusicContentCenterStatusMusicDecryption = 6,
+        kMusicContentCenterReasonMusicDecryption = 6,
 
-        kMusicContentCenterStatusHttpInternalError = 7,
+        kMusicContentCenterReasonHttpInternalError = 7,
     }
 
     public class MusicChartInfo

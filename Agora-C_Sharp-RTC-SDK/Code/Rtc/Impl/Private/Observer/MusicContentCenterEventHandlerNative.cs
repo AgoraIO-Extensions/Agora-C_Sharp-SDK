@@ -54,7 +54,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         EventHandler.OnMusicChartsResult(
                             (string)AgoraJson.GetData<string>(jsonData, "requestId"),
                             AgoraJson.JsonToStructArray<MusicChartInfo>(jsonData, "result"),
-                            (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "status")
+                            (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
  }); 
@@ -71,7 +71,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         EventHandler.OnMusicCollectionResult(
                             (string)AgoraJson.GetData<string>(jsonData, "requestId"),
                             AgoraJson.JsonToStruct<MusicCollection>(jsonData, "result"),
-                            (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "status")
+                            (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
  }); 
@@ -89,7 +89,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             (string)AgoraJson.GetData<string>(jsonData, "requestId"),
                             (long)AgoraJson.GetData<long>(jsonData, "songCode"),
                             (string)AgoraJson.GetData<string>(jsonData, "lyricUrl"),
-                            (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "status")
+                            (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
  }); 
@@ -107,7 +107,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             (string)AgoraJson.GetData<string>(jsonData, "requestId"),
                             (long)AgoraJson.GetData<long>(jsonData, "songCode"),
                             (string)AgoraJson.GetData<string>(jsonData, "simpleInfo"),
-                            (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "status")
+                            (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
  }); 
@@ -126,8 +126,8 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             (long)AgoraJson.GetData<long>(jsonData, "songCode"),
                             (int)AgoraJson.GetData<int>(jsonData, "percent"),
                             (string)AgoraJson.GetData<string>(jsonData, "lyricUrl"),
-                            (PreloadStatusCode)AgoraJson.GetData<int>(jsonData, "preloadStatus"),
-                            (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "mccStatus")
+                            (PreloadState)AgoraJson.GetData<int>(jsonData, "state"),
+                            (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
  }); 

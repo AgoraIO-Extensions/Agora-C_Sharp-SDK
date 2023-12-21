@@ -537,8 +537,6 @@ namespace Agora.Rtc
 
         AGORA_IID_MEDIA_ENGINE_REGULATOR = 9,
 
-        AGORA_IID_CLOUD_SPATIAL_AUDIO = 10,
-
         AGORA_IID_LOCAL_SPATIAL_AUDIO = 11,
 
         AGORA_IID_STATE_SYNC = 13,
@@ -3748,6 +3746,8 @@ namespace Agora.Rtc
 
         public AdvancedConfigInfo advancedConfig;
 
+        public bool disableAut;
+
         public LocalAccessPointConfiguration()
         {
             this.ipList = new string[0];
@@ -3756,9 +3756,10 @@ namespace Agora.Rtc
             this.domainListSize = 0;
             this.verifyDomainName = "";
             this.mode = LOCAL_PROXY_MODE.ConnectivityFirst;
+            this.disableAut = true;
         }
 
-        public LocalAccessPointConfiguration(string[] ipList, int ipListSize, string[] domainList, int domainListSize, string verifyDomainName, LOCAL_PROXY_MODE mode, AdvancedConfigInfo advancedConfig)
+        public LocalAccessPointConfiguration(string[] ipList, int ipListSize, string[] domainList, int domainListSize, string verifyDomainName, LOCAL_PROXY_MODE mode, AdvancedConfigInfo advancedConfig, bool disableAut)
         {
             this.ipList = ipList;
             this.ipListSize = ipListSize;
@@ -3767,6 +3768,7 @@ namespace Agora.Rtc
             this.verifyDomainName = verifyDomainName;
             this.mode = mode;
             this.advancedConfig = advancedConfig;
+            this.disableAut = disableAut;
         }
     }
 

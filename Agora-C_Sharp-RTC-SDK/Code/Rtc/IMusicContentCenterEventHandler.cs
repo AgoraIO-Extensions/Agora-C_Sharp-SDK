@@ -9,15 +9,15 @@ namespace Agora.Rtc
     {
 
         #region terra IMusicContentCenterEventHandler
-        public abstract void OnMusicChartsResult(string requestId, MusicChartInfo[] result, MusicContentCenterStatusCode status);
+        public abstract void OnMusicChartsResult(string requestId, MusicChartInfo[] result, MusicContentCenterStateReason reason);
 
-        public abstract void OnMusicCollectionResult(string requestId, MusicCollection result, MusicContentCenterStatusCode status);
+        public abstract void OnMusicCollectionResult(string requestId, MusicCollection result, MusicContentCenterStateReason reason);
 
-        public abstract void OnLyricResult(string requestId, long songCode, string lyricUrl, MusicContentCenterStatusCode status);
+        public abstract void OnLyricResult(string requestId, long songCode, string lyricUrl, MusicContentCenterStateReason reason);
 
-        public abstract void OnSongSimpleInfoResult(string requestId, long songCode, string simpleInfo, MusicContentCenterStatusCode status);
+        public abstract void OnSongSimpleInfoResult(string requestId, long songCode, string simpleInfo, MusicContentCenterStateReason reason);
 
-        public abstract void OnPreLoadEvent(string requestId, long songCode, int percent, string lyricUrl, PreloadStatusCode preloadStatus, MusicContentCenterStatusCode mccStatus);
+        public abstract void OnPreLoadEvent(string requestId, long songCode, int percent, string lyricUrl, PreloadState state, MusicContentCenterStateReason reason);
         #endregion terra IMusicContentCenterEventHandler
     }
 }
