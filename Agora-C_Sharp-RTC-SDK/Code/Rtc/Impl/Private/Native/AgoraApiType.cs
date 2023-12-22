@@ -551,11 +551,11 @@ namespace Agora.Rtc
         #endregion terra IMusicPlayer
 
         #region terra IH265Transcoder
-        internal const string FUNC_H265TRANSCODER_ENABLETRANSCODE = "H265Transcoder_enableTranscode";
-        internal const string FUNC_H265TRANSCODER_QUERYCHANNEL = "H265Transcoder_queryChannel";
-        internal const string FUNC_H265TRANSCODER_TRIGGERTRANSCODE = "H265Transcoder_triggerTranscode";
-        internal const string FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER = "H265Transcoder_registerTranscoderObserver";
-        internal const string FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER = "H265Transcoder_unregisterTranscoderObserver";
+        internal const string FUNC_H265TRANSCODER_ENABLETRANSCODE = "IH265Transcoder__enableTranscode__const_char_ptr__const_char_ptr__agora_rtc_uid_t";
+        internal const string FUNC_H265TRANSCODER_QUERYCHANNEL = "IH265Transcoder__queryChannel__const_char_ptr__const_char_ptr__agora_rtc_uid_t";
+        internal const string FUNC_H265TRANSCODER_TRIGGERTRANSCODE = "IH265Transcoder__triggerTranscode__const_char_ptr__const_char_ptr__agora_rtc_uid_t";
+        internal const string FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER = "IH265Transcoder__registerTranscoderObserver__agora_rtc_IH265TranscoderObserver_ptr";
+        internal const string FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER = "IH265Transcoder__unregisterTranscoderObserver__agora_rtc_IH265TranscoderObserver_ptr";
         #endregion terra IH265Transcoder
     }
 }

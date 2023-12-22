@@ -5,7 +5,7 @@ import { CXXTYPE, Clazz, EnumConstant, Enumz, MemberFunction, MemberVariable, St
 import { copyFile } from "fs";
 import { publicDecrypt } from "crypto";
 import { start } from "repl";
-
+import { irisApiType } from "@agoraio-extensions/terra_shared_configs"
 export class SpeicalLogic {
 
     public cSharpSDK_MethodObsolete(clazzName: string, info: MemberFunction, repeart: number, belongToClazzName: string): string {
@@ -1099,7 +1099,14 @@ export class SpeicalLogic {
         }
         else if (transType.includes('[]')) {
             //是数组
-            return `AgoraJson.JsonToStructArray<${transType.substring(0, transType.length - 2)}> (${jsonMapName}, "${originName}")`;
+            let elementType = transType.substring(0, transType.length - 2);
+            if (simpleType.includes(elementType)) {
+
+                return `AgoraJson.GetDataArray${Tool.processString("-u", elementType)}(${jsonMapName}, "${originName}")`;
+            }
+            else {
+                return `AgoraJson.JsonToStructArray<${transType.substring(0, transType.length - 2)}> (${jsonMapName}, "${originName}")`;
+            }
         }
         else {
             //是枚举或者结构体 
@@ -1177,6 +1184,41 @@ export class SpeicalLogic {
         return lines.join("\n");
 
     }
+
+    public cSharpSDK_GenerateH265TranscoderObserverNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
+        let lines = [];
+
+        let switchKey = this.cSharpSDK_GenerateCallApiKeyWithH265(clazzName, m, 1, clazzName);
+        //Tool._processStringWithR(clazzName) + "_" + m.name
+        lines.push(`case "${switchKey}":\n{`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
+        lines.push(`#endif`);
+        lines.push(`if (EventHandler == null) return;`);
+        let methodName = Tool._processStringWithU(m.name);
+        lines.push(`EventHandler.${methodName}(`);
+
+        let paramslines = [];
+
+        for (let p of m.parameters) {
+            let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
+            if (jsonString != null)
+                paramslines.push("\t" + jsonString);
+        }
+
+        lines.push(`${paramslines.join(",\n")}`);
+
+        lines.push(`); `);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(` }); `);
+        lines.push(`#endif`);
+        lines.push(`break;\n}`);
+
+        return lines.join("\n");
+
+    }
+
+
 
     public cSharpSDK_GenerateMusicContentCenterEventHandlerNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
@@ -1385,5 +1427,10 @@ export class SpeicalLogic {
         else {
             return specialKeyMap[key];
         }
+    }
+
+    public cSharpSDK_GenerateCallApiKeyWithH265(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
+        let clazz: any = ConfigTool.getInstance().getClassOrStruct(clazzName) as any;
+        return irisApiType(clazz, m as any);
     }
 }

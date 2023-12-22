@@ -9,5 +9,5 @@
             "onPlayerInfoUpdated"
         ]
     },
-    "method_callback_common": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateMusicContentCenterEventHandlerNative}"
+    "method_callback_common": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateH265TranscoderObserverNative}"
 }

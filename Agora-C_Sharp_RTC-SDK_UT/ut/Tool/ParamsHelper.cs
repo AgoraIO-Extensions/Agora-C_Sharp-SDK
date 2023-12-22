@@ -288,7 +288,8 @@ namespace Agora.Rtc
             param.logConfig.filePath = "/Users/xiayangqun/Documents/agoraSpace";
         }
 
-        public static void InitParam(out MessageEvent @event) {
+        public static void InitParam(out MessageEvent @event)
+        {
             @event = new MessageEvent();
         }
 

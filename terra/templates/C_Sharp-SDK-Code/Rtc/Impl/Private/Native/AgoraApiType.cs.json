@@ -103,12 +103,13 @@
         "name": "IH265Transcoder",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": [
             "AddRef",
             "Release",
             "HasOneRef"
         ]
     },
-    "api_name": "internal const string FUNC_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-onMETHOD_NAME}\";"
+    "api_name": "internal const string FUNC_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-onMETHOD_NAME}\";",
+    "api_name_h265": "internal const string FUNC_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKeyWithH265}\";"
 }
