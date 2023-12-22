@@ -349,7 +349,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         (int)AgoraJson.GetData<int>(jsonData, "imageWidth"),
                         (int)AgoraJson.GetData<int>(jsonData, "imageHeight"),
                         AgoraJson.JsonToStructArray<Rectangle>(jsonData, "vecRectangle"),
-                        AgoraJson.JsonToStructArray<int>(jsonData, "vecDistance"),
+                        AgoraJson.GetDataArrayInt(jsonData, "vecDistance"),
                         (int)AgoraJson.GetData<int>(jsonData, "numFaces")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

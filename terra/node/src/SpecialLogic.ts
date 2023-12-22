@@ -1099,7 +1099,14 @@ export class SpeicalLogic {
         }
         else if (transType.includes('[]')) {
             //是数组
-            return `AgoraJson.JsonToStructArray<${transType.substring(0, transType.length - 2)}> (${jsonMapName}, "${originName}")`;
+            let elementType = transType.substring(0, transType.length - 2);
+            if (simpleType.includes(elementType)) {
+
+                return `AgoraJson.GetDataArray${Tool.processString("-u", elementType)}(${jsonMapName}, "${originName}")`;
+            }
+            else {
+                return `AgoraJson.JsonToStructArray<${transType.substring(0, transType.length - 2)}> (${jsonMapName}, "${originName}")`;
+            }
         }
         else {
             //是枚举或者结构体 
