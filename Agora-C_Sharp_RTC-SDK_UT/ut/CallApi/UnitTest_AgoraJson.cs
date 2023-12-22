@@ -5,17 +5,18 @@ using System;
 namespace Agora.Rtc
 {
 
-	public class UnitTest_AgoraJson
-	{
+    public class UnitTest_AgoraJson
+    {
 
         [SetUp]
         public void Setup()
         {
-           
+
         }
 
         [TearDown]
-        public void TearDown() {
+        public void TearDown()
+        {
 
         }
 
