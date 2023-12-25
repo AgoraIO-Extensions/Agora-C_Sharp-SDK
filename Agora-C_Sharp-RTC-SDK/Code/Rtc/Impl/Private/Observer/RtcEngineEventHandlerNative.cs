@@ -802,10 +802,6 @@ namespace Agora.Rtc
                     {
 #endif
                     if (rtcEngineEventHandler == null) return;
-
-                    string str = AgoraJson.ToJson(jsonData);
-                    AgoraLog.Log("RtcEngineEventHandler_onFacePositionChanged: " + str);
-
                     var numFaces = (int)AgoraJson.GetData<int>(jsonData, "numFaces");
                     rtcEngineEventHandler.OnFacePositionChanged(
                         (int)AgoraJson.GetData<int>(jsonData, "imageWidth"),
