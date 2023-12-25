@@ -86,9 +86,9 @@ namespace Agora.Rtc
             ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
             #region terra ThumbImageBufferInternal_Generate
             byte[] thumbBuffer = new byte[length];
-            if (imageBuffer.length > 0)
+            if (length > 0)
             {
-                Marshal.Copy((IntPtr)(this.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+                Marshal.Copy((this.buffer), thumbBuffer, 0, (int)length);
             }
             imageBuffer.buffer = thumbBuffer;
             imageBuffer.length = this.length;
@@ -128,8 +128,22 @@ namespace Agora.Rtc
             screenCaptureSourceInfo.type = this.type;
             screenCaptureSourceInfo.sourceId = this.sourceId;
             screenCaptureSourceInfo.sourceName = this.sourceName;
-            screenCaptureSourceInfo.thumbImage = this.thumbImage.GenerateThumbImageBuffer();
-            screenCaptureSourceInfo.iconImage = this.iconImage.GenerateThumbImageBuffer();
+            if (this.thumbImage != null)
+            {
+                screenCaptureSourceInfo.thumbImage = this.thumbImage.GenerateThumbImageBuffer();
+            }
+            else
+            {
+                screenCaptureSourceInfo.thumbImage = new ThumbImageBuffer(new byte[0], 0, 0, 0);
+            }
+            if (this.iconImage != null)
+            {
+                screenCaptureSourceInfo.iconImage = this.iconImage.GenerateThumbImageBuffer();
+            }
+            else
+            {
+                screenCaptureSourceInfo.iconImage = new ThumbImageBuffer(new byte[0], 0, 0, 0);
+            }
             screenCaptureSourceInfo.processPath = this.processPath;
             screenCaptureSourceInfo.sourceTitle = this.sourceTitle;
             screenCaptureSourceInfo.primaryMonitor = this.primaryMonitor;

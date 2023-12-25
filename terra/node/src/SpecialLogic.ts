@@ -184,7 +184,12 @@ export class SpeicalLogic {
 
     public cSharpSDK_ScreenCaptureSourceInfoInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.type.source.includes("ThumbImageBuffer")) {
-            return `screenCaptureSourceInfo.${m.name} = this.${m.name}.GenerateThumbImageBuffer();`
+            let array: string[] = [];
+            array.push(`if(this.${m.name} !=null) {`);
+            array.push(`screenCaptureSourceInfo.${m.name} = this.${m.name}.GenerateThumbImageBuffer();}`);
+            array.push(`else {`);
+            array.push(`screenCaptureSourceInfo.${m.name} = new ThumbImageBuffer(new byte[0], 0, 0, 0);}`)
+            return array.join("\n");
         }
         else {
             return `screenCaptureSourceInfo.${m.name} = this.${m.name};`
@@ -204,9 +209,9 @@ export class SpeicalLogic {
     public cSharpSDK_ThumbImageBufferInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.name == 'buffer') {
             return ` byte[] thumbBuffer = new byte[length];
-            if (imageBuffer.length > 0)
+            if (length > 0)
             {
-                Marshal.Copy((IntPtr)(this.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+                Marshal.Copy((this.buffer), thumbBuffer, 0, (int)length);
             }
             imageBuffer.buffer = thumbBuffer;`;
         }
