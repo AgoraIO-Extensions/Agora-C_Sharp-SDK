@@ -204,9 +204,9 @@ export class SpeicalLogic {
     public cSharpSDK_ThumbImageBufferInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.name == 'buffer') {
             return ` byte[] thumbBuffer = new byte[length];
-            if (imageBuffer.length > 0)
+            if (length > 0)
             {
-                Marshal.Copy((IntPtr)(this.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+                Marshal.Copy((this.buffer), thumbBuffer, 0, (int)length);
             }
             imageBuffer.buffer = thumbBuffer;`;
         }
