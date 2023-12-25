@@ -184,7 +184,12 @@ export class SpeicalLogic {
 
     public cSharpSDK_ScreenCaptureSourceInfoInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.type.source.includes("ThumbImageBuffer")) {
-            return `screenCaptureSourceInfo.${m.name} = this.${m.name}.GenerateThumbImageBuffer();`
+            let array: string[] = [];
+            array.push(`if(this.${m.name} !=null) {`);
+            array.push(`screenCaptureSourceInfo.${m.name} = this.${m.name}.GenerateThumbImageBuffer();}`);
+            array.push(`else {`);
+            array.push(`screenCaptureSourceInfo.${m.name} = new ThumbImageBuffer(new byte[0], 0, 0, 0);}`)
+            return array.join("\n");
         }
         else {
             return `screenCaptureSourceInfo.${m.name} = this.${m.name};`

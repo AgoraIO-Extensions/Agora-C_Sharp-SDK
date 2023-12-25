@@ -128,8 +128,22 @@ namespace Agora.Rtc
             screenCaptureSourceInfo.type = this.type;
             screenCaptureSourceInfo.sourceId = this.sourceId;
             screenCaptureSourceInfo.sourceName = this.sourceName;
-            screenCaptureSourceInfo.thumbImage = this.thumbImage.GenerateThumbImageBuffer();
-            screenCaptureSourceInfo.iconImage = this.iconImage.GenerateThumbImageBuffer();
+            if (this.thumbImage != null)
+            {
+                screenCaptureSourceInfo.thumbImage = this.thumbImage.GenerateThumbImageBuffer();
+            }
+            else
+            {
+                screenCaptureSourceInfo.thumbImage = new ThumbImageBuffer(new byte[0], 0, 0, 0);
+            }
+            if (this.iconImage != null)
+            {
+                screenCaptureSourceInfo.iconImage = this.iconImage.GenerateThumbImageBuffer();
+            }
+            else
+            {
+                screenCaptureSourceInfo.iconImage = new ThumbImageBuffer(new byte[0], 0, 0, 0);
+            }
             screenCaptureSourceInfo.processPath = this.processPath;
             screenCaptureSourceInfo.sourceTitle = this.sourceTitle;
             screenCaptureSourceInfo.primaryMonitor = this.primaryMonitor;
