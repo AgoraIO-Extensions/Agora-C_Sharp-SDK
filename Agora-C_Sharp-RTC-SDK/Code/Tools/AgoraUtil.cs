@@ -12,7 +12,7 @@ namespace Agora.Rtc
     public class AgoraJson
     {
         private const string ErrorTag = "AgoraJsonError";
-        internal static object GetData<T>(string data, string key)
+        public static object GetData<T>(string data, string key)
         {
             string jValue = "";
             try
@@ -59,13 +59,13 @@ namespace Agora.Rtc
             }
         }
 
-        internal static object GetData<T>(char[] data, string key)
+        public static object GetData<T>(char[] data, string key)
         {
             var str = new string(data, 0, Array.IndexOf(data, '\0'));
             return AgoraJson.GetData<T>(str, key);
         }
 
-        internal static object GetData<T>(JsonData data, string key)
+        public static object GetData<T>(JsonData data, string key)
         {
             var jValue = data[key].ToString();
 
@@ -102,13 +102,32 @@ namespace Agora.Rtc
             }
         }
 
-        internal static T JsonToStruct<T>(char[] data) where T : new()
+        public static int[] GetDataArrayInt(JsonData data, string key)
+        {
+            JsonData jsonData = data[key];
+            if (jsonData == null || jsonData.IsArray == false)
+            {
+                return new int[0];
+            }
+            else
+            {
+                var count = jsonData.Count;
+                var array = new int[count];
+                for (int i = 0; i < count; i++)
+                {
+                    array[i] = (int)jsonData[i];
+                }
+                return array;
+            }
+        }
+
+        public static T JsonToStruct<T>(char[] data) where T : new()
         {
             var str = new string(data, 0, Array.IndexOf(data, '\0'));
             return AgoraJson.JsonToStruct<T>(str);
         }
 
-        internal static T JsonToStruct<T>(char[] data, string key) where T : new()
+        public static T JsonToStruct<T>(char[] data, string key) where T : new()
         {
             var str = new string(data, 0, Array.IndexOf(data, '\0'));
             return AgoraJson.JsonToStruct<T>(str, key);
@@ -117,7 +136,7 @@ namespace Agora.Rtc
             //return JsonMapper.ToObject<T>(jValue ?? string.Empty);
         }
 
-        internal static T[] JsonToStructArray<T>(char[] data, string key = null, uint length = 0) where T : new()
+        public static T[] JsonToStructArray<T>(char[] data, string key = null, uint length = 0) where T : new()
         {
             var str = new string(data, 0, Array.IndexOf(data, '\0'));
             return AgoraJson.JsonToStructArray<T>(str, key, length);
@@ -135,7 +154,7 @@ namespace Agora.Rtc
             //return ret;
         }
 
-        internal static T JsonToStruct<T>(string data) where T : new()
+        public static T JsonToStruct<T>(string data) where T : new()
         {
             try
             {
@@ -148,19 +167,19 @@ namespace Agora.Rtc
             return new T();
         }
 
-        internal static T JsonToStruct<T>(string data, string key) where T : new()
+        public static T JsonToStruct<T>(string data, string key) where T : new()
         {
             var jValue = AgoraJson.ToJson(JsonMapper.ToObject(data)[key]);
             return AgoraJson.JsonToStruct<T>(jValue ?? string.Empty);
         }
 
-        internal static T JsonToStruct<T>(JsonData data, string key) where T : new()
+        public static T JsonToStruct<T>(JsonData data, string key) where T : new()
         {
             var jValue = AgoraJson.ToJson(data[key]);
             return AgoraJson.JsonToStruct<T>(jValue ?? string.Empty);
         }
 
-        internal static T[] JsonToStructArray<T>(string data, string key = null, uint length = 0) where T : new()
+        public static T[] JsonToStructArray<T>(string data, string key = null, uint length = 0) where T : new()
         {
             var jValueArray = key == null ? JsonMapper.ToObject(data) : JsonMapper.ToObject(data)[key];
             if (jValueArray == null)
@@ -175,7 +194,7 @@ namespace Agora.Rtc
             return ret;
         }
 
-        internal static T[] JsonToStructArray<T>(JsonData data, string key = null, uint length = 0) where T : new()
+        public static T[] JsonToStructArray<T>(JsonData data, string key = null, uint length = 0) where T : new()
         {
             var jValueArray = key == null ? data : data[key];
             if (jValueArray == null)
@@ -190,7 +209,7 @@ namespace Agora.Rtc
             return ret;
         }
 
-        internal static string ToJson<T>(T param)
+        public static string ToJson<T>(T param)
         {
             try
             {
@@ -203,7 +222,7 @@ namespace Agora.Rtc
             return "";
         }
 
-        internal static JsonData ToObject(string data)
+        public static JsonData ToObject(string data)
         {
             try
             {
