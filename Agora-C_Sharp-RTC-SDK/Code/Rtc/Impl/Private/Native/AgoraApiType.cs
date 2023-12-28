@@ -352,6 +352,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_ENABLECONTENTINSPECTEX = "RtcEngineEx_enableContentInspectEx";
         internal const string FUNC_RTCENGINEEX_STARTMEDIARENDERINGTRACINGEX = "RtcEngineEx_startMediaRenderingTracingEx";
         internal const string FUNC_RTCENGINEEX_SENDAUDIOMETADATAEX = "RtcEngineEx_sendAudioMetadataEx";
+        internal const string FUNC_RTCENGINE_GETCALLIDEX = "RtcEngine_getCallIdEx";
         #endregion
 
         #region IMediaPlayer start
