@@ -4807,5 +4807,8 @@ namespace Agora.Rtc
 
 
         public abstract int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, uint length);
+
+
+        public abstract int GetCallIdEx(ref string callId, RtcConnection connection);
     }
 }

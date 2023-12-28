@@ -3227,6 +3227,23 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int GetCallIdEx(ref string callId, RtcConnection connection)
+        {
+            _param.Clear();
+            _param.Add("connection",connection);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETCALLIDEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            callId = nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "callId");
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int Rate(string callId, int rating,
                         string description)
         {
