@@ -3626,6 +3626,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         REMOTE_AUDIO_REASON_REMOTE_OFFLINE = 7,
+
+        REMOTE_AUDIO_REASON_REMOTE_NO_PACKET_RECEIVE = 8,
+
+        REMOTE_AUDIO_REASON_REMOTE_LOCAL_PLAY_FAILED = 9,
     };
 
     ///
@@ -8073,7 +8077,9 @@ namespace Agora.Rtc
         /// 1<<2: Enable noise suppression to the in-ear monitor.
         /// </summary>
         ///
-        EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1 << 2)
+        EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1 << 2),
+
+        EAR_MONITORING_FILTER_REUSE_POST_PROCESSING_FILTER = (1 << 15),
     };
 
     ///

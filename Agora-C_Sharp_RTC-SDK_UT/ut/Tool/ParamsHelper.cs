@@ -2595,6 +2595,8 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.avsync_type, outParam.avsync_type) == false)
                 return false;
+            if (compareUint(selfParam.rtpTimestamp, outParam.rtpTimestamp) == false)
+                return false;
             return true;
         }
 

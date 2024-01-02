@@ -717,6 +717,18 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
+        [Test]
+        public void Test_GetCallIdEx()
+        {
+            string callId = "";
+
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.GetCallIdEx(ref callId, connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
         #endregion
     }
 

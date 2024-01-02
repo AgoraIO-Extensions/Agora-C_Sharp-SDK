@@ -1177,6 +1177,7 @@ namespace Agora.Rtc
             avsync_type = 0;
             presentationMs = 0;
             audioTrackNumber = 0;
+            rtpTimestamp = 0;
         }
 
         public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec,
@@ -1264,6 +1265,8 @@ namespace Agora.Rtc
         public int64_t presentationMs;
 
         public int audioTrackNumber;
+
+        public uint rtpTimestamp;
     };
 
     [Flags]
