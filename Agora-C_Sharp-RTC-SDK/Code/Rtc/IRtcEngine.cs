@@ -6254,5 +6254,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int StartMediaRenderingTracingEx(RtcConnection connection);
+
+
+        public abstract int GetCallIdEx(ref string callId, RtcConnection connection);
     }
 }

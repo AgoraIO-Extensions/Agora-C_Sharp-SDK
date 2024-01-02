@@ -2039,6 +2039,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetCallId(ref callId);
         }
 
+        public override int GetCallIdEx(ref string callId, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetCallIdEx(ref callId, connection);
+        }
+
         public override int Rate(string callId, int rating, string description)
         {
             if (_rtcEngineImpl == null)
