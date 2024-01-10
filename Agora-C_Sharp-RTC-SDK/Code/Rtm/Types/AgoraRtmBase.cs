@@ -1696,7 +1696,18 @@ namespace Agora.Rtm
         {
             set
             {
-                Buffer.BlockCopy(value, 0, encryptionSalt32, 0, 32);
+                if (value.Length != 32)
+                {
+                    var status = new RtmStatus();
+                    status.Error = true;
+                    status.ErrorCode = (int)RTM_ERROR_CODE.INVALID_ENCRYPTION_PARAMETER;
+                    status.Reason = "encryptionSalt length must be 32";
+                    throw new RTMException(status);
+                }
+                else
+                {
+                    Buffer.BlockCopy(value, 0, encryptionSalt32, 0, 32);
+                }
             }
 
             get
