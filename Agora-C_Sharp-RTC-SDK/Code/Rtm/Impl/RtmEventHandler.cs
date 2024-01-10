@@ -829,17 +829,8 @@ namespace Agora.Rtm
                 WhoNowResult whoNowResult = new WhoNowResult();
                 whoNowResult.UserStateList = userStateList;
                 whoNowResult.NextPage = nextPage;
-
-                // jira RTM2-832
-                if (userStateList == null || userStateList.Length == 0)
-                {
-                    whoNowResult.TotalOccupancy = (int)count;
-                }
-                else
-                {
-                    whoNowResult.TotalOccupancy = -1;
-                }
-
+                whoNowResult.TotalOccupancy = (int)count;
+               
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMWhoNowOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<WhoNowResult> rtmResult = new RtmResult<WhoNowResult>();
@@ -864,16 +855,7 @@ namespace Agora.Rtm
                 GetOnlineUsersResult getOnlineUsersResult = new GetOnlineUsersResult();
                 getOnlineUsersResult.UserStateList = userStateList;
                 getOnlineUsersResult.NextPage = nextPage;
-
-                // jira RTM2-832
-                if (userStateList == null || userStateList.Length == 0)
-                {
-                    getOnlineUsersResult.TotalOccupancy = (int)count;
-                }
-                else
-                {
-                    getOnlineUsersResult.TotalOccupancy = -1;
-                }
+                getOnlineUsersResult.TotalOccupancy = (int)count;
 
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMGetOnlineUsersOperation, this.rtmClient.GetInternalRtmClient());
 
