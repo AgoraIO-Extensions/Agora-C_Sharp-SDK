@@ -15,8 +15,8 @@ namespace Agora.Rtc
     public class TextureManager : MonoBehaviour
     {
         // texture identity
-        protected int _videoPixelWidth = 0;
-        protected int _videoPixelHeight = 0;
+        protected int _videoPixelWidth = 1;
+        protected int _videoPixelHeight = 1;
         //texture width and height
         public int Width
         {
