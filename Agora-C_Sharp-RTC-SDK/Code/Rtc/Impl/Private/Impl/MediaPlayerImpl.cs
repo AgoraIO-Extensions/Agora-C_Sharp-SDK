@@ -112,6 +112,12 @@ namespace Agora.Rtc
             if (_mediaPlayerEventHandlerHandle.handle != IntPtr.Zero)
                 return 0;
 
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            _callbackObject = new AgoraCallbackObject(identifier);
+            MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
+#endif
+
             AgoraRtcNative.AllocEventHandlerHandle(ref _mediaPlayerEventHandlerHandle, MediaPlayerSourceObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER,
@@ -124,10 +130,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER failed: " + nRet);
             }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            _callbackObject = new AgoraCallbackObject(identifier);
-            MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
-#endif
+
 
             return nRet;
         }

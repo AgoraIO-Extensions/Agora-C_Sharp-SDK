@@ -52,6 +52,26 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = null;
         }
 
+        public override void Dispose(bool sync = false)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return;
+            }
+
+            _rtcEngineImpl.Dispose(sync);
+            _rtcEngineImpl = null;
+
+            AudioDeviceManager.ReleaseInstance();
+            VideoDeviceManager.ReleaseInstance();
+            MusicContentCenter.ReleaseInstance();
+            H265Transcoder.ReleaseInstance();
+            LocalSpatialAudioEngine.ReleaseInstance();
+            MediaPlayerCacheManager.ReleaseInstance();
+
+            instance = null;
+        }
+
         private static IRtcEngine instance = null;
         public static IRtcEngine Instance
         {
@@ -105,25 +125,6 @@ namespace Agora.Rtc
             }
         }
 #endif
-
-        public override void Dispose(bool sync = false)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return;
-            }
-
-            _rtcEngineImpl.Dispose(sync);
-            _rtcEngineImpl = null;
-
-            AudioDeviceManager.ReleaseInstance();
-            VideoDeviceManager.ReleaseInstance();
-            MusicContentCenter.ReleaseInstance();
-            LocalSpatialAudioEngine.ReleaseInstance();
-            MediaPlayerCacheManager.ReleaseInstance();
-
-            instance = null;
-        }
 
         public override int InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {

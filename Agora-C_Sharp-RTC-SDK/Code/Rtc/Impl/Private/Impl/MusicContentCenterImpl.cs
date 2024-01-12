@@ -61,6 +61,11 @@ namespace Agora.Rtc
             if (this._musicContentCenterHandlerHandle.handle != IntPtr.Zero)
                 return;
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
+            MusicContentCenterEventHandlerNative.CallbackObject = _callbackObject;
+#endif
+
             AgoraRtcNative.AllocEventHandlerHandle(ref _musicContentCenterHandlerHandle, MusicContentCenterEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _musicContentCenterHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER,
@@ -73,10 +78,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER failed: " + nRet);
             }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
-            MusicContentCenterEventHandlerNative.CallbackObject = _callbackObject;
-#endif
+
         }
 
         private void UnSetEventHandler()

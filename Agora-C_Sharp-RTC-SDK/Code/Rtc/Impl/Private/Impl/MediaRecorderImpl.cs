@@ -66,10 +66,6 @@ namespace Agora.Rtc
             if (_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandle))
                 return _mediaRecorderEventHandlerHandles[nativeHandle];
 
-            RtcEventHandlerHandle handle = new RtcEventHandlerHandle();
-            AgoraRtcNative.AllocEventHandlerHandle(ref handle, MediaRecorderObserverNative.OnEvent);
-            _mediaRecorderEventHandlerHandles.Add(nativeHandle, handle);
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (_callbackObject == null)
             {
@@ -77,6 +73,10 @@ namespace Agora.Rtc
                 MediaRecorderObserverNative.CallbackObject = _callbackObject;
             }
 #endif
+
+            RtcEventHandlerHandle handle = new RtcEventHandlerHandle();
+            AgoraRtcNative.AllocEventHandlerHandle(ref handle, MediaRecorderObserverNative.OnEvent);
+            _mediaRecorderEventHandlerHandles.Add(nativeHandle, handle);
 
             return handle;
         }

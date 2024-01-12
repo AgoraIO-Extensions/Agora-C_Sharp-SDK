@@ -70,6 +70,15 @@ namespace Agora.Rtc
             if (_h265TranscoderObserverHandle.handle != IntPtr.Zero)
                 return 0;
 
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            if (_callbackObject == null)
+            {
+                _callbackObject = new AgoraCallbackObject(identifier);
+                H265TranscoderObserverNative.CallbackObject = _callbackObject;
+            }
+#endif
+
             AgoraRtcNative.AllocEventHandlerHandle(ref _h265TranscoderObserverHandle, H265TranscoderObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER,
@@ -82,10 +91,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            _callbackObject = new AgoraCallbackObject(identifier);
-            H265TranscoderObserverNative.CallbackObject = _callbackObject;
-#endif
+
 
             return nRet;
         }
