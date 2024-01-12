@@ -2244,6 +2244,8 @@ namespace Agora.Rtc
 
         public bool autoRegisterAgoraExtensions;
 
+        public bool enableAudioRoutingController;
+
         public override void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2278,6 +2280,16 @@ namespace Agora.Rtc
 
             writer.WritePropertyName("useExternalEglContext");
             writer.Write(this.useExternalEglContext);
+
+            writer.WritePropertyName("domainLimit");
+            writer.Write(this.domainLimit);
+
+            writer.WritePropertyName("autoRegisterAgoraExtensions");
+            writer.Write(this.autoRegisterAgoraExtensions);
+
+            writer.WritePropertyName("enableAudioRoutingController");
+            writer.Write(this.enableAudioRoutingController);
+
 
             writer.WriteObjectEnd();
         }
