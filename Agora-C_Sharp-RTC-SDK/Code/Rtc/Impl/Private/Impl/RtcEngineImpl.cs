@@ -116,7 +116,10 @@ namespace Agora.Rtc
                 _musicContentCenterImpl.Dispose();
                 _musicContentCenterImpl = null;
 
+                _spatialAudioEngineInstance.Dispose();
                 _spatialAudioEngineInstance = null;
+
+                _h265TranscoderImpl.Dispose();
                 _h265TranscoderImpl = null;
 
                 _mediaPlayerCacheManager.Dispose();
