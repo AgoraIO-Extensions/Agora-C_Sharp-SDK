@@ -1696,7 +1696,7 @@ namespace Agora.Rtm
         {
             set
             {
-                if (value.Length != 32)
+                if (value.Length > 32)
                 {
                     var status = new RtmStatus();
                     status.Error = true;
@@ -1706,7 +1706,14 @@ namespace Agora.Rtm
                 }
                 else
                 {
-                    Buffer.BlockCopy(value, 0, encryptionSalt32, 0, 32);
+                    Buffer.BlockCopy(value, 0, encryptionSalt32, 0, value.Length);
+                    if (value.Length < 32)
+                    {
+                        for (int i = value.Length; i < 32; i++)
+                        {
+                            encryptionSalt32[i] = 0;
+                        }
+                    }
                 }
             }
 
