@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using uid_t = System.UInt32;
 using System.Collections.Generic;
-namespace Agora.Rtc.Event
+namespace Agora.Rtc.Ut.Event
 {
     [TestFixture]
     public class UnitTest_IMetadataObserver

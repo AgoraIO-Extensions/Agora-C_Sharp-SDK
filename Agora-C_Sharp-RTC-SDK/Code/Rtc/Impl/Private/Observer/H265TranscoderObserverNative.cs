@@ -45,7 +45,7 @@ namespace Agora.Rtc
             switch (@event)
             {
                 #region terra IH265TranscoderObserver
-                case "H265TranscoderObserver_onEnableTranscode_6ba6646":
+                case AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONENABLETRANSCODE:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -60,7 +60,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "H265TranscoderObserver_onQueryChannel_31ba3df":
+                case AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONQUERYCHANNEL:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -77,7 +77,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "H265TranscoderObserver_onTriggerTranscode_6ba6646":
+                case AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONTRIGGERTRANSCODE:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {

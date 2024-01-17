@@ -1,7 +1,7 @@
 ﻿using System;
 using Agora.Rtc;
 
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     public class UTMediaPlayerCustomDataProvider : IMediaPlayerCustomDataProvider
     {

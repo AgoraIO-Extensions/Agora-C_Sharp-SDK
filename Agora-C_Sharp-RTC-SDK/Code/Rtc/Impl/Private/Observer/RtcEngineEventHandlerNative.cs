@@ -51,7 +51,7 @@ namespace Agora.Rtc
         {
             switch (@event)
             {
-                case "RtcEngineEventHandler_onStreamMessageEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSTREAMMESSAGE:
                     {
                         var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
                         var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
@@ -79,7 +79,7 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                         break;
                     }
                 #region terra IRtcEngineEventHandler
-                case "RtcEngineEventHandler_onProxyConnected":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONPROXYCONNECTED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -98,7 +98,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onError":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONERROR:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -114,7 +114,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLastmileProbeResult":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLASTMILEPROBERESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -129,7 +129,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioDeviceStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIODEVICESTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -146,7 +146,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioMixingPositionChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGPOSITIONCHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -161,7 +161,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioMixingFinished":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGFINISHED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -176,7 +176,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioEffectFinished":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOEFFECTFINISHED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -191,7 +191,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onVideoDeviceStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEODEVICESTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -208,7 +208,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUplinkNetworkInfoUpdated":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONUPLINKNETWORKINFOUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -223,7 +223,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onDownlinkNetworkInfoUpdated":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONDOWNLINKNETWORKINFOUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -238,7 +238,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLastmileQuality":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLASTMILEQUALITY:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -253,7 +253,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFirstLocalVideoFrame":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONFIRSTLOCALVIDEOFRAME:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -271,7 +271,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalVideoStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -288,7 +288,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onCameraReady":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERAREADY:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -303,7 +303,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onCameraFocusAreaChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERAFOCUSAREACHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -321,7 +321,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onCameraExposureAreaChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERAEXPOSUREAREACHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -339,7 +339,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFacePositionChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONFACEPOSITIONCHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -358,7 +358,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onVideoStopped":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSTOPPED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -373,7 +373,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioMixingStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -389,7 +389,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRhythmPlayerStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONRHYTHMPLAYERSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -405,7 +405,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onContentInspectResult":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCONTENTINSPECTRESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -420,7 +420,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioDeviceVolumeChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIODEVICEVOLUMECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -437,7 +437,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRtmpStreamingStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONRTMPSTREAMINGSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -454,7 +454,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRtmpStreamingEvent":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONRTMPSTREAMINGEVENT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -470,7 +470,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onTranscodingUpdated":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODINGUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -485,7 +485,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioRoutingChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOROUTINGCHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -500,7 +500,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onChannelMediaRelayStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCHANNELMEDIARELAYSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -516,7 +516,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalPublishFallbackToAudioOnly":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALPUBLISHFALLBACKTOAUDIOONLY:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -531,7 +531,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRemoteSubscribeFallbackToAudioOnly":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONREMOTESUBSCRIBEFALLBACKTOAUDIOONLY:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -547,7 +547,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onPermissionError":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONPERMISSIONERROR:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -562,7 +562,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalUserRegistered":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALUSERREGISTERED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -578,7 +578,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserInfoUpdated":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONUSERINFOUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -594,7 +594,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalVideoTranscoderError":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOTRANSCODERERROR:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -610,7 +610,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioSubscribeStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOSUBSCRIBESTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -629,7 +629,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onVideoSubscribeStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSUBSCRIBESTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -648,7 +648,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioPublishStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOPUBLISHSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -666,7 +666,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onVideoPublishStateChanged":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOPUBLISHSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -685,7 +685,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onExtensionEvent":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -703,7 +703,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onExtensionStarted":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -719,7 +719,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onExtensionStopped":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -735,7 +735,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onExtensionError":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERROR:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -753,7 +753,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onJoinChannelSuccessEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONJOINCHANNELSUCCESS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -769,7 +769,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRejoinChannelSuccessEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREJOINCHANNELSUCCESS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -785,7 +785,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioQualityEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOQUALITY:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -804,7 +804,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onAudioVolumeIndicationEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOVOLUMEINDICATION:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -822,7 +822,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLeaveChannelEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLEAVECHANNEL:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -838,7 +838,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRtcStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONRTCSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -854,7 +854,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onNetworkQualityEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONNETWORKQUALITY:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -872,7 +872,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onIntraRequestReceivedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONINTRAREQUESTRECEIVED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -887,7 +887,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFirstLocalVideoFramePublishedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAMEPUBLISHED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -903,7 +903,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFirstRemoteVideoDecodedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEODECODED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -922,7 +922,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onVideoSizeChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEOSIZECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -942,7 +942,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalVideoStateChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALVIDEOSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -959,7 +959,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRemoteVideoStateChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -978,7 +978,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFirstRemoteVideoFrameEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEOFRAME:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -997,7 +997,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserJoinedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERJOINED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1014,7 +1014,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserOfflineEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSEROFFLINE:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1031,7 +1031,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserMuteAudioEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERMUTEAUDIO:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1048,7 +1048,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserMuteVideoEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERMUTEVIDEO:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1065,7 +1065,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserEnableVideoEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERENABLEVIDEO:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1082,7 +1082,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserEnableLocalVideoEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERENABLELOCALVIDEO:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1099,7 +1099,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserStateChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1116,7 +1116,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalAudioStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALAUDIOSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1132,7 +1132,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRemoteAudioStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEAUDIOSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1148,7 +1148,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalVideoStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALVIDEOSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1164,7 +1164,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRemoteVideoStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1180,7 +1180,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onConnectionLostEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONLOST:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1195,7 +1195,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onConnectionInterruptedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONINTERRUPTED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1210,7 +1210,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onConnectionBannedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONBANNED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1225,7 +1225,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onStreamMessageErrorEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSTREAMMESSAGEERROR:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1245,7 +1245,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRequestTokenEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREQUESTTOKEN:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1260,7 +1260,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLicenseValidationFailureEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLICENSEVALIDATIONFAILURE:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1276,7 +1276,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onTokenPrivilegeWillExpireEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONTOKENPRIVILEGEWILLEXPIRE:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1292,7 +1292,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFirstLocalAudioFramePublishedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALAUDIOFRAMEPUBLISHED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1308,7 +1308,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFirstRemoteAudioFrameEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEAUDIOFRAME:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1325,7 +1325,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onFirstRemoteAudioDecodedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEAUDIODECODED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1342,7 +1342,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onLocalAudioStateChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALAUDIOSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1359,7 +1359,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRemoteAudioStateChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEAUDIOSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1378,7 +1378,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onActiveSpeakerEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONACTIVESPEAKER:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1394,7 +1394,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onClientRoleChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCLIENTROLECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1412,7 +1412,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onClientRoleChangeFailedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCLIENTROLECHANGEFAILED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1429,7 +1429,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRemoteAudioTransportStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEAUDIOTRANSPORTSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1448,7 +1448,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onRemoteVideoTransportStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOTRANSPORTSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1467,7 +1467,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onConnectionStateChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1484,7 +1484,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onWlAccMessageEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONWLACCMESSAGE:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1502,7 +1502,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onWlAccStatsEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONWLACCSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1519,7 +1519,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onNetworkTypeChangedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONNETWORKTYPECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1535,7 +1535,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onEncryptionErrorEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONENCRYPTIONERROR:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1551,7 +1551,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUploadLogResultEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUPLOADLOGRESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1569,7 +1569,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onUserAccountUpdatedEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERACCOUNTUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1586,7 +1586,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onSnapshotTakenEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSNAPSHOTTAKEN:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1606,7 +1606,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onVideoRenderingTracingResultEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEORENDERINGTRACINGRESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1624,7 +1624,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onSetRtmFlagResultEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSETRTMFLAGRESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1640,7 +1640,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "RtcEngineEventHandler_onTranscodedStreamLayoutInfoEx":
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONTRANSCODEDSTREAMLAYOUTINFO:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1690,7 +1690,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
             {
 
                 #region terra IDirectCdnStreamingEventHandler
-                case "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged":
+                case AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -1707,7 +1707,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "DirectCdnStreamingEventHandler_onDirectCdnStreamingStats":
+                case AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {

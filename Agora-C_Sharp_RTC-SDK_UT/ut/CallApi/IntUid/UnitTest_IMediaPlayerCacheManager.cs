@@ -1,7 +1,7 @@
 ﻿using System;
 using Agora.Rtc;
 using NUnit.Framework;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     public class UnitTest_IMediaPlayerCacheManager
     {

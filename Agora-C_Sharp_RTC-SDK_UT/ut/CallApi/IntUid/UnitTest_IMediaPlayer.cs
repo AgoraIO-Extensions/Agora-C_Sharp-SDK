@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Agora.Rtc;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     using view_t = System.Int64;
     public class UnitTest_IMediaPlayer

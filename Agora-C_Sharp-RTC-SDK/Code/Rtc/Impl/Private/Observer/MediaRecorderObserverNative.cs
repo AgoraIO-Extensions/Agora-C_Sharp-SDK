@@ -62,7 +62,7 @@ namespace Agora.Rtc
             string nativeHandle = (string)AgoraJson.GetData<string>(jsonData, "nativeHandle");
             switch (@event)
             {
-                case "MediaRecorderObserver_onRecorderStateChanged":
+                case AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() =>{
@@ -80,7 +80,7 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                         break;
                     }
 
-                case "MediaRecorderObserver_onRecorderInfoUpdated":
+                case AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() =>{

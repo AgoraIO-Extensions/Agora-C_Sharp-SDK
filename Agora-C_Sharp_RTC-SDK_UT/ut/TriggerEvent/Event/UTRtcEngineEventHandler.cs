@@ -1,6 +1,6 @@
 ﻿using System;
 using uid_t = System.UInt32;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     public class UTRtcEngineEventHandler : IRtcEngineEventHandler
     {

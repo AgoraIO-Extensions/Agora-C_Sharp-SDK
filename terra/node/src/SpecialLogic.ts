@@ -986,14 +986,12 @@ export class SpeicalLogic {
 
     public cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName: string, m: MemberFunction, forcedConversion: string): string {
         let lines = [];
-        let switchKeyPre = "RtcEngineEventHandler";
-        let switchKeyTail = clazzName.endsWith('Ex') ? m.name + "Ex" : m.name;
-        let switchKey = switchKeyPre + "_" + switchKeyTail;
+        let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", clazzName)}_${Tool.processString("-v", m.name, 1)}`;
         let handlerNameMap = {
             "IDirectCdnStreamingEventHandler": "rtcEngineEventHandler"
         }
         let handlerName = handlerNameMap[clazzName] || "commonEventHandler";
-        lines.push(`case "${switchKey}":\n{`);
+        lines.push(`case ${switchKey}:\n{`);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
@@ -1126,12 +1124,12 @@ export class SpeicalLogic {
 
     public cSharpSDK_GenerateCommonEventHandlerNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
-        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
+        let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-v", m.name, repeart)}`;
         let handlerNameMap = {
             "IDirectCdnStreamingEventHandler": "rtcEngineEventHandler"
         }
         let handlerName = handlerNameMap[clazzName] || "commonEventHandler";
-        lines.push(`case "${switchKey}":\n{`);
+        lines.push(`case ${switchKey}:\n{`);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
@@ -1161,8 +1159,8 @@ export class SpeicalLogic {
 
     public cSharpSDK_GenerateMediaPlayerSourceObserverNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
-        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
-        lines.push(`case "${switchKey}":\n{`);
+        let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-v", m.name, repeart)}`;
+        lines.push(`case ${switchKey}:\n{`);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
@@ -1193,9 +1191,8 @@ export class SpeicalLogic {
     public cSharpSDK_GenerateH265TranscoderObserverNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
 
-        let switchKey = this.cSharpSDK_GenerateCallApiKeyWithH265(clazzName, m, 1, clazzName);
-        //Tool._processStringWithR(clazzName) + "_" + m.name
-        lines.push(`case "${switchKey}":\n{`);
+        let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-v", m.name, repeart)}`;
+        lines.push(`case ${switchKey}:\n{`);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
@@ -1227,8 +1224,8 @@ export class SpeicalLogic {
 
     public cSharpSDK_GenerateMusicContentCenterEventHandlerNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
-        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
-        lines.push(`case "${switchKey}":\n{`);
+        let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-v", m.name, repeart)}`;
+        lines.push(`case ${switchKey}:\n{`);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
@@ -1437,5 +1434,11 @@ export class SpeicalLogic {
     public cSharpSDK_GenerateCallApiKeyWithH265(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         let clazz: any = ConfigTool.getInstance().getClassOrStruct(clazzName) as any;
         return irisApiId(clazz, m as any, { toUpperCase: false });
+    }
+
+    public cSharpSDK_GenerateCallApiKeyWitRtcEngineEventEx(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
+        let clazz: any = ConfigTool.getInstance().getClassOrStruct(clazzName) as any;
+        let apiId = irisApiId(clazz, m as any, { toUpperCase: false });
+        return apiId.replace("Ex", "");
     }
 }

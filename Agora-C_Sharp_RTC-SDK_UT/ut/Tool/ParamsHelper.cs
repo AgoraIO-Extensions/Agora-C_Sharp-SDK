@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Agora.Rtc;
 using Agora.Rtm;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisCApiParam2
