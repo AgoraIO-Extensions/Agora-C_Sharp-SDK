@@ -238,7 +238,7 @@ namespace Agora.Rtc.Ut
 
 
             var nRet = MediaPlayer.GetState();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE, nRet);
         }
 
         [Test]
@@ -375,7 +375,7 @@ namespace Agora.Rtc.Ut
 
 
             var nRet = MediaPlayer.GetPlayerSdkVersion();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
@@ -384,7 +384,7 @@ namespace Agora.Rtc.Ut
 
 
             var nRet = MediaPlayer.GetPlaySrc();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
