@@ -4,7 +4,7 @@
         "name": "IRtcEngine",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IRtcEngineEx": {
@@ -12,7 +12,7 @@
         "name": "IRtcEngineEx",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IMediaPlayer": {
@@ -20,7 +20,7 @@
         "name": "IMediaPlayer",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IAudioDeviceManager": {
@@ -28,7 +28,7 @@
         "name": "IAudioDeviceManager",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IVideoDeviceManager": {
@@ -36,7 +36,7 @@
         "name": "IVideoDeviceManager",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "ISpatialAudioEngineBase": {
@@ -44,7 +44,7 @@
         "name": "ISpatialAudioEngineBase",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "ILocalSpatialAudioEngine": {
@@ -52,7 +52,7 @@
         "name": "ILocalSpatialAudioEngine",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IMediaEngine": {
@@ -60,7 +60,7 @@
         "name": "IMediaEngine",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": [
             "addVideoFrameRenderer",
             "removeVideoFrameRenderer"
@@ -71,7 +71,7 @@
         "name": "IMediaPlayerCacheManager",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IMediaRecorder": {
@@ -79,7 +79,7 @@
         "name": "IMediaRecorder",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IMusicContentCenter": {
@@ -87,7 +87,7 @@
         "name": "IMusicContentCenter",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IMusicPlayer": {
@@ -95,7 +95,7 @@
         "name": "IMusicPlayer",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
+        "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
     "IH265Transcoder": {

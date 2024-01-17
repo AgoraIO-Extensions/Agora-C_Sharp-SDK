@@ -232,7 +232,7 @@ namespace Agora.Rtc
 
         ROUTE_LOUDSPEAKER = 4,
 
-        ROUTE_HEADSETBLUETOOTH = 5,
+        ROUTE_BLUETOOTH_DEVICE_HFP = 5,
 
         ROUTE_USB = 6,
 
@@ -242,7 +242,7 @@ namespace Agora.Rtc
 
         ROUTE_AIRPLAY = 9,
 
-        ROUTE_BLUETOOTH_SPEAKER = 10,
+        ROUTE_BLUETOOTH_DEVICE_A2DP = 10,
     }
 
     public enum BYTES_PER_SAMPLE

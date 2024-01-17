@@ -5,7 +5,7 @@ import { CXXTYPE, Clazz, EnumConstant, Enumz, MemberFunction, MemberVariable, St
 import { copyFile } from "fs";
 import { publicDecrypt } from "crypto";
 import { start } from "repl";
-import { irisApiType } from "@agoraio-extensions/terra_shared_configs"
+import { irisApiId } from "@agoraio-extensions/terra_shared_configs"
 export class SpeicalLogic {
 
     public cSharpSDK_MethodObsolete(clazzName: string, info: MemberFunction, repeart: number, belongToClazzName: string): string {
@@ -1436,6 +1436,6 @@ export class SpeicalLogic {
 
     public cSharpSDK_GenerateCallApiKeyWithH265(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         let clazz: any = ConfigTool.getInstance().getClassOrStruct(clazzName) as any;
-        return irisApiType(clazz, m as any);
+        return irisApiId(clazz, m as any, { toUpperCase: false });
     }
 }
