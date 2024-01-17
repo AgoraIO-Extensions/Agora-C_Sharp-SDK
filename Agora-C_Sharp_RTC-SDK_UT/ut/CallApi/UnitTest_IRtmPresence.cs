@@ -1,7 +1,7 @@
 ﻿using System;
-using Agora.Rtc;
+using Agora.Rtc.Ut;
 using NUnit.Framework;
-namespace Agora.Rtm
+namespace Agora.Rtm.Ut
 {
     public class UnitTest_IRtmPresence
     {

@@ -2,9 +2,9 @@ using System;
 using NUnit.Framework;
 using uid_t = System.UInt32;
 using System.Collections.Generic;
-using Agora.Rtc;
+using Agora.Rtc.Ut;
 
-namespace Agora.Rtm.Event
+namespace Agora.Rtm.Ut.Ut
 {
     [TestFixture]
     public class UnitTest_IRtmEventHandler
@@ -13,13 +13,13 @@ namespace Agora.Rtm.Event
         public Internal.IRtmClient Client;
         public UTInternalRtmEventHandler EventHandler;
         public IntPtr FakeRtmClientPtr;
-        public IrisCApiParam2 ApiParam;
+        public Agora.Rtc.Ut.IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
 
         [SetUp]
         public void Setup()
         {
-            FakeRtmClientPtr = DLLHelper.CreateFakeRtmClient();
+            FakeRtmClientPtr = Agora.Rtc.Ut.DLLHelper.CreateFakeRtmClient();
             Client = Internal.RtmClient.CreateAgoraRtmClient(FakeRtmClientPtr);
             Internal.RtmConfig config = new Internal.RtmConfig();
             EventHandler = new UTInternalRtmEventHandler();

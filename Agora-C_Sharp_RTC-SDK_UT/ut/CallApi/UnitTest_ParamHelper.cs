@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Agora.Rtc;
 using Agora.Rtm;
 
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     public class UnitTest_ParamHelper
     {

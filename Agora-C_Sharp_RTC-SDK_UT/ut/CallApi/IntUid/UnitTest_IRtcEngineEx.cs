@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Agora.Rtc;
 
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     using uid_t = System.UInt32;
     [TestFixture]

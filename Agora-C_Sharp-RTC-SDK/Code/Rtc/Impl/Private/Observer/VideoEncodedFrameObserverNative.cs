@@ -41,7 +41,7 @@ namespace Agora.Rtc
                 switch (@event)
                 {
 
-                    case "VideoEncodedFrameObserver_onEncodedVideoFrameReceived":
+                    case AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED:
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
@@ -73,7 +73,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case "VideoEncodedFrameObserver_OnEncodedVideoFrameReceived":
+                case AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED:
                     {
                         bool result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();

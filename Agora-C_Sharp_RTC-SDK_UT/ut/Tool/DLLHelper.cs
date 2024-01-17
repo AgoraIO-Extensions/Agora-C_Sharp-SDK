@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     internal class DLLHelper
     {

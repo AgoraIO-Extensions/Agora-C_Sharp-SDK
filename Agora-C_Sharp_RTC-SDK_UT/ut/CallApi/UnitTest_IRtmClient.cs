@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using Agora.Rtc;
-namespace Agora.Rtm
+using Agora.Rtc.Ut;
+namespace Agora.Rtm.Ut
 {
     public class UnitTest_IRtmClient
     {
