@@ -1412,14 +1412,7 @@ export class SpeicalLogic {
     public cSharpSDK_GenerateCallApiKey(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         // return `"${Tool.processString('-r', clazzName)}_${Tool.processString('-n', m.name)}${repeat > 1 ? repeat : ""}"`;
         let specialKeyMap = {
-            "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION": "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION2",
-            "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION2": "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION",
 
-            "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY": "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY2",
-            "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY2": "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY",
-
-            "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY": "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY2",
-            "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY2": "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY"
         }
 
         let key = `AgoraApiType.FUNC_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-vn", m.name, repeat)}`;

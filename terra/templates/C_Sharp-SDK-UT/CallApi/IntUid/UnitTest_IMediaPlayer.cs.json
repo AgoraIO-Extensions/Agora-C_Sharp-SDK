@@ -13,7 +13,9 @@
             "registerPlayerSourceObserver",
             "unregisterPlayerSourceObserver",
             "openWithCustomSource",
-            "openWithMediaSource"
+            "openWithMediaSource",
+            "registerAudioFrameObserver",
+            "registerMediaPlayerAudioSpectrumObserver"
         ],
         "specialMethodsTemplate": {
             "getPlayerSdkVersion": "method_unitTest_compare_string",

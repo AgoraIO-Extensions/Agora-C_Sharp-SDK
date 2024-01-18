@@ -23,7 +23,7 @@ namespace Agora.Rtc
 
         private IrisRtcCApiParam _apiParam;
 
-        private RtcEventHandlerHandle _mediaPlayerEventHandlerHandle = new RtcEventHandlerHandle();
+        private Dictionary<int, RtcEventHandlerHandle> _mediaPlayerEventHandlerHandles = new Dictionary<int, RtcEventHandlerHandle>();
 
         // audioFrameObserver
         private Dictionary<int, RtcEventHandlerHandle> _mediaPlayerAudioFrameObserverHandles = new Dictionary<int, RtcEventHandlerHandle>();
@@ -63,10 +63,16 @@ namespace Agora.Rtc
 
             if (disposing)
             {
-                ReleaseEventHandler();
-
                 // must unset and then free. If you only free. When callback trigger. Your eventHandler will be bed address
-                var keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
+
+                var keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerEventHandlerHandles);
+                foreach (var playerId in keys)
+                {
+                    ReleaseEventHandler(playerId);
+                }
+                _mediaPlayerEventHandlerHandles.Clear();
+
+                keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
                 foreach (var playerId in keys)
                 {
                     this.UnSetIrisAudioFrameObserver(playerId);
@@ -107,21 +113,23 @@ namespace Agora.Rtc
             GC.SuppressFinalize(this);
         }
 
-        private int CreateEventHandler()
+        private int CreateEventHandler(int playerId)
         {
-            if (_mediaPlayerEventHandlerHandle.handle != IntPtr.Zero)
-                return 0;
-
+            if (_mediaPlayerEventHandlerHandles.ContainsKey(playerId) == true) return 0;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _callbackObject = new AgoraCallbackObject(identifier);
             MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
 #endif
+            _param.Clear();
+            _param.Add("playerId", playerId);
+            var json = AgoraJson.ToJson(_param);
+            var _mediaPlayerEventHandlerHandle = new RtcEventHandlerHandle();
 
             AgoraRtcNative.AllocEventHandlerHandle(ref _mediaPlayerEventHandlerHandle, MediaPlayerSourceObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER,
-                                                          "{}", 2,
+                                                          json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
@@ -129,20 +137,24 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER failed: " + nRet);
             }
-
-
+            _mediaPlayerEventHandlerHandles.Add(playerId, _mediaPlayerEventHandlerHandle);
 
             return nRet;
         }
 
-        private void ReleaseEventHandler()
+        private int ReleaseEventHandler(int playerId)
         {
-            if (_mediaPlayerEventHandlerHandle.handle == IntPtr.Zero)
-                return;
+            if (_mediaPlayerEventHandlerHandles.ContainsKey(playerId) == false) return 0;
+
+            _param.Clear();
+            _param.Add("playerId", playerId);
+            var json = AgoraJson.ToJson(_param);
+
+            var _mediaPlayerEventHandlerHandle = _mediaPlayerEventHandlerHandles[playerId];
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER,
-                                                          "{}", 2,
+                                                          json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
@@ -152,10 +164,11 @@ namespace Agora.Rtc
             }
 
             AgoraRtcNative.FreeEventHandlerHandle(ref _mediaPlayerEventHandlerHandle);
+            _mediaPlayerEventHandlerHandles.Remove(playerId);
 
             /// You must release callbackObject after you release eventhandler.
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
-            MediaPlayerSourceObserverNative.ClearSourceObserver();
+            MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             MediaPlayerSourceObserverNative.CallbackObject = null;
@@ -163,6 +176,7 @@ namespace Agora.Rtc
                 _callbackObject.Release();
             _callbackObject = null;
 #endif
+            return nRet;
         }
 
         private int SetIrisAudioFrameObserver(int playerId)
@@ -418,16 +432,17 @@ namespace Agora.Rtc
             // you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
             // because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
             // and this time you dont have observer be trigger
+            int ret = 0;
             if (engineEventHandler == null)
             {
                 MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
+                ret = ReleaseEventHandler(playerId);
             }
             else
             {
                 MediaPlayerSourceObserverNative.AddSourceObserver(playerId, engineEventHandler);
+                ret = CreateEventHandler(playerId);
             }
-
-            int ret = CreateEventHandler();
             return ret;
         }
 

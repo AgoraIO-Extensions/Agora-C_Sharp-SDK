@@ -47,6 +47,13 @@ namespace Agora.Rtc.Ut
         public uint buffer_count;
     }
 
+    public class FakeVideoFrameMetaInfo : IVideoFrameMetaInfo
+    {
+        public override string GetMetaInfoStr(META_INFO_KEY key)
+        {
+            return key.ToString();
+        }
+    }
 
     public class ParamsHelper
     {
@@ -78,6 +85,9 @@ namespace Agora.Rtc.Ut
             }
             else if (instType.IsClass)
             {
+                if (instType.Name == "IVideoFrameMetaInfo")
+                    return new FakeVideoFrameMetaInfo();
+
                 if (instType.Name == "String")
                     return "10";
 

@@ -78,7 +78,6 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER failed: " + nRet);
             }
 
-
         }
 
         private void UnSetEventHandler()

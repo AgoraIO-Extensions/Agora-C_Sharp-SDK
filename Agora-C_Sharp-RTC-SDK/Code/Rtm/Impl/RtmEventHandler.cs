@@ -830,7 +830,7 @@ namespace Agora.Rtm
                 whoNowResult.UserStateList = userStateList;
                 whoNowResult.NextPage = nextPage;
                 whoNowResult.TotalOccupancy = (int)count;
-               
+
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMWhoNowOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<WhoNowResult> rtmResult = new RtmResult<WhoNowResult>();
