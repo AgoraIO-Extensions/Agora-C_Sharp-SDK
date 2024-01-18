@@ -55,7 +55,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "AudioSpectrumObserver_onLocalAudioSpectrum":
+                    case AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM:
                         {
                             var irisAudioSpectrumData = AgoraJson.JsonToStruct<IrisAudioSpectrumData>(jsonData, "data");
                             var spectrumData = new AudioSpectrumData();
@@ -69,7 +69,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-                    case "AudioSpectrumObserver_onRemoteAudioSpectrum":
+                    case AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM:
                         {
                             var irisUserAudioSpectrumInfo = AgoraJson.JsonToStructArray<IrisUserAudioSpectrumInfo>(jsonData, "spectrums");
                             var spectrumNumber = (uint)AgoraJson.GetData<uint>(jsonData, "spectrumNumber");
@@ -102,8 +102,8 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case "AudioSpectrumObserver_onLocalAudioSpectrum":
-                case "AudioSpectrumObserver_onRemoteAudioSpectrum":
+                case AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM:
+                case AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM:
                     {
                         var result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();

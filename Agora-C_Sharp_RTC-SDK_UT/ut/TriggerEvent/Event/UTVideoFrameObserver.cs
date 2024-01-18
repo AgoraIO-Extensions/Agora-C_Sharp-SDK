@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     public class UTVideoFrameObserver : IVideoFrameObserver
     {

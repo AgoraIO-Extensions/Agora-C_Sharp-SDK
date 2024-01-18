@@ -8,38 +8,48 @@ import { ParamDefaultTrans } from "./ParamDefaultTrans";
 import { ParseEngine } from "./PraseEngine";
 import { Tool } from "./Tool";
 import { AddAllDocTag, AddAllDocContetnt, DeleteAllOldDoc } from "./DocHelper";
+import path from "path";
 
-let jsonPath = "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/node/.terra/cxx_parser/dump_json_1f16dedf5e0b3542bc2cbbcec4cce513.json";
-
+let jsonPath = getTerraJsonPath();
+console.log(jsonPath);
 let cxxiles = JSON.parse(fs.readFileSync(jsonPath, { encoding: 'utf-8' }));
 
 new ParseEngine(
-    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/Agora-C_Sharp-RTC-SDK/Code",
-    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/templates/C_Sharp-SDK-Code",
-    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/templates/C_Sharp-SDK-Trans",
+    path.join(__dirname, "../../../Agora-C_Sharp-RTC-SDK/Code"),
+    path.join(__dirname, "../../../terra/templates/C_Sharp-SDK-Code"),
+    path.join(__dirname, "../../../terra/templates/C_Sharp-SDK-Trans"),
     cxxiles,
     "#region terra",
     "#endregion terra",
-    "/Users/xiayangqun/Documents/agoraSpace/terra_shared_configs/headers/rtc_4.3.0/include"
+    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.0/include")
 );
 
 new ParseEngine(
-    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/Agora-C_Sharp_RTC-SDK_UT/ut",
-    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/templates/C_Sharp-SDK-UT",
-    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/templates/C_Sharp-SDK-Trans",
+    path.join(__dirname, "../../../Agora-C_Sharp_RTC-SDK_UT/ut"),
+    path.join(__dirname, "../../../terra/templates/C_Sharp-SDK-UT"),
+    path.join(__dirname, "../../../terra/templates/C_Sharp-SDK-Trans"),
     cxxiles,
     "#region terra",
     "#endregion terra",
-    "/Users/xiayangqun/Documents/agoraSpace/terra_shared_configs/headers/rtc_4.3.0/include"
+    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.0/include")
 );
 
-// var data = Tool.getCppConstructor("ChannelMediaInfoS", "/Users/xiayangqun/Documents/agoraSpace/terra_shared_configs/headers/rtc_4.3.0/include/AgoraBaseS.h")
-// console.log(JSON.stringify(data));
+// // var data = Tool.getCppConstructor("ChannelMediaInfoS", "/Users/xiayangqun/Documents/agoraSpace/terra_shared_configs/headers/rtc_4.3.0/include/AgoraBaseS.h")
+// // console.log(JSON.stringify(data));
 execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
-// DeleteAllOldDoc();
-// AddAllDocTag();
-// AddAllDocContetnt();
+
+
+// add doc 
+// // DeleteAllOldDoc();
+// // AddAllDocTag();
+// // AddAllDocContetnt();
 // execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
 
+
+function getTerraJsonPath(): string {
+    let jsonDir = path.join(__dirname, "../.terra/cxx_parser");
+    let jsonFiles = fs.readdirSync(jsonDir).filter(file => file.startsWith("dump_json_"));
+    return path.join(jsonDir, jsonFiles[0]);
+}
 
 

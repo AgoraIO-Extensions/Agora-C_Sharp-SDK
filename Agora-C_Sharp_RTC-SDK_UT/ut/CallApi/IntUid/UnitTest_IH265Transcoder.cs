@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Agora.Rtc;
 using uid_t = System.UInt32;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     public class UnitTest_IH265Transcoder
     {

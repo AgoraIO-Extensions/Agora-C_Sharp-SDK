@@ -42,7 +42,7 @@ namespace Agora.Rtc
                 switch (@event)
                 {
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
-                    case "MetadataObserver_getMaxMetadataSize":
+                    case AgoraEventType.EVENT_METADATAOBSERVER_GETMAXMETADATASIZE:
                         {
                             int result = metadataObserver.GetMaxMetadataSize();
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -55,7 +55,7 @@ namespace Agora.Rtc
                         break;
 #endif
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
-                    case "MetadataObserver_onReadyToSendMetadata":
+                    case AgoraEventType.EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA:
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
@@ -71,7 +71,7 @@ namespace Agora.Rtc
                         }
                         break;
 #endif
-                    case "MetadataObserver_onMetadataReceived":
+                    case AgoraEventType.EVENT_METADATAOBSERVER_ONMETADATARECEIVED:
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
@@ -92,7 +92,7 @@ namespace Agora.Rtc
             switch (@event)
             {
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
-                case "MetadataObserverBase_getMaxMetadataSize":
+                case AgoraEventType.EVENT_METADATAOBSERVER_GETMAXMETADATASIZE:
                     {
                         int result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -105,7 +105,7 @@ namespace Agora.Rtc
                     break;
 #endif
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
-                case "MetadataObserver_onReadyToSendMetadata":
+                case AgoraEventType.EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA:
                     {
                         Metadata metadata = new Metadata();
                         bool result = false;
@@ -119,7 +119,7 @@ namespace Agora.Rtc
                     }
                     break;
 #endif
-                case "MetadataObserver_onMetadataReceived":
+                case AgoraEventType.EVENT_METADATAOBSERVER_ONMETADATARECEIVED:
                     break;
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);

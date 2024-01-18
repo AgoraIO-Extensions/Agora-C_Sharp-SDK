@@ -51,7 +51,7 @@ namespace Agora.Rtc
             int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
             switch (@event)
             {
-                case "MediaPlayerSourceObserver_onMetaData":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONMETADATA:
                     {
                         var byteLength = (int)AgoraJson.GetData<int>(jsonData, "length");
                         var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
@@ -74,7 +74,7 @@ namespace Agora.Rtc
                     }
 
                 #region terra IMediaPlayerSourceObserver
-                case "MediaPlayerSourceObserver_onPlayerSourceStateChanged":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSOURCESTATECHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -90,7 +90,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPositionChanged":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -106,7 +106,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPlayerEvent":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYEREVENT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -123,7 +123,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPlayBufferUpdated":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYBUFFERUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -138,7 +138,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPreloadEvent":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPRELOADEVENT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -154,7 +154,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onCompleted":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONCOMPLETED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -169,7 +169,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onAgoraCDNTokenWillExpire":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAGORACDNTOKENWILLEXPIRE:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -184,7 +184,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPlayerSrcInfoChanged":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSRCINFOCHANGED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -200,7 +200,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPlayerInfoUpdated":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERINFOUPDATED:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -215,7 +215,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPlayerCacheStats":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERCACHESTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -230,7 +230,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onPlayerPlaybackStats":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERPLAYBACKSTATS:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -245,7 +245,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MediaPlayerSourceObserver_onAudioVolumeIndication":
+                case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAUDIOVOLUMEINDICATION:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {

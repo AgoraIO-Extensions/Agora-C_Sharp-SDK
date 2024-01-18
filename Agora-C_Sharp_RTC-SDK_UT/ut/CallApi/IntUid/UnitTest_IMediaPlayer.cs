@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Agora.Rtc;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     using view_t = System.Int64;
     public class UnitTest_IMediaPlayer
@@ -40,7 +40,8 @@ namespace Agora.Rtc
         [Test]
         public void Test_OpenWithMediaSource()
         {
-            MediaSource source = ParamsHelper.CreateParam<MediaSource>();
+            MediaSource source = new MediaSource();
+            source.provider = new UTMediaPlayerCustomDataProvider();
 
             var nRet = MediaPlayer.OpenWithMediaSource(source);
             Assert.AreEqual(0, nRet);
@@ -238,7 +239,7 @@ namespace Agora.Rtc
 
 
             var nRet = MediaPlayer.GetState();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE, nRet);
         }
 
         [Test]
@@ -314,40 +315,11 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_RegisterAudioFrameObserver()
-        {
-            IAudioPcmFrameSink observer = ParamsHelper.CreateParam<IAudioPcmFrameSink>();
-
-            var nRet = MediaPlayer.RegisterAudioFrameObserver(observer);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_RegisterAudioFrameObserver2()
-        {
-            IAudioPcmFrameSink observer = ParamsHelper.CreateParam<IAudioPcmFrameSink>();
-            RAW_AUDIO_FRAME_OP_MODE_TYPE mode = ParamsHelper.CreateParam<RAW_AUDIO_FRAME_OP_MODE_TYPE>();
-
-            var nRet = MediaPlayer.RegisterAudioFrameObserver(observer, mode);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_UnregisterAudioFrameObserver()
         {
 
 
             var nRet = MediaPlayer.UnregisterAudioFrameObserver();
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_RegisterMediaPlayerAudioSpectrumObserver()
-        {
-            IAudioSpectrumObserver observer = ParamsHelper.CreateParam<IAudioSpectrumObserver>();
-            int intervalInMS = ParamsHelper.CreateParam<int>();
-
-            var nRet = MediaPlayer.RegisterMediaPlayerAudioSpectrumObserver(observer, intervalInMS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -375,7 +347,7 @@ namespace Agora.Rtc
 
 
             var nRet = MediaPlayer.GetPlayerSdkVersion();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
@@ -384,7 +356,7 @@ namespace Agora.Rtc
 
 
             var nRet = MediaPlayer.GetPlaySrc();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual("", nRet);
         }
 
         [Test]

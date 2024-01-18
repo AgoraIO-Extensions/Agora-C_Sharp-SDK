@@ -206,7 +206,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "VideoFrameObserver_onCaptureVideoFrame":
+                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -223,7 +223,7 @@ namespace Agora.Rtc
                             break;
                         }
 
-                    case "VideoFrameObserver_onPreEncodeVideoFrame":
+                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -240,7 +240,7 @@ namespace Agora.Rtc
                             break;
                         }
 
-                    case "VideoFrameObserver_onMediaPlayerVideoFrame":
+                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -256,7 +256,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-                    case "VideoFrameObserver_onTranscodedVideoFrame":
+                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -272,8 +272,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-
-                    case "VideoFrameObserver_onRenderVideoFrame":
+                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -307,11 +306,11 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case "VideoFrameObserver_onCaptureVideoFrame":
-                case "VideoFrameObserver_onPreEncodeVideoFrame":
-                case "VideoFrameObserver_onMediaPlayerVideoFrame":
-                case "VideoFrameObserver_onTranscodedVideoFrame":
-                case "VideoFrameObserver_onRenderVideoFrame":
+                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME:
+                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME:
+                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME:
+                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME:
+                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME:
                     {
                         bool result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();

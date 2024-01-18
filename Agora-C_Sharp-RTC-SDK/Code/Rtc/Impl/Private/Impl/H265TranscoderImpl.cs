@@ -70,7 +70,6 @@ namespace Agora.Rtc
             if (_h265TranscoderObserverHandle.handle != IntPtr.Zero)
                 return 0;
 
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (_callbackObject == null)
             {
@@ -90,8 +89,6 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
-
-
 
             return nRet;
         }

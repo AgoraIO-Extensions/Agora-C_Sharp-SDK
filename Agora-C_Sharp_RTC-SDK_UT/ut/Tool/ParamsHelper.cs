@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Agora.Rtc;
 using Agora.Rtm;
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisCApiParam2
@@ -47,6 +47,13 @@ namespace Agora.Rtc
         public uint buffer_count;
     }
 
+    public class FakeVideoFrameMetaInfo : IVideoFrameMetaInfo
+    {
+        public override string GetMetaInfoStr(META_INFO_KEY key)
+        {
+            return key.ToString();
+        }
+    }
 
     public class ParamsHelper
     {
@@ -78,6 +85,9 @@ namespace Agora.Rtc
             }
             else if (instType.IsClass)
             {
+                if (instType.Name == "IVideoFrameMetaInfo")
+                    return new FakeVideoFrameMetaInfo();
+
                 if (instType.Name == "String")
                     return "10";
 

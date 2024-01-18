@@ -55,7 +55,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "MediaPlayerCustomDataProvider_onReadData":
+                    case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA:
                         {
                             IntPtr buffer0 = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "buffer");
                             int bufferSize = (int)AgoraJson.GetData<int>(jsonData, "bufferSize");
@@ -69,7 +69,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-                    case "MediaPlayerCustomDataProvider_onSeek":
+                    case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK:
                         {
                             Int64 offset = (Int64)AgoraJson.GetData<Int64>(jsonData, "offset");
                             int whence = (int)AgoraJson.GetData<int>(jsonData, "whence");
@@ -95,7 +95,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case "MediaPlayerCustomDataProvider_onReadData":
+                case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA:
                     {
                         int result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -106,7 +106,7 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
-                case "MediaPlayerCustomDataProvider_onSeek":
+                case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK:
                     {
                         Int64 result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();

@@ -45,7 +45,7 @@ namespace Agora.Rtc
             switch (@event)
             {
                 #region terra IMusicContentCenterEventHandler
-                case "MusicContentCenterEventHandler_onMusicChartsResult":
+                case AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -62,7 +62,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MusicContentCenterEventHandler_onMusicCollectionResult":
+                case AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -79,7 +79,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MusicContentCenterEventHandler_onLyricResult":
+                case AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -97,7 +97,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MusicContentCenterEventHandler_onSongSimpleInfoResult":
+                case AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -115,7 +115,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case "MusicContentCenterEventHandler_onPreLoadEvent":
+                case AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 CallbackObject._CallbackQueue.EnQueue(() => {
