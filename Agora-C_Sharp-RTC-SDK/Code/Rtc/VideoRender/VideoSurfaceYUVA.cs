@@ -8,14 +8,12 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. As of v4.2.0, Agora Unity SDK does not support rendering different video sources with both VideoSurface and VideoSurfaceYUV at the same time. Specifically, after successfully creating IRtcEngine, if the first view is rendered with VideoSurfaceYUV, then only VideoSurfaceYUV can be used for rendering throughout the entire lifecycle of IRtcEngine.
+    /// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. The SDK supports using different VideoSurface to render different video sources; for example, using VideoSurface to render the video images of user A and VideoSurfaceYUV for user B. Note that video images from the same video source can only be rendered either through VideoSurface or VideoSurfaceYUV.
     /// </summary>
     ///
-    public class VideoSurfaceYUV : VideoSurface
+    public class VideoSurfaceYUVA : VideoSurfaceYUV
     {
-        private TextureManagerYUV _textureManagerYUV;
-        protected Material _material = null;
-        protected float YStrideScale = 1.0f;
+        protected TextureManagerYUVA _textureManagerYUVA;
 
         void Start()
         {
@@ -29,7 +27,7 @@ namespace Agora.Rtc
 
             if (Enable)
             {
-                if (_textureManagerYUV == null)
+                if (_textureManagerYUVA == null)
                 {
                     string textureManagerName = this.GenerateTextureManagerUniqueName();
                     _TextureManagerGameObject = GameObject.Find(textureManagerName);
@@ -39,29 +37,29 @@ namespace Agora.Rtc
                         _TextureManagerGameObject = new GameObject(textureManagerName);
                         _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
-                        _textureManagerYUV = _TextureManagerGameObject.AddComponent<TextureManagerYUV>();
-                        _textureManagerYUV.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
-                        _textureManagerYUV.EnableVideoFrameWithIdentity();
+                        _textureManagerYUVA = _TextureManagerGameObject.AddComponent<TextureManagerYUVA>();
+                        _textureManagerYUVA.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
+                        _textureManagerYUVA.EnableVideoFrameWithIdentity();
                     }
                     else
                     {
-                        _textureManagerYUV = _TextureManagerGameObject.GetComponent<TextureManagerYUV>();
+                        _textureManagerYUVA = _TextureManagerGameObject.GetComponent<TextureManagerYUVA>();
                     }
                 }
-                else if (_textureManagerYUV && !_hasAttach && _textureManagerYUV.CanTextureAttach())
+                else if (_textureManagerYUVA && !_hasAttach && _textureManagerYUVA.CanTextureAttach())
                 {
                     UpdateShader();
-                    ApplyTexture(_textureManagerYUV.YTexture, _textureManagerYUV.UTexture, _textureManagerYUV.VTexture);
-                    _textureManagerYUV.Attach();
+                    ApplyTexture(_textureManagerYUVA.YTexture, _textureManagerYUVA.UTexture, _textureManagerYUVA.VTexture, _textureManagerYUVA.ATexture);
+                    _textureManagerYUVA.Attach();
                     _hasAttach = true;
                 }
 
-                if (_textureManagerYUV)
+                if (_textureManagerYUVA)
                 {
-                    if (this._textureWidth != _textureManagerYUV.Width || this._textureHeight != _textureManagerYUV.Height)
+                    if (this._textureWidth != _textureManagerYUVA.Width || this._textureHeight != _textureManagerYUVA.Height)
                     {
-                        this._textureWidth = _textureManagerYUV.Width;
-                        this._textureHeight = _textureManagerYUV.Height;
+                        this._textureWidth = _textureManagerYUVA.Width;
+                        this._textureHeight = _textureManagerYUVA.Height;
 
                         if (this._textureWidth != 0 && this._textureHeight != 0)
                         {
@@ -69,14 +67,14 @@ namespace Agora.Rtc
                         }
                     }
 
-                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != this._textureManagerYUV.YStrideScale)
+                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != this._textureManagerYUVA.YStrideScale)
                     {
                         if (_material != null)
                         {
-                            _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+                            _material.SetFloat("_yStrideScale", _textureManagerYUVA.YStrideScale);
                         }
                         //AgoraLog.Log("_yStrideScale" + _textureManagerYUV.YStrideScale);
-                        this.YStrideScale = this._textureManagerYUV.YStrideScale;
+                        this.YStrideScale = this._textureManagerYUVA.YStrideScale;
                     }
 
                 }
@@ -86,7 +84,7 @@ namespace Agora.Rtc
                 if (_hasAttach && !IsBlankTexture())
                 {
                     DestroyTextureManager();
-                    ApplyTexture(null, null, null);
+                    ApplyTexture(null, null, null, null);
                 }
             }
         }
@@ -137,7 +135,7 @@ namespace Agora.Rtc
             }
         }
 
-        protected void ApplyTexture(Texture2D texture, Texture2D uTexture, Texture2D vTexture)
+        protected void ApplyTexture(Texture2D texture, Texture2D uTexture, Texture2D vTexture, Texture2D aTexture)
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
@@ -145,6 +143,7 @@ namespace Agora.Rtc
                 rd.material.mainTexture = texture;
                 rd.material.SetTexture("_UTex", uTexture);
                 rd.material.SetTexture("_VTex", vTexture);
+                rd.material.SetTexture("_ATex", aTexture);
             }
             else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
@@ -152,24 +151,25 @@ namespace Agora.Rtc
                 rd.texture = texture;
                 rd.material.SetTexture("_UTex", uTexture);
                 rd.material.SetTexture("_VTex", vTexture);
+                rd.material.SetTexture("_ATex", aTexture);
             }
         }
 
         protected override void DestroyTextureManager()
         {
-            if (_textureManagerYUV == null) return;
+            if (_textureManagerYUVA == null) return;
 
             if (_hasAttach == true)
             {
-                _textureManagerYUV.Detach();
+                _textureManagerYUVA.Detach();
                 _hasAttach = false;
             }
 
-            if (_textureManagerYUV.GetRefCount() <= 0)
+            if (_textureManagerYUVA.GetRefCount() <= 0)
             {
                 Destroy(_TextureManagerGameObject);
             }
-            _textureManagerYUV = null;
+            _textureManagerYUVA = null;
         }
 
         protected override void UpdateShader()
@@ -178,17 +178,17 @@ namespace Agora.Rtc
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
-                rd.material = new Material(Shader.Find("Unlit/RendererShader601"));
+                rd.material = new Material(Shader.Find("Unlit/RendererShader601WithAlpha"));
                 _material = rd.material;
             }
             else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
                 var rd = _renderer as RawImage;
-                rd.material = new Material(Shader.Find("UI/RendererShader601"));
+                rd.material = new Material(Shader.Find("UI/RendererShader601WithAlpha"));
                 _material = rd.material;
             }
 
-            _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+            _material.SetFloat("_yStrideScale", _textureManagerYUVA.YStrideScale);
         }
 
     }
