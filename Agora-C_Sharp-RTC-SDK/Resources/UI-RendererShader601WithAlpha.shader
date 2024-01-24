@@ -122,7 +122,7 @@ Shader "UI/RendererShader601WithAlpha"
                     0, 0, 0, 1);
                
                 color = mul(yuvToRgb,color);
-                color.a = tex2D(_ATex, uv).r;
+                color.a = tex2D(_ATex, IN.texcoord).r;
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
                 #endif
