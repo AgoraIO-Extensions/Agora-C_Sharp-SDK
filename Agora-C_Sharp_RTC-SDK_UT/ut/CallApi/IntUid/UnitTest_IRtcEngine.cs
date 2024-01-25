@@ -81,7 +81,7 @@ namespace Agora.Rtc.Ut
             int build = ParamsHelper.CreateParam<int>();
 
             var nRet = RtcEngine.GetVersion(ref build);
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual("v1", nRet);
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Agora.Rtc.Ut
             int code = ParamsHelper.CreateParam<int>();
 
             var nRet = RtcEngine.GetErrorDescription(code);
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual("fatal", nRet);
         }
 
         [Test]
