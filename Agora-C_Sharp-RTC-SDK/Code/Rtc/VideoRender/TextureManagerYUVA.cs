@@ -109,7 +109,7 @@ namespace Agora.Rtc
                 _uTexture.Apply();
                 _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
                 _vTexture.Apply();
-                _aTexture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                _aTexture.Resize(_cachedVideoFrame.width, _cachedVideoFrame.height);
                 _aTexture.Apply();
                 _textureNative = _texture.GetRawTextureData<byte>();
                 _uTextureNative = _uTexture.GetRawTextureData<byte>();
@@ -138,7 +138,7 @@ namespace Agora.Rtc
                 }
                 else
                 {
-                    YStrideScale = ((float)_cachedVideoFrame.width / (float)_cachedVideoFrame.yStride) - 0.02f;
+                    YStrideScale = ((float)_cachedVideoFrame.width / (float)_cachedVideoFrame.yStride);
                 }
 
                 return;
@@ -169,7 +169,7 @@ namespace Agora.Rtc
                     _uTexture.Apply();
                     _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
                     _vTexture.Apply();
-                    _aTexture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                    _aTexture.Resize(_cachedVideoFrame.width, _cachedVideoFrame.height);
                     _aTexture.Apply();
                    
                     _needResize = false;
@@ -185,7 +185,7 @@ namespace Agora.Rtc
                     (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
                 _vTexture.Apply();
                 _aTexture.LoadRawTextureData(_cachedVideoFrame.alphaBuffer,
-                    (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
+                    (int)_cachedVideoFrame.width * (int)_videoPixelHeight);
                 _aTexture.Apply();
 #endif
 
