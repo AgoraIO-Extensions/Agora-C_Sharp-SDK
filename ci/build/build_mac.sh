@@ -345,7 +345,7 @@ download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file -
 payload1='{
             "msgtype": "text",
             "text": {
-                "content": "Unity SDK 【'${SDK_Version}'】 打包:\n'${download_file}'"
+                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
             }
         }'
 
