@@ -71,7 +71,7 @@ Shader "Unlit/RendererShader601WithAlpha"
                     0, 0, 0, 1);
                
                 color = mul(yuvToRgb,color);
-                color.a = tex2D(_ATex, uv).r;
+                color.a = tex2D(_ATex, i.texcoord).r;
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return color;
             }
