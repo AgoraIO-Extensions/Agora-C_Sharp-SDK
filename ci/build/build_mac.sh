@@ -93,6 +93,7 @@ echo RTM: $RTM
 echo NUMBER_UID: $NUMBER_UID
 echo STRING_UID: $STRING_UID
 echo SUFFIX: $SUFFIX
+echo robot_key: $robot_key
 
 if [ "$RTC" == "true" ]; then
     PLUGIN_NAME="Agora-RTC-Plugin"
@@ -340,7 +341,18 @@ else
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
-python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project
+download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+payload1='{
+            "msgtype": "text",
+            "text": {
+                "content": "Unity SDK 【'${SDK_Version}'】 打包:\n'${download_file}'"
+            }
+        }'
+
+# 发送 POST 请求
+curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
+    -d "$payload1" \
+    "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=$robot_key"
 
 cd ..
 rm -rf ./tempDir
