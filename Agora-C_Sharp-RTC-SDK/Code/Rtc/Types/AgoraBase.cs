@@ -1147,7 +1147,7 @@ namespace Agora.Rtc
 
         public VideoEncoderConfiguration(VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
         {
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_NONE;
             this.dimensions = d;
             this.frameRate = f;
             this.bitrate = b;
@@ -1160,7 +1160,7 @@ namespace Agora.Rtc
 
         public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
         {
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_NONE;
             this.dimensions = new VideoDimensions(width, height);
             this.frameRate = f;
             this.bitrate = b;
@@ -1186,7 +1186,7 @@ namespace Agora.Rtc
 
         public VideoEncoderConfiguration()
         {
-            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
+            this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_NONE;
             this.dimensions = new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_960, (int)FRAME_HEIGHT.FRAME_HEIGHT_540);
             this.frameRate = (int)FRAME_RATE.FRAME_RATE_FPS_15;
             this.bitrate = (int)BITRATE.STANDARD_BITRATE;
