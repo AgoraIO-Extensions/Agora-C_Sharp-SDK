@@ -1,10 +1,25 @@
 ﻿namespace Agora.Rtc
 {
     #region terra IAgoraRtcEngineEx.h
+    ///
+    /// <summary>
+    /// Contains connection information.
+    /// </summary>
+    ///
     public class RtcConnection
     {
+        ///
+        /// <summary>
+        /// The channel name.
+        /// </summary>
+        ///
         public string channelId;
 
+        ///
+        /// <summary>
+        /// The ID of the local user.
+        /// </summary>
+        ///
         public uint localUid;
 
         public RtcConnection()
@@ -20,7 +35,6 @@
         }
 
     }
-
 
     #endregion terra IAgoraRtcEngineEx.h
 }

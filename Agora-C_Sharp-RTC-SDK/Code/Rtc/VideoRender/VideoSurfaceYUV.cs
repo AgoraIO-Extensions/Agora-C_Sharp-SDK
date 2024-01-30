@@ -8,7 +8,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. The SDK supports using different VideoSurface to render different video sources; for example, using VideoSurface to render the video images of user A and VideoSurfaceYUV for user B. Note that video images from the same video source can only be rendered either through VideoSurface or VideoSurfaceYUV.
+    /// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. As of v4.2.0, Agora Unity SDK does not support rendering different video sources with both VideoSurface and VideoSurfaceYUV at the same time. Specifically, after successfully creating IRtcEngine, if the first view is rendered with VideoSurfaceYUV, then only VideoSurfaceYUV can be used for rendering throughout the entire lifecycle of IRtcEngine.
     /// </summary>
     ///
     public class VideoSurfaceYUV : VideoSurface
