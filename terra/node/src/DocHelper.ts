@@ -8,6 +8,7 @@ import { Tool } from "./Tool";
 let AllDirPath = [
     "../../Agora-C_Sharp-RTC-SDK/Code/Rtc",
     "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/Types",
+    "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/VideoRender",
 ];
 
 let DocPath = "../templates/C_Sharp-SDK-Trans/unity_ng_json_template_en.json";
@@ -80,7 +81,7 @@ function GetMethodName(clazzName: string, methodName: string): string {
 
 function SwapIfHadObsolete(lines: string[], i: number) {
     let upLine = lines[i - 1].trim();
-    if (upLine.startsWith('[Obsolete') || upLine.startsWith("#if")) {
+    if (upLine.startsWith('[Obsolete') || upLine.startsWith("#if") || upLine.startsWith('[Flags]')) {
         let temp = lines[i];
         lines[i] = lines[i - 1];
         lines[i - 1] = temp;
@@ -261,20 +262,27 @@ function SplitDocTag(str: string): { clazzName: string, paramName: string | null
 function GetDocs(): DocData[] {
     let docPath = path.join(process.cwd(), DocPath);
     let str = fs.readFileSync(docPath, { encoding: 'utf-8' });
+    str = SwapString(str, "api_irtcengine_enableextension", "api_irtcengine_enableextension2");
+    str = SwapString(str, "api_irtcengine_setextensionproperty", "api_irtcengine_setextensionproperty2");
     str = str.replaceAll("iaudioframeobserverbase", "iaudioframeobserver")
     str = str.replaceAll("api_iaudioframeobserver", "callback_iaudioframeobserver")
     str = str.replaceAll("ibasespatialaudioengine", "ilocalspatialaudioengine")
     str = str.replaceAll("api_imediaengine", "api_irtcengine")
     str = str.replaceAll("pushaudioframe0", "pushaudioframe")
-    str = str.replaceAll("\"api_irtcengine_getextensionproperty2\"", "\"api_irtcengine_getextensionproperty\"")
     str = str.replaceAll("\"api_irtcengine_enabledualstreammode2\"", "\"api_irtcengine_delete\"")
     str = str.replaceAll("\"api_irtcengine_enabledualstreammode3\"", "\"api_irtcengine_enabledualstreammode2\"")
     str = str.replaceAll("\"api_getmediaplayercachemanager\"", "\"api_irtcengine_getmediaplayercachemanager\"")
     str = str.replaceAll("\"api_iagoraparameter_setparameters\"", "\"api_irtcengine_setparameters2\"")
     str = str.replaceAll("\"api_irtcengine_getnativehandle\"", "\"api_irtcengine_getnativehandler\"")
-
     str = str.replaceAll("class_deviceinfo", "class_deviceinfomobile")
     str = str.replaceAll("class_videodeviceinfo", "class_deviceinfo")
+    str = str.replaceAll("api_irtcengine_addhandler", "api_irtcengine_initeventhandler");
+    str = str.replaceAll("api_irtcengine_playeffect2", "api_irtcengine_playeffect");
+    str = str.replaceAll("api_irtcengine_setremoterendermode2", "api_irtcengine_setremoterendermode");
+    str = str.replaceAll("api_irtcengine_setremoterendermode2", "api_irtcengine_enableinearmonitoring");
+    str = str.replaceAll("api_imediaengine_setexternalaudiosource2", "api_irtcengine_setexternalaudiosource");
+    str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstatechanged", "callback_irtcengineeventhandler_ondirectcdnstreamingstatechanged");
+    str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstats", "callback_irtcengineeventhandler_ondirectcdnstreamingstats");
 
     fs.writeFileSync(path.join(process.cwd(), "process_json"), str);
 

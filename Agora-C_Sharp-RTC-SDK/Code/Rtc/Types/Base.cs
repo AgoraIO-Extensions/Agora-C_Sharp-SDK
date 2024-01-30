@@ -62,31 +62,98 @@ namespace Agora.Rtc
         #endregion terra AudioFrameInternal_Member_List
     }
 
-    // use for videoFrameObserver json parse
-    // workaround, must be public, so can parse from a json string
+    ///
+    /// @ignore
+    ///
     public class IrisVideoFrame
     {
+        ///
+        /// @ignore
+        ///
         public VIDEO_OBSERVER_FRAME_TYPE type;
+        ///
+        /// @ignore
+        ///
         public int width;
+        ///
+        /// @ignore
+        ///
         public int height;
+        ///
+        /// @ignore
+        ///
         public int yStride;
+        ///
+        /// @ignore
+        ///
         public int uStride;
+        ///
+        /// @ignore
+        ///
         public int vStride;
+        ///
+        /// @ignore
+        ///
         public IntPtr yBuffer;
+        ///
+        /// @ignore
+        ///
         public IntPtr uBuffer;
+        ///
+        /// @ignore
+        ///
         public IntPtr vBuffer;
+        ///
+        /// @ignore
+        ///
         public uint y_buffer_length;
+        ///
+        /// @ignore
+        ///
         public uint u_buffer_length;
+        ///
+        /// @ignore
+        ///
         public uint v_buffer_length;
+        ///
+        /// @ignore
+        ///
         public int rotation;
+        ///
+        /// @ignore
+        ///
         public Int64 renderTimeMs;
+        ///
+        /// @ignore
+        ///
         public int avsync_type;
+        ///
+        /// @ignore
+        ///
         public IntPtr metadata_buffer;
+        ///
+        /// @ignore
+        ///
         public int metadata_size;
+        ///
+        /// @ignore
+        ///
         public IntPtr sharedContext;
+        ///
+        /// @ignore
+        ///
         public int textureId;
+        ///
+        /// @ignore
+        ///
         public float[] matrix;
+        ///
+        /// @ignore
+        ///
         public IntPtr alphaBuffer;
+        ///
+        /// @ignore
+        ///
         public uint alpha_buffer_length;
         public Dictionary<string, string> metaInfo;
     }
@@ -115,7 +182,6 @@ namespace Agora.Rtc
 
             this.metadata_size = frame.metadata_size;
 
-
             this.texture_slice_index = frame.texture_slice_index;
             #endregion terra ExternalVideoFrameInternal_Assignment
         }
@@ -138,7 +204,6 @@ namespace Agora.Rtc
         public float[] matrix;
 
         public int metadata_size;
-
 
         public int texture_slice_index;
         #endregion terra ExternalVideoFrameInternal_Member_List
@@ -213,6 +278,9 @@ namespace Agora.Rtc
         ///
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_TEXTURE_ID3D11TEXTURE2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_ID3D11TEXTURE2D,
     }
 

@@ -12,6 +12,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the SDK seeks the media resource data.
+        /// 
+        /// When you call the OpenWithMediaSource or Open method to open a custom media resource, the SDK triggers this callback to request the specified location in the media resource.
         /// </summary>
         ///
         /// <param name="offset"> An input parameter. The offset of the target position relative to the starting point, in bytes. The value can be positive or negative. </param>
@@ -25,8 +27,8 @@ namespace Agora.Rtc
         /// </param>
         ///
         /// <returns>
-        /// When when ce is 65536, the media file size is returned.
-        /// When when ce is 0, 1, or 2, the actual data offset after the seeking is returned.
+        /// When whence is 65536, the media file size is returned.
+        /// When whence is 0, 1, or 2, the actual data offset after the seeking is returned.
         /// -1: Seeking failed.
         /// </returns>
         ///
@@ -38,6 +40,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the SDK reads the media resource data.
+        /// 
+        /// When you call the OpenWithMediaSource method to open a media resource, the SDK triggers this callback and request you to pass in the buffer of the media resource data.
         /// </summary>
         ///
         /// <param name="bufferPtr"> An input parameter. Data buffer (bytes). Write the bufferSize data reported by the SDK into this parameter. </param>
