@@ -285,7 +285,20 @@ namespace Agora.Rtc
         public abstract int SelectAudioTrack(int index);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Selects the audio tracks that you want to play on your local device and publish to the channel respectively.
+        /// 
+        /// You can call this method to determine the audio track to be played on your local device and published to the channel. Before calling this method, you need to open the media file with the OpenWithMediaSource method and set enableMultiAudioTrack in MediaSource as true.
+        /// </summary>
+        ///
+        /// <param name="playoutTrackIndex"> The index of audio tracks for local playback. You can obtain the index through GetStreamInfo. </param>
+        ///
+        /// <param name="publishTrackIndex"> The index of audio tracks to be published in the channel. You can obtain the index through GetStreamInfo. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SelectMultiAudioTrack(int playoutTrackIndex, int publishTrackIndex);
 

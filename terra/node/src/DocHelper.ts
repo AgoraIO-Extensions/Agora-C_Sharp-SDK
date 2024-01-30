@@ -283,6 +283,7 @@ function GetDocs(): DocData[] {
     str = str.replaceAll("api_imediaengine_setexternalaudiosource2", "api_irtcengine_setexternalaudiosource");
     str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstatechanged", "callback_irtcengineeventhandler_ondirectcdnstreamingstatechanged");
     str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstats", "callback_irtcengineeventhandler_ondirectcdnstreamingstats");
+    str = str.replaceAll("api_Imediaplayer_selectmultiaudiotrack", "api_imediaplayer_selectmultiaudiotrack");
 
     fs.writeFileSync(path.join(process.cwd(), "process_json"), str);
 
