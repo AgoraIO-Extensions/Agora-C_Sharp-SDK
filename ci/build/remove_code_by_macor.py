@@ -131,6 +131,16 @@ def replace_key_word_in_path(file_path, key_word, replace_word):
             f.write(content)
             f.close()
 
+def replace_key_word_in_file(file, key_word, replace_word):
+    f = open(file, 'r', encoding='UTF-8')
+    content = f.read()
+    content = content.replace(key_word, replace_word)
+    content.encode('UTF-8')
+    f.close()
+
+    f = open(file, 'w', encoding='UTF-8')
+    f.write(content)
+    f.close()
 
 # # remove number uid code without number uid
 # if NUMBER_UID == 'false':
@@ -181,3 +191,8 @@ if RTC == 'false':
 if RTC == 'false':
     replace_key_word_in_path(os.path.join(ROOT,'Unity/Editor'), 'Agora-RTC-Plugin/Agora-Unity-RTC-SDK/Plugins/iOS','Agora-RTM-Plugin/Agora-Unity-RTM-SDK/Plugins/iOS')
 
+
+# asmdef
+if RTC == 'false':
+    replace_key_word_in_file(os.path.join(ROOT,'Code/AgoraRtcSDK.asmdef'),'AgoraRtcSDK','AgoraRtmSDK')
+    os.rename(os.path.join(ROOT,'Code/AgoraRtcSDK.asmdef'),os.path.join(ROOT,'Code/AgoraRtmSDK.asmdef'))
