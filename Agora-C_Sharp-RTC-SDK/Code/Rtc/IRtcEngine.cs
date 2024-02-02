@@ -3593,6 +3593,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int UnRegisterVideoEncodedFrameObserver();
+
+
+        public abstract int RegisterFaceInfoObserver(IFaceInfoObserver observer);
+
+        public abstract int UnRegisterFaceInfoObserver();
         #endregion
 
         #region Extension
@@ -4789,6 +4794,9 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int UploadLogFile(ref string requestId);
+
+
+        public abstract int WriteLog(LOG_LEVEL level, string fmt);
         #endregion
 
         #region black list and white list

@@ -252,5 +252,9 @@ namespace Agora.Rtc
         internal const string EVENT_VIDEOFRAMEOBSERVER_GETOBSERVEDFRAMEPOSITION = "VideoFrameObserver_getObservedFramePosition";
         internal const string EVENT_VIDEOFRAMEOBSERVER_ISEXTERNAL = "VideoFrameObserver_isExternal";
         #endregion
+
+        #region IFaceInfoObserver Start
+        internal const string EVENT_FACEINFOOBSERVER_ONFACEINFO = "FaceInfoObserver_onFaceInfo";
+        #endregion 
     }
 }

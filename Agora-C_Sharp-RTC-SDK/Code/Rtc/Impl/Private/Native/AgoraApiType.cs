@@ -140,6 +140,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETLOGLEVEL = "RtcEngine_setLogLevel";
         internal const string FUNC_RTCENGINE_SETLOGFILESIZE = "RtcEngine_setLogFileSize";
         internal const string FUNC_RTCENGINE_UPLOADLOGFILE = "RtcEngine_uploadLogFile";
+        internal const string FUNC_RTCENGINE_WRITELOG = "RtcEngine_writeLog";
         internal const string FUNC_RTCENGINE_SETLOCALRENDERMODE = "RtcEngine_setLocalRenderMode";
         internal const string FUNC_RTCENGINE_SETREMOTERENDERMODE = "RtcEngine_setRemoteRenderMode";
         internal const string FUNC_RTCENGINE_SETLOCALRENDERMODE2 = "RtcEngine_setLocalRenderMode2";
@@ -500,6 +501,8 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER = "MediaEngine_registerAudioFrameObserver";
         internal const string FUNC_MEDIAENGINE_REGISTERVIDEOFRAMEOBSERVER = "MediaEngine_registerVideoFrameObserver";
         internal const string FUNC_MEDIAENGINE_REGISTERVIDEOENCODEDFRAMEOBSERVER = "MediaEngine_registerVideoEncodedFrameObserver";
+        internal const string FUNC_MEDIAENGINE_REGISTERFACEINFOOBSERVER = "MediaEngine_registerFaceInfoObserver";
+        internal const string FUNC_MEDIAENGINE_UNREGISTERFACEINFOOBSERVER = "MediaEngine_unregisterFaceInfoObserver";
         internal const string FUNC_MEDIAENGINE_PUSHAUDIOFRAME = "MediaEngine_pushAudioFrame";
         internal const string FUNC_MEDIAENGINE_PULLAUDIOFRAME = "MediaEngine_pullAudioFrame";
         internal const string FUNC_MEDIAENGINE_SETEXTERNALVIDEOSOURCE = "MediaEngine_setExternalVideoSource";
