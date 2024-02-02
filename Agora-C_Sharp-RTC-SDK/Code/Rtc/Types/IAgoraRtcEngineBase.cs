@@ -1723,6 +1723,10 @@ namespace Agora.Rtc
 
         public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
 
+        public Optional<int> mixPolicyForMixedTrack = new Optional<int>();
+
+        public Optional<bool> publishLipSyncTrack = new Optional<bool>();
+
         ///
         /// <summary>
         /// Whether to automatically subscribe to all remote audio streams when the user joins a channel: true : Subscribe to all remote audio streams. false : Do not automatically subscribe to any remote audio streams.
@@ -1952,6 +1956,18 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("publishMixedAudioTrack");
                 writer.Write(this.publishMixedAudioTrack.GetValue());
+            }
+
+            if (this.mixPolicyForMixedTrack.HasValue())
+            {
+                writer.WritePropertyName("mixPolicyForMixedTrack");
+                writer.Write(this.mixPolicyForMixedTrack.GetValue());
+            }
+
+            if (this.publishLipSyncTrack.HasValue())
+            {
+                writer.WritePropertyName("publishLipSyncTrack");
+                writer.Write(this.publishLipSyncTrack.GetValue());
             }
 
             if (this.autoSubscribeAudio.HasValue())

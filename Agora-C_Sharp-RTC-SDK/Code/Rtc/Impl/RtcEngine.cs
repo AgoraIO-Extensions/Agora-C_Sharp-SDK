@@ -191,6 +191,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
         }
 
+        public override int RegisterFaceInfoObserver(IFaceInfoObserver observer)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.RegisterFaceInfoObserver(observer);
+        }
+
+        public override int UnRegisterFaceInfoObserver()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.UnRegisterFaceInfoObserver();
+        }
+
         public override IAudioDeviceManager GetAudioDeviceManager()
         {
             if (_rtcEngineImpl == null)
@@ -3108,6 +3126,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.UploadLogFile(ref requestId);
+        }
+
+        public override int WriteLog(LOG_LEVEL level, string fmt)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.WriteLog(level, fmt);
         }
 
         public override int SetSubscribeAudioBlocklist(uint[] uidList, int uidNumber)

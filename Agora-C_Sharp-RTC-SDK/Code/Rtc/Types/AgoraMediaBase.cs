@@ -130,6 +130,8 @@ namespace Agora.Rtc
         ///
         VIDEO_SOURCE_SCREEN_FOURTH = 14,
 
+
+        VIDEO_SOURCE_SPEECH_DRIVEN = 15,
         ///
         /// <summary>
         /// 100: An unknown video source.
@@ -297,6 +299,13 @@ namespace Agora.Rtc
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
     };
 
+    public enum TRACK_AUDIO_MIXED_POLICY_TYPE
+    {
+        TRACK_AUDIO_MIXED_LOCAL = 1 << 0,
+      
+        TRACK_AUDIO_MIXED_REMOTE = 1 << 1,
+    };
+
 
     public class AudioDeviceInfo
     {
@@ -391,6 +400,7 @@ namespace Agora.Rtc
         ///
         TRANSCODED_VIDEO_SOURCE = 12,
 
+        SPEECH_DRIVEN_VIDEO_SOURCE = 13,
         ///
         /// <summary>
         /// 100: Unknown media source.
@@ -612,6 +622,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_TEXTURE_ID3D11TEXTURE2D = 17,
+
+        VIDEO_PIXEL_I010 = 18,
     };
 
     ///

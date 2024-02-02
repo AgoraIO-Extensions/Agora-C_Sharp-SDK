@@ -42,7 +42,8 @@ namespace Agora.Rtc
         private EventHandlerHandle _rtcMetaDataObserverHandle = new EventHandlerHandle();
         //audioSpectrumOberver
         private EventHandlerHandle _rtcAudioSpectrumObserverHandle = new EventHandlerHandle();
-
+        //faceInfoObserver
+        private EventHandlerHandle _faceInfoObserverHandle = new EventHandlerHandle();
 
         private IrisRtcRenderingHandle _rtcRenderingHandle;
 
@@ -98,6 +99,7 @@ namespace Agora.Rtc
                 UnSetIrisMetaDataObserver();
                 UnSetIrisAudioEncodedFrameObserver();
                 UnSetIrisAudioSpectrumObserver();
+                UnSetIrisFaceInfoObserver();
 
                 _videoDeviceManagerInstance.Dispose();
                 _videoDeviceManagerInstance = null;
@@ -512,6 +514,57 @@ namespace Agora.Rtc
             return nRet;
         }
 
+        public int RegisterFaceInfoObserver(IFaceInfoObserver observer)
+        {
+            FaceInfoObserverNative.SetFaceInfoObserver(observer);
+            return SetIrisFaceInfoObserver();
+        }
+
+        public int UnRegisterFaceInfoObserver()
+        {
+            int ret = UnSetIrisFaceInfoObserver();
+            FaceInfoObserverNative.SetFaceInfoObserver(null);
+            return ret;
+        }
+
+        public int SetIrisFaceInfoObserver()
+        {
+
+            if (_faceInfoObserverHandle.handle != IntPtr.Zero) return 0;
+
+            AgoraUtil.AllocEventHandlerHandle(ref _faceInfoObserverHandle, FaceInfoObserverNative.OnEvent);
+            IntPtr[] arrayPtr = new IntPtr[] { _faceInfoObserverHandle.handle };
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERFACEINFOOBSERVER,
+                "{}", 2,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAENGINE_REGISTERFACEINFOOBSERVER failed: " + nRet);
+            }
+            return nRet;
+        }
+
+        public int UnSetIrisFaceInfoObserver()
+        {
+            if (_faceInfoObserverHandle.handle == IntPtr.Zero) return 0;
+
+            IntPtr[] arrayPtr = new IntPtr[] { _faceInfoObserverHandle.handle };
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_UNREGISTERFACEINFOOBSERVER,
+                "{}", 2,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAENGINE_UNREGISTERFACEINFOOBSERVER failed: " + nRet);
+            }
+
+            AgoraUtil.FreeEventHandlerHandle(ref _faceInfoObserverHandle);
+            return nRet;
+        }
+
         public AudioDeviceManagerImpl GetAudioDeviceManager()
         {
             return _audioDeviceManagerInstance;
@@ -624,7 +677,7 @@ namespace Agora.Rtc
         public int QueryDeviceScore()
         {
             _param.Clear();
-          
+
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_QUERYDEVICESCORE,
@@ -5247,6 +5300,22 @@ namespace Agora.Rtc
             {
                 requestId = "";
             }
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int WriteLog(LOG_LEVEL level, string fmt)
+        {
+            _param.Clear();
+            _param.Add("level", level);
+            _param.Add("fmt", fmt);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_WRITELOG,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
