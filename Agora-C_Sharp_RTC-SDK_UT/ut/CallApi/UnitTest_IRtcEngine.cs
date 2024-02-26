@@ -180,6 +180,17 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_WriteLog()
+        {
+            LOG_LEVEL level;
+            ParamsHelper.InitParam(out level);
+            string fmt;
+            ParamsHelper.InitParam(out fmt);
+            int nRet = Engine.WriteLog(level, fmt);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_GetCallId()
         {
             string callId;
