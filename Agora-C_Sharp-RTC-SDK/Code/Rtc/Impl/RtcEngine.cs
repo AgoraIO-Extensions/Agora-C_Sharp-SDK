@@ -3111,6 +3111,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UploadLogFile(ref requestId);
         }
 
+        public override int WriteLog(LOG_LEVEL level, string fmt)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.WriteLog(level, fmt);
+        }
+
         public override int SetSubscribeAudioBlocklist(uint[] uidList, int uidNumber)
         {
             if (_rtcEngineImpl == null)

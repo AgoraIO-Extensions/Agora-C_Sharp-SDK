@@ -632,7 +632,10 @@ namespace Agora.Rtc
          * The total number of audio bytes received (bytes), inluding the FEC bytes, represented by an aggregate value.
          */
         public uint rxAudioBytes;
-
+        /**
+         * The end-to-end delay (ms) from the sender to the receiver.
+         */
+        public int e2eDelay;
     }
 
     ///
@@ -1489,7 +1492,7 @@ namespace Agora.Rtc
 
 
         public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
-       
+
         public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
         ///
         /// <summary>

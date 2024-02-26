@@ -131,6 +131,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETLOGLEVEL = "RtcEngine_setLogLevel";
         internal const string FUNC_RTCENGINE_SETLOGFILESIZE = "RtcEngine_setLogFileSize";
         internal const string FUNC_RTCENGINE_UPLOADLOGFILE = "RtcEngine_uploadLogFile";
+        internal const string FUNC_RTCENGINE_WRITELOG = "RtcEngine_writeLog";
         internal const string FUNC_RTCENGINE_SETLOCALRENDERMODE = "RtcEngine_setLocalRenderMode";
         internal const string FUNC_RTCENGINE_SETREMOTERENDERMODE = "RtcEngine_setRemoteRenderMode";
         internal const string FUNC_RTCENGINE_SETLOCALRENDERMODE2 = "RtcEngine_setLocalRenderMode2";

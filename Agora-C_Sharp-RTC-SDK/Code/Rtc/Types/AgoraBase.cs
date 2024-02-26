@@ -3892,6 +3892,10 @@ namespace Agora.Rtc
         public int earMonitorDelay;
 
         public int aecEstimatedDelay;
+
+        public int aedVoiceRes;
+       
+        public int aedMusicRes;
     }
 
     ///
