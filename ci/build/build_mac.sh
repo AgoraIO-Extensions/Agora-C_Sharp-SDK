@@ -87,6 +87,7 @@ echo MAC_URL: $MAC_URL
 echo WIN_URL: $WIN_URL
 echo ANDROID_URL: $ANDROID_URL
 echo IOS_URL: $IOS_URL
+echo VISIONOS_URL: $VISIONOS_URL
 echo TYPE: $TYPE
 echo RTC: $RTC
 echo RTM: $RTM
@@ -183,7 +184,6 @@ if [ "$TYPE" == "VOICE" ]; then
     perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
 fi
 
-mkdir "$ROOT_DIR"/Unity/Plugins/iOS
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
@@ -261,6 +261,32 @@ if [ "$IOS_URL" != "" ]; then
     done
 
     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+
+    files=$(ls $IOS_DST_PATH)
+    for filename in $files; do
+        cp -f "$ROOT_DIR"/Unity/Plugins/iOS/ios.meta $IOS_DST_PATH/${filename}.meta
+    done
+
+fi
+
+# Vision OS
+if [ "$$VISIONOS_URL" != "" ]; then
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${VISIONOS_URL}
+    7za x ./iris_*_xrOS_*.zip || exit 1
+    VISIONOS_SRC_PATH="./iris_*_xrOS"
+    VISIONOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/visionOS"
+    cp -PRf $VISIONOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework "$VISIONOS_DST_PATH"
+    cp -PRf $VISIONOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.xcframework "$VISIONOS_DST_PATH"
+
+    files=$(ls $VISIONOS_DST_PATH)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "xcframework" ]; then
+            cp -f "$ROOT_DIR"/Unity/Plugins/visionOS/devices.meta $VISIONOS_DST_PATH/$basename.xcframework/xros-arm64/$basename.framework.meta
+            cp -f "$ROOT_DIR"/Unity/Plugins/visionOS/simulator.meta $VISIONOS_DST_PATH/$basename.xcframework/xros-arm64_x86_64-simulator/$basename.framework.meta
+        fi
+    done
 
 fi
 
