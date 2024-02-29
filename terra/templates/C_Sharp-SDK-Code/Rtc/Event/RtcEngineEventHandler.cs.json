@@ -1,0 +1,20 @@
+{
+    "IRtcEngineEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandler",
+        "headTailTemple": "rtcEngineEventHandler_head_tail"
+    },
+    "rtcEngineEventHandler_head_tail": {
+        "head": "${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_GenerateRtcEngineEventHandler}",
+        "tail": ""
+    },
+    "DirectCdnStreamingEventHandler_head_tail": {
+        "head": "${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_GenerateDirectCdnStreamingEventHandler}",
+        "tail": ""
+    },
+    "IDirectCdnStreamingEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IDirectCdnStreamingEventHandler",
+        "headTailTemple": "DirectCdnStreamingEventHandler_head_tail"
+    }
+}

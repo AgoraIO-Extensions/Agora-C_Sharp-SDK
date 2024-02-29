@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>agora_rtm_sdk</id>
+    <version>2.1.8-alpha.4</version>
+    <title>agora rtm sdk wrapper</title>
+    <authors>agora.io</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/AgoraIO-Extensions/Agora-C_Sharp-SDK</projectUrl>
+    <description>Agora C# SDK enables developer one-to-many and many-to-many audio or video live streaming. Agora C# SDK support .netCore(minimum 2.0) and .netFramework(minimum 4.0) application.
+
+Developer can use APIExample to test different case and understand how to integrate C# SDK.Before test APIExample, create a developer account at [Agora.io](https://dashboard.agora.io/signin/), and obtain an App ID.
+
+For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
+
+**For more detail information, please visit our [API Reference](https://docs.agora.io/en/Video/api-ref?platform=All%20Platforms) **</description>
+    <repository type="GitHub" url="https://github.com/AgoraIO/Agora-C_Sharp-SDK"/>
+    <releaseNotes>Alhpa</releaseNotes>
+    <copyright></copyright>
+    <tags>v2.1.8</tags>
+  </metadata>
+  <files>
+    <file src="bin\agora_rtm_sdk.net40.props" target="build\net40\agora_rtm_sdk.props"/>
+    <file src="bin\agora_rtm_sdk.net40.targets" target="build\net40\agora_rtm_sdk.targets"/>
+    <file src="bin\agora_rtm_sdk.core20.props" target="build\netcoreapp20\agora_rtm_sdk.props"/>
+    <file src="bin\agora_rtm_sdk.core20.targets" target="build\netcoreapp20\agora_rtm_sdk.targets"/>
+    <file src="bin\x86_64\net40\agorartm.dll" target="lib\net40"/>
+    <file src="bin\x86_64\netcoreapp20\agorartm.dll" target="lib\netcoreapp20"/>
+    <file src="bin\x86_64\**" target="build\x64"/>
+    <file src="bin\x86\**" target="build\x86"/>
+  </files>
+</package>

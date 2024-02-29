@@ -7,9 +7,11 @@ namespace Agora.Rtc
     ///
     public abstract class IMusicPlayer : IMediaPlayer
     {
+        #region terra IMusicPlayer
         ///
         /// @ignore
         ///
-        public abstract int Open(Int64 songCode, Int64 startPos);
+        public abstract int Open(long songCode, long startPos = 0);
+        #endregion terra IMusicPlayer
     }
 }

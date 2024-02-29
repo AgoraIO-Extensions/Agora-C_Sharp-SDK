@@ -1,0 +1,34 @@
+{
+    "AudioFrameInternal_Assignment": {
+        "type": "ClazzStruct",
+        "name": "AudioFrame",
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "audioFrameInternal_member_assignment",
+        "specialMembersTemplate": "\n"
+    },
+    "audioFrameInternal_member_assignment": "this.${-oMEMBER_NAME} = audioFrame.${-oMEMBER_NAME};",
+    "AudioFrameInternal_Member_List": {
+        "type": "ClazzStruct",
+        "name": "AudioFrame",
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "audioFrameInternal_member_list",
+        "specialMembersTemplate": "\n"
+    },
+    "audioFrameInternal_member_list": "public ${-oMEMBER_TYPE} ${-oMEMBER_NAME};",
+    "ExternalVideoFrameInternal_Assignment": {
+        "type": "ClazzStruct",
+        "name": "ExternalVideoFrame",
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "externalVideoFrameInternal_member_assignment",
+        "specialMembersTemplate": "\n"
+    },
+    "externalVideoFrameInternal_member_assignment": "${SPECIAL_MEMBER_LOGIC:cSharpSDK_ExternalVideoFrameInternalMemberAssignment}",
+    "ExternalVideoFrameInternal_Member_List": {
+        "type": "ClazzStruct",
+        "name": "ExternalVideoFrame",
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "externalVideoFrameInternal_member_list",
+        "specialMembersTemplate": "\n"
+    },
+    "externalVideoFrameInternal_member_list": "${SPECIAL_MEMBER_LOGIC:cSharpSDK_ExternalVideoFrameInternalMemberList}"
+}

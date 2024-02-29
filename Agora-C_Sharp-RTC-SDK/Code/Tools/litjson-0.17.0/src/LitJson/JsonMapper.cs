@@ -7,7 +7,8 @@
  * the COPYING file included with this distribution.
  **/
 #endregion
-
+#define AGORA_RTC
+#define AGORA_RTM
 
 using System;
 using System.Collections;
@@ -16,7 +17,11 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
+#if AGORA_RTC
 namespace Agora.Rtc.LitJson
+#elif AGORA_RTM
+namespace Agora.Rtm.LitJson
+#endif
 {
     internal struct PropertyMetadata
     {
@@ -1409,6 +1414,7 @@ namespace Agora.Rtc.LitJson
             RegisterImporter(custom_importers_table,
                typeof(Optional<string>), typeof(string), importer);
 
+#if AGORA_RTC
             //enum CLIENT_ROLE_TYPE
             importer = delegate (object input)
             {
@@ -1506,7 +1512,7 @@ namespace Agora.Rtc.LitJson
             RegisterImporter(custom_importers_table,
               typeof(Optional<THREAD_PRIORITY_TYPE>), typeof(long), importer);
 
-          
+#endif
             //InPtr
             importer = delegate (object input)
             {
@@ -1569,9 +1575,9 @@ namespace Agora.Rtc.LitJson
                 return;
             }
 
-            if (obj is OptionalJsonParse)
+            if (obj is IOptionalJsonParse)
             {
-                ((OptionalJsonParse)obj).ToJson(writer);
+                ((IOptionalJsonParse)obj).ToJson(writer);
                 return;
             }
 
@@ -1622,7 +1628,8 @@ namespace Agora.Rtc.LitJson
                 return;
             }
 
-            if (obj is IntPtr) {
+            if (obj is IntPtr)
+            {
                 writer.Write((UInt64)(IntPtr)obj);
                 return;
             }

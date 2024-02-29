@@ -26,7 +26,34 @@
             }
         }
 
-        #region PlaybackDevices
+        internal static IAudioDeviceManager GetInstance(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
+        {
+            return instance ?? (instance = new AudioDeviceManager(rtcEngine, impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
+        }
+
+        public override int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetPlaybackDefaultDevice(ref deviceId, ref deviceName);
+        }
+
+        public override int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetRecordingDefaultDevice(ref deviceId, ref deviceName);
+        }
+
         public override DeviceInfo[] EnumeratePlaybackDevices()
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
@@ -36,6 +63,16 @@
             return _audioDeviecManagerImpl.EnumeratePlaybackDevices();
         }
 
+        public override DeviceInfo[] EnumerateRecordingDevices()
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return null;
+            }
+            return _audioDeviecManagerImpl.EnumerateRecordingDevices();
+        }
+
+        #region terra IAudioDeviceManager
         public override int SetPlaybackDevice(string deviceId)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
@@ -79,62 +116,6 @@
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetPlaybackDeviceVolume(ref volume);
-        }
-
-        public override int SetPlaybackDeviceMute(bool mute)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.SetPlaybackDeviceMute(mute);
-        }
-
-        public override int GetPlaybackDeviceMute(ref bool mute)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.GetPlaybackDeviceMute(ref mute);
-        }
-
-        public override int StartPlaybackDeviceTest(string testAudioFilePath)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.StartPlaybackDeviceTest(testAudioFilePath);
-        }
-
-        public override int StopPlaybackDeviceTest()
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.StopPlaybackDeviceTest();
-        }
-
-        public override int FollowSystemPlaybackDevice(bool enable)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.FollowSystemPlaybackDevice(enable);
-        }
-        #endregion
-
-        #region RecordingDevices
-        public override DeviceInfo[] EnumerateRecordingDevices()
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return null;
-            }
-            return _audioDeviecManagerImpl.EnumerateRecordingDevices();
         }
 
         public override int SetRecordingDevice(string deviceId)
@@ -182,6 +163,42 @@
             return _audioDeviecManagerImpl.GetRecordingDeviceVolume(ref volume);
         }
 
+        public override int SetLoopbackDevice(string deviceId)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.SetLoopbackDevice(deviceId);
+        }
+
+        public override int GetLoopbackDevice(ref string deviceId)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetLoopbackDevice(ref deviceId);
+        }
+
+        public override int SetPlaybackDeviceMute(bool mute)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.SetPlaybackDeviceMute(mute);
+        }
+
+        public override int GetPlaybackDeviceMute(ref bool mute)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetPlaybackDeviceMute(ref mute);
+        }
+
         public override int SetRecordingDeviceMute(bool mute)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
@@ -198,6 +215,24 @@
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetRecordingDeviceMute(ref mute);
+        }
+
+        public override int StartPlaybackDeviceTest(string testAudioFilePath)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.StartPlaybackDeviceTest(testAudioFilePath);
+        }
+
+        public override int StopPlaybackDeviceTest()
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.StopPlaybackDeviceTest();
         }
 
         public override int StartRecordingDeviceTest(int indicationInterval)
@@ -218,17 +253,6 @@
             return _audioDeviecManagerImpl.StopRecordingDeviceTest();
         }
 
-        public override int FollowSystemRecordingDevice(bool enable)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.FollowSystemRecordingDevice(enable);
-        }
-        #endregion
-
-        #region AudioDevice
         public override int StartAudioDeviceLoopbackTest(int indicationInterval)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
@@ -247,40 +271,22 @@
             return _audioDeviecManagerImpl.StopAudioDeviceLoopbackTest();
         }
 
-        public override int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceName)
+        public override int FollowSystemPlaybackDevice(bool enable)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 return ErrorCode;
             }
-            return _audioDeviecManagerImpl.GetPlaybackDefaultDevice(ref deviceId, ref deviceName);
+            return _audioDeviecManagerImpl.FollowSystemPlaybackDevice(enable);
         }
 
-        public override int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName)
+        public override int FollowSystemRecordingDevice(bool enable)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 return ErrorCode;
             }
-            return _audioDeviecManagerImpl.GetRecordingDefaultDevice(ref deviceId, ref deviceName);
-        }
-
-        public override int SetLoopbackDevice(string deviceId)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.SetLoopbackDevice(deviceId);
-        }
-
-        public override int GetLoopbackDevice(ref string deviceId)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.GetLoopbackDevice(ref deviceId);
+            return _audioDeviecManagerImpl.FollowSystemRecordingDevice(enable);
         }
 
         public override int FollowSystemLoopbackDevice(bool enable)
@@ -292,18 +298,7 @@
             return _audioDeviecManagerImpl.FollowSystemLoopbackDevice(enable);
         }
 
-        #endregion
 
-        internal static IAudioDeviceManager GetInstance(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
-        {
-            return instance ?? (instance = new AudioDeviceManager(rtcEngine, impl));
-        }
-
-        internal static void ReleaseInstance()
-        {
-            instance = null;
-        }
-
-
+        #endregion terra IAudioDeviceManager
     }
 }

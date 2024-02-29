@@ -21,50 +21,14 @@ namespace Agora.Rtc
             }
         }
 
-
-        //internal class IrisMetadata
-        //{
-        //    public uint uid;
-        //    public uint size;
-        //    public UInt64 buffer;
-        //    public long timeStampMs;
-
-        //    public void GenerateMetadata(ref Metadata data)
-        //    {
-        //        data.uid = uid;
-        //        data.size = size;
-        //        data.buffer = (IntPtr)buffer;
-        //        data.timeStampMs = timeStampMs;
-        //    }
-
-        //    public void CopyFromMetadata(ref Metadata data)
-        //    {
-        //        uid = data.uid;
-        //        size = data.size;
-        //        buffer = (UInt64)data.buffer;
-        //        timeStampMs = data.timeStampMs;
-        //    }
-
-        //}
-
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        //        [MonoPInvokeCallback(typeof(Func_MaxMetadataSize_Native))]
-        //#endif
-        //        internal static int GetMaxMetadataSize()
-        //        {
-        //            if (MetadataObserver == null) return 0;
-        //            return MetadataObserver.GetMaxMetadataSize();
-        //        }
-
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_Event_Native))]
+        [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
             lock (observerLock)
             {
-                IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
                 if (metadataObserver == null)
                 {
@@ -74,11 +38,11 @@ namespace Agora.Rtc
 
                 var @event = eventParam.@event;
                 var data = eventParam.data;
-       
+
                 switch (@event)
                 {
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
-                    case "MetadataObserver_getMaxMetadataSize":
+                    case AgoraEventType.EVENT_METADATAOBSERVER_GETMAXMETADATASIZE:
                         {
                             int result = metadataObserver.GetMaxMetadataSize();
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -89,7 +53,9 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-                    case "MetadataObserver_onReadyToSendMetadata":
+#endif
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
+                    case AgoraEventType.EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA:
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
@@ -105,7 +71,7 @@ namespace Agora.Rtc
                         }
                         break;
 #endif
-                    case "MetadataObserver_onMetadataReceived":
+                    case AgoraEventType.EVENT_METADATAOBSERVER_ONMETADATARECEIVED:
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
@@ -120,13 +86,13 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
+        private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
             {
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
-                case "MetadataObserver_getMaxMetadataSize":
+                case AgoraEventType.EVENT_METADATAOBSERVER_GETMAXMETADATASIZE:
                     {
                         int result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -137,7 +103,9 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
-                case "MetadataObserver_onReadyToSendMetadata":
+#endif
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
+                case AgoraEventType.EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA:
                     {
                         Metadata metadata = new Metadata();
                         bool result = false;
@@ -151,58 +119,12 @@ namespace Agora.Rtc
                     }
                     break;
 #endif
-                case "MetadataObserver_onMetadataReceived":
+                case AgoraEventType.EVENT_METADATAOBSERVER_ONMETADATARECEIVED:
                     break;
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);
                     break;
             }
         }
-
-
-
-
-
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        //        [MonoPInvokeCallback(typeof(Func_ReadyToSendMetadata_Native))]
-        //#endif
-        //            internal static bool OnReadyToSendMetadata(ref IrisMetadata metadata, VIDEO_SOURCE_TYPE source_type)
-        //            {
-        //                if (MetadataObserver == null) return false;
-
-        //                var localMetaData = new Metadata();
-        //                localMetaData.buffer = metadata.buffer;
-        //                localMetaData.size = metadata.size;
-        //                localMetaData.uid = metadata.uid;
-        //                localMetaData.timeStampMs = metadata.timeStampMs;
-
-        //                var ret = MetadataObserver.OnReadyToSendMetadata(ref localMetaData, source_type);
-
-        //                metadata.buffer = localMetaData.buffer;
-        //                metadata.uid = localMetaData.uid;
-        //                metadata.size = localMetaData.size;
-        //                metadata.timeStampMs = localMetaData.timeStampMs;
-
-        //                return ret;
-        //            }
-
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        //            [MonoPInvokeCallback(typeof(Func_MetadataReceived_Native))]
-        //#endif
-        //            internal static void OnMetadataReceived(IntPtr metadata)
-        //            {
-        //                if (MetadataObserver == null) return;
-
-        //                var metaData = (IrisMetadata)(Marshal.PtrToStructure(metadata, typeof(IrisMetadata)) ??
-        //                                                        new IrisMetadata());
-        //                var localMetaData = new Metadata();
-
-        //                localMetaData.buffer = metaData.buffer;
-        //                localMetaData.uid = metaData.uid;
-        //                localMetaData.size = metaData.size;
-        //                localMetaData.timeStampMs = metaData.timeStampMs;
-
-        //                MetadataObserver.OnMetadataReceived(localMetaData);
-        //            }
     }
 }

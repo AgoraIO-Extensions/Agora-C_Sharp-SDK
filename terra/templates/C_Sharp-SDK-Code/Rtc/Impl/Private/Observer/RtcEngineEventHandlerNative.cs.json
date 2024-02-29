@@ -1,0 +1,36 @@
+{
+    "IRtcEngineEventHandlerBase": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandler",
+        "headTailTemple": "rtcEngineEventHandlerBase_head_tail"
+    },
+    "IRtcEngineEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandler",
+        "headTailTemple": "rtcEngineEventHandler_head_tail"
+    },
+    "IRtcEngineEventHandlerS": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandler",
+        "headTailTemple": "rtcEngineEventHandlerS_head_tail"
+    },
+    "rtcEngineEventHandlerBase_head_tail": {
+        "head": "${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_GenerateRtcEngineEventHandlerBaseNative}",
+        "tail": ""
+    },
+    "rtcEngineEventHandler_head_tail": {
+        "head": "${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_GenerateRtcEngineEventHandlerNative}",
+        "tail": ""
+    },
+    "rtcEngineEventHandlerS_head_tail": {
+        "head": "${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_GenerateRtcEngineEventHandlerSNative}",
+        "tail": ""
+    },
+    "IDirectCdnStreamingEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IDirectCdnStreamingEventHandler",
+        "commonMethodTemplate": "method_callback_common",
+        "methodSplitSymbol": "\n\n"
+    },
+    "method_callback_common": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCommonEventHandlerNative}"
+}

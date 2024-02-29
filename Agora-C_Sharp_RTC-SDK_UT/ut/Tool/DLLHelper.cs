@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Agora.Rtc
+namespace Agora.Rtc.Ut
 {
     internal class DLLHelper
     {
-        private const string  DebugLibName = "libName";
+        private const string DebugLibName = "libName";
 
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateFakeRtcEngine();
@@ -13,6 +13,11 @@ namespace Agora.Rtc
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int TriggerEventWithFakeRtcEngine(IntPtr engine_ptr, ref IrisCApiParam2 apiParam);
 
+        [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr CreateFakeRtmClient();
+
+        [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int TriggerEventWithFakeRtmClient(IntPtr engine_ptr, ref IrisCApiParam2 apiParam);
     }
 
 

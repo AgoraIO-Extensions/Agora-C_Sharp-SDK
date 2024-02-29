@@ -11,9 +11,10 @@
 ::         %4 (APP-KEY) : The app-key for download iris
 ::         %5 (WIN-URL) : The url for iris_win
 ::         %6 (NUGET_API_KEY) : nuget api key for publish
+::         %7 (PRODUCT) : whether to publish or build rtc or not, default is rtc
 ::  eg:
-::     .\build.bat build 3.2.1.7 Debug ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL
-::     .\build.bat publish 3.2.1.7 Release ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL
+::     .\build.bat build 3.2.1.7 Debug ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL rtc
+::     .\build.bat publish 3.2.1.7 Release ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL rtc
 :: Created by Yiqing Huang on Apr 23, 2021.
 :: Modified by Yiqing Huang on May 12, 2021.
 :: Modified by Hugo Chaan on September 2, 2021.
@@ -24,12 +25,23 @@ SET CURDIR=%cd%
 SET APP_KEY=%JFROG_TOKEN%
 SET WIN_URL=%5
 SET NUGET_API_KEY=%6
+SET PRODUCT=%7
+
+set "PRODUCT=%PRODUCT:ucase=%"
+if "%PRODUCT%" == "RTC" (
+    SET PRODUCT="rtc"
+) else if "%PRODUCT%" == "RTM" (
+    SET PRODUCT="rtm"
+) else (
+    :: force set to rtc by default
+    SET PRODUCT="rtc"
+)
 
 goto :main
 
 :main
     setlocal
-    echo type[%1] version[%2] config[%3] app_key[%4] win_url[%5] nuget_api_key[%6]
+    echo type[%1] version[%2] config[%3] app_key[%4] win_url[%5] nuget_api_key[%6] product[%7]
     SET TYPE=%1
     if "%TYPE%"=="publish" (
         if "%NUGET_API_KEY%"=="" (
@@ -87,14 +99,14 @@ goto :main
 :publish_to_nuget
     setlocal
     SET SOURCE=https://api.nuget.org/v3/index.json
-    SET NUPKG_FILE_NAME=agora_rtc_sdk.%~1%.nupkg
+    SET NUPKG_FILE_NAME=agora_%PRODUCT%_sdk.%~1%.nupkg
 
     call :build %~1 Release publish
 
     SET PATH_PATH=%CURDIR%\publish
     cd %PATH_PATH%
     nuget setapikey %NUGET_API_KEY%
-    nuget.exe pack agora_rtc_sdk.nuspec
+    nuget.exe pack agora_%PRODUCT%_sdk.nuspec
 
     echo =====Start pushing package to NuGet=====
     nuget.exe push %NUPKG_FILE_NAME% -Source %SOURCE%
@@ -117,7 +129,7 @@ goto :main
     setlocal
     SET CONFIG=%~1
     mkdir %CURDIR%\Agora_C#_SDK
-    mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
+    mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agora%PRODUCT% %CURDIR%\Agora_C#_SDK\agora%PRODUCT%\agora%PRODUCT%
     xcopy /s /y %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\x86
     xcopy /s /y %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\x86_64
     xcopy /s /y %CURDIR%\..\Code\bin\x86\%CONFIG%\netcoreapp20 %CURDIR%\Agora_C#_SDK\x86
@@ -136,11 +148,11 @@ goto :main
     SET CONFIG_BIN_PATH_DST=%CURDIR%\publish\bin
 
     mkdir %CONFIG_BIN_PATH_DST%\x86\netcoreapp20 %CONFIG_BIN_PATH_DST%\x86\net40 %CONFIG_BIN_PATH_DST%\x86_64\netcoreapp20 %CONFIG_BIN_PATH_DST%\x86_64\net40
-    xcopy /s /y %CONFIG_PATH%\agora_rtc_sdk.nuspec %CONFIG_PATH_DST%
-    xcopy /s /y %CONFIG_PATH%\agorartc_core20.props %CONFIG_BIN_PATH_DST%
-    xcopy /s /y %CONFIG_PATH%\agorartc_core20.targets %CONFIG_BIN_PATH_DST%
-    xcopy /s /y %CONFIG_PATH%\agorartc_framework40.props %CONFIG_BIN_PATH_DST%
-    xcopy /s /y %CONFIG_PATH%\agorartc_framework40.targets %CONFIG_BIN_PATH_DST%
+    xcopy /s /y %CONFIG_PATH%\agora_%PRODUCT%_sdk.nuspec %CONFIG_PATH_DST%
+    xcopy /s /y %CONFIG_PATH%\agora_%PRODUCT%_sdk.core20.props %CONFIG_BIN_PATH_DST%
+    xcopy /s /y %CONFIG_PATH%\agora_%PRODUCT%_sdk.core20.targets %CONFIG_BIN_PATH_DST%
+    xcopy /s /y %CONFIG_PATH%\agora_%PRODUCT%_sdk.net40.props %CONFIG_BIN_PATH_DST%
+    xcopy /s /y %CONFIG_PATH%\agora_%PRODUCT%_sdk.net40.targets %CONFIG_BIN_PATH_DST%
     xcopy /s /y %CURDIR%\iris\x86  %CONFIG_BIN_PATH_DST%\x86
     xcopy /s /y %CURDIR%\iris\x86_64  %CONFIG_BIN_PATH_DST%\x86_64
     xcopy /s /y %CURDIR%\..\Code\bin\x86\%CONFIG%\netcoreapp20\ %CONFIG_BIN_PATH_DST%\x86\netcoreapp20
@@ -156,7 +168,7 @@ goto :main
 
     echo =====Start removing unnecessary files=====
     rmdir /q /s %CURDIR%\Agora_C#_SDK
-    rmdir /q /s %CURDIR%\iris %CURDIR%\agorartc
+    rmdir /q /s %CURDIR%\iris %CURDIR%\agora%PRODUCT%
     echo =====Finish removing unnecessary files=====
 
     endlocal
@@ -183,9 +195,9 @@ goto :main
     SET URL_FILE=url_config_csharp.txt
     SET OUT_FILENAME=iris.zip
     SET IRIS_PATH_x86=%CURDIR%\iris\iris_*\Win32
-    SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\DCG\Agora_Native_SDK_for_Windows_FULL\sdk\x86
+    SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\RTM\Agora_Native_SDK_for_Windows_*\sdk\x86
     SET IRIS_PATH_x64=%CURDIR%\iris\iris_*\x64
-    SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\DCG\Agora_Native_SDK_for_Windows_FULL\sdk\x86_64
+    SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\RTM\Agora_Native_SDK_for_Windows_*\sdk\x86_64
 
     :: download iris
     CALL :download_library %URL_FILE% %OUT_FILENAME%

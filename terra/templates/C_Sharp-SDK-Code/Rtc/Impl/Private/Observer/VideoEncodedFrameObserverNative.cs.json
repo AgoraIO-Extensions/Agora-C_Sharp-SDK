@@ -1,0 +1,39 @@
+{
+    "IVideoEncodedFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IVideoEncodedFrameObserver",
+        "excludeMethods": [
+            "onEncodedVideoFrameReceived"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IVideoEncodedFrameObserverS": {
+        "type": "ClazzStruct",
+        "name": "IVideoEncodedFrameObserverS",
+        "excludeMethods": [
+            "onEncodedVideoFrameReceived"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IVideoEncodedFrameObserver_CreateDefaultReturn": {
+        "type": "ClazzStruct",
+        "name": "IVideoEncodedFrameObserver",
+        "excludeMethods": [
+            "onEncodedVideoFrameReceived"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IVideoEncodedFrameObserverS_CreateDefaultReturn": {
+        "type": "ClazzStruct",
+        "name": "IVideoEncodedFrameObserverS",
+        "excludeMethods": [
+            "onEncodedVideoFrameReceived"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "method_callback_impl": "case \"${-rCLAZZ_STRUCT_NAME}_${-oMETHOD_NAME}\":{ImplMe and Exclude Me}break;"
+}

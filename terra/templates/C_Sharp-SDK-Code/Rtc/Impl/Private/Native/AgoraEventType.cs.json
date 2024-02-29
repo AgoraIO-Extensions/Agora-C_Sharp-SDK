@@ -1,0 +1,130 @@
+{
+    "IAudioEncodedFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IAudioEncodedFrameObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IAudioFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IAudioFrameObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IAudioPcmFrameSink": {
+        "type": "ClazzStruct",
+        "name": "IAudioPcmFrameSink",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IAudioSpectrumObserver": {
+        "type": "ClazzStruct",
+        "name": "IAudioSpectrumObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IH265TranscoderObserver": {
+        "type": "ClazzStruct",
+        "name": "IH265TranscoderObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMediaPlayerCustomDataProvider": {
+        "type": "ClazzStruct",
+        "name": "IMediaPlayerCustomDataProvider",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMediaPlayerSourceObserver": {
+        "type": "ClazzStruct",
+        "name": "IMediaPlayerSourceObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMediaRecorderObserver": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorderObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": [
+            "addVideoFrameRenderer",
+            "removeVideoFrameRenderer"
+        ]
+    },
+    "IMetadataObserver": {
+        "type": "ClazzStruct",
+        "name": "IMetadataObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMusicContentCenterEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IMusicContentCenterEventHandler",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IRtcEngineEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandler",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IRtcEngineEventHandlerEx": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandlerEx",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_RtcEngineEventEx",
+        "excludeMethods": []
+    },
+    "IDirectCdnStreamingEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IDirectCdnStreamingEventHandler",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IVideoEncodedFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IVideoEncodedFrameObserver",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IVideoFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserver",
+        "namespaces": "agora::media",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "api_name": "public const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-onMETHOD_NAME}\";",
+    "api_name_h265": "public const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKeyWithH265}\";",
+    "api_name_RtcEngineEventEx": "public const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKeyWitRtcEngineEventEx}\";"
+}

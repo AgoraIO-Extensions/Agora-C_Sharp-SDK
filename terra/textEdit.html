@@ -1,0 +1,24 @@
+<body>
+    <textarea style="width: 2000px;" class="form-control" rows="40">Hello</textarea>
+    <div>
+        <button onclick="multipleToOne()">多行变一行</button>
+        <button onclick="OneToMultiple()">一行变多行</button>
+    </div>
+</body>
+
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+<script>
+    function multipleToOne() {
+        var text = $("textarea").val();
+        text = text.replace(/\n/g, "\\n");
+        $("textarea").val(text);
+    }
+
+    function OneToMultiple() {
+        var text = $("textarea").val();
+        text = text.replace(/\\n/g, "\n");
+        $("textarea").val(text);
+    }
+
+</script>

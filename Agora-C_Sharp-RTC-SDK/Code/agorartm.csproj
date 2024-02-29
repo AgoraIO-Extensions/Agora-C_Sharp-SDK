@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp20;net40</TargetFrameworks>
+    <Nullable>disable</Nullable>
+    <Platforms>x86;x64</Platforms>
+    <ApplicationIcon />
+    <Win32Resource />
+    <Company>Agora.io</Company>
+    <Copyright>Agora.io Copyright (C) 2021</Copyright>
+    <Version>2.1.8</Version>
+    <Description>Agora's Video Calling allows you to add customized real-time video experiences to any application.
+
+Enabled by Agora’s Video SDK, Video Calling gives you full control over a rich set of features within your app. You can extend the SDK with functionality like recording and content moderation or use Extensions Marketplace to quickly activate background removal, face filters, and more.</Description>
+    <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK</PackageProjectUrl>
+    <PackageId>agora_rtm_sdk</PackageId>
+    <AssemblyName>agorartm</AssemblyName>
+    <RootNamespace>agorartm</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>bin\x64\Debug</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <OutputPath>bin\x86\Release</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>bin\x64\Release</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LitJson" Version="0.17.0" />
+  </ItemGroup>
+
+</Project>

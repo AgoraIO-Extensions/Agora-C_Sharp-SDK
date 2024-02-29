@@ -32,13 +32,13 @@ namespace Agora.Rtc
 
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_Event_Native))]
+        [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
             lock (observerLock)
             {
-                IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
                 var data = eventParam.data;
 
@@ -55,7 +55,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "MediaPlayerCustomDataProvider_onReadData":
+                    case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA:
                         {
                             IntPtr buffer0 = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "buffer");
                             int bufferSize = (int)AgoraJson.GetData<int>(jsonData, "bufferSize");
@@ -69,7 +69,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-                    case "MediaPlayerCustomDataProvider_onSeek":
+                    case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK:
                         {
                             Int64 offset = (Int64)AgoraJson.GetData<Int64>(jsonData, "offset");
                             int whence = (int)AgoraJson.GetData<int>(jsonData, "whence");
@@ -90,12 +90,12 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
+        private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
             {
-                case "MediaPlayerCustomDataProvider_onReadData":
+                case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA:
                     {
                         int result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -106,7 +106,7 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
-                case "MediaPlayerCustomDataProvider_onSeek":
+                case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK:
                     {
                         Int64 result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -122,50 +122,5 @@ namespace Agora.Rtc
                     break;
             }
         }
-
-
-
-
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        //        [MonoPInvokeCallback(typeof(Func_OnSeek_Native))]
-        //#endif
-        //        internal static Int64 OnSeek(Int64 offset, int whence, int playerId)
-        //        {
-        //            if (CustomDataProviderDic.ContainsKey(playerId))
-        //            {
-        //                try
-        //                {
-        //                    return CustomDataProviderDic[playerId].OnSeek(offset, whence);
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnSeek: " + e);
-        //                    return 0;
-        //                }
-        //            }
-
-        //            return 0;
-        //        }
-
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        //        [MonoPInvokeCallback(typeof(Func_onReadData_Native))]
-        //#endif
-        //        internal static int OnReadData(IntPtr buffer, int bufferSize, int playerId)
-        //        {
-        //            if (CustomDataProviderDic.ContainsKey(playerId))
-        //            {
-        //                try
-        //                {
-        //                    return CustomDataProviderDic[playerId].OnReadData(buffer, bufferSize);
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnReadData: " + e);
-        //                    return 0;
-        //                }
-        //            }
-
-        //            return 0;
-        //        }
     }
 }

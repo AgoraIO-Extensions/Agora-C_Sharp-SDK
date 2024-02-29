@@ -1,9 +1,21 @@
-﻿using System;
+﻿#define AGORA_RTC
+#define AGORA_RTM
+
+using System;
 using System.Collections;
 using System.Collections.Specialized;
-using Agora.Rtc.LitJson;
 
+#if AGORA_RTC
+using Agora.Rtc.LitJson;
+#elif AGORA_RTM
+using Agora.Rtm.LitJson;
+#endif
+
+#if AGORA_RTC
 namespace Agora.Rtc
+#elif AGORA_RTM
+namespace Agora.Rtm
+#endif
 {
     public class Optional<T>
     {
@@ -38,38 +50,8 @@ namespace Agora.Rtc
 
     }
 
-
-    public class OptionalJsonParse 
+    public interface IOptionalJsonParse
     {
-        public virtual void ToJson(JsonWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void WriteEnum(LitJson.JsonWriter writer, Object obj)
-
-        {
-            Type obj_type = obj.GetType();
-            Type e_type = Enum.GetUnderlyingType(obj_type);
-
-            if (e_type == typeof(long))
-                writer.Write((long)obj);
-            else if (e_type == typeof(uint))
-                writer.Write((uint)obj);
-            else if (e_type == typeof(ulong))
-                writer.Write((ulong)obj);
-            else if (e_type == typeof(ushort))
-                writer.Write((ushort)obj);
-            else if (e_type == typeof(short))
-                writer.Write((short)obj);
-            else if (e_type == typeof(byte))
-                writer.Write((byte)obj);
-            else if (e_type == typeof(sbyte))
-                writer.Write((sbyte)obj);
-            else
-                writer.Write((int)obj);
-        }
-
+        void ToJson(JsonWriter writer);
     }
-
 }

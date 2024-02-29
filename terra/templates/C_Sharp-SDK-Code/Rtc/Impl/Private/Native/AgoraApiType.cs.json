@@ -1,0 +1,115 @@
+{
+    "IRtcEngine": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngine",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IRtcEngineEx": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEx",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMediaPlayer": {
+        "type": "ClazzStruct",
+        "name": "IMediaPlayer",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IAudioDeviceManager": {
+        "type": "ClazzStruct",
+        "name": "IAudioDeviceManager",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IVideoDeviceManager": {
+        "type": "ClazzStruct",
+        "name": "IVideoDeviceManager",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "ISpatialAudioEngineBase": {
+        "type": "ClazzStruct",
+        "name": "ISpatialAudioEngineBase",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "ILocalSpatialAudioEngine": {
+        "type": "ClazzStruct",
+        "name": "ILocalSpatialAudioEngine",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMediaEngine": {
+        "type": "ClazzStruct",
+        "name": "IMediaEngine",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": [
+            "addVideoFrameRenderer",
+            "removeVideoFrameRenderer"
+        ]
+    },
+    "IMediaPlayerCacheManager": {
+        "type": "ClazzStruct",
+        "name": "IMediaPlayerCacheManager",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMediaRecorder": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorder",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMusicContentCenter": {
+        "type": "ClazzStruct",
+        "name": "IMusicContentCenter",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IMusicPlayer": {
+        "type": "ClazzStruct",
+        "name": "IMusicPlayer",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
+    "IH265Transcoder": {
+        "type": "ClazzStruct",
+        "name": "IH265Transcoder",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": [
+            "AddRef",
+            "Release",
+            "HasOneRef"
+        ]
+    },
+    "api_name": "internal const string FUNC_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-onMETHOD_NAME}\";",
+    "api_name_h265": "internal const string FUNC_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKeyWithH265}\";"
+}
