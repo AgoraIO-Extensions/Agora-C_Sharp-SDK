@@ -267,7 +267,7 @@ if [ "$IOS_URL" != "" ]; then
         cp -f "$ROOT_DIR"/Unity/Plugins/iOS/ios.meta $IOS_DST_PATH/${filename}.meta
     done
 
-    rm "$ROOT_DIR"/Unity/Plugins/iOS/ios.meta
+    rm $IOS_DST_PATH/ios.meta
 
 fi
 
@@ -290,8 +290,8 @@ if [ "$$VISIONOS_URL" != "" ]; then
         fi
     done
 
-    rm "$ROOT_DIR"/Unity/Plugins/visionOS/devices.meta
-    rm "$ROOT_DIR"/Unity/Plugins/visionOS/simulator.meta
+    rm $VISIONOS_DST_PATH/devices.meta
+    rm $VISIONOS_DST_PATH/simulator.meta
 fi
 
 # macOS
