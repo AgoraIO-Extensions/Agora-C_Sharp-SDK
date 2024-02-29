@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS 
 using AOT;
 #endif
 
@@ -167,7 +167,7 @@ namespace Agora.Rtc
 
 
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
@@ -327,7 +327,7 @@ namespace Agora.Rtc
         }
 
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
         //#endif
         //        internal static bool OnRecordAudioFrame(string channelId, IntPtr audioFramePtr)
@@ -348,7 +348,7 @@ namespace Agora.Rtc
         //            }
         //        }
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
         //#endif
         //        internal static bool OnPlaybackAudioFrame(string channelId, IntPtr audioFramePtr)
@@ -369,7 +369,7 @@ namespace Agora.Rtc
         //            }
         //        }
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
         //#endif
         //        internal static bool OnMixedAudioFrame(string channelId, IntPtr audioFramePtr)
@@ -390,7 +390,7 @@ namespace Agora.Rtc
         //            }
         //        }
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioFramePosition_Native))]
         //#endif
         //        internal static int GetObservedAudioFramePosition()
@@ -409,7 +409,7 @@ namespace Agora.Rtc
         //            }
         //        }
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
         //#endif
         //        internal static IrisAudioParams GetPlaybackAudioParams()
@@ -429,7 +429,7 @@ namespace Agora.Rtc
         //        }
 
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
         //#endif
         //        internal static IrisAudioParams GetRecordAudioParams()
@@ -448,7 +448,7 @@ namespace Agora.Rtc
         //            }
         //        }
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
         //#endif
         //        internal static IrisAudioParams GetMixedAudioParams()
@@ -468,7 +468,7 @@ namespace Agora.Rtc
         //        }
 
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioFrameRemote_Native))]
         //#endif
         //        internal static bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, IntPtr audioFramePtr)
@@ -489,7 +489,7 @@ namespace Agora.Rtc
         //            }
         //        }
 
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         //        [MonoPInvokeCallback(typeof(Func_AudioFrameRemoteStringUid_Native))]
         //#endif
         //        internal static bool OnPlaybackAudioFrameBeforeMixing2(string channelId, string uid, IntPtr audioFramePtr)

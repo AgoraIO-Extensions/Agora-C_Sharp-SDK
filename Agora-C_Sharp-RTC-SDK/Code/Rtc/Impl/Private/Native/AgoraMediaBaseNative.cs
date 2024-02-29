@@ -113,10 +113,7 @@ namespace Agora.Rtc
     {
         public ScreenCaptureSourceType type;
         public view_t sourceId;
-#if  UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-#else
         public view_t sourceDisplayId;
-#endif
         public string sourceName;
         public ThumbImageBufferInternal thumbImage;
         public ThumbImageBufferInternal iconImage;
@@ -130,11 +127,7 @@ namespace Agora.Rtc
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
             sourceId = 0;
-#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-#else
             sourceDisplayId = -2;
-#endif
-
             sourceName = "";
             processPath = "";
             sourceTitle = "";
