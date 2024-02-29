@@ -285,6 +285,16 @@ if [ "$$VISIONOS_URL" != "" ]; then
         extension=${filename##*.}
         basename=${filename%.*}
         if [ "$extension" == "xcframework" ]; then
+
+            # check if a directory exists
+            if [ -d $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_armv7 ]; then
+                rm -rf $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_armv7
+            fi
+
+            if [ -d $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_x86_64-simulator ]; then
+                rm -rf $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_x86_64-simulator
+            fi
+
             cp -f "$ROOT_DIR"/Unity/Plugins/visionOS/devices.meta $VISIONOS_DST_PATH/$basename.xcframework/xros-arm64/$basename.framework.meta
             cp -f "$ROOT_DIR"/Unity/Plugins/visionOS/simulator.meta $VISIONOS_DST_PATH/$basename.xcframework/xros-arm64_x86_64-simulator/$basename.framework.meta
         fi
