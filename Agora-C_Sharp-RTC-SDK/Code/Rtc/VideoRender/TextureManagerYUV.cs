@@ -127,11 +127,23 @@ namespace Agora.Rtc
                 _videoPixelHeight = _cachedVideoFrame.height;
 
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
+#if UNITY_2021_2_OR_NEWER
+                _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+#else
                 _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+#endif
                 _texture.Apply();
+#if UNITY_2021_2_OR_NEWER
+                _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+#else
                 _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+#endif
                 _uTexture.Apply();
+#if UNITY_2021_2_OR_NEWER
+                _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+#else
                 _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+#endif
                 _vTexture.Apply();
                 _textureNative = _texture.GetRawTextureData<byte>();
                 _uTextureNative = _uTexture.GetRawTextureData<byte>();
@@ -171,11 +183,23 @@ namespace Agora.Rtc
 #else
                     if (_needResize)
                     {
+#if UNITY_2021_2_OR_NEWER
+                        _texture.Reinitialize(_cachedVideoFrame.yStride, _videoPixelHeight);
+#else
                         _texture.Resize(_cachedVideoFrame.yStride, _videoPixelHeight);
+#endif
                         _texture.Apply();
+#if UNITY_2021_2_OR_NEWER
+                        _uTexture.Reinitialize(_cachedVideoFrame.uStride, _videoPixelHeight / 2);
+#else
                         _uTexture.Resize(_cachedVideoFrame.uStride, _videoPixelHeight / 2);
+#endif
                         _uTexture.Apply();
+#if UNITY_2021_2_OR_NEWER
+                        _vTexture.Reinitialize(_cachedVideoFrame.vStride, _videoPixelHeight / 2);
+#else
                         _vTexture.Resize(_cachedVideoFrame.vStride, _videoPixelHeight / 2);
+#endif
                         _vTexture.Apply();
                         _needResize = false;
                     }
