@@ -1870,6 +1870,11 @@ namespace Agora.Rtc
         public abstract int SetAudioMixingPitch(int pitch);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetAudioMixingPlaybackSpeed(int speed);
+
+        ///
         /// <summary>
         /// Retrieves the volume of the audio effects.
         /// 
@@ -2545,6 +2550,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int UploadLogFile(ref string requestId);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int WriteLog(LOG_LEVEL level, string fmt);
 
         ///
         /// <summary>
@@ -3589,6 +3599,11 @@ namespace Agora.Rtc
         public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetCameraStabilizationMode(CAMERA_STABILIZATION_MODE mode);
+
+        ///
         /// <summary>
         /// Sets the default audio playback route.
         /// 
@@ -3668,6 +3683,16 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetRouteInCommunicationMode(int route);
+
+        ///
+        /// @ignore
+        ///
+        public abstract bool IsSupportPortraitCenterStage();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int EnablePortraitCenterStage(bool enabled);
 
         ///
         /// <summary>
@@ -5171,6 +5196,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract bool IsFeatureAvailableOnDevice(FeatureType type);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SendAudioMetadata(string metadata, ulong length);
         #endregion terra IRtcEngine
 
         ///
@@ -5286,7 +5316,17 @@ namespace Agora.Rtc
         ///
         public abstract int UnRegisterAudioFrameObserver();
 
+        ///
+        /// @ignore
+        ///
+        public abstract int UnRegisterFaceInfoObserver();
+
         #region terra IMediaEngine
+        ///
+        /// @ignore
+        ///
+        public abstract int RegisterFaceInfoObserver(IFaceInfoObserver observer);
+
         ///
         /// <summary>
         /// Pushes the external audio frame.

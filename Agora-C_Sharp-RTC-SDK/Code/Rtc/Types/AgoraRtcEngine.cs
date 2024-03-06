@@ -716,6 +716,11 @@ namespace Agora.Rtc
         ///
         public uint rxAudioBytes;
 
+        ///
+        /// @ignore
+        ///
+        public int e2eDelay;
+
         public RemoteAudioStats()
         {
             this.uid = 0;
@@ -736,9 +741,10 @@ namespace Agora.Rtc
             this.qoeQuality = 0;
             this.qualityChangedReason = 0;
             this.rxAudioBytes = 0;
+            this.e2eDelay = 0;
         }
 
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes)
+        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
         {
             this.uid = uid;
             this.quality = quality;
@@ -758,6 +764,7 @@ namespace Agora.Rtc
             this.qoeQuality = qoeQuality;
             this.qualityChangedReason = qualityChangedReason;
             this.rxAudioBytes = rxAudioBytes;
+            this.e2eDelay = e2eDelay;
         }
     }
 
@@ -1322,6 +1329,11 @@ namespace Agora.Rtc
         public string deviceId;
 
         ///
+        /// @ignore
+        ///
+        public string cameraId;
+
+        ///
         /// <summary>
         /// The format of the video frame. See VideoFormat.
         /// </summary>
@@ -1340,10 +1352,11 @@ namespace Agora.Rtc
             this.followEncodeDimensionRatio = true;
         }
 
-        public CameraCapturerConfiguration(CAMERA_DIRECTION cameraDirection, string deviceId, VideoFormat format, bool followEncodeDimensionRatio)
+        public CameraCapturerConfiguration(CAMERA_DIRECTION cameraDirection, string deviceId, string cameraId, VideoFormat format, bool followEncodeDimensionRatio)
         {
             this.cameraDirection = cameraDirection;
             this.deviceId = deviceId;
+            this.cameraId = cameraId;
             this.format = format;
             this.followEncodeDimensionRatio = followEncodeDimensionRatio;
         }
@@ -1866,6 +1879,11 @@ namespace Agora.Rtc
         public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
 
         ///
+        /// @ignore
+        ///
+        public Optional<bool> publishLipSyncTrack = new Optional<bool>();
+
+        ///
         /// <summary>
         /// Whether to automatically subscribe to all remote audio streams when the user joins a channel: true : Subscribe to all remote audio streams. false : Do not automatically subscribe to any remote audio streams.
         /// </summary>
@@ -1979,7 +1997,7 @@ namespace Agora.Rtc
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
@@ -2000,6 +2018,7 @@ namespace Agora.Rtc
             this.publishMediaPlayerVideoTrack = publishMediaPlayerVideoTrack;
             this.publishTranscodedVideoTrack = publishTranscodedVideoTrack;
             this.publishMixedAudioTrack = publishMixedAudioTrack;
+            this.publishLipSyncTrack = publishLipSyncTrack;
             this.autoSubscribeAudio = autoSubscribeAudio;
             this.autoSubscribeVideo = autoSubscribeVideo;
             this.enableAudioRecordingOrPlayout = enableAudioRecordingOrPlayout;
@@ -2134,6 +2153,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("publishMixedAudioTrack");
                 writer.Write(this.publishMixedAudioTrack.GetValue());
+            }
+
+            if (this.publishLipSyncTrack.HasValue())
+            {
+                writer.WritePropertyName("publishLipSyncTrack");
+                writer.Write(this.publishLipSyncTrack.GetValue());
             }
 
             if (this.autoSubscribeAudio.HasValue())

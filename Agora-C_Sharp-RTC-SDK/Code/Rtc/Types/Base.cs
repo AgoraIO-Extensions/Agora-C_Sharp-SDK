@@ -45,6 +45,7 @@ namespace Agora.Rtc
             this.avsync_type = audioFrame.avsync_type;
             this.presentationMs = audioFrame.presentationMs;
             this.audioTrackNumber = audioFrame.audioTrackNumber;
+            this.rtpTimestamp = audioFrame.rtpTimestamp;
             #endregion terra AudioFrameInternal_Assignment
         }
 
@@ -59,6 +60,7 @@ namespace Agora.Rtc
         public int avsync_type;
         public long presentationMs;
         public int audioTrackNumber;
+        public uint rtpTimestamp;
         #endregion terra AudioFrameInternal_Member_List
     }
 
@@ -182,6 +184,8 @@ namespace Agora.Rtc
 
             this.metadata_size = frame.metadata_size;
 
+            this.fillAlphaBuffer = frame.fillAlphaBuffer;
+
             this.texture_slice_index = frame.texture_slice_index;
             #endregion terra ExternalVideoFrameInternal_Assignment
         }
@@ -204,6 +208,8 @@ namespace Agora.Rtc
         public float[] matrix;
 
         public int metadata_size;
+
+        public bool fillAlphaBuffer;
 
         public int texture_slice_index;
         #endregion terra ExternalVideoFrameInternal_Member_List

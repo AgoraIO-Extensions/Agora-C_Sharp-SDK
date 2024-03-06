@@ -176,18 +176,25 @@ namespace Agora.Rtc
         ///
         public byte[] encryptionKdfSalt;
 
+        ///
+        /// @ignore
+        ///
+        public bool datastreamEncryptionEnabled;
+
         public EncryptionConfig()
         {
             this.encryptionMode = ENCRYPTION_MODE.AES_128_GCM2;
             this.encryptionKey = "";
             this.encryptionKdfSalt = new byte[32];
+            this.datastreamEncryptionEnabled = false;
         }
 
-        public EncryptionConfig(ENCRYPTION_MODE encryptionMode, string encryptionKey, byte[] encryptionKdfSalt)
+        public EncryptionConfig(ENCRYPTION_MODE encryptionMode, string encryptionKey, byte[] encryptionKdfSalt, bool datastreamEncryptionEnabled)
         {
             this.encryptionMode = encryptionMode;
             this.encryptionKey = encryptionKey;
             this.encryptionKdfSalt = encryptionKdfSalt;
+            this.datastreamEncryptionEnabled = datastreamEncryptionEnabled;
         }
 
         public string GetEncryptionString()
@@ -257,7 +264,9 @@ namespace Agora.Rtc
         ///
         public string deviceName;
 
-
+        ///
+        /// @ignore
+        ///
         public string deviceTypeName;
 
         ///
@@ -741,6 +750,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_INVALID_USER_ID = 121,
+
+        ///
+        /// @ignore
+        ///
+        ERR_DATASTREAM_DECRYPTION_FAILED = 122,
 
         ///
         /// <summary>
@@ -2171,6 +2185,11 @@ namespace Agora.Rtc
         ///
         public VIDEO_STREAM_TYPE streamType;
 
+        ///
+        /// @ignore
+        ///
+        public long presentationMs;
+
         public EncodedVideoFrameInfo()
         {
             this.uid = 0;
@@ -2184,6 +2203,7 @@ namespace Agora.Rtc
             this.captureTimeMs = 0;
             this.decodeTimeMs = 0;
             this.streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
+            this.presentationMs = -1;
         }
 
         public EncodedVideoFrameInfo(EncodedVideoFrameInfo rhs)
@@ -2199,9 +2219,10 @@ namespace Agora.Rtc
             this.captureTimeMs = rhs.captureTimeMs;
             this.decodeTimeMs = rhs.decodeTimeMs;
             this.streamType = rhs.streamType;
+            this.presentationMs = rhs.presentationMs;
         }
 
-        public EncodedVideoFrameInfo(uint uid, VIDEO_CODEC_TYPE codecType, int width, int height, int framesPerSecond, VIDEO_FRAME_TYPE frameType, VIDEO_ORIENTATION rotation, int trackId, long captureTimeMs, long decodeTimeMs, VIDEO_STREAM_TYPE streamType)
+        public EncodedVideoFrameInfo(uint uid, VIDEO_CODEC_TYPE codecType, int width, int height, int framesPerSecond, VIDEO_FRAME_TYPE frameType, VIDEO_ORIENTATION rotation, int trackId, long captureTimeMs, long decodeTimeMs, VIDEO_STREAM_TYPE streamType, long presentationMs)
         {
             this.uid = uid;
             this.codecType = codecType;
@@ -2214,6 +2235,7 @@ namespace Agora.Rtc
             this.captureTimeMs = captureTimeMs;
             this.decodeTimeMs = decodeTimeMs;
             this.streamType = streamType;
+            this.presentationMs = presentationMs;
         }
     }
 
@@ -3669,6 +3691,42 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum CAMERA_STABILIZATION_MODE
+    {
+        ///
+        /// @ignore
+        ///
+        CAMERA_STABILIZATION_MODE_OFF = -1,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_STABILIZATION_MODE_AUTO = 0,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_STABILIZATION_MODE_LEVEL_1 = 1,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_STABILIZATION_MODE_LEVEL_2 = 2,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_STABILIZATION_MODE_LEVEL_3 = 3,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_STABILIZATION_MODE_MAX_LEVEL = CAMERA_STABILIZATION_MODE_LEVEL_3,
+    }
+
+    ///
     /// <summary>
     /// The state of the local audio.
     /// </summary>
@@ -3910,6 +3968,16 @@ namespace Agora.Rtc
         LOCAL_VIDEO_STREAM_REASON_DEVICE_INVALID_ID = 10,
 
         ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_INTERRUPT = 14,
+
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_FATAL_ERROR = 15,
+
+        ///
         /// <summary>
         /// 101: The current video capture device is unavailable due to excessive system pressure.
         /// </summary>
@@ -4105,6 +4173,16 @@ namespace Agora.Rtc
         /// </summary>
         ///
         REMOTE_AUDIO_REASON_REMOTE_OFFLINE = 7,
+
+        ///
+        /// @ignore
+        ///
+        REMOTE_AUDIO_REASON_NO_PACKET_RECEIVE = 8,
+
+        ///
+        /// @ignore
+        ///
+        REMOTE_AUDIO_REASON_LOCAL_PLAY_FAILED = 9,
     }
 
     ///
@@ -7007,6 +7085,11 @@ namespace Agora.Rtc
         ROOM_ACOUSTICS_VIRTUAL_SURROUND_SOUND = 0x02010900,
 
         ///
+        /// @ignore
+        ///
+        ROOM_ACOUSTICS_CHORUS = 0x02010D00,
+
+        ///
         /// <summary>
         /// A middle-aged man's voice. Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
         /// </summary>
@@ -8102,6 +8185,16 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ENCRYPTION_ERROR_ENCRYPTION_FAILURE = 2,
+
+        ///
+        /// @ignore
+        ///
+        ENCRYPTION_ERROR_DATASTREAM_DECRYPTION_FAILURE = 3,
+
+        ///
+        /// @ignore
+        ///
+        ENCRYPTION_ERROR_DATASTREAM_ENCRYPTION_FAILURE = 4,
     }
 
     ///
@@ -8338,6 +8431,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1 << 2),
+
+        ///
+        /// @ignore
+        ///
+        EAR_MONITORING_FILTER_REUSE_POST_PROCESSING_FILTER = (1 << 15),
     }
 
     ///
