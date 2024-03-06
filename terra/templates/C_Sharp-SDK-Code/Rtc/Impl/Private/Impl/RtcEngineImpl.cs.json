@@ -76,7 +76,8 @@
             "pushAudioFrame",
             "pushVideoFrame",
             "pushEncodedVideoImage",
-            "pullAudioFrame"
+            "pullAudioFrame",
+            "registerFaceInfoObserver"
         ],
         "specialMethodsTemplate": {},
         "memberSplitSymbol": "\n",

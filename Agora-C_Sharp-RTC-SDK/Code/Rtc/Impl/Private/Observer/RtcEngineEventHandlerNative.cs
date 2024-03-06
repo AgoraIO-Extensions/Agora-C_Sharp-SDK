@@ -1659,6 +1659,24 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
+
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOMETADATARECEIVED:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnAudioMetadataReceived(
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (string)AgoraJson.GetData<string>(jsonData, "metadata"),
+                        (ulong)AgoraJson.GetData<ulong>(jsonData, "length")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+}); 
+#endif
+                        break;
+                    }
                     #endregion terra IRtcEngineEventHandler
             }
         }

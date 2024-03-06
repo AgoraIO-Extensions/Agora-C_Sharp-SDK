@@ -124,6 +124,15 @@
         "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
+    "IFaceInfoObserver": {
+        "type": "ClazzStruct",
+        "name": "IFaceInfoObserver",
+        "namespaces": "agora::media",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
     "api_name": "public const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-onMETHOD_NAME}\";",
     "api_name_h265": "public const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKeyWithH265}\";",
     "api_name_RtcEngineEventEx": "public const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateCallApiKeyWitRtcEngineEventEx}\";"

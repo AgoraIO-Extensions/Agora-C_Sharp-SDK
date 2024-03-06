@@ -118,6 +118,15 @@
             return _audioDeviecManagerImpl.GetPlaybackDeviceInfo(ref deviceId, ref deviceName);
         }
 
+        public override int GetPlaybackDeviceInfo(ref string deviceId, ref string deviceName, ref string deviceTypeName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetPlaybackDeviceInfo(ref deviceId, ref deviceName, ref deviceTypeName);
+        }
+
         public override int SetPlaybackDeviceVolume(int volume)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
@@ -161,6 +170,15 @@
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetRecordingDeviceInfo(ref deviceId, ref deviceName);
+        }
+
+        public override int GetRecordingDeviceInfo(ref string deviceId, ref string deviceName, ref string deviceTypeName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetRecordingDeviceInfo(ref deviceId, ref deviceName, ref deviceTypeName);
         }
 
         public override int SetRecordingDeviceVolume(int volume)

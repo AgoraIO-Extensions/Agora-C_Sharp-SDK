@@ -565,6 +565,27 @@ namespace Agora.Rtc.Ut
             var nRet = RtcEngineEx.SetParametersEx(connection, parameters);
             Assert.AreEqual(0, nRet);
         }
+
+        [Test]
+        public void Test_GetCallIdEx()
+        {
+            string callId = ParamsHelper.CreateParam<string>();
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = RtcEngineEx.GetCallIdEx(ref callId, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SendAudioMetadataEx()
+        {
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            string metadata = ParamsHelper.CreateParam<string>();
+            ulong length = ParamsHelper.CreateParam<ulong>();
+
+            var nRet = RtcEngineEx.SendAudioMetadataEx(connection, metadata, length);
+            Assert.AreEqual(0, nRet);
+        }
         #endregion terra IRtcEngineEx
     }
 

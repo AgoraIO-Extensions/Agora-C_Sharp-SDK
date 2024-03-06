@@ -15,7 +15,8 @@
             "IMediaRecorderObserver",
             "VideoFrame",
             "AudioFrame",
-            "IVideoFrameMetaInfo"
+            "IVideoFrameMetaInfo",
+            "IFaceInfoObserver"
         ],
         "commmonEnumTemplate": "commmon_enum_template",
         "specialEnumTemplate": {

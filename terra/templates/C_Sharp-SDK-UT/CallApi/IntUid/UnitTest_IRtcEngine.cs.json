@@ -76,7 +76,8 @@
             "registerVideoFrameObserver",
             "registerVideoEncodedFrameObserver",
             "addVideoFrameRenderer",
-            "removeVideoFrameRenderer"
+            "removeVideoFrameRenderer",
+            "registerFaceInfoObserver"
         ],
         "specialMethodsTemplate": {
             "createCustomAudioTrack": "method_unitTest_greater_than_0",

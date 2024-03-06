@@ -169,6 +169,7 @@ namespace Agora.Rtc
         public const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOPUBLISHSTATECHANGED = "RtcEngineEventHandler_onAudioPublishStateChanged_2c13a28";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOPUBLISHSTATECHANGED = "RtcEngineEventHandler_onVideoPublishStateChanged_5b45b6e";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODEDSTREAMLAYOUTINFO = "RtcEngineEventHandler_onTranscodedStreamLayoutInfo_3bfb91b";
+        public const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMETADATARECEIVED = "RtcEngineEventHandler_onAudioMetadataReceived_77edd82";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENT = "RtcEngineEventHandler_onExtensionEvent_062d13c";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED = "RtcEngineEventHandler_onExtensionStarted_ccad422";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED = "RtcEngineEventHandler_onExtensionStopped_ccad422";
@@ -232,6 +233,7 @@ namespace Agora.Rtc
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEORENDERINGTRACINGRESULT = "RtcEngineEventHandler_onVideoRenderingTracingResult_813c0f4";
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONSETRTMFLAGRESULT = "RtcEngineEventHandler_onSetRtmFlagResult_263e4cd";
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONTRANSCODEDSTREAMLAYOUTINFO = "RtcEngineEventHandler_onTranscodedStreamLayoutInfo_48f6419";
+        public const string EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOMETADATARECEIVED = "RtcEngineEventHandler_onAudioMetadataReceived_0d4eb96";
         #endregion terra IRtcEngineEventHandlerEx
 
         #region terra IDirectCdnStreamingEventHandler
@@ -256,6 +258,10 @@ namespace Agora.Rtc
         public const string EVENT_VIDEOFRAMEOBSERVER_GETOBSERVEDFRAMEPOSITION = "VideoFrameObserver_getObservedFramePosition";
         public const string EVENT_VIDEOFRAMEOBSERVER_ISEXTERNAL = "VideoFrameObserver_isExternal";
         #endregion terra IVideoFrameObserver
+
+        #region terra IFaceInfoObserver
+        public const string EVENT_FACEINFOOBSERVER_ONFACEINFO = "FaceInfoObserver_onFaceInfo_3a2037f";
+        #endregion terra IFaceInfoObserver
 
     }
 }

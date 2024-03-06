@@ -866,6 +866,15 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_SetAudioMixingPlaybackSpeed()
+        {
+            int speed = ParamsHelper.CreateParam<int>();
+
+            var nRet = RtcEngine.SetAudioMixingPlaybackSpeed(speed);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_GetEffectsVolume()
         {
 
@@ -1240,6 +1249,16 @@ namespace Agora.Rtc.Ut
             string requestId = ParamsHelper.CreateParam<string>();
 
             var nRet = RtcEngine.UploadLogFile(ref requestId);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_WriteLog()
+        {
+            LOG_LEVEL level = ParamsHelper.CreateParam<LOG_LEVEL>();
+            string fmt = ParamsHelper.CreateParam<string>();
+
+            var nRet = RtcEngine.WriteLog(level, fmt);
             Assert.AreEqual(0, nRet);
         }
 
@@ -1847,6 +1866,15 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_SetCameraStabilizationMode()
+        {
+            CAMERA_STABILIZATION_MODE mode = ParamsHelper.CreateParam<CAMERA_STABILIZATION_MODE>();
+
+            var nRet = RtcEngine.SetCameraStabilizationMode(mode);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_SetDefaultAudioRouteToSpeakerphone()
         {
             bool defaultToSpeaker = ParamsHelper.CreateParam<bool>();
@@ -1880,6 +1908,24 @@ namespace Agora.Rtc.Ut
 
             var nRet = RtcEngine.SetRouteInCommunicationMode(route);
             Assert.AreEqual(-4, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_IsSupportPortraitCenterStage()
+        {
+
+
+            var nRet = RtcEngine.IsSupportPortraitCenterStage();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_EnablePortraitCenterStage()
+        {
+            bool enabled = ParamsHelper.CreateParam<bool>();
+
+            var nRet = RtcEngine.EnablePortraitCenterStage(enabled);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2653,6 +2699,16 @@ namespace Agora.Rtc.Ut
 
             var nRet = RtcEngine.IsFeatureAvailableOnDevice(type);
             Assert.AreEqual(true, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SendAudioMetadata()
+        {
+            string metadata = ParamsHelper.CreateParam<string>();
+            ulong length = ParamsHelper.CreateParam<ulong>();
+
+            var nRet = RtcEngine.SendAudioMetadata(metadata, length);
+            Assert.AreEqual(0, nRet);
         }
         #endregion terra IRtcEngine
 
