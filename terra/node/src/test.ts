@@ -21,7 +21,7 @@ new ParseEngine(
     cxxiles,
     "#region terra",
     "#endregion terra",
-    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.0/include")
+    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.1/include")
 );
 
 new ParseEngine(
@@ -31,7 +31,7 @@ new ParseEngine(
     cxxiles,
     "#region terra",
     "#endregion terra",
-    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.0/include")
+    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.1/include")
 );
 
 execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
