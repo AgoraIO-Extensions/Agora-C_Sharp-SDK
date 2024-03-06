@@ -45,6 +45,15 @@
             return _audioDeviecManagerImpl.GetPlaybackDefaultDevice(ref deviceId, ref deviceName);
         }
 
+        public override int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetPlaybackDefaultDevice(ref deviceId, ref deviceTypeName, ref deviceName);
+        }
+
         public override int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
@@ -52,6 +61,15 @@
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetRecordingDefaultDevice(ref deviceId, ref deviceName);
+        }
+
+        public override int GetRecordingDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetRecordingDefaultDevice(ref deviceId, ref deviceTypeName, ref deviceName);
         }
 
         public override DeviceInfo[] EnumeratePlaybackDevices()

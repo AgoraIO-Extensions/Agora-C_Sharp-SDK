@@ -257,6 +257,9 @@ namespace Agora.Rtc
         ///
         public string deviceName;
 
+
+        public string deviceTypeName;
+
         ///
         /// <summary>
         /// The device ID.

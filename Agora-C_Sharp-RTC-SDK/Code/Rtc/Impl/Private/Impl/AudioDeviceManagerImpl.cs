@@ -84,6 +84,32 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+
+        public int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName)
+        {
+            _param.Clear();
+
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                                                         AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEFAULTDEVICE,
+                                                         jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            if (ret == 0)
+            {
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
+                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceName");
+                deviceTypeName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceTypeName");
+            }
+            else
+            {
+                deviceId = "";
+                deviceName = "";
+                deviceTypeName = "";
+            }
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName)
         {
             _param.Clear();
@@ -102,6 +128,31 @@ namespace Agora.Rtc
             {
                 deviceId = "";
                 deviceName = "";
+            }
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int GetRecordingDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName)
+        {
+            _param.Clear();
+
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                                                         AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEAFULTDEVICE,
+                                                         jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            if (ret == 0)
+            {
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
+                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceName");
+                deviceTypeName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceTypeName");
+            }
+            else
+            {
+                deviceId = "";
+                deviceName = "";
+                deviceTypeName = "";
             }
 
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");

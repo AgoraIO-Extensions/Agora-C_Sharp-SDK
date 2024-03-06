@@ -53,6 +53,9 @@ namespace Agora.Rtc
         ///
         public abstract int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceName);
 
+
+        public abstract int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName);
+
         ///
         /// <summary>
         /// Gets the default audio capture device.
@@ -70,6 +73,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName);
+
+        public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName);
 
         #region terra IAudioDeviceManager
         ///
