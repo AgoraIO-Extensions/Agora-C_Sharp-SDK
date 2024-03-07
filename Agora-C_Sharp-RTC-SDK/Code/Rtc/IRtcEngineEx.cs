@@ -975,7 +975,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int SendAudioMetadataEx(RtcConnection connection, string metadata, ulong length);
+        public abstract int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length);
         #endregion terra IRtcEngineEx
 
         ///

@@ -4399,7 +4399,8 @@ namespace Agora.Rtc
             _param.Add("streamId", streamId);
             _param.Add("length", length);
 
-            var json = AgoraJson.ToJson(_param); IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+            var json = AgoraJson.ToJson(_param);
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDSTREAMMESSAGE,
                 json, (UInt32)json.Length,
@@ -5077,16 +5078,17 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SendAudioMetadata(string metadata, ulong length)
+        public int SendAudioMetadata(byte[] metadata, ulong length)
         {
             _param.Clear();
-            _param.Add("metadata", metadata);
             _param.Add("length", length);
 
             var json = AgoraJson.ToJson(_param);
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(metadata, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDAUDIOMETADATA,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
+            Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
@@ -5589,7 +5591,8 @@ namespace Agora.Rtc
             _param.Add("length", length);
             _param.Add("connection", connection);
 
-            var json = AgoraJson.ToJson(_param); IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+            var json = AgoraJson.ToJson(_param);
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX,
                 json, (UInt32)json.Length,
@@ -5969,17 +5972,18 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SendAudioMetadataEx(RtcConnection connection, string metadata, ulong length)
+        public int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length)
         {
             _param.Clear();
             _param.Add("connection", connection);
-            _param.Add("metadata", metadata);
             _param.Add("length", length);
 
             var json = AgoraJson.ToJson(_param);
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(metadata, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDAUDIOMETADATAEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
+            Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 

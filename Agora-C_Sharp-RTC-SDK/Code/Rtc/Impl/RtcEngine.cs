@@ -2791,7 +2791,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
 
-        public override int SendAudioMetadata(string metadata, ulong length)
+        public override int SendAudioMetadata(byte[] metadata, ulong length)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3279,7 +3279,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetCallIdEx(ref callId, connection);
         }
 
-        public override int SendAudioMetadataEx(RtcConnection connection, string metadata, ulong length)
+        public override int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length)
         {
             if (_rtcEngineImpl == null)
             {

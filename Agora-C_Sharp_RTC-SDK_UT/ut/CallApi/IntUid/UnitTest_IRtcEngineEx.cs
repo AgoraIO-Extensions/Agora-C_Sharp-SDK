@@ -580,7 +580,7 @@ namespace Agora.Rtc.Ut
         public void Test_SendAudioMetadataEx()
         {
             RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-            string metadata = ParamsHelper.CreateParam<string>();
+            byte[] metadata = ParamsHelper.CreateParam<byte[]>();
             ulong length = ParamsHelper.CreateParam<ulong>();
 
             var nRet = RtcEngineEx.SendAudioMetadataEx(connection, metadata, length);

@@ -2704,7 +2704,7 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_IRtcEngine_SendAudioMetadata()
         {
-            string metadata = ParamsHelper.CreateParam<string>();
+            byte[] metadata = ParamsHelper.CreateParam<byte[]>();
             ulong length = ParamsHelper.CreateParam<ulong>();
 
             var nRet = RtcEngine.SendAudioMetadata(metadata, length);
