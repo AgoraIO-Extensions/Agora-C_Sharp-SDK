@@ -136,6 +136,7 @@
         "IRtcEngineEventHandler.onVideoDeviceStateChanged.deviceType": "MEDIA_DEVICE_TYPE",
         "IRtcEngineEventHandler.onVideoDeviceStateChanged.deviceState": "MEDIA_DEVICE_STATE_TYPE",
         "IRtcEngineEventHandlerEx.onStreamMessage.data": "byte[]",
+        "IRtcEngineEventHandlerEx.onAudioMetadataReceived.metadata": "byte[]",
         "IMediaPlayerSourceObserver.onMetaData.data": "byte[]",
         "IAudioSpectrumObserver.onRemoteAudioSpectrum.spectrums": "UserAudioSpectrumInfo[]",
         "IMediaPlayerCustomDataProvider.onReadData.buffer": "IntPtr",

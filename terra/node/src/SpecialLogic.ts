@@ -958,6 +958,8 @@ export class SpeicalLogic {
 
             if (data.m.name == "onStreamMessage")
                 continue;
+            if (data.m.name == "onAudioMetadataReceived")
+                continue;
 
             let eachM = this.cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName, data.m, null);
             lines.push(eachM);

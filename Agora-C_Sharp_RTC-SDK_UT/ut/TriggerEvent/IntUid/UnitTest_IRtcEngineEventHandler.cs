@@ -2371,7 +2371,7 @@ namespace Agora.Rtc.Ut.Event
             uint uid = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("uid", uid);
 
-            string metadata = ParamsHelper.CreateParam<string>();
+            byte[] metadata = ParamsHelper.CreateParam<byte[]>();
             jsonObj.Add("metadata", metadata);
 
             ulong length = ParamsHelper.CreateParam<ulong>();

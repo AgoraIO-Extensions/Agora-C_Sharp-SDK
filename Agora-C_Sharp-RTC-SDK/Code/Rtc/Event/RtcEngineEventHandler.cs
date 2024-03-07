@@ -766,9 +766,9 @@ namespace Agora.Rtc
             EventOnTranscodedStreamLayoutInfo.Invoke(connection, uid, width, height, layoutCount, layoutlist);
         }
 
-        public event Action<RtcConnection, uint, string, ulong> EventOnAudioMetadataReceived;
+        public event Action<RtcConnection, uint, byte[], ulong> EventOnAudioMetadataReceived;
 
-        public override void OnAudioMetadataReceived(RtcConnection connection, uint uid, string metadata, ulong length)
+        public override void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, ulong length)
         {
             if (EventOnAudioMetadataReceived == null) return;
             EventOnAudioMetadataReceived.Invoke(connection, uid, metadata, length);

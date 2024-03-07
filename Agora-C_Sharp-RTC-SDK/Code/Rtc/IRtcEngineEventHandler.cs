@@ -1530,7 +1530,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public virtual void OnAudioMetadataReceived(RtcConnection connection, uint uid, string metadata, ulong length)
+        public virtual void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, ulong length)
         {
         }
         #endregion terra IRtcEngineEventHandler
