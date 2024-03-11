@@ -1871,7 +1871,7 @@ namespace Agora.Rtc.Ut
             CAMERA_STABILIZATION_MODE mode = ParamsHelper.CreateParam<CAMERA_STABILIZATION_MODE>();
 
             var nRet = RtcEngine.SetCameraStabilizationMode(mode);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
@@ -1916,7 +1916,7 @@ namespace Agora.Rtc.Ut
 
 
             var nRet = RtcEngine.IsSupportPortraitCenterStage();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet);
         }
 
         [Test]

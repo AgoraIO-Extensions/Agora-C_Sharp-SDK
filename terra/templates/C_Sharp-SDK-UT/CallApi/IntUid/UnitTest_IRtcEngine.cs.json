@@ -59,7 +59,9 @@
             "startScreenCapture": "method_unitTest_greater_than_4",
             "startScreenCaptureByScreenRect": "method_unitTest_greater_than_4",
             "switchCamera": "method_unitTest_greater_than_4",
-            "updateScreenCapture": "method_unitTest_greater_than_4"
+            "updateScreenCapture": "method_unitTest_greater_than_4",
+            "isSupportPortraitCenterStage": "method_unitTest_compare_true",
+            "setCameraStabilizationMode": "method_unitTest_greater_than_4"
         },
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": ""

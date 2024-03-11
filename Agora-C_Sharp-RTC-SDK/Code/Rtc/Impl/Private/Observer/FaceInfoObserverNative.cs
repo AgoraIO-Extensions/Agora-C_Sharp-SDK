@@ -42,7 +42,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "FaceInfoObserver_onFaceInfo":
+                    case AgoraEventType.EVENT_FACEINFOOBSERVER_ONFACEINFO:
                         {
                             if (faceInfoObserver == null) return;
                             string outFaceInfo = (string)AgoraJson.GetData<string>(jsonData, "outFaceInfo");
