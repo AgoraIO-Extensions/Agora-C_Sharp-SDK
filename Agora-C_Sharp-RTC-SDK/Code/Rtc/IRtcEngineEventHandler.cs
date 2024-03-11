@@ -1526,6 +1526,13 @@ namespace Agora.Rtc
         public virtual void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
         }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, ulong length)
+        {
+        }
         #endregion terra IRtcEngineEventHandler
 
         #region terra IDirectCdnStreamingEventHandler

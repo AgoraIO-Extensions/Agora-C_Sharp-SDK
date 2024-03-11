@@ -966,6 +966,16 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SetParametersEx(RtcConnection connection, string parameters);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int GetCallIdEx(ref string callId, RtcConnection connection);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length);
         #endregion terra IRtcEngineEx
 
         ///

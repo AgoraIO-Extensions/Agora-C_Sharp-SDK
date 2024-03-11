@@ -2357,6 +2357,34 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnTranscodedStreamLayoutInfoPassed(connection, uid, width, height, layoutCount, layoutlist));
         }
+
+        [Test]
+        public void Test_IRtcEngineEventHandlerEx_OnAudioMetadataReceived()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOMETADATARECEIVED;
+
+            jsonObj.Clear();
+
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            jsonObj.Add("connection", connection);
+
+            uint uid = ParamsHelper.CreateParam<uint>();
+            jsonObj.Add("uid", uid);
+
+            byte[] metadata = ParamsHelper.CreateParam<byte[]>();
+            jsonObj.Add("metadata", metadata);
+
+            ulong length = ParamsHelper.CreateParam<ulong>();
+            jsonObj.Add("length", length);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnAudioMetadataReceivedPassed(connection, uid, metadata, length));
+        }
         #endregion terra IRtcEngineEventHandler
 
     }

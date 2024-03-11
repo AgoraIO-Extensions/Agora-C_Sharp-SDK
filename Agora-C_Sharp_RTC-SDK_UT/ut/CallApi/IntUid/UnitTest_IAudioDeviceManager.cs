@@ -33,11 +33,33 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_GetRecordingDefaultDevice2()
+        {
+            string deviceId = "";
+            string deviceTypeName = "";
+            string deviceName = "";
+            var nRet = AudioDeviceManager.GetRecordingDefaultDevice(ref deviceId, ref deviceTypeName, ref deviceName);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_GetPlaybackDefaultDevice()
         {
             string deviceId = "";
             string deviceName = "";
             var nRet = AudioDeviceManager.GetPlaybackDefaultDevice(ref deviceId, ref deviceName);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetPlaybackDefaultDevice2()
+        {
+            string deviceId = "";
+            string deviceTypeName = "";
+            string deviceName = "";
+            var nRet = AudioDeviceManager.GetPlaybackDefaultDevice(ref deviceId, ref deviceTypeName, ref deviceName);
 
             Assert.AreEqual(0, nRet);
         }
@@ -90,6 +112,17 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_GetPlaybackDeviceInfo2()
+        {
+            string deviceId = ParamsHelper.CreateParam<string>();
+            string deviceName = ParamsHelper.CreateParam<string>();
+            string deviceTypeName = ParamsHelper.CreateParam<string>();
+
+            var nRet = AudioDeviceManager.GetPlaybackDeviceInfo(ref deviceId, ref deviceName, ref deviceTypeName);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_SetPlaybackDeviceVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
@@ -132,6 +165,17 @@ namespace Agora.Rtc.Ut
             string deviceName = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.GetRecordingDeviceInfo(ref deviceId, ref deviceName);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetRecordingDeviceInfo2()
+        {
+            string deviceId = ParamsHelper.CreateParam<string>();
+            string deviceName = ParamsHelper.CreateParam<string>();
+            string deviceTypeName = ParamsHelper.CreateParam<string>();
+
+            var nRet = AudioDeviceManager.GetRecordingDeviceInfo(ref deviceId, ref deviceName, ref deviceTypeName);
             Assert.AreEqual(0, nRet);
         }
 

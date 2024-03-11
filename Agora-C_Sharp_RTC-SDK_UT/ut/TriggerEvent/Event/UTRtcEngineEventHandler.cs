@@ -2403,6 +2403,36 @@ namespace Agora.Rtc.Ut
             return true;
         }
         //////////////////
+
+        public bool OnAudioMetadataReceived_be_trigger = false;
+        public RtcConnection OnAudioMetadataReceived_connection;
+        public uint OnAudioMetadataReceived_uid;
+        public byte[] OnAudioMetadataReceived_metadata;
+        public ulong OnAudioMetadataReceived_length;
+        public override void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, ulong length)
+        {
+            OnAudioMetadataReceived_be_trigger = true;
+            OnAudioMetadataReceived_connection = connection;
+            OnAudioMetadataReceived_uid = uid;
+            OnAudioMetadataReceived_metadata = metadata;
+            OnAudioMetadataReceived_length = length;
+        }
+
+        public bool OnAudioMetadataReceivedPassed(RtcConnection connection, uint uid, byte[] metadata, ulong length)
+        {
+            if (OnAudioMetadataReceived_be_trigger == false)
+                return false;
+            //if (ParamsHelper.Compare<RtcConnection>(OnAudioMetadataReceived_connection, connection) == false)
+            //return false;
+            //if (ParamsHelper.Compare<uint>(OnAudioMetadataReceived_uid, uid) == false)
+            //return false;
+            //if (ParamsHelper.Compare<byte[]>(OnAudioMetadataReceived_metadata, metadata) == false)
+            //return false;
+            //if (ParamsHelper.Compare<ulong>(OnAudioMetadataReceived_length, length) == false)
+            //return false;
+            return true;
+        }
+        //////////////////
         #endregion terra IRtcEngineEventHandler
 
         #region terra IDirectCdnStreamingEventHandler
