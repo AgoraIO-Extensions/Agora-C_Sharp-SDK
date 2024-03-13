@@ -152,14 +152,18 @@ namespace Agora.Rtc
             engineInstance = null;
         }
 
-        private int CreateEventHandler()
+        private int CreateEventHandler(bool needExtensionContext)
         {
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return 0;
+
+            _param.Clear();
+            _param.Add("needExtensionContext", needExtensionContext);
+            var json = AgoraJson.ToJson(_param);
 
             AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtcEngineEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTEREVENTHANDLER,
-                "{}", 2,
+                json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
@@ -253,9 +257,9 @@ namespace Agora.Rtc
             GC.SuppressFinalize(this);
         }
 
-        public int InitEventHandler(IRtcEngineEventHandler engineEventHandler)
+        public int InitEventHandler(IRtcEngineEventHandler engineEventHandler, bool needExtensionContext)
         {
-            int ret = CreateEventHandler();
+            int ret = CreateEventHandler(needExtensionContext);
             RtcEngineEventHandlerNative.SetEventHandler(engineEventHandler);
             return ret;
         }
@@ -3230,7 +3234,7 @@ namespace Agora.Rtc
         public int GetCallIdEx(ref string callId, RtcConnection connection)
         {
             _param.Clear();
-            _param.Add("connection",connection);
+            _param.Add("connection", connection);
 
             var json = AgoraJson.ToJson(_param);
 
@@ -4022,7 +4026,7 @@ namespace Agora.Rtc
 
         public int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
         {
-            var nRet = CreateEventHandler();
+            var nRet = CreateEventHandler(false);
             if (nRet != 0) return nRet;
 
             _param.Clear();
@@ -5092,7 +5096,7 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-         
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6108,7 +6112,7 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("length", length);
-        
+
             var json = AgoraJson.ToJson(_param);
 
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(metadata, 0);

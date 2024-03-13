@@ -130,13 +130,13 @@ namespace Agora.Rtc
             instance = null;
         }
 
-        public override int InitEventHandler(IRtcEngineEventHandler engineEventHandler)
+        public override int InitEventHandler(IRtcEngineEventHandler engineEventHandler, bool needExtensionContext = false)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.InitEventHandler(engineEventHandler);
+            return _rtcEngineImpl.InitEventHandler(engineEventHandler, needExtensionContext);
         }
 
         public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)

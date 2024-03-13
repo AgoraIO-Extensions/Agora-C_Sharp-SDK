@@ -947,7 +947,8 @@ namespace Agora.Rtc
         public static void InitParam(out VideoLayout[] param)
         {
             param = new VideoLayout[10];
-            for (int i = 0; i < param.Length; i++) {
+            for (int i = 0; i < param.Length; i++)
+            {
                 InitParam(out param[i]);
             }
         }
@@ -963,9 +964,14 @@ namespace Agora.Rtc
             param.height = 10;
             param.videoState = 10;
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
+        public static void InitParam(out ExtensionContext param)
+        {
+            param = new ExtensionContext();
+            param.isValid = true;
+            param.uid = 10;
+            param.providerName = "10";
+            param.extensionName = "10";
+        }
         //}
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
@@ -3523,6 +3529,20 @@ namespace Agora.Rtc
             if (compareUint(selfParam.height, outParam.height) == false)
                 return false;
             if (compareUint(selfParam.videoState, outParam.videoState) == false)
+                return false;
+
+            return true;
+        }
+
+        public static bool compareExtensionContext(ExtensionContext selfParam, ExtensionContext outParam)
+        {
+            if (compareBool(selfParam.isValid, outParam.isValid) == false)
+                return false;
+            if (compareUint(selfParam.uid, outParam.uid) == false)
+                return false;
+            if (compareString(selfParam.providerName, outParam.providerName) == false)
+                return false;
+            if (compareString(selfParam.extensionName, outParam.extensionName) == false)
                 return false;
 
             return true;

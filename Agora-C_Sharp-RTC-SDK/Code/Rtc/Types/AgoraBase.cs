@@ -1072,6 +1072,24 @@ namespace Agora.Rtc
         SCREEN_CAPTURE_CAPABILITY_LEVEL_60_FPS = 2,
     };
 
+    public enum VIDEO_CODEC_CAPABILITY_LEVEL
+    {
+
+        CODEC_CAPABILITY_LEVEL_UNSPECIFIED = -1,
+
+        CODEC_CAPABILITY_LEVEL_BASIC_SUPPORT = 5,
+
+        CODEC_CAPABILITY_LEVEL_1080P30FPS = 10,
+
+        CODEC_CAPABILITY_LEVEL_1080P60FPS = 20,
+
+        CODEC_CAPABILITY_LEVEL_2K30FPS = 23,
+
+        CODEC_CAPABILITY_LEVEL_2K60FPS = 26,
+
+        CODEC_CAPABILITY_LEVEL_4K60FPS = 30,
+    };
+
     ///
     /// <summary>
     /// The encoding bitrate of the video.
@@ -1865,24 +1883,39 @@ namespace Agora.Rtc
         CODEC_CAP_MASK_SW_ENC = 1 << 3,
     };
 
+    public class CodecCapLevels
+    {
+        VIDEO_CODEC_CAPABILITY_LEVEL hwDecodingLevel;
+        VIDEO_CODEC_CAPABILITY_LEVEL swDecodingLevel;
+
+        public CodecCapLevels()
+        {
+            hwDecodingLevel = VIDEO_CODEC_CAPABILITY_LEVEL.CODEC_CAPABILITY_LEVEL_UNSPECIFIED;
+            swDecodingLevel = VIDEO_CODEC_CAPABILITY_LEVEL.CODEC_CAPABILITY_LEVEL_UNSPECIFIED;
+        }
+    };
+
     /** The codec support information. */
     public class CodecCapInfo
     {
         public CodecCapInfo(VIDEO_CODEC_TYPE codec_type, int codec_cap_mask)
         {
-            this.codec_type = codec_type;
-            this.codec_cap_mask = codec_cap_mask;
+            this.codecType = codec_type;
+            this.codecCapMask = codec_cap_mask;
+            codecLevels = new CodecCapLevels();
         }
 
         public CodecCapInfo()
         {
-
+            codecLevels = new CodecCapLevels();
         }
 
         /** The codec type: #VIDEO_CODEC_TYPE. */
-        public VIDEO_CODEC_TYPE codec_type;
+        public VIDEO_CODEC_TYPE codecType;
         /** The codec support flag. */
-        public int codec_cap_mask;
+        public int codecCapMask;
+        /** The codec capability level, estimated based on the device hardware.*/
+        public CodecCapLevels codecLevels;
     };
 
     ///
@@ -3207,7 +3240,7 @@ namespace Agora.Rtc
 
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_INTERRUPT = 14,
 
-       
+
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_FATAL_ERROR = 15,
         ///
         /// <summary>
@@ -3254,6 +3287,8 @@ namespace Agora.Rtc
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_HIDDEN = 25,
 
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN = 26,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED = 27,
     };
 
     ///
@@ -3894,7 +3929,7 @@ namespace Agora.Rtc
         public int aecEstimatedDelay;
 
         public int aedVoiceRes;
-       
+
         public int aedMusicRes;
     }
 

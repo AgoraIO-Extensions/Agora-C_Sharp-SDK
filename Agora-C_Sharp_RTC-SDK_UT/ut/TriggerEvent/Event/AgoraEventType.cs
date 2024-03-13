@@ -96,6 +96,14 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED = "RtcEngineEventHandler_onExtensionStarted";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED = "RtcEngineEventHandler_onExtensionStopped";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERROR = "RtcEngineEventHandler_onExtensionError";
+
+        internal const string EVENT_RTCENGINEEVENTHANDLER_onExtensionEventWithContext = "RtcEngineEventHandler_onExtensionEventWithContext";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_onExtensionStartedWithContext = "RtcEngineEventHandler_onExtensionStartedWithContext";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_onExtensionStoppedWithContext = "RtcEngineEventHandler_onExtensionStoppedWithContext";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_onExtensionErrorWithContext = "RtcEngineEventHandler_onExtensionErrorWithContext";
+
+
+
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONUSERACCOUNTUPDATED = "RtcEngineEventHandler_onUserAccountUpdated";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOTRANSCODERERROR = "RtcEngineEventHandler_onLocalVideoTranscoderError";
         #endregion
