@@ -3970,12 +3970,12 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        LOCAL_VIDEO_STREAM_ERROR_DEVICE_INTERRUPT = 14,
+        LOCAL_VIDEO_STREAM_REASON_DEVICE_INTERRUPT = 14,
 
         ///
         /// @ignore
         ///
-        LOCAL_VIDEO_STREAM_ERROR_DEVICE_FATAL_ERROR = 15,
+        LOCAL_VIDEO_STREAM_REASON_DEVICE_FATAL_ERROR = 15,
 
         ///
         /// <summary>
