@@ -1439,6 +1439,66 @@ namespace Agora.Rtc
 #endif
                     break;
 
+                case "RtcEngineEventHandler_onExtensionEventWithContext":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnExtensionEventWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context"),
+                        (string)AgoraJson.GetData<string>(jsonData, "key"),
+                        (string)AgoraJson.GetData<string>(jsonData, "value")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "RtcEngineEventHandler_onExtensionStartedWithContext":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnExtensionStartedWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "RtcEngineEventHandler_onExtensionStoppedWithContext":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnExtensionStoppedWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "RtcEngineEventHandler_onExtensionErrorWithContext":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnExtensionErrorWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context"),
+                        (int)AgoraJson.GetData<int>(jsonData, "error"),
+                        (string)AgoraJson.GetData<string>(jsonData, "message")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "RtcEngineEventHandler_onAudioRoutingChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>

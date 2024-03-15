@@ -2664,6 +2664,106 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
+        public void Test_OnExtensionEventWithContext()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENTWITHCONTEXT;
+
+            ExtensionContext context;
+            ParamsHelper.InitParam(out context);
+
+            string key;
+            ParamsHelper.InitParam(out key);
+
+            string value;
+            ParamsHelper.InitParam(out value);
+
+            jsonObj.Clear();
+            jsonObj.Add("context", context);
+            jsonObj.Add("key", key);
+            jsonObj.Add("value", value);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnExtensionEventWithContextPassed(context, key, value));
+        }
+
+        [Test]
+        public void Test_OnExtensionStartedWithContext()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTEDWITHCONTEXT;
+
+            ExtensionContext context;
+            ParamsHelper.InitParam(out context);
+
+            jsonObj.Clear();
+            jsonObj.Add("context", context);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnExtensionStartedWithContextPassed(context));
+        }
+
+        [Test]
+        public void Test_OnExtensionStoppedWithContext()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPEDWITHCONTEXT;
+
+            ExtensionContext context;
+            ParamsHelper.InitParam(out context);
+
+            jsonObj.Clear();
+            jsonObj.Add("context", context);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnExtensionStoppedWithContextPassed(context));
+        }
+
+        [Test]
+        public void Test_OnExtensionErrorWithContext()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERRORWITHCONTEXT;
+
+            ExtensionContext context;
+            ParamsHelper.InitParam(out context);
+
+            int error;
+            ParamsHelper.InitParam(out error);
+
+            string message;
+            ParamsHelper.InitParam(out message);
+
+            jsonObj.Clear();
+            jsonObj.Add("context", context);
+            jsonObj.Add("error", error);
+            jsonObj.Add("message", message);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnExtensionErrorWithContextPassed(context, error, message));
+        }
+
+        [Test]
         public void Test_OnVideoRenderingTracingResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEORENDERINGTRACINGRESULT;

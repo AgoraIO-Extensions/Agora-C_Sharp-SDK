@@ -995,6 +995,13 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) { }
 
+        public virtual void OnExtensionEventWithContext(ExtensionContext context, string key, string value) { }
+
+        public virtual void OnExtensionStartedWithContext(ExtensionContext context) { }
+
+        public virtual void OnExtensionStoppedWithContext(ExtensionContext context) { }
+
+        public virtual void OnExtensionErrorWithContext(ExtensionContext context, int error, string message) { }
 
         public virtual void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo) { }
 

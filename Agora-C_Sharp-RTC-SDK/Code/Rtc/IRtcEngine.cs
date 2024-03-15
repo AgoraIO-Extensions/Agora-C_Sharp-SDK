@@ -301,7 +301,7 @@ namespace Agora.Rtc
         ///
         /// <param name="engineEventHandler"> Callback events to be added. See IRtcEngineEventHandler .</param>
         ///
-        public abstract int InitEventHandler(IRtcEngineEventHandler engineEventHandler);
+        public abstract int InitEventHandler(IRtcEngineEventHandler engineEventHandler, bool needExtensionContext = false);
         #endregion
 
         #region Audio management

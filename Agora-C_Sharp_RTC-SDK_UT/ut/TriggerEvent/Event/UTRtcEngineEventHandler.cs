@@ -1594,6 +1594,110 @@ namespace Agora.Rtc
 
         ///////////////////////////////////
 
+        public bool OnExtensionEventWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionEventWithContext_context = null;
+        public string OnExtensionEventWithContext_key = null;
+        public string OnExtensionEventWithContext_value = null;
+
+        public override void OnExtensionEventWithContext(ExtensionContext context, string key, string value)
+        {
+            OnExtensionEventWithContext_be_trigger = true;
+            OnExtensionEventWithContext_context = context;
+            OnExtensionEventWithContext_key = key;
+            OnExtensionEventWithContext_value = value;
+        }
+
+        public bool OnExtensionEventWithContextPassed(ExtensionContext context, string key, string value)
+        {
+            if (OnExtensionEventWithContext_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareExtensionContext(OnExtensionEventWithContext_context, context) == false)
+                return false;
+            if (ParamsHelper.compareString(OnExtensionEventWithContext_key, key) == false)
+                return false;
+            if (ParamsHelper.compareString(OnExtensionEventWithContext_value, value) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnExtensionStartedWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionStartedWithContext_context = null;
+
+        public override void OnExtensionStartedWithContext(ExtensionContext context)
+        {
+            OnExtensionStartedWithContext_be_trigger = true;
+            OnExtensionStartedWithContext_context = context;
+        }
+
+        public bool OnExtensionStartedWithContextPassed(ExtensionContext context)
+        {
+            if (OnExtensionStartedWithContext_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareExtensionContext(OnExtensionStartedWithContext_context, context) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnExtensionStoppedWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionStoppedWithContext_context = null;
+
+        public override void OnExtensionStoppedWithContext(ExtensionContext context)
+        {
+            OnExtensionStoppedWithContext_be_trigger = true;
+            OnExtensionStoppedWithContext_context = context;
+        }
+
+        public bool OnExtensionStoppedWithContextPassed(ExtensionContext context)
+        {
+            if (OnExtensionStoppedWithContext_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareExtensionContext(OnExtensionStoppedWithContext_context, context) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnExtensionErrorWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionErrorWithContext_context = null;
+        public int OnExtensionErrorWithContext_error = 0;
+        public string OnExtensionErrorWithContext_message = null;
+
+        public override void OnExtensionErrorWithContext(ExtensionContext context, int error, string message)
+        {
+            OnExtensionErrorWithContext_be_trigger = true;
+            OnExtensionErrorWithContext_context = context;
+            OnExtensionErrorWithContext_error = error;
+            OnExtensionErrorWithContext_message = message;
+        }
+
+        public bool OnExtensionErrorWithContextPassed(ExtensionContext context, int error, string message)
+        {
+            if (OnExtensionErrorWithContext_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareExtensionContext(OnExtensionErrorWithContext_context, context) == false)
+                return false;
+            if (ParamsHelper.compareInt(OnExtensionErrorWithContext_error, error) == false)
+                return false;
+            if (ParamsHelper.compareString(OnExtensionErrorWithContext_message, message) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
         public bool OnSnapshotTaken_be_trigger = false;
         public RtcConnection OnSnapshotTaken_connection = null;
         public uid_t OnSnapshotTaken_uid = 0;

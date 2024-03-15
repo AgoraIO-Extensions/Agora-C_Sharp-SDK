@@ -8,6 +8,32 @@ namespace Agora.Rtc
 
     #region AgoraMediaBase.h
 
+
+    public class ExtensionContext
+    {
+        /** Whether uid is valid.
+         */
+        public bool isValid;
+        /** Default 0 when "isValid" is false
+         * Local user is 0 and remote user great than 0 when "isValid" is true
+         */
+        public uint uid;
+        /** current extension's provider name
+         */
+        public string providerName;
+        /** current extension's name
+         */
+        public string extensionName;
+
+        public ExtensionContext()
+        {
+            isValid = false;
+            uid = 0;
+            providerName = "";
+            extensionName = "";
+        }
+    };
+
     /**
     * Video source types definition.
     **/
