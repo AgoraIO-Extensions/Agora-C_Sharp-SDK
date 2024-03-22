@@ -288,6 +288,13 @@ namespace Agora.Rtc
         }
 
         ///
+        /// @ignore
+        ///
+        public virtual void OnCameraCapturerConfigurationChanged(int direction, int focalLengthType, int width, int height, int frameRate)
+        {
+        }
+
+        ///
         /// <summary>
         /// Occurs when the video stops playing.
         /// 

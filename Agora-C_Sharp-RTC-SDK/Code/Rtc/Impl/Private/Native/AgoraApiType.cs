@@ -226,6 +226,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_STARTSCREENCAPTURE = "RtcEngine_startScreenCapture_270da41";
         internal const string FUNC_RTCENGINE_UPDATESCREENCAPTURE = "RtcEngine_updateScreenCapture_270da41";
         internal const string FUNC_RTCENGINE_QUERYSCREENCAPTURECAPABILITY = "RtcEngine_queryScreenCaptureCapability";
+        internal const string FUNC_RTCENGINE_QUERYCAMERAFOCALLENGTHCAPABILITY = "RtcEngine_queryCameraFocalLengthCapability_2dee6af";
         internal const string FUNC_RTCENGINE_SETSCREENCAPTURESCENARIO = "RtcEngine_setScreenCaptureScenario_13de7b4";
         internal const string FUNC_RTCENGINE_STOPSCREENCAPTURE = "RtcEngine_stopScreenCapture";
         internal const string FUNC_RTCENGINE_GETCALLID = "RtcEngine_getCallId_66d4ecd";

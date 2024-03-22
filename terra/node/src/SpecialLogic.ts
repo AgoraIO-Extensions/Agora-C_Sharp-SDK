@@ -1399,7 +1399,8 @@ export class SpeicalLogic {
             "IRtcEngineEventHandlerEx"
         ];
         let excludeMethods = [
-            "onFacePositionChanged"
+            "onFacePositionChanged",
+            "onCameraCapturerConfigurationChanged",
         ];
         for (let data of allData) {
             if (includeClassStruct.includes(data.clazzName) == false)

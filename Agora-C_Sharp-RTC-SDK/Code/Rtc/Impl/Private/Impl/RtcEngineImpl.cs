@@ -4002,6 +4002,24 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size)
+        {
+            _param.Clear();
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_QUERYCAMERAFOCALLENGTHCAPABILITY,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            if (nRet == 0)
+            {
+                focalLengthInfos = AgoraJson.JsonToStructArray<FocalLengthInfo>(_apiParam.Result, "focalLengthInfos");
+                size = (int)AgoraJson.GetData<int>(_apiParam.Result, "size");
+            }
+            return result;
+        }
+
         public int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
         {
             _param.Clear();

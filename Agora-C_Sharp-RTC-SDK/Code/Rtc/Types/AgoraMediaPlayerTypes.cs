@@ -838,6 +838,9 @@ namespace Agora.Rtc
             this.provider = provider;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();

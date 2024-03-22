@@ -427,6 +427,37 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
+        public void Test_IRtcEngineEventHandler_OnCameraCapturerConfigurationChanged()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERACAPTURERCONFIGURATIONCHANGED;
+
+            jsonObj.Clear();
+
+            int direction = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("direction", direction);
+
+            int focalLengthType = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("focalLengthType", focalLengthType);
+
+            int width = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("width", width);
+
+            int height = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("height", height);
+
+            int frameRate = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("frameRate", frameRate);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(false, EventHandler.OnCameraCapturerConfigurationChangedPassed(direction, focalLengthType, width, height, frameRate));
+        }
+
+        [Test]
         public void Test_IRtcEngineEventHandler_OnVideoStopped()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSTOPPED;
