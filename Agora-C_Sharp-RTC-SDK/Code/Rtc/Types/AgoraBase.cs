@@ -2094,6 +2094,9 @@ namespace Agora.Rtc
             this.encodedFrameOnly = encodedFrameOnly;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -9066,6 +9069,9 @@ namespace Agora.Rtc
         {
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();

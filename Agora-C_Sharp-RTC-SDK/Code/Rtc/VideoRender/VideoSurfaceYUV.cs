@@ -75,7 +75,6 @@ namespace Agora.Rtc
                         {
                             _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
                         }
-                        //AgoraLog.Log("_yStrideScale" + _textureManagerYUV.YStrideScale);
                         this.YStrideScale = this._textureManagerYUV.YStrideScale;
                     }
 

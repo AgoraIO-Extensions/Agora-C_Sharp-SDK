@@ -1689,6 +1689,9 @@ namespace Agora.Rtc
             this.audioProcessingChannels = audioProcessingChannels;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2043,6 +2046,9 @@ namespace Agora.Rtc
             this.isAudioFilterable = isAudioFilterable;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2474,6 +2480,9 @@ namespace Agora.Rtc
             this.autoRegisterAgoraExtensions = autoRegisterAgoraExtensions;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2831,6 +2840,9 @@ namespace Agora.Rtc
             this.customVideoTrackId = customVideoTrackId;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
