@@ -1610,6 +1610,32 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
+    public enum CAMERA_FOCAL_LENGTH_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        CAMERA_FOCAL_LENGTH_DEFAULT = 0,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_FOCAL_LENGTH_WIDE_ANGLE = 1,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_FOCAL_LENGTH_URLTRA_WIDE = 2,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_FOCAL_LENGTH_TELEPHOTO = 3,
+    }
+
+    ///
+    /// @ignore
+    ///
     public enum TCcMode
     {
         ///
@@ -2473,6 +2499,32 @@ namespace Agora.Rtc
             this.codecCapMask = codecCapMask;
             this.codecLevels = codecLevels;
         }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class FocalLengthInfo
+    {
+        ///
+        /// @ignore
+        ///
+        public int cameraDirection;
+
+        ///
+        /// @ignore
+        ///
+        public CAMERA_FOCAL_LENGTH_TYPE focalLengthType;
+
+        public FocalLengthInfo(int cameraDirection, CAMERA_FOCAL_LENGTH_TYPE focalLengthType)
+        {
+            this.cameraDirection = cameraDirection;
+            this.focalLengthType = focalLengthType;
+        }
+        public FocalLengthInfo()
+        {
+        }
+
     }
 
     ///

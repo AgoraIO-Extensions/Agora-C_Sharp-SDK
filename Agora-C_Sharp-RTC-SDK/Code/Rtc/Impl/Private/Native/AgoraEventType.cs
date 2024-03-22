@@ -121,6 +121,7 @@ namespace Agora.Rtc
         public const string EVENT_RTCENGINEEVENTHANDLER_ONCAMERAFOCUSAREACHANGED = "RtcEngineEventHandler_onCameraFocusAreaChanged_41c5354";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONCAMERAEXPOSUREAREACHANGED = "RtcEngineEventHandler_onCameraExposureAreaChanged_41c5354";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONFACEPOSITIONCHANGED = "RtcEngineEventHandler_onFacePositionChanged_197b4a7";
+        public const string EVENT_RTCENGINEEVENTHANDLER_ONCAMERACAPTURERCONFIGURATIONCHANGED = "RtcEngineEventHandler_onCameraCapturerConfigurationChanged_8c68d23";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSTOPPED = "RtcEngineEventHandler_onVideoStopped";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGSTATECHANGED = "RtcEngineEventHandler_onAudioMixingStateChanged_fd2c0a6";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONRHYTHMPLAYERSTATECHANGED = "RtcEngineEventHandler_onRhythmPlayerStateChanged_09360d2";

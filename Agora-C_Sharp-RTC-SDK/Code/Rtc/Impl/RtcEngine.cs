@@ -2138,6 +2138,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.QueryScreenCaptureCapability();
         }
 
+        public override int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.QueryCameraFocalLengthCapability(ref focalLengthInfos, ref size);
+        }
+
         public override int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
         {
             if (_rtcEngineImpl == null)

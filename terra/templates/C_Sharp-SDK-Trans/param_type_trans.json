@@ -44,6 +44,8 @@
         "IRtcEngine.getAudioDeviceInfo.deviceInfo": "ref DeviceInfoMobile",
         "IRtcEngine.getExtensionProperty.value": "ref string",
         "IRtcEngine.sendAudioMetadata.metadata": "byte[]",
+        "IRtcEngine.queryCameraFocalLengthCapability.focalLengthInfos": "ref FocalLengthInfo[]",
+        "IRtcEngine.queryCameraFocalLengthCapability.size": "ref int",
         "IRtcEngineEx.sendStreamMessageEx.data": "byte[]",
         "IRtcEngineEx.sendStreamMessageEx.length": "uint",
         "IRtcEngineEx.createDataStreamEx.streamId": "ref int",

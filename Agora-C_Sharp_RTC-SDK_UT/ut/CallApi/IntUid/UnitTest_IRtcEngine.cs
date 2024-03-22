@@ -2025,6 +2025,16 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_QueryCameraFocalLengthCapability()
+        {
+            FocalLengthInfo[] focalLengthInfos = ParamsHelper.CreateParam<FocalLengthInfo[]>();
+            int size = ParamsHelper.CreateParam<int>();
+
+            var nRet = RtcEngine.QueryCameraFocalLengthCapability(ref focalLengthInfos, ref size);
+            Assert.AreEqual(-4, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_SetScreenCaptureScenario()
         {
             SCREEN_SCENARIO_TYPE screenScenario = ParamsHelper.CreateParam<SCREEN_SCENARIO_TYPE>();

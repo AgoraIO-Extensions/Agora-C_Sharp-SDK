@@ -1322,6 +1322,11 @@ namespace Agora.Rtc
         public CAMERA_DIRECTION cameraDirection;
 
         ///
+        /// @ignore
+        ///
+        public CAMERA_FOCAL_LENGTH_TYPE cameraFocalLengthType;
+
+        ///
         /// <summary>
         /// This method applies to Windows only. The ID of the camera.
         /// </summary>
@@ -1352,9 +1357,10 @@ namespace Agora.Rtc
             this.followEncodeDimensionRatio = true;
         }
 
-        public CameraCapturerConfiguration(CAMERA_DIRECTION cameraDirection, string deviceId, string cameraId, VideoFormat format, bool followEncodeDimensionRatio)
+        public CameraCapturerConfiguration(CAMERA_DIRECTION cameraDirection, CAMERA_FOCAL_LENGTH_TYPE cameraFocalLengthType, string deviceId, string cameraId, VideoFormat format, bool followEncodeDimensionRatio)
         {
             this.cameraDirection = cameraDirection;
+            this.cameraFocalLengthType = cameraFocalLengthType;
             this.deviceId = deviceId;
             this.cameraId = cameraId;
             this.format = format;

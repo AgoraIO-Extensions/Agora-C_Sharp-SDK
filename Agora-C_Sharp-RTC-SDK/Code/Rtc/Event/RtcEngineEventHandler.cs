@@ -142,6 +142,14 @@ namespace Agora.Rtc
             EventOnFacePositionChanged.Invoke(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
         }
 
+        public event Action<int, int, int, int, int> EventOnCameraCapturerConfigurationChanged;
+
+        public override void OnCameraCapturerConfigurationChanged(int direction, int focalLengthType, int width, int height, int frameRate)
+        {
+            if (EventOnCameraCapturerConfigurationChanged == null) return;
+            EventOnCameraCapturerConfigurationChanged.Invoke(direction, focalLengthType, width, height, frameRate);
+        }
+
         public event Action EventOnVideoStopped;
 
         public override void OnVideoStopped()

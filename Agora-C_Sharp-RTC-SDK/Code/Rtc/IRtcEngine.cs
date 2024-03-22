@@ -3944,6 +3944,11 @@ namespace Agora.Rtc
         public abstract int QueryScreenCaptureCapability();
 
         ///
+        /// @ignore
+        ///
+        public abstract int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size);
+
+        ///
         /// <summary>
         /// Sets the screen sharing scenario.
         /// 
