@@ -6011,95 +6011,29 @@ namespace Agora.Rtc
 
         public int PushAudioFrame(AudioFrame frame, uint trackId)
         {
-            _param.Clear();
-            _param.Add("frame", new AudioFrameInternal(frame));
-            _param.Add("trackId", trackId);
-
-            var json = AgoraJson.ToJson(_param);
-
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHAUDIOFRAME,
-                                                          json, (UInt32)json.Length,
-                                                          Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                                                          ref _apiParam, (uint)frame.RawBuffer.Length);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            IrisAudioFrame irisFrame = new IrisAudioFrame(frame);
+            irisFrame.buffer = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
+            return AgoraRtcNative.IMediaEngine_PushAudioFrame(_irisRtcEngine, ref irisFrame, trackId);
         }
 
         public int PullAudioFrame(AudioFrame frame)
         {
-            _param.Clear();
-            _param.Add("frame", new AudioFrameInternal(frame));
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PULLAUDIOFRAME,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
-
-            if (nRet == 0)
-            {
-                var f = AgoraJson.JsonToStruct<AudioFrame>(_apiParam.Result, "frame");
-                #region terra PullAudioFrame_Assignment
-                frame.type = f.type;
-                frame.samplesPerChannel = f.samplesPerChannel;
-                frame.bytesPerSample = f.bytesPerSample;
-                frame.channels = f.channels;
-                frame.samplesPerSec = f.samplesPerSec;
-
-                frame.renderTimeMs = f.renderTimeMs;
-                frame.avsync_type = f.avsync_type;
-                frame.presentationMs = f.presentationMs;
-                frame.audioTrackNumber = f.audioTrackNumber;
-                frame.rtpTimestamp = f.rtpTimestamp;
-                #endregion terra PullAudioFrame_Assignment
-            }
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            IrisAudioFrame irisFrame = new IrisAudioFrame(frame);
+            return AgoraRtcNative.IMediaEngine_PullAudioFrame(_irisRtcEngine, ref irisFrame);
         }
 
         public int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId)
         {
-            _param.Clear();
-            _param.Add("frame", new ExternalVideoFrameInternal(frame));
-            _param.Add("videoTrackId", videoTrackId);
-
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-            IntPtr eglContextPtr = frame.eglContext;
-            IntPtr metadataPtr = IntPtr.Zero;
-            IntPtr alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBuffer, frame.d3d11_texture_2d };
-            int alphaLength = frame.alphaBuffer == null ? 0 : frame.alphaBuffer.Length;
-            var json = AgoraJson.ToJson(_param);
-
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
-                                                          json, (UInt32)json.Length,
-                                                          Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), (uint)arrayPtr.Length,
-                                                          ref _apiParam, (uint)frame.buffer.Length, 0, 0, (uint)alphaLength);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            IrisExternalVideoFrame irisFrame = new IrisExternalVideoFrame(frame);
+            return AgoraRtcNative.IMediaEngine_PushVideoFrame(_irisRtcEngine, ref irisFrame, videoTrackId);
         }
 
         public int PushEncodedVideoImage(byte[] imageBuffer, ulong length,
                                          EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId)
         {
-            _param.Clear();
-            _param.Add("length", length);
-            _param.Add("videoEncodedFrameInfo", videoEncodedFrameInfo);
-            _param.Add("videoTrackId", videoTrackId);
-
-            var json = AgoraJson.ToJson(_param);
-
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE,
-                                                          json, (UInt32)json.Length,
-                                                          Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                                                          ref _apiParam, (uint)length);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            IrisEncodedVideoFrameInfo irisFrameInfo = new IrisEncodedVideoFrameInfo(videoEncodedFrameInfo);
+            return AgoraRtcNative.IMediaEngine_PushEncodedVideoImage(_irisRtcEngine, bufferPtr, length, ref irisFrameInfo, videoTrackId);
         }
 
         #region terra IMediaEngine

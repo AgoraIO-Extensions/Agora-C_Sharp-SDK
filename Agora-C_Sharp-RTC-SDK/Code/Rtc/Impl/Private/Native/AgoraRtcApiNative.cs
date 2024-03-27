@@ -216,6 +216,22 @@ namespace Agora.Rtc
         internal static extern int ILocalSpatialAudioEngine_SetRemoteAudioAttenuation(IrisRtcEnginePtr enginePtr,
           uint uid, double attenuation, bool forceSet);
 
+        //
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IMediaEngine_PushAudioFrame(IrisRtcEnginePtr enginePtr,
+        ref IrisAudioFrame frame, uint trackId);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IMediaEngine_PullAudioFrame(IrisRtcEnginePtr enginePtr,
+        ref IrisAudioFrame frame);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IMediaEngine_PushVideoFrame(IrisRtcEnginePtr enginePtr,
+        ref IrisExternalVideoFrame frame, uint videoTrackId);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int IMediaEngine_PushEncodedVideoImage(IrisRtcEnginePtr enginePtr,
+        IntPtr imageBuffer, ulong length, ref IrisEncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId);
         #endregion
 
     }
@@ -341,6 +357,129 @@ namespace Agora.Rtc
             this.audioAttenuation = zone.audioAttenuation;
         }
     };
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisAudioFrame
+    {
+        public int type;
+        public int samplesPerChannel;
+        public int bytesPerSample;
+        public int channels;
+        public int samplesPerSec;
+        public IntPtr buffer;
+        public long renderTimeMs;
+        public int avsync_type;
+        public long presentationMs;
+        public int audioTrackNumber;
+        public uint rtpTimestamp;
+
+        public IrisAudioFrame(AudioFrame frame)
+        {
+            this.type = (int)frame.type;
+            this.samplesPerChannel = frame.samplesPerChannel;
+            this.bytesPerSample = (int)frame.bytesPerSample;
+            this.channels = frame.channels;
+            this.samplesPerSec = frame.samplesPerSec;
+            this.buffer = frame.buffer;
+            this.renderTimeMs = frame.renderTimeMs;
+            this.avsync_type = frame.avsync_type;
+            this.presentationMs = frame.presentationMs;
+            this.audioTrackNumber = frame.audioTrackNumber;
+            this.rtpTimestamp = frame.rtpTimestamp;
+        }
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisExternalVideoFrame
+    {
+        public int type;
+        public int format;
+        public IntPtr buffer;
+        public int stride;
+        public int height;
+        public int cropLeft;
+        public int cropTop;
+        public int cropRight;
+        public int cropBottom;
+        public int rotation;
+        public long timestamp;
+        public IntPtr eglContext;
+        public int eglType;
+        public int textureId;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public float[] matrix;
+        public IntPtr metadata_buffer;
+        public int metadata_size;
+        public IntPtr alphaBuffer;
+        public bool fillAlphaBuffer;
+        public IntPtr d3d11_texture_2d;
+        public int texture_slice_index;
+
+        public IrisExternalVideoFrame(ExternalVideoFrame frame)
+        {
+            this.type = (int)frame.type;
+            this.format = (int)frame.format;
+            this.buffer = frame.buffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
+            this.stride = frame.stride;
+            this.height = frame.height;
+            this.cropLeft = frame.cropLeft;
+            this.cropTop = frame.cropTop;
+            this.cropRight = frame.cropRight;
+            this.cropBottom = frame.cropBottom;
+            this.rotation = frame.rotation;
+            this.timestamp = frame.timestamp;
+            this.eglContext = frame.eglContext;
+            this.eglType = (int)frame.eglType;
+            this.textureId = frame.textureId;
+            if (frame.matrix != null && frame.matrix.Length == 16)
+            {
+                this.matrix = frame.matrix;
+            }
+            else {
+                this.matrix = new float[16];
+            }
+            this.metadata_buffer = frame.metadata_buffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.metadata_buffer, 0);
+            this.metadata_size = frame.metadata_size;
+            this.alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
+            this.fillAlphaBuffer = frame.fillAlphaBuffer;
+            this.d3d11_texture_2d = frame.d3d11_texture_2d;
+            this.texture_slice_index = frame.texture_slice_index;
+        }
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisEncodedVideoFrameInfo
+    {
+        public uint uid;
+        public int codecType;
+        public int width;
+        public int height;
+        public int framesPerSecond;
+        public int frameType;
+        public int rotation;
+        public int trackId;
+        public long captureTimeMs;
+        public long decodeTimeMs;
+        public int streamType;
+        public long presentationMs;
+
+        public IrisEncodedVideoFrameInfo(EncodedVideoFrameInfo info)
+        {
+            this.uid = info.uid;
+            this.codecType = (int)info.codecType;
+            this.width = info.width;
+            this.height = info.height;
+            this.framesPerSecond = info.framesPerSecond;
+            this.frameType = (int)info.frameType;
+            this.rotation = (int)info.rotation;
+            this.trackId = info.trackId;
+            this.captureTimeMs = info.captureTimeMs;
+            this.decodeTimeMs = info.decodeTimeMs;
+            this.streamType = (int)info.streamType;
+            this.presentationMs = info.presentationMs;
+        }
+    };
+
 
     #endregion
 }
