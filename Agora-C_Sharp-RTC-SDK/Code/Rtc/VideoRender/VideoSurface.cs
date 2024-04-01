@@ -43,8 +43,8 @@ namespace Agora.Rtc
 
         protected GameObject _TextureManagerGameObject;
         protected TextureManager _textureManager;
-        protected int _textureWidth = 0;
-        protected int _textureHeight = 0;
+        protected int _textureWidth = 2;
+        protected int _textureHeight = 2;
 
         ///
         /// <summary>
