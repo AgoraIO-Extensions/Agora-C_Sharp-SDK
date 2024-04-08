@@ -50,6 +50,8 @@ namespace Agora.Rtc
         internal string channelId;
 
         internal int video_view_setup_mode;
+
+        internal uint observed_frame_position;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -66,6 +68,8 @@ namespace Agora.Rtc
         internal string channelId;
 
         internal int video_view_setup_mode;
+
+        internal uint observed_frame_position;
     }
 
     internal class ThumbImageBufferInternal
