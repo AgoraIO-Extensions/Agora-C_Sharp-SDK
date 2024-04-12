@@ -650,6 +650,7 @@ namespace Agora.Rtc
             this.eglContext = null;
             this.eglType = EGL_CONTEXT_TYPE.EGL_CONTEXT10;
             this.textureId = 0;
+            this.fence_object = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.fillAlphaBuffer = false;
@@ -677,6 +678,7 @@ namespace Agora.Rtc
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
             this.fillAlphaBuffer = false;
+            this.fence_object = 0;
         }
 
         ///
@@ -776,6 +778,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int textureId;
+
+        public long fence_object;
 
         ///
         /// <summary>
