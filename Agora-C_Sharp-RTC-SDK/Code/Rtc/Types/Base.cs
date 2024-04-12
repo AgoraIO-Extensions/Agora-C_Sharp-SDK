@@ -66,6 +66,7 @@ namespace Agora.Rtc
             this.timestamp = frame.timestamp;
             this.eglType = frame.eglType;
             this.textureId = frame.textureId;
+            this.fence_object = frame.fence_object;
             this.metadata_size = frame.metadata_size;
         }
 
@@ -82,6 +83,7 @@ namespace Agora.Rtc
         public int rotation;
         public long timestamp;
         public EGL_CONTEXT_TYPE eglType;
+        public long fence_object;
         public int textureId;
         public int metadata_size;
     }
