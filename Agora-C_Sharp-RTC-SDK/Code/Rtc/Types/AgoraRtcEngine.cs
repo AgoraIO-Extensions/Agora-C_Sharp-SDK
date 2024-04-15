@@ -1354,7 +1354,7 @@ namespace Agora.Rtc
 
         public CameraCapturerConfiguration()
         {
-            this.followEncodeDimensionRatio = true;
+            this.format = new VideoFormat(0, 0, 0);
         }
 
         public CameraCapturerConfiguration(Optional<CAMERA_DIRECTION> cameraDirection, Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType, Optional<string> deviceId, Optional<string> cameraId, Optional<bool> followEncodeDimensionRatio, VideoFormat format)

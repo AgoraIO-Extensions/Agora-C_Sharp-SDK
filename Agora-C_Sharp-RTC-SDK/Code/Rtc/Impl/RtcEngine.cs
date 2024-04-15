@@ -2016,7 +2016,7 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
+                return false;
             }
             return _rtcEngineImpl.IsCameraCenterStageSupported();
         }
