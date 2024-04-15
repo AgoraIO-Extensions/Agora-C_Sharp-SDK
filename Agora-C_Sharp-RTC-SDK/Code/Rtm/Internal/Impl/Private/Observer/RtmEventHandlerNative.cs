@@ -358,7 +358,7 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
-                        AgoraJson.JsonToStruct<RtmMetadata>(jsonData, "data"),
+                        AgoraJson.JsonToStruct<Metadata>(jsonData, "data"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                                                           });
@@ -423,7 +423,7 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnGetUserMetadataResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
-                        AgoraJson.JsonToStruct<RtmMetadata>(jsonData, "data"),
+                        AgoraJson.JsonToStruct<Metadata>(jsonData, "data"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                                                           });

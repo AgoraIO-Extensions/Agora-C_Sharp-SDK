@@ -70,15 +70,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int RenewToken(string channelName, string token)
+        public int RenewToken(string channelName, string token, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -91,7 +95,16 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            if (nRet == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+            else
+            {
+                requestId = 0;
+            }
+
+            return nRet;
         }
 
         public int Leave(string channelName, ref UInt64 requestId)
@@ -105,12 +118,16 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int JoinTopic(string channelName, string topic, JoinTopicOptions options, ref UInt64 requestId)
@@ -127,15 +144,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam, (uint)options.meta.Length);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int PublishTopicMessage(string channelName, string topic, byte[] message, int length, TopicMessageOptions option)
+        public int PublishTopicMessage(string channelName, string topic, byte[] message, int length, TopicMessageOptions option, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -151,7 +172,16 @@ namespace Agora.Rtm.Internal
                                                              json, (UInt32)json.Length,
                                                              Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                              ref _apiParam, (uint)length);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            if (nRet == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+            else
+            {
+                requestId = 0;
+            }
+
+            return nRet;
         }
 
         public int LeaveTopic(string channelName, string topic, ref UInt64 requestId)
@@ -167,12 +197,16 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int SubscribeTopic(string channelName, string topic, TopicOptions options, ref UInt64 requestId)
@@ -189,16 +223,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
-                int result = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int UnsubscribeTopic(string channelName, string topic, TopicOptions options)
+        public int UnsubscribeTopic(string channelName, string topic, TopicOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -211,10 +248,19 @@ namespace Agora.Rtm.Internal
                                                              json, (UInt32)json.Length,
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            if (nRet == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+            else
+            {
+                requestId = 0;
+            }
+
+            return nRet;
         }
 
-        public int GetSubscribedUserList(string channelName, string topic, ref UserList users)
+        public int GetSubscribedUserList(string channelName, string topic, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -227,16 +273,16 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
-
-                users = AgoraJson.JsonToStruct<UserList>(_apiParam.Result, "users");
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
             else
             {
-                users = new UserList();
+                requestId = 0;
             }
-            return (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return nRet;
         }
 
         public int Release(string channelName)

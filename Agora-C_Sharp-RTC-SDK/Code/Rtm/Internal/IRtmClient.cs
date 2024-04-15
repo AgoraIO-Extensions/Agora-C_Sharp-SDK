@@ -10,9 +10,9 @@ namespace Agora.Rtm.Internal
 
         public abstract int Dispose();
 
-        public abstract int Login(string token);
+        public abstract int Login(string token, ref UInt64 requestId);
 
-        public abstract int Logout();
+        public abstract int Logout(ref UInt64 requestId);
 
         public abstract IRtmStorage GetStorage();
 
@@ -28,9 +28,9 @@ namespace Agora.Rtm.Internal
 
         public abstract int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId);
 
-        public abstract int Unsubscribe(string channelName);
+        public abstract int Unsubscribe(string channelName, ref UInt64 requestId);
 
-        public abstract IStreamChannel CreateStreamChannel(string channelName);
+        public abstract IStreamChannel CreateStreamChannel(string channelName, ref int errorCode);
 
         public abstract int SetParameters(string parameters);
 

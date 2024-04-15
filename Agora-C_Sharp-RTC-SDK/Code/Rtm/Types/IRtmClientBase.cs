@@ -1,4 +1,5 @@
 using System;
+using System.Net.Sockets;
 
 namespace Agora.Rtm
 {
@@ -15,23 +16,16 @@ namespace Agora.Rtm
             appId = "";
             userId = "";
             areaCode = RTM_AREA_CODE.GLOB;
+            protocolType = RTM_PROTOCOL_TYPE.RTM_PROTOCOL_TYPE_TCP_UDP;
             presenceTimeout = 300;
+            heartbeatInterval = 5;
             useStringUserId = true;
+            multipath = false;
             logConfig = new RtmLogConfig();
             proxyConfig = new RtmProxyConfig();
             encryptionConfig = new RtmEncryptionConfig();
+            privateConfig = new RtmPrivateConfig();
         }
-
-        public RtmConfig(string appId, string userId, RTM_AREA_CODE areaCode, RtmLogConfig logConfig, RtmProxyConfig proxyConfig, RtmEncryptionConfig encryptionConfig)
-        {
-            this.appId = appId;
-            this.userId = userId;
-            this.areaCode = areaCode;
-            this.logConfig = logConfig;
-            this.proxyConfig = proxyConfig;
-            this.encryptionConfig = encryptionConfig;
-        }
-
         ///
         /// <summary>
         /// The App ID of your project.
@@ -57,6 +51,11 @@ namespace Agora.Rtm
         ///
         public RTM_AREA_CODE areaCode;
 
+        /**
+   * The protocol used for connecting to the Agora RTM service.
+   */
+        public RTM_PROTOCOL_TYPE protocolType;
+
         ///
         /// <summary>
         /// Presence timeout in seconds, specify the timeout value when you lost connection between sdk
@@ -64,6 +63,12 @@ namespace Agora.Rtm
         /// </summary>
         ///
         public UInt32 presenceTimeout;
+
+        /**
+  * Heartbeat interval in seconds, specify the interval value of sending heartbeat between sdk
+  * and rtm service.
+  */
+        public UInt32 heartbeatInterval;
 
         ///
         /// <summary>
@@ -73,6 +78,11 @@ namespace Agora.Rtm
         ///
         public bool useStringUserId;
 
+
+        /**
+  * Whether to enable multipath, introduced from 2.2.0, for now , only effect on stream channel.
+  */
+        public bool multipath;
         ///
         /// <summary>
         /// The config for customer set log path, log size and log level.
@@ -93,6 +103,12 @@ namespace Agora.Rtm
         /// </summary>
         ///
         public RtmEncryptionConfig encryptionConfig;
+
+
+        /**
+   * The config for private setting
+   */
+        public RtmPrivateConfig privateConfig;
     };
 
     [Flags]
@@ -140,6 +156,61 @@ namespace Agora.Rtm
         ///
         API_CALL = 0x0010,
     }
+
+
+    public class LinkStateEvent
+    {
+        /**
+         * The current link state
+         */
+        public RTM_LINK_STATE currentState;
+        /**
+         * The previous link state
+         */
+        public RTM_LINK_STATE previousState;
+        /**
+         * The service type
+         */
+        public RTM_SERVICE_TYPE serviceType;
+        /**
+         * The operation which trigger this event
+         */
+        public RTM_LINK_OPERATION operation;
+        /**
+         * The reason of this state change event
+         */
+        public string reason;
+        /**
+         * The affected channels
+         */
+        public string[] affectedChannels;
+
+        /**
+         * The unrestored channels
+         */
+        public string[] unrestoredChannels;
+     
+        /**
+         * Is resumed from disconnected state
+         */
+        public bool isResumed;
+        /**
+         * RTM server UTC time
+         */
+        public UInt64 timestamp;
+
+        LinkStateEvent() : currentState(RTM_LINK_STATE_IDLE),
+                       previousState(RTM_LINK_STATE_IDLE),
+                       serviceType(RTM_SERVICE_TYPE_MESSAGE),
+                       operation(RTM_LINK_OPERATION_LOGIN),
+                       reason(NULL),
+                       affectedChannels(NULL),
+                       affectedChannelCount(0),
+                       unrestoredChannels(NULL),
+                       unrestoredChannelCount(0),
+                       isResumed(false),
+                       timestamp(0) { }
+    };
 
     public class MessageEvent
     {
@@ -407,7 +478,7 @@ namespace Agora.Rtm
         /// The metadata infomation
         /// </summary>
         ///
-        public RtmMetadata data;
+        public Metadata data;
 
         public StorageEvent()
         {

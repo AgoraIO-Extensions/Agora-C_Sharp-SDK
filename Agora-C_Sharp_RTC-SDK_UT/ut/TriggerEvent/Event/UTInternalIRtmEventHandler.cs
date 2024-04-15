@@ -561,10 +561,10 @@ namespace Agora.Rtm.Ut
         public UInt64 OnGetChannelMetadataResult_requestId = 0;
         public string OnGetChannelMetadataResult_channelName = null;
         public RTM_CHANNEL_TYPE OnGetChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.STREAM;
-        public RtmMetadata OnGetChannelMetadataResult_data = null;
+        public Metadata OnGetChannelMetadataResult_data = null;
         public RTM_ERROR_CODE OnGetChannelMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
-        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, RTM_ERROR_CODE errorCode)
         {
             OnGetChannelMetadataResult_be_trigger = true;
             OnGetChannelMetadataResult_requestId = requestId;
@@ -574,7 +574,7 @@ namespace Agora.Rtm.Ut
             OnGetChannelMetadataResult_errorCode = errorCode;
         }
 
-        public bool OnGetChannelMetadataResultPassed(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public bool OnGetChannelMetadataResultPassed(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (OnGetChannelMetadataResult_be_trigger == false)
                 return false;
@@ -692,10 +692,10 @@ namespace Agora.Rtm.Ut
         public bool OnGetUserMetadataResult_be_trigger = false;
         public UInt64 OnGetUserMetadataResult_requestId = 0;
         public string OnGetUserMetadataResult_userId = null;
-        public RtmMetadata OnGetUserMetadataResult_data = null;
+        public Metadata OnGetUserMetadataResult_data = null;
         public RTM_ERROR_CODE OnGetUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
-        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode)
         {
             OnGetUserMetadataResult_be_trigger = true;
             OnGetUserMetadataResult_requestId = requestId;
@@ -704,7 +704,7 @@ namespace Agora.Rtm.Ut
             OnGetUserMetadataResult_errorCode = errorCode;
         }
 
-        public bool OnGetUserMetadataResultPassed(UInt64 requestId, string userId, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public bool OnGetUserMetadataResultPassed(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (OnGetUserMetadataResult_be_trigger == false)
                 return false;

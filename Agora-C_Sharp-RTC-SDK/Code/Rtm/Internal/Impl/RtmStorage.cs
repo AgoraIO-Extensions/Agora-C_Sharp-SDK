@@ -5,7 +5,7 @@ namespace Agora.Rtm.Internal
     internal sealed class RtmStorage : IRtmStorage
     {
         private RtmStorageImpl _rtmStorageImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = (int)RTM_ERROR_CODE.NOT_INITIALIZED;
 
         internal RtmStorage(RtmStorageImpl impl)
         {
@@ -23,15 +23,6 @@ namespace Agora.Rtm.Internal
         {
             instance = null;
         }
-
-        // public override RtmMetadata CreateMetadata()
-        //{
-        //     if (_rtmStorageImpl == null)
-        //     {
-        //         return null;
-        //     }
-        //     return _rtmStorageImpl.CreateMetadata();
-        // }
 
         public override int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
@@ -114,13 +105,13 @@ namespace Agora.Rtm.Internal
             return _rtmStorageImpl.SubscribeUserMetadata(userId, ref requestId);
         }
 
-        public override int UnsubscribeUserMetadata(string userId)
+        public override int UnsubscribeUserMetadata(string userId, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtmStorageImpl.UnsubscribeUserMetadata(userId);
+            return _rtmStorageImpl.UnsubscribeUserMetadata(userId, ref requestId);
         }
     }
 }

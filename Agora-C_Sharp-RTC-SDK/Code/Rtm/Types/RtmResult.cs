@@ -326,7 +326,7 @@ namespace Agora.Rtm
         /// The result metadata of getting operation.
         /// </summary>
         ///
-        public RtmMetadata Data;
+        public Metadata Data;
     };
 
     public class SetUserMetadataResult
@@ -373,7 +373,7 @@ namespace Agora.Rtm
         /// The result metadata of getting operation.
         /// </summary>
         ///
-        public RtmMetadata Data;
+        public Metadata Data;
     };
 
     public class SubscribeUserMetadataResult

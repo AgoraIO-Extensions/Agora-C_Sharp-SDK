@@ -1,6 +1,117 @@
 ﻿using System;
 namespace Agora.Rtm
 {
+
+    public enum RTM_LINK_STATE
+    {
+        /**
+         * The initial state.
+         */
+        RTM_LINK_STATE_IDLE = 0,
+        /**
+         * The SDK is connecting to the server.
+         */
+        RTM_LINK_STATE_CONNECTING = 1,
+        /**
+         * The SDK has connected to the server.
+         */
+        RTM_LINK_STATE_CONNECTED = 2,
+        /**
+         * The SDK is disconnected from the server.
+         */
+        RTM_LINK_STATE_DISCONNECTED = 3,
+        /**
+         * The SDK link is suspended.
+         */
+        RTM_LINK_STATE_SUSPENDED = 4,
+        /**
+         * The SDK is failed to connect to the server.
+         */
+        RTM_LINK_STATE_FAILED = 5,
+    };
+
+    /**
+     * Rtm link operation.
+     */
+    public enum RTM_LINK_OPERATION
+    {
+        /**
+         * Login.
+         */
+        RTM_LINK_OPERATION_LOGIN = 0,
+        /**
+         * Logout.
+         */
+        RTM_LINK_OPERATION_LOGOUT = 1,
+        /**
+         * Join
+         */
+        RTM_LINK_OPERATION_JOIN = 2,
+        /**
+         * Leave.
+         */
+        RTM_LINK_OPERATION_LEAVE = 3,
+        /**
+         * Server reject
+         */
+        RTM_LINK_OPERATION_SERVER_REJECT = 4,
+        /**
+         * Auto reconnect
+         */
+        RTM_LINK_OPERATION_AUTO_RECONNECT = 5,
+        /**
+         * Reconnected
+         */
+        RTM_LINK_OPERATION_RECONNECTED = 6,
+        /**
+         * Heartbeat lost
+         */
+        RTM_LINK_OPERATION_HEARTBEAT_LOST = 7,
+        /**
+         * Server timeout
+         */
+        RTM_LINK_OPERATION_SERVER_TIMEOUT = 8,
+        /**
+         * Network change
+         */
+        RTM_LINK_OPERATION_NETWORK_CHANGE = 9,
+    };
+
+
+    /**
+     * Rtm service type.
+     */
+    public enum RTM_SERVICE_TYPE
+    {
+        /**
+         * The type of rtm service not specified.
+         */
+        RTM_SERVICE_TYPE_NONE = 0x00000000,
+        /**
+         * The basic functionality of rtm service.
+         */
+        RTM_SERVICE_TYPE_MESSAGE = 0x00000001,
+        /**
+         * The advanced functionality of rtm service.
+         */
+        RTM_SERVICE_TYPE_STREAM = 0x00000002,
+    };
+
+    /**
+     * Rtm protocol type for underlying connection.
+     */
+    public enum RTM_PROTOCOL_TYPE
+    {
+        /**
+         * TCP and UDP (default).
+         */
+        RTM_PROTOCOL_TYPE_TCP_UDP = 0,
+        /**
+         * Use TCP only.
+         */
+        RTM_PROTOCOL_TYPE_TCP_ONLY = 1,
+    };
+
     ///
     /// <summary>
     /// IP areas.
@@ -241,6 +352,24 @@ namespace Agora.Rtm
         /// </summary>
         ///
         OPERATION_RATE_EXCEED_LIMITATION = -10021,
+
+
+        /**
+   * -10022: The service is not configured in private config mode.
+   */
+        SERVICE_NOT_SUPPORTED = -10022,
+        /**
+         * -10023: This login operation stopped by a new login operation or logout operation.
+         */
+        LOGIN_CANCELED = -10023,
+        /**
+         * -10024: The private config is invalid, set private config should both set serviceType and accessPointHosts.
+         */
+        INVALID_PRIVATE_CONFIG = -10024,
+        /**
+         * -10025: Perform operation failed due to RTM service is not connected.
+         */
+        NOT_CONNECTED = -10025,
         ///
         /// <summary>
         /// -11001 ~ -12000 : reserved for channel error.
@@ -440,6 +569,11 @@ namespace Agora.Rtm
         /// </summary>
         ///
         CHANNEL_RECEIVER_OFFLINE = -11033,
+
+        /**
+  * -11034: The channel join operation is canceled.
+  */
+        CHANNEL_JOIN_CANCELED = -11034,
         ///
         /// <summary>
         /// -12001 ~ -13000 : reserved for storage error.
@@ -848,18 +982,23 @@ namespace Agora.Rtm
         /// </summary>
         ///
         LICENSE_VALIDATION_FAILURE = 21,
+
+        /**
+   * 22: The connection is failed due to certification verify failure.
+   */
+        CERTIFICATION_VERIFY_FAILURE = 22,
         ///
         /// <summary>
         /// 22: The connection is failed due to user vid not support stream channel.
         /// </summary>
         ///
-        STREAM_CHANNEL_NOT_AVAILABLE = 22,
+        STREAM_CHANNEL_NOT_AVAILABLE = 23,
         ///
         /// <summary>
         /// 23: The connection is failed due to token and appid inconsistent.
         /// </summary>
         ///
-        INCONSISTENT_APPID = 23,
+        INCONSISTENT_APPID = 24,
         ///
         /// <summary>
         /// 10001: The connection of rtm edge service has been successfully established.
@@ -1401,20 +1540,20 @@ namespace Agora.Rtm
         ///
         public bool withLock;
 
+        /**
+   * Whether to subscribe channel in quiet mode
+   * Quiet mode means remote user will not receive any notification when we subscribe or
+   * unsubscribe or change our presence state
+   */
+        public bool beQuiet;
+
         public SubscribeOptions()
         {
             withMessage = true;
             withMetadata = false;
             withPresence = true;
             withLock = false;
-        }
-
-        public SubscribeOptions(bool withMessage, bool withMetadata, bool withPresence, bool withLock)
-        {
-            this.withMessage = withMessage;
-            this.withMetadata = withMetadata;
-            this.withPresence = withPresence;
-            this.withLock = withLock;
+            beQuiet = false;
         }
     };
 
@@ -1731,17 +1870,40 @@ namespace Agora.Rtm
         }
     };
 
-    public class RtmMetadata
+    public class RtmPrivateConfig
     {
-        public Int64 majorRevision;
-        public MetadataItem[] metadataItems;
-        public UInt64 metadataItemsSize;
+        /**
+         * Rtm service type.
+         */
+        public RTM_SERVICE_TYPE serviceType;
 
-        public RtmMetadata()
+        /**
+         * Local access point hosts list.
+         */
+        public string[] accessPointHosts;
+
+        public RtmPrivateConfig()
+        {
+            serviceType = RTM_SERVICE_TYPE.RTM_SERVICE_TYPE_NONE;
+            accessPointHosts = new string[0];
+        }
+    };
+
+    public class Metadata
+    {
+        /**
+   * the major revision of metadata.
+  */
+        public Int64 majorRevision;
+        /**
+   * The metadata item array.
+   */
+        public MetadataItem[] items;
+
+        public Metadata()
         {
             majorRevision = 0;
-            metadataItems = new MetadataItem[0];
-            metadataItemsSize = 0;
+            items = new MetadataItem[0];
         }
     }
 }

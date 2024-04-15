@@ -538,7 +538,7 @@ namespace Agora.Rtm.Ut
 
             RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            Rtc.Metadata data = ParamsHelper.CreateParam<Rtc.Metadata>();
 
             RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
@@ -650,7 +650,7 @@ namespace Agora.Rtm.Ut
 
             string userId = ParamsHelper.CreateParam<string>();
 
-            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            Rtc.Metadata data = ParamsHelper.CreateParam<Rtc.Metadata>();
 
             RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 

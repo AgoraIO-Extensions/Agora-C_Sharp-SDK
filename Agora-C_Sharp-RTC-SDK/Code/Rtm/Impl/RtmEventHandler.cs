@@ -518,7 +518,7 @@ namespace Agora.Rtm
             }
         }
 
-        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (getChannelMetadataResultTaskMap.ContainsKey(requestId))
             {
@@ -616,7 +616,7 @@ namespace Agora.Rtm
             }
         }
 
-        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (getUserMetadataResultTaskMap.ContainsKey(requestId))
             {

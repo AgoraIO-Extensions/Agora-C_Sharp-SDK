@@ -72,6 +72,7 @@ namespace Agora.Rtm
             withMetadata = false;
             withPresence = true;
             withLock = false;
+            beQuiet = false;
         }
 
         ///
@@ -101,6 +102,13 @@ namespace Agora.Rtm
         /// </summary>
         ///
         public bool withLock;
+
+        /**
+   * Whether to join channel in quiet mode
+   * Quiet mode means remote user will not receive any notification when we join  or
+   * leave or change our presence state
+   */
+        public bool beQuiet;
     };
 
     ///

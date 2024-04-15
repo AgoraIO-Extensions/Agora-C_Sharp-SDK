@@ -7,7 +7,7 @@ namespace Agora.Rtm.Internal
         private bool _disposed = false;
         private IStreamChannelCreator _selfCreator = null;
         private IStreamChannelImpl _streamChannelImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = (int)RTM_ERROR_CODE.NOT_INITIALIZED;
 
         private string channelName = "";
 
@@ -71,13 +71,13 @@ namespace Agora.Rtm.Internal
             return _streamChannelImpl.Join(channelName, options, ref requestId);
         }
 
-        public override int RenewToken(string token)
+        public override int RenewToken(string token, ref UInt64 requestId)
         {
             if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.RenewToken(channelName, token);
+            return _streamChannelImpl.RenewToken(channelName, token, ref requestId);
         }
 
         public override int Leave(ref UInt64 requestId)
@@ -98,23 +98,23 @@ namespace Agora.Rtm.Internal
             return _streamChannelImpl.JoinTopic(channelName, topic, options, ref requestId);
         }
 
-        public override int PublishTopicMessage(string topic, byte[] message, int length, TopicMessageOptions option)
+        public override int PublishTopicMessage(string topic, byte[] message, int length, TopicMessageOptions option, ref UInt64 requestId)
         {
             if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option,ref requestId);
         }
 
-        public override int PublishTopicMessage(string topic, string message, int length, TopicMessageOptions option)
+        public override int PublishTopicMessage(string topic, string message, int length, TopicMessageOptions option, ref UInt64 requestId)
         {
             if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(message);
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, bytes, bytes.Length, option);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, bytes, bytes.Length, option,ref requestId);
         }
 
         public override int LeaveTopic(string topic, ref UInt64 requestId)
@@ -135,22 +135,22 @@ namespace Agora.Rtm.Internal
             return _streamChannelImpl.SubscribeTopic(channelName, topic, options, ref requestId);
         }
 
-        public override int UnsubscribeTopic(string topic, TopicOptions options)
+        public override int UnsubscribeTopic(string topic, TopicOptions options, ref UInt64 requestId)
         {
             if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.UnsubscribeTopic(channelName, topic, options);
+            return _streamChannelImpl.UnsubscribeTopic(channelName, topic, options, ref requestId);
         }
 
-        public override int GetSubscribedUserList(string topic, ref UserList users)
+        public override int GetSubscribedUserList(string topic, ref UInt64 requestId)
         {
             if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.GetSubscribedUserList(channelName, topic, ref users);
+            return _streamChannelImpl.GetSubscribedUserList(channelName, topic, ref requestId);
         }
     }
 }
