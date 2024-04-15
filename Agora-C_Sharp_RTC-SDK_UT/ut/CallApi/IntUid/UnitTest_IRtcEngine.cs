@@ -1911,20 +1911,20 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
-        public void Test_IRtcEngine_IsSupportPortraitCenterStage()
+        public void Test_IRtcEngine_IsCameraCenterStageSupported()
         {
 
 
-            var nRet = RtcEngine.IsSupportPortraitCenterStage();
-            Assert.AreEqual(true, nRet);
+            var nRet = RtcEngine.IsCameraCenterStageSupported();
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngine_EnablePortraitCenterStage()
+        public void Test_IRtcEngine_EnableCameraCenterStage()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
-            var nRet = RtcEngine.EnablePortraitCenterStage(enabled);
+            var nRet = RtcEngine.EnableCameraCenterStage(enabled);
             Assert.AreEqual(0, nRet);
         }
 

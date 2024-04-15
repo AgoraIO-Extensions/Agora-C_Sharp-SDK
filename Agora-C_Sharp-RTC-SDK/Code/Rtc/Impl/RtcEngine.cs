@@ -2012,22 +2012,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetRouteInCommunicationMode(route);
         }
 
-        public override bool IsSupportPortraitCenterStage()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return false;
-            }
-            return _rtcEngineImpl.IsSupportPortraitCenterStage();
-        }
-
-        public override int EnablePortraitCenterStage(bool enabled)
+        public override bool IsCameraCenterStageSupported()
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnablePortraitCenterStage(enabled);
+            return _rtcEngineImpl.IsCameraCenterStageSupported();
+        }
+
+        public override int EnableCameraCenterStage(bool enabled)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableCameraCenterStage(enabled);
         }
 
         public override ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)

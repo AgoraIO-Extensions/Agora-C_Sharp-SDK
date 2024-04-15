@@ -3687,12 +3687,12 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract bool IsSupportPortraitCenterStage();
+        public abstract bool IsCameraCenterStageSupported();
 
         ///
         /// @ignore
         ///
-        public abstract int EnablePortraitCenterStage(bool enabled);
+        public abstract int EnableCameraCenterStage(bool enabled);
 
         ///
         /// <summary>
