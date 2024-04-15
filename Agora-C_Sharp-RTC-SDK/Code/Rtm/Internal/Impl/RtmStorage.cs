@@ -24,7 +24,7 @@ namespace Agora.Rtm.Internal
             instance = null;
         }
 
-        public override int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public override int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {
@@ -33,7 +33,7 @@ namespace Agora.Rtm.Internal
             return _rtmStorageImpl.SetChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
         }
 
-        public override int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public override int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {
@@ -42,7 +42,7 @@ namespace Agora.Rtm.Internal
             return _rtmStorageImpl.UpdateChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
         }
 
-        public override int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public override int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {
@@ -60,7 +60,7 @@ namespace Agora.Rtm.Internal
             return _rtmStorageImpl.GetChannelMetadata(channelName, channelType, ref requestId);
         }
 
-        public override int SetUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public override int SetUserMetadata(string userId, Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {
@@ -69,7 +69,7 @@ namespace Agora.Rtm.Internal
             return _rtmStorageImpl.SetUserMetadata(userId, data, options, ref requestId);
         }
 
-        public override int UpdateUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public override int UpdateUserMetadata(string userId, Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {
@@ -78,7 +78,7 @@ namespace Agora.Rtm.Internal
             return _rtmStorageImpl.UpdateUserMetadata(userId, data, options, ref requestId);
         }
 
-        public override int RemoveUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public override int RemoveUserMetadata(string userId, Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {

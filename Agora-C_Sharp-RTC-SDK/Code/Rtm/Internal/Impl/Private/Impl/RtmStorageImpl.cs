@@ -57,7 +57,7 @@ namespace Agora.Rtm.Internal
             GC.SuppressFinalize(this);
         }
 
-        public int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Rtc.Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -85,7 +85,7 @@ namespace Agora.Rtm.Internal
             return nRet;
         }
 
-        public int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Rtc.Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -113,7 +113,7 @@ namespace Agora.Rtm.Internal
             return nRet;
         }
 
-        public int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Rtc.Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -166,7 +166,7 @@ namespace Agora.Rtm.Internal
             return nRet;
         }
 
-        public int SetUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int SetUserMetadata(string userId, Rtc.Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
@@ -192,7 +192,7 @@ namespace Agora.Rtm.Internal
             return nRet;
         }
 
-        public int UpdateUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int UpdateUserMetadata(string userId, Rtc.Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
@@ -218,7 +218,7 @@ namespace Agora.Rtm.Internal
             return nRet;
         }
 
-        public int RemoveUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int RemoveUserMetadata(string userId, Rtc.Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);

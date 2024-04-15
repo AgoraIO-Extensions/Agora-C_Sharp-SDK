@@ -43,7 +43,7 @@ namespace Agora.Rtm.Internal
 
         public virtual void OnRemoveChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode) { }
 
-        public virtual void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data,
+        public virtual void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data,
                                                        RTM_ERROR_CODE errorCode)
         {
         }
@@ -54,7 +54,7 @@ namespace Agora.Rtm.Internal
 
         public virtual void OnRemoveUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode) { }
 
-        public virtual void OnGetUserMetadataResult(UInt64 requestId, string userId, RtmMetadata data, RTM_ERROR_CODE errorCode) { }
+        public virtual void OnGetUserMetadataResult(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnSubscribeUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode) { }
 
