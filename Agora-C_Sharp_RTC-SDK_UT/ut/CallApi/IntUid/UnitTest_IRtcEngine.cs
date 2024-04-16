@@ -4,7 +4,7 @@ using Agora.Rtc;
 namespace Agora.Rtc.Ut
 {
     using uid_t = System.UInt32;
-    using view_t = System.Int64;
+    using view_t = System.UInt64;
     [TestFixture]
     class UnitTest_IRtcEngine
     {

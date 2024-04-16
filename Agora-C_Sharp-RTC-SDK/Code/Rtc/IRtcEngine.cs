@@ -1,8 +1,7 @@
 #define AGORA_RTC
 #define AGORA_RTM
 using System;
-using view_t = System.Int64;
-using track_id_t = System.UInt32;
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
 

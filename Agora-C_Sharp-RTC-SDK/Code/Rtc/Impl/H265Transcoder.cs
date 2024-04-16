@@ -2,7 +2,6 @@ using System;
 
 namespace Agora.Rtc
 {
-    using view_t = Int64;
     public sealed class H265Transcoder : IH265Transcoder
     {
         private IRtcEngine _rtcEngineInstance = null;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
-    using view_t = Int64;
+    using view_t = UInt64;
     public class MusicPlayerImpl
     {
         private bool _disposed = false;

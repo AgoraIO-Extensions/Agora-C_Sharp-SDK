@@ -14,7 +14,7 @@ namespace Agora.Rtc
     using track_id_t = System.UInt32;
     using IrisRtcEnginePtr = IntPtr;
     using IrisRtcRenderingHandle = IntPtr;
-    using view_t = System.Int64;
+    using view_t = System.UInt64;
 
     internal class RtcEngineImpl
     {

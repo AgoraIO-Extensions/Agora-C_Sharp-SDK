@@ -3,7 +3,7 @@ using Agora.Rtc;
 
 namespace Agora.Rtc.Ut
 {
-    using view_t = System.Int64;
+    using view_t = System.UInt64;
     public class UnitTest_IMusicPlayer
     {
         public IRtcEngine Engine;

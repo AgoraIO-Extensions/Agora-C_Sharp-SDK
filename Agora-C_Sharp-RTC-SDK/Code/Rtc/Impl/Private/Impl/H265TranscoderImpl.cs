@@ -13,7 +13,6 @@ namespace Agora.Rtc
     using IrisEventHandlerHandle = IntPtr;
 
     using IrisApiEnginePtr = IntPtr;
-    using view_t = Int64;
 
     internal class H265TranscoderImpl
     {

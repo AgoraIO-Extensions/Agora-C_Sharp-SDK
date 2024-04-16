@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 namespace Agora.Rtc
 {
-    using int64_t = Int64;
-    using view_t = Int64;
-    using uint64_t = UInt64;
     using uint8_t = Byte;
-    using uint32_t = UInt32;
     using int16_t = Int16;
 
     ///

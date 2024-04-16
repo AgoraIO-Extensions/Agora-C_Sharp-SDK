@@ -1,5 +1,5 @@
 ﻿using System;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 using Agora.Rtc.LitJson;
 
 namespace Agora.Rtc
@@ -1689,7 +1689,7 @@ namespace Agora.Rtc
             this.primaryMonitor = false;
             this.isOccluded = false;
             this.minimizeWindow = false;
-            this.sourceDisplayId = -2;
+            this.sourceDisplayId = AgoraUtil.ConvertNegativeToUInt64(-2);
         }
 
         public ScreenCaptureSourceInfo(ScreenCaptureSourceType type, view_t sourceId, string sourceName, ThumbImageBuffer thumbImage, ThumbImageBuffer iconImage, string processPath, string sourceTitle, bool primaryMonitor, bool isOccluded, Rectangle position, bool minimizeWindow, view_t sourceDisplayId)

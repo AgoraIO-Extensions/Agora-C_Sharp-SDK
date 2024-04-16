@@ -1,8 +1,8 @@
 ﻿using System;
 using Agora.Rtc.LitJson;
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
-    using view_t = Int64;
 
     internal enum AppType
     {
