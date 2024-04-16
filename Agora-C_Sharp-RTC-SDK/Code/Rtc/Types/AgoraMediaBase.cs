@@ -302,7 +302,7 @@ namespace Agora.Rtc
     public enum TRACK_AUDIO_MIXED_POLICY_TYPE
     {
         TRACK_AUDIO_MIXED_LOCAL = 1 << 0,
-      
+
         TRACK_AUDIO_MIXED_REMOTE = 1 << 1,
     };
 
@@ -742,6 +742,7 @@ namespace Agora.Rtc
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.alphaBuffer = null;
+            this.fillAlphaBuffer = false;
             this.d3d11_texture_2d = IntPtr.Zero;
             this.texture_slice_index = 0;
         }
@@ -769,6 +770,7 @@ namespace Agora.Rtc
             this.metadata_size = metadata_size;
             this.d3d11_texture_2d = IntPtr.Zero;
             this.texture_slice_index = 0;
+            this.fillAlphaBuffer = false;
         }
 
         ///
@@ -891,7 +893,7 @@ namespace Agora.Rtc
         ///
         public byte[] alphaBuffer;
 
-
+        public bool fillAlphaBuffer;
         ///
         /// <summary>
         /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.

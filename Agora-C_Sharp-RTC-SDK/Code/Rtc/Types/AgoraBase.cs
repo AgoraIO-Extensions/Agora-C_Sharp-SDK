@@ -1356,6 +1356,12 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AUDIO_CODEC_LPCNET = 12,
+
+        AUDIO_CODEC_OPUS4C = 13,
+
+        AUDIO_CODEC_OPUS6C = 14,
+
+        AUDIO_CODEC_OPUS8C = 15,
     };
 
     [Flags]

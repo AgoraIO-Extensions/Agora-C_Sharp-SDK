@@ -2598,6 +2598,19 @@ namespace Agora.Rtc
         ///
         public Optional<video_track_id_t> customVideoTrackId = new Optional<video_track_id_t>();
 
+
+        Optional<bool> publishScreenTrack = new Optional<bool>();
+       
+        Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
+        
+        Optional<bool> publishThirdScreenTrack = new Optional<bool>();
+      
+        Optional<bool> publishFourthScreenTrack = new Optional<bool>();
+
+        Optional<bool> publishLoopbackAudioTrack = new Optional<bool>();
+
+        Optional<string> publishLoopbackDeviceName = new Optional<string>();
+
         public DirectCdnStreamingMediaOptions()
         {
 
@@ -2660,6 +2673,42 @@ namespace Agora.Rtc
                 writer.Write(this.customVideoTrackId.GetValue());
             }
 
+            if (this.publishScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishScreenTrack");
+                writer.Write(this.publishScreenTrack.GetValue());
+            }
+
+            if (this.publishSecondaryScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishSecondaryScreenTrack");
+                writer.Write(this.publishSecondaryScreenTrack.GetValue());
+            }
+
+            if (this.publishThirdScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishThirdScreenTrack");
+                writer.Write(this.publishThirdScreenTrack.GetValue());
+            }
+
+            if (this.publishFourthScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishFourthScreenTrack");
+                writer.Write(this.publishFourthScreenTrack.GetValue());
+            }
+
+            if (this.publishLoopbackAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishLoopbackAudioTrack");
+                writer.Write(this.publishLoopbackAudioTrack.GetValue());
+            }
+
+            if (this.publishLoopbackDeviceName.HasValue())
+            {
+                writer.WritePropertyName("publishLoopbackDeviceName");
+                writer.Write(this.publishLoopbackDeviceName.GetValue());
+            }
+           
             writer.WriteObjectEnd();
         }
     }
