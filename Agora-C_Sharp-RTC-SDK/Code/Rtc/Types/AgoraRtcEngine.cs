@@ -1312,31 +1312,38 @@ namespace Agora.Rtc
     /// The camera capturer preference.
     /// </summary>
     ///
-    public class CameraCapturerConfiguration
+    public class CameraCapturerConfiguration : IOptionalJsonParse
     {
         ///
         /// <summary>
         /// This parameter applies to Android and iOS only. The camera direction. See CAMERA_DIRECTION.
         /// </summary>
         ///
-        public CAMERA_DIRECTION cameraDirection;
+        public Optional<CAMERA_DIRECTION> cameraDirection = new Optional<CAMERA_DIRECTION>();
 
         ///
         /// @ignore
         ///
-        public CAMERA_FOCAL_LENGTH_TYPE cameraFocalLengthType;
+        public Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType = new Optional<CAMERA_FOCAL_LENGTH_TYPE>();
 
         ///
         /// <summary>
         /// This method applies to Windows only. The ID of the camera.
         /// </summary>
         ///
-        public string deviceId;
+        public Optional<string> deviceId = new Optional<string>();
 
         ///
         /// @ignore
         ///
-        public string cameraId;
+        public Optional<string> cameraId = new Optional<string>();
+
+        ///
+        /// <summary>
+        /// Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame.
+        /// </summary>
+        ///
+        public Optional<bool> followEncodeDimensionRatio = new Optional<bool>();
 
         ///
         /// <summary>
@@ -1345,26 +1352,62 @@ namespace Agora.Rtc
         ///
         public VideoFormat format;
 
-        ///
-        /// <summary>
-        /// Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame.
-        /// </summary>
-        ///
-        public bool followEncodeDimensionRatio;
-
         public CameraCapturerConfiguration()
         {
-            this.followEncodeDimensionRatio = true;
+            this.format = new VideoFormat(0, 0, 0);
         }
 
-        public CameraCapturerConfiguration(CAMERA_DIRECTION cameraDirection, CAMERA_FOCAL_LENGTH_TYPE cameraFocalLengthType, string deviceId, string cameraId, VideoFormat format, bool followEncodeDimensionRatio)
+        public CameraCapturerConfiguration(Optional<CAMERA_DIRECTION> cameraDirection, Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType, Optional<string> deviceId, Optional<string> cameraId, Optional<bool> followEncodeDimensionRatio, VideoFormat format)
         {
             this.cameraDirection = cameraDirection;
             this.cameraFocalLengthType = cameraFocalLengthType;
             this.deviceId = deviceId;
             this.cameraId = cameraId;
-            this.format = format;
             this.followEncodeDimensionRatio = followEncodeDimensionRatio;
+            this.format = format;
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void ToJson(JsonWriter writer)
+        {
+            writer.WriteObjectStart();
+
+            if (this.cameraDirection.HasValue())
+            {
+                writer.WritePropertyName("cameraDirection");
+                AgoraJson.WriteEnum(writer, this.cameraDirection.GetValue());
+            }
+
+            if (this.cameraFocalLengthType.HasValue())
+            {
+                writer.WritePropertyName("cameraFocalLengthType");
+                AgoraJson.WriteEnum(writer, this.cameraFocalLengthType.GetValue());
+            }
+
+            if (this.deviceId.HasValue())
+            {
+                writer.WritePropertyName("deviceId");
+                writer.Write(this.deviceId.GetValue());
+            }
+
+            if (this.cameraId.HasValue())
+            {
+                writer.WritePropertyName("cameraId");
+                writer.Write(this.cameraId.GetValue());
+            }
+
+            if (this.followEncodeDimensionRatio.HasValue())
+            {
+                writer.WritePropertyName("followEncodeDimensionRatio");
+                writer.Write(this.followEncodeDimensionRatio.GetValue());
+            }
+
+            writer.WritePropertyName("format");
+            JsonMapper.WriteValue(this.format, writer, false, 0);
+
+            writer.WriteObjectEnd();
         }
     }
 

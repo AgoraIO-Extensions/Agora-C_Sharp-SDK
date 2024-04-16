@@ -435,7 +435,8 @@ namespace Agora.Rtc
             {
                 this.matrix = frame.matrix;
             }
-            else {
+            else
+            {
                 this.matrix = new float[16];
             }
             this.metadata_buffer = frame.metadata_buffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.metadata_buffer, 0);

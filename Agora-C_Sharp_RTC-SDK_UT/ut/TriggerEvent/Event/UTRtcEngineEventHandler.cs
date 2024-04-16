@@ -400,40 +400,6 @@ namespace Agora.Rtc.Ut
         }
         //////////////////
 
-        public bool OnCameraCapturerConfigurationChanged_be_trigger = false;
-        public int OnCameraCapturerConfigurationChanged_direction;
-        public int OnCameraCapturerConfigurationChanged_focalLengthType;
-        public int OnCameraCapturerConfigurationChanged_width;
-        public int OnCameraCapturerConfigurationChanged_height;
-        public int OnCameraCapturerConfigurationChanged_frameRate;
-        public override void OnCameraCapturerConfigurationChanged(int direction, int focalLengthType, int width, int height, int frameRate)
-        {
-            OnCameraCapturerConfigurationChanged_be_trigger = true;
-            OnCameraCapturerConfigurationChanged_direction = direction;
-            OnCameraCapturerConfigurationChanged_focalLengthType = focalLengthType;
-            OnCameraCapturerConfigurationChanged_width = width;
-            OnCameraCapturerConfigurationChanged_height = height;
-            OnCameraCapturerConfigurationChanged_frameRate = frameRate;
-        }
-
-        public bool OnCameraCapturerConfigurationChangedPassed(int direction, int focalLengthType, int width, int height, int frameRate)
-        {
-            if (OnCameraCapturerConfigurationChanged_be_trigger == false)
-                return false;
-            //if (ParamsHelper.Compare<int>(OnCameraCapturerConfigurationChanged_direction, direction) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraCapturerConfigurationChanged_focalLengthType, focalLengthType) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraCapturerConfigurationChanged_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraCapturerConfigurationChanged_height, height) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraCapturerConfigurationChanged_frameRate, frameRate) == false)
-            //return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnVideoStopped_be_trigger = false;
         public override void OnVideoStopped()
         {

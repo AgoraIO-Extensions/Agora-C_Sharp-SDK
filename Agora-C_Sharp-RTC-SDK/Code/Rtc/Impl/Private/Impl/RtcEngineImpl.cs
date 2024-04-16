@@ -3801,12 +3801,12 @@ namespace Agora.Rtc
             return result;
         }
 
-        public bool IsSupportPortraitCenterStage()
+        public bool IsCameraCenterStageSupported()
         {
             _param.Clear();
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISSUPPORTPORTRAITCENTERSTAGE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERACENTERSTAGESUPPORTED,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -3815,13 +3815,13 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnablePortraitCenterStage(bool enabled)
+        public int EnableCameraCenterStage(bool enabled)
         {
             _param.Clear();
             _param.Add("enabled", enabled);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEPORTRAITCENTERSTAGE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLECAMERACENTERSTAGE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

@@ -554,12 +554,18 @@ export class SpeicalLogic {
                             constructorLines.push(`this.${transName} = ${this.cSharpSDK_AddEnumzPrefixIfIsIsEnumz(transValue)};`);
                         }
                         else {
-                            let params = transValue.split(",");
-                            let transParams = [];
-                            for (let p of params) {
-                                transParams.push(this.cSharpSDK_AddEnumzPrefixIfIsIsEnumz(p.trim()));
+                            if (transValue.startsWith(transType)) {
+                                //解析类似这种  CameraCapturerConfiguration() : format(VideoFormat(0, 0, 0)) {}
+                                constructorLines.push(`this.${transName} = new ${transValue};`)
                             }
-                            constructorLines.push(`this.${transName} = new ${transType}(${transParams.join(",")});`)
+                            else {
+                                let params = transValue.split(",");
+                                let transParams = [];
+                                for (let p of params) {
+                                    transParams.push(this.cSharpSDK_AddEnumzPrefixIfIsIsEnumz(p.trim()));
+                                }
+                                constructorLines.push(`this.${transName} = new ${transType}(${transParams.join(",")});`)
+                            }
                         }
                     }
                 }
