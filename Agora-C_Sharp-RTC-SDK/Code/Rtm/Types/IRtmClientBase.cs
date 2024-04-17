@@ -189,7 +189,7 @@ namespace Agora.Rtm
          * The unrestored channels
          */
         public string[] unrestoredChannels;
-     
+
         /**
          * Is resumed from disconnected state
          */
@@ -199,17 +199,18 @@ namespace Agora.Rtm
          */
         public UInt64 timestamp;
 
-        LinkStateEvent() : currentState(RTM_LINK_STATE_IDLE),
-                       previousState(RTM_LINK_STATE_IDLE),
-                       serviceType(RTM_SERVICE_TYPE_MESSAGE),
-                       operation(RTM_LINK_OPERATION_LOGIN),
-                       reason(NULL),
-                       affectedChannels(NULL),
-                       affectedChannelCount(0),
-                       unrestoredChannels(NULL),
-                       unrestoredChannelCount(0),
-                       isResumed(false),
-                       timestamp(0) { }
+        public LinkStateEvent()
+        {
+            currentState = RTM_LINK_STATE.RTM_LINK_STATE_IDLE;
+            previousState = RTM_LINK_STATE.RTM_LINK_STATE_IDLE;
+            serviceType = RTM_SERVICE_TYPE.RTM_SERVICE_TYPE_MESSAGE;
+            operation = RTM_LINK_OPERATION.RTM_LINK_OPERATION_LOGIN;
+            reason = "";
+            affectedChannels = null;
+            unrestoredChannels = null;
+            isResumed = false;
+            timestamp = 0;
+        }
     };
 
     public class MessageEvent

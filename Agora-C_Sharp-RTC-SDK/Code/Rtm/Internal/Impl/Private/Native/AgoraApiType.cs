@@ -48,7 +48,7 @@
         #endregion
 
         #region IRtmClient start
-        internal const string FUNC_RTMCLIENT_INITIALIZE = "RtmClient_initialize";
+        //internal const string FUNC_RTMCLIENT_INITIALIZE = "RtmClient_initialize";
         internal const string FUNC_RTMCLIENT_RELEASE = "RtmClient_release";
         internal const string FUNC_RTMCLIENT_LOGIN = "RtmClient_login";
         internal const string FUNC_RTMCLIENT_LOGOUT = "RtmClient_logout";

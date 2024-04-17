@@ -40,13 +40,16 @@ namespace Agora.Rtm.Internal
 
         public event Action<RtmClientImpl> OnRtmClientImpleWillDispose;
 
-        private RtmClientImpl(IntPtr engine_ptr)
+        private RtmClientImpl(IntPtr engine_ptr,RtmConfig config, ref int errorCode)
         {
             _apiParam = new IrisRtmApiParam();
             _apiParam.AllocResult();
 
-            _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(engine_ptr);
-
+            CreateEventHandler();
+            IntPtr @event = _rtcEventHandlerHandle.handle;
+            RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
+            var jsonConfig = AgoraJson.ToJson(config);
+            _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(engine_ptr, jsonConfig, @event, ref errorCode);
             _streamChannelImpl = new StreamChannelImpl(_irisApiRtmEngine);
             _rtmLockImpl = new RtmLockImpl(_irisApiRtmEngine);
             _rtmPresenceImpl = new RtmPresenceImpl(_irisApiRtmEngine);
@@ -164,9 +167,9 @@ namespace Agora.Rtm.Internal
             return _irisApiRtmEngine;
         }
 
-        public static RtmClientImpl GetInstance(IntPtr engine_ptr)
+        public static RtmClientImpl GetInstance(IntPtr engine_ptr, RtmConfig config, ref int errorCode)
         {
-            return clientInstance ?? (clientInstance = new RtmClientImpl(engine_ptr));
+            return clientInstance ?? (clientInstance = new RtmClientImpl(engine_ptr, config, ref errorCode));
         }
 
         public static RtmClientImpl Get()
@@ -174,25 +177,25 @@ namespace Agora.Rtm.Internal
             return clientInstance;
         }
 
-        public int Initialize(RtmConfig config)
-        {
-            CreateEventHandler();
-            RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
+        //public int Initialize(RtmConfig config)
+        //{
+        //    CreateEventHandler();
+        //    RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
 
-            _param.Clear();
-            _param.Add("config", config);
+        //    _param.Clear();
+        //    _param.Add("config", config);
 
-            var json = AgoraJson.ToJson(_param);
+        //    var json = AgoraJson.ToJson(_param);
 
-            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+        //    IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
 
-            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
-                                                             json, (UInt32)json.Length,
-                                                             Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                                                             ref _apiParam);
+        //    var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
+        //                                                     json, (UInt32)json.Length,
+        //                                                     Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+        //                                                     ref _apiParam);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        //}
 
         public string GetVersion()
         {

@@ -4,8 +4,6 @@ namespace Agora.Rtm.Internal
 {
     public abstract class IRtmClient
     {
-        public abstract int Initialize(RtmConfig config);
-
         public abstract string GetVersion();
 
         public abstract int Dispose();
@@ -20,7 +18,7 @@ namespace Agora.Rtm.Internal
 
         public abstract IRtmPresence GetPresence();
 
-        public abstract int RenewToken(string token);
+        public abstract int RenewToken(string token, ref UInt64 requestId);
 
         public abstract int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId);
 

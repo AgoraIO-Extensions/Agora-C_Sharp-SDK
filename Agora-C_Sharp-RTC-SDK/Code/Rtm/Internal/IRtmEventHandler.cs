@@ -4,6 +4,8 @@ namespace Agora.Rtm.Internal
 {
     public abstract class IRtmEventHandler
     {
+        public virtual void OnLinkStateEvent(LinkStateEvent @event) { }
+
         public virtual void OnMessageEvent(MessageEvent @event) { }
 
         public virtual void OnPresenceEvent(PresenceEvent @event) { }
@@ -18,14 +20,19 @@ namespace Agora.Rtm.Internal
 
         public virtual void OnLeaveResult(UInt64 requestId, string channelName, string userId, RTM_ERROR_CODE errorCode) { }
 
+        public virtual void OnPublishTopicMessageResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode) { }
+
         public virtual void OnJoinTopicResult(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnLeaveTopicResult(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic,
                                                    UserList succeedUsers, UserList failedUsers, RTM_ERROR_CODE errorCode)
-        {
-        }
+        { }
+
+        public virtual void OnUnsubscribeTopicResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode) { }
+
+        public virtual void OnGetSubscribedUserListResult(UInt64 requestId, string channelName, string topic, UserList users, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnConnectionStateChanged(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason) { }
 
@@ -33,9 +40,15 @@ namespace Agora.Rtm.Internal
 
         public virtual void OnSubscribeResult(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode) { }
 
+        public virtual void OnUnsubscribeResult(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode) { }
+
         public virtual void OnPublishResult(UInt64 requestId, RTM_ERROR_CODE errorCode) { }
 
-        public virtual void OnLoginResult(RTM_ERROR_CODE errorCode) { }
+        public virtual void OnLoginResult(UInt64 requestId, RTM_ERROR_CODE errorCode) { }
+
+        public virtual void OnLogoutResult(UInt64 requestId, RTM_ERROR_CODE errorCode) { }
+
+        public virtual void OnRenewTokenResult(UInt64 requestId, RTM_SERVICE_TYPE serverType, string channelName, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnSetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode) { }
 
@@ -45,8 +58,7 @@ namespace Agora.Rtm.Internal
 
         public virtual void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data,
                                                        RTM_ERROR_CODE errorCode)
-        {
-        }
+        { }
 
         public virtual void OnSetUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode) { }
 
@@ -58,35 +70,31 @@ namespace Agora.Rtm.Internal
 
         public virtual void OnSubscribeUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode) { }
 
+        public virtual void OnUnsubscribeUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode) { }
+
         public virtual void OnSetLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType,
-                                            string lockName, RTM_ERROR_CODE errorCode)
-        {
-        }
+                                                string lockName, RTM_ERROR_CODE errorCode)
+        { }
 
         public virtual void OnRemoveLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType,
                                                string lockName, RTM_ERROR_CODE errorCode)
-        {
-        }
+        { }
 
         public virtual void OnReleaseLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType,
                                                 string lockName, RTM_ERROR_CODE errorCode)
-        {
-        }
+        { }
 
         public virtual void OnAcquireLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType,
                                                 string lockName, RTM_ERROR_CODE errorCode, string errorDetails)
-        {
-        }
+        { }
 
         public virtual void OnRevokeLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType,
                                                string lockName, RTM_ERROR_CODE errorCode)
-        {
-        }
+        { }
 
         public virtual void OnGetLocksResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType,
                                              LockDetail[] lockDetailList, UInt64 count, RTM_ERROR_CODE errorCode)
-        {
-        }
+        { }
 
         public virtual void OnWhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode) { }
 
