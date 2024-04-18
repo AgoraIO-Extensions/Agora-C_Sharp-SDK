@@ -9,12 +9,11 @@ namespace Agora.Rtm.Ut
         [SetUp]
         public void Setup()
         {
-            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient());
             Internal.RtmConfig config;
             ParamsHelper.InitParam(out config);
-
-            int ret = RtmClient.Initialize(config);
-            Assert.AreEqual(0, ret);
+            int errorCode = 0;
+            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient(), config, ref errorCode);
+            Assert.AreEqual(0, errorCode);
         }
 
         [TearDown]
@@ -28,7 +27,8 @@ namespace Agora.Rtm.Ut
         public void Test_Login()
         {
             string token = ParamsHelper.CreateParam<string>();
-            var nRet = RtmClient.Login(token);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmClient.Login(token, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -36,8 +36,8 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_Logout()
         {
-
-            var nRet = RtmClient.Logout();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmClient.Logout(ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -46,7 +46,8 @@ namespace Agora.Rtm.Ut
         public void Test_RenewToken()
         {
             string token = ParamsHelper.CreateParam<string>();
-            var nRet = RtmClient.RenewToken(token);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmClient.RenewToken(token, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -91,7 +92,8 @@ namespace Agora.Rtm.Ut
         public void Test_Unsubscribe()
         {
             string channelName = ParamsHelper.CreateParam<string>();
-            var nRet = RtmClient.Unsubscribe(channelName);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmClient.Unsubscribe(channelName, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }

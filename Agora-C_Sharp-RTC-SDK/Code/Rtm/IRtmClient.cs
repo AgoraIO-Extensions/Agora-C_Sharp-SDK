@@ -2,6 +2,13 @@ using System;
 using System.Threading.Tasks;
 namespace Agora.Rtm
 {
+
+    /**
+   * Occurs when link state change
+   *
+   * @param event details of link state event
+   */
+    public delegate void OnLinkStateEventHandler(LinkStateEvent @event);
     ///
     /// <summary>
     /// Occurs when receive a message.
@@ -79,6 +86,12 @@ namespace Agora.Rtm
     ///
     public interface IRtmClient
     {
+        /**
+   * Occurs when link state change
+   *
+   */
+        event OnLinkStateEventHandler OnLinkStateEvent;
+
         ///
         /// <summary>
         /// Occurs when receive a message.
@@ -290,7 +303,7 @@ namespace Agora.Rtm
         /// - return NULL if error occurred
         /// </returns>
         ///
-        IStreamChannel CreateStreamChannel(string channelName);
+        IStreamChannel CreateStreamChannel(string channelName, ref int errorCode);
 
         ///
         /// <summary>

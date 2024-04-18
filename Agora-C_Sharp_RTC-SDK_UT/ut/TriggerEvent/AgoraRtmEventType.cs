@@ -4,6 +4,7 @@ namespace Agora.Rtc.Ut
     public class AgoraRtmEventType
     {
         #region IRtmEventHandler
+        internal const string EVENT_RTMEVENTHANDLER_ONLINKSTATEEVENT = "RtmEventHandler_onLinkStateEvent";
         internal const string EVENT_RTMEVENTHANDLER_ONMESSAGEEVENT = "RtmEventHandler_onMessageEvent";
         internal const string EVENT_RTMEVENTHANDLER_ONPRESENCEEVENT = "RtmEventHandler_onPresenceEvent";
         internal const string EVENT_RTMEVENTHANDLER_ONTOPICEVENT = "RtmEventHandler_onTopicEvent";
@@ -11,14 +12,20 @@ namespace Agora.Rtc.Ut
         internal const string EVENT_RTMEVENTHANDLER_ONSTORAGEEVENT = "RtmEventHandler_onStorageEvent";
         internal const string EVENT_RTMEVENTHANDLER_ONJOINRESULT = "RtmEventHandler_onJoinResult";
         internal const string EVENT_RTMEVENTHANDLER_ONLEAVERESULT = "RtmEventHandler_onLeaveResult";
+        internal const string EVENT_RTMEVENTHANDLER_ONPUBLISHTOPICMESSAGERESULT = "RtmEventHandler_onPublishTopicMessageResult";
         internal const string EVENT_RTMEVENTHANDLER_ONJOINTOPICRESULT = "RtmEventHandler_onJoinTopicResult";
         internal const string EVENT_RTMEVENTHANDLER_ONLEAVETOPICRESULT = "RtmEventHandler_onLeaveTopicResult";
         internal const string EVENT_RTMEVENTHANDLER_ONSUBSCRIBETOPICRESULT = "RtmEventHandler_onSubscribeTopicResult";
+        internal const string EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBETOPICRESULT = "RtmEventHandler_onUnsubscribeTopicResult";
+        internal const string EVENT_RTMEVENTHANDLER_ONGETSUBSCRIBEDUSERLISTRESULT = "RtmEventHandler_onGetSubscribedUserListResult";
         internal const string EVENT_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGED = "RtmEventHandler_onConnectionStateChanged";
         internal const string EVENT_RTMEVENTHANDLER_ONTOKENPRIVILEGEWILLEXPIRE = "RtmEventHandler_onTokenPrivilegeWillExpire";
         internal const string EVENT_RTMEVENTHANDLER_ONSUBSCRIBERESULT = "RtmEventHandler_onSubscribeResult";
+        internal const string EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBERESULT = "RtmEventHandler_onUnsubscribeResult";
         internal const string EVENT_RTMEVENTHANDLER_ONPUBLISHRESULT = "RtmEventHandler_onPublishResult";
         internal const string EVENT_RTMEVENTHANDLER_ONLOGINRESULT = "RtmEventHandler_onLoginResult";
+        internal const string EVENT_RTMEVENTHANDLER_ONLOGOUTRESULT = "RtmEventHandler_onLogoutResult";
+        internal const string EVENT_RTMEVENTHANDLER_ONRENEWTOKENRESULT = "RtmEventHandler_onRenewTokenResult";
         internal const string EVENT_RTMEVENTHANDLER_ONSETCHANNELMETADATARESULT = "RtmEventHandler_onSetChannelMetadataResult";
         internal const string EVENT_RTMEVENTHANDLER_ONUPDATECHANNELMETADATARESULT = "RtmEventHandler_onUpdateChannelMetadataResult";
         internal const string EVENT_RTMEVENTHANDLER_ONREMOVECHANNELMETADATARESULT = "RtmEventHandler_onRemoveChannelMetadataResult";
@@ -28,6 +35,7 @@ namespace Agora.Rtc.Ut
         internal const string EVENT_RTMEVENTHANDLER_ONREMOVEUSERMETADATARESULT = "RtmEventHandler_onRemoveUserMetadataResult";
         internal const string EVENT_RTMEVENTHANDLER_ONGETUSERMETADATARESULT = "RtmEventHandler_onGetUserMetadataResult";
         internal const string EVENT_RTMEVENTHANDLER_ONSUBSCRIBEUSERMETADATARESULT = "RtmEventHandler_onSubscribeUserMetadataResult";
+        internal const string EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBEUSERMETADATARESULT = "RtmEventHandler_onUnsubscribeUserMetadataResult";
         internal const string EVENT_RTMEVENTHANDLER_ONSETLOCKRESULT = "RtmEventHandler_onSetLockResult";
         internal const string EVENT_RTMEVENTHANDLER_ONREMOVELOCKRESULT = "RtmEventHandler_onRemoveLockResult";
         internal const string EVENT_RTMEVENTHANDLER_ONRELEASELOCKRESULT = "RtmEventHandler_onReleaseLockResult";

@@ -11,11 +11,11 @@ namespace Agora.Rtm.Ut
         [SetUp]
         public void Setup()
         {
-            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient());
             Internal.RtmConfig config;
             ParamsHelper.InitParam(out config);
-            int ret = RtmClient.Initialize(config);
-            Assert.AreEqual(0, ret);
+            int errorCode = 0;
+            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient(), config, ref errorCode);
+            Assert.AreEqual(0, errorCode);
 
             RtmStorage = RtmClient.GetStorage();
         }
@@ -142,7 +142,8 @@ namespace Agora.Rtm.Ut
         public void Test_UnsubscribeUserMetadata()
         {
             string userId = ParamsHelper.CreateParam<string>();
-            var nRet = RtmStorage.UnsubscribeUserMetadata(userId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = RtmStorage.UnsubscribeUserMetadata(userId, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }

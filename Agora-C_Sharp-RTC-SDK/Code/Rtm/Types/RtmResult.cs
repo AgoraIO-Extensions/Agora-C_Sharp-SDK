@@ -105,6 +105,11 @@ namespace Agora.Rtm
 
     public class PublishTopicMessageResult
     {
+        //channelName The name of the chann
+        public string ChannelName;
+
+        //topic The name of the topic.
+        public string Topic;
     }
 
     public class LeaveTopicResult
@@ -178,10 +183,20 @@ namespace Agora.Rtm
 
     public class UnsubscribeTopicResult
     {
+        //channelName The name of the channel.
+        public string ChannelName;
+
+        //topic The name of the topic.
+        public string Topic;
     };
 
     public class GetSubscribedUserListResult
     {
+        //channelName The name of the channel.
+        public string ChannelName;
+
+        //topic The name of the topic.
+        public string Topic;
         ///
         /// <summary>
         /// The subscribed users
@@ -236,6 +251,12 @@ namespace Agora.Rtm
 
     public class UnsubscribeResult
     {
+        ///
+        /// <summary>
+        /// The name of the channel.
+        /// </summary>
+        ///
+        public string ChannelName;
     };
 
     public class PublishResult
@@ -252,6 +273,15 @@ namespace Agora.Rtm
 
     public class RenewTokenResult
     {
+        //serverType The type of server.
+        public RTM_SERVICE_TYPE ServerType;
+
+        ///
+        /// <summary>
+        /// The name of the channel.
+        /// </summary>
+        ///
+        public string ChannelName;
     };
 
     public class SetChannelMetadataResult
@@ -388,6 +418,12 @@ namespace Agora.Rtm
 
     public class UnsubscribeUserMetadataResult
     {
+        ///
+        /// <summary>
+        /// The id of the user.
+        /// </summary>
+        ///
+        public string UserId;
     };
 
     public class SetLockResult

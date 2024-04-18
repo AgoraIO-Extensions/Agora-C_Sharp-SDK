@@ -18,14 +18,20 @@ namespace Agora.Rtm
 
         private RtmClient rtmClient;
 
-        private List<TaskCompletionSource<RtmResult<LoginResult>>> loginResultTaskArray = new List<TaskCompletionSource<RtmResult<LoginResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinResult>>> joinResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<LeaveResult>>> leaveResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<LeaveResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<PublishTopicMessageResult>>> publishTopicMessageResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<PublishTopicMessageResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinTopicResult>>> joinTopicResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinTopicResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<LeaveTopicResult>>> leaveTopicResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<LeaveTopicResult>>>();
-        private Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeTopicResult>>> topicSubscribedTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeTopicResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeTopicResult>>> subscribeTopicResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeTopicResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<UnsubscribeTopicResult>>> unsubscribeTopicResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<UnsubscribeTopicResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetSubscribedUserListResult>>> getSubscribedUserListResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetSubscribedUserListResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeResult>>> subscribeResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<UnsubscribeResult>>> unsubscribeResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<UnsubscribeResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<PublishResult>>> publishResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<PublishResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<LoginResult>>> loginResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<LoginResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<LogoutResult>>> logoutResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<LogoutResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<RenewTokenResult>>> renewTokenResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RenewTokenResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<SetChannelMetadataResult>>> setChannelMetadataResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SetChannelMetadataResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<UpdateChannelMetadataResult>>> updateChannelMetadataResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<UpdateChannelMetadataResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveChannelMetadataResult>>> removeChannelMetadataResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveChannelMetadataResult>>>();
@@ -35,6 +41,7 @@ namespace Agora.Rtm
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveUserMetadataResult>>> removeUserMetadataResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveUserMetadataResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetUserMetadataResult>>> getUserMetadataResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetUserMetadataResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeUserMetadataResult>>> subscribeUserMetadataResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SubscribeUserMetadataResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>>> unsubscribeUserMetadataResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<SetLockResult>>> setLockResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SetLockResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveLockResult>>> removeLockResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveLockResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<ReleaseLockResult>>> releaseLockResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<ReleaseLockResult>>>();
@@ -65,6 +72,11 @@ namespace Agora.Rtm
             leaveResultTaskMap.Add(requestId, task);
         }
 
+        public void PutPublishTopicMessageResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<PublishTopicMessageResult>> task)
+        {
+            publishTopicMessageResultTaskMap.Add(requestId, task);
+        }
+
         public void PutJoinTopicResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<JoinTopicResult>> task)
         {
             joinTopicResultTaskMap.Add(requestId, task);
@@ -77,7 +89,17 @@ namespace Agora.Rtm
 
         public void PutSubscribeTopicResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SubscribeTopicResult>> task)
         {
-            topicSubscribedTaskMap.Add(requestId, task);
+            subscribeTopicResultTaskMap.Add(requestId, task);
+        }
+
+        public void PutUnsubscribeTopicResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<UnsubscribeTopicResult>> task)
+        {
+            unsubscribeTopicResultTaskMap.Add(requestId, task);
+        }
+
+        public void PutGetSubscribedUserListResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<GetSubscribedUserListResult>> task)
+        {
+            getSubscribedUserListResultTaskMap.Add(requestId, task);
         }
 
         public void PutSubscribeResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SubscribeResult>> task)
@@ -85,14 +107,29 @@ namespace Agora.Rtm
             subscribeResultTaskMap.Add(requestId, task);
         }
 
+        public void PutUnsubscribeResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<UnsubscribeResult>> task)
+        {
+            unsubscribeResultTaskMap.Add(requestId, task);
+        }
+
         public void PutPublishResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<PublishResult>> task)
         {
             publishResultTaskMap.Add(requestId, task);
         }
 
-        public void PutLoginResultTask(TaskCompletionSource<RtmResult<LoginResult>> task)
+        public void PutLoginResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<LoginResult>> task)
         {
-            loginResultTaskArray.Add(task);
+            loginResultTaskMap.Add(requestId, task);
+        }
+
+        public void PutLogoutResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<LogoutResult>> task)
+        {
+            logoutResultTaskMap.Add(requestId, task);
+        }
+
+        public void PutRenewTokenResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<RenewTokenResult>> task)
+        {
+            renewTokenResultTaskMap.Add(requestId, task);
         }
 
         public void PutSetChannelMetadataResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SetChannelMetadataResult>> task)
@@ -138,6 +175,11 @@ namespace Agora.Rtm
         public void PutSubscribeUserMetadataResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SubscribeUserMetadataResult>> task)
         {
             subscribeUserMetadataResultTaskMap.Add(requestId, task);
+        }
+
+        public void PutUnsubscribeUserMetadataResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>> task)
+        {
+            unsubscribeUserMetadataResultTaskMap.Add(requestId, task);
         }
 
         public void PutSetLockResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SetLockResult>> task)
@@ -207,6 +249,11 @@ namespace Agora.Rtm
         #endregion
 
         #region eventHandler
+        public override void OnLinkStateEvent(LinkStateEvent @event)
+        {
+            rtmClient.InvokeOnLinkStateEvent(@event);
+        }
+
         public override void OnMessageEvent(MessageEvent @event)
         {
             rtmClient.InvokeOnMessageEvent(@event);
@@ -292,6 +339,27 @@ namespace Agora.Rtm
             }
         }
 
+        public override void OnPublishTopicMessageResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            if (publishTopicMessageResultTaskMap.ContainsKey(requestId))
+            {
+                PublishTopicMessageResult response = new PublishTopicMessageResult();
+                response.ChannelName = channelName;
+                response.Topic = topic;
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMPublishTopicMessageOperation, rtmClient.GetInternalRtmClient());
+                RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = response;
+                var task = publishTopicMessageResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                publishTopicMessageResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnPublishTopicMessageResult unrecorded requestId: " + requestId);
+            }
+        }
+
         public override void OnJoinTopicResult(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode)
         {
             if (joinTopicResultTaskMap.ContainsKey(requestId))
@@ -348,7 +416,7 @@ namespace Agora.Rtm
 
         public override void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic, Internal.UserList succeedUsers, Internal.UserList failedUsers, RTM_ERROR_CODE errorCode)
         {
-            if (topicSubscribedTaskMap.ContainsKey(requestId))
+            if (subscribeTopicResultTaskMap.ContainsKey(requestId))
             {
                 SubscribeTopicResult topicSubscribed = new SubscribeTopicResult();
                 topicSubscribed.ChannelName = channelName;
@@ -363,14 +431,57 @@ namespace Agora.Rtm
                 rtmResult.Status = status;
                 rtmResult.Response = topicSubscribed;
 
-                var task = topicSubscribedTaskMap[requestId];
+                var task = subscribeTopicResultTaskMap[requestId];
                 task.SetResult(rtmResult);
 
-                topicSubscribedTaskMap.Remove(requestId);
+                subscribeTopicResultTaskMap.Remove(requestId);
             }
             else
             {
                 AgoraLog.LogWarning("OnTopicSubscribed unrecorded requestId: " + requestId);
+            }
+        }
+
+        public override void OnUnsubscribeTopicResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            if (unsubscribeTopicResultTaskMap.ContainsKey(requestId))
+            {
+                UnsubscribeTopicResult response = new UnsubscribeTopicResult();
+                response.ChannelName = channelName;
+                response.Topic = topic;
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMUnsubscribeTopicOperation, rtmClient.GetInternalRtmClient());
+                RtmResult<UnsubscribeTopicResult> rtmResult = new RtmResult<UnsubscribeTopicResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = response;
+                var task = unsubscribeTopicResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                unsubscribeTopicResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnUnsubscribeTopicResult unrecorded requestId: " + requestId);
+            }
+        }
+
+        public override void OnGetSubscribedUserListResult(UInt64 requestId, string channelName, string topic, Internal.UserList users, RTM_ERROR_CODE errorCode)
+        {
+            if (getSubscribedUserListResultTaskMap.ContainsKey(requestId))
+            {
+                GetSubscribedUserListResult response = new GetSubscribedUserListResult();
+                response.ChannelName = channelName;
+                response.Topic = topic;
+                response.Users = users.users;
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMGetSubscribedUserListOperation, rtmClient.GetInternalRtmClient());
+                RtmResult<GetSubscribedUserListResult> rtmResult = new RtmResult<GetSubscribedUserListResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = response;
+                var task = getSubscribedUserListResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                getSubscribedUserListResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnGetSubscribedUserListResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -398,6 +509,26 @@ namespace Agora.Rtm
             }
         }
 
+        public override void OnUnsubscribeResult(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            if (unsubscribeResultTaskMap.ContainsKey(requestId))
+            {
+                UnsubscribeResult response = new UnsubscribeResult();
+                response.ChannelName = channelName;
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMUnsubscribeOperation, rtmClient.GetInternalRtmClient());
+                RtmResult<UnsubscribeResult> rtmResult = new RtmResult<UnsubscribeResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = response;
+                var task = unsubscribeResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                unsubscribeResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnUnsubscribeResult unrecorded requestId: " + requestId);
+            }
+        }
+
         public override void OnPublishResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
             if (publishResultTaskMap.ContainsKey(requestId))
@@ -421,25 +552,62 @@ namespace Agora.Rtm
             }
         }
 
-        public override void OnLoginResult(RTM_ERROR_CODE errorCode)
+        public override void OnLoginResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
-            if (loginResultTaskArray.Count > 0)
+            if (loginResultTaskMap.ContainsKey(requestId))
             {
-                LoginResult loginResult = new LoginResult();
-
+                LoginResult response = new LoginResult();
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMLoginOperation, rtmClient.GetInternalRtmClient());
-
                 RtmResult<LoginResult> rtmResult = new RtmResult<LoginResult>();
                 rtmResult.Status = status;
-                rtmResult.Response = loginResult;
-
-                var loginResultTask = loginResultTaskArray[0];
-                loginResultTask.SetResult(rtmResult);
-                loginResultTaskArray.RemoveAt(0);
+                rtmResult.Response = response;
+                var task = loginResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                loginResultTaskMap.Remove(requestId);
             }
             else
             {
-                AgoraLog.LogWarning("OnLoginResult unrecorded");
+                AgoraLog.LogWarning("OnLoginResult unrecorded requestId: " + requestId);
+            }
+        }
+
+        public override void OnLogoutResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
+        {
+            if (logoutResultTaskMap.ContainsKey(requestId))
+            {
+                LogoutResult response = new LogoutResult();
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMLogoutOperation, rtmClient.GetInternalRtmClient());
+                RtmResult<LogoutResult> rtmResult = new RtmResult<LogoutResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = response;
+                var task = logoutResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                logoutResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnLogoutResult unrecorded requestId: " + requestId);
+            }
+        }
+
+        public override void OnRenewTokenResult(UInt64 requestId, RTM_SERVICE_TYPE serverType, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            if (renewTokenResultTaskMap.ContainsKey(requestId))
+            {
+                RenewTokenResult response = new RenewTokenResult();
+                response.ServerType = serverType;
+                response.ChannelName = channelName;
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMRenewTokenOperation, rtmClient.GetInternalRtmClient());
+                RtmResult<RenewTokenResult> rtmResult = new RtmResult<RenewTokenResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = response;
+                var task = renewTokenResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                renewTokenResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnRenewTokenResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -662,6 +830,26 @@ namespace Agora.Rtm
             else
             {
                 AgoraLog.LogWarning("OnSubscribeUserMetadataResult unrecorded requestId: " + requestId);
+            }
+        }
+
+        public override void OnUnsubscribeUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
+        {
+            if (unsubscribeUserMetadataResultTaskMap.ContainsKey(requestId))
+            {
+                UnsubscribeUserMetadataResult response = new UnsubscribeUserMetadataResult();
+                response.UserId = userId;
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMUnsubscribeUserMetadataOperation, rtmClient.GetInternalRtmClient());
+                RtmResult<UnsubscribeUserMetadataResult> rtmResult = new RtmResult<UnsubscribeUserMetadataResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = response;
+                var task = unsubscribeUserMetadataResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+                unsubscribeUserMetadataResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnUnsubscribeUserMetadataResult unrecorded requestId: " + requestId);
             }
         }
 

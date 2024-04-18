@@ -180,18 +180,19 @@ namespace Agora.Rtm
 
         public Task<RtmResult<UnsubscribeUserMetadataResult>> UnsubscribeUserMetadataAsync(string userId)
         {
-            // fake async
-            int errorCode = this.internalRtmStorage.UnsubscribeUserMetadata(userId);
-
-            RtmResult<UnsubscribeUserMetadataResult> rtmResult = new RtmResult<UnsubscribeUserMetadataResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeUserMetadataOperation, this.internalRtmClient);
-            if (errorCode == 0)
-            {
-                rtmResult.Response = new UnsubscribeUserMetadataResult();
-            }
-
             TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>>();
-            taskCompletionSource.SetResult(rtmResult);
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.UnsubscribeUserMetadata(userId, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<UnsubscribeUserMetadataResult> result = new RtmResult<UnsubscribeUserMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeUserMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutUnsubscribeUserMetadataResultTask(requestId, taskCompletionSource);
+            }
             return taskCompletionSource.Task;
         }
     }

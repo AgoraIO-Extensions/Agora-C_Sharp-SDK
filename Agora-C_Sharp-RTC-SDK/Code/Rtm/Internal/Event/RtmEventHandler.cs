@@ -2,6 +2,8 @@ using System;
 
 namespace Agora.Rtm.Internal
 {
+    public delegate void OnLinkStateEventHandler(LinkStateEvent @event);
+
     public delegate void OnMessageEventHandler(MessageEvent @event);
 
     public delegate void OnPresenceEventHandler(PresenceEvent @event);
@@ -14,11 +16,17 @@ namespace Agora.Rtm.Internal
 
     public delegate void OnLeaveResultHandler(UInt64 requestId, string channelName, string userId, RTM_ERROR_CODE errorCode);
 
+    public delegate void OnPublishTopicMessageResultHandler(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode);
+
     public delegate void OnJoinTopicResultHandler(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode);
 
     public delegate void OnLeaveTopicResultHandler(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode);
 
     public delegate void OnSubscribeTopicResultHandler(UInt64 requestId, string channelName, string userId, string topic, UserList succeedUsers, UserList failedUsers, RTM_ERROR_CODE errorCode);
+
+    public delegate void OnUnsubscribeTopicResultHandler(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode);
+
+    public delegate void OnGetSubscribedUserListResultHandler(UInt64 requestId, string channelName, string topic, UserList users, RTM_ERROR_CODE errorCode);
 
     public delegate void OnConnectionStateChangeHandler(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason);
 
@@ -26,9 +34,15 @@ namespace Agora.Rtm.Internal
 
     public delegate void OnSubscribeResultHandler(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode);
 
+    public delegate void OnUnsubscribeResultHandler(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode);
+
     public delegate void OnPublishResultHandler(UInt64 requestId, RTM_ERROR_CODE errorCode);
 
-    public delegate void OnLoginResultHandler(RTM_ERROR_CODE errorCode);
+    public delegate void OnLoginResultHandler(UInt64 requestId, RTM_ERROR_CODE errorCode);
+
+    public delegate void OnLogoutResultHandler(UInt64 requestId, RTM_ERROR_CODE errorCode);
+
+    public delegate void OnRenewTokenResultHandler(UInt64 requestId, RTM_SERVICE_TYPE serverType, string channelName, RTM_ERROR_CODE errorCode);
 
     public delegate void OnSetChannelMetadataResultHandler(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode);
 
@@ -47,6 +61,8 @@ namespace Agora.Rtm.Internal
     public delegate void OnGetUserMetadataResultHandler(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode);
 
     public delegate void OnSubscribeUserMetadataResultHandler(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode);
+
+    public delegate void OnUnsubscribeUserMetadataResultHandler(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode);
 
     public delegate void OnSetLockResultHandler(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, RTM_ERROR_CODE errorCode);
 
@@ -72,6 +88,7 @@ namespace Agora.Rtm.Internal
 
     internal class RtmEventHandler : IRtmEventHandler
     {
+        public event OnLinkStateEventHandler EventOnLinkStateEvent;
 
         public event OnMessageEventHandler EventOnMessageEvent;
 
@@ -85,11 +102,17 @@ namespace Agora.Rtm.Internal
 
         public event OnLeaveResultHandler EventOnLeaveResult;
 
+        public event OnPublishTopicMessageResultHandler EventOnPublishTopicMessageResult;
+
         public event OnJoinTopicResultHandler EventOnJoinTopicResult;
 
         public event OnLeaveTopicResultHandler EventOnLeaveTopicResult;
 
         public event OnSubscribeTopicResultHandler EventOnSubscribeTopicResult;
+
+        public event OnUnsubscribeTopicResultHandler EventOnUnsubscribeTopicResult;
+
+        public event OnGetSubscribedUserListResultHandler EventOnGetSubscribedUserListResult;
 
         public event OnConnectionStateChangedHandler EventOnConnectionStateChanged;
 
@@ -97,9 +120,15 @@ namespace Agora.Rtm.Internal
 
         public event OnSubscribeResultHandler EventOnSubscribeResult;
 
+        public event OnUnsubscribeResultHandler EventOnUnsubscribeResult;
+
         public event OnPublishResultHandler EventOnPublishResult;
 
         public event OnLoginResultHandler EventOnLoginResult;
+
+        public event OnLogoutResultHandler EventOnLogoutResult;
+
+        public event OnRenewTokenResultHandler EventOnRenewTokenResult;
 
         public event OnSetChannelMetadataResultHandler EventOnSetChannelMetadataResult;
 
@@ -118,6 +147,8 @@ namespace Agora.Rtm.Internal
         public event OnGetUserMetadataResultHandler EventOnGetUserMetadataResult;
 
         public event OnSubscribeUserMetadataResultHandler EventOnSubscribeUserMetadataResult;
+
+        public event OnUnsubscribeUserMetadataResultHandler EventOnUnsubscribeUserMetadataResult;
 
         public event OnSetLockResultHandler EventOnSetLockResult;
 
@@ -146,6 +177,13 @@ namespace Agora.Rtm.Internal
         public static RtmEventHandler GetInstance()
         {
             return eventInstance ?? (eventInstance = new RtmEventHandler());
+        }
+
+        public override void OnLinkStateEvent(LinkStateEvent @event)
+        {
+            if (EventOnLinkStateEvent == null)
+                return;
+            EventOnLinkStateEvent.Invoke(@event);
         }
 
         public override void OnMessageEvent(MessageEvent @event)
@@ -190,6 +228,13 @@ namespace Agora.Rtm.Internal
             EventOnLeaveResult.Invoke(requestId, channelName, userId, errorCode);
         }
 
+        public override void OnPublishTopicMessageResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            if (EventOnPublishTopicMessageResult == null)
+                return;
+            EventOnPublishTopicMessageResult.Invoke(requestId, channelName, topic, errorCode);
+        }
+
         public override void OnJoinTopicResult(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode)
         {
             if (EventOnJoinTopicResult == null)
@@ -209,6 +254,20 @@ namespace Agora.Rtm.Internal
             if (EventOnSubscribeTopicResult == null)
                 return;
             EventOnSubscribeTopicResult.Invoke(requestId, channelName, userId, topic, succeedUsers, failedUsers, errorCode);
+        }
+
+        public override void OnUnsubscribeTopicResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            if (EventOnUnsubscribeTopicResult == null)
+                return;
+            EventOnUnsubscribeTopicResult.Invoke(requestId, channelName, topic, errorCode);
+        }
+
+        public override void OnGetSubscribedUserListResult(UInt64 requestId, string channelName, string topic, UserList users, RTM_ERROR_CODE errorCode)
+        {
+            if (EventOnGetSubscribedUserListResult == null)
+                return;
+            EventOnGetSubscribedUserListResult.Invoke(requestId, channelName, topic, users, errorCode);
         }
 
         public override void OnConnectionStateChanged(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
@@ -232,6 +291,13 @@ namespace Agora.Rtm.Internal
             EventOnSubscribeResult.Invoke(requestId, channelName, errorCode);
         }
 
+        public override void OnUnsubscribeResult(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            if (EventOnUnsubscribeResult == null)
+                return;
+            EventOnUnsubscribeResult.Invoke(requestId, channelName, errorCode);
+        }
+
         public override void OnPublishResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
             if (EventOnPublishResult == null)
@@ -239,11 +305,25 @@ namespace Agora.Rtm.Internal
             EventOnPublishResult.Invoke(requestId, errorCode);
         }
 
-        public override void OnLoginResult(RTM_ERROR_CODE errorCode)
+        public override void OnLoginResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
             if (EventOnLoginResult == null)
                 return;
-            EventOnLoginResult.Invoke(errorCode);
+            EventOnLoginResult.Invoke(requestId, errorCode);
+        }
+
+        public override void OnLogoutResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
+        {
+            if (EventOnLogoutResult == null)
+                return;
+            EventOnLogoutResult.Invoke(requestId, errorCode);
+        }
+
+        public override void OnRenewTokenResult(UInt64 requestId, RTM_SERVICE_TYPE serverType, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            if (EventOnRenewTokenResult == null)
+                return;
+            EventOnRenewTokenResult.Invoke(requestId, serverType, channelName, errorCode);
         }
 
         public override void OnSetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode)
@@ -307,6 +387,13 @@ namespace Agora.Rtm.Internal
             if (EventOnSubscribeUserMetadataResult == null)
                 return;
             EventOnSubscribeUserMetadataResult.Invoke(requestId, userId, errorCode);
+        }
+
+        public override void OnUnsubscribeUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
+        {
+            if (EventOnUnsubscribeUserMetadataResult == null)
+                return;
+            EventOnUnsubscribeUserMetadataResult.Invoke(requestId, userId, errorCode);
         }
 
         public override void OnSetLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, RTM_ERROR_CODE errorCode)

@@ -88,11 +88,12 @@ namespace Agora.Rtm.Internal
 
             if (_streamChannelDic.ContainsKey(channelName))
             {
+                errorCode = 0;
                 return _streamChannelDic[channelName];
             }
 
             int ret = _rtmClientImpl.CreateStreamChannel(channelName, ref errorCode);
-            if (ret != 0 && errorCode != 0)
+            if (ret != 0 || errorCode != 0)
             {
                 return null;
             }
