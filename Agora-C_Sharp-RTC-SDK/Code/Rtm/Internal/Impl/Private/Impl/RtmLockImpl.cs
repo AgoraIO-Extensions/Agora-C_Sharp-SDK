@@ -92,11 +92,6 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_GETLOCKS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
-            {
-                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
-            }
-
             if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");

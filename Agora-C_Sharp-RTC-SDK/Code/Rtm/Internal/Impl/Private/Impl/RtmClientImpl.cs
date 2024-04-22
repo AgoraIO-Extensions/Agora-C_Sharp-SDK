@@ -177,26 +177,6 @@ namespace Agora.Rtm.Internal
             return clientInstance;
         }
 
-        //public int Initialize(RtmConfig config)
-        //{
-        //    CreateEventHandler();
-        //    RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
-
-        //    _param.Clear();
-        //    _param.Add("config", config);
-
-        //    var json = AgoraJson.ToJson(_param);
-
-        //    IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-
-        //    var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
-        //                                                     json, (UInt32)json.Length,
-        //                                                     Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-        //                                                     ref _apiParam);
-
-        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        //}
-
         public string GetVersion()
         {
             IntPtr versionPtr = AgoraRtmNative.GetIrisRtmVersion();
@@ -217,7 +197,7 @@ namespace Agora.Rtm.Internal
 
             if (nRet == 0)
             {
-                errorCode = (int)AgoraJson.GetData<UInt64>(_apiParam.Result, "errorCode");
+                errorCode = (int)AgoraJson.GetData<int>(_apiParam.Result, "errorCode");
             }
             return nRet;
         }
