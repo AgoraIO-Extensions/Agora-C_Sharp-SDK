@@ -40,7 +40,7 @@ namespace Agora.Rtm.Internal
 
         public event Action<RtmClientImpl> OnRtmClientImpleWillDispose;
 
-        private RtmClientImpl(IntPtr engine_ptr,RtmConfig config, ref int errorCode)
+        private RtmClientImpl(IntPtr engine_ptr, RtmConfig config, ref int errorCode)
         {
             _apiParam = new IrisRtmApiParam();
             _apiParam.AllocResult();
@@ -100,10 +100,10 @@ namespace Agora.Rtm.Internal
         private void Release()
         {
             AgoraRtmNative.CallIrisRtmApiWithArgs(
-                _irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RELEASE,
-                "{}", 2,
-                IntPtr.Zero, 0,
-                ref _apiParam);
+               _irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RELEASE,
+               "{}", 2,
+               IntPtr.Zero, 0,
+               ref _apiParam);
         }
 
         public void Dispose()

@@ -21,9 +21,11 @@ namespace Agora.Rtm.Ut
         {
             Internal.RtmConfig config;
             ParamsHelper.InitParam(out config);
+            EventHandler = new UTInternalRtmEventHandler();
+            config.setEventHandler(EventHandler);
             int errorCode = 0;
             FakeRtmClientPtr = DLLHelper.CreateFakeRtmClient();
-            Client = Internal.RtmClient.CreateAgoraRtmClient(FakeRtmClientPtr, config, ref errorCode);
+            Client = Internal.RtmClient.CreateAgoraRtmClient(config, ref errorCode);
             Assert.AreEqual(0, errorCode);
             ApiParam.AllocResult();
         }
