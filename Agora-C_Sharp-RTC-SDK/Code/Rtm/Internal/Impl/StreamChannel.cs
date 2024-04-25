@@ -104,7 +104,7 @@ namespace Agora.Rtm.Internal
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option,ref requestId);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option, ref requestId);
         }
 
         public override int PublishTopicMessage(string topic, string message, int length, TopicMessageOptions option, ref UInt64 requestId)
@@ -114,7 +114,7 @@ namespace Agora.Rtm.Internal
                 return ErrorCode;
             }
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(message);
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, bytes, bytes.Length, option,ref requestId);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, bytes, bytes.Length, option, ref requestId);
         }
 
         public override int LeaveTopic(string topic, ref UInt64 requestId)

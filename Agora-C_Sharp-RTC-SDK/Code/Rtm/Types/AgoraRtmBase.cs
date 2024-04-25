@@ -4,111 +4,159 @@ namespace Agora.Rtm
 
     public enum RTM_LINK_STATE
     {
-        /**
-         * The initial state.
-         */
+        ///
+        /// <summary>
+        /// The initial state.
+        /// </summary>
+        ///
         RTM_LINK_STATE_IDLE = 0,
-        /**
-         * The SDK is connecting to the server.
-         */
+        ///
+        /// <summary>
+        /// The SDK is connecting to the server.
+        /// </summary>
+        ///
         RTM_LINK_STATE_CONNECTING = 1,
-        /**
-         * The SDK has connected to the server.
-         */
+        ///
+        /// <summary>
+        /// The SDK has connected to the server.
+        /// </summary>
+        ///
         RTM_LINK_STATE_CONNECTED = 2,
-        /**
-         * The SDK is disconnected from the server.
-         */
+        ///
+        /// <summary>
+        /// The SDK is disconnected from the server.
+        /// </summary>
+        ///
         RTM_LINK_STATE_DISCONNECTED = 3,
-        /**
-         * The SDK link is suspended.
-         */
+        ///
+        /// <summary>
+        /// The SDK link is suspended.
+        /// </summary>
+        ///
         RTM_LINK_STATE_SUSPENDED = 4,
-        /**
-         * The SDK is failed to connect to the server.
-         */
+        ///
+        /// <summary>
+        /// The SDK is failed to connect to the server.
+        /// </summary>
+        ///
         RTM_LINK_STATE_FAILED = 5,
     };
 
-    /**
-     * Rtm link operation.
-     */
+    ///
+    /// <summary>
+    /// Rtm link operation.
+    /// </summary>
+    ///
     public enum RTM_LINK_OPERATION
     {
-        /**
-         * Login.
-         */
+        ///
+        /// <summary>
+        /// Login.
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_LOGIN = 0,
-        /**
-         * Logout.
-         */
+        ///
+        /// <summary>
+        /// Logout.
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_LOGOUT = 1,
-        /**
-         * Join
-         */
+        ///
+        /// <summary>
+        /// Join
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_JOIN = 2,
-        /**
-         * Leave.
-         */
+        ///
+        /// <summary>
+        /// Leave.
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_LEAVE = 3,
-        /**
-         * Server reject
-         */
+        ///
+        /// <summary>
+        /// Server reject
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_SERVER_REJECT = 4,
-        /**
-         * Auto reconnect
-         */
+        ///
+        /// <summary>
+        /// Auto reconnect
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_AUTO_RECONNECT = 5,
-        /**
-         * Reconnected
-         */
+        ///
+        /// <summary>
+        /// Reconnected
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_RECONNECTED = 6,
-        /**
-         * Heartbeat lost
-         */
+        ///
+        /// <summary>
+        /// Heartbeat lost
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_HEARTBEAT_LOST = 7,
-        /**
-         * Server timeout
-         */
+        ///
+        /// <summary>
+        /// Server timeout
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_SERVER_TIMEOUT = 8,
-        /**
-         * Network change
-         */
+        ///
+        /// <summary>
+        /// Network change
+        /// </summary>
+        ///
         RTM_LINK_OPERATION_NETWORK_CHANGE = 9,
     };
 
 
-    /**
-     * Rtm service type.
-     */
+    ///
+    /// <summary>
+    /// Rtm service type.
+    /// </summary>
+    ///
     public enum RTM_SERVICE_TYPE
     {
-        /**
-         * The type of rtm service not specified.
-         */
+        ///
+        /// <summary>
+        /// The type of rtm service not specified.
+        /// </summary>
+        ///
         RTM_SERVICE_TYPE_NONE = 0x00000000,
-        /**
-         * The basic functionality of rtm service.
-         */
+        ///
+        /// <summary>
+        /// The basic functionality of rtm service.
+        /// </summary>
+        ///
         RTM_SERVICE_TYPE_MESSAGE = 0x00000001,
-        /**
-         * The advanced functionality of rtm service.
-         */
+        ///
+        /// <summary>
+        /// The advanced functionality of rtm service.
+        /// </summary>
+        ///
         RTM_SERVICE_TYPE_STREAM = 0x00000002,
     };
 
-    /**
-     * Rtm protocol type for underlying connection.
-     */
+    ///
+    /// <summary>
+    /// Rtm protocol type for underlying connection.
+    /// </summary>
+    ///
     public enum RTM_PROTOCOL_TYPE
     {
-        /**
-         * TCP and UDP (default).
-         */
+        ///
+        /// <summary>
+        /// TCP and UDP (default).
+        /// </summary>
+        ///
         RTM_PROTOCOL_TYPE_TCP_UDP = 0,
-        /**
-         * Use TCP only.
-         */
+        ///
+        /// <summary>
+        /// Use TCP only.
+        /// </summary>
+        ///
         RTM_PROTOCOL_TYPE_TCP_ONLY = 1,
     };
 
@@ -354,21 +402,29 @@ namespace Agora.Rtm
         OPERATION_RATE_EXCEED_LIMITATION = -10021,
 
 
-        /**
-   * -10022: The service is not configured in private config mode.
-   */
+        ///
+        /// <summary>
+        /// -10022: The service is not configured in private config mode.
+        /// </summary>
+        ///
         SERVICE_NOT_SUPPORTED = -10022,
-        /**
-         * -10023: This login operation stopped by a new login operation or logout operation.
-         */
+        ///
+        /// <summary>
+        /// -10023: This login operation stopped by a new login operation or logout operation.
+        /// </summary>
+        ///
         LOGIN_CANCELED = -10023,
-        /**
-         * -10024: The private config is invalid, set private config should both set serviceType and accessPointHosts.
-         */
+        ///
+        /// <summary>
+        /// -10024: The private config is invalid, set private config should both set serviceType and accessPointHosts.
+        /// </summary>
+        ///
         INVALID_PRIVATE_CONFIG = -10024,
-        /**
-         * -10025: Perform operation failed due to RTM service is not connected.
-         */
+        ///
+        /// <summary>
+        /// -10025: Perform operation failed due to RTM service is not connected.
+        /// </summary>
+        ///
         NOT_CONNECTED = -10025,
         ///
         /// <summary>
@@ -570,9 +626,11 @@ namespace Agora.Rtm
         ///
         CHANNEL_RECEIVER_OFFLINE = -11033,
 
-        /**
-  * -11034: The channel join operation is canceled.
-  */
+        ///
+        /// <summary>
+        /// -11034: The channel join operation is canceled.
+        /// </summary>
+        ///
         CHANNEL_JOIN_CANCELED = -11034,
         ///
         /// <summary>
@@ -983,9 +1041,11 @@ namespace Agora.Rtm
         ///
         LICENSE_VALIDATION_FAILURE = 21,
 
-        /**
-   * 22: The connection is failed due to certification verify failure.
-   */
+        ///
+        /// <summary>
+        /// 22: The connection is failed due to certification verify failure.
+        /// </summary>
+        ///
         CERTIFICATION_VERIFY_FAILURE = 22,
         ///
         /// <summary>
@@ -1540,11 +1600,13 @@ namespace Agora.Rtm
         ///
         public bool withLock;
 
-        /**
-   * Whether to subscribe channel in quiet mode
-   * Quiet mode means remote user will not receive any notification when we subscribe or
-   * unsubscribe or change our presence state
-   */
+        ///
+        /// <summary>
+        /// Whether to subscribe channel in quiet mode
+        /// Quiet mode means remote user will not receive any notification when we subscribe or
+        /// unsubscribe or change our presence state
+        /// </summary>
+        ///
         public bool beQuiet;
 
         public SubscribeOptions()
@@ -1872,14 +1934,18 @@ namespace Agora.Rtm
 
     public class RtmPrivateConfig
     {
-        /**
-         * Rtm service type.
-         */
+        ///
+        /// <summary>
+        /// Rtm service type.
+        /// </summary>
+        ///
         public RTM_SERVICE_TYPE serviceType;
 
-        /**
-         * Local access point hosts list.
-         */
+        ///
+        /// <summary>
+        /// Local access point hosts list.
+        /// </summary>
+        ///
         public string[] accessPointHosts;
 
         public RtmPrivateConfig()
@@ -1891,13 +1957,17 @@ namespace Agora.Rtm
 
     public class Metadata
     {
-        /**
-   * the major revision of metadata.
-  */
+        ///
+        /// <summary>
+        /// the major revision of metadata.
+        /// </summary>
+        ///
         public Int64 majorRevision;
-        /**
-   * The metadata item array.
-   */
+        ///
+        /// <summary>
+        /// The metadata item array.
+        /// </summary>
+        ///
         public MetadataItem[] items;
 
         public Metadata()

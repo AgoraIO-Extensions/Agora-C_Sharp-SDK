@@ -51,9 +51,11 @@ namespace Agora.Rtm
         ///
         public RTM_AREA_CODE areaCode;
 
-        /**
-   * The protocol used for connecting to the Agora RTM service.
-   */
+        ///
+        /// <summary>
+        /// The protocol used for connecting to the Agora RTM service.
+        /// </summary>
+        ///
         public RTM_PROTOCOL_TYPE protocolType;
 
         ///
@@ -64,10 +66,12 @@ namespace Agora.Rtm
         ///
         public UInt32 presenceTimeout;
 
-        /**
-  * Heartbeat interval in seconds, specify the interval value of sending heartbeat between sdk
-  * and rtm service.
-  */
+        ///
+        /// <summary>
+        /// Heartbeat interval in seconds, specify the interval value of sending heartbeat between sdk
+        /// and rtm service.
+        /// </summary>
+        ///
         public UInt32 heartbeatInterval;
 
         ///
@@ -79,9 +83,11 @@ namespace Agora.Rtm
         public bool useStringUserId;
 
 
-        /**
-  * Whether to enable multipath, introduced from 2.2.0, for now , only effect on stream channel.
-  */
+        ///
+        /// <summary>
+        /// Whether to enable multipath, introduced from 2.2.0, for now , only effect on stream channel.
+        /// </summary>
+        ///
         public bool multipath;
         ///
         /// <summary>
@@ -105,9 +111,11 @@ namespace Agora.Rtm
         public RtmEncryptionConfig encryptionConfig;
 
 
-        /**
-   * The config for private setting
-   */
+        ///
+        /// <summary>
+        /// The config for private setting
+        /// </summary>
+        ///
         public RtmPrivateConfig privateConfig;
     };
 
@@ -160,43 +168,61 @@ namespace Agora.Rtm
 
     public class LinkStateEvent
     {
-        /**
-         * The current link state
-         */
+        ///
+        /// <summary>
+        /// The current link state
+        /// </summary>
+        ///
         public RTM_LINK_STATE currentState;
-        /**
-         * The previous link state
-         */
+        ///
+        /// <summary>
+        /// The previous link state
+        /// </summary>
+        ///
         public RTM_LINK_STATE previousState;
-        /**
-         * The service type
-         */
+        ///
+        /// <summary>
+        /// The service type
+        /// </summary>
+        ///
         public RTM_SERVICE_TYPE serviceType;
-        /**
-         * The operation which trigger this event
-         */
+        ///
+        /// <summary>
+        /// The operation which trigger this event
+        /// </summary>
+        ///
         public RTM_LINK_OPERATION operation;
-        /**
-         * The reason of this state change event
-         */
+        ///
+        /// <summary>
+        /// The reason of this state change event
+        /// </summary>
+        ///
         public string reason;
-        /**
-         * The affected channels
-         */
+        ///
+        /// <summary>
+        /// The affected channels
+        /// </summary>
+        ///
         public string[] affectedChannels;
 
-        /**
-         * The unrestored channels
-         */
+        ///
+        /// <summary>
+        /// The unrestored channels
+        /// </summary>
+        ///
         public string[] unrestoredChannels;
 
-        /**
-         * Is resumed from disconnected state
-         */
+        ///
+        /// <summary>
+        /// Is resumed from disconnected state
+        /// </summary>
+        ///
         public bool isResumed;
-        /**
-         * RTM server UTC time
-         */
+        ///
+        /// <summary>
+        /// RTM server UTC time
+        /// </summary>
+        ///
         public UInt64 timestamp;
 
         public LinkStateEvent()

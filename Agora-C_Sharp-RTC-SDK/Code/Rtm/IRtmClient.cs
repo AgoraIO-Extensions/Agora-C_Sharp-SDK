@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 namespace Agora.Rtm
 {
 
-    /**
-   * Occurs when link state change
-   *
-   * @param event details of link state event
-   */
+    ///
+    /// <summary>
+    /// Occurs when link state change
+    /// </summary>
+    ///
+    /// <param name="event"> details of link state event</param>
+    ///
     public delegate void OnLinkStateEventHandler(LinkStateEvent @event);
     ///
     /// <summary>
@@ -86,10 +88,11 @@ namespace Agora.Rtm
     ///
     public interface IRtmClient
     {
-        /**
-   * Occurs when link state change
-   *
-   */
+        ///
+        /// <summary>
+        /// Occurs when link state change
+        /// </summary>
+        ///
         event OnLinkStateEventHandler OnLinkStateEvent;
 
         ///

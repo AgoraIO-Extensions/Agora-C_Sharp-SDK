@@ -103,11 +103,13 @@ namespace Agora.Rtm
         ///
         public bool withLock;
 
-        /**
-   * Whether to join channel in quiet mode
-   * Quiet mode means remote user will not receive any notification when we join  or
-   * leave or change our presence state
-   */
+        ///
+        /// <summary>
+        /// Whether to join channel in quiet mode
+        /// Quiet mode means remote user will not receive any notification when we join  or
+        /// leave or change our presence state
+        /// </summary>
+        ///
         public bool beQuiet;
     };
 

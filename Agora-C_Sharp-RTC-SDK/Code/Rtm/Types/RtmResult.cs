@@ -105,10 +105,18 @@ namespace Agora.Rtm
 
     public class PublishTopicMessageResult
     {
-        //channelName The name of the chann
+        ///
+        /// <summary>
+        /// channelName The name of the chann
+        /// </summary>
+        ///
         public string ChannelName;
 
-        //topic The name of the topic.
+        ///
+        /// <summary>
+        /// topic The name of the topic.
+        /// </summary>
+        ///
         public string Topic;
     }
 
@@ -183,19 +191,35 @@ namespace Agora.Rtm
 
     public class UnsubscribeTopicResult
     {
-        //channelName The name of the channel.
+        ///
+        /// <summary>
+        /// channelName The name of the channel.
+        /// </summary>
+        ///
         public string ChannelName;
 
-        //topic The name of the topic.
+        ///
+        /// <summary>
+        /// topic The name of the topic.
+        /// </summary>
+        ///
         public string Topic;
     };
 
     public class GetSubscribedUserListResult
     {
-        //channelName The name of the channel.
+        ///
+        /// <summary>
+        /// channelName The name of the channel.
+        /// </summary>
+        ///
         public string ChannelName;
 
-        //topic The name of the topic.
+        ///
+        /// <summary>
+        /// topic The name of the topic.
+        /// </summary>
+        ///
         public string Topic;
         ///
         /// <summary>
@@ -273,7 +297,11 @@ namespace Agora.Rtm
 
     public class RenewTokenResult
     {
-        //serverType The type of server.
+        ///
+        /// <summary>
+        /// serverType The type of server.
+        /// </summary>
+        ///
         public RTM_SERVICE_TYPE ServerType;
 
         ///
