@@ -4,6 +4,8 @@ namespace Agora.Rtm.Internal
 {
     public abstract class IRtmClient
     {
+        public abstract int Create(RtmConfig config);
+
         public abstract string GetVersion();
 
         public abstract int Dispose();

@@ -40,16 +40,11 @@ namespace Agora.Rtm.Internal
 
         public event Action<RtmClientImpl> OnRtmClientImpleWillDispose;
 
-        private RtmClientImpl(IntPtr engine_ptr, RtmConfig config, ref int errorCode)
+        private RtmClientImpl(IntPtr engine_ptr)
         {
             _apiParam = new IrisRtmApiParam();
             _apiParam.AllocResult();
-
-            CreateEventHandler();
-            IntPtr @event = _rtcEventHandlerHandle.handle;
-            RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
-            var jsonConfig = AgoraJson.ToJson(config);
-            _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(engine_ptr, jsonConfig, @event, ref errorCode);
+            _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(engine_ptr);
             _streamChannelImpl = new StreamChannelImpl(_irisApiRtmEngine);
             _rtmLockImpl = new RtmLockImpl(_irisApiRtmEngine);
             _rtmPresenceImpl = new RtmPresenceImpl(_irisApiRtmEngine);
@@ -167,14 +162,34 @@ namespace Agora.Rtm.Internal
             return _irisApiRtmEngine;
         }
 
-        public static RtmClientImpl GetInstance(IntPtr engine_ptr, RtmConfig config, ref int errorCode)
+        public static RtmClientImpl GetInstance(IntPtr engine_ptr)
         {
-            return clientInstance ?? (clientInstance = new RtmClientImpl(engine_ptr, config, ref errorCode));
+            return clientInstance ?? (clientInstance = new RtmClientImpl(engine_ptr));
         }
 
         public static RtmClientImpl Get()
         {
             return clientInstance;
+        }
+
+        public int Create(RtmConfig config)
+        {
+            CreateEventHandler();
+            RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
+
+            _param.Clear();
+            _param.Add("config", config);
+
+            var json = AgoraJson.ToJson(_param);
+
+            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_CREATE,
+                                                             json, (UInt32)json.Length,
+                                                             Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                                                             ref _apiParam);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public string GetVersion()

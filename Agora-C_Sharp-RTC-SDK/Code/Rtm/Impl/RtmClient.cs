@@ -20,9 +20,9 @@ namespace Agora.Rtm
         private static IRtmClient _instance = null;
 
         public static IRtmClient CreateAgoraRtmClient(RtmConfig config)
-        {
-            int errorCode = 0;
-            RtmClient rtmClient = (RtmClient)(_instance ?? (_instance = new RtmClient(config, ref errorCode)));
+        { 
+            RtmClient rtmClient = (RtmClient)(_instance ?? (_instance = new RtmClient()));
+            int errorCode = rtmClient.Create(config);
             if (errorCode != 0)
             {
                 RtmStatus status = Tools.GenerateStatus(errorCode, RtmOperation.RTMCreateClientOperation, null);
@@ -39,11 +39,10 @@ namespace Agora.Rtm
             return _instance;
         }
 
-        internal RtmClient(RtmConfig config, ref int errorCode)
-        {
+        internal RtmClient()
+        { 
+            _internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient();
             _rtmEventHandler = new RtmEventHandler(this);
-            Internal.RtmConfig rtmConfig = new Internal.RtmConfig(config, _rtmEventHandler);
-            _internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient(rtmConfig, ref errorCode);
         }
 
         public string GetVersion()
@@ -163,6 +162,13 @@ namespace Agora.Rtm
         {
             Internal.IRtmStorage internalRtmStorage = this._internalRtmClient.GetStorage();
             return new RtmStorage(internalRtmStorage, _rtmEventHandler, _internalRtmClient);
+        }
+
+        private int Create(RtmConfig config)
+        {
+            Internal.RtmConfig internalConfig = new Internal.RtmConfig(config, _rtmEventHandler);
+            int errorCode = _internalRtmClient.Create(internalConfig);
+            return errorCode;
         }
 
         public Task<RtmResult<LoginResult>> LoginAsync(string token)

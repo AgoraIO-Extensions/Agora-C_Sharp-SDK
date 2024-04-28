@@ -35,7 +35,7 @@ namespace Agora.Rtm.Internal
 
 #endif
         [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr CreateIrisRtmEngine(IntPtr client, string config, IntPtr @eventm, ref int errorCode);
+        internal static extern IntPtr CreateIrisRtmEngine(IntPtr client);
 
         [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisRtmEngine(IntPtr handle);

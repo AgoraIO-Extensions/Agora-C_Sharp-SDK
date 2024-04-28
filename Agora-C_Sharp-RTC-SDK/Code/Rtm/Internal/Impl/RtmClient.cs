@@ -14,9 +14,9 @@ namespace Agora.Rtm.Internal
         private RtmPresence _rtmPresence = null;
         private RtmStorage _rtmStorage = null;
 
-        private RtmClient(IntPtr engine_ptr, RtmConfig config, ref int errorCode)
+        private RtmClient(IntPtr engine_ptr)
         {
-            _rtmClientImpl = RtmClientImpl.GetInstance(engine_ptr, config, ref errorCode);
+            _rtmClientImpl = RtmClientImpl.GetInstance(engine_ptr);
             _rtmLock = RtmLock.GetInstance(_rtmClientImpl.GetRtmLockImpl());
             _rtmPresence = RtmPresence.GetInstance(_rtmClientImpl.GetRtmPresenceImpl());
             _rtmStorage = RtmStorage.GetInstance(_rtmClientImpl.GetRtmStorageImpl());
@@ -29,14 +29,14 @@ namespace Agora.Rtm.Internal
 
         private static IRtmClient instance = null;
 
-        public static IRtmClient CreateAgoraRtmClient(RtmConfig config, ref int errorCode)
+        public static IRtmClient CreateAgoraRtmClient()
         {
-            return instance ?? (instance = new RtmClient(IntPtr.Zero, config, ref errorCode));
+            return instance ?? (instance = new RtmClient(IntPtr.Zero));
         }
 
-        public static IRtmClient CreateAgoraRtmClient(IntPtr engine_ptr, RtmConfig config, ref int errorCode)
+        public static IRtmClient CreateAgoraRtmClient(IntPtr engine_ptr)
         {
-            return instance ?? (instance = new RtmClient(engine_ptr, config, ref errorCode));
+            return instance ?? (instance = new RtmClient(engine_ptr));
         }
 
         public static IRtmClient GetInstance()
@@ -68,6 +68,15 @@ namespace Agora.Rtm.Internal
             instance = null;
             _disposed = true;
             return 0;
+        }
+
+        public override int Create(RtmConfig config)
+        {
+            if (_rtmClientImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtmClientImpl.Create(config);
         }
 
         public override string GetVersion()
