@@ -3,7 +3,7 @@ namespace Agora.Rtm
 {
     public class RtmOperation
     {
-        public static readonly string RTMInitializeOperation = "RTMInitializeOperation";
+        public static readonly string RTMCreateClientOperation = "RTMInitializeOperation";
         public static readonly string RTMReleaseOperation = "RTMReleaseOperation";
         public static readonly string RTMLoginOperation = "RTMLoginOperation";
         public static readonly string RTMLogoutOperation = "RTMLogoutOperation";

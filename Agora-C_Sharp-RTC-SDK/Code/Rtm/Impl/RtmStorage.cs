@@ -16,7 +16,7 @@ namespace Agora.Rtm
             this.internalRtmClient = rtmClient;
         }
 
-        public Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName)
+        public Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName)
         {
             TaskCompletionSource<RtmResult<SetChannelMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SetChannelMetadataResult>>();
             UInt64 requestId = 0;
@@ -34,7 +34,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<UpdateChannelMetadataResult>> UpdateChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName)
+        public Task<RtmResult<UpdateChannelMetadataResult>> UpdateChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName)
         {
             TaskCompletionSource<RtmResult<UpdateChannelMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UpdateChannelMetadataResult>>();
             UInt64 requestId = 0;
@@ -52,7 +52,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<RemoveChannelMetadataResult>> RemoveChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName)
+        public Task<RtmResult<RemoveChannelMetadataResult>> RemoveChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName)
         {
             TaskCompletionSource<RtmResult<RemoveChannelMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RemoveChannelMetadataResult>>();
             UInt64 requestId = 0;
@@ -88,7 +88,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<SetUserMetadataResult>> SetUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options)
+        public Task<RtmResult<SetUserMetadataResult>> SetUserMetadataAsync(string userId, Metadata data, MetadataOptions options)
         {
             TaskCompletionSource<RtmResult<SetUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SetUserMetadataResult>>();
             UInt64 requestId = 0;
@@ -106,7 +106,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<UpdateUserMetadataResult>> UpdateUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options)
+        public Task<RtmResult<UpdateUserMetadataResult>> UpdateUserMetadataAsync(string userId, Metadata data, MetadataOptions options)
         {
             TaskCompletionSource<RtmResult<UpdateUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UpdateUserMetadataResult>>();
             UInt64 requestId = 0;
@@ -124,7 +124,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<RemoveUserMetadataResult>> RemoveUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options)
+        public Task<RtmResult<RemoveUserMetadataResult>> RemoveUserMetadataAsync(string userId, Metadata data, MetadataOptions options)
         {
             TaskCompletionSource<RtmResult<RemoveUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RemoveUserMetadataResult>>();
             UInt64 requestId = 0;
@@ -180,18 +180,19 @@ namespace Agora.Rtm
 
         public Task<RtmResult<UnsubscribeUserMetadataResult>> UnsubscribeUserMetadataAsync(string userId)
         {
-            // fake async
-            int errorCode = this.internalRtmStorage.UnsubscribeUserMetadata(userId);
-
-            RtmResult<UnsubscribeUserMetadataResult> rtmResult = new RtmResult<UnsubscribeUserMetadataResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeUserMetadataOperation, this.internalRtmClient);
-            if (errorCode == 0)
-            {
-                rtmResult.Response = new UnsubscribeUserMetadataResult();
-            }
-
             TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>>();
-            taskCompletionSource.SetResult(rtmResult);
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.UnsubscribeUserMetadata(userId, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<UnsubscribeUserMetadataResult> result = new RtmResult<UnsubscribeUserMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeUserMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutUnsubscribeUserMetadataResultTask(requestId, taskCompletionSource);
+            }
             return taskCompletionSource.Task;
         }
     }

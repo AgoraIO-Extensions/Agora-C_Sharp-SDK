@@ -70,12 +70,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_SETLOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int GetLocks(string channelName, RTM_CHANNEL_TYPE channelType, ref UInt64 requestId)
@@ -88,12 +92,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_GETLOCKS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int RemoveLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, ref UInt64 requestId)
@@ -107,12 +115,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_REMOVELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int AcquireLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, bool retry, ref UInt64 requestId)
@@ -127,12 +139,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_ACQUIRELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int ReleaseLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, ref UInt64 requestId)
@@ -146,12 +162,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_RELEASELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int RevokeLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, string owner, ref UInt64 requestId)
@@ -166,12 +186,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_REVOKELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Agora.Rtm.Internal
     internal sealed class RtmPresence : IRtmPresence
     {
         private RtmPresenceImpl _rtmPresenceImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = (int)RTM_ERROR_CODE.NOT_INITIALIZED;
 
         internal RtmPresence(RtmPresenceImpl rtmPresenceImpl)
         {

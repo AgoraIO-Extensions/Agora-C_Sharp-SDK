@@ -57,27 +57,7 @@ namespace Agora.Rtm.Internal
             GC.SuppressFinalize(this);
         }
 
-        // public RtmMetadata CreateMetadata()
-        //{
-        //     _param.Clear();
-
-        //    var json = AgoraJson.ToJson(_param);
-
-        //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_CREATEMETADATA, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-        //    if (nRet == 0)
-        //    {
-        //        IntPtr metadataPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "result");
-        //        if (metadataPtr != IntPtr.Zero)
-        //        {
-        //            Metadata metadata = new Metadata(this._metadataImpl, metadataPtr);
-        //            return metadata;
-        //        }
-        //    }
-
-        //    return null;
-        //}
-
-        public int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -93,15 +73,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -117,15 +101,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -141,12 +129,16 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int GetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, ref UInt64 requestId)
@@ -162,15 +154,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int SetUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int SetUserMetadata(string userId, Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
@@ -184,15 +180,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int UpdateUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int UpdateUserMetadata(string userId, Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
@@ -206,15 +206,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int RemoveUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int RemoveUserMetadata(string userId, Metadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
@@ -228,12 +232,16 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int GetUserMetadata(string userId, ref UInt64 requestId)
@@ -248,12 +256,16 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int SubscribeUserMetadata(string userId, ref UInt64 requestId)
@@ -268,15 +280,19 @@ namespace Agora.Rtm.Internal
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
-        public int UnsubscribeUserMetadata(string userId)
+        public int UnsubscribeUserMetadata(string userId, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
@@ -287,7 +303,16 @@ namespace Agora.Rtm.Internal
                                                              json, (UInt32)json.Length,
                                                              IntPtr.Zero, 0,
                                                              ref _apiParam);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            if (nRet == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+            else
+            {
+                requestId = 0;
+            }
+
+            return nRet;
         }
     }
 }

@@ -67,12 +67,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_WHONOW, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int WhereNow(string userId, ref UInt64 requestId)
@@ -84,12 +88,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_WHERENOW, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, int count, ref UInt64 requestId)
@@ -104,12 +112,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_SETSTATE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count, ref UInt64 requestId)
@@ -124,12 +136,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_REMOVESTATE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int GetState(string channelName, RTM_CHANNEL_TYPE channelType, string userId, ref UInt64 requestId)
@@ -142,12 +158,16 @@ namespace Agora.Rtm.Internal
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_GETSTATE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int GetOnlineUsers(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options, ref UInt64 requestId)
@@ -160,13 +180,16 @@ namespace Agora.Rtm.Internal
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_GETONLINEUSERS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
 
         public int GetUserChannels(string userId, ref UInt64 requestId)
@@ -178,12 +201,16 @@ namespace Agora.Rtm.Internal
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_GETUSERCHANNELS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
+            else
+            {
+                requestId = 0;
+            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet;
         }
     }
 }

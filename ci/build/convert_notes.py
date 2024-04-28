@@ -4,8 +4,9 @@ import re
 import shutil
 import string
 
-# root dir you want convert docs
-root_dir = sys.argv[1]
+
+current_directory = os.path.dirname(os.path.realpath(__file__))
+print(current_directory)
 
 
 def get_all_files(target_dir):
@@ -125,6 +126,7 @@ def convert_to_c_shape_docs2(str_):
 
 
 # convert /**    */
+root_dir = os.path.join(current_directory, "../../Agora-C_Sharp-RTC-SDK/Code/Rtm")
 files = get_all_files(root_dir)
 for i in range(0, len(files)):
     file_name = files[i]
@@ -144,46 +146,41 @@ for i in range(0, len(files)):
         f.write(content)
         f.close()
 
-        # clang-foramt
-        os.system("clang-format -i " + file_name)
-
-
-
 # # convert //
-# files = ["/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK/Agora-C_Sharp-RTC-SDK/Code/Rtm/Types/RtmResult.cs"]
-# for i in range(0, len(files)):
-#     for i in range(0, len(files)):
-#         file_name = files[i]
-#         if file_name.endswith(".cs") == False:
-#             continue
+files = [
+    os.path.join(current_directory,"../../Agora-C_Sharp-RTC-SDK/Code/Rtm/Types/RtmResult.cs")
+]
+for i in range(0, len(files)):
+    for i in range(0, len(files)):
+        file_name = files[i]
+        if file_name.endswith(".cs") == False:
+            continue
 
-#         f = open(file_name, 'r', encoding='UTF-8')
-#         content = f.read()
-#         f.close()
+        f = open(file_name, 'r', encoding='UTF-8')
+        content = f.read()
+        f.close()
 
-#         lines = content.split("\n")
-#         for i in range(0,len(lines)):
-#             each_line = lines[i]
-#             if each_line.find("///") !=-1:
-#                 continue
+        lines = content.split("\n")
+        for i in range(0,len(lines)):
+            each_line = lines[i]
+            if each_line.find("///") !=-1:
+                continue
 
-#             re_str = r'//.*'
-#             print("each_line: " + each_line)
-#             result = re.findall(re_str, each_line)
-#             if len(result) == 0:
-#                 continue
-#             docs = result[0] 
-#             new_docs = convert_to_c_shape_docs2(docs)
-#             print(docs)
-#             print(new_docs)
-#             print("__________")
-#             lines[i] = new_docs
+            re_str = r'//.*'
+            print("each_line: " + each_line)
+            result = re.findall(re_str, each_line)
+            if len(result) == 0:
+                continue
+            docs = result[0] 
+            new_docs = convert_to_c_shape_docs2(docs)
+            print(docs)
+            print(new_docs)
+            print("__________")
+            lines[i] = new_docs
 
-#         content = "\n".join(lines)
-#         f = open(file_name, 'w')
-#         f.write(content)
-#         f.close()
-#         # clang-foramt
-#         os.system("clang-format -i " + file_name)
+        content = "\n".join(lines)
+        f = open(file_name, 'w')
+        f.write(content)
+        f.close()
         
 os.system("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln")

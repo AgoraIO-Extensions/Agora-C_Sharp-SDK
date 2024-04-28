@@ -6,6 +6,24 @@ namespace Agora.Rtm.Ut
     public class UTInternalRtmEventHandler : Internal.IRtmEventHandler
     {
 
+        public bool OnLinkStateEvent_be_trigger = false;
+        public LinkStateEvent OnLinkStateEvent_event = null;
+
+        public override void OnLinkStateEvent(LinkStateEvent @event)
+        {
+            OnLinkStateEvent_be_trigger = true;
+        }
+
+
+        public bool OnLinkStateEventPassed(LinkStateEvent @event)
+        {
+            if (OnLinkStateEvent_be_trigger == false)
+                return false;
+
+            return true;
+        }
+        ///////////////////////////////////
+
         public bool OnMessageEvent_be_trigger = false;
         public MessageEvent OnMessageEvent_event = null;
 
@@ -187,6 +205,33 @@ namespace Agora.Rtm.Ut
 
         ///////////////////////////////////
 
+        public bool OnPublishTopicMessageResult_be_trigger = false;
+        public UInt64 OnPublishTopicMessageResult_requestId = 0;
+        public string OnPublishTopicMessageResult_channelName = null;
+        public string OnPublishTopicMessageResult_topic = null;
+        public RTM_ERROR_CODE OnPublishTopicMessageResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnPublishTopicMessageResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            OnPublishTopicMessageResult_be_trigger = true;
+            OnPublishTopicMessageResult_requestId = requestId;
+            OnPublishTopicMessageResult_channelName = channelName;
+            OnPublishTopicMessageResult_topic = topic;
+            OnPublishTopicMessageResult_errorCode = errorCode;
+        }
+
+        public bool OnPublishTopicMessageResultPassed(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            if (OnPublishTopicMessageResult_be_trigger == false)
+                return false;
+
+
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
 
         public bool OnJoinTopicResult_be_trigger = false;
         public UInt64 OnJoinTopicResult_requestId = 0;
@@ -316,6 +361,58 @@ namespace Agora.Rtm.Ut
 
         ///////////////////////////////////
 
+        public bool OnUnsubscribeTopicResult_be_trigger = false;
+        public UInt64 OnUnsubscribeTopicResult_requestId = 0;
+        public string OnUnsubscribeTopicResult_channelName = null;
+        public string OnUnsubscribeTopicResult_topic = null;
+        public RTM_ERROR_CODE OnUnsubscribeTopicResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnUnsubscribeTopicResult(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            OnUnsubscribeTopicResult_be_trigger = true;
+            OnUnsubscribeTopicResult_requestId = requestId;
+            OnUnsubscribeTopicResult_channelName = channelName;
+            OnUnsubscribeTopicResult_topic = topic;
+            OnUnsubscribeTopicResult_errorCode = errorCode;
+        }
+
+        public bool OnUnsubscribeTopicResultPassed(UInt64 requestId, string channelName, string topic, RTM_ERROR_CODE errorCode)
+        {
+            if (OnUnsubscribeTopicResult_be_trigger == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnGetSubscribedUserListResult_be_trigger = false;
+        public UInt64 OnGetSubscribedUserListResult_requestId = 0;
+        public string OnGetSubscribedUserListResult_channelName = null;
+        public string OnGetSubscribedUserListResult_topic = null;
+        public Internal.UserList OnGetSubscribedUserListResult_users = null;
+        public RTM_ERROR_CODE OnGetSubscribedUserListResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnGetSubscribedUserListResult(UInt64 requestId, string channelName, string topic, Internal.UserList users, RTM_ERROR_CODE errorCode)
+        {
+            OnGetSubscribedUserListResult_be_trigger = true;
+            OnGetSubscribedUserListResult_requestId = requestId;
+            OnGetSubscribedUserListResult_channelName = channelName;
+            OnGetSubscribedUserListResult_topic = topic;
+            OnGetSubscribedUserListResult_users = users;
+            OnGetSubscribedUserListResult_errorCode = errorCode;
+        }
+
+        public bool OnGetSubscribedUserListResultPassed(UInt64 requestId, string channelName, string topic, Internal.UserList users, RTM_ERROR_CODE errorCode)
+        {
+            if (OnGetSubscribedUserListResult_be_trigger == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
 
         public bool OnConnectionStateChanged_be_trigger = false;
         public string OnConnectionStateChanged_channelName = null;
@@ -401,6 +498,31 @@ namespace Agora.Rtm.Ut
 
         ///////////////////////////////////
 
+        public bool OnUnsubscribeResult_be_trigger = false;
+        public UInt64 OnUnsubscribeResult_requestId = 0;
+        public string OnUnsubscribeResult_channelName = null;
+        public RTM_ERROR_CODE OnUnsubscribeResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnUnsubscribeResult(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            OnUnsubscribeResult_be_trigger = true;
+            OnUnsubscribeResult_requestId = requestId;
+            OnUnsubscribeResult_channelName = channelName;
+            OnUnsubscribeResult_errorCode = errorCode;
+        }
+
+        public bool OnUnsubscribeResultPassed(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            if (OnUnsubscribeResult_be_trigger == false)
+                return false;
+
+
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
 
         public bool OnPublishResult_be_trigger = false;
         public UInt64 OnPublishResult_requestId = 0;
@@ -430,21 +552,69 @@ namespace Agora.Rtm.Ut
 
 
         public bool OnLoginResult_be_trigger = false;
+        public UInt64 OnLoginResult_requestId = 0;
         public RTM_ERROR_CODE OnLoginResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
-        public override void OnLoginResult(RTM_ERROR_CODE errorCode)
+        public override void OnLoginResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
             OnLoginResult_be_trigger = true;
+            OnLoginResult_requestId = requestId;
             OnLoginResult_errorCode = errorCode;
         }
 
-        public bool OnLoginResultPassed(RTM_ERROR_CODE errorCode)
+        public bool OnLoginResultPassed(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
-            //if (OnLoginResult_be_trigger == false)
-            //    return false;
+            if (OnLoginResult_be_trigger == false)
+                return false;
 
-            //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnLoginResult_errorCode, errorCode) == false)
-            //    return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnLogoutResult_be_trigger = false;
+        public UInt64 OnLogoutResult_requestId = 0;
+        public RTM_ERROR_CODE OnLogoutResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnLogoutResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
+        {
+            OnLogoutResult_be_trigger = true;
+            OnLogoutResult_requestId = requestId;
+            OnLogoutResult_errorCode = errorCode;
+        }
+
+        public bool OnLogoutResultPassed(UInt64 requestId, RTM_ERROR_CODE errorCode)
+        {
+            if (OnLogoutResult_be_trigger == false)
+                return false;
+
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnRenewTokenResult_be_trigger = false;
+        public UInt64 OnRenewTokenResult_requestId = 0;
+        public RTM_SERVICE_TYPE OnRenewTokenResult_serverType = RTM_SERVICE_TYPE.RTM_SERVICE_TYPE_NONE;
+        public string OnRenewTokenResult_channelName = "";
+        public RTM_ERROR_CODE OnRenewTokenResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnRenewTokenResult(UInt64 requestId, RTM_SERVICE_TYPE serverType, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            OnRenewTokenResult_be_trigger = true;
+            OnRenewTokenResult_requestId = requestId;
+            OnRenewTokenResult_serverType = serverType;
+            OnRenewTokenResult_channelName = channelName;
+            OnRenewTokenResult_errorCode = errorCode;
+        }
+
+        public bool OnRenewTokenResultPassed(UInt64 requestId, RTM_SERVICE_TYPE serverType, string channelName, RTM_ERROR_CODE errorCode)
+        {
+            if (OnRenewTokenResult_be_trigger == false)
+                return false;
+
 
             return true;
         }
@@ -561,10 +731,10 @@ namespace Agora.Rtm.Ut
         public UInt64 OnGetChannelMetadataResult_requestId = 0;
         public string OnGetChannelMetadataResult_channelName = null;
         public RTM_CHANNEL_TYPE OnGetChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.STREAM;
-        public RtmMetadata OnGetChannelMetadataResult_data = null;
+        public Metadata OnGetChannelMetadataResult_data = null;
         public RTM_ERROR_CODE OnGetChannelMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
-        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, RTM_ERROR_CODE errorCode)
         {
             OnGetChannelMetadataResult_be_trigger = true;
             OnGetChannelMetadataResult_requestId = requestId;
@@ -574,7 +744,7 @@ namespace Agora.Rtm.Ut
             OnGetChannelMetadataResult_errorCode = errorCode;
         }
 
-        public bool OnGetChannelMetadataResultPassed(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public bool OnGetChannelMetadataResultPassed(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (OnGetChannelMetadataResult_be_trigger == false)
                 return false;
@@ -692,10 +862,10 @@ namespace Agora.Rtm.Ut
         public bool OnGetUserMetadataResult_be_trigger = false;
         public UInt64 OnGetUserMetadataResult_requestId = 0;
         public string OnGetUserMetadataResult_userId = null;
-        public RtmMetadata OnGetUserMetadataResult_data = null;
+        public Metadata OnGetUserMetadataResult_data = null;
         public RTM_ERROR_CODE OnGetUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
-        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode)
         {
             OnGetUserMetadataResult_be_trigger = true;
             OnGetUserMetadataResult_requestId = requestId;
@@ -704,7 +874,7 @@ namespace Agora.Rtm.Ut
             OnGetUserMetadataResult_errorCode = errorCode;
         }
 
-        public bool OnGetUserMetadataResultPassed(UInt64 requestId, string userId, RtmMetadata data, RTM_ERROR_CODE errorCode)
+        public bool OnGetUserMetadataResultPassed(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (OnGetUserMetadataResult_be_trigger == false)
                 return false;
@@ -748,6 +918,29 @@ namespace Agora.Rtm.Ut
             //    return false;
             //if (ParamsHelper.Compare<RTM_ERROR_CODE>(OnSubscribeUserMetadataResult_errorCode, errorCode) == false)
             //    return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnUnsubscribeUserMetadataResult_be_trigger = false;
+        public UInt64 OnUnsubscribeUserMetadataResult_requestId = 0;
+        public string OnUnsubscribeUserMetadataResult_userId = null;
+        public RTM_ERROR_CODE OnUnsubscribeUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
+
+        public override void OnUnsubscribeUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
+        {
+            OnUnsubscribeUserMetadataResult_be_trigger = true;
+            OnUnsubscribeUserMetadataResult_requestId = requestId;
+            OnUnsubscribeUserMetadataResult_userId = userId;
+            OnUnsubscribeUserMetadataResult_errorCode = errorCode;
+        }
+
+        public bool OnUnsubscribeUserMetadataResultPassed(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
+        {
+            if (OnUnsubscribeUserMetadataResult_be_trigger == false)
+                return false;
 
             return true;
         }
