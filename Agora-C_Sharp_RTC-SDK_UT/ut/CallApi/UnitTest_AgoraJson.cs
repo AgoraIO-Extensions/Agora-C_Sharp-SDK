@@ -31,6 +31,18 @@ namespace Agora.Rtc.Ut
             Assert.AreEqual(60, vecDistance[0]);
             Assert.AreEqual(40, vecDistance[1]);
         }
+
+        [Test]
+        public void Test_ScreenCaptureConfigurationSourceId()
+        {
+            string data = "{\"sourceId\": 18446744071649487568,\"sourceDisplayId\":40}";
+            ScreenCaptureSourceInfo info = AgoraJson.JsonToStruct<ScreenCaptureSourceInfo>(data);
+            Assert.AreEqual(18446744071649487568, info.sourceId);
+            Assert.AreEqual(40, info.sourceDisplayId);
+
+            info = new ScreenCaptureSourceInfo();
+            Assert.AreEqual(18446744073709551614, info.sourceDisplayId);
+        }
     }
 }
 

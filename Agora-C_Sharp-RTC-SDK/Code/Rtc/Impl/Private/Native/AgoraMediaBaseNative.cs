@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
 

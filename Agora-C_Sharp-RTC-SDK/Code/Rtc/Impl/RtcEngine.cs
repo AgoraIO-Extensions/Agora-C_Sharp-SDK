@@ -2,7 +2,7 @@
 #define AGORA_RTM
 
 using System;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 using track_id_t = System.UInt32;
 using System.Collections.Generic;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

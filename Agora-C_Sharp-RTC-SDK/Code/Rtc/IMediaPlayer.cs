@@ -1,8 +1,8 @@
 using System;
-
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
-    using view_t = Int64;
+
     ///
     /// <summary>
     /// This class provides media player functions and supports multiple instances.
