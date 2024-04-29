@@ -20,7 +20,7 @@ namespace Agora.Rtm
         private static IRtmClient _instance = null;
 
         public static IRtmClient CreateAgoraRtmClient(RtmConfig config)
-        { 
+        {
             RtmClient rtmClient = (RtmClient)(_instance ?? (_instance = new RtmClient()));
             int errorCode = rtmClient.Create(config);
             if (errorCode != 0)
@@ -40,7 +40,7 @@ namespace Agora.Rtm
         }
 
         internal RtmClient()
-        { 
+        {
             _internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient();
             _rtmEventHandler = new RtmEventHandler(this);
         }

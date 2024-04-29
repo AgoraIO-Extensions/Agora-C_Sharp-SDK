@@ -14,7 +14,7 @@ import { AddNodeParser } from "@agoraio-extensions/terra_shared_configs";
 let jsonPath = getTerraJsonPath();
 console.log(jsonPath);
 let cxxiles = JSON.parse(fs.readFileSync(jsonPath, { encoding: 'utf-8' }));
-
+let headersPath = path.join(__dirname, "../node_modules/@agoraio-extensions/terra_shared_configs/headers/rtc_4.3.1/include");
 new ParseEngine(
     path.join(__dirname, "../../../Agora-C_Sharp-RTC-SDK/Code"),
     path.join(__dirname, "../../../terra/templates/C_Sharp-SDK-Code"),
@@ -22,7 +22,7 @@ new ParseEngine(
     cxxiles,
     "#region terra",
     "#endregion terra",
-    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.1/include")
+    headersPath
 );
 
 new ParseEngine(
@@ -32,7 +32,7 @@ new ParseEngine(
     cxxiles,
     "#region terra",
     "#endregion terra",
-    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.1/include")
+    headersPath
 );
 
 execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");

@@ -1,20 +1,5 @@
 [
   {
-    "id": "api_Imediaplayer_selectmultiaudiotrack",
-    "name": "SelectMultiAudioTrack",
-    "description": "Selects the audio tracks that you want to play on your local device and publish to the channel respectively.\n\nYou can call this method to determine the audio track to be played on your local device and published to the channel. Before calling this method, you need to open the media file with the OpenWithMediaSource method and set enableMultiAudioTrack in MediaSource as true.",
-    "parameters": [
-      {
-        "playoutTrackIndex": "The index of audio tracks for local playback. You can obtain the index through GetStreamInfo."
-      },
-      {
-        "publishTrackIndex": "The index of audio tracks to be published in the channel. You can obtain the index through GetStreamInfo."
-      }
-    ],
-    "returns": "0: Success.\n < 0: Failure.",
-    "is_hide": false
-  },
-  {
     "id": "api_createagorartcengine",
     "name": "CreateAgoraRtcEngine",
     "description": "Creates one IRtcEngine object.\n\nCurrently, the Agora RTC SDK v4.x supports creating only one IRtcEngine object for each app.",
@@ -116,14 +101,32 @@
   },
   {
     "id": "api_iaudiodevicemanager_getplaybackdefaultdevice",
-    "name": "GetPlaybackDefaultDevice",
+    "name": "GetPlaybackDefaultDevice [1/2]",
     "description": "Gets the default audio playback device.\n\nThis method is for Windows and macOS only.",
     "parameters": [
       {
-        "deviceId": "Output parameter, the device ID of the default audio playback device."
+        "deviceId": "Output parameter; indicates the ID of the default audio playback device."
       },
       {
-        "deviceName": "Output parameter, the device name of the default audio playback device."
+        "deviceName": "Output parameter; indicates the name of the default audio playback device."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_iaudiodevicemanager_getplaybackdefaultdevice2",
+    "name": "GetPlaybackDefaultDevice [2/2]",
+    "description": "Get the system‘s default audio playback device and its type.\n\nThis method applies to macOS only.",
+    "parameters": [
+      {
+        "deviceId": "Output parameter; indicates the ID of the default audio playback device."
+      },
+      {
+        "deviceName": "Output parameter; indicates the name of the default audio playback device."
+      },
+      {
+        "deviceTypeName": "Output parameter; indicates the type of audio devices, such as built-in, USB and HDMI."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -143,14 +146,32 @@
   },
   {
     "id": "api_iaudiodevicemanager_getplaybackdeviceinfo",
-    "name": "GetPlaybackDeviceInfo",
-    "description": "Retrieves the audio playback device associated with the device ID.\n\nThis method is for Windows and macOS only.",
+    "name": "GetPlaybackDeviceInfo [1/2]",
+    "description": "Retrieves the information of the audio playback device.\n\nThis method is for Windows and macOS only.",
     "parameters": [
       {
-        "deviceId": "The device ID of the playback device."
+        "deviceId": "Th ID of the audio playback device."
       },
       {
-        "deviceName": "The device name of the playback device."
+        "deviceName": "Output parameter; the name of the playback device."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_iaudiodevicemanager_getplaybackdeviceinfo2",
+    "name": "GetPlaybackDeviceInfo [2/2]",
+    "description": "Get the information and type of the audio playback device.\n\nThis method applies to macOS only.",
+    "parameters": [
+      {
+        "deviceName": "Output parameter; the name of the playback device."
+      },
+      {
+        "deviceId": "Th ID of the audio playback device."
+      },
+      {
+        "deviceTypeName": "Output parameter; indicates the type of audio playback devices, such as built-in, USB and HDMI."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -174,14 +195,32 @@
   },
   {
     "id": "api_iaudiodevicemanager_getrecordingdefaultdevice",
-    "name": "GetRecordingDefaultDevice",
+    "name": "GetRecordingDefaultDevice [1/2]",
     "description": "Gets the default audio capture device.\n\nThis method is for Windows and macOS only.",
     "parameters": [
       {
-        "deviceId": "Output parameter, the device ID of the default audio capture device."
+        "deviceId": "Output parameter; indicates the ID of the default audio capture device."
       },
       {
-        "deviceName": "Output parameter, the device name of the default audio capture device."
+        "deviceName": "Output parameter; indicates the name of the default audio capture device."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_iaudiodevicemanager_getrecordingdefaultdevice2",
+    "name": "GetRecordingDefaultDevice [2/2]",
+    "description": "Gets the default audio capture device and its type.\n\nThis method applies to macOS only.",
+    "parameters": [
+      {
+        "deviceTypeName": "Output parameter; indicates the type of audio devices, such as built-in, USB and HDMI."
+      },
+      {
+        "deviceId": "Output parameter; indicates the ID of the default audio capture device."
+      },
+      {
+        "deviceName": "Output parameter; indicates the name of the default audio capture device."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -201,14 +240,32 @@
   },
   {
     "id": "api_iaudiodevicemanager_getrecordingdeviceinfo",
-    "name": "GetRecordingDeviceInfo",
-    "description": "Retrieves the volume of the audio recording device.\n\nThis method is for Windows and macOS only.",
+    "name": "GetRecordingDeviceInfo [1/2]",
+    "description": "Retrieves the information of the audio recording device.\n\nThis method is for Windows and macOS only.",
     "parameters": [
       {
-        "deviceId": "The device ID of the playback device."
+        "deviceId": "Th ID of the audio playback device."
       },
       {
-        "deviceName": "The device name of the playback device."
+        "deviceName": "Output parameter; the name of the playback device."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_iaudiodevicemanager_getrecordingdeviceinfo2",
+    "name": "GetRecordingDeviceInfo [2/2]",
+    "description": "Get the information and type of the audio capturing device.\n\nThis method applies to macOS only.",
+    "parameters": [
+      {
+        "deviceName": "Output parameter; the name of the playback device."
+      },
+      {
+        "deviceId": "Th ID of the audio playback device."
+      },
+      {
+        "deviceTypeName": "Output parameter; indicates the type of audio capturing devices, such as built-in, USB and HDMI."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -701,7 +758,7 @@
   {
     "id": "api_imediaengine_pullaudioframe",
     "name": "PullAudioFrame",
-    "description": "Pulls the remote audio data.\n\nBefore calling this method, you need to call SetExternalAudioSink to notify the app to enable and set the external rendering. After a successful call of this method, the app pulls the decoded and mixed audio data for playback.\n This method only supports pulling data from custom audio source. If you need to pull the data captured by the SDK, do not call this method.\n Call this method after joining a channel.\n Once you enable the external audio sink, the app will not retrieve any audio data from the OnPlaybackAudioFrame callback.\n The difference between this method and the OnPlaybackAudioFrame callback is as follows:\n The SDK sends the audio data to the app through the OnPlaybackAudioFrame callback. Any delay in processing the audio frames may result in audio jitter.\n After a successful method call, the app automatically pulls the audio data from the SDK. After setting the audio data parameters, the SDK adjusts the frame buffer and avoids problems caused by jitter in the external audio playback.",
+    "description": "Pulls the remote audio data.\n\nBefore calling this method, call SetExternalAudioSink (enabled : true) to notify the app to enable and set the external audio rendering. After a successful call of this method, the app pulls the decoded and mixed audio data for playback.\n Call this method after joining a channel.\n Both this method and OnPlaybackAudioFrame callback can be used to get audio data after remote mixing. Note that after calling SetExternalAudioSink to enable external audio rendering, the app no longer receives data from the OnPlaybackAudioFrame callback. Therefore, you should choose between this method and the OnPlaybackAudioFrame callback based on your actual business requirements. The specific distinctions between them are as follows:\n After calling this method, the app automatically pulls the audio data from the SDK. By setting the audio data parameters, the SDK adjusts the frame buffer to help the app handle latency, effectively avoiding audio playback jitter.\n The SDK sends the audio data to the app through the OnPlaybackAudioFrame callback. Any delay in processing the audio frames may result in audio jitter.\n This method is only used for retrieving audio data after remote mixing. If you need to get audio data from different audio processing stages such as capture and playback, you can register the corresponding callbacks by calling RegisterAudioFrameObserver.",
     "parameters": [
       {
         "frame": "Pointers to AudioFrame."
@@ -713,7 +770,7 @@
   {
     "id": "api_imediaengine_pushaudioframe0",
     "name": "PushAudioFrame",
-    "description": "Pushes the external audio frame.",
+    "description": "Pushes the external audio frame.\n\nBefore calling this method to push external audio data, perform the following steps:\n Call CreateCustomAudioTrack to create a custom audio track and get the audio track ID.\n Call JoinChannel [2/2] to join the channel. In ChannelMediaOptions, set publishCustomAduioTrackId to the audio track ID that you want to publish, and set publishCustomAudioTrack to true.",
     "parameters": [
       {
         "frame": "The external audio frame. See AudioFrame."
@@ -771,6 +828,18 @@
       },
       {
         "position": "The frame position of the audio observer. AUDIO_FRAME_POSITION_PLAYBACK (0x0001): This position can observe the playback audio mixed by all remote users, corresponding to the OnPlaybackAudioFrame callback. AUDIO_FRAME_POSITION_RECORD (0x0002): This position can observe the collected local user's audio, corresponding to the OnRecordAudioFrame callback. AUDIO_FRAME_POSITION_MIXED (0x0004): This position can observe the playback audio mixed by the loacl user and all remote users, corresponding to the OnMixedAudioFrame callback. AUDIO_FRAME_POSITION_BEFORE_MIXING (0x0008): This position can observe the audio of a single remote user before mixing, corresponding to the OnPlaybackAudioFrameBeforeMixing callback. AUDIO_FRAME_POSITION_EAR_MONITORING (0x0010): This position can observe the in-ear monitoring audio of the local user, corresponding to the OnEarMonitoringAudioFrame callback."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_imediaengine_registerfaceinfoobserver",
+    "name": "RegisterFaceInfoObserver",
+    "description": "Registers a facial information observer.\n\nYou can call this method to register the OnFaceInfo callback to receive the facial information processed by Agora speech driven extension. When calling this method to register a facial information observer, you can register callbacks in the IFaceInfoObserver class as needed. After successfully registering the facial information observer, the SDK triggers the callback you have registered when it captures the facial information converted by the speech driven extension.\n Ensure that you call this method before joining a channel.\n Before calling this method, you need to make sure that the speech driven extension has been enabled by calling EnableExtension.",
+    "parameters": [
+      {
+        "observer": "Facial information observer, see IFaceInfoObserver."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -870,6 +939,18 @@
       },
       {
         "encodedVideoOption": "Video encoding options. This parameter needs to be set if sourceType is ENCODED_VIDEO_FRAME. To set this parameter, contact."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_imediaengine_unregisterfaceinfoobserver",
+    "name": "UnregisterFaceInfoObserver",
+    "description": "Unregisters a facial information observer.",
+    "parameters": [
+      {
+        "observer": "Facial information observer, see IFaceInfoObserver."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -1270,6 +1351,21 @@
     "parameters": [
       {
         "index": "The index of the audio track."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_imediaplayer_selectmultiaudiotrack",
+    "name": "SelectMultiAudioTrack",
+    "description": "Selects the audio tracks that you want to play on your local device and publish to the channel respectively.\n\nYou can call this method to determine the audio track to be played on your local device and published to the channel. Before calling this method, you need to open the media file with the OpenWithMediaSource method and set enableMultiAudioTrack in MediaSource as true.",
+    "parameters": [
+      {
+        "playoutTrackIndex": "The index of audio tracks for local playback. You can obtain the index through GetStreamInfo."
+      },
+      {
+        "publishTrackIndex": "The index of audio tracks to be published in the channel. You can obtain the index through GetStreamInfo."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -2145,6 +2241,18 @@
     "is_hide": false
   },
   {
+    "id": "api_irtcengine_enablecameracenterstage",
+    "name": "EnableCameraCenterStage",
+    "description": "Enables or disables portrait center stage.\n\nThe portrait center stage feature is off by default. You need to call this method to turn it on. If you need to disable this feature, you need to call this method again and set enabled to false. This method is for iOS and macOS only.",
+    "parameters": [
+      {
+        "enabled": "Whether to enable the portrait center stage: true : Enable portrait center stage. false : Disable portrait center stage."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
     "id": "api_irtcengine_enablecontentinspect",
     "name": "EnableContentInspect",
     "description": "Enables or disables video screenshot and upload.\n\nWhen video screenshot and upload function is enabled, the SDK takes screenshots and uploads videos sent by local users based on the type and frequency of the module you set in ContentInspectConfig. After video screenshot and upload, the Agora server sends the callback notification to your app server in HTTPS requests and sends all screenshots to the third-party cloud storage service. Before calling this method, ensure that you have contacted to activate the video screenshot upload service.",
@@ -2237,7 +2345,7 @@
     "description": "Enables or disables the built-in encryption.\n\nIn scenarios requiring high security, Agora recommends calling this method to enable the built-in encryption before joining a channel. All users in the same channel must use the same encryption mode and encryption key. After the user leaves the channel, the SDK automatically disables the built-in encryption. To enable the built-in encryption, call this method before the user joins the channel again. If you enable the built-in encryption, you cannot use the Media Push function.",
     "parameters": [
       {
-        "enabled": "Whether to enable built-in encryption: true : Enable the built-in encryption. false : Disable the built-in encryption."
+        "enabled": "Whether to enable built-in encryption: true : Enable the built-in encryption. false : (Default) Disable the built-in encryption."
       },
       {
         "config": "Built-in encryption configurations. See EncryptionConfig."
@@ -2261,7 +2369,7 @@
         "enable": "Whether to enable the extension: true : Enable the extension. false : Disable the extension."
       },
       {
-        "type": "Type of media source. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:\n The default value is UNKNOWN_MEDIA_SOURCE.\n If you want to use the second camera to capture video, set this parameter to SECONDARY_CAMERA_SOURCE."
+        "type": "Source type of the extension. See MEDIA_SOURCE_TYPE."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.\n -3: The extension library is not loaded. Agora recommends that you check the storage location or the name of the dynamic library.",
@@ -2288,7 +2396,7 @@
         "enabled": "Enables or disables in-ear monitoring. true : Enables in-ear monitoring. false : (Default) Disables in-ear monitoring."
       },
       {
-        "includeAudioFilters": "The audio filter of in-ear monitoring: See EAR_MONITORING_FILTER_TYPE."
+        "includeAudioFilters": "The audio filter types of in-ear monitoring. See EAR_MONITORING_FILTER_TYPE."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.\n - 8: Make sure the current audio routing is Bluetooth or headset.",
@@ -2383,7 +2491,7 @@
   {
     "id": "api_irtcengine_enablevideo",
     "name": "EnableVideo",
-    "description": "Enables the video module.\n\nCall this method either before joining a channel or during a call. If this method is called before joining a channel, the call starts in the video mode; if called during a call, the audio call switches to a video call. Call DisableVideo to disable the video mode. A successful call of this method triggers the OnRemoteVideoStateChanged callback on the remote client.\n This method enables the internal engine and is valid after leaving the channel.\n Calling this method will reset the entire engine, resulting in a slow response time. Instead of callling this method, you can independently control a specific video module based on your actual needs using the following methods: EnableLocalVideo : Whether to enable the camera to create the local video stream. MuteLocalVideoStream : Whether to publish the local video stream. MuteRemoteVideoStream : Whether to subscribe to and play the remote video stream. MuteAllRemoteVideoStreams : Whether to subscribe to and play all remote video streams.\n A successful call of this method resets EnableLocalVideo, MuteRemoteVideoStream, and MuteAllRemoteVideoStreams. Proceed it with caution.",
+    "description": "Enables the video module.\n\nThe video module is disabled by default, call this method to enable it. If you need to disable the video module later, you need to call DisableVideo.",
     "parameters": [],
     "returns": "0: Success.\n < 0: Failure.",
     "is_hide": false
@@ -2406,7 +2514,7 @@
   {
     "id": "api_irtcengine_enablevirtualbackground",
     "name": "EnableVirtualBackground",
-    "description": "Enables/Disables the virtual background.\n\nThe virtual background feature enables the local user to replace their original background with a static image, dynamic video, blurred background, or portrait-background segmentation to achieve picture-in-picture effect. Once the virtual background feature is enabled, all users in the channel can see the custom background. Call this method before calling EnableVideo or StartPreview [2/2].\n This feature has high requirements on device performance. When calling this method, the SDK automatically checks the capabilities of the current device. Agora recommends you use virtual background on devices with the following processors:\n Snapdragon 700 series 750G and later\n Snapdragon 800 series 835 and later\n Dimensity 700 series 720 and later\n Kirin 800 series 810 and later\n Kirin 900 series 980 and later\n Devices with an i5 CPU and better\n Devices with an A9 chip and better, as follows:\n iPhone 6S and later\n iPad Air 3rd generation and later\n iPad 5th generation and later\n iPad Pro 1st generation and later\n iPad mini 5th generation and later\n Agora recommends that you use this feature in scenarios that meet the following conditions:\n A high-definition camera device is used, and the environment is uniformly lit.\n There are few objects in the captured video. Portraits are half-length and unobstructed. Ensure that the background is a solid color that is different from the color of the user's clothing.\n This method relies on the virtual background dynamic library libagora_segmentation_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.",
+    "description": "Enables/Disables the virtual background.\n\nThe virtual background feature enables the local user to replace their original background with a static image, dynamic video, blurred background, or portrait-background segmentation to achieve picture-in-picture effect. Once the virtual background feature is enabled, all users in the channel can see the custom background. Call this method after calling EnableVideo or StartPreview [2/2].\n This feature has high requirements on device performance. When calling this method, the SDK automatically checks the capabilities of the current device. Agora recommends you use virtual background on devices with the following processors:\n Snapdragon 700 series 750G and later\n Snapdragon 800 series 835 and later\n Dimensity 700 series 720 and later\n Kirin 800 series 810 and later\n Kirin 900 series 980 and later\n Devices with an i5 CPU and better\n Devices with an A9 chip and better, as follows:\n iPhone 6S and later\n iPad Air 3rd generation and later\n iPad 5th generation and later\n iPad Pro 1st generation and later\n iPad mini 5th generation and later\n Agora recommends that you use this feature in scenarios that meet the following conditions:\n A high-definition camera device is used, and the environment is uniformly lit.\n There are few objects in the captured video. Portraits are half-length and unobstructed. Ensure that the background is a solid color that is different from the color of the user's clothing.\n This method relies on the virtual background dynamic library libagora_segmentation_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.",
     "parameters": [
       {
         "enabled": "Whether to enable virtual background: true : Enable virtual background. false : Disable virtual background."
@@ -2499,7 +2607,7 @@
   {
     "id": "api_irtcengine_getcallid",
     "name": "GetCallId",
-    "description": "Retrieves the call ID.\n\nWhen a user joins a channel on a client, a callId is generated to identify the call from the client. Some methods, such as Rate and Complain, must be called after the call ends to submit feedback to the SDK. These methods require the callId parameter. Call this method after joining a channel.",
+    "description": "Retrieves the call ID.\n\nWhen a user joins a channel on a client, a callId is generated to identify the call from the client. You can call this method to get the callId parameter, and pass it in when calling methods such as Rate and Complain. Call this method after joining a channel.",
     "parameters": [
       {
         "callId": "Output parameter, the current call ID."
@@ -2756,6 +2864,14 @@
     "is_hide": false
   },
   {
+    "id": "api_irtcengine_iscameracenterstagesupported",
+    "name": "IsCameraCenterStageSupported",
+    "description": "Check if the camera supports portrait center stage.\n\nThis method is for iOS and macOS only. Before calling EnableCameraCenterStage to enable portrait center stage, it is recommended to call this method to check if the current device supports the feature.",
+    "parameters": [],
+    "returns": "true : The current camera supports the portrait center stage. false : The current camera supports the portrait center stage.",
+    "is_hide": false
+  },
+  {
     "id": "api_irtcengine_iscameraexposurepositionsupported",
     "name": "IsCameraExposurePositionSupported",
     "description": "Checks whether the device supports manual exposure.\n\nThis method must be called after the camera is successfully enabled, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).\n This method is for Android and iOS only.",
@@ -2826,10 +2942,10 @@
   {
     "id": "api_irtcengine_joinchannel",
     "name": "JoinChannel [1/2]",
-    "description": "Joins a channel.\n\nWhen the connection between the client and Agora's server is interrupted due to poor network conditions, the SDK tries reconnecting to the server. When the local client successfully rejoins the channel, the SDK triggers the OnRejoinChannelSuccess callback on the local client. A successful call of this method triggers the following callbacks:\n The local client: The OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: OnUserJoined, if the user joining the channel is in the Communication profile or is a host in the Live-broadcasting profile. This method enables users to join a channel. Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other. Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods.",
+    "description": "Joins a channel.\n\nWhen the connection between the client and Agora's server is interrupted due to poor network conditions, the SDK tries reconnecting to the server. When the local client successfully rejoins the channel, the SDK triggers the OnRejoinChannelSuccess callback on the local client. A successful call of this method triggers the following callbacks:\n The local client: The OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: OnUserJoined, if the user joining the channel is in the Communication profile or is a host in the Live-broadcasting profile. This method enables users to join a channel. Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other.\n Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods.\n If you choose the Testing Mode (using an App ID for authentication) for your project and call this method to join a channel, you will automatically exit the channel after 24 hours.",
     "parameters": [
       {
-        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters:\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
+        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
       },
       {
         "token": "The token generated on your server for authentication. If you need to join different channels at the same time or switch between channels, Agora recommends using a wildcard token so that you don't need to apply for a new token every time joining a channel."
@@ -2847,13 +2963,13 @@
   {
     "id": "api_irtcengine_joinchannel2",
     "name": "JoinChannel [2/2]",
-    "description": "Joins a channel with media options.\n\nThis method enables users to join a channel. Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other. A successful call of this method triggers the following callbacks:\n The local client: The OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: OnUserJoined, if the user joining the channel is in the Communication profile or is a host in the Live-broadcasting profile. When the connection between the client and Agora's server is interrupted due to poor network conditions, the SDK tries reconnecting to the server. When the local client successfully rejoins the channel, the SDK triggers the OnRejoinChannelSuccess callback on the local client. Compared to JoinChannel [1/2], this method adds the options parameter to configure whether to automatically subscribe to all remote audio and video streams in the channel when the user joins the channel. By default, the user subscribes to the audio and video streams of all the other users in the channel, giving rise to usage and billings. To unsubscribe, set the options parameter or call the mute methods accordingly.\n This method allows users to join only one channel at a time.\n Ensure that the app ID you use to generate the token is the same app ID that you pass in the Initialize method; otherwise, you may fail to join the channel by token.",
+    "description": "Joins a channel with media options.\n\nThis method enables users to join a channel. Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other. A successful call of this method triggers the following callbacks:\n The local client: The OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: OnUserJoined, if the user joining the channel is in the Communication profile or is a host in the Live-broadcasting profile. When the connection between the client and Agora's server is interrupted due to poor network conditions, the SDK tries reconnecting to the server. When the local client successfully rejoins the channel, the SDK triggers the OnRejoinChannelSuccess callback on the local client. Compared to JoinChannel [1/2], this method adds the options parameter to configure whether to automatically subscribe to all remote audio and video streams in the channel when the user joins the channel. By default, the user subscribes to the audio and video streams of all the other users in the channel, giving rise to usage and billings. To unsubscribe, set the options parameter or call the mute methods accordingly.\n This method allows users to join only one channel at a time.\n Ensure that the app ID you use to generate the token is the same app ID that you pass in the Initialize method; otherwise, you may fail to join the channel by token.\n If you choose the Testing Mode (using an App ID for authentication) for your project and call this method to join a channel, you will automatically exit the channel after 24 hours.",
     "parameters": [
       {
         "token": "The token generated on your server for authentication. If you need to join different channels at the same time or switch between channels, Agora recommends using a wildcard token so that you don't need to apply for a new token every time joining a channel."
       },
       {
-        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters:\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
+        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
       },
       {
         "uid": "The user ID. This parameter is used to identify the user in the channel for real-time audio and video interaction. You need to set and manage user IDs yourself, and ensure that each user ID in the same channel is unique. This parameter is a 32-bit unsigned integer. The value range is 1 to 2 32 -1. If the user ID is not assigned (or set to 0), the SDK assigns a random user ID and returns it in the OnJoinChannelSuccess callback. Your app must record and maintain the returned user ID, because the SDK does not do so."
@@ -2868,16 +2984,16 @@
   {
     "id": "api_irtcengine_joinchannelwithuseraccount",
     "name": "JoinChannelWithUserAccount [1/2]",
-    "description": "Joins a channel with a User Account and Token.\n\nThis method allows a user to join the channel with the user account and a token. After the user successfully joins the channel, the SDK triggers the following callbacks:\n The local client: OnLocalUserRegistered, OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: OnUserJoined and OnUserInfoUpdated callbacks, if the user joining the channel is in the communication profile or is a host in the live streaming profile. Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods. To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.",
+    "description": "Joins a channel with a User Account and Token.\n\nThis method allows a user to join the channel with the user account and a token. After the user successfully joins the channel, the SDK triggers the following callbacks:\n The local client: OnLocalUserRegistered, OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: OnUserJoined and OnUserInfoUpdated callbacks, if the user joining the channel is in the communication profile or is a host in the live streaming profile. Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods.\n To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.\n If you choose the Testing Mode (using an App ID for authentication) for your project and call this method to join a channel, you will automatically exit the channel after 24 hours.",
     "parameters": [
       {
-        "userAccount": "The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are (89 in total):\n The 26 lowercase English letters: a to z.\n The 26 uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
+        "userAccount": "The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are as follows(89 in total):\n The 26 lowercase English letters: a to z.\n The 26 uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
       },
       {
         "token": "The token generated on your server for authentication. If you need to join different channels at the same time or switch between channels, Agora recommends using a wildcard token so that you don't need to apply for a new token every time joining a channel."
       },
       {
-        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters:\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
+        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
       }
     ],
     "returns": "0: Success.\n < 0: Failure.\n -2: The parameter is invalid.\n -3: The initialization of the SDK fails. You can try to initialize the SDK again.\n -5: The request is rejected.\n -17: The request to join the channel is rejected. Since the SDK only supports users to join one IRtcEngine channel at a time; this error code will be returned when the user who has joined the IRtcEngine channel calls the join channel method in the IRtcEngine class again with a valid channel name.",
@@ -2886,7 +3002,7 @@
   {
     "id": "api_irtcengine_joinchannelwithuseraccount2",
     "name": "JoinChannelWithUserAccount [2/2]",
-    "description": "Joins the channel with a user account, and configures whether to automatically subscribe to audio or video streams after joining the channel.\n\nThis method allows a user to join the channel with the user account. After the user successfully joins the channel, the SDK triggers the following callbacks:\n The local client: OnLocalUserRegistered, OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: The OnUserJoined callback, if the user is in the COMMUNICATION profile, and the OnUserInfoUpdated callback if the user is a host in the LIVE_BROADCASTING profile. Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods. To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.",
+    "description": "Joins the channel with a user account, and configures whether to automatically subscribe to audio or video streams after joining the channel.\n\nTo ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.\n If you choose the Testing Mode (using an App ID for authentication) for your project and call this method to join a channel, you will automatically exit the channel after 24 hours. This method allows a user to join the channel with the user account. After the user successfully joins the channel, the SDK triggers the following callbacks:\n The local client: OnLocalUserRegistered, OnJoinChannelSuccess and OnConnectionStateChanged callbacks.\n The remote client: The OnUserJoined callback, if the user is in the COMMUNICATION profile, and the OnUserInfoUpdated callback if the user is a host in the LIVE_BROADCASTING profile. Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods.",
     "parameters": [
       {
         "options": "The channel media options. See ChannelMediaOptions."
@@ -2895,10 +3011,10 @@
         "token": "The token generated on your server for authentication. If you need to join different channels at the same time or switch between channels, Agora recommends using a wildcard token so that you don't need to apply for a new token every time joining a channel."
       },
       {
-        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters:\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
+        "channelId": "The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
       },
       {
-        "userAccount": "The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are (89 in total):\n The 26 lowercase English letters: a to z.\n The 26 uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
+        "userAccount": "The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are as follows(89 in total):\n The 26 lowercase English letters: a to z.\n The 26 uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
       }
     ],
     "returns": "0: Success.\n < 0: Failure.\n -2: The parameter is invalid. For example, the token is invalid, the uid parameter is not set to an integer, or the value of a member in ChannelMediaOptions is invalid. You need to pass in a valid parameter and join the channel again.\n -3: Failes to initialize the IRtcEngine object. You need to reinitialize the IRtcEngine object.\n -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.\n -8: The internal state of the IRtcEngine object is wrong. The typical cause is that you call this method to join the channel without calling StartEchoTest [3/3] to stop the test after calling StopEchoTest to start a call loop test. You need to call StopEchoTest before calling this method.\n -17: The request to join the channel is rejected. The typical cause is that the user is in the channel. Agora recommends that you use the OnConnectionStateChanged callback to determine whether the user exists in the channel. Do not call this method to join the channel unless you receive the CONNECTION_STATE_DISCONNECTED (1) state.\n -102: The channel name is invalid. You need to pass in a valid channelname in channelId to rejoin the channel.\n -121: The user ID is invalid. You need to pass in a valid user ID in uid to rejoin the channel.",
@@ -3154,7 +3270,7 @@
   },
   {
     "id": "api_irtcengine_preloadchannel",
-    "name": "PreloadChannel [1/2]",
+    "name": "PreloadChannel",
     "description": "Preloads a channel with token, channelId, and uid.\n\nWhen audience members need to switch between different channels frequently, calling the method can help shortening the time of joining a channel, thus reducing the time it takes for audience members to hear and see the host. As it may take a while for the SDK to preload a channel, Agora recommends that you call this method as soon as possible after obtaining the channel name and user ID to join a channel.\n When calling this method, ensure you set the user role as audience and do not set the audio scenario as AUDIO_SCENARIO_CHORUS, otherwise, this method does not take effect.\n You also need to make sure that the channel name, user ID and token passed in for preloading are the same as the values passed in when joinning the channel, otherwise, this method does not take effect.\n One IRtcEngine instance supports preloading 20 channels at most. When exceeding this limit, the latest 20 preloaded channels take effect.\n Failing to preload a channel does not mean that you can't join a channel, nor will it increase the time of joining a channel. If you join a preloaded channel, leave it and want to rejoin the same channel, you do not need to call this method unless the token for preloading the channel expires.",
     "parameters": [
       {
@@ -3171,24 +3287,6 @@
     "is_hide": false
   },
   {
-    "id": "api_irtcengine_preloadchannel2",
-    "name": "PreloadChannel [2/2]",
-    "description": "Preloads a channel with token, channelId, and userAccount.\n\nWhen audience members need to switch between different channels frequently, calling the method can help shortening the time of joining a channel, thus reducing the time it takes for audience members to hear and see the host. As it may take a while for the SDK to preload a channel, Agora recommends that you call this method as soon as possible after obtaining the channel name and user ID to join a channel. If you join a preloaded channel, leave it and want to rejoin the same channel, you do not need to call this method unless the token for preloading the channel expires.\n Failing to preload a channel does not mean that you can't join a channel, nor will it increase the time of joining a channel.\n One IRtcEngine instance supports preloading 20 channels at most. When exceeding this limit, the latest 20 preloaded channels take effect.\n When calling this method, ensure you set the user role as audience and do not set the audio scenario as AUDIO_SCENARIO_CHORUS, otherwise, this method does not take effect.\n You also need to make sure that the User Account, channel ID and token passed in for preloading are the same as the values passed in when joining the channel, otherwise, this method does not take effect.",
-    "parameters": [
-      {
-        "userAccount": "The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are (89 in total):\n The 26 lowercase English letters: a to z.\n The 26 uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
-      },
-      {
-        "channelId": "The channel name that you want to preload. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):\n All lowercase English letters: a to z.\n All uppercase English letters: A to Z.\n All numeric characters: 0 to 9.\n Space\n \"!\", \"#\", \"$\", \"%\", \"&\", \"(\", \")\", \"+\", \"-\", \":\", \";\", \"<\", \"=\", \".\", \">\", \"?\", \"@\", \"[\", \"]\", \"^\", \"_\", \"{\", \"}\", \"|\", \"~\", \",\""
-      },
-      {
-        "token": "The token generated on your server for authentication. When the token for preloading channels expires, you can update the token based on the number of channels you preload.\n When preloading one channel, calling this method to pass in the new token.\n When preloading more than one channels:\n If you use a wildcard token for all preloaded channels, call UpdatePreloadChannelToken to update the token. When generating a wildcard token, ensure the user ID is not set as 0.\n If you use different tokens to preload different channels, call this method to pass in your user ID, channel name and the new token."
-      }
-    ],
-    "returns": "0: Success.\n < 0: Failure.\n -2: The parameter is invalid. For example, the User Account is empty. You need to pass in a valid parameter and join the channel again.\n -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.\n -102: The channel name is invalid. You need to pass in a valid channel name and join the channel again.",
-    "is_hide": false
-  },
-  {
     "id": "api_irtcengine_preloadeffect",
     "name": "PreloadEffect",
     "description": "Preloads a specified audio effect file into the memory.\n\nTo ensure smooth communication, It is recommended that you limit the size of the audio effect file. You can call this method to preload the audio effect before calling JoinChannel [2/2]. For the audio file formats supported by this method, see What formats of audio files does the Agora RTC SDK support.",
@@ -3201,6 +3299,21 @@
       },
       {
         "startPos": "The playback position (ms) of the audio effect file."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_irtcengine_querycamerafocallengthcapability",
+    "name": "QueryCameraFocalLengthCapability",
+    "description": "Queries the focal length capability supported by the camera.\n\nIf you want to enable the wide-angle or ultra-wide-angle mode for camera capture, it is recommended to start by calling this method to check whether the device supports the required focal length capability. Then, adjust the camera's focal length configuration based on the query result by calling SetCameraCapturerConfiguration, ensuring the best camera capture performance. This method is for Android and iOS only.",
+    "parameters": [
+      {
+        "focalLengthInfos": "An output parameter. After the method is executed, output an array of FocalLengthInfo objects containing camera focal length information."
+      },
+      {
+        "size": "An output parameter. After the method is executed, output the number of focal length information items retrieved."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -3285,10 +3398,10 @@
   {
     "id": "api_irtcengine_registerextension",
     "name": "RegisterExtension",
-    "description": "Registers an extension.\n\nAfter the extension is loaded, you can call this method to register the extension. This method applies to Windows only.",
+    "description": "Registers an extension.\n\nAfter the extension is loaded, you can call this method to register the extension.\n Before calling this method, you need to call LoadExtensionProvider to load the extension first.\n For extensions external to the SDK (such as those from Extensions Marketplace and SDK Extensions), you need to call this method before calling SetExtensionProperty.",
     "parameters": [
       {
-        "type": "Type of media source. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:\n The default value is UNKNOWN_MEDIA_SOURCE.\n If you want to use the second camera to capture video, set this parameter to SECONDARY_CAMERA_SOURCE."
+        "type": "Source type of the extension. See MEDIA_SOURCE_TYPE."
       },
       {
         "extension": "The name of the extension."
@@ -3537,6 +3650,18 @@
     "is_hide": false
   },
   {
+    "id": "api_irtcengine_setaudiomixingplaybackspeed",
+    "name": "SetAudioMixingPlaybackSpeed",
+    "description": "Sets the playback speed of the current audio file.\n\nEnsure you call this method after calling StartAudioMixing [2/2] receiving the OnAudioMixingStateChanged callback reporting the state as AUDIO_MIXING_STATE_PLAYING.",
+    "parameters": [
+      {
+        "speed": "The playback speed. Agora recommends that you set this to a value between 50 and 400, defined as follows:\n 50: Half the original speed.\n 100: The original speed.\n 400: 4 times the original speed."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
     "id": "api_irtcengine_setaudiomixingposition",
     "name": "SetAudioMixingPosition",
     "description": "Sets the audio mixing position.\n\nCall this method to set the playback position of the music file to a different starting position (the default plays from the beginning). You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback.",
@@ -3617,10 +3742,10 @@
   {
     "id": "api_irtcengine_setbeautyeffectoptions",
     "name": "SetBeautyEffectOptions",
-    "description": "Sets the image enhancement options.\n\nEnables or disables image enhancement, and sets the options.\n Call this method before calling EnableVideo or StartPreview [2/2].\n This method relies on the image enhancement dynamic library libagora_clear_vision_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.\n This feature has high requirements on device performance. When calling this method, the SDK automatically checks the capabilities of the current device.",
+    "description": "Sets the image enhancement options.\n\nEnables or disables image enhancement, and sets the options.\n Call this method after calling EnableVideo or StartPreview [2/2].\n This method relies on the image enhancement dynamic library libagora_clear_vision_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.\n This feature has high requirements on device performance. When calling this method, the SDK automatically checks the capabilities of the current device.",
     "parameters": [
       {
-        "type": "Type of media source. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:\n The default value is UNKNOWN_MEDIA_SOURCE.\n If you want to use the second camera to capture video, set this parameter to SECONDARY_CAMERA_SOURCE."
+        "type": "Source type of the extension. See MEDIA_SOURCE_TYPE."
       },
       {
         "enabled": "Whether to enable the image enhancement function: true : Enable the image enhancement function. false : (Default) Disable the image enhancement function."
@@ -3659,7 +3784,7 @@
   {
     "id": "api_irtcengine_setcameracapturerconfiguration",
     "name": "SetCameraCapturerConfiguration",
-    "description": "Sets the camera capture configuration.\n\nThis method is for Android and iOS only.\n Call this method before enabling local camera capture, such as before calling StartPreview [2/2] and JoinChannel [2/2].",
+    "description": "Sets the camera capture configuration.\n\nThis method is for Android and iOS only.\n Call this method before enabling local camera capture, such as before calling StartPreview [2/2] and JoinChannel [2/2].\n To adjust the camera focal length configuration, It is recommended to call QueryCameraFocalLengthCapability first to check the device's focal length capabilities, and then configure based on the query results.\n Due to limitations on some Android devices, even if you set the focal length type according to the results returned in QueryCameraFocalLengthCapability, the settings may not take effect.",
     "parameters": [
       {
         "config": "The camera capture configuration. See CameraCapturerConfiguration. In this method, you do not need to set the deviceId parameter."
@@ -3726,6 +3851,18 @@
     "is_hide": false
   },
   {
+    "id": "api_irtcengine_setcamerastabilizationmode",
+    "name": "SetCameraStabilizationMode",
+    "description": "Set the camera stabilization mode.\n\nThis method applies to iOS only. The camera stabilization mode is off by default. You need to call this method to turn it on and set the appropriate stabilization mode.",
+    "parameters": [
+      {
+        "mode": "Camera stabilization mode. See CAMERA_STABILIZATION_MODE."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
     "id": "api_irtcengine_setcameratorchon",
     "name": "SetCameraTorchOn",
     "description": "Enables the camera flash.\n\nYou must call this method after EnableVideo. The setting result will take effect after the camera is successfully turned on, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).\n This method is for Android and iOS only.",
@@ -3740,10 +3877,10 @@
   {
     "id": "api_irtcengine_setcamerazoomfactor",
     "name": "SetCameraZoomFactor",
-    "description": "Sets the camera zoom ratio.\n\nYou must call this method after EnableVideo. The setting result will take effect after the camera is successfully turned on, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).\n This method is for Android and iOS only.",
+    "description": "Sets the camera zoom factor.\n\nFor iOS devices equipped with multi-lens rear cameras, such as those featuring dual-camera (wide-angle and ultra-wide-angle) or triple-camera (wide-angle, ultra-wide-angle, and telephoto), you can call SetCameraCapturerConfiguration first to set the cameraFocalLengthType as CAMERA_FOCAL_LENGTH_DEFAULT (0) (standard lens). Then, adjust the camera zoom factor to a value less than 1.0. This configuration allows you to capture video with an ultra-wide-angle perspective.\n You must call this method after EnableVideo. The setting result will take effect after the camera is successfully turned on, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).\n This method is for Android and iOS only.",
     "parameters": [
       {
-        "factor": "The camera zoom ratio. The value ranges between 1.0 and the maximum zoom supported by the device. You can get the maximum zoom ratio supported by the device by calling the GetCameraMaxZoomFactor method."
+        "factor": "The camera zoom factor. For devices that do not support ultra-wide-angle, the value ranges from 1.0 to the maximum zoom factor; for devices that support ultra-wide-angle, the value ranges from 0.5 to the maximum zoom factor. You can get the maximum zoom factor supported by the device by calling the GetCameraMaxZoomFactor method."
       }
     ],
     "returns": "The camera zoom factor value, if successful.\n < 0: if the method if failed.",
@@ -3857,7 +3994,7 @@
   {
     "id": "api_irtcengine_setdualstreammode",
     "name": "SetDualStreamMode [1/2]",
-    "description": "Sets the dual-stream mode on the sender side.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiver can initiate a low-quality video stream request by calling SetRemoteVideoStreamType, and the sender then automatically starts sending low-quality video stream upon receiving the request.\n If you want to modify this behavior, you can call this method and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video streams) or ENABLE_SIMULCAST_STREAM (always send low-quality video streams).\n If you want to restore the default behavior after making changes, you can call this method again with mode set to AUTO_SIMULCAST_STREAM. The difference and connection between this method and EnableDualStreamMode [1/2] is as follows:\n When calling this method and setting mode to DISABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamMode [1/2] (false).\n When calling this method and setting mode to ENABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamMode [1/2] (true).\n Both methods can be called before and after joining a channel. If both methods are used, the settings in the method called later takes precedence.",
+    "description": "Sets the dual-stream mode on the sender side.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiving end with the role of the host can initiate a low-quality video stream request by calling SetRemoteVideoStreamType, and upon receiving the request, the sending end automatically starts sending low-quality stream.\n If you want to modify this behavior, you can call this method and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video streams) or ENABLE_SIMULCAST_STREAM (always send low-quality video streams).\n If you want to restore the default behavior after making changes, you can call this method again with mode set to AUTO_SIMULCAST_STREAM. The difference and connection between this method and EnableDualStreamMode [1/2] is as follows:\n When calling this method and setting mode to DISABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamMode [1/2] (false).\n When calling this method and setting mode to ENABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamMode [1/2] (true).\n Both methods can be called before and after joining a channel. If both methods are used, the settings in the method called later takes precedence.",
     "parameters": [
       {
         "mode": "The mode in which the video stream is sent. See SIMULCAST_STREAM_MODE."
@@ -3869,7 +4006,7 @@
   {
     "id": "api_irtcengine_setdualstreammode2",
     "name": "SetDualStreamMode [2/2]",
-    "description": "Sets dual-stream mode configuration on the sender side.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiver can initiate a low-quality video stream request by calling SetRemoteVideoStreamType, and the sender then automatically starts sending low-quality video stream upon receiving the request.\n If you want to modify this behavior, you can call this method and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video streams) or ENABLE_SIMULCAST_STREAM (always send low-quality video streams).\n If you want to restore the default behavior after making changes, you can call this method again with mode set to AUTO_SIMULCAST_STREAM. The difference between this method and SetDualStreamMode [1/2] is that this method can also configure the low-quality video stream, and the SDK sends the stream according to the configuration in streamConfig. The difference and connection between this method and EnableDualStreamMode [2/2] is as follows:\n When calling this method and setting mode to DISABLE_SIMULCAST_STREAM, it has the same effect as calling EnableDualStreamMode [2/2] and setting enabled to false.\n When calling this method and setting mode to ENABLE_SIMULCAST_STREAM, it has the same effect as calling EnableDualStreamMode [2/2] and setting enabled to true.\n Both methods can be called before and after joining a channel. If both methods are used, the settings in the method called later takes precedence.",
+    "description": "Sets dual-stream mode configuration on the sender side.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiving end with the role of the host can initiate a low-quality video stream request by calling SetRemoteVideoStreamType, and upon receiving the request, the sending end automatically starts sending low-quality stream.\n If you want to modify this behavior, you can call this method and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video streams) or ENABLE_SIMULCAST_STREAM (always send low-quality video streams).\n If you want to restore the default behavior after making changes, you can call this method again with mode set to AUTO_SIMULCAST_STREAM. The difference between this method and SetDualStreamMode [1/2] is that this method can also configure the low-quality video stream, and the SDK sends the stream according to the configuration in streamConfig. The difference and connection between this method and EnableDualStreamMode [2/2] is as follows:\n When calling this method and setting mode to DISABLE_SIMULCAST_STREAM, it has the same effect as calling EnableDualStreamMode [2/2] and setting enabled to false.\n When calling this method and setting mode to ENABLE_SIMULCAST_STREAM, it has the same effect as calling EnableDualStreamMode [2/2] and setting enabled to true.\n Both methods can be called before and after joining a channel. If both methods are used, the settings in the method called later takes precedence.",
     "parameters": [
       {
         "streamConfig": "The configuration of the low-quality video stream. See SimulcastStreamConfig. When setting mode to DISABLE_SIMULCAST_STREAM, setting streamConfig will not take effect."
@@ -3971,7 +4108,7 @@
     "description": "Sets the properties of the extension.\n\nAfter enabling the extension, you can call this method to set the properties of the extension.",
     "parameters": [
       {
-        "type": "Type of media source. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:\n The default value is UNKNOWN_MEDIA_SOURCE.\n If you want to use the second camera to capture video, set this parameter to SECONDARY_CAMERA_SOURCE."
+        "type": "Source type of the extension. See MEDIA_SOURCE_TYPE."
       },
       {
         "provider": "The name of the extension provider."
@@ -4061,7 +4198,7 @@
   {
     "id": "api_irtcengine_setlocalaccesspoint",
     "name": "SetLocalAccessPoint",
-    "description": "Configure the connection with the native access module of the Agora network private media server.\n\nAfter successfully deploying the Agora private media server and integrating Agora Native SDK v4.0.0 on the intranet terminal, you can call this method to specify the Local Access Point and assign the Native access module to the SDK.\n This method takes effect only after the Agora hybrid cloud solution is deployed. You can contact to get to know more about the Agora hybrid cloud solution.\n Ensure that you call this method before joining a channel.",
+    "description": "Configures the connection with the access module of the Agora network private media server.\n\nAfter successfully deploying the Agora private media server and integrating the RTC SDK on the intranet terminal, you can call this method to specify the Local Access Point and assign the access module to the SDK.\n This method takes effect only after the Agora hybrid cloud solution is deployed. You can contact to get to know more about the Agora hybrid cloud solution.\n Ensure that you call this method before joining a channel.",
     "parameters": [
       {
         "config": "The configurations of the Local Access Point. See LocalAccessPointConfiguration."
@@ -4217,7 +4354,7 @@
     "description": "Sets low-light enhancement.\n\nThe low-light enhancement feature can adaptively adjust the brightness value of the video captured in situations with low or uneven lighting, such as backlit, cloudy, or dark scenes. It restores or highlights the image details and improves the overall visual effect of the video. You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.\n Call this method after calling EnableVideo.\n Dark light enhancement has certain requirements for equipment performance. The low-light enhancement feature has certain performance requirements on devices. If your device overheats after you enable low-light enhancement, Agora recommends modifying the low-light enhancement options to a less performance-consuming level or disabling low-light enhancement entirely.\n Both this method and SetExtensionProperty can turn on low-light enhancement:\n When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).\n When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends using SetExtensionProperty.\n This method relies on the image enhancement dynamic library libagora_clear_vision_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.",
     "parameters": [
       {
-        "enabled": "Whether to enable low-light enhancement function: true : Enable low-light enhancement function. false : (Default) Disable low-light enhancement function."
+        "enabled": "Whether to enable low-light enhancement: true : Enable low-light enhancement. false : (Default) Disable low-light enhancement."
       },
       {
         "options": "The low-light enhancement options. See LowlightEnhanceOptions."
@@ -4335,7 +4472,7 @@
   {
     "id": "api_irtcengine_setremotedefaultvideostreamtype",
     "name": "SetRemoteDefaultVideoStreamType",
-    "description": "Sets the default video stream type to subscribe to.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiver can initiate a low-quality video stream request by calling this method, and the sender will automatically start sending low-quality video stream upon receiving the request. By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. The SDK will dynamically adjust the size of the corresponding video stream based on the size of the video window to save bandwidth and computing resources. The default aspect ratio of the low-quality video stream is the same as that of the high-quality video stream. According to the current aspect ratio of the high-quality video stream, the system will automatically allocate the resolution, frame rate, and bitrate of the low-quality video stream. Under limited network conditions, if the publisher does not disable the dual-stream mode using EnableDualStreamMode [2/2] (false), the receiver can choose to receive either the high-quality video stream, or the low-quality video stream. The high-quality video stream has a higher resolution and bitrate, while the low-quality video stream has a lower resolution and bitrate.\n Call this method before joining a channel. The SDK does not support changing the default subscribed video stream type after joining a channel.\n If you call both this method and SetRemoteVideoStreamType, the setting of SetRemoteVideoStreamType takes effect.",
+    "description": "Sets the default video stream type to subscribe to.\n\nThe SDK will dynamically adjust the size of the corresponding video stream based on the size of the video window to save bandwidth and computing resources. The default aspect ratio of the low-quality video stream is the same as that of the high-quality video stream. According to the current aspect ratio of the high-quality video stream, the system will automatically allocate the resolution, frame rate, and bitrate of the low-quality video stream. The SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sending end, which means the sender does not actively send low-quality video stream. The receiver with the role of the host can initiate a low-quality video stream request by calling this method, and upon receiving the request, the sending end automatically starts sending the low-quality video stream.\n Call this method before joining a channel. The SDK does not support changing the default subscribed video stream type after joining a channel.\n If you call both this method and SetRemoteVideoStreamType, the setting of SetRemoteVideoStreamType takes effect.",
     "parameters": [
       {
         "streamType": "The default video-stream type. See VIDEO_STREAM_TYPE."
@@ -4392,7 +4529,7 @@
   {
     "id": "api_irtcengine_setremotevideostreamtype",
     "name": "SetRemoteVideoStreamType",
-    "description": "Sets the video stream type to subscribe to.\n\nUnder limited network conditions, if the publisher does not disable the dual-stream mode using EnableDualStreamMode [2/2] (false), the receiver can choose to receive either the high-quality video stream, or the low-quality video stream. The high-quality video stream has a higher resolution and bitrate, while the low-quality video stream has a lower resolution and bitrate. By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. The SDK will dynamically adjust the size of the corresponding video stream based on the size of the video window to save bandwidth and computing resources. The default aspect ratio of the low-quality video stream is the same as that of the high-quality video stream. According to the current aspect ratio of the high-quality video stream, the system will automatically allocate the resolution, frame rate, and bitrate of the low-quality video stream. The SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiver can initiate a low-quality video stream request by calling this method, and the sender will automatically start sending low-quality video stream upon receiving the request. You can call this method either before or after joining a channel. If you call both SetRemoteVideoStreamType and SetRemoteDefaultVideoStreamType, the setting of SetRemoteVideoStreamType takes effect.",
+    "description": "Sets the video stream type to subscribe to.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sending end, which means the sender does not actively send low-quality video stream. The receiver with the role of the host can initiate a low-quality video stream request by calling this method, and upon receiving the request, the sending end automatically starts sending the low-quality video stream. The SDK will dynamically adjust the size of the corresponding video stream based on the size of the video window to save bandwidth and computing resources. The default aspect ratio of the low-quality video stream is the same as that of the high-quality video stream. According to the current aspect ratio of the high-quality video stream, the system will automatically allocate the resolution, frame rate, and bitrate of the low-quality video stream.\n You can call this method either before or after joining a channel.\n If the publisher has already called SetDualStreamMode [2/2] and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video stream), calling this method will not take effect, you should call SetDualStreamMode [2/2] again on the sending end and adjust the settings.\n Calling this method on the receiving end of the audience role will not take effect.\n If you call both SetRemoteVideoStreamType and SetRemoteDefaultVideoStreamType, the settings in SetRemoteVideoStreamType take effect.",
     "parameters": [
       {
         "uid": "The user ID."
@@ -4746,7 +4883,7 @@
     "description": "Starts camera capture.\n\nYou can call this method to start capturing video from one or more cameras by specifying sourceType. On the iOS platform, if you want to enable multi-camera capture, you need to call EnableMultiCamera and set enabled to true before calling this method.",
     "parameters": [
       {
-        "sourceType": "The type of the video source. See VIDEO_SOURCE_TYPE.\n On the mobile platforms, you can capture video from up to 2 cameras, provided the device has dual cameras or supports an external camera.\n On the desktop platforms, you can capture video from up to 4 cameras."
+        "sourceType": "The type of the video source. See VIDEO_SOURCE_TYPE.\n On iOS devices, you can capture video from up to 2 cameras, provided the device has multiple cameras or supports external cameras.\n On Android devices, you can capture video from up to 4 cameras, provided the device has multiple cameras or supports external cameras.\n On the desktop platforms, you can capture video from up to 4 cameras."
       },
       {
         "config": "The configuration of the video capture. See CameraCapturerConfiguration. On the iOS platform, this parameter has no practical function. Use the config parameter in EnableMultiCamera instead to set the video capture configuration."
@@ -4817,7 +4954,7 @@
   {
     "id": "api_irtcengine_startlocalvideotranscoder",
     "name": "StartLocalVideoTranscoder",
-    "description": "Starts the local video mixing.\n\nAfter calling this method, you can merge multiple video streams into one video stream locally. For example, you can merge the video streams captured by the camera, screen sharing, media player, remote video, video files, images, etc. into one video stream, and then publish the mixed video stream to the channel.\n Local video mixing requires more CPU resources. Therefore, Agora recommends enabling this function on devices with higher performance.\n If you need to mix locally captured video streams, the SDK supports the following capture combinations:\n On the Windows platform, it supports up to 4 video streams captured by cameras + 4 screen sharing streams.\n On the macOS platform, it supports up to 4 video streams captured by cameras + 1 screen sharing stream.\n On Android and iOS platforms, it supports video streams captured by up to 2 cameras (the device itself needs to support dual cameras or supports external cameras) + 1 screen sharing stream.\n If you need to mix the locally collected video streams, you need to call this method after StartCameraCapture or StartScreenCapture [2/2].\n If you want to publish the mixed video stream to the channel, you need to set publishTranscodedVideoTrack in ChannelMediaOptions to true when calling JoinChannel [2/2] or UpdateChannelMediaOptions.",
+    "description": "Starts the local video mixing.\n\nAfter calling this method, you can merge multiple video streams into one video stream locally. For example, you can merge the video streams captured by the camera, screen sharing, media player, remote video, video files, images, etc. into one video stream, and then publish the mixed video stream to the channel.",
     "parameters": [
       {
         "config": "Configuration of the local video mixing, see LocalTranscoderConfiguration.\n The maximum resolution of each video stream participating in the local video mixing is 4096 × 2160. If this limit is exceeded, video mixing does not take effect.\n The maximum resolution of the mixed video stream is 4096 × 2160."
@@ -4914,13 +5051,13 @@
   {
     "id": "api_irtcengine_startscreencapture",
     "name": "StartScreenCapture [1/2]",
-    "description": "Starts screen capture.\n\nThere are two ways to start screen sharing, you can choose one according to your needs:\n Call this method before joining a channel, then call JoinChannel [2/2] to join channel and set publishScreenCaptureVideo to true to start screen sharing.\n Call this method after joining a channel, then call UpdateChannelMediaOptions and set publishScreenCaptureVideo to true to start screen sharing.\n This method applies to Android and iOS only.\n On the iOS platform, screen sharing is only available on iOS 12.0 and later.\n The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value. For billing details, see.\n If you are using the custom audio source instead of the SDK to capture audio, Agora recommends you add the keep-alive processing logic to your application to avoid screen sharing stopping when the application goes to the background.\n This feature requires high-performance device, and Agora recommends that you use it on iPhone X and later models.\n This method relies on the iOS screen sharing dynamic library AgoraReplayKitExtension.xcframework. If the dynamic library is deleted, screen sharing cannot be enabled normally.\n On the Android platform, make sure the user has granted the app screen capture permission.\n On Android 9 and later, to avoid the application being killed by the system after going to the background, Agora recommends you add the foreground service android.permission.FOREGROUND_SERVICE to the /app/Manifests/AndroidManifest.xml file.\n Due to performance limitations, screen sharing is not supported on Android TV.\n Due to system limitations, if you are using Huawei phones, do not adjust the video encoding resolution of the screen sharing stream during the screen sharing, or you could experience crashes.\n Due to system limitations, some Xiaomi devices do not support capturing system audio during screen sharing.\n To avoid system audio capture failure when screen sharing, Agora recommends that you set the audio application scenario to AUDIO_SCENARIO_GAME_STREAMING by using the SetAudioScenario method before joining the channel.",
+    "description": "Starts screen capture.\n\nThere are two options for enabling screen sharing. You can choose the one that best suits your specific scenario:\n Call this method before joining a channel, then call JoinChannel [2/2] to join channel and set publishScreenCaptureVideo to true to start screen sharing.\n Call this method after joining a channel, then call UpdateChannelMediaOptions and set publishScreenCaptureVideo to true to start screen sharing.\n This method applies to Android and iOS only.\n On the iOS platform, screen sharing is only available on iOS 12.0 and later.\n The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value. For billing details, see.\n If you are using the custom audio source instead of the SDK to capture audio, Agora recommends you add the keep-alive processing logic to your application to avoid screen sharing stopping when the application goes to the background.\n This feature requires high-performance device, and Agora recommends that you use it on iPhone X and later models.\n This method relies on the iOS screen sharing dynamic library AgoraReplayKitExtension.xcframework. If the dynamic library is deleted, screen sharing cannot be enabled normally.\n On the Android platform, if the user has not granted the app screen capture permission, the SDK reports the OnPermissionError (2) callback.\n On Android 9 and later, to avoid the application being killed by the system after going to the background, Agora recommends you add the foreground service android.permission.FOREGROUND_SERVICE to the /app/Manifests/AndroidManifest.xml file.\n Due to performance limitations, screen sharing is not supported on Android TV.\n Due to system limitations, if you are using Huawei phones, do not adjust the video encoding resolution of the screen sharing stream during the screen sharing, or you could experience crashes.\n Due to system limitations, some Xiaomi devices do not support capturing system audio during screen sharing.\n To avoid system audio capture failure when screen sharing, Agora recommends that you set the audio application scenario to AUDIO_SCENARIO_GAME_STREAMING by using the SetAudioScenario method before joining the channel.",
     "parameters": [
       {
         "captureParams": "The screen sharing encoding parameters. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters2."
       }
     ],
-    "returns": "0: Success.\n < 0: Failure.\n -2: The parameter is null.",
+    "returns": "0: Success.\n < 0: Failure.\n -2 (iOS platform): Empty parameter.\n -2 (Android platform): The system version is too low. Ensure that the Android API level is not lower than 21.\n -3 (Android platform): Unable to capture system audio. Ensure that the Android API level is not lower than 29.",
     "is_hide": false
   },
   {
@@ -5143,7 +5280,7 @@
   {
     "id": "api_irtcengine_switchcamera",
     "name": "SwitchCamera",
-    "description": "Switches between front and rear cameras.\n\nThis method is for Android and iOS only.\n This method must be called after the camera is successfully enabled, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).",
+    "description": "Switches between front and rear cameras.\n\nYou can call this method to dynamically switch cameras based on the actual camera availability during the app's runtime, without having to restart the video stream or reconfigure the video source.\n This method is for Android and iOS only.\n This method must be called after the camera is successfully enabled, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).\n This method only switches the camera for the video stream captured by the first camera, that is, the video source set to VIDEO_SOURCE_CAMERA (0) when calling StartCameraCapture.",
     "parameters": [],
     "returns": "0: Success.\n < 0: Failure.",
     "is_hide": false
@@ -5440,7 +5577,7 @@
   {
     "id": "api_irtcengineex_enabledualstreammodeex",
     "name": "EnableDualStreamModeEx",
-    "description": "Enables or disables dual-stream mode on the sender side.\n\nAfter you enable dual-stream mode, you can call SetRemoteVideoStreamType to choose to receive either the high-quality video stream or the low-quality video stream on the subscriber side. You can call this method to enable or disable the dual-stream mode on the publisher side. Dual streams are a pairing of a high-quality video stream and a low-quality video stream:\n High-quality video stream: High bitrate, high resolution.\n Low-quality video stream: Low bitrate, low resolution. This method is applicable to all types of streams from the sender, including but not limited to video streams collected from cameras, screen sharing streams, and custom-collected video streams.",
+    "description": "Enables or disables dual-stream mode on the sender side.\n\nAfter you enable dual-stream mode, you can call SetRemoteVideoStreamType to choose to receive either the high-quality video stream or the low-quality video stream on the subscriber side. You can call this method to enable or disable the dual-stream mode on the publisher side. Dual streams are a pairing of a high-quality video stream and a low-quality video stream:\n High-quality video stream: High bitrate, high resolution.\n Low-quality video stream: Low bitrate, low resolution. Deprecated: This method is deprecated as of v4.2.0. Use SetDualStreamModeEx instead. This method is applicable to all types of streams from the sender, including but not limited to video streams collected from cameras, screen sharing streams, and custom-collected video streams.",
     "parameters": [
       {
         "connection": "The connection information. See RtcConnection."
@@ -5450,6 +5587,24 @@
       },
       {
         "enabled": "Whether to enable dual-stream mode: true : Enable dual-stream mode. false : (Default) Disable dual-stream mode."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
+    "id": "api_irtcengineex_enableencryptionex",
+    "name": "EnableEncryptionEx",
+    "description": "Enables or disables the built-in encryption.\n\nAll users in the same channel must use the same encryption mode and encryption key. After the user leaves the channel, the SDK automatically disables the built-in encryption. To enable the built-in encryption, call this method before the user joins the channel again. In scenarios requiring high security, Agora recommends calling this method to enable the built-in encryption before joining a channel.",
+    "parameters": [
+      {
+        "connection": "The connection information. See RtcConnection."
+      },
+      {
+        "config": "Built-in encryption configurations. See EncryptionConfig."
+      },
+      {
+        "enabled": "Whether to enable built-in encryption: true : Enable the built-in encryption. false : (Default) Disable the built-in encryption."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -5474,6 +5629,21 @@
     "is_hide": false
   },
   {
+    "id": "api_irtcengineex_getcallidex",
+    "name": "GetCallIdEx",
+    "description": "Gets the call ID with the connection ID.\n\nCall this method after joining a channel. When a user joins a channel on a client, a callId is generated to identify the call from the client. You can call this method to get the callId parameter, and pass it in when calling methods such as Rate and Complain.",
+    "parameters": [
+      {
+        "connection": "The connection information. See RtcConnection."
+      },
+      {
+        "callId": "Output parameter, the current call ID."
+      }
+    ],
+    "returns": "0: Success.\n < 0: Failure.",
+    "is_hide": false
+  },
+  {
     "id": "api_irtcengineex_getconnectionstateex",
     "name": "GetConnectionStateEx",
     "description": "Gets the current connection state of the SDK.\n\nYou can call this method either before or after joining a channel.",
@@ -5488,7 +5658,7 @@
   {
     "id": "api_irtcengineex_joinchannelex",
     "name": "JoinChannelEx",
-    "description": "Joins a channel with the connection ID.\n\nYou can call this method multiple times to join more than one channel.\n If you are already in a channel, you cannot rejoin it with the same user ID.\n If you want to join the same channel from different devices, ensure that the user IDs are different for all devices.\n Ensure that the App ID you use to generate the token is the same as the App ID used when creating the IRtcEngine instance.",
+    "description": "Joins a channel with the connection ID.\n\nYou can call this method multiple times to join more than one channel.\n If you are already in a channel, you cannot rejoin it with the same user ID.\n If you want to join the same channel from different devices, ensure that the user IDs are different for all devices.\n Ensure that the App ID you use to generate the token is the same as the App ID used when creating the IRtcEngine instance.\n If you choose the Testing Mode (using an App ID for authentication) for your project and call this method to join a channel, you will automatically exit the channel after 24 hours.",
     "parameters": [
       {
         "options": "The channel media options. See ChannelMediaOptions."
@@ -5703,7 +5873,7 @@
   {
     "id": "api_irtcengineex_setdualstreammodeex",
     "name": "SetDualStreamModeEx",
-    "description": "Sets the dual-stream mode on the sender side.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiver can initiate a low-quality video stream request by calling SetRemoteVideoStreamTypeEx, and the sender will automatically start sending low-quality video stream upon receiving the request.\n If you want to modify this behavior, you can call this method and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video streams) or ENABLE_SIMULCAST_STREAM (always send low-quality video streams).\n If you want to restore the default behavior after making changes, you can call this method again with mode set to AUTO_SIMULCAST_STREAM. The difference and connection between this method and EnableDualStreamModeEx is as follows:\n When calling this method and setting mode to DISABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamModeEx (false).\n When calling this method and setting mode to ENABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamModeEx (true).\n Both methods can be called before and after joining a channel. If both methods are used, the settings in the method called later takes precedence.",
+    "description": "Sets the dual-stream mode on the sender side.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sending end, which means the sender does not actively send low-quality video stream. The receiver with the role of the host can initiate a low-quality video stream request by calling SetRemoteVideoStreamTypeEx, and upon receiving the request, the sending end automatically starts sending the low-quality video stream.\n If you want to modify this behavior, you can call this method and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video streams) or ENABLE_SIMULCAST_STREAM (always send low-quality video streams).\n If you want to restore the default behavior after making changes, you can call this method again with mode set to AUTO_SIMULCAST_STREAM. The difference and connection between this method and EnableDualStreamModeEx is as follows:\n When calling this method and setting mode to DISABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamModeEx (false).\n When calling this method and setting mode to ENABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamModeEx (true).\n Both methods can be called before and after joining a channel. If both methods are used, the settings in the method called later takes precedence.",
     "parameters": [
       {
         "connection": "The connection information. See RtcConnection."
@@ -5742,7 +5912,7 @@
   {
     "id": "api_irtcengineex_setremotevideostreamtypeex",
     "name": "SetRemoteVideoStreamTypeEx",
-    "description": "Sets the video stream type to subscribe to.\n\nThe SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiver can initiate a low-quality video stream request by calling this method, and the sender will automatically start sending low-quality video stream upon receiving the request. By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. The SDK will dynamically adjust the size of the corresponding video stream based on the size of the video window to save bandwidth and computing resources. The default aspect ratio of the low-quality video stream is the same as that of the high-quality video stream. According to the current aspect ratio of the high-quality video stream, the system will automatically allocate the resolution, frame rate, and bitrate of the low-quality video stream. Under limited network conditions, if the publisher does not disable the dual-stream mode using EnableDualStreamModeEx (false), the receiver can choose to receive either the high-quality video stream, or the low-quality video stream. The high-quality video stream has a higher resolution and bitrate, while the low-quality video stream has a lower resolution and bitrate.",
+    "description": "Sets the video stream type to subscribe to.\n\nThe SDK will dynamically adjust the size of the corresponding video stream based on the size of the video window to save bandwidth and computing resources. The default aspect ratio of the low-quality video stream is the same as that of the high-quality video stream. According to the current aspect ratio of the high-quality video stream, the system will automatically allocate the resolution, frame rate, and bitrate of the low-quality video stream. The SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sending end, which means the sender does not actively send low-quality video stream. The receiver with the role of the host can initiate a low-quality video stream request by calling this method, and upon receiving the request, the sending end automatically starts sending the low-quality video stream.\n If the publisher has already called SetDualStreamModeEx and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video stream), calling this method will not take effect, you should call SetDualStreamModeEx again on the sending end and adjust the settings.\n Calling this method on the receiving end of the audience role will not take effect.",
     "parameters": [
       {
         "connection": "The connection information. See RtcConnection."
@@ -6432,6 +6602,18 @@
       }
     ],
     "returns": "",
+    "is_hide": false
+  },
+  {
+    "id": "callback_ifaceinfoobserver_onfaceinfo",
+    "name": "OnFaceInfo",
+    "description": "Occurs when the facial information processed by speech driven extension is received.",
+    "parameters": [
+      {
+        "outFaceInfo": "Output parameter, the JSON string of the facial information processed by the voice driver plugin, including the following fields:\n faces: Object sequence. The collection of facial information, with each face corresponding to an object.\n blendshapes: Object. The collection of face capture coefficients, named according to ARkit standards, with each key-value pair representing a blendshape coefficient. The blendshape coefficient is a floating point number with a range of [0.0, 1.0].\n rotation: Object sequence. The rotation of the head, which includes the following three key-value pairs, with values as floating point numbers ranging from -180.0 to 180.0:\n pitch: Head pitch angle. A positve value means looking down, while a negative value means looking up.\n yaw: Head yaw angle. A positve value means turning left, while a negative value means turning right.\n roll: Head roll angle. A positve value means tilting to the right, while a negative value means tilting to the left.\n timestamp: String. The timestamp of the output result, in milliseconds. Here is an example of JSON:\n{\n \"faces\":[{ \n \"blendshapes\":{\n \"eyeBlinkLeft\":0.9, \"eyeLookDownLeft\":0.0, \"eyeLookInLeft\":0.0, \"eyeLookOutLeft\":0.0, \"eyeLookUpLeft\":0.0,\n \"eyeSquintLeft\":0.0, \"eyeWideLeft\":0.0, \"eyeBlinkRight\":0.0, \"eyeLookDownRight\":0.0, \"eyeLookInRight\":0.0,\n \"eyeLookOutRight\":0.0, \"eyeLookUpRight\":0.0, \"eyeSquintRight\":0.0, \"eyeWideRight\":0.0, \"jawForward\":0.0,\n \"jawLeft\":0.0, \"jawRight\":0.0, \"jawOpen\":0.0, \"mouthClose\":0.0, \"mouthFunnel\":0.0, \"mouthPucker\":0.0,\n \"mouthLeft\":0.0, \"mouthRight\":0.0, \"mouthSmileLeft\":0.0, \"mouthSmileRight\":0.0, \"mouthFrownLeft\":0.0,\n \"mouthFrownRight\":0.0, \"mouthDimpleLeft\":0.0, \"mouthDimpleRight\":0.0, \"mouthStretchLeft\":0.0, \"mouthStretchRight\":0.0,\n \"mouthRollLower\":0.0, \"mouthRollUpper\":0.0, \"mouthShrugLower\":0.0, \"mouthShrugUpper\":0.0, \"mouthPressLeft\":0.0,\n \"mouthPressRight\":0.0, \"mouthLowerDownLeft\":0.0, \"mouthLowerDownRight\":0.0, \"mouthUpperUpLeft\":0.0, \"mouthUpperUpRight\":0.0,\n \"browDownLeft\":0.0, \"browDownRight\":0.0, \"browInnerUp\":0.0, \"browOuterUpLeft\":0.0, \"browOuterUpRight\":0.0,\n \"cheekPuff\":0.0, \"cheekSquintLeft\":0.0, \"cheekSquintRight\":0.0, \"noseSneerLeft\":0.0, \"noseSneerRight\":0.0,\n \"tongueOut\":0.0\n },\n \"rotation\":{\"pitch\":30.0, \"yaw\":25.5, \"roll\":-15.5},\n\n }],\n \"timestamp\":\"654879876546\"\n}"
+      }
+    ],
+    "returns": "true : Facial information JSON parsing successful. false : Facial information JSON parsing failed.",
     "is_hide": false
   },
   {
@@ -7200,7 +7382,7 @@
   {
     "id": "callback_irtcengineeventhandler_onextensionerror",
     "name": "OnExtensionError",
-    "description": "Occurs when the extension runs incorrectly.\n\nWhen calling EnableExtension (true) fails or the extension runs in error, the extension triggers this callback and reports the error code and reason.",
+    "description": "Occurs when the extension runs incorrectly.\n\nIn case of extension enabling failure or runtime errors, the extension triggers this callback and reports the error code along with the reasons.",
     "parameters": [
       {
         "provider": "The name of the extension provider."
@@ -7242,7 +7424,7 @@
   {
     "id": "callback_irtcengineeventhandler_onextensionstarted",
     "name": "OnExtensionStarted",
-    "description": "Occurs when the extension is enabled.\n\nAfter a successful call of EnableExtension (true), the extension triggers this callback.",
+    "description": "Occurs when the extension is enabled.\n\nThe extension triggers this callback after it is successfully enabled.",
     "parameters": [
       {
         "provider": "The name of the extension provider."
@@ -7257,7 +7439,7 @@
   {
     "id": "callback_irtcengineeventhandler_onextensionstopped",
     "name": "OnExtensionStopped",
-    "description": "Occurs when the extension is disabled.\n\nAfter a successful call of EnableExtension (false), this callback is triggered.",
+    "description": "Occurs when the extension is disabled.\n\nThe extension triggers this callback after it is successfully destroyed.",
     "parameters": [
       {
         "extension": "The name of the extension."
@@ -7533,7 +7715,7 @@
   {
     "id": "callback_irtcengineeventhandler_onlocalvideostatechanged",
     "name": "OnLocalVideoStateChanged",
-    "description": "Occurs when the local video stream state changes.\n\nWhen the state of the local video stream changes (including the state of the video capture and encoding), the SDK triggers this callback to report the current state. This callback indicates the state of the local video stream, including camera capturing and video encoding, and allows you to troubleshoot issues when exceptions occur. The SDK triggers the OnLocalVideoStateChanged callback with the state code of LOCAL_VIDEO_STREAM_STATE_FAILED and error code of LOCAL_VIDEO_STREAM_REASON_CAPTURE_FAILURE in the following situations:\n The app switches to the background, and the system gets the camera resource.\n For Android 9 and later versions, after an app is in the background for a period, the system automatically revokes camera permissions.\n For Android 6 and later versions, if the camera is held by a third-party app for a certain duration and then released, the SDK triggers this callback and reports the OnLocalVideoStateChanged (LOCAL_VIDEO_STREAM_STATE_CAPTURING, LOCAL_VIDEO_STREAM_REASON_OK) callback.\n The camera starts normally, but does not output video frames for four consecutive seconds. When the camera outputs the captured video frames, if the video frames are the same for 15 consecutive frames, the SDK triggers the OnLocalVideoStateChanged callback with the state code of LOCAL_VIDEO_STREAM_STATE_CAPTURING and error code of LOCAL_VIDEO_STREAM_REASON_CAPTURE_FAILURE. Note that the video frame duplication detection is only available for video frames with a resolution greater than 200 × 200, a frame rate greater than or equal to 10 fps, and a bitrate less than 20 Kbps. For some device models, the SDK does not trigger this callback when the state of the local video changes while the local video capturing device is in use, so you have to make your own timeout judgment.",
+    "description": "Occurs when the local video stream state changes.\n\nWhen the status of the local video changes, the SDK triggers this callback to report the current local video state and the reason for the state change.",
     "parameters": [
       {
         "source": "The type of the video source. See VIDEO_SOURCE_TYPE."
@@ -7542,7 +7724,7 @@
         "state": "The state of the local video, see LOCAL_VIDEO_STREAM_STATE."
       },
       {
-        "errorCode": "The reasons for changes in local video state. See LOCAL_VIDEO_STREAM_REASON."
+        "reason": "The reasons for changes in local video state. See LOCAL_VIDEO_STREAM_REASON."
       }
     ],
     "returns": "",
@@ -8015,7 +8197,7 @@
   {
     "id": "callback_irtcengineeventhandler_onuserenablelocalvideo",
     "name": "OnUserEnableLocalVideo",
-    "description": "Occurs when a specific remote user enables/disables the local video capturing function.\n\nThe SDK triggers this callback when the remote user resumes or stops capturing the video stream by calling the EnableLocalVideo method.",
+    "description": "Occurs when a specific remote user enables/disables the local video capturing function.\n\nDeprecated: This callback is deprecated, use the following enumerations in the OnRemoteVideoStateChanged callback: REMOTE_VIDEO_STATE_STOPPED (0) and REMOTE_VIDEO_STATE_REASON_REMOTE_MUTED (5). REMOTE_VIDEO_STATE_DECODING (2) and REMOTE_VIDEO_STATE_REASON_REMOTE_UNMUTED (6). The SDK triggers this callback when the remote user resumes or stops capturing the video stream by calling the EnableLocalVideo method.",
     "parameters": [
       {
         "connection": "The connection information. See RtcConnection."
@@ -8024,7 +8206,7 @@
         "remoteUid": "The user ID of the remote user."
       },
       {
-        "enabled": "Whether the specified remote user enables/disables the local video capturing function: true : The video module is enabled. Other users in the channel can see the video of this remote user. false : The video module is disabled. Other users in the channel can no longer receive the video stream from this remote user, while this remote user can still receive the video streams from other users."
+        "enabled": "Whether the specified remote user enables/disables local video capturing: true : The video module is enabled. Other users in the channel can see the video of this remote user. false : The video module is disabled. Other users in the channel can no longer receive the video stream from this remote user, while this remote user can still receive the video streams from other users."
       }
     ],
     "returns": "",
@@ -8281,7 +8463,7 @@
   {
     "id": "callback_ivideoframeobserver_oncapturevideoframe",
     "name": "OnCaptureVideoFrame",
-    "description": "Occurs each time the SDK receives a video frame captured by local devices.\n\nAfter you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data captured by local devices. You can then pre-process the data according to your scenarios. Once the pre-processing is complete, you can directly modify videoFrame in this callback, and set the return value to true to send the modified video data to the SDK.\n The video data that this callback gets has not been pre-processed such as watermarking, cropping, and rotating.\n If the video data type you get is RGBA, the SDK does not support processing the data of the alpha channel.",
+    "description": "Occurs each time the SDK receives a video frame captured by local devices.\n\nYou can get raw video data collected by the local device through this callback and preprocess it as needed. Once the preprocessing is complete, you can directly modify videoFrame in this callback, and set the return value to true to send the modified video data to the SDK.",
     "parameters": [
       {
         "sourceType": "Video source types, including cameras, screens, or media player. See VIDEO_SOURCE_TYPE."
@@ -8419,14 +8601,6 @@
     "is_hide": false
   },
   {
-    "id": "class_videosurface",
-    "name": "VideoSurface",
-    "description": "This class contains Unity native methods related to video rendering.",
-    "parameters": [],
-    "returns": "",
-    "is_hide": false
-  },
-  {
     "id": "class_audioencodedframeobserverconfig",
     "name": "AudioEncodedFrameObserverConfig",
     "description": "Observer settings for the encoded audio.",
@@ -8453,13 +8627,13 @@
         "samplesPerChannel": "The number of samples per channel in the audio frame."
       },
       {
-        "bytesPerSample": "The number of bytes per sample. The number of bytes per audio sample, which is usually 16-bit (2-byte)."
+        "bytesPerSample": "The number of bytes per sample. For PCM, this parameter is generally set to 16 bits (2 bytes)."
       },
       {
         "channels": "The number of audio channels (the data are interleaved if it is stereo).\n 1: Mono.\n 2: Stereo."
       },
       {
-        "samplesPerSec": "The number of samples per second of the audio frame."
+        "samplesPerSec": "The number of samples per channel in the audio frame."
       },
       {
         "RawBuffer": "The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved. The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample."
@@ -8645,16 +8819,22 @@
     "description": "The camera capturer preference.",
     "parameters": [
       {
-        "cameraDirection": "This parameter applies to Android and iOS only. The camera direction. See CAMERA_DIRECTION."
+        "cameraDirection": "(Optional) The camera direction. See CAMERA_DIRECTION. This parameter is for Android and iOS only."
       },
       {
-        "format": "The format of the video frame. See VideoFormat."
+        "cameraId": "(Optional) The camera ID. The default value is the camera ID of the front camera. You can get the camera ID through the Android native system API, see and for details.\n This parameter is for Android only.\n This parameter and cameraDirection are mutually exclusive in specifying the camera; you can choose one based on your needs. The differences are as follows:\n Specifying the camera via cameraDirection is more straightforward. You only need to indicate the camera direction (front or rear), without specifying a specific camera ID; the SDK will retrieve and confirm the actual camera ID through Android native system APIs.\n Specifying via cameraId allows for more precise identification of a particular camera. For devices with multiple cameras, where cameraDirection cannot recognize or access all available cameras, it is recommended to use cameraId to specify the desired camera ID directly."
       },
       {
-        "deviceId": "This method applies to Windows only. The ID of the camera."
+        "cameraFocalLengthType": "(Optional) The camera focal length type. See CAMERA_FOCAL_LENGTH_TYPE.\n This parameter is for Android and iOS only.\n To set the focal length type of the camera, it is only supported to specify the camera through cameraDirection, and not supported to specify it through cameraId.\n For iOS devices equipped with multi-lens rear cameras, such as those featuring dual-camera (wide-angle and ultra-wide-angle) or triple-camera (wide-angle, ultra-wide-angle, and telephoto), you can use one of the following methods to capture video with an ultra-wide-angle perspective:\n Method one: Set this parameter to CAMERA_FOCAL_LENGTH_ULTRA_WIDE (2) (ultra-wide lens).\n Method two: Set this parameter to CAMERA_FOCAL_LENGTH_DEFAULT (0) (standard lens), then call SetCameraZoomFactor to set the camera's zoom factor to a value less than 1.0, with the minimum setting being 0.5. The difference is that the size of the ultra-wide angle in method one is not adjustable, whereas method two supports adjusting the camera's zoom factor freely."
       },
       {
-        "followEncodeDimensionRatio": "Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame."
+        "format": "(Optional) The format of the video frame. See VideoFormat."
+      },
+      {
+        "deviceId": "The camera ID. This parameter is for Windows and macOS only."
+      },
+      {
+        "followEncodeDimensionRatio": "(Optional) Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame."
       }
     ],
     "returns": "",
@@ -8696,19 +8876,19 @@
         "publishMicrophoneTrack": "Whether to publish the audio captured by the microphone: true : Publish the audio captured by the microphone. false : Do not publish the audio captured by the microphone."
       },
       {
-        "publishThirdCameraTrack": "Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This is for Windows and macOS only."
+        "publishThirdCameraTrack": "Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This parameter is for Android, Windows and macOS only."
       },
       {
-        "publishFourthCameraTrack": "Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This is for Windows and macOS only."
+        "publishFourthCameraTrack": "Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This parameter is for Android, Windows and macOS only."
       },
       {
         "publishScreenTrack": "Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This is for Windows and macOS only."
       },
       {
-        "publishScreenCaptureVideo": "Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter applies to Android and iOS only."
+        "publishScreenCaptureVideo": "Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only."
       },
       {
-        "publishScreenCaptureAudio": "Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter applies to Android and iOS only."
+        "publishScreenCaptureAudio": "Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only."
       },
       {
         "publishSecondaryScreenTrack": "Whether to publish the video captured from the second screen: true : Publish the video captured from the second screen. false : Do not publish the video captured from the second screen."
@@ -8762,13 +8942,16 @@
         "channelProfile": "The channel profile. See CHANNEL_PROFILE_TYPE."
       },
       {
+        "audioDelayMs": "Delay (in milliseconds) for sending audio frames. You can use this parameter to set the delay of the audio frames that need to be sent, to ensure audio and video synchronization. To switch off the delay, set the value to 0."
+      },
+      {
         "token": "(Optional) The token generated on your server for authentication.\n This parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx.\n Ensure that the App ID, channel name, and user name used for creating the token are the same as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel."
       },
       {
         "publishRhythmPlayerTrack": "Whether to publish the sound of a metronome to remote users: true : Publish processed audio frames. Both the local user and remote users can hear the metronome. false : Do not publish the sound of the metronome. Only the local user can hear the metronome."
       },
       {
-        "isInteractiveAudience": "Whether to enable interactive mode: true : Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency. false :Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.\n This parameter only applies to scenarios involving cohosting across channels. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.\n This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE."
+        "isInteractiveAudience": "Whether to enable interactive mode: true : Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency. false :Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.\n This parameter only applies to co-streaming scenarios. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.\n This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE."
       },
       {
         "customVideoTrackId": "The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0."
@@ -9111,6 +9294,9 @@
       },
       {
         "encryptionKdfSalt": "Salt, 32 bytes in length. Agora recommends that you use OpenSSL to generate salt on the server side. See Media Stream Encryption for details. This parameter takes effect only in AES_128_GCM2 or AES_256_GCM2 encrypted mode. In this case, ensure that this parameter is not 0."
+      },
+      {
+        "datastreamEncryptionEnabled": "Whether to enable data stream encryption: true : Enable data stream encryption. false : (Default) Disable data stream encryption."
       }
     ],
     "returns": "",
@@ -9180,6 +9366,21 @@
     "is_hide": false
   },
   {
+    "id": "class_focallengthinfo",
+    "name": "FocalLengthInfo",
+    "description": "Focal length information supported by the camera, including the camera direction and focal length type.\n\nThis enumeration class applies to Android and iOS only.",
+    "parameters": [
+      {
+        "cameraDirection": "The camera direction. See CAMERA_DIRECTION."
+      },
+      {
+        "focalLengthType": "The focal length type. See CAMERA_FOCAL_LENGTH_TYPE."
+      }
+    ],
+    "returns": "",
+    "is_hide": false
+  },
+  {
     "id": "class_iaudiodevicemanager",
     "name": "IAudioDeviceManager",
     "description": "Audio device management methods.",
@@ -9234,6 +9435,14 @@
     "parameters": [],
     "returns": "",
     "is_hide": true
+  },
+  {
+    "id": "class_ifaceinfoobserver",
+    "name": "IFaceInfoObserver",
+    "description": "Facial information observer.\n\nYou can call RegisterFaceInfoObserver to register or unregister the IFaceInfoObserver object.",
+    "parameters": [],
+    "returns": "",
+    "is_hide": false
   },
   {
     "id": "class_ilocalspatialaudioengine",
@@ -9742,7 +9951,7 @@
     "description": "Configuration of Agora SDK log files.",
     "parameters": [
       {
-        "filePath": "The complete path of the log files. Ensure that the path for the log file exists and is writable. You can use this parameter to rename the log files. The default path is:\n Android： /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.\n iOS： App Sandbox/Library/caches/agorasdk.log.\n macOS:\n If Sandbox is enabled: App Sandbox/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.\n If Sandbox is disabled: ~/Library/Logs/agorasdk.log\n Windows: C:\\Users\\<user_name>\\AppData\\Local\\Agora\\<process_name>\\agorasdk.log."
+        "filePath": "The complete path of the log files. Agora recommends using the default log directory. If you need to modify the default directory, ensure that the directory you specify exists and is writable. The default log directory is:\n Android： /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.\n iOS： App Sandbox/Library/caches/agorasdk.log.\n macOS:\n If Sandbox is enabled: App Sandbox/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.\n If Sandbox is disabled: ~/Library/Logs/agorasdk.log\n Windows: C:\\Users\\<user_name>\\AppData\\Local\\Agora\\<process_name>\\agorasdk.log."
       },
       {
         "fileSizeInKB": "The size (KB) of an agorasdk.log file. The value range is [128,20480]. The default value is 2,048 KB. If you set fileSizeInKByte smaller than 128 KB, the SDK automatically adjusts it to 128 KB; if you set fileSizeInKByte greater than 20,480 KB, the SDK automatically adjusts it to 20,480 KB."
@@ -10190,6 +10399,9 @@
       },
       {
         "mosValue": "The quality of the remote audio stream in the reported interval. The quality is determined by the Agora real-time audio MOS (Mean Opinion Score) measurement method. The return value range is [0, 500]. Dividing the return value by 100 gets the MOS score, which ranges from 0 to 5. The higher the score, the better the audio quality. The subjective perception of audio quality corresponding to the Agora real-time audio MOS scores is as follows: MOS score Perception of audio quality Greater than 4 Excellent. The audio sounds clear and smooth. From 3.5 to 4 Good. The audio has some perceptible impairment but still sounds clear. From 3 to 3.5 Fair. The audio freezes occasionally and requires attentive listening. From 2.5 to 3 Poor. The audio sounds choppy and requires considerable effort to understand. From 2 to 2.5 Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty. Less than 2 Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible."
+      },
+      {
+        "e2eDelay": "End-to-end audio delay (in milliseconds), which refers to the time from when the audio is captured by the remote user to when it is played by the local user."
       }
     ],
     "returns": "",
@@ -10480,7 +10692,7 @@
     "description": "Screen sharing configurations.",
     "parameters": [
       {
-        "dimensions": "The video encoding resolution of the shared screen stream. See VideoDimensions. The default value is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 × 1080:\n If the value of the screen dimensions is lower than that of dimensions, for example, 1000 × 1000 pixels, the SDK uses the screen dimensions, that is, 1000 × 1000 pixels, for encoding.\n If the value of the screen dimensions is higher than that of dimensions, for example, 2000 × 1500, the SDK uses the maximum value under dimensions with the aspect ratio of the screen dimension (4:3) for encoding, that is, 1440 × 1080."
+        "dimensions": "The video encoding resolution of the screen sharing stream. See VideoDimensions. The default value is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 × 1080:\n If the value of the screen dimensions is lower than that of dimensions, for example, 1000 × 1000 pixels, the SDK uses the screen dimensions, that is, 1000 × 1000 pixels, for encoding.\n If the value of the screen dimensions is higher than that of dimensions, for example, 2000 × 1500, the SDK uses the maximum value under dimensions with the aspect ratio of the screen dimension (4:3) for encoding, that is, 1440 × 1080. When setting the encoding resolution in the scenario of sharing documents (SCREEN_SCENARIO_DOCUMENT), choose one of the following two methods:\n If you require the best image quality, it is recommended to set the encoding resolution to be the same as the capture resolution.\n If you wish to achieve a relative balance between image quality, bandwidth, and system performance, then:\n When the capture resolution is greater than 1920 × 1080, it is recommended that the encoding resolution is not less than 1920 × 1080.\n When the capture resolution is less than 1920 × 1080, it is recommended that the encoding resolution is not less than 1280 × 720."
       },
       {
         "frameRate": "On Windows and macOS, this represents the video encoding frame rate (fps) of the shared screen stream. The frame rate (fps) of the shared region. The default value is 5. Agora does not recommend setting this to a value greater than 15."
@@ -10603,7 +10815,7 @@
         "modelType": "The type of algorithms to user for background processing. See SEG_MODEL_TYPE."
       },
       {
-        "greenCapacity": "The range of accuracy for identifying green colors (different shades of green) in the view. The value range is [0,1], and the default value is 0.5. The larger the value, the wider the range of identifiable shades of green. When the value of this parameter is too large, the edge of the portrait and the green color in the portrait range are also detected. Agora recommends that you dynamically adjust the value of this parameter according to the actual effect. This parameter only takes effect when modelType is set to SEG_MODEL_GREEN."
+        "greenCapacity": "The accuracy range for recognizing background colors in the image. The value range is [0,1], and the default value is 0.5. The larger the value, the wider the range of identifiable shades of pure color. When the value of this parameter is too large, the edge of the portrait and the pure color in the portrait range are also detected. Agora recommends that you dynamically adjust the value of this parameter according to the actual effect. This parameter only takes effect when modelType is set to SEG_MODEL_GREEN."
       }
     ],
     "returns": "",
@@ -10615,10 +10827,10 @@
     "description": "The configuration of the low-quality video stream.",
     "parameters": [
       {
-        "dimensions": "The video dimension. See VideoDimensions. The default value is 160 × 120."
+        "dimensions": "The video dimension. See VideoDimensions. The default value is 50% of the high-quality video stream."
       },
       {
-        "kBitrate": "Video receive bitrate (Kbps), represented by an instantaneous value. The default value is 65."
+        "kBitrate": "Video receive bitrate (Kbps), represented by an instantaneous value. This parameter does not need to be set. The SDK automatically matches the most suitable bitrate based on the video resolution and frame rate you set."
       },
       {
         "frameRate": "The frame rate (fps) of the local video. The default value is 5."
@@ -10654,7 +10866,7 @@
         "speaker_attenuation": "The sound attenuation coefficient of the remote user or media player. The value range is [0,1]. The values are as follows:\n 0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.\n (0,0.5): Weak attenuation mode, where the volume and timbre only have a weak attenuation during the propagation, and the sound can travel farther than that in a real environment. enable_air_absorb needs to be enabled at the same time.\n 0.5: (Default) Simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the speaker_attenuation parameter.\n (0.5,1]: Strong attenuation mode, where volume and timbre attenuate rapidly during the propagation. enable_air_absorb needs to be enabled at the same time."
       },
       {
-        "enable_doppler": "Whether to enable the Doppler effect: When there is a relative displacement between the sound source and the receiver of the sound source, the tone heard by the receiver changes. true : Enable the Doppler effect. false : (Default) Disable the Doppler effect.\n This parameter is suitable for scenarios where the sound source is moving at high speed (for example, racing games). It is not recommended for common audio and video interactive scenarios (for example, voice chat, cohosting, or online KTV).\n When this parameter is enabled, Agora recommends that you set a regular period (such as 30 ms), and then call the UpdatePlayerPositionInfo, UpdateSelfPosition, and UpdateRemotePosition methods to continuously update the relative distance between the sound source and the receiver. The following factors can cause the Doppler effect to be unpredictable or the sound to be jittery: the period of updating the distance is too long, the updating period is irregular, or the distance information is lost due to network packet loss or delay."
+        "enable_doppler": "Whether to enable the Doppler effect: When there is a relative displacement between the sound source and the receiver of the sound source, the tone heard by the receiver changes. true : Enable the Doppler effect. false : (Default) Disable the Doppler effect.\n This parameter is suitable for scenarios where the sound source is moving at high speed (for example, racing games). It is not recommended for common audio and video interactive scenarios (for example, voice chat, co-streaming, or online KTV).\n When this parameter is enabled, Agora recommends that you set a regular period (such as 30 ms), and then call the UpdatePlayerPositionInfo, UpdateSelfPosition, and UpdateRemotePosition methods to continuously update the relative distance between the sound source and the receiver. The following factors can cause the Doppler effect to be unpredictable or the sound to be jittery: the period of updating the distance is too long, the updating period is irregular, or the distance information is lost due to network packet loss or delay."
       }
     ],
     "returns": "",
@@ -10861,7 +11073,7 @@
         "subviewUid": "The ID of the user who publishes a specific sub-video stream within the mixed video stream."
       },
       {
-        "view": "The video display window."
+        "view": "The video display window. In one VideoCanvas, you can only choose to set either view or surfaceTexture. If both are set, only the settings in view take effect."
       },
       {
         "renderMode": "The rendering mode of the video. See RENDER_MODE_TYPE."
@@ -10885,7 +11097,7 @@
         "backgroundColor": "The background color of the video canvas in RGBA format. The default value is 0x00000000, which represents completely transparent black."
       },
       {
-        "enableAlphaMask": "(Optional) Whether the receiver enables alpha mask rendering: true : The receiver enables alpha mask rendering. false : (default) The receiver disables alpha mask rendering. Alpha mask rendering can create images with transparent effects and extract portraits from videos. When used in combination with other methods, you can implement effects such as portrait-in-picture and watermarking.\n This property applies to macOS only.\n The receiver can render alpha channel information only when the sender enables alpha transmission.\n To enable alpha transmission,."
+        "enableAlphaMask": "(Optional) Whether the receiver enables alpha mask rendering: true : The receiver enables alpha mask rendering. false : (Default) The receiver disables alpha mask rendering. Alpha mask rendering can create images with transparent effects and extract portraits from videos. When used in combination with other methods, you can implement effects such as portrait-in-picture and watermarking.\n The receiver can render alpha channel information only when the sender enables alpha transmission.\n To enable alpha transmission,."
       },
       {
         "position": "The observation position of the video frame in the video link. See VIDEO_MODULE_POSITION."
@@ -10981,13 +11193,13 @@
     "description": "The format of the video frame.",
     "parameters": [
       {
-        "width": "The width (px) of the video frame."
+        "width": "The width (px) of the video frame. The default value is 960."
       },
       {
-        "height": "The height (px) of the video frame."
+        "height": "The height (px) of the video frame. The default value is 540."
       },
       {
-        "fps": "The video frame rate (fps)."
+        "fps": "The video frame rate (fps). The default value is 15."
       }
     ],
     "returns": "",
@@ -11008,13 +11220,13 @@
         "height": "The height of the video, in pixels."
       },
       {
-        "yStride": "For YUV data, the line span of the Y buffer; for RGBA data, the total data length."
+        "yStride": "For YUV data, the line span of the Y buffer; for RGBA data, the total data length. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion."
       },
       {
-        "uStride": "For YUV data, the line span of the U buffer; for RGBA data, the value is 0."
+        "uStride": "For YUV data, the line span of the U buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion."
       },
       {
-        "vStride": "For YUV data, the line span of the V buffer; for RGBA data, the value is 0."
+        "vStride": "For YUV data, the line span of the V buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion."
       },
       {
         "yBuffer": "For YUV data, the pointer to the Y buffer; for RGBA data, the data buffer."
@@ -11029,7 +11241,7 @@
         "rotation": "The clockwise rotation of the video frame before rendering. Supported values include 0, 90, 180, and 270 degrees."
       },
       {
-        "renderTimeMs": "The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. It is required."
+        "renderTimeMs": "The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. This parameter is required."
       },
       {
         "avsync_type": "Reserved for future use."
@@ -11153,6 +11365,14 @@
     "is_hide": false
   },
   {
+    "id": "class_videosurface",
+    "name": "VideoSurface",
+    "description": "This class contains Unity native methods related to video rendering.",
+    "parameters": [],
+    "returns": "",
+    "is_hide": false
+  },
+  {
     "id": "class_videosurfaceyuv",
     "name": "VideoSurfaceYUV",
     "description": "Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. As of v4.2.0, Agora Unity SDK does not support rendering different video sources with both VideoSurface and VideoSurfaceYUV at the same time. Specifically, after successfully creating IRtcEngine, if the first view is rendered with VideoSurfaceYUV, then only VideoSurfaceYUV can be used for rendering throughout the entire lifecycle of IRtcEngine.",
@@ -11187,7 +11407,7 @@
     "description": "Configurations of the watermark image.",
     "parameters": [
       {
-        "visibleInPreview": "Is the watermark visible in the local preview view? true : (Default) The watermark is visible in the local preview view. false : The watermark is not visible in the local preview view."
+        "visibleInPreview": "Whether the watermark is visible in the local preview view: true : (Default) The watermark is visible in the local preview view. false : The watermark is not visible in the local preview view."
       },
       {
         "positionInLandscapeMode": "When the adaptation mode of the watermark is FIT_MODE_COVER_POSITION, it is used to set the area of the watermark image in landscape mode. See Rectangle."
@@ -11389,6 +11609,9 @@
       },
       {
         "ROOM_ACOUSTICS_VIRTUAL_SURROUND_SOUND": "Virtual surround sound, that is, the SDK generates a simulated surround sound field on the basis of stereo channels, thereby creating a surround sound effect. If the virtual surround sound is enabled, users need to use stereo audio playback devices to hear the anticipated audio effect."
+      },
+      {
+        "ROOM_ACOUSTICS_CHORUS": "The audio effect of chorus. Agora recommends using this effect in chorus scenarios to enhance the sense of depth and dimension in the vocals."
       },
       {
         "ROOM_ACOUSTICS_3D_VOICE": "A 3D voice effect that makes the voice appear to be moving around the user. The default cycle period is 10 seconds. After setting this effect, you can call SetAudioEffectParameters to modify the movement period. If the 3D voice effect is enabled, users need to use stereo audio playback devices to hear the anticipated voice effect."
@@ -11799,10 +12022,10 @@
         "ROUTE_BLUETOOTH_DEVICE_HFP": "5: The audio route is a Bluetooth device using the HFP protocol."
       },
       {
-        "ROUTE_HDMI": "6: The audio route is an HDMI peripheral device. (For macOS only)"
+        "ROUTE_USB": "6: The audio route is a USB peripheral device. (For macOS only)"
       },
       {
-        "ROUTE_USB": "7: The audio route is a USB peripheral device. (For macOS only)"
+        "ROUTE_HDMI": "7: The audio route is an HDMI peripheral device. (For macOS only)"
       },
       {
         "ROUTE_DISPLAYPORT": "8: The audio route is a DisplayPort peripheral device. (For macOS only)"
@@ -11964,10 +12187,55 @@
     "description": "The camera direction.",
     "parameters": [
       {
-        "CAMERA_REAR": "The rear camera."
+        "CAMERA_REAR": "0: The rear camera."
       },
       {
-        "CAMERA_FRONT": "The front camera."
+        "CAMERA_FRONT": "1: (Default) The front camera."
+      }
+    ],
+    "returns": "",
+    "is_hide": false
+  },
+  {
+    "id": "enum_camerafocallengthtype",
+    "name": "CAMERA_FOCAL_LENGTH_TYPE",
+    "description": "The camera focal length types.\n\nThis enumeration class applies to Android and iOS only.",
+    "parameters": [
+      {
+        "CAMERA_FOCAL_LENGTH_DEFAULT": "0: (Default) Standard lens."
+      },
+      {
+        "CAMERA_FOCAL_LENGTH_WIDE_ANGLE": "1: Wide-angle lens."
+      },
+      {
+        "CAMERA_FOCAL_LENGTH_ULTRA_WIDE": "2: Ultra-wide-angle lens."
+      },
+      {
+        "CAMERA_FOCAL_LENGTH_TELEPHOTO": "3: (For iOS only) Telephoto lens."
+      }
+    ],
+    "returns": "",
+    "is_hide": false
+  },
+  {
+    "id": "enum_camerastabilizationmode",
+    "name": "CAMERA_STABILIZATION_MODE",
+    "description": "Camera stabilization modes.\n\nThe camera stabilization effect increases in the order of 1 < 2 < 3, and the latency will also increase accordingly.",
+    "parameters": [
+      {
+        "CAMERA_STABILIZATION_MODE_OFF": "-1: (Default) Camera stabilization mode off."
+      },
+      {
+        "CAMERA_STABILIZATION_MODE_AUTO": "0: Automatic camera stabilization. The system automatically selects a stabilization mode based on the status of the camera. However, the latency is relatively high in this mode, so it is recommended not to use this enumeration."
+      },
+      {
+        "CAMERA_STABILIZATION_MODE_LEVEL_1": "1: (Recommended) Level 1 camera stabilization."
+      },
+      {
+        "CAMERA_STABILIZATION_MODE_LEVEL_2": "2: Level 2 camera stabilization."
+      },
+      {
+        "CAMERA_STABILIZATION_MODE_LEVEL_3": "3: Level 3 camera stabilization."
       }
     ],
     "returns": "",
@@ -12006,7 +12274,7 @@
         "RELAY_ERROR_SERVER_ERROR_RESPONSE": "1: An error occurs in the server response."
       },
       {
-        "RELAY_ERROR_SERVER_NO_RESPONSE": "2: No server response. You can call LeaveChannel [1/2] to leave the channel. This error can also occur if your project has not enabled co-host token authentication. You can to enable the service for cohosting across channels before starting a channel media relay."
+        "RELAY_ERROR_SERVER_NO_RESPONSE": "2: No server response. This error may be caused by poor network connections. If this error occurs when initiating a channel media relay, you can try again later; if this error occurs during channel media relay, you can call LeaveChannel [2/2] to leave the channel. This error can also occur if the channel media relay service is not enabled in the project. You can contact to enable the service."
       },
       {
         "RELAY_ERROR_NO_RESOURCE_AVAILABLE": "3: The SDK fails to access the service, probably due to limited resources of the server."
@@ -12024,7 +12292,7 @@
         "RELAY_ERROR_FAILED_PACKET_SENT_TO_DEST": "7: The server fails to send the media stream."
       },
       {
-        "RELAY_ERROR_SERVER_CONNECTION_LOST": "8: The SDK disconnects from the server due to poor network connections. You can call LeaveChannel [1/2] to leave the channel."
+        "RELAY_ERROR_SERVER_CONNECTION_LOST": "8: The SDK disconnects from the server due to poor network connections. You can call LeaveChannel [2/2] to leave the channel."
       },
       {
         "RELAY_ERROR_INTERNAL_ERROR": "9: An internal error occurs in the server."
@@ -12381,16 +12649,19 @@
   {
     "id": "enum_earmonitoringfiltertype",
     "name": "EAR_MONITORING_FILTER_TYPE",
-    "description": "The audio filter of in-ear monitoring.",
+    "description": "The audio filter types of in-ear monitoring.",
     "parameters": [
       {
-        "EAR_MONITORING_FILTER_NONE": "1<<0: Do not add an audio filter to the in-ear monitor."
+        "EAR_MONITORING_FILTER_NONE": "1<<0: No audio filter added to in-ear monitoring."
       },
       {
-        "EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS": "1<<1: Add an audio filter to the in-ear monitor. If you implement functions such as voice beautifier and audio effect, users can hear the voice after adding these effects."
+        "EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS": "1<<1: Add vocal effects audio filter to in-ear monitoring. If you implement functions such as voice beautifier and audio effect, users can hear the voice after adding these effects."
       },
       {
-        "EAR_MONITORING_FILTER_NOISE_SUPPRESSION": "1<<2: Enable noise suppression to the in-ear monitor."
+        "EAR_MONITORING_FILTER_NOISE_SUPPRESSION": "1<<2: Add noise suppression audio filter to in-ear monitoring."
+      },
+      {
+        "EAR_MONITORING_FILTER_REUSE_POST_PROCESSING_FILTER": "1<<15: Reuse the audio filter that has been processed on the sending end for in-ear monitoring. This enumerator reduces CPU usage while increasing in-ear monitoring latency, which is suitable for latency-tolerant scenarios requiring low CPU consumption."
       }
     ],
     "returns": "",
@@ -12423,10 +12694,16 @@
         "ENCRYPTION_ERROR_INTERNAL_FAILURE": "0: Internal reason."
       },
       {
-        "ENCRYPTION_ERROR_DECRYPTION_FAILURE": "1: Decryption errors. Ensure that the receiver and the sender use the same encryption mode and key."
+        "ENCRYPTION_ERROR_DECRYPTION_FAILURE": "1: Media stream decryption error. Ensure that the receiver and the sender use the same encryption mode and key."
       },
       {
-        "ENCRYPTION_ERROR_ENCRYPTION_FAILURE": "2: Encryption errors."
+        "ENCRYPTION_ERROR_ENCRYPTION_FAILURE": "2: Media stream encryption error."
+      },
+      {
+        "ENCRYPTION_ERROR_DATASTREAM_DECRYPTION_FAILURE": "3: Data stream decryption error. Ensure that the receiver and the sender use the same encryption mode and key."
+      },
+      {
+        "ENCRYPTION_ERROR_DATASTREAM_ENCRYPTION_FAILURE": "4: Data stream encryption error."
       }
     ],
     "returns": "",
@@ -12571,10 +12848,13 @@
         "ERR_SET_CLIENT_ROLE_NOT_AUTHORIZED": "119: Switching roles fails, try rejoining the channel."
       },
       {
-        "ERR_DECRYPTION_FAILED": "120: Decryption fails. The user might have entered an incorrect password to join the channel. Check the entered password, or tell the user to try rejoining the channel."
+        "ERR_DECRYPTION_FAILED": "120: Media streams decryption fails. The user might use an incorrect password to join the channel. Check the entered password, or tell the user to try rejoining the channel."
       },
       {
         "ERR_INVALID_USER_ID": "121: The user ID is invalid."
+      },
+      {
+        "ERR_DATASTREAM_DECRYPTION_FAILED": "122: Data streams decryption fails. The user might use an incorrect password to join the channel. Check the entered password, or tell the user to try rejoining the channel."
       },
       {
         "ERR_CLIENT_IS_BANNED_BY_SERVER": "123: The user is banned from the server."
@@ -12814,19 +13094,19 @@
         "LOCAL_AUDIO_STREAM_REASON_ENCODE_FAILURE": "5: The local audio encoding fails."
       },
       {
-        "LOCAL_AUDIO_STREAM_REASON_NO_RECORDING_DEVICE": "6: (Windows and macOS only) No local audio capture device. Remind your users to check whether the microphone is connected to the device properly in the control plane of the device or if the microphone is working properly."
+        "LOCAL_AUDIO_STREAM_REASON_NO_RECORDING_DEVICE": "6: (Windows and macOS only) No local audio capture device. Remind your users to check whether the microphone is connected to the device properly in the control panel of the device or if the microphone is working properly."
       },
       {
-        "LOCAL_AUDIO_STREAM_REASON_NO_PLAYOUT_DEVICE": "7: (Windows and macOS only) No local audio capture device. Remind your users to check whether the speaker is connected to the device properly in the control plane of the device or if the speaker is working properly."
+        "LOCAL_AUDIO_STREAM_REASON_NO_PLAYOUT_DEVICE": "7: (Windows and macOS only) No local audio capture device. Remind your users to check whether the speaker is connected to the device properly in the control panel of the device or if the speaker is working properly."
       },
       {
-        "LOCAL_AUDIO_STREAM_REASON_INTERRUPTED": "8: (Android and iOS only) The local audio capture is interrupted by a system call, Siri, or alarm clock. Remind your users to end the phone call, Siri, or alarm clock if the local audio capture is required."
+        "LOCAL_AUDIO_STREAM_REASON_INTERRUPTED": "8: (Android and iOS only) The local audio capture is interrupted by a system call, smart assistants, or alarm clock. Prompt your users to end the phone call, smart assistants, or alarm clock if the local audio capture is required."
       },
       {
-        "LOCAL_AUDIO_STREAM_REASON_RECORD_INVALID_ID": "9: (Windows only) The ID of the local audio-capture device is invalid. Check the audio capture device ID."
+        "LOCAL_AUDIO_STREAM_REASON_RECORD_INVALID_ID": "9: (Windows only) The ID of the local audio-capture device is invalid. Prompt the user to check the audio capture device ID."
       },
       {
-        "LOCAL_AUDIO_STREAM_REASON_PLAYOUT_INVALID_ID": "10: (Windows only) The ID of the local audio-playback device is invalid. Check the audio playback device ID."
+        "LOCAL_AUDIO_STREAM_REASON_PLAYOUT_INVALID_ID": "10: (Windows only) The ID of the local audio-playback device is invalid. Prompt the user to check the audio playback device ID."
       }
     ],
     "returns": "",
@@ -12880,22 +13160,22 @@
         "LOCAL_VIDEO_STREAM_REASON_FAILURE": "1: No specified reason for the local video failure."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_DEVICE_NO_PERMISSION": "2: No permission to use the local video capturing device. Remind the user to grant permissions and rejoin the channel. Deprecated: This enumerator is deprecated. Please use CAMERA in the OnPermissionError callback instead."
+        "LOCAL_VIDEO_STREAM_REASON_DEVICE_NO_PERMISSION": "2: No permission to use the local video capturing device. Prompt the user to grant permissions and rejoin the channel. Deprecated: This enumerator is deprecated. Please use CAMERA in the OnPermissionError callback instead."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_DEVICE_BUSY": "3: The local video capturing device is in use. Remind the user to check whether another application occupies the camera."
+        "LOCAL_VIDEO_STREAM_REASON_DEVICE_BUSY": "3: The local video capturing device is in use. Prompt the user to check if the camera is being used by another app, or try to rejoin the channel."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_CAPTURE_FAILURE": "4: The local video capture fails. Remind your user to check whether the video capture device is working properly, whether the camera is occupied by another application, or try to rejoin the channel."
+        "LOCAL_VIDEO_STREAM_REASON_CAPTURE_FAILURE": "4: The local video capture fails. Prompt the user to check whether the video capture device is working properly, whether the camera is used by another app, or try to rejoin the channel."
       },
       {
         "LOCAL_VIDEO_STREAM_REASON_CODEC_NOT_SUPPORT": "5: The local video encoding fails."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_CAPTURE_INBACKGROUND": "6: (iOS only) The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background."
+        "LOCAL_VIDEO_STREAM_REASON_CAPTURE_INBACKGROUND": "6: (iOS only) The app is in the background. Prompt the user that video capture cannot be performed normally when the app is in the background."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_CAPTURE_MULTIPLE_FOREGROUND_APPS": "7: (iOS only) The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera."
+        "LOCAL_VIDEO_STREAM_REASON_CAPTURE_MULTIPLE_FOREGROUND_APPS": "7: (iOS only) The current app window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Prompt the user that the app cannot capture video properly when it is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera."
       },
       {
         "LOCAL_VIDEO_STREAM_REASON_DEVICE_NOT_FOUND": "8: Fails to find a local video capture device. Remind the user to check whether the camera is connected to the device properly or the camera is working properly, and then to rejoin the channel."
@@ -12907,13 +13187,19 @@
         "LOCAL_VIDEO_STREAM_REASON_DEVICE_INVALID_ID": "10: (macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID of the video device is valid."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_MINIMIZED": "11: (macOS and Windows only) The shared windows is minimized when you call the StartScreenCaptureByWindowId method to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window."
+        "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_MINIMIZED": "11: (macOS and Windows only) The shared window is minimized when you call the StartScreenCaptureByWindowId method to share a window. The SDK cannot share a minimized window. Please prompt the user to unminimize the shared window."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_CLOSED": "12: (macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing. Common scenarios reporting this error code:\n When the local user closes the shared window, the SDK reports this error code.\n The local user shows some slides in full-screen mode first, and then shares the windows of the slides. After the user exits full-screen mode, the SDK reports this error code.\n The local user watches a web video or reads a web document in full-screen mode first, and then shares the window of the web video or document. After the user exits full-screen mode, the SDK reports this error code."
+        "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_CLOSED": "12: (macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing. Common scenarios reporting this error code:\n The local user closes the shared window.\n The local user shows some slides in full-screen mode first, and then shares the windows of the slides. After the user exits full-screen mode, the SDK reports this error code.\n The local user watches a web video or reads a web document in full-screen mode first, and then shares the window of the web video or document. After the user exits full-screen mode, the SDK reports this error code."
       },
       {
         "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_OCCLUDED": "13: (Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by the SDK during window sharing."
+      },
+      {
+        "LOCAL_VIDEO_STREAM_REASON_DEVICE_INTERRUPT": "14: (Android only) Video capture is interrupted. Possible reasons include the following:\n The camera is being used by another app. Prompt the user to check if the camera is being used by another app.\n The current app has been switched to the background. You can use foreground services to notify the operating system and ensure that the app can still collect video when it switches to the background."
+      },
+      {
+        "LOCAL_VIDEO_STREAM_REASON_DEVICE_FATAL_ERROR": "15: (Android only) The video capture device encounters an error. Prompt the user to close and restart the camera to restore functionality. If this operation does not solve the problem, check if the camera has a hardware failure."
       },
       {
         "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_NO_PERMISSION": "22: (Windows and macOS only) No permission for screen capture."
@@ -12928,7 +13214,7 @@
         "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN": "26: (Windows only) The window for screen capture has been restored from hidden state."
       },
       {
-        "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED": "27: (Windows only) The window for screen capture has been restored from minimized state."
+        "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED": "27: (macOS and Windows only) The window for screen capture has been restored from the minimized state."
       },
       {
         "LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_PAUSED": "28: (Windows only) Screen capture has been paused. Common scenarios reporting this error code: The current screen may have been switched to a secure desktop, such as a UAC dialog box or Winlogon desktop."
@@ -13297,7 +13583,7 @@
         "SECONDARY_CAMERA_SOURCE": "3: A secondary camera."
       },
       {
-        "CUSTOM_VIDEO_SOURCE": "6. Custom video source."
+        "CUSTOM_VIDEO_SOURCE": "6: Custom video source."
       },
       {
         "UNKNOWN_MEDIA_SOURCE": "100: Unknown media source."
@@ -13969,7 +14255,7 @@
         "RTMP_STREAM_PUBLISH_REASON_NET_DOWN": "14: Errors occurred in the host's network."
       },
       {
-        "RTMP_STREAM_PUBLISH_REASON_INVALID_PRIVILEGE": "16: Your project does not have permission to use streaming services. Refer to Media Push to enable the Media Push permission."
+        "RTMP_STREAM_PUBLISH_REASON_INVALID_PRIVILEGE": "16: Your project does not have permission to use streaming services."
       },
       {
         "RTMP_STREAM_UNPUBLISH_REASON_OK": "100: The streaming has been stopped normally. After you stop the Media Push, the SDK returns this value."
@@ -14800,10 +15086,10 @@
         "VIDEO_SOURCE_TRANSCODED": "10: One transcoded video source."
       },
       {
-        "VIDEO_SOURCE_CAMERA_THIRD": "11: (For Windows and macOS only) The third camera."
+        "VIDEO_SOURCE_CAMERA_THIRD": "11: (For Android, Windows, and macOS only) The third camera."
       },
       {
-        "VIDEO_SOURCE_CAMERA_FOURTH": "12: (For Windows and macOS only) The fourth camera."
+        "VIDEO_SOURCE_CAMERA_FOURTH": "12: (For Android, Windows, and macOS only) The fourth camera."
       },
       {
         "VIDEO_SOURCE_SCREEN_THIRD": "13: (For Windows and macOS only) The third screen."
