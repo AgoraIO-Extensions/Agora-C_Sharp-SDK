@@ -37,21 +37,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length.
+        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
         /// </summary>
         ///
         public int yStride;
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0.
+        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
         /// </summary>
         ///
         public int uStride;
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0.
+        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
         /// </summary>
         ///
         public int vStride;
@@ -101,7 +101,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. It is required.
+        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. This parameter is required.
         /// </summary>
         ///
         public long renderTimeMs;
@@ -228,7 +228,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of bytes per sample. The number of bytes per audio sample, which is usually 16-bit (2-byte).
+        /// The number of bytes per sample. For PCM, this parameter is generally set to 16 bits (2 bytes).
         /// </summary>
         ///
         public BYTES_PER_SAMPLE bytesPerSample;
@@ -244,7 +244,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of samples per second of the audio frame.
+        /// The number of samples per channel in the audio frame.
         /// </summary>
         ///
         public int samplesPerSec;
@@ -428,14 +428,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 11: (For Windows and macOS only) The third camera.
+        /// 11: (For Android, Windows, and macOS only) The third camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_THIRD = 11,
 
         ///
         /// <summary>
-        /// 12: (For Windows and macOS only) The fourth camera.
+        /// 12: (For Android, Windows, and macOS only) The fourth camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_FOURTH = 12,
@@ -525,14 +525,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 7: The audio route is a USB peripheral device. (For macOS only)
+        /// 6: The audio route is a USB peripheral device. (For macOS only)
         /// </summary>
         ///
         ROUTE_USB = 6,
 
         ///
         /// <summary>
-        /// 6: The audio route is an HDMI peripheral device. (For macOS only)
+        /// 7: The audio route is an HDMI peripheral device. (For macOS only)
         /// </summary>
         ///
         ROUTE_HDMI = 7,
@@ -674,7 +674,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6. Custom video source.
+        /// 6: Custom video source.
         /// </summary>
         ///
         CUSTOM_VIDEO_SOURCE = 6,

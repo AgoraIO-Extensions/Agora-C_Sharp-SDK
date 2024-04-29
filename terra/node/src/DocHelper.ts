@@ -316,6 +316,8 @@ function GetDocs(): DocData[] {
     str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstatechanged", "callback_irtcengineeventhandler_ondirectcdnstreamingstatechanged");
     str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstats", "callback_irtcengineeventhandler_ondirectcdnstreamingstats");
     str = str.replaceAll("api_Imediaplayer_selectmultiaudiotrack", "api_imediaplayer_selectmultiaudiotrack");
+    str = str.replaceAll("api_imediaengine_registerfaceinfoobserver", "api_irtcengine_registerfaceinfoobserver");
+    str = str.replaceAll("api_imediaengine_unregisterfaceinfoobserver", "api_irtcengine_unregisterfaceinfoobserver");
 
     fs.writeFileSync(path.join(process.cwd(), "process_json"), str);
 

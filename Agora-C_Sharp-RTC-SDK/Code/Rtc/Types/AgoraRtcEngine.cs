@@ -717,7 +717,9 @@ namespace Agora.Rtc
         public uint rxAudioBytes;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// End-to-end audio delay (in milliseconds), which refers to the time from when the audio is captured by the remote user to when it is played by the local user.
+        /// </summary>
         ///
         public int e2eDelay;
 
@@ -1265,14 +1267,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The rear camera.
+        /// 0: The rear camera.
         /// </summary>
         ///
         CAMERA_REAR = 0,
 
         ///
         /// <summary>
-        /// The front camera.
+        /// 1: (Default) The front camera.
         /// </summary>
         ///
         CAMERA_FRONT = 1,
@@ -1316,38 +1318,51 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// This parameter applies to Android and iOS only. The camera direction. See CAMERA_DIRECTION.
+        /// (Optional) The camera direction. See CAMERA_DIRECTION. This parameter is for Android and iOS only.
         /// </summary>
         ///
         public Optional<CAMERA_DIRECTION> cameraDirection = new Optional<CAMERA_DIRECTION>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// (Optional) The camera focal length type. See CAMERA_FOCAL_LENGTH_TYPE.
+        ///  This parameter is for Android and iOS only.
+        ///  To set the focal length type of the camera, it is only supported to specify the camera through cameraDirection, and not supported to specify it through cameraId.
+        ///  For iOS devices equipped with multi-lens rear cameras, such as those featuring dual-camera (wide-angle and ultra-wide-angle) or triple-camera (wide-angle, ultra-wide-angle, and telephoto), you can use one of the following methods to capture video with an ultra-wide-angle perspective:
+        ///  Method one: Set this parameter to CAMERA_FOCAL_LENGTH_ULTRA_WIDE (2) (ultra-wide lens).
+        ///  Method two: Set this parameter to CAMERA_FOCAL_LENGTH_DEFAULT (0) (standard lens), then call SetCameraZoomFactor to set the camera's zoom factor to a value less than 1.0, with the minimum setting being 0.5. The difference is that the size of the ultra-wide angle in method one is not adjustable, whereas method two supports adjusting the camera's zoom factor freely.
+        /// </summary>
         ///
         public Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType = new Optional<CAMERA_FOCAL_LENGTH_TYPE>();
 
         ///
         /// <summary>
-        /// This method applies to Windows only. The ID of the camera.
+        /// The camera ID. This parameter is for Windows and macOS only.
         /// </summary>
         ///
         public Optional<string> deviceId = new Optional<string>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// (Optional) The camera ID. The default value is the camera ID of the front camera. You can get the camera ID through the Android native system API, see and for details.
+        ///  This parameter is for Android only.
+        ///  This parameter and cameraDirection are mutually exclusive in specifying the camera; you can choose one based on your needs. The differences are as follows:
+        ///  Specifying the camera via cameraDirection is more straightforward. You only need to indicate the camera direction (front or rear), without specifying a specific camera ID; the SDK will retrieve and confirm the actual camera ID through Android native system APIs.
+        ///  Specifying via cameraId allows for more precise identification of a particular camera. For devices with multiple cameras, where cameraDirection cannot recognize or access all available cameras, it is recommended to use cameraId to specify the desired camera ID directly.
+        /// </summary>
         ///
         public Optional<string> cameraId = new Optional<string>();
 
         ///
         /// <summary>
-        /// Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame.
+        /// (Optional) Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame.
         /// </summary>
         ///
         public Optional<bool> followEncodeDimensionRatio = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The format of the video frame. See VideoFormat.
+        /// (Optional) The format of the video frame. See VideoFormat.
         /// </summary>
         ///
         public VideoFormat format;
@@ -1815,14 +1830,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This is for Windows and macOS only.
+        /// Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This parameter is for Android, Windows and macOS only.
         /// </summary>
         ///
         public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This is for Windows and macOS only.
+        /// Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This parameter is for Android, Windows and macOS only.
         /// </summary>
         ///
         public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
@@ -1836,14 +1851,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter applies to Android and iOS only.
+        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
         /// </summary>
         ///
         public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter applies to Android and iOS only.
+        /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only.
         /// </summary>
         ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
@@ -1992,7 +2007,9 @@ namespace Agora.Rtc
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Delay (in milliseconds) for sending audio frames. You can use this parameter to set the delay of the audio frames that need to be sent, to ensure audio and video synchronization. To switch off the delay, set the value to 0.
+        /// </summary>
         ///
         public Optional<int> audioDelayMs = new Optional<int>();
 
@@ -2025,7 +2042,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Whether to enable interactive mode: true : Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency. false :Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.
-        ///  This parameter only applies to scenarios involving cohosting across channels. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.
+        ///  This parameter only applies to co-streaming scenarios. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.
         ///  This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
         /// </summary>
         ///
