@@ -122,6 +122,8 @@ namespace Agora.Rtm.Internal
 
         public SnapshotInfo snapshot;
 
+        public UInt64 timestamp;
+
         public Rtm.PresenceEvent GeneratePresenceEvent()
         {
             Rtm.PresenceEvent presenceEvent = new Rtm.PresenceEvent();
@@ -132,6 +134,7 @@ namespace Agora.Rtm.Internal
             presenceEvent.stateItems = this.stateItems;
             presenceEvent.interval = this.interval.GenerateIntervalInfo();
             presenceEvent.snapshot = this.snapshot;
+            presenceEvent.timestamp = this.timestamp;
             return presenceEvent;
         }
     };
