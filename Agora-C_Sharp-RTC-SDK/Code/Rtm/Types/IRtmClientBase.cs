@@ -250,6 +250,7 @@ namespace Agora.Rtm
             message = null;
             publisher = "";
             customType = "";
+            timestamp = 0;
         }
 
         ///
@@ -300,6 +301,13 @@ namespace Agora.Rtm
         /// </summary>
         ///
         public string customType;
+
+        ///
+        /// <summary>
+        /// RTM server UTC time
+        /// </summary>
+        ///
+        public UInt64 timestamp;
     };
 
     public class IntervalInfo
@@ -414,17 +422,51 @@ namespace Agora.Rtm
         /// </summary>
         ///
         public SnapshotInfo snapshot;
+
+        ///
+        /// <summary>
+        /// RTM server UTC time
+        /// </summary>
+        ///
+        public UInt64 timestamp;
     };
 
     public class TopicEvent
     {
+        ///
+        /// <summary>
+        /// Indicate topic event type
+        /// </summary>
+        ///
         public RTM_TOPIC_EVENT_TYPE type;
 
+        ///
+        /// <summary>
+        /// The channel which the topic event was triggered
+        /// </summary>
+        ///
         public string channelName;
 
+        ///
+        /// <summary>
+        /// The user who triggered this event.
+        /// </summary>
+        ///
         public string publisher;
 
+        ///
+        /// <summary>
+        /// Topic information array.
+        /// </summary>
+        ///
         public TopicInfo[] topicInfos;
+
+        ///
+        /// <summary>
+        /// RTM server UTC time
+        /// </summary>
+        ///
+        public UInt64 timestamp;
 
         public TopicEvent()
         {
@@ -432,6 +474,7 @@ namespace Agora.Rtm
             channelName = "";
             publisher = "";
             topicInfos = new TopicInfo[0];
+            timestamp = 0;
         }
     };
 
@@ -465,12 +508,20 @@ namespace Agora.Rtm
         ///
         public LockDetail[] lockDetailList;
 
+        ///
+        /// <summary>
+        /// RTM server UTC time
+        /// </summary>
+        ///
+        public UInt64 timestamp;
+
         public LockEvent()
         {
             channelType = RTM_CHANNEL_TYPE.NONE;
             eventType = RTM_LOCK_EVENT_TYPE.NONE;
             channelName = "";
             lockDetailList = new LockDetail[0];
+            timestamp = 0;
         }
     };
 
@@ -507,6 +558,13 @@ namespace Agora.Rtm
         ///
         public Metadata data;
 
+        ///
+        /// <summary>
+        /// RTM server UTC time
+        /// </summary>
+        ///
+        public UInt64 timestamp;
+
         public StorageEvent()
         {
             channelType = RTM_CHANNEL_TYPE.NONE;
@@ -514,6 +572,7 @@ namespace Agora.Rtm
             eventType = RTM_STORAGE_EVENT_TYPE.NONE;
             target = "";
             data = null;
+            timestamp = 0;
         }
     };
 }
