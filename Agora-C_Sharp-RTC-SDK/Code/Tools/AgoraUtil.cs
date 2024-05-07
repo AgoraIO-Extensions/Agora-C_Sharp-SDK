@@ -295,6 +295,12 @@ namespace Agora.Rtc
             return list;
         }
 
+        static public UInt64 ConvertNegativeToUInt64(Int64 value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            ulong uNum = BitConverter.ToUInt64(bytes, 0);
+            return uNum;
+        }
     }
 
     //event_handler

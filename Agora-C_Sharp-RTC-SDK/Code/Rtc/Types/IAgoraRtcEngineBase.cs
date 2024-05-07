@@ -1,5 +1,5 @@
 ﻿using System;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 using video_track_id_t = System.UInt32;
 using Agora.Rtc.LitJson;
 
@@ -1526,7 +1526,7 @@ namespace Agora.Rtc
             iconImage = new ThumbImageBuffer();
             position = new Rectangle();
             minimizeWindow = false;
-            sourceDisplayId = -2;
+            sourceDisplayId = AgoraUtil.ConvertNegativeToUInt64(-2);
         }
     };
 

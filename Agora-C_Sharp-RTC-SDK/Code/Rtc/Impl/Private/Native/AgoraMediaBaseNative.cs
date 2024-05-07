@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Agora.Rtc
 {
-    using view_t = Int64;
+    using view_t = UInt64;
 
     //use for raw data
     [StructLayout(LayoutKind.Sequential)]
@@ -127,7 +127,7 @@ namespace Agora.Rtc
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
             sourceId = 0;
-            sourceDisplayId = -2;
+            sourceDisplayId = AgoraUtil.ConvertNegativeToUInt64(-2);
             sourceName = "";
             processPath = "";
             sourceTitle = "";

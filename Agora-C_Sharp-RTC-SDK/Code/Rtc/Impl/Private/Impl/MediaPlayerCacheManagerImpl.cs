@@ -3,7 +3,6 @@ using System.Collections.Generic;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
-    using view_t = IntPtr;
 
     public class MediaPlayerCacheManagerImpl
     {
