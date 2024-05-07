@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Agora.Rtc;
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
     [StructLayout(LayoutKind.Sequential)]
@@ -1977,7 +1978,7 @@ namespace Agora.Rtc
             return selfParam == VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
         }
 
-        public static bool compareView_t(long selfParam, long outParam)
+        public static bool compareView_t(view_t selfParam, view_t outParam)
         {
             return selfParam == 10;
         }
@@ -2127,7 +2128,7 @@ namespace Agora.Rtc
             return selfParam == HEADPHONE_EQUALIZER_PRESET.HEADPHONE_EQUALIZER_OFF;
         }
 
-        public static bool compareView_tArray(long[] selfParam, long[] outParam)
+        public static bool compareView_tArray(view_t[] selfParam, view_t[] outParam)
         {
             if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;

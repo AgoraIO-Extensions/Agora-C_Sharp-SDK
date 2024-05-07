@@ -4,7 +4,7 @@ using Agora.Rtc.LitJson;
 namespace Agora.Rtc
 {
     using int64_t = Int64;
-    using view_t = Int64;
+    using view_t = UInt64;
     using uint64_t = UInt64;
 
     #region AgoraBase

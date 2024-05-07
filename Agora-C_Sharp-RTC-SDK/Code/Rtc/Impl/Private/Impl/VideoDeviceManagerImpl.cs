@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
-    using view_t = IntPtr;
+    using view_t = UInt64;
 
     internal class VideoDeviceManagerImpl
     {
@@ -82,7 +82,7 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StartDeviceTest(view_t hwnd)
+        public int StartDeviceTest(IntPtr hwnd)
         {
             _param.Clear();
             _param.Add("hwnd", (ulong)hwnd);

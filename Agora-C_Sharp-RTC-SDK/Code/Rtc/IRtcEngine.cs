@@ -1,6 +1,6 @@
 using System;
 using video_track_id_t = System.UInt32;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
     ///
