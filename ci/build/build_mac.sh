@@ -306,7 +306,7 @@ if [ "$$VISIONOS_URL" != "" ]; then
 
     # split vision os package as sub package
     if [ "$SPLIT_VISIONOS" == "true" ]; then
-        $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME"/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
+        $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
         ZIP_FILE="Unknow"
         if [ "$RTC" == "true" ]; then
             ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
@@ -327,7 +327,6 @@ if [ "$$VISIONOS_URL" != "" ]; then
         curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
             -d "$payload1" \
             "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=$robot_key"
-
 
         rm -rf $VISIONOS_DST_PATH
     fi
