@@ -1,4 +1,4 @@
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS 
 using UnityEngine;
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using System.Diagnostics;
@@ -13,7 +13,7 @@ namespace Agora.Rtc
 
         internal static void Log(string msg)
         {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             Debug.LogFormat("{0} {1}\n", AgoraMsgTag, msg);
 #endif
 
@@ -24,7 +24,7 @@ namespace Agora.Rtc
 
         internal static void LogWarning(string warningMsg)
         {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
            
             Debug.LogWarningFormat("{0} {1}\n", AgoraMsgTag, warningMsg);
 #endif
@@ -36,7 +36,7 @@ namespace Agora.Rtc
 
         internal static void LogError(string errorMsg)
         {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
            
             Debug.LogErrorFormat("{0} {1}\n", AgoraMsgTag, errorMsg);
 #endif
