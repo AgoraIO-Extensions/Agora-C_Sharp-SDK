@@ -87,6 +87,7 @@ echo MAC_URL: $MAC_URL
 echo WIN_URL: $WIN_URL
 echo ANDROID_URL: $ANDROID_URL
 echo IOS_URL: $IOS_URL
+echo VISIONOS_URL: $VISIONOS_URL
 echo TYPE: $TYPE
 echo RTC: $RTC
 echo RTM: $RTM
@@ -94,6 +95,7 @@ echo NUMBER_UID: $NUMBER_UID
 echo STRING_UID: $STRING_UID
 echo SUFFIX: $SUFFIX
 echo robot_key: $robot_key
+echo SPLIT_VISIONOS: $SPLIT_VISIONOS
 
 if [ "$RTC" == "true" ]; then
     PLUGIN_NAME="Agora-RTC-Plugin"
@@ -183,7 +185,6 @@ if [ "$TYPE" == "VOICE" ]; then
     perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
 fi
 
-mkdir "$ROOT_DIR"/Unity/Plugins/iOS
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
@@ -262,6 +263,46 @@ if [ "$IOS_URL" != "" ]; then
 
     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 
+    files=$(ls $IOS_DST_PATH)
+    for filename in $files; do
+        cp -f "$ROOT_DIR"/Unity/Plugins/iOS/ios.meta $IOS_DST_PATH/${filename}.meta
+    done
+
+    rm $IOS_DST_PATH/ios.meta
+
+fi
+
+# Vision OS
+if [ "$$VISIONOS_URL" != "" ]; then
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${VISIONOS_URL}
+    7za x ./iris_*_xrOS_*.zip || exit 1
+    VISIONOS_SRC_PATH="./iris_*_xrOS"
+    VISIONOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/visionOS"
+    cp -PRf $VISIONOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework "$VISIONOS_DST_PATH"
+    cp -PRf $VISIONOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.xcframework "$VISIONOS_DST_PATH"
+
+    files=$(ls $VISIONOS_DST_PATH)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "xcframework" ]; then
+
+            # check if a directory exists
+            if [ -d $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_armv7 ]; then
+                rm -rf $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_armv7
+            fi
+
+            if [ -d $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_x86_64-simulator ]; then
+                rm -rf $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_x86_64-simulator
+            fi
+
+            cp -f "$ROOT_DIR"/Unity/Plugins/visionOS/devices.meta $VISIONOS_DST_PATH/$basename.xcframework/xros-arm64/$basename.framework.meta
+            cp -f "$ROOT_DIR"/Unity/Plugins/visionOS/simulator.meta $VISIONOS_DST_PATH/$basename.xcframework/xros-arm64_x86_64-simulator/$basename.framework.meta
+        fi
+    done
+
+    rm $VISIONOS_DST_PATH/devices.meta
+    rm $VISIONOS_DST_PATH/simulator.meta
 fi
 
 # macOS
@@ -330,6 +371,33 @@ if [ "$RTC" == "false" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "./project" -executeMethod Agora_RTC_Plugin.API_Example.PackageTools.ReplaceGUIDs
     echo "replace guids for rtm finish"
     rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
+fi
+
+# split vision os package as sub package
+if [ "$$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
+    $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
+    ZIP_FILE="Unknow"
+    if [ "$RTC" == "true" ]; then
+        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    else
+        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    fi
+    7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
+
+    download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+    payload1='{
+            "msgtype": "text",
+            "text": {
+                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
+            }
+        }'
+
+    # 发送 POST 请求
+    curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
+        -d "$payload1" \
+        "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=$robot_key"
+
+    rm -rf $VISIONOS_DST_PATH
 fi
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1

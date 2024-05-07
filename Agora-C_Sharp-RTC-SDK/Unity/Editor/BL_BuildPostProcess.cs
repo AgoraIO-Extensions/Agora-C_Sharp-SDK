@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_VISIONOS
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
@@ -20,10 +20,17 @@ namespace Agora.Rtc
             if (buildTarget == BuildTarget.iOS)
             {
 #if UNITY_IOS
-            LinkLibraries(path);
-            UpdatePermission(path + "/Info.plist");
+                LinkLibraries(path);
+                UpdatePermission(path + "/Info.plist");
 #endif
             }
+
+#if UNITY_VISIONOS
+            if (buildTarget == BuildTarget.VisionOS)
+            {
+                UpdatePermission(path + "/Info.plist");
+            }
+#endif
         }
 
         //public static void DisableBitcode(string projPath)
@@ -91,20 +98,23 @@ namespace Agora.Rtc
         // done, write to the project file
         File.WriteAllText(projPath, proj.WriteToString());
     }
-
-    static void UpdatePermission(string pListPath)
-    {
-
-        PlistDocument plist = new PlistDocument();
-        plist.ReadFromString(File.ReadAllText(pListPath));
-        PlistElementDict rootDic = plist.root;
-        var cameraPermission = "NSCameraUsageDescription";
-        var micPermission = "NSMicrophoneUsageDescription";
-        rootDic.SetString(cameraPermission, "Video need to use camera");
-        rootDic.SetString(micPermission, "Voice call need to user mic");
-        File.WriteAllText(pListPath, plist.WriteToString());
-    }
 #endif
+
+#if UNITY_VISIONOS || UNITY_IOS
+        static void UpdatePermission(string pListPath)
+        {
+
+            PlistDocument plist = new PlistDocument();
+            plist.ReadFromString(File.ReadAllText(pListPath));
+            PlistElementDict rootDic = plist.root;
+            var cameraPermission = "NSCameraUsageDescription";
+            var micPermission = "NSMicrophoneUsageDescription";
+            rootDic.SetString(cameraPermission, "Video need to use camera");
+            rootDic.SetString(micPermission, "Voice call need to user mic");
+            File.WriteAllText(pListPath, plist.WriteToString());
+        }
+#endif
+
     }
 }
 

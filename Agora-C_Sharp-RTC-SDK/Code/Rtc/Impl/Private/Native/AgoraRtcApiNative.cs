@@ -38,7 +38,7 @@ namespace Agora.Rtc
         private const string AgoraRtcLibName = "AgoraRtcWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         private const string AgoraRtcLibName = "AgoraRtcWrapperUnity";
-#elif UNITY_IPHONE
+#elif UNITY_IPHONE || UNITY_VISIONOS
 		private const string AgoraRtcLibName = "__Internal";
 #else
         private const string AgoraRtcLibName = "AgoraRtcWrapper";
