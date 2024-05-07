@@ -95,6 +95,7 @@ echo NUMBER_UID: $NUMBER_UID
 echo STRING_UID: $STRING_UID
 echo SUFFIX: $SUFFIX
 echo robot_key: $robot_key
+echo SPLIT_VISIONOS: $SPLIT_VISIONOS
 
 if [ "$RTC" == "true" ]; then
     PLUGIN_NAME="Agora-RTC-Plugin"
@@ -302,6 +303,34 @@ if [ "$$VISIONOS_URL" != "" ]; then
 
     rm $VISIONOS_DST_PATH/devices.meta
     rm $VISIONOS_DST_PATH/simulator.meta
+
+    # split vision os package as sub package
+    if [ "$SPLIT_VISIONOS" == "true" ]; then
+        $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME"/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
+        ZIP_FILE="Unknow"
+        if [ "$RTC" == "true" ]; then
+            ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        else
+            ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        fi
+        7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
+
+        download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+        payload1='{
+            "msgtype": "text",
+            "text": {
+                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
+            }
+        }'
+
+        # 发送 POST 请求
+        curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
+            -d "$payload1" \
+            "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=$robot_key"
+
+
+        rm -rf $VISIONOS_DST_PATH
+    fi
 fi
 
 # macOS
