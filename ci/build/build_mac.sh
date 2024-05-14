@@ -273,7 +273,7 @@ if [ "$IOS_URL" != "" ]; then
 fi
 
 # Vision OS
-if [ "$$VISIONOS_URL" != "" ]; then
+if [ "$VISIONOS_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${VISIONOS_URL}
     7za x ./iris_*_xrOS_*.zip || exit 1
     VISIONOS_SRC_PATH="./iris_*_xrOS"
