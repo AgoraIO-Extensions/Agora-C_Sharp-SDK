@@ -2,8 +2,68 @@ using System;
 using NUnit.Framework;
 using uid_t = System.UInt32;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
 namespace Agora.Rtc.Ut.Event
 {
+    public class FakeVideoFrame
+    {
+        public VIDEO_PIXEL_FORMAT type;
+        public int width;
+        public int height;
+        public int yStride;
+        public int uStride;
+        public int vStride;
+        public IntPtr yBuffer;
+        public IntPtr uBuffer;
+        public IntPtr vBuffer;
+        public int rotation;
+        public long renderTimeMs;
+        public int avsync_type;
+        public IntPtr metadata_buffer;
+        public int metadata_size;
+        public IntPtr sharedContext;
+        public int textureId;
+        public IntPtr d3d11Texture2d;
+        public float[] matrix;
+        public IntPtr alphaBuffer;
+        public Dictionary<string, string> metaInfo;
+
+        public FakeVideoFrame(VideoFrame frame)
+        {
+            this.type = frame.type;
+            this.width = frame.width;
+            this.height = frame.height;
+            this.yStride = frame.yStride;
+            this.uStride = frame.uStride;
+            this.vStride = frame.vStride;
+            this.yBuffer = Marshal.UnsafeAddrOfPinnedArrayElement(frame.yBuffer, 0);
+            this.uBuffer = Marshal.UnsafeAddrOfPinnedArrayElement(frame.uBuffer, 0);
+            this.vBuffer = Marshal.UnsafeAddrOfPinnedArrayElement(frame.vBuffer, 0);
+            this.rotation = frame.rotation;
+            this.renderTimeMs = frame.renderTimeMs;
+            this.avsync_type = frame.avsync_type;
+            this.metadata_buffer = frame.metadata_buffer;
+            this.metadata_size = frame.metadata_size;
+            this.sharedContext = frame.sharedContext;
+            this.textureId = frame.textureId;
+            this.d3d11Texture2d = frame.d3d11Texture2d;
+            this.matrix = frame.matrix;
+            this.alphaBuffer = Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
+            if (frame.metaInfo != null)
+            {
+                metaInfo = new Dictionary<string, string>
+                {
+                    { "KEY_FACE_CAPTURE", frame.metaInfo.GetMetaInfoStr(META_INFO_KEY.KEY_FACE_CAPTURE) }
+                };
+            }
+            else
+            {
+                metaInfo = null;
+            }
+        }
+    }
+
     [TestFixture]
     public class UnitTest_IVideoFrameObserver
     {
@@ -52,7 +112,7 @@ namespace Agora.Rtc.Ut.Event
             jsonObj.Add("sourceType", sourceType);
 
             VideoFrame videoFrame = ParamsHelper.CreateParam<VideoFrame>();
-            jsonObj.Add("videoFrame", videoFrame);
+            jsonObj.Add("videoFrame", new FakeVideoFrame(videoFrame));
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -74,7 +134,7 @@ namespace Agora.Rtc.Ut.Event
             jsonObj.Add("sourceType", sourceType);
 
             VideoFrame videoFrame = ParamsHelper.CreateParam<VideoFrame>();
-            jsonObj.Add("videoFrame", videoFrame);
+            jsonObj.Add("videoFrame", new FakeVideoFrame(videoFrame));
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -93,7 +153,7 @@ namespace Agora.Rtc.Ut.Event
             jsonObj.Clear();
 
             VideoFrame videoFrame = ParamsHelper.CreateParam<VideoFrame>();
-            jsonObj.Add("videoFrame", videoFrame);
+            jsonObj.Add("videoFrame", new FakeVideoFrame(videoFrame));
 
             int mediaPlayerId = ParamsHelper.CreateParam<int>();
             jsonObj.Add("mediaPlayerId", mediaPlayerId);
@@ -121,7 +181,7 @@ namespace Agora.Rtc.Ut.Event
             jsonObj.Add("remoteUid", remoteUid);
 
             VideoFrame videoFrame = ParamsHelper.CreateParam<VideoFrame>();
-            jsonObj.Add("videoFrame", videoFrame);
+            jsonObj.Add("videoFrame", new FakeVideoFrame(videoFrame));
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -140,7 +200,7 @@ namespace Agora.Rtc.Ut.Event
             jsonObj.Clear();
 
             VideoFrame videoFrame = ParamsHelper.CreateParam<VideoFrame>();
-            jsonObj.Add("videoFrame", videoFrame);
+            jsonObj.Add("videoFrame", new FakeVideoFrame(videoFrame));
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;

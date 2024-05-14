@@ -2,8 +2,35 @@ using System;
 using NUnit.Framework;
 using uid_t = System.UInt32;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
 namespace Agora.Rtc.Ut.Event
 {
+    public class FakeAudioSpectrumData
+    {
+        public IntPtr audioSpectrumData;
+        public int dataLength;
+
+        public FakeAudioSpectrumData(AudioSpectrumData data)
+        {
+            this.dataLength = data.dataLength;
+            this.audioSpectrumData = Marshal.UnsafeAddrOfPinnedArrayElement(data.audioSpectrumData, 0);
+        }
+    };
+
+    class FakeUserAudioSpectrumInfo
+    {
+
+        public uint uid;
+        public FakeAudioSpectrumData spectrumData;
+
+        public FakeUserAudioSpectrumInfo(UserAudioSpectrumInfo info)
+        {
+            this.uid = info.uid;
+            this.spectrumData = new FakeAudioSpectrumData(info.spectrumData);
+        }
+    }
+
     [TestFixture]
     public class UnitTest_IAudioSpectrumObserver
     {
@@ -52,7 +79,6 @@ namespace Agora.Rtc.Ut.Event
             ApiParam.FreeResult();
         }
 
-        #region terra IAudioSpectrumObserver
         [Test]
         public void Test_IAudioSpectrumObserver_OnLocalAudioSpectrum()
         {
@@ -61,7 +87,8 @@ namespace Agora.Rtc.Ut.Event
             jsonObj.Clear();
 
             AudioSpectrumData data = ParamsHelper.CreateParam<AudioSpectrumData>();
-            jsonObj.Add("data", data);
+            FakeAudioSpectrumData fakeData = new FakeAudioSpectrumData(data);
+            jsonObj.Add("data", fakeData);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -81,7 +108,12 @@ namespace Agora.Rtc.Ut.Event
             jsonObj.Clear();
 
             UserAudioSpectrumInfo[] spectrums = ParamsHelper.CreateParam<UserAudioSpectrumInfo[]>();
-            jsonObj.Add("spectrums", spectrums);
+            FakeUserAudioSpectrumInfo[] fakeSpectrums = new FakeUserAudioSpectrumInfo[spectrums.Length];
+            for (int i = 0; i < spectrums.Length; i++)
+            {
+                fakeSpectrums[i] = new FakeUserAudioSpectrumInfo(spectrums[i]);
+            }
+            jsonObj.Add("spectrums", fakeSpectrums);
 
             uint spectrumNumber = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("spectrumNumber", spectrumNumber);
@@ -95,6 +127,9 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(true, EventHandler.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
             Assert.AreEqual(true, EventHandlerForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
         }
+
+        #region terra IAudioSpectrumObserver
+
         #endregion terra IAudioSpectrumObserver
     }
 }

@@ -41,6 +41,7 @@
             "isCameraFocusSupported": "method_unitTest_compare_false",
             "isCameraTorchSupported": "method_unitTest_compare_false",
             "isCameraZoomSupported": "method_unitTest_compare_false",
+            "isCameraCenterStageSupported": "method_unitTest_compare_true",
             "isFeatureAvailableOnDevice": "method_unitTest_compare_true",
             "isSpeakerphoneEnabled": "method_unitTest_compare_false",
             "loadExtensionProvider": "method_unitTest_greater_than_4",

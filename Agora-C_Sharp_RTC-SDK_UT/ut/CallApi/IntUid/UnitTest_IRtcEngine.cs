@@ -1916,7 +1916,7 @@ namespace Agora.Rtc.Ut
 
 
             var nRet = RtcEngine.IsCameraCenterStageSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet);
         }
 
         [Test]
