@@ -2,6 +2,8 @@ using System;
 using NUnit.Framework;
 using uid_t = System.UInt32;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
 namespace Agora.Rtc.Ut.Event
 {
     [TestFixture]
@@ -39,6 +41,28 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(0, ret);
             Engine.Dispose();
             ApiParam.FreeResult();
+        }
+
+        [Test]
+        public void Test_IMediaPlayerSourceObserver_OnMetaData()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONMETADATA;
+
+            jsonObj.Clear();
+
+            byte[] data = ParamsHelper.CreateParam<byte[]>();
+            jsonObj.Add("data", Marshal.UnsafeAddrOfPinnedArrayElement(data, 0));
+
+            int length = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("length", length);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnMetaDataPassed(data, length));
         }
 
         #region terra IMediaPlayerSourceObserver
@@ -109,28 +133,6 @@ namespace Agora.Rtc.Ut.Event
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPlayerEventPassed(eventCode, elapsedTime, message));
-        }
-
-        [Test]
-        public void Test_IMediaPlayerSourceObserver_OnMetaData()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONMETADATA;
-
-            jsonObj.Clear();
-
-            byte[] data = ParamsHelper.CreateParam<byte[]>();
-            jsonObj.Add("data", data);
-
-            int length = ParamsHelper.CreateParam<int>();
-            jsonObj.Add("length", length);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnMetaDataPassed(data, length));
         }
 
         [Test]

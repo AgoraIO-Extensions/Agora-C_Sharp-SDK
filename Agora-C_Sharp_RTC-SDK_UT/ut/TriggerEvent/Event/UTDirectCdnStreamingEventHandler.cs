@@ -27,12 +27,12 @@ namespace Agora.Rtc.Ut
             if (OnDirectCdnStreamingStateChanged_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_STATE>(OnDirectCdnStreamingStateChanged_state, state) == false)
-            //return false;
-            // if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_REASON>(OnDirectCdnStreamingStateChanged_reason, reason) == false)
-            //return false;
-            // if (ParamsHelper.Compare<string>(OnDirectCdnStreamingStateChanged_message, message) == false)
-            //return false;
+            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_STATE>(OnDirectCdnStreamingStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_REASON>(OnDirectCdnStreamingStateChanged_reason, reason) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnDirectCdnStreamingStateChanged_message, message) == false)
+                return false;
 
             return true;
         }
@@ -55,8 +55,8 @@ namespace Agora.Rtc.Ut
             if (OnDirectCdnStreamingStats_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<DirectCdnStreamingStats>(OnDirectCdnStreamingStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<DirectCdnStreamingStats>(OnDirectCdnStreamingStats_stats, stats) == false)
+                return false;
 
             return true;
         }

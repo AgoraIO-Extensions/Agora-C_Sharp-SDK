@@ -25,10 +25,10 @@ namespace Agora.Rtc.Ut
             if (OnPlayerSourceStateChanged_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<MEDIA_PLAYER_STATE>(OnPlayerSourceStateChanged_state, state) == false)
-            //return false;
-            // if (ParamsHelper.Compare<MEDIA_PLAYER_REASON>(OnPlayerSourceStateChanged_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<MEDIA_PLAYER_STATE>(OnPlayerSourceStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<MEDIA_PLAYER_REASON>(OnPlayerSourceStateChanged_reason, reason) == false)
+                return false;
 
             return true;
         }
@@ -53,10 +53,10 @@ namespace Agora.Rtc.Ut
             if (OnPositionChanged_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<long>(OnPositionChanged_positionMs, positionMs) == false)
-            //return false;
-            // if (ParamsHelper.Compare<long>(OnPositionChanged_timestampMs, timestampMs) == false)
-            //return false;
+            if (ParamsHelper.Compare<long>(OnPositionChanged_positionMs, positionMs) == false)
+                return false;
+            if (ParamsHelper.Compare<long>(OnPositionChanged_timestampMs, timestampMs) == false)
+                return false;
 
             return true;
         }
@@ -83,12 +83,12 @@ namespace Agora.Rtc.Ut
             if (OnPlayerEvent_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<MEDIA_PLAYER_EVENT>(OnPlayerEvent_eventCode, eventCode) == false)
-            //return false;
-            // if (ParamsHelper.Compare<long>(OnPlayerEvent_elapsedTime, elapsedTime) == false)
-            //return false;
-            // if (ParamsHelper.Compare<string>(OnPlayerEvent_message, message) == false)
-            //return false;
+            if (ParamsHelper.Compare<MEDIA_PLAYER_EVENT>(OnPlayerEvent_eventCode, eventCode) == false)
+                return false;
+            if (ParamsHelper.Compare<long>(OnPlayerEvent_elapsedTime, elapsedTime) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnPlayerEvent_message, message) == false)
+                return false;
 
             return true;
         }
@@ -113,10 +113,10 @@ namespace Agora.Rtc.Ut
             if (OnMetaData_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<byte[]>(OnMetaData_data, data) == false)
-            //return false;
-            // if (ParamsHelper.Compare<int>(OnMetaData_length, length) == false)
-            //return false;
+            if (ParamsHelper.Compare<byte[]>(OnMetaData_data, data) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnMetaData_length, length) == false)
+                return false;
 
             return true;
         }
@@ -139,8 +139,8 @@ namespace Agora.Rtc.Ut
             if (OnPlayBufferUpdated_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<long>(OnPlayBufferUpdated_playCachedBuffer, playCachedBuffer) == false)
-            //return false;
+            if (ParamsHelper.Compare<long>(OnPlayBufferUpdated_playCachedBuffer, playCachedBuffer) == false)
+                return false;
 
             return true;
         }
@@ -165,10 +165,10 @@ namespace Agora.Rtc.Ut
             if (OnPreloadEvent_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<string>(OnPreloadEvent_src, src) == false)
-            //return false;
-            // if (ParamsHelper.Compare<PLAYER_PRELOAD_EVENT>(OnPreloadEvent_event, @event) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnPreloadEvent_src, src) == false)
+                return false;
+            if (ParamsHelper.Compare<PLAYER_PRELOAD_EVENT>(OnPreloadEvent_event, @event) == false)
+                return false;
 
             return true;
         }
@@ -239,10 +239,10 @@ namespace Agora.Rtc.Ut
             if (OnPlayerSrcInfoChanged_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<SrcInfo>(OnPlayerSrcInfoChanged_from, from) == false)
-            //return false;
-            // if (ParamsHelper.Compare<SrcInfo>(OnPlayerSrcInfoChanged_to, to) == false)
-            //return false;
+            if (ParamsHelper.Compare<SrcInfo>(OnPlayerSrcInfoChanged_from, from) == false)
+                return false;
+            if (ParamsHelper.Compare<SrcInfo>(OnPlayerSrcInfoChanged_to, to) == false)
+                return false;
 
             return true;
         }
@@ -265,8 +265,8 @@ namespace Agora.Rtc.Ut
             if (OnPlayerInfoUpdated_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<PlayerUpdatedInfo>(OnPlayerInfoUpdated_info, info) == false)
-            //return false;
+            if (ParamsHelper.Compare<PlayerUpdatedInfo>(OnPlayerInfoUpdated_info, info) == false)
+                return false;
 
             return true;
         }
@@ -289,8 +289,8 @@ namespace Agora.Rtc.Ut
             if (OnPlayerCacheStats_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<CacheStatistics>(OnPlayerCacheStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<CacheStatistics>(OnPlayerCacheStats_stats, stats) == false)
+                return false;
 
             return true;
         }
@@ -313,8 +313,8 @@ namespace Agora.Rtc.Ut
             if (OnPlayerPlaybackStats_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<PlayerPlaybackStats>(OnPlayerPlaybackStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<PlayerPlaybackStats>(OnPlayerPlaybackStats_stats, stats) == false)
+                return false;
 
             return true;
         }
@@ -337,8 +337,8 @@ namespace Agora.Rtc.Ut
             if (OnAudioVolumeIndication_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<int>(OnAudioVolumeIndication_volume, volume) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnAudioVolumeIndication_volume, volume) == false)
+                return false;
 
             return true;
         }

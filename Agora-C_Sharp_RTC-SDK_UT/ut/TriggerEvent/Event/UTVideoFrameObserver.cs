@@ -23,10 +23,10 @@ namespace Agora.Rtc.Ut
             if (OnCaptureVideoFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnCaptureVideoFrame_sourceType, sourceType) == false)
-            //return false;
-            // if (ParamsHelper.Compare<VideoFrame>(OnCaptureVideoFrame_videoFrame, videoFrame) == false)
-            //return false;
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnCaptureVideoFrame_sourceType, sourceType) == false)
+                return false;
+            if (ParamsHelper.Compare<VideoFrame>(OnCaptureVideoFrame_videoFrame, videoFrame) == false)
+                return false;
 
             return true;
         }
@@ -52,10 +52,10 @@ namespace Agora.Rtc.Ut
             if (OnPreEncodeVideoFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnPreEncodeVideoFrame_sourceType, sourceType) == false)
-            //return false;
-            // if (ParamsHelper.Compare<VideoFrame>(OnPreEncodeVideoFrame_videoFrame, videoFrame) == false)
-            //return false;
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnPreEncodeVideoFrame_sourceType, sourceType) == false)
+                return false;
+            if (ParamsHelper.Compare<VideoFrame>(OnPreEncodeVideoFrame_videoFrame, videoFrame) == false)
+                return false;
 
             return true;
         }
@@ -81,10 +81,10 @@ namespace Agora.Rtc.Ut
             if (OnMediaPlayerVideoFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<VideoFrame>(OnMediaPlayerVideoFrame_videoFrame, videoFrame) == false)
-            //return false;
-            // if (ParamsHelper.Compare<int>(OnMediaPlayerVideoFrame_mediaPlayerId, mediaPlayerId) == false)
-            //return false;
+            if (ParamsHelper.Compare<VideoFrame>(OnMediaPlayerVideoFrame_videoFrame, videoFrame) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnMediaPlayerVideoFrame_mediaPlayerId, mediaPlayerId) == false)
+                return false;
 
             return true;
         }
@@ -112,12 +112,12 @@ namespace Agora.Rtc.Ut
             if (OnRenderVideoFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<string>(OnRenderVideoFrame_channelId, channelId) == false)
-            //return false;
-            // if (ParamsHelper.Compare<uint>(OnRenderVideoFrame_remoteUid, remoteUid) == false)
-            //return false;
-            // if (ParamsHelper.Compare<VideoFrame>(OnRenderVideoFrame_videoFrame, videoFrame) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnRenderVideoFrame_channelId, channelId) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRenderVideoFrame_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<VideoFrame>(OnRenderVideoFrame_videoFrame, videoFrame) == false)
+                return false;
 
             return true;
         }
@@ -141,8 +141,8 @@ namespace Agora.Rtc.Ut
             if (OnTranscodedVideoFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<VideoFrame>(OnTranscodedVideoFrame_videoFrame, videoFrame) == false)
-            //return false;
+            if (ParamsHelper.Compare<VideoFrame>(OnTranscodedVideoFrame_videoFrame, videoFrame) == false)
+                return false;
 
             return true;
         }

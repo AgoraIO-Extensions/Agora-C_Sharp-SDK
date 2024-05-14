@@ -28,14 +28,14 @@ namespace Agora.Rtc.Ut
             if (OnEncodedVideoFrameReceived_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<uint>(OnEncodedVideoFrameReceived_uid, uid) == false)
-            //return false;
-            // if (ParamsHelper.Compare<IntPtr>(OnEncodedVideoFrameReceived_imageBuffer, imageBuffer) == false)
-            //return false;
-            // if (ParamsHelper.Compare<ulong>(OnEncodedVideoFrameReceived_length, length) == false)
-            //return false;
-            // if (ParamsHelper.Compare<EncodedVideoFrameInfo>(OnEncodedVideoFrameReceived_videoEncodedFrameInfo, videoEncodedFrameInfo) == false)
-            //return false;
+            if (ParamsHelper.Compare<uint>(OnEncodedVideoFrameReceived_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<IntPtr>(OnEncodedVideoFrameReceived_imageBuffer, imageBuffer) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnEncodedVideoFrameReceived_length, length) == false)
+                return false;
+            if (ParamsHelper.Compare<EncodedVideoFrameInfo>(OnEncodedVideoFrameReceived_videoEncodedFrameInfo, videoEncodedFrameInfo) == false)
+                return false;
 
             return true;
         }

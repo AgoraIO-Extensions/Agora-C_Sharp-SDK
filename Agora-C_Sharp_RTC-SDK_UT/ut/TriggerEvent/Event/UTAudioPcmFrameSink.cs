@@ -21,8 +21,8 @@ namespace Agora.Rtc.Ut
             if (OnFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<AudioPcmFrame>(OnFrame_frame, frame) == false)
-            //return false;
+            if (ParamsHelper.Compare<AudioPcmFrame>(OnFrame_frame, frame) == false)
+                return false;
 
             return true;
         }

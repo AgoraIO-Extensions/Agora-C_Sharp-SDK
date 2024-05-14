@@ -1336,8 +1336,8 @@ export class SpeicalLogic {
             if (transType == "@remove")
                 continue;
 
-            funLines.push(`//if (ParamsHelper.Compare<${transType}>(${methodName}_${transName}, ${transName}) == false)`);
-            funLines.push(`//return false;`);
+            funLines.push(`if (ParamsHelper.Compare<${transType}>(${methodName}_${transName}, ${transName}) == false)`);
+            funLines.push(`return false;`);
         }
         funLines.push(`return true;}`);
         funLines.push("//////////////////");
@@ -1368,7 +1368,12 @@ export class SpeicalLogic {
             if (transType == "@remove")
                 continue;
             lines.push(`${transType} ${transName} = ParamsHelper.CreateParam<${transType}>();`);
-            lines.push(`jsonObj.Add("${p.name}", ${transName});\n`);
+            if (transType == "VideoFrame") {
+                lines.push(`jsonObj.Add("${p.name}", new FakeVideoFrame(${transName}));\n`);
+            }
+            else {
+                lines.push(`jsonObj.Add("${p.name}", ${transName});\n`);
+            }
             paramsLines.push(`${config.paramNameActualTrans.transType(clazzName, m.name, p.name)}`);
         }
         lines.push(`var jsonString = LitJson.JsonMapper.ToJson(jsonObj);`)
@@ -1404,14 +1409,20 @@ export class SpeicalLogic {
             "IRtcEngineEventHandler",
             "IRtcEngineEventHandlerEx"
         ];
-        let excludeMethods = [
+        let notPassedMethods = [
             "onFacePositionChanged",
             "onCameraCapturerConfigurationChanged",
+        ];
+        let excludeMethods = [
+            "onAudioMetadataReceived",
+            "onStreamMessage"
         ];
         for (let data of allData) {
             if (includeClassStruct.includes(data.clazzName) == false)
                 continue;
-            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserver(data.clazzName, data.m, data.repeart, data.clazzName, !excludeMethods.includes(data.m.name));
+            if (excludeMethods.includes(data.m.name))
+                continue;
+            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserver(data.clazzName, data.m, data.repeart, data.clazzName, !notPassedMethods.includes(data.m.name));
             lines.push(str);
         }
 

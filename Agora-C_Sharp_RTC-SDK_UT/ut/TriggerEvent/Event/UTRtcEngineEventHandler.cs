@@ -26,16 +26,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnProxyConnected_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnProxyConnected_channel, channel) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnProxyConnected_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<PROXY_TYPE>(OnProxyConnected_proxyType, proxyType) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnProxyConnected_localProxyIp, localProxyIp) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnProxyConnected_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnProxyConnected_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnProxyConnected_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<PROXY_TYPE>(OnProxyConnected_proxyType, proxyType) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnProxyConnected_localProxyIp, localProxyIp) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnProxyConnected_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -54,10 +54,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnError_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnError_err, err) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnError_msg, msg) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnError_err, err) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnError_msg, msg) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -74,8 +74,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnLastmileProbeResult_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<LastmileProbeResult>(OnLastmileProbeResult_result, result) == false)
-            //return false;
+            if (ParamsHelper.Compare<LastmileProbeResult>(OnLastmileProbeResult_result, result) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -96,12 +96,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioDeviceStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnAudioDeviceStateChanged_deviceId, deviceId) == false)
-            //return false;
-            //if (ParamsHelper.Compare<MEDIA_DEVICE_TYPE>(OnAudioDeviceStateChanged_deviceType, deviceType) == false)
-            //return false;
-            //if (ParamsHelper.Compare<MEDIA_DEVICE_STATE_TYPE>(OnAudioDeviceStateChanged_deviceState, deviceState) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnAudioDeviceStateChanged_deviceId, deviceId) == false)
+                return false;
+            if (ParamsHelper.Compare<MEDIA_DEVICE_TYPE>(OnAudioDeviceStateChanged_deviceType, deviceType) == false)
+                return false;
+            if (ParamsHelper.Compare<MEDIA_DEVICE_STATE_TYPE>(OnAudioDeviceStateChanged_deviceState, deviceState) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -118,8 +118,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioMixingPositionChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<long>(OnAudioMixingPositionChanged_position, position) == false)
-            //return false;
+            if (ParamsHelper.Compare<long>(OnAudioMixingPositionChanged_position, position) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -150,8 +150,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioEffectFinished_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnAudioEffectFinished_soundId, soundId) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnAudioEffectFinished_soundId, soundId) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -172,12 +172,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnVideoDeviceStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnVideoDeviceStateChanged_deviceId, deviceId) == false)
-            //return false;
-            //if (ParamsHelper.Compare<MEDIA_DEVICE_TYPE>(OnVideoDeviceStateChanged_deviceType, deviceType) == false)
-            //return false;
-            //if (ParamsHelper.Compare<MEDIA_DEVICE_STATE_TYPE>(OnVideoDeviceStateChanged_deviceState, deviceState) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnVideoDeviceStateChanged_deviceId, deviceId) == false)
+                return false;
+            if (ParamsHelper.Compare<MEDIA_DEVICE_TYPE>(OnVideoDeviceStateChanged_deviceType, deviceType) == false)
+                return false;
+            if (ParamsHelper.Compare<MEDIA_DEVICE_STATE_TYPE>(OnVideoDeviceStateChanged_deviceState, deviceState) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -194,8 +194,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnUplinkNetworkInfoUpdated_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<UplinkNetworkInfo>(OnUplinkNetworkInfoUpdated_info, info) == false)
-            //return false;
+            if (ParamsHelper.Compare<UplinkNetworkInfo>(OnUplinkNetworkInfoUpdated_info, info) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -212,8 +212,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnDownlinkNetworkInfoUpdated_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<DownlinkNetworkInfo>(OnDownlinkNetworkInfoUpdated_info, info) == false)
-            //return false;
+            if (ParamsHelper.Compare<DownlinkNetworkInfo>(OnDownlinkNetworkInfoUpdated_info, info) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -230,8 +230,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnLastmileQuality_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnLastmileQuality_quality, quality) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnLastmileQuality_quality, quality) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -254,14 +254,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnFirstLocalVideoFrame_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnFirstLocalVideoFrame_source, source) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_height, height) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnFirstLocalVideoFrame_source, source) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_height, height) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -282,12 +282,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalVideoStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnLocalVideoStateChanged_source, source) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_REASON>(OnLocalVideoStateChanged_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnLocalVideoStateChanged_source, source) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_REASON>(OnLocalVideoStateChanged_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -324,14 +324,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnCameraFocusAreaChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_x, x) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_y, y) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_height, height) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_x, x) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_y, y) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnCameraFocusAreaChanged_height, height) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -354,14 +354,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnCameraExposureAreaChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_x, x) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_y, y) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_height, height) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_x, x) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_y, y) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnCameraExposureAreaChanged_height, height) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -386,16 +386,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnFacePositionChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnFacePositionChanged_imageWidth, imageWidth) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFacePositionChanged_imageHeight, imageHeight) == false)
-            //return false;
-            //if (ParamsHelper.Compare<Rectangle[]>(OnFacePositionChanged_vecRectangle, vecRectangle) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int[]>(OnFacePositionChanged_vecDistance, vecDistance) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFacePositionChanged_numFaces, numFaces) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnFacePositionChanged_imageWidth, imageWidth) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFacePositionChanged_imageHeight, imageHeight) == false)
+                return false;
+            if (ParamsHelper.Compare<Rectangle[]>(OnFacePositionChanged_vecRectangle, vecRectangle) == false)
+                return false;
+            if (ParamsHelper.Compare<int[]>(OnFacePositionChanged_vecDistance, vecDistance) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFacePositionChanged_numFaces, numFaces) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -428,10 +428,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioMixingStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<AUDIO_MIXING_STATE_TYPE>(OnAudioMixingStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<AUDIO_MIXING_REASON_TYPE>(OnAudioMixingStateChanged_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<AUDIO_MIXING_STATE_TYPE>(OnAudioMixingStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<AUDIO_MIXING_REASON_TYPE>(OnAudioMixingStateChanged_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -450,10 +450,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnRhythmPlayerStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RHYTHM_PLAYER_STATE_TYPE>(OnRhythmPlayerStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RHYTHM_PLAYER_REASON>(OnRhythmPlayerStateChanged_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<RHYTHM_PLAYER_STATE_TYPE>(OnRhythmPlayerStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<RHYTHM_PLAYER_REASON>(OnRhythmPlayerStateChanged_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -470,8 +470,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnContentInspectResult_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<CONTENT_INSPECT_RESULT>(OnContentInspectResult_result, result) == false)
-            //return false;
+            if (ParamsHelper.Compare<CONTENT_INSPECT_RESULT>(OnContentInspectResult_result, result) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -492,12 +492,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioDeviceVolumeChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<MEDIA_DEVICE_TYPE>(OnAudioDeviceVolumeChanged_deviceType, deviceType) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnAudioDeviceVolumeChanged_volume, volume) == false)
-            //return false;
-            //if (ParamsHelper.Compare<bool>(OnAudioDeviceVolumeChanged_muted, muted) == false)
-            //return false;
+            if (ParamsHelper.Compare<MEDIA_DEVICE_TYPE>(OnAudioDeviceVolumeChanged_deviceType, deviceType) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnAudioDeviceVolumeChanged_volume, volume) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnAudioDeviceVolumeChanged_muted, muted) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -518,12 +518,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnRtmpStreamingStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnRtmpStreamingStateChanged_url, url) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RTMP_STREAM_PUBLISH_STATE>(OnRtmpStreamingStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RTMP_STREAM_PUBLISH_REASON>(OnRtmpStreamingStateChanged_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnRtmpStreamingStateChanged_url, url) == false)
+                return false;
+            if (ParamsHelper.Compare<RTMP_STREAM_PUBLISH_STATE>(OnRtmpStreamingStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<RTMP_STREAM_PUBLISH_REASON>(OnRtmpStreamingStateChanged_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -542,10 +542,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnRtmpStreamingEvent_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnRtmpStreamingEvent_url, url) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RTMP_STREAMING_EVENT>(OnRtmpStreamingEvent_eventCode, eventCode) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnRtmpStreamingEvent_url, url) == false)
+                return false;
+            if (ParamsHelper.Compare<RTMP_STREAMING_EVENT>(OnRtmpStreamingEvent_eventCode, eventCode) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -576,8 +576,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioRoutingChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnAudioRoutingChanged_routing, routing) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnAudioRoutingChanged_routing, routing) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -596,10 +596,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnChannelMediaRelayStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<int>(OnChannelMediaRelayStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnChannelMediaRelayStateChanged_code, code) == false)
-            //return false;
+            if (ParamsHelper.Compare<int>(OnChannelMediaRelayStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnChannelMediaRelayStateChanged_code, code) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -616,8 +616,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalPublishFallbackToAudioOnly_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<bool>(OnLocalPublishFallbackToAudioOnly_isFallbackOrRecover, isFallbackOrRecover) == false)
-            //return false;
+            if (ParamsHelper.Compare<bool>(OnLocalPublishFallbackToAudioOnly_isFallbackOrRecover, isFallbackOrRecover) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -636,10 +636,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnRemoteSubscribeFallbackToAudioOnly_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<uint>(OnRemoteSubscribeFallbackToAudioOnly_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<bool>(OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover, isFallbackOrRecover) == false)
-            //return false;
+            if (ParamsHelper.Compare<uint>(OnRemoteSubscribeFallbackToAudioOnly_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover, isFallbackOrRecover) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -656,8 +656,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnPermissionError_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<PERMISSION_TYPE>(OnPermissionError_permissionType, permissionType) == false)
-            //return false;
+            if (ParamsHelper.Compare<PERMISSION_TYPE>(OnPermissionError_permissionType, permissionType) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -676,10 +676,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalUserRegistered_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<uint>(OnLocalUserRegistered_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnLocalUserRegistered_userAccount, userAccount) == false)
-            //return false;
+            if (ParamsHelper.Compare<uint>(OnLocalUserRegistered_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnLocalUserRegistered_userAccount, userAccount) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -698,10 +698,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserInfoUpdated_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<uint>(OnUserInfoUpdated_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<UserInfo>(OnUserInfoUpdated_info, info) == false)
-            //return false;
+            if (ParamsHelper.Compare<uint>(OnUserInfoUpdated_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<UserInfo>(OnUserInfoUpdated_info, info) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -720,10 +720,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalVideoTranscoderError_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<TranscodingVideoStream>(OnLocalVideoTranscoderError_stream, stream) == false)
-            //return false;
-            //if (ParamsHelper.Compare<VIDEO_TRANSCODER_ERROR>(OnLocalVideoTranscoderError_error, error) == false)
-            //return false;
+            if (ParamsHelper.Compare<TranscodingVideoStream>(OnLocalVideoTranscoderError_stream, stream) == false)
+                return false;
+            if (ParamsHelper.Compare<VIDEO_TRANSCODER_ERROR>(OnLocalVideoTranscoderError_error, error) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -748,16 +748,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioSubscribeStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnAudioSubscribeStateChanged_channel, channel) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnAudioSubscribeStateChanged_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_oldState, oldState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_newState, newState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnAudioSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnAudioSubscribeStateChanged_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnAudioSubscribeStateChanged_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_oldState, oldState) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_newState, newState) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnAudioSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -782,16 +782,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnVideoSubscribeStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnVideoSubscribeStateChanged_channel, channel) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnVideoSubscribeStateChanged_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_oldState, oldState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_newState, newState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnVideoSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnVideoSubscribeStateChanged_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnVideoSubscribeStateChanged_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_oldState, oldState) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_newState, newState) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnVideoSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -814,14 +814,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioPublishStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnAudioPublishStateChanged_channel, channel) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnAudioPublishStateChanged_oldState, oldState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnAudioPublishStateChanged_newState, newState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnAudioPublishStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnAudioPublishStateChanged_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnAudioPublishStateChanged_oldState, oldState) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnAudioPublishStateChanged_newState, newState) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnAudioPublishStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -846,16 +846,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnVideoPublishStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoPublishStateChanged_source, source) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnVideoPublishStateChanged_channel, channel) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnVideoPublishStateChanged_oldState, oldState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnVideoPublishStateChanged_newState, newState) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnVideoPublishStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
-            //return false;
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoPublishStateChanged_source, source) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnVideoPublishStateChanged_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnVideoPublishStateChanged_oldState, oldState) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_PUBLISH_STATE>(OnVideoPublishStateChanged_newState, newState) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnVideoPublishStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -878,14 +878,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnExtensionEvent_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionEvent_provider, provider) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionEvent_extension, extension) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionEvent_key, key) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionEvent_value, value) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnExtensionEvent_provider, provider) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtensionEvent_extension, extension) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtensionEvent_key, key) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtensionEvent_value, value) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -904,10 +904,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnExtensionStarted_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionStarted_provider, provider) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionStarted_extension, extension) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnExtensionStarted_provider, provider) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtensionStarted_extension, extension) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -926,10 +926,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnExtensionStopped_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionStopped_provider, provider) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionStopped_extension, extension) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnExtensionStopped_provider, provider) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtensionStopped_extension, extension) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -952,14 +952,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnExtensionError_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionError_provider, provider) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionError_extension, extension) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnExtensionError_error, error) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnExtensionError_message, message) == false)
-            //return false;
+            if (ParamsHelper.Compare<string>(OnExtensionError_provider, provider) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtensionError_extension, extension) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnExtensionError_error, error) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtensionError_message, message) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -978,10 +978,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnJoinChannelSuccess_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnJoinChannelSuccess_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnJoinChannelSuccess_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnJoinChannelSuccess_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnJoinChannelSuccess_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1000,10 +1000,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnRejoinChannelSuccess_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRejoinChannelSuccess_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnRejoinChannelSuccess_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRejoinChannelSuccess_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnRejoinChannelSuccess_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1028,16 +1028,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioQuality_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnAudioQuality_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnAudioQuality_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnAudioQuality_quality, quality) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnAudioQuality_delay, delay) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnAudioQuality_lost, lost) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnAudioQuality_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnAudioQuality_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnAudioQuality_quality, quality) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnAudioQuality_delay, delay) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnAudioQuality_lost, lost) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1060,14 +1060,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioVolumeIndication_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnAudioVolumeIndication_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<AudioVolumeInfo[]>(OnAudioVolumeIndication_speakers, speakers) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnAudioVolumeIndication_speakerNumber, speakerNumber) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnAudioVolumeIndication_totalVolume, totalVolume) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnAudioVolumeIndication_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<AudioVolumeInfo[]>(OnAudioVolumeIndication_speakers, speakers) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnAudioVolumeIndication_speakerNumber, speakerNumber) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnAudioVolumeIndication_totalVolume, totalVolume) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1086,10 +1086,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnLeaveChannel_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnLeaveChannel_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RtcStats>(OnLeaveChannel_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnLeaveChannel_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<RtcStats>(OnLeaveChannel_stats, stats) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1108,10 +1108,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnRtcStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRtcStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RtcStats>(OnRtcStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRtcStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<RtcStats>(OnRtcStats_stats, stats) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1134,14 +1134,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnNetworkQuality_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnNetworkQuality_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnNetworkQuality_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnNetworkQuality_txQuality, txQuality) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnNetworkQuality_rxQuality, rxQuality) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnNetworkQuality_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnNetworkQuality_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnNetworkQuality_txQuality, txQuality) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnNetworkQuality_rxQuality, rxQuality) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1158,8 +1158,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnIntraRequestReceived_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnIntraRequestReceived_connection, connection) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnIntraRequestReceived_connection, connection) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1178,10 +1178,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnFirstLocalVideoFramePublished_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnFirstLocalVideoFramePublished_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstLocalVideoFramePublished_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnFirstLocalVideoFramePublished_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstLocalVideoFramePublished_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1206,16 +1206,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnFirstRemoteVideoDecoded_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteVideoDecoded_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnFirstRemoteVideoDecoded_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_height, height) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteVideoDecoded_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnFirstRemoteVideoDecoded_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_height, height) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1242,18 +1242,18 @@ namespace Agora.Rtc.Ut
         {
             if (OnVideoSizeChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnVideoSizeChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoSizeChanged_sourceType, sourceType) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnVideoSizeChanged_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnVideoSizeChanged_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnVideoSizeChanged_height, height) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnVideoSizeChanged_rotation, rotation) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnVideoSizeChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoSizeChanged_sourceType, sourceType) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnVideoSizeChanged_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnVideoSizeChanged_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnVideoSizeChanged_height, height) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnVideoSizeChanged_rotation, rotation) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1274,12 +1274,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalVideoStateChanged2_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStateChanged2_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged2_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_REASON>(OnLocalVideoStateChanged2_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStateChanged2_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged2_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_REASON>(OnLocalVideoStateChanged2_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1304,16 +1304,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnRemoteVideoStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoStateChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnRemoteVideoStateChanged_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<REMOTE_VIDEO_STATE>(OnRemoteVideoStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<REMOTE_VIDEO_STATE_REASON>(OnRemoteVideoStateChanged_reason, reason) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnRemoteVideoStateChanged_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoStateChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRemoteVideoStateChanged_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<REMOTE_VIDEO_STATE>(OnRemoteVideoStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<REMOTE_VIDEO_STATE_REASON>(OnRemoteVideoStateChanged_reason, reason) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnRemoteVideoStateChanged_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1338,16 +1338,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnFirstRemoteVideoFrame_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteVideoFrame_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnFirstRemoteVideoFrame_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_height, height) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteVideoFrame_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnFirstRemoteVideoFrame_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_height, height) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1368,12 +1368,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserJoined_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserJoined_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserJoined_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnUserJoined_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserJoined_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserJoined_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnUserJoined_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1394,12 +1394,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserOffline_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserOffline_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserOffline_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<USER_OFFLINE_REASON_TYPE>(OnUserOffline_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserOffline_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserOffline_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<USER_OFFLINE_REASON_TYPE>(OnUserOffline_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1420,12 +1420,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserMuteAudio_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserMuteAudio_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserMuteAudio_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<bool>(OnUserMuteAudio_muted, muted) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserMuteAudio_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserMuteAudio_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnUserMuteAudio_muted, muted) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1446,12 +1446,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserMuteVideo_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserMuteVideo_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserMuteVideo_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<bool>(OnUserMuteVideo_muted, muted) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserMuteVideo_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserMuteVideo_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnUserMuteVideo_muted, muted) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1472,12 +1472,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserEnableVideo_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserEnableVideo_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserEnableVideo_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<bool>(OnUserEnableVideo_enabled, enabled) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserEnableVideo_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserEnableVideo_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnUserEnableVideo_enabled, enabled) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1498,12 +1498,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserEnableLocalVideo_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserEnableLocalVideo_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserEnableLocalVideo_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<bool>(OnUserEnableLocalVideo_enabled, enabled) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserEnableLocalVideo_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserEnableLocalVideo_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnUserEnableLocalVideo_enabled, enabled) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1524,12 +1524,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserStateChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserStateChanged_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserStateChanged_state, state) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserStateChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserStateChanged_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserStateChanged_state, state) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1548,10 +1548,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalAudioStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnLocalAudioStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LocalAudioStats>(OnLocalAudioStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnLocalAudioStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<LocalAudioStats>(OnLocalAudioStats_stats, stats) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1570,10 +1570,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnRemoteAudioStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RemoteAudioStats>(OnRemoteAudioStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<RemoteAudioStats>(OnRemoteAudioStats_stats, stats) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1592,10 +1592,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalVideoStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LocalVideoStats>(OnLocalVideoStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<LocalVideoStats>(OnLocalVideoStats_stats, stats) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1614,10 +1614,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnRemoteVideoStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<RemoteVideoStats>(OnRemoteVideoStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<RemoteVideoStats>(OnRemoteVideoStats_stats, stats) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1634,8 +1634,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnConnectionLost_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnConnectionLost_connection, connection) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnConnectionLost_connection, connection) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1652,8 +1652,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnConnectionInterrupted_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnConnectionInterrupted_connection, connection) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnConnectionInterrupted_connection, connection) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1670,8 +1670,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnConnectionBanned_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnConnectionBanned_connection, connection) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnConnectionBanned_connection, connection) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1698,18 +1698,18 @@ namespace Agora.Rtc.Ut
         {
             if (OnStreamMessage_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnStreamMessage_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnStreamMessage_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnStreamMessage_streamId, streamId) == false)
-            //return false;
-            //if (ParamsHelper.Compare<byte[]>(OnStreamMessage_data, data) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ulong>(OnStreamMessage_length, length) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ulong>(OnStreamMessage_sentTs, sentTs) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnStreamMessage_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnStreamMessage_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnStreamMessage_streamId, streamId) == false)
+                return false;
+            if (ParamsHelper.Compare<byte[]>(OnStreamMessage_data, data) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnStreamMessage_length, length) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnStreamMessage_sentTs, sentTs) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1736,18 +1736,18 @@ namespace Agora.Rtc.Ut
         {
             if (OnStreamMessageError_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnStreamMessageError_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnStreamMessageError_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnStreamMessageError_streamId, streamId) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnStreamMessageError_code, code) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnStreamMessageError_missed, missed) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnStreamMessageError_cached, cached) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnStreamMessageError_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnStreamMessageError_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_streamId, streamId) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_code, code) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_missed, missed) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_cached, cached) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1764,8 +1764,8 @@ namespace Agora.Rtc.Ut
         {
             if (OnRequestToken_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRequestToken_connection, connection) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRequestToken_connection, connection) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1784,10 +1784,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnLicenseValidationFailure_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnLicenseValidationFailure_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LICENSE_ERROR_TYPE>(OnLicenseValidationFailure_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnLicenseValidationFailure_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<LICENSE_ERROR_TYPE>(OnLicenseValidationFailure_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1806,10 +1806,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnTokenPrivilegeWillExpire_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnTokenPrivilegeWillExpire_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnTokenPrivilegeWillExpire_token, token) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnTokenPrivilegeWillExpire_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnTokenPrivilegeWillExpire_token, token) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1828,10 +1828,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnFirstLocalAudioFramePublished_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnFirstLocalAudioFramePublished_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstLocalAudioFramePublished_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnFirstLocalAudioFramePublished_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstLocalAudioFramePublished_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1852,12 +1852,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnFirstRemoteAudioFrame_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteAudioFrame_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnFirstRemoteAudioFrame_userId, userId) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteAudioFrame_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteAudioFrame_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnFirstRemoteAudioFrame_userId, userId) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteAudioFrame_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1878,12 +1878,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnFirstRemoteAudioDecoded_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteAudioDecoded_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnFirstRemoteAudioDecoded_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnFirstRemoteAudioDecoded_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteAudioDecoded_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnFirstRemoteAudioDecoded_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnFirstRemoteAudioDecoded_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1904,12 +1904,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnLocalAudioStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnLocalAudioStateChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_STATE>(OnLocalAudioStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_REASON>(OnLocalAudioStateChanged_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnLocalAudioStateChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_STATE>(OnLocalAudioStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_REASON>(OnLocalAudioStateChanged_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1934,16 +1934,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnRemoteAudioStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioStateChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnRemoteAudioStateChanged_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<REMOTE_AUDIO_STATE>(OnRemoteAudioStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<REMOTE_AUDIO_STATE_REASON>(OnRemoteAudioStateChanged_reason, reason) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnRemoteAudioStateChanged_elapsed, elapsed) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioStateChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRemoteAudioStateChanged_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<REMOTE_AUDIO_STATE>(OnRemoteAudioStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<REMOTE_AUDIO_STATE_REASON>(OnRemoteAudioStateChanged_reason, reason) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnRemoteAudioStateChanged_elapsed, elapsed) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1962,10 +1962,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnActiveSpeaker_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnActiveSpeaker_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnActiveSpeaker_uid, uid) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnActiveSpeaker_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnActiveSpeaker_uid, uid) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -1988,14 +1988,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnClientRoleChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnClientRoleChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged_oldRole, oldRole) == false)
-            //return false;
-            //if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged_newRole, newRole) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ClientRoleOptions>(OnClientRoleChanged_newRoleOptions, newRoleOptions) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnClientRoleChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged_oldRole, oldRole) == false)
+                return false;
+            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged_newRole, newRole) == false)
+                return false;
+            if (ParamsHelper.Compare<ClientRoleOptions>(OnClientRoleChanged_newRoleOptions, newRoleOptions) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2016,12 +2016,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnClientRoleChangeFailed_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnClientRoleChangeFailed_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<CLIENT_ROLE_CHANGE_FAILED_REASON>(OnClientRoleChangeFailed_reason, reason) == false)
-            //return false;
-            //if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChangeFailed_currentRole, currentRole) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnClientRoleChangeFailed_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<CLIENT_ROLE_CHANGE_FAILED_REASON>(OnClientRoleChangeFailed_reason, reason) == false)
+                return false;
+            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChangeFailed_currentRole, currentRole) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2046,16 +2046,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnRemoteAudioTransportStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioTransportStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnRemoteAudioTransportStats_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_delay, delay) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_lost, lost) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_rxKBitRate, rxKBitRate) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioTransportStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRemoteAudioTransportStats_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_delay, delay) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_lost, lost) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_rxKBitRate, rxKBitRate) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2080,16 +2080,16 @@ namespace Agora.Rtc.Ut
         {
             if (OnRemoteVideoTransportStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoTransportStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnRemoteVideoTransportStats_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_delay, delay) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_lost, lost) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_rxKBitRate, rxKBitRate) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoTransportStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRemoteVideoTransportStats_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_delay, delay) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_lost, lost) == false)
+                return false;
+            if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_rxKBitRate, rxKBitRate) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2110,12 +2110,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnConnectionStateChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnConnectionStateChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<CONNECTION_STATE_TYPE>(OnConnectionStateChanged_state, state) == false)
-            //return false;
-            //if (ParamsHelper.Compare<CONNECTION_CHANGED_REASON_TYPE>(OnConnectionStateChanged_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnConnectionStateChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<CONNECTION_STATE_TYPE>(OnConnectionStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<CONNECTION_CHANGED_REASON_TYPE>(OnConnectionStateChanged_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2138,14 +2138,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnWlAccMessage_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnWlAccMessage_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<WLACC_MESSAGE_REASON>(OnWlAccMessage_reason, reason) == false)
-            //return false;
-            //if (ParamsHelper.Compare<WLACC_SUGGEST_ACTION>(OnWlAccMessage_action, action) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnWlAccMessage_wlAccMsg, wlAccMsg) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnWlAccMessage_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<WLACC_MESSAGE_REASON>(OnWlAccMessage_reason, reason) == false)
+                return false;
+            if (ParamsHelper.Compare<WLACC_SUGGEST_ACTION>(OnWlAccMessage_action, action) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnWlAccMessage_wlAccMsg, wlAccMsg) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2166,12 +2166,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnWlAccStats_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnWlAccStats_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_currentStats, currentStats) == false)
-            //return false;
-            //if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_averageStats, averageStats) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnWlAccStats_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_currentStats, currentStats) == false)
+                return false;
+            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_averageStats, averageStats) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2190,10 +2190,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnNetworkTypeChanged_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnNetworkTypeChanged_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<NETWORK_TYPE>(OnNetworkTypeChanged_type, type) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnNetworkTypeChanged_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<NETWORK_TYPE>(OnNetworkTypeChanged_type, type) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2212,10 +2212,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnEncryptionError_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnEncryptionError_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ENCRYPTION_ERROR_TYPE>(OnEncryptionError_errorType, errorType) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnEncryptionError_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<ENCRYPTION_ERROR_TYPE>(OnEncryptionError_errorType, errorType) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2238,14 +2238,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnUploadLogResult_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUploadLogResult_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnUploadLogResult_requestId, requestId) == false)
-            //return false;
-            //if (ParamsHelper.Compare<bool>(OnUploadLogResult_success, success) == false)
-            //return false;
-            //if (ParamsHelper.Compare<UPLOAD_ERROR_REASON>(OnUploadLogResult_reason, reason) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUploadLogResult_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnUploadLogResult_requestId, requestId) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnUploadLogResult_success, success) == false)
+                return false;
+            if (ParamsHelper.Compare<UPLOAD_ERROR_REASON>(OnUploadLogResult_reason, reason) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2266,12 +2266,12 @@ namespace Agora.Rtc.Ut
         {
             if (OnUserAccountUpdated_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnUserAccountUpdated_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnUserAccountUpdated_remoteUid, remoteUid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnUserAccountUpdated_remoteUserAccount, remoteUserAccount) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnUserAccountUpdated_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserAccountUpdated_remoteUid, remoteUid) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnUserAccountUpdated_remoteUserAccount, remoteUserAccount) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2298,18 +2298,18 @@ namespace Agora.Rtc.Ut
         {
             if (OnSnapshotTaken_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnSnapshotTaken_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnSnapshotTaken_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<string>(OnSnapshotTaken_filePath, filePath) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnSnapshotTaken_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnSnapshotTaken_height, height) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnSnapshotTaken_errCode, errCode) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnSnapshotTaken_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnSnapshotTaken_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnSnapshotTaken_filePath, filePath) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnSnapshotTaken_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnSnapshotTaken_height, height) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnSnapshotTaken_errCode, errCode) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2332,14 +2332,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnVideoRenderingTracingResult_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnVideoRenderingTracingResult_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnVideoRenderingTracingResult_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<MEDIA_TRACE_EVENT>(OnVideoRenderingTracingResult_currentEvent, currentEvent) == false)
-            //return false;
-            //if (ParamsHelper.Compare<VideoRenderingTracingInfo>(OnVideoRenderingTracingResult_tracingInfo, tracingInfo) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnVideoRenderingTracingResult_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnVideoRenderingTracingResult_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<MEDIA_TRACE_EVENT>(OnVideoRenderingTracingResult_currentEvent, currentEvent) == false)
+                return false;
+            if (ParamsHelper.Compare<VideoRenderingTracingInfo>(OnVideoRenderingTracingResult_tracingInfo, tracingInfo) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2358,10 +2358,10 @@ namespace Agora.Rtc.Ut
         {
             if (OnSetRtmFlagResult_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnSetRtmFlagResult_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnSetRtmFlagResult_code, code) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnSetRtmFlagResult_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnSetRtmFlagResult_code, code) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2388,18 +2388,18 @@ namespace Agora.Rtc.Ut
         {
             if (OnTranscodedStreamLayoutInfo_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnTranscodedStreamLayoutInfo_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnTranscodedStreamLayoutInfo_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_width, width) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_height, height) == false)
-            //return false;
-            //if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_layoutCount, layoutCount) == false)
-            //return false;
-            //if (ParamsHelper.Compare<VideoLayout[]>(OnTranscodedStreamLayoutInfo_layoutlist, layoutlist) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnTranscodedStreamLayoutInfo_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnTranscodedStreamLayoutInfo_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_width, width) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_height, height) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_layoutCount, layoutCount) == false)
+                return false;
+            if (ParamsHelper.Compare<VideoLayout[]>(OnTranscodedStreamLayoutInfo_layoutlist, layoutlist) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2422,14 +2422,14 @@ namespace Agora.Rtc.Ut
         {
             if (OnAudioMetadataReceived_be_trigger == false)
                 return false;
-            //if (ParamsHelper.Compare<RtcConnection>(OnAudioMetadataReceived_connection, connection) == false)
-            //return false;
-            //if (ParamsHelper.Compare<uint>(OnAudioMetadataReceived_uid, uid) == false)
-            //return false;
-            //if (ParamsHelper.Compare<byte[]>(OnAudioMetadataReceived_metadata, metadata) == false)
-            //return false;
-            //if (ParamsHelper.Compare<ulong>(OnAudioMetadataReceived_length, length) == false)
-            //return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnAudioMetadataReceived_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnAudioMetadataReceived_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<byte[]>(OnAudioMetadataReceived_metadata, metadata) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnAudioMetadataReceived_length, length) == false)
+                return false;
             return true;
         }
         //////////////////
@@ -2456,12 +2456,12 @@ namespace Agora.Rtc.Ut
             if (OnDirectCdnStreamingStateChanged_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_STATE>(OnDirectCdnStreamingStateChanged_state, state) == false)
-            //return false;
-            // if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_REASON>(OnDirectCdnStreamingStateChanged_reason, reason) == false)
-            //return false;
-            // if (ParamsHelper.Compare<string>(OnDirectCdnStreamingStateChanged_message, message) == false)
-            //return false;
+            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_STATE>(OnDirectCdnStreamingStateChanged_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_REASON>(OnDirectCdnStreamingStateChanged_reason, reason) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnDirectCdnStreamingStateChanged_message, message) == false)
+                return false;
 
             return true;
         }
@@ -2484,8 +2484,8 @@ namespace Agora.Rtc.Ut
             if (OnDirectCdnStreamingStats_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<DirectCdnStreamingStats>(OnDirectCdnStreamingStats_stats, stats) == false)
-            //return false;
+            if (ParamsHelper.Compare<DirectCdnStreamingStats>(OnDirectCdnStreamingStats_stats, stats) == false)
+                return false;
 
             return true;
         }
