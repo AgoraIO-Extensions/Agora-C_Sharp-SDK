@@ -2,7 +2,7 @@
 #define AGORA_RTM
 
 using System;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 using track_id_t = System.UInt32;
 using System.Collections.Generic;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1040,6 +1040,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetAudioMixingPitch(pitch);
         }
 
+        public override int SetAudioMixingPlaybackSpeed(int speed)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetAudioMixingPlaybackSpeed(speed);
+        }
+
         public override int GetEffectsVolume()
         {
             if (_rtcEngineImpl == null)
@@ -1389,6 +1398,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.UploadLogFile(ref requestId);
+        }
+
+        public override int WriteLog(LOG_LEVEL level, string fmt)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.WriteLog(level, fmt);
         }
 
         public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
@@ -1949,6 +1967,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetCameraAutoExposureFaceModeEnabled(enabled);
         }
 
+        public override int SetCameraStabilizationMode(CAMERA_STABILIZATION_MODE mode)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetCameraStabilizationMode(mode);
+        }
+
         public override int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker)
         {
             if (_rtcEngineImpl == null)
@@ -1983,6 +2010,24 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRouteInCommunicationMode(route);
+        }
+
+        public override bool IsCameraCenterStageSupported()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return false;
+            }
+            return _rtcEngineImpl.IsCameraCenterStageSupported();
+        }
+
+        public override int EnableCameraCenterStage(bool enabled)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableCameraCenterStage(enabled);
         }
 
         public override ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
@@ -2091,6 +2136,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.QueryScreenCaptureCapability();
+        }
+
+        public override int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.QueryCameraFocalLengthCapability(ref focalLengthInfos, ref size);
         }
 
         public override int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
@@ -2745,6 +2799,15 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
+
+        public override int SendAudioMetadata(byte[] metadata, ulong length)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SendAudioMetadata(metadata, length);
+        }
         #endregion terra IRtcEngine
 
         public override int SetParametersEx(RtcConnection connection, string key, object value)
@@ -3215,6 +3278,24 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SetParametersEx(connection, parameters);
         }
+
+        public override int GetCallIdEx(ref string callId, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetCallIdEx(ref callId, connection);
+        }
+
+        public override int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SendAudioMetadataEx(connection, metadata, length);
+        }
         #endregion terra IRtcEngineEx
 
         public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
@@ -3280,7 +3361,25 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
         }
 
+        public override int UnRegisterFaceInfoObserver()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.UnRegisterFaceInfoObserver();
+        }
+
         #region terra IMediaEngine
+        public override int RegisterFaceInfoObserver(IFaceInfoObserver observer)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.RegisterFaceInfoObserver(observer);
+        }
+
         public override int PushAudioFrame(AudioFrame frame, uint trackId = 0)
         {
             if (_rtcEngineImpl == null)

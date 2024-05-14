@@ -7,13 +7,14 @@ import { execSync } from 'child_process';
 import { ParamDefaultTrans } from "./ParamDefaultTrans";
 import { ParseEngine } from "./PraseEngine";
 import { Tool } from "./Tool";
-import { AddAllDocTag, AddAllDocContetnt, DeleteAllOldDoc } from "./DocHelper";
+import { AndDocAndFormat } from "./DocHelper";
 import path from "path";
+import { AddNodeParser } from "@agoraio-extensions/terra_shared_configs";
 
 let jsonPath = getTerraJsonPath();
 console.log(jsonPath);
 let cxxiles = JSON.parse(fs.readFileSync(jsonPath, { encoding: 'utf-8' }));
-
+let headersPath = path.join(__dirname, "../node_modules/@agoraio-extensions/terra_shared_configs/headers/rtc_4.3.1/include");
 new ParseEngine(
     path.join(__dirname, "../../../Agora-C_Sharp-RTC-SDK/Code"),
     path.join(__dirname, "../../../terra/templates/C_Sharp-SDK-Code"),
@@ -21,7 +22,7 @@ new ParseEngine(
     cxxiles,
     "#region terra",
     "#endregion terra",
-    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.0/include")
+    headersPath
 );
 
 new ParseEngine(
@@ -31,17 +32,12 @@ new ParseEngine(
     cxxiles,
     "#region terra",
     "#endregion terra",
-    path.join(__dirname, "../../../../terra_shared_configs/headers/rtc_4.3.0/include")
+    headersPath
 );
 
 execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
 
-// add doc 
-DeleteAllOldDoc();
-AddAllDocTag();
-AddAllDocContetnt();
-execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
-
+AndDocAndFormat();
 
 function getTerraJsonPath(): string {
     let jsonDir = path.join(__dirname, "../.terra/cxx_parser");

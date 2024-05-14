@@ -4,7 +4,10 @@
         "name": "IAudioSpectrumObserver",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_event_compare",
-        "excludeMethods": [],
+        "excludeMethods": [
+            "onLocalAudioSpectrum",
+            "onRemoteAudioSpectrum"
+        ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
         "pecialMembersTemplate": "",

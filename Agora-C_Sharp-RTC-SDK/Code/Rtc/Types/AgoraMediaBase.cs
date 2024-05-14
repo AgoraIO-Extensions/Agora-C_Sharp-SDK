@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 namespace Agora.Rtc
 {
-    using int64_t = Int64;
-    using view_t = Int64;
-    using uint64_t = UInt64;
     using uint8_t = Byte;
-    using uint32_t = UInt32;
     using int16_t = Int16;
 
     ///
@@ -42,21 +37,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length.
+        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
         /// </summary>
         ///
         public int yStride;
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0.
+        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
         /// </summary>
         ///
         public int uStride;
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0.
+        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
         /// </summary>
         ///
         public int vStride;
@@ -106,7 +101,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. It is required.
+        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. This parameter is required.
         /// </summary>
         ///
         public long renderTimeMs;
@@ -233,7 +228,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of bytes per sample. The number of bytes per audio sample, which is usually 16-bit (2-byte).
+        /// The number of bytes per sample. For PCM, this parameter is generally set to 16 bits (2 bytes).
         /// </summary>
         ///
         public BYTES_PER_SAMPLE bytesPerSample;
@@ -249,7 +244,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of samples per second of the audio frame.
+        /// The number of samples per channel in the audio frame.
         /// </summary>
         ///
         public int samplesPerSec;
@@ -282,6 +277,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public int audioTrackNumber;
+
+        ///
+        /// @ignore
+        ///
+        public uint rtpTimestamp;
         #endregion terra AudioFrame_Member_List
 
         ///
@@ -305,10 +305,11 @@ namespace Agora.Rtc
             this.avsync_type = 0;
             this.presentationMs = 0;
             this.audioTrackNumber = 0;
+            this.rtpTimestamp = 0;
             this.RawBuffer = new byte[0];
         }
 
-        public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec, IntPtr buffer, long renderTimeMs, int avsync_type, long presentationMs, int audioTrackNumber)
+        public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec, IntPtr buffer, long renderTimeMs, int avsync_type, long presentationMs, int audioTrackNumber, uint rtpTimestamp)
         {
             this.type = type;
             this.samplesPerChannel = samplesPerChannel;
@@ -320,6 +321,7 @@ namespace Agora.Rtc
             this.avsync_type = avsync_type;
             this.presentationMs = presentationMs;
             this.audioTrackNumber = audioTrackNumber;
+            this.rtpTimestamp = rtpTimestamp;
         }
 
         #endregion terra AudioFrame_Constructor
@@ -426,14 +428,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 11: (For Windows and macOS only) The third camera.
+        /// 11: (For Android, Windows, and macOS only) The third camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_THIRD = 11,
 
         ///
         /// <summary>
-        /// 12: (For Windows and macOS only) The fourth camera.
+        /// 12: (For Android, Windows, and macOS only) The fourth camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_FOURTH = 12,
@@ -451,6 +453,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN_FOURTH = 14,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_SOURCE_SPEECH_DRIVEN = 15,
 
         ///
         /// <summary>
@@ -518,14 +525,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 7: The audio route is a USB peripheral device. (For macOS only)
+        /// 6: The audio route is a USB peripheral device. (For macOS only)
         /// </summary>
         ///
         ROUTE_USB = 6,
 
         ///
         /// <summary>
-        /// 6: The audio route is an HDMI peripheral device. (For macOS only)
+        /// 7: The audio route is an HDMI peripheral device. (For macOS only)
         /// </summary>
         ///
         ROUTE_HDMI = 7,
@@ -667,7 +674,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6. Custom video source.
+        /// 6: Custom video source.
         /// </summary>
         ///
         CUSTOM_VIDEO_SOURCE = 6,
@@ -701,6 +708,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         TRANSCODED_VIDEO_SOURCE = 12,
+
+        ///
+        /// @ignore
+        ///
+        SPEECH_DRIVEN_VIDEO_SOURCE = 13,
 
         ///
         /// <summary>
@@ -1100,6 +1112,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_TEXTURE_ID3D11TEXTURE2D = 17,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_PIXEL_I010 = 18,
     }
 
     ///
@@ -1296,6 +1313,11 @@ namespace Agora.Rtc
         public byte[] alphaBuffer;
 
         ///
+        /// @ignore
+        ///
+        public bool fillAlphaBuffer;
+
+        ///
         /// <summary>
         /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
         /// </summary>
@@ -1328,11 +1350,12 @@ namespace Agora.Rtc
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.alphaBuffer = null;
+            this.fillAlphaBuffer = false;
             this.d3d11_texture_2d = IntPtr.Zero;
             this.texture_slice_index = 0;
         }
 
-        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, IntPtr d3d11_texture_2d, int texture_slice_index)
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, IntPtr d3d11_texture_2d, int texture_slice_index)
         {
             this.type = type;
             this.format = format;
@@ -1352,6 +1375,7 @@ namespace Agora.Rtc
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
             this.alphaBuffer = alphaBuffer;
+            this.fillAlphaBuffer = fillAlphaBuffer;
             this.d3d11_texture_2d = d3d11_texture_2d;
             this.texture_slice_index = texture_slice_index;
         }

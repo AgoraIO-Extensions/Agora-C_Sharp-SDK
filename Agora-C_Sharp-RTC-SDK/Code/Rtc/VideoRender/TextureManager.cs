@@ -15,8 +15,8 @@ namespace Agora.Rtc
     public class TextureManager : MonoBehaviour
     {
         // texture identity
-        protected int _videoPixelWidth = 1;
-        protected int _videoPixelHeight = 1;
+        protected int _videoPixelWidth = 2;
+        protected int _videoPixelHeight = 2;
         //texture width and height
         public int Width
         {
@@ -173,7 +173,11 @@ namespace Agora.Rtc
 
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
+#if UNITY_2021_2_OR_NEWER
+                _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
+#else
                 _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+#endif
                 _texture.Apply();
                 _textureNative = _texture.GetRawTextureData<byte>();
                 unsafe
@@ -207,7 +211,11 @@ namespace Agora.Rtc
 #else
                 if (_needResize)
                 {
+#if UNITY_2021_2_OR_NEWER
+                    _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
+#else
                     _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+#endif
                     _texture.Apply();
                     _needResize = false;
                 }

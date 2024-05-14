@@ -204,11 +204,14 @@ namespace Agora.Rtc.Ut
                 if (instType.Name.StartsWith("Optional") && instType.IsGenericType)
                     return CompareOptinal(instType, obj1, obj2);
 
-                FieldInfo[] files = instType.GetFields();
-                int length = files.Length;
+                FieldInfo[] fields = instType.GetFields();
+                int length = fields.Length;
                 for (int i = 0; i < length; i++)
                 {
-                    var f = files[i];
+                    var f = fields[i];
+                    if (IsSkipCompare(instType, f))
+                        return true;
+
                     object item1 = f.GetValue(obj1);
                     object item2 = f.GetValue(obj2);
                     if (Compare(f.FieldType, item1, item2) == false)
@@ -243,6 +246,29 @@ namespace Agora.Rtc.Ut
                 }
             }
         }
+
+
+        private static bool IsSkipCompare(Type instType, FieldInfo field)
+        {
+            if (instType == typeof(AudioFrame) && field.Name == "RawBuffer")
+            {
+                return true;
+            }
+            if (instType == typeof(AudioPcmFrame) && field.Name == "data_")
+            {
+                return true;
+            }
+            if (instType == typeof(VideoFrame)
+                && (field.FieldType == typeof(IntPtr) ||
+                    field.FieldType == typeof(byte[])
+                ))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         static private bool CompareOptinal(Type instType, object obj1, object obj2)
         {

@@ -11,13 +11,15 @@ namespace Agora.Rtm.Ut
         [SetUp]
         public void Setup()
         {
-            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient());
             Internal.RtmConfig config;
             ParamsHelper.InitParam(out config);
-            int ret = RtmClient.Initialize(config);
-            Assert.AreEqual(0, ret);
+            int errorCode = 0;
+            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient());
+            Assert.AreEqual(0, errorCode);
 
-            StreamChannel = RtmClient.CreateStreamChannel("test");
+            errorCode = 0;
+            StreamChannel = RtmClient.CreateStreamChannel("test", ref errorCode);
+            Assert.AreEqual(0, errorCode);
         }
 
         [TearDown]
@@ -42,7 +44,8 @@ namespace Agora.Rtm.Ut
         public void Test_RenewToken()
         {
             string token = ParamsHelper.CreateParam<string>();
-            var nRet = StreamChannel.RenewToken(token);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = StreamChannel.RenewToken(token, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -83,8 +86,8 @@ namespace Agora.Rtm.Ut
             string message = ParamsHelper.CreateParam<string>();
             int length = ParamsHelper.CreateParam<int>();
             Internal.TopicMessageOptions option = ParamsHelper.CreateParam<Internal.TopicMessageOptions>();
-
-            var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -96,7 +99,8 @@ namespace Agora.Rtm.Ut
             byte[] message = ParamsHelper.CreateParam<byte[]>();
             int length = ParamsHelper.CreateParam<int>();
             Internal.TopicMessageOptions option = ParamsHelper.CreateParam<Internal.TopicMessageOptions>();
-            var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -127,7 +131,8 @@ namespace Agora.Rtm.Ut
         {
             string topic = ParamsHelper.CreateParam<string>();
             Internal.TopicOptions options = ParamsHelper.CreateParam<Internal.TopicOptions>();
-            var nRet = StreamChannel.UnsubscribeTopic(topic, options);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = StreamChannel.UnsubscribeTopic(topic, options, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -136,8 +141,8 @@ namespace Agora.Rtm.Ut
         public void Test_GetSubscribedUserList()
         {
             string topic = ParamsHelper.CreateParam<string>();
-            Internal.UserList users = ParamsHelper.CreateParam<Internal.UserList>();
-            var nRet = StreamChannel.GetSubscribedUserList(topic, ref users);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            var nRet = StreamChannel.GetSubscribedUserList(topic, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }

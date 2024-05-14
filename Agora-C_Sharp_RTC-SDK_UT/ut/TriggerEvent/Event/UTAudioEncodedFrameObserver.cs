@@ -25,12 +25,12 @@ namespace Agora.Rtc.Ut
             if (OnRecordAudioEncodedFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<IntPtr>(OnRecordAudioEncodedFrame_frameBuffer, frameBuffer) == false)
-            //return false;
-            // if (ParamsHelper.Compare<int>(OnRecordAudioEncodedFrame_length, length) == false)
-            //return false;
-            // if (ParamsHelper.Compare<EncodedAudioFrameInfo>(OnRecordAudioEncodedFrame_audioEncodedFrameInfo, audioEncodedFrameInfo) == false)
-            //return false;
+            if (ParamsHelper.Compare<IntPtr>(OnRecordAudioEncodedFrame_frameBuffer, frameBuffer) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnRecordAudioEncodedFrame_length, length) == false)
+                return false;
+            if (ParamsHelper.Compare<EncodedAudioFrameInfo>(OnRecordAudioEncodedFrame_audioEncodedFrameInfo, audioEncodedFrameInfo) == false)
+                return false;
 
             return true;
         }
@@ -57,12 +57,12 @@ namespace Agora.Rtc.Ut
             if (OnPlaybackAudioEncodedFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<IntPtr>(OnPlaybackAudioEncodedFrame_frameBuffer, frameBuffer) == false)
-            //return false;
-            // if (ParamsHelper.Compare<int>(OnPlaybackAudioEncodedFrame_length, length) == false)
-            //return false;
-            // if (ParamsHelper.Compare<EncodedAudioFrameInfo>(OnPlaybackAudioEncodedFrame_audioEncodedFrameInfo, audioEncodedFrameInfo) == false)
-            //return false;
+            if (ParamsHelper.Compare<IntPtr>(OnPlaybackAudioEncodedFrame_frameBuffer, frameBuffer) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnPlaybackAudioEncodedFrame_length, length) == false)
+                return false;
+            if (ParamsHelper.Compare<EncodedAudioFrameInfo>(OnPlaybackAudioEncodedFrame_audioEncodedFrameInfo, audioEncodedFrameInfo) == false)
+                return false;
 
             return true;
         }
@@ -89,12 +89,12 @@ namespace Agora.Rtc.Ut
             if (OnMixedAudioEncodedFrame_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<IntPtr>(OnMixedAudioEncodedFrame_frameBuffer, frameBuffer) == false)
-            //return false;
-            // if (ParamsHelper.Compare<int>(OnMixedAudioEncodedFrame_length, length) == false)
-            //return false;
-            // if (ParamsHelper.Compare<EncodedAudioFrameInfo>(OnMixedAudioEncodedFrame_audioEncodedFrameInfo, audioEncodedFrameInfo) == false)
-            //return false;
+            if (ParamsHelper.Compare<IntPtr>(OnMixedAudioEncodedFrame_frameBuffer, frameBuffer) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnMixedAudioEncodedFrame_length, length) == false)
+                return false;
+            if (ParamsHelper.Compare<EncodedAudioFrameInfo>(OnMixedAudioEncodedFrame_audioEncodedFrameInfo, audioEncodedFrameInfo) == false)
+                return false;
 
             return true;
         }

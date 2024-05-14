@@ -13,7 +13,7 @@ namespace Agora.Rtc
     ///
     public class VideoSurfaceYUV : VideoSurface
     {
-        protected TextureManagerYUV _textureManagerYUV;
+        private TextureManagerYUV _textureManagerYUV;
         protected Material _material = null;
         protected float YStrideScale = 1.0f;
 
@@ -75,7 +75,6 @@ namespace Agora.Rtc
                         {
                             _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
                         }
-                        //AgoraLog.Log("_yStrideScale" + _textureManagerYUV.YStrideScale);
                         this.YStrideScale = this._textureManagerYUV.YStrideScale;
                     }
 

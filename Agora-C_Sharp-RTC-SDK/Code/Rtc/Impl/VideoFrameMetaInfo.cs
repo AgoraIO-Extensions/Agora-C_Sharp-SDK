@@ -4,7 +4,7 @@ namespace Agora.Rtc
 {
     public sealed class VideoFrameMetaInfo : IVideoFrameMetaInfo
     {
-        protected Dictionary<string, string> _data;
+        private Dictionary<string, string> _data;
 
         public VideoFrameMetaInfo(Dictionary<string, string> data)
         {

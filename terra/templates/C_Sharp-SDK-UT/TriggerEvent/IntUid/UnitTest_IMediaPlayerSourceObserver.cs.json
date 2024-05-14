@@ -4,7 +4,9 @@
         "name": "IMediaPlayerSourceObserver",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_event_compare",
-        "excludeMethods": [],
+        "excludeMethods": [
+            "onMetaData"
+        ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
         "pecialMembersTemplate": "",

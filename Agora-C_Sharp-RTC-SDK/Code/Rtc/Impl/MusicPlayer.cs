@@ -2,7 +2,7 @@
 
 namespace Agora.Rtc
 {
-    using view_t = Int64;
+    using view_t = UInt64;
     public sealed class MusicPlayer : IMusicPlayer
     {
         private MusicPlayerImpl _musicPlayerImpl = null;

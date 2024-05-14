@@ -5,6 +5,7 @@ namespace Agora.Rtm
 {
     public class RtmClient : IRtmClient
     {
+        public event OnLinkStateEventHandler OnLinkStateEvent;
         public event OnMessageEventHandler OnMessageEvent;
         public event OnPresenceEventHandler OnPresenceEvent;
         public event OnTopicEventHandler OnTopicEvent;
@@ -21,10 +22,10 @@ namespace Agora.Rtm
         public static IRtmClient CreateAgoraRtmClient(RtmConfig config)
         {
             RtmClient rtmClient = (RtmClient)(_instance ?? (_instance = new RtmClient()));
-
-            RtmStatus status = rtmClient.Initialize(config);
-            if (status.Error)
+            int errorCode = rtmClient.Create(config);
+            if (errorCode != 0)
             {
+                RtmStatus status = Tools.GenerateStatus(errorCode, RtmOperation.RTMCreateClientOperation, null);
                 throw new RTMException(status);
             }
             else
@@ -38,7 +39,7 @@ namespace Agora.Rtm
             return _instance;
         }
 
-        public RtmClient()
+        internal RtmClient()
         {
             _internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient();
             _rtmEventHandler = new RtmEventHandler(this);
@@ -57,6 +58,14 @@ namespace Agora.Rtm
         internal Internal.IRtmClient GetInternalRtmClient()
         {
             return this._internalRtmClient;
+        }
+
+        internal void InvokeOnLinkStateEvent(LinkStateEvent @event)
+        {
+            if (this.OnLinkStateEvent != null)
+            {
+                this.OnLinkStateEvent.Invoke(@event);
+            }
         }
 
         internal void InvokeOnMessageEvent(MessageEvent @event)
@@ -114,10 +123,10 @@ namespace Agora.Rtm
             }
         }
 
-        public IStreamChannel CreateStreamChannel(string channelName)
+        public IStreamChannel CreateStreamChannel(string channelName, ref int errorCode)
         {
-            Internal.IStreamChannel internalStreamChannel = this._internalRtmClient.CreateStreamChannel(channelName);
-            if (internalStreamChannel == null)
+            Internal.IStreamChannel internalStreamChannel = this._internalRtmClient.CreateStreamChannel(channelName, ref errorCode);
+            if (internalStreamChannel == null || errorCode != 0)
             {
                 return null;
             }
@@ -155,17 +164,18 @@ namespace Agora.Rtm
             return new RtmStorage(internalRtmStorage, _rtmEventHandler, _internalRtmClient);
         }
 
-        private RtmStatus Initialize(RtmConfig config)
+        private int Create(RtmConfig config)
         {
             Internal.RtmConfig internalConfig = new Internal.RtmConfig(config, _rtmEventHandler);
-            int errorCode = _internalRtmClient.Initialize(internalConfig);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMInitializeOperation, this._internalRtmClient);
+            int errorCode = _internalRtmClient.Create(internalConfig);
+            return errorCode;
         }
 
         public Task<RtmResult<LoginResult>> LoginAsync(string token)
         {
             TaskCompletionSource<RtmResult<LoginResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LoginResult>>();
-            int errorCode = _internalRtmClient.Login(token);
+            UInt64 requestId = 0;
+            int errorCode = _internalRtmClient.Login(token, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<LoginResult> result = new RtmResult<LoginResult>();
@@ -174,24 +184,26 @@ namespace Agora.Rtm
             }
             else
             {
-                _rtmEventHandler.PutLoginResultTask(taskCompletionSource);
+                _rtmEventHandler.PutLoginResultTask(requestId, taskCompletionSource);
             }
             return taskCompletionSource.Task;
         }
 
         public Task<RtmResult<LogoutResult>> LogoutAsync()
         {
-            // fake async
-            int errorCode = _internalRtmClient.Logout();
-            RtmResult<LogoutResult> rtmResult = new RtmResult<LogoutResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this._internalRtmClient);
-            if (errorCode == 0)
-            {
-                rtmResult.Response = new LogoutResult();
-            }
-
             TaskCompletionSource<RtmResult<LogoutResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LogoutResult>>();
-            taskCompletionSource.SetResult(rtmResult);
+            UInt64 requestId = 0;
+            int errorCode = _internalRtmClient.Logout(ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<LogoutResult> result = new RtmResult<LogoutResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this._internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                _rtmEventHandler.PutLogoutResultTask(requestId, taskCompletionSource);
+            }
             return taskCompletionSource.Task;
         }
 
@@ -235,17 +247,19 @@ namespace Agora.Rtm
 
         public Task<RtmResult<RenewTokenResult>> RenewTokenAsync(string token)
         {
-            // fake async
-            int errorCode = _internalRtmClient.RenewToken(token);
-            RtmResult<RenewTokenResult> rtmResult = new RtmResult<RenewTokenResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this._internalRtmClient);
-            if (errorCode == 0)
-            {
-                rtmResult.Response = new RenewTokenResult();
-            }
-
             TaskCompletionSource<RtmResult<RenewTokenResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RenewTokenResult>>();
-            taskCompletionSource.SetResult(rtmResult);
+            UInt64 requestId = 0;
+            int errorCode = _internalRtmClient.RenewToken(token, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<RenewTokenResult> result = new RtmResult<RenewTokenResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this._internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                _rtmEventHandler.PutRenewTokenResultTask(requestId, taskCompletionSource);
+            }
             return taskCompletionSource.Task;
         }
 
@@ -275,18 +289,19 @@ namespace Agora.Rtm
 
         public Task<RtmResult<UnsubscribeResult>> UnsubscribeAsync(string channelName)
         {
-            // fake async
-            int errorCode = _internalRtmClient.Unsubscribe(channelName);
-
-            RtmResult<UnsubscribeResult> rtmResult = new RtmResult<UnsubscribeResult>();
-            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeOperation, this._internalRtmClient);
-            if (errorCode == 0)
-            {
-                rtmResult.Response = new UnsubscribeResult();
-            }
-
             TaskCompletionSource<RtmResult<UnsubscribeResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UnsubscribeResult>>();
-            taskCompletionSource.SetResult(rtmResult);
+            UInt64 requestId = 0;
+            int errorCode = _internalRtmClient.Unsubscribe(channelName, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<UnsubscribeResult> result = new RtmResult<UnsubscribeResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeOperation, this._internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                _rtmEventHandler.PutUnsubscribeResultTask(requestId, taskCompletionSource);
+            }
             return taskCompletionSource.Task;
         }
 

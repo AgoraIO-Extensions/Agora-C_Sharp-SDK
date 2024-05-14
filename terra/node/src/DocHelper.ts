@@ -5,11 +5,16 @@ import { ParamNameTrans } from "./ParamNameTrans";
 import path from "path";
 import { Tool } from "./Tool";
 
-let AllDirPath = [
+let InterfaceDirPath = [
     "../../Agora-C_Sharp-RTC-SDK/Code/Rtc",
-    "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/Types",
-    "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/VideoRender",
+    "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/Types"
 ];
+
+let UnityDirPath = [
+    "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/VideoRender/VideoSurface.cs",
+    "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/VideoRender/VideoSurfaceYUV.cs",
+    "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/VideoRender/VideoSurfaceYUVA.cs",
+]
 
 let DocPath = "../templates/C_Sharp-SDK-Trans/unity_ng_json_template_en.json";
 
@@ -33,9 +38,8 @@ function DeleteOldDocWithFile(filePath: string) {
     Tool.writeFile(filePath, writeLines);
 }
 
-
-export function DeleteAllOldDoc() {
-    for (let dirPath of AllDirPath) {
+function DeleteAllOldDoc() {
+    for (let dirPath of InterfaceDirPath) {
         dirPath = path.join(process.cwd(), dirPath);
         let fileList = fs.readdirSync(dirPath);
         for (let file of fileList) {
@@ -45,6 +49,11 @@ export function DeleteAllOldDoc() {
                 DeleteOldDocWithFile(file);
             }
         }
+    }
+
+    for (let filePath of UnityDirPath) {
+        filePath = path.join(process.cwd(), filePath);
+        DeleteOldDocWithFile(filePath);
     }
 }
 
@@ -175,6 +184,25 @@ function AddDocTagWithFile(filePath: string) {
                 lineLength++;
                 continue;
             }
+            matchParamsArray = line.match(/^public event (\S+) (\S+);/)
+            if (matchParamsArray != null) {
+                let apiName = matchParamsArray[2].toLowerCase();
+                lines.splice(i, 0, `/* callback_${content.name}_${apiName} */`);
+                SwapIfHadObsolete(lines, i);
+                i = i + 2;
+                lineLength++;
+                continue;
+            }
+            let matchApiArray = line.match(/^public (virtual|abstract) ([\S]+) ([a-zA-Z0-9_]+)\([\s\S]*\)/)
+            if (matchApiArray != null) {
+                let apiName = matchApiArray[3].toLowerCase();
+                apiName = GetMethodName(content.name, apiName);
+                lines.splice(i, 0, `/* api_${content.name}_${apiName} */`);
+                SwapIfHadObsolete(lines, i);
+                i = i + 2;
+                lineLength++;
+                continue;
+            }
         }
         else if (content.type == ContentType.Apiz) {
             let matchApiArray = line.match(/^public abstract ([\S]+) ([a-zA-Z0-9_]+)\([\s\S]*\)/)
@@ -218,12 +246,11 @@ function AddDocTagWithFile(filePath: string) {
     }
 
     Tool.writeFile(filePath, lines);
-    // execSync(`clang-format -i ${filePath}`);
 }
 
 
-export function AddAllDocTag() {
-    for (let dirPath of AllDirPath) {
+function AddAllDocTag() {
+    for (let dirPath of InterfaceDirPath) {
         dirPath = path.join(process.cwd(), dirPath);
         let fileList = fs.readdirSync(dirPath);
         for (let file of fileList) {
@@ -233,6 +260,11 @@ export function AddAllDocTag() {
                 AddDocTagWithFile(file);
             }
         }
+    }
+
+    for (let filePath of UnityDirPath) {
+        filePath = path.join(process.cwd(), filePath);
+        AddDocTagWithFile(filePath);
     }
 }
 
@@ -284,6 +316,8 @@ function GetDocs(): DocData[] {
     str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstatechanged", "callback_irtcengineeventhandler_ondirectcdnstreamingstatechanged");
     str = str.replaceAll("callback_idirectcdnstreamingeventhandler_ondirectcdnstreamingstats", "callback_irtcengineeventhandler_ondirectcdnstreamingstats");
     str = str.replaceAll("api_Imediaplayer_selectmultiaudiotrack", "api_imediaplayer_selectmultiaudiotrack");
+    str = str.replaceAll("api_imediaengine_registerfaceinfoobserver", "api_irtcengine_registerfaceinfoobserver");
+    str = str.replaceAll("api_imediaengine_unregisterfaceinfoobserver", "api_irtcengine_unregisterfaceinfoobserver");
 
     fs.writeFileSync(path.join(process.cwd(), "process_json"), str);
 
@@ -441,12 +475,11 @@ function AddDocContentWithFile(filePath: string, docs: DocData[]) {
     }
 
     Tool.writeFile(filePath, lines);
-    // execSync(`clang-format -i ${filePath}`);
 }
 
-export function AddAllDocContetnt() {
+function AddAllDocContetnt() {
     let docs = GetDocs();
-    for (let dirPath of AllDirPath) {
+    for (let dirPath of InterfaceDirPath) {
         dirPath = path.join(process.cwd(), dirPath);
         let fileList = fs.readdirSync(dirPath);
         for (let file of fileList) {
@@ -457,7 +490,51 @@ export function AddAllDocContetnt() {
             }
         }
     }
+
+    for (let filePath of UnityDirPath) {
+        filePath = path.join(process.cwd(), filePath);
+        AddDocContentWithFile(filePath, docs);
+    }
 }
+
+function removeAllFileKeyWord(from: string, to: string) {
+    for (let dirPath of InterfaceDirPath) {
+        dirPath = path.join(process.cwd(), dirPath);
+        let fileList = fs.readdirSync(dirPath);
+        for (let file of fileList) {
+            file = path.join(dirPath, file);
+            let state = fs.statSync(file);
+            if (state.isFile()) {
+                replaceKeyWord(file, from, to);
+            }
+        }
+    }
+
+    for (let filePath of UnityDirPath) {
+        filePath = path.join(process.cwd(), filePath);
+        replaceKeyWord(filePath, from, to);
+    }
+
+}
+
+function replaceKeyWord(fullPath: string, from: string, to: string) {
+    let str = Tool.readFile(fullPath);
+    str = str.replaceAll(from, to);
+    fs.writeFileSync(fullPath, str);
+}
+
+
+let unityDefine = "#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID";
+
+export function AndDocAndFormat() {
+    DeleteAllOldDoc();
+    AddAllDocTag();
+    AddAllDocContetnt();
+    removeAllFileKeyWord(unityDefine, "#if true");
+    execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
+    removeAllFileKeyWord("#if true", unityDefine);
+}
+
 
 
 

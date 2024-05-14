@@ -1,5 +1,5 @@
 ﻿using System;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 using Agora.Rtc.LitJson;
 
 namespace Agora.Rtc
@@ -716,6 +716,13 @@ namespace Agora.Rtc
         ///
         public uint rxAudioBytes;
 
+        ///
+        /// <summary>
+        /// End-to-end audio delay (in milliseconds), which refers to the time from when the audio is captured by the remote user to when it is played by the local user.
+        /// </summary>
+        ///
+        public int e2eDelay;
+
         public RemoteAudioStats()
         {
             this.uid = 0;
@@ -736,9 +743,10 @@ namespace Agora.Rtc
             this.qoeQuality = 0;
             this.qualityChangedReason = 0;
             this.rxAudioBytes = 0;
+            this.e2eDelay = 0;
         }
 
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes)
+        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
         {
             this.uid = uid;
             this.quality = quality;
@@ -758,6 +766,7 @@ namespace Agora.Rtc
             this.qoeQuality = qoeQuality;
             this.qualityChangedReason = qualityChangedReason;
             this.rxAudioBytes = rxAudioBytes;
+            this.e2eDelay = e2eDelay;
         }
     }
 
@@ -1258,14 +1267,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The rear camera.
+        /// 0: The rear camera.
         /// </summary>
         ///
         CAMERA_REAR = 0,
 
         ///
         /// <summary>
-        /// The front camera.
+        /// 1: (Default) The front camera.
         /// </summary>
         ///
         CAMERA_FRONT = 1,
@@ -1305,47 +1314,115 @@ namespace Agora.Rtc
     /// The camera capturer preference.
     /// </summary>
     ///
-    public class CameraCapturerConfiguration
+    public class CameraCapturerConfiguration : IOptionalJsonParse
     {
         ///
         /// <summary>
-        /// This parameter applies to Android and iOS only. The camera direction. See CAMERA_DIRECTION.
+        /// (Optional) The camera direction. See CAMERA_DIRECTION. This parameter is for Android and iOS only.
         /// </summary>
         ///
-        public CAMERA_DIRECTION cameraDirection;
+        public Optional<CAMERA_DIRECTION> cameraDirection = new Optional<CAMERA_DIRECTION>();
 
         ///
         /// <summary>
-        /// This method applies to Windows only. The ID of the camera.
+        /// (Optional) The camera focal length type. See CAMERA_FOCAL_LENGTH_TYPE.
+        ///  This parameter is for Android and iOS only.
+        ///  To set the focal length type of the camera, it is only supported to specify the camera through cameraDirection, and not supported to specify it through cameraId.
+        ///  For iOS devices equipped with multi-lens rear cameras, such as those featuring dual-camera (wide-angle and ultra-wide-angle) or triple-camera (wide-angle, ultra-wide-angle, and telephoto), you can use one of the following methods to capture video with an ultra-wide-angle perspective:
+        ///  Method one: Set this parameter to CAMERA_FOCAL_LENGTH_ULTRA_WIDE (2) (ultra-wide lens).
+        ///  Method two: Set this parameter to CAMERA_FOCAL_LENGTH_DEFAULT (0) (standard lens), then call SetCameraZoomFactor to set the camera's zoom factor to a value less than 1.0, with the minimum setting being 0.5. The difference is that the size of the ultra-wide angle in method one is not adjustable, whereas method two supports adjusting the camera's zoom factor freely.
         /// </summary>
         ///
-        public string deviceId;
+        public Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType = new Optional<CAMERA_FOCAL_LENGTH_TYPE>();
 
         ///
         /// <summary>
-        /// The format of the video frame. See VideoFormat.
+        /// The camera ID. This parameter is for Windows and macOS only.
+        /// </summary>
+        ///
+        public Optional<string> deviceId = new Optional<string>();
+
+        ///
+        /// <summary>
+        /// (Optional) The camera ID. The default value is the camera ID of the front camera. You can get the camera ID through the Android native system API, see and for details.
+        ///  This parameter is for Android only.
+        ///  This parameter and cameraDirection are mutually exclusive in specifying the camera; you can choose one based on your needs. The differences are as follows:
+        ///  Specifying the camera via cameraDirection is more straightforward. You only need to indicate the camera direction (front or rear), without specifying a specific camera ID; the SDK will retrieve and confirm the actual camera ID through Android native system APIs.
+        ///  Specifying via cameraId allows for more precise identification of a particular camera. For devices with multiple cameras, where cameraDirection cannot recognize or access all available cameras, it is recommended to use cameraId to specify the desired camera ID directly.
+        /// </summary>
+        ///
+        public Optional<string> cameraId = new Optional<string>();
+
+        ///
+        /// <summary>
+        /// (Optional) Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame.
+        /// </summary>
+        ///
+        public Optional<bool> followEncodeDimensionRatio = new Optional<bool>();
+
+        ///
+        /// <summary>
+        /// (Optional) The format of the video frame. See VideoFormat.
         /// </summary>
         ///
         public VideoFormat format;
 
-        ///
-        /// <summary>
-        /// Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame.
-        /// </summary>
-        ///
-        public bool followEncodeDimensionRatio;
-
         public CameraCapturerConfiguration()
         {
-            this.followEncodeDimensionRatio = true;
+            this.format = new VideoFormat(0, 0, 0);
         }
 
-        public CameraCapturerConfiguration(CAMERA_DIRECTION cameraDirection, string deviceId, VideoFormat format, bool followEncodeDimensionRatio)
+        public CameraCapturerConfiguration(Optional<CAMERA_DIRECTION> cameraDirection, Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType, Optional<string> deviceId, Optional<string> cameraId, Optional<bool> followEncodeDimensionRatio, VideoFormat format)
         {
             this.cameraDirection = cameraDirection;
+            this.cameraFocalLengthType = cameraFocalLengthType;
             this.deviceId = deviceId;
-            this.format = format;
+            this.cameraId = cameraId;
             this.followEncodeDimensionRatio = followEncodeDimensionRatio;
+            this.format = format;
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void ToJson(JsonWriter writer)
+        {
+            writer.WriteObjectStart();
+
+            if (this.cameraDirection.HasValue())
+            {
+                writer.WritePropertyName("cameraDirection");
+                AgoraJson.WriteEnum(writer, this.cameraDirection.GetValue());
+            }
+
+            if (this.cameraFocalLengthType.HasValue())
+            {
+                writer.WritePropertyName("cameraFocalLengthType");
+                AgoraJson.WriteEnum(writer, this.cameraFocalLengthType.GetValue());
+            }
+
+            if (this.deviceId.HasValue())
+            {
+                writer.WritePropertyName("deviceId");
+                writer.Write(this.deviceId.GetValue());
+            }
+
+            if (this.cameraId.HasValue())
+            {
+                writer.WritePropertyName("cameraId");
+                writer.Write(this.cameraId.GetValue());
+            }
+
+            if (this.followEncodeDimensionRatio.HasValue())
+            {
+                writer.WritePropertyName("followEncodeDimensionRatio");
+                writer.Write(this.followEncodeDimensionRatio.GetValue());
+            }
+
+            writer.WritePropertyName("format");
+            JsonMapper.WriteValue(this.format, writer, false, 0);
+
+            writer.WriteObjectEnd();
         }
     }
 
@@ -1627,7 +1704,7 @@ namespace Agora.Rtc
             this.primaryMonitor = false;
             this.isOccluded = false;
             this.minimizeWindow = false;
-            this.sourceDisplayId = -2;
+            this.sourceDisplayId = AgoraUtil.ConvertNegativeToUInt64(-2);
         }
 
         public ScreenCaptureSourceInfo(ScreenCaptureSourceType type, view_t sourceId, string sourceName, ThumbImageBuffer thumbImage, ThumbImageBuffer iconImage, string processPath, string sourceTitle, bool primaryMonitor, bool isOccluded, Rectangle position, bool minimizeWindow, view_t sourceDisplayId)
@@ -1670,6 +1747,9 @@ namespace Agora.Rtc
             this.audioProcessingChannels = audioProcessingChannels;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -1750,14 +1830,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This is for Windows and macOS only.
+        /// Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This parameter is for Android, Windows and macOS only.
         /// </summary>
         ///
         public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This is for Windows and macOS only.
+        /// Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This parameter is for Android, Windows and macOS only.
         /// </summary>
         ///
         public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
@@ -1771,14 +1851,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter applies to Android and iOS only.
+        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
         /// </summary>
         ///
         public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter applies to Android and iOS only.
+        /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only.
         /// </summary>
         ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
@@ -1866,6 +1946,11 @@ namespace Agora.Rtc
         public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
 
         ///
+        /// @ignore
+        ///
+        public Optional<bool> publishLipSyncTrack = new Optional<bool>();
+
+        ///
         /// <summary>
         /// Whether to automatically subscribe to all remote audio streams when the user joins a channel: true : Subscribe to all remote audio streams. false : Do not automatically subscribe to any remote audio streams.
         /// </summary>
@@ -1922,7 +2007,9 @@ namespace Agora.Rtc
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Delay (in milliseconds) for sending audio frames. You can use this parameter to set the delay of the audio frames that need to be sent, to ensure audio and video synchronization. To switch off the delay, set the value to 0.
+        /// </summary>
         ///
         public Optional<int> audioDelayMs = new Optional<int>();
 
@@ -1955,7 +2042,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Whether to enable interactive mode: true : Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency. false :Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.
-        ///  This parameter only applies to scenarios involving cohosting across channels. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.
+        ///  This parameter only applies to co-streaming scenarios. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.
         ///  This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
         /// </summary>
         ///
@@ -1979,7 +2066,7 @@ namespace Agora.Rtc
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
@@ -2000,6 +2087,7 @@ namespace Agora.Rtc
             this.publishMediaPlayerVideoTrack = publishMediaPlayerVideoTrack;
             this.publishTranscodedVideoTrack = publishTranscodedVideoTrack;
             this.publishMixedAudioTrack = publishMixedAudioTrack;
+            this.publishLipSyncTrack = publishLipSyncTrack;
             this.autoSubscribeAudio = autoSubscribeAudio;
             this.autoSubscribeVideo = autoSubscribeVideo;
             this.enableAudioRecordingOrPlayout = enableAudioRecordingOrPlayout;
@@ -2018,6 +2106,9 @@ namespace Agora.Rtc
             this.isAudioFilterable = isAudioFilterable;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2134,6 +2225,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("publishMixedAudioTrack");
                 writer.Write(this.publishMixedAudioTrack.GetValue());
+            }
+
+            if (this.publishLipSyncTrack.HasValue())
+            {
+                writer.WritePropertyName("publishLipSyncTrack");
+                writer.Write(this.publishLipSyncTrack.GetValue());
             }
 
             if (this.autoSubscribeAudio.HasValue())
@@ -2443,6 +2540,9 @@ namespace Agora.Rtc
             this.autoRegisterAgoraExtensions = autoRegisterAgoraExtensions;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2800,6 +2900,9 @@ namespace Agora.Rtc
             this.customVideoTrackId = customVideoTrackId;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();

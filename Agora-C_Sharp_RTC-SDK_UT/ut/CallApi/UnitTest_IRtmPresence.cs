@@ -11,11 +11,11 @@ namespace Agora.Rtm.Ut
         [SetUp]
         public void Setup()
         {
-            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient());
             Internal.RtmConfig config;
             ParamsHelper.InitParam(out config);
-            int ret = RtmClient.Initialize(config);
-            Assert.AreEqual(0, ret);
+            int errorCode = 0;
+            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient());
+            Assert.AreEqual(0, errorCode);
 
             RtmPresence = RtmClient.GetPresence();
         }

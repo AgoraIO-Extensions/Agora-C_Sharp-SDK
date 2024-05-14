@@ -33,7 +33,7 @@
         "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceName:nullptr": "\"\"",
         "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.processPath:nullptr": "\"\"",
         "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceTitle:nullptr": "\"\"",
-        "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceDisplayId:(view_t)-2": "-2",
+        "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceDisplayId:(view_t)-2": "AgoraUtil.ConvertNegativeToUInt64(-2)",
         "ImageTrackOptions.ImageTrackOptions.imageUrl:OPTIONAL_NULLPTR": "\"\"",
         "RtcEngineContext.RtcEngineContext.appId:OPTIONAL_NULLPTR": "\"\"",
         "RtcEngineContext.RtcEngineContext.context:OPTIONAL_NULLPTR": "0",

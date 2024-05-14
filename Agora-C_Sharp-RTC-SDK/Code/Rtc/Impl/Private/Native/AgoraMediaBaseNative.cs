@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using view_t = System.Int64;
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
 
@@ -50,6 +50,8 @@ namespace Agora.Rtc
         internal string channelId;
 
         internal int video_view_setup_mode;
+
+        internal uint observed_frame_position;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -66,6 +68,8 @@ namespace Agora.Rtc
         internal string channelId;
 
         internal int video_view_setup_mode;
+
+        internal uint observed_frame_position;
     }
 
     internal class ThumbImageBufferInternal

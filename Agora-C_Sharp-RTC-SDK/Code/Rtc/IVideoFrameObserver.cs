@@ -12,9 +12,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs each time the SDK receives a video frame captured by local devices.
         /// 
-        /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data captured by local devices. You can then pre-process the data according to your scenarios. Once the pre-processing is complete, you can directly modify videoFrame in this callback, and set the return value to true to send the modified video data to the SDK.
-        /// The video data that this callback gets has not been pre-processed such as watermarking, cropping, and rotating.
-        /// If the video data type you get is RGBA, the SDK does not support processing the data of the alpha channel.
+        /// You can get raw video data collected by the local device through this callback and preprocess it as needed. Once the preprocessing is complete, you can directly modify videoFrame in this callback, and set the return value to true to send the modified video data to the SDK.
         /// </summary>
         ///
         /// <param name="sourceType"> Video source types, including cameras, screens, or media player. See VIDEO_SOURCE_TYPE. </param>

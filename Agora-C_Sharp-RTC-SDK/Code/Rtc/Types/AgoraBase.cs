@@ -1,8 +1,8 @@
 ﻿using System;
 using Agora.Rtc.LitJson;
+using view_t = System.UInt64;
 namespace Agora.Rtc
 {
-    using view_t = Int64;
 
     internal enum AppType
     {
@@ -176,18 +176,27 @@ namespace Agora.Rtc
         ///
         public byte[] encryptionKdfSalt;
 
+        ///
+        /// <summary>
+        /// Whether to enable data stream encryption: true : Enable data stream encryption. false : (Default) Disable data stream encryption.
+        /// </summary>
+        ///
+        public bool datastreamEncryptionEnabled;
+
         public EncryptionConfig()
         {
             this.encryptionMode = ENCRYPTION_MODE.AES_128_GCM2;
             this.encryptionKey = "";
             this.encryptionKdfSalt = new byte[32];
+            this.datastreamEncryptionEnabled = false;
         }
 
-        public EncryptionConfig(ENCRYPTION_MODE encryptionMode, string encryptionKey, byte[] encryptionKdfSalt)
+        public EncryptionConfig(ENCRYPTION_MODE encryptionMode, string encryptionKey, byte[] encryptionKdfSalt, bool datastreamEncryptionEnabled)
         {
             this.encryptionMode = encryptionMode;
             this.encryptionKey = encryptionKey;
             this.encryptionKdfSalt = encryptionKdfSalt;
+            this.datastreamEncryptionEnabled = datastreamEncryptionEnabled;
         }
 
         public string GetEncryptionString()
@@ -256,6 +265,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public string deviceName;
+
+        ///
+        /// @ignore
+        ///
+        public string deviceTypeName;
 
         ///
         /// <summary>
@@ -727,7 +741,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 120: Decryption fails. The user might have entered an incorrect password to join the channel. Check the entered password, or tell the user to try rejoining the channel.
+        /// 120: Media streams decryption fails. The user might use an incorrect password to join the channel. Check the entered password, or tell the user to try rejoining the channel.
         /// </summary>
         ///
         ERR_DECRYPTION_FAILED = 120,
@@ -738,6 +752,13 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_INVALID_USER_ID = 121,
+
+        ///
+        /// <summary>
+        /// 122: Data streams decryption fails. The user might use an incorrect password to join the channel. Check the entered password, or tell the user to try rejoining the channel.
+        /// </summary>
+        ///
+        ERR_DATASTREAM_DECRYPTION_FAILED = 122,
 
         ///
         /// <summary>
@@ -1591,6 +1612,44 @@ namespace Agora.Rtc
     }
 
     ///
+    /// <summary>
+    /// The camera focal length types.
+    /// 
+    /// This enumeration class applies to Android and iOS only.
+    /// </summary>
+    ///
+    public enum CAMERA_FOCAL_LENGTH_TYPE
+    {
+        ///
+        /// <summary>
+        /// 0: (Default) Standard lens.
+        /// </summary>
+        ///
+        CAMERA_FOCAL_LENGTH_DEFAULT = 0,
+
+        ///
+        /// <summary>
+        /// 1: Wide-angle lens.
+        /// </summary>
+        ///
+        CAMERA_FOCAL_LENGTH_WIDE_ANGLE = 1,
+
+        ///
+        /// <summary>
+        /// 2: Ultra-wide-angle lens.
+        /// </summary>
+        ///
+        CAMERA_FOCAL_LENGTH_ULTRA_WIDE = 2,
+
+        ///
+        /// <summary>
+        /// 3: (For iOS only) Telephoto lens.
+        /// </summary>
+        ///
+        CAMERA_FOCAL_LENGTH_TELEPHOTO = 3,
+    }
+
+    ///
     /// @ignore
     ///
     public enum TCcMode
@@ -2051,6 +2110,9 @@ namespace Agora.Rtc
             this.encodedFrameOnly = encodedFrameOnly;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2168,6 +2230,11 @@ namespace Agora.Rtc
         ///
         public VIDEO_STREAM_TYPE streamType;
 
+        ///
+        /// @ignore
+        ///
+        public long presentationMs;
+
         public EncodedVideoFrameInfo()
         {
             this.uid = 0;
@@ -2181,6 +2248,7 @@ namespace Agora.Rtc
             this.captureTimeMs = 0;
             this.decodeTimeMs = 0;
             this.streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
+            this.presentationMs = -1;
         }
 
         public EncodedVideoFrameInfo(EncodedVideoFrameInfo rhs)
@@ -2196,9 +2264,10 @@ namespace Agora.Rtc
             this.captureTimeMs = rhs.captureTimeMs;
             this.decodeTimeMs = rhs.decodeTimeMs;
             this.streamType = rhs.streamType;
+            this.presentationMs = rhs.presentationMs;
         }
 
-        public EncodedVideoFrameInfo(uint uid, VIDEO_CODEC_TYPE codecType, int width, int height, int framesPerSecond, VIDEO_FRAME_TYPE frameType, VIDEO_ORIENTATION rotation, int trackId, long captureTimeMs, long decodeTimeMs, VIDEO_STREAM_TYPE streamType)
+        public EncodedVideoFrameInfo(uint uid, VIDEO_CODEC_TYPE codecType, int width, int height, int framesPerSecond, VIDEO_FRAME_TYPE frameType, VIDEO_ORIENTATION rotation, int trackId, long captureTimeMs, long decodeTimeMs, VIDEO_STREAM_TYPE streamType, long presentationMs)
         {
             this.uid = uid;
             this.codecType = codecType;
@@ -2211,6 +2280,7 @@ namespace Agora.Rtc
             this.captureTimeMs = captureTimeMs;
             this.decodeTimeMs = decodeTimeMs;
             this.streamType = streamType;
+            this.presentationMs = presentationMs;
         }
     }
 
@@ -2452,6 +2522,40 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
+    /// Focal length information supported by the camera, including the camera direction and focal length type.
+    /// 
+    /// This enumeration class applies to Android and iOS only.
+    /// </summary>
+    ///
+    public class FocalLengthInfo
+    {
+        ///
+        /// <summary>
+        /// The camera direction. See CAMERA_DIRECTION.
+        /// </summary>
+        ///
+        public int cameraDirection;
+
+        ///
+        /// <summary>
+        /// The focal length type. See CAMERA_FOCAL_LENGTH_TYPE.
+        /// </summary>
+        ///
+        public CAMERA_FOCAL_LENGTH_TYPE focalLengthType;
+
+        public FocalLengthInfo(int cameraDirection, CAMERA_FOCAL_LENGTH_TYPE focalLengthType)
+        {
+            this.cameraDirection = cameraDirection;
+            this.focalLengthType = focalLengthType;
+        }
+        public FocalLengthInfo()
+        {
+        }
+
+    }
+
+    ///
+    /// <summary>
     /// Video encoder configurations.
     /// </summary>
     ///
@@ -2658,14 +2762,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The video dimension. See VideoDimensions. The default value is 160 × 120.
+        /// The video dimension. See VideoDimensions. The default value is 50% of the high-quality video stream.
         /// </summary>
         ///
         public VideoDimensions dimensions;
 
         ///
         /// <summary>
-        /// Video receive bitrate (Kbps), represented by an instantaneous value. The default value is 65.
+        /// Video receive bitrate (Kbps), represented by an instantaneous value. This parameter does not need to be set. The SDK automatically matches the most suitable bitrate based on the video resolution and frame rate you set.
         /// </summary>
         ///
         public int kBitrate;
@@ -2800,7 +2904,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Is the watermark visible in the local preview view? true : (Default) The watermark is visible in the local preview view. false : The watermark is not visible in the local preview view.
+        /// Whether the watermark is visible in the local preview view: true : (Default) The watermark is visible in the local preview view. false : The watermark is not visible in the local preview view.
         /// </summary>
         ///
         public bool visibleInPreview;
@@ -3468,21 +3572,21 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The width (px) of the video frame.
+        /// The width (px) of the video frame. The default value is 960.
         /// </summary>
         ///
         public int width;
 
         ///
         /// <summary>
-        /// The height (px) of the video frame.
+        /// The height (px) of the video frame. The default value is 540.
         /// </summary>
         ///
         public int height;
 
         ///
         /// <summary>
-        /// The video frame rate (fps).
+        /// The video frame rate (fps). The default value is 15.
         /// </summary>
         ///
         public int fps;
@@ -3667,6 +3771,56 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
+    /// Camera stabilization modes.
+    /// 
+    /// The camera stabilization effect increases in the order of 1 < 2 < 3, and the latency will also increase accordingly.
+    /// </summary>
+    ///
+    public enum CAMERA_STABILIZATION_MODE
+    {
+        ///
+        /// <summary>
+        /// -1: (Default) Camera stabilization mode off.
+        /// </summary>
+        ///
+        CAMERA_STABILIZATION_MODE_OFF = -1,
+
+        ///
+        /// <summary>
+        /// 0: Automatic camera stabilization. The system automatically selects a stabilization mode based on the status of the camera. However, the latency is relatively high in this mode, so it is recommended not to use this enumeration.
+        /// </summary>
+        ///
+        CAMERA_STABILIZATION_MODE_AUTO = 0,
+
+        ///
+        /// <summary>
+        /// 1: (Recommended) Level 1 camera stabilization.
+        /// </summary>
+        ///
+        CAMERA_STABILIZATION_MODE_LEVEL_1 = 1,
+
+        ///
+        /// <summary>
+        /// 2: Level 2 camera stabilization.
+        /// </summary>
+        ///
+        CAMERA_STABILIZATION_MODE_LEVEL_2 = 2,
+
+        ///
+        /// <summary>
+        /// 3: Level 3 camera stabilization.
+        /// </summary>
+        ///
+        CAMERA_STABILIZATION_MODE_LEVEL_3 = 3,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_STABILIZATION_MODE_MAX_LEVEL = CAMERA_STABILIZATION_MODE_LEVEL_3,
+    }
+
+    ///
+    /// <summary>
     /// The state of the local audio.
     /// </summary>
     ///
@@ -3752,35 +3906,35 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: (Windows and macOS only) No local audio capture device. Remind your users to check whether the microphone is connected to the device properly in the control plane of the device or if the microphone is working properly.
+        /// 6: (Windows and macOS only) No local audio capture device. Remind your users to check whether the microphone is connected to the device properly in the control panel of the device or if the microphone is working properly.
         /// </summary>
         ///
         LOCAL_AUDIO_STREAM_REASON_NO_RECORDING_DEVICE = 6,
 
         ///
         /// <summary>
-        /// 7: (Windows and macOS only) No local audio capture device. Remind your users to check whether the speaker is connected to the device properly in the control plane of the device or if the speaker is working properly.
+        /// 7: (Windows and macOS only) No local audio capture device. Remind your users to check whether the speaker is connected to the device properly in the control panel of the device or if the speaker is working properly.
         /// </summary>
         ///
         LOCAL_AUDIO_STREAM_REASON_NO_PLAYOUT_DEVICE = 7,
 
         ///
         /// <summary>
-        /// 8: (Android and iOS only) The local audio capture is interrupted by a system call, Siri, or alarm clock. Remind your users to end the phone call, Siri, or alarm clock if the local audio capture is required.
+        /// 8: (Android and iOS only) The local audio capture is interrupted by a system call, smart assistants, or alarm clock. Prompt your users to end the phone call, smart assistants, or alarm clock if the local audio capture is required.
         /// </summary>
         ///
         LOCAL_AUDIO_STREAM_REASON_INTERRUPTED = 8,
 
         ///
         /// <summary>
-        /// 9: (Windows only) The ID of the local audio-capture device is invalid. Check the audio capture device ID.
+        /// 9: (Windows only) The ID of the local audio-capture device is invalid. Prompt the user to check the audio capture device ID.
         /// </summary>
         ///
         LOCAL_AUDIO_STREAM_REASON_RECORD_INVALID_ID = 9,
 
         ///
         /// <summary>
-        /// 10: (Windows only) The ID of the local audio-playback device is invalid. Check the audio playback device ID.
+        /// 10: (Windows only) The ID of the local audio-playback device is invalid. Prompt the user to check the audio playback device ID.
         /// </summary>
         ///
         LOCAL_AUDIO_STREAM_REASON_PLAYOUT_INVALID_ID = 10,
@@ -3845,21 +3999,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 2: No permission to use the local video capturing device. Remind the user to grant permissions and rejoin the channel. Deprecated: This enumerator is deprecated. Please use CAMERA in the OnPermissionError callback instead.
+        /// 2: No permission to use the local video capturing device. Prompt the user to grant permissions and rejoin the channel. Deprecated: This enumerator is deprecated. Please use CAMERA in the OnPermissionError callback instead.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_DEVICE_NO_PERMISSION = 2,
 
         ///
         /// <summary>
-        /// 3: The local video capturing device is in use. Remind the user to check whether another application occupies the camera.
+        /// 3: The local video capturing device is in use. Prompt the user to check if the camera is being used by another app, or try to rejoin the channel.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_DEVICE_BUSY = 3,
 
         ///
         /// <summary>
-        /// 4: The local video capture fails. Remind your user to check whether the video capture device is working properly, whether the camera is occupied by another application, or try to rejoin the channel.
+        /// 4: The local video capture fails. Prompt the user to check whether the video capture device is working properly, whether the camera is used by another app, or try to rejoin the channel.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_CAPTURE_FAILURE = 4,
@@ -3873,14 +4027,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: (iOS only) The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background.
+        /// 6: (iOS only) The app is in the background. Prompt the user that video capture cannot be performed normally when the app is in the background.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_CAPTURE_INBACKGROUND = 6,
 
         ///
         /// <summary>
-        /// 7: (iOS only) The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
+        /// 7: (iOS only) The current app window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Prompt the user that the app cannot capture video properly when it is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_CAPTURE_MULTIPLE_FOREGROUND_APPS = 7,
@@ -3908,6 +4062,22 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
+        /// 14: (Android only) Video capture is interrupted. Possible reasons include the following:
+        ///  The camera is being used by another app. Prompt the user to check if the camera is being used by another app.
+        ///  The current app has been switched to the background. You can use foreground services to notify the operating system and ensure that the app can still collect video when it switches to the background.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_REASON_DEVICE_INTERRUPT = 14,
+
+        ///
+        /// <summary>
+        /// 15: (Android only) The video capture device encounters an error. Prompt the user to close and restart the camera to restore functionality. If this operation does not solve the problem, check if the camera has a hardware failure.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_REASON_DEVICE_FATAL_ERROR = 15,
+
+        ///
+        /// <summary>
         /// 101: The current video capture device is unavailable due to excessive system pressure.
         /// </summary>
         ///
@@ -3915,7 +4085,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 11: (macOS and Windows only) The shared windows is minimized when you call the StartScreenCaptureByWindowId method to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window.
+        /// 11: (macOS and Windows only) The shared window is minimized when you call the StartScreenCaptureByWindowId method to share a window. The SDK cannot share a minimized window. Please prompt the user to unminimize the shared window.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
@@ -3923,7 +4093,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// 12: (macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing. Common scenarios reporting this error code:
-        ///  When the local user closes the shared window, the SDK reports this error code.
+        ///  The local user closes the shared window.
         ///  The local user shows some slides in full-screen mode first, and then shares the windows of the slides. After the user exits full-screen mode, the SDK reports this error code.
         ///  The local user watches a web video or reads a web document in full-screen mode first, and then shares the window of the web video or document. After the user exits full-screen mode, the SDK reports this error code.
         /// </summary>
@@ -3977,7 +4147,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 27: (Windows only) The window for screen capture has been restored from minimized state.
+        /// 27: (macOS and Windows only) The window for screen capture has been restored from the minimized state.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED = 27,
@@ -4102,6 +4272,16 @@ namespace Agora.Rtc
         /// </summary>
         ///
         REMOTE_AUDIO_REASON_REMOTE_OFFLINE = 7,
+
+        ///
+        /// @ignore
+        ///
+        REMOTE_AUDIO_REASON_NO_PACKET_RECEIVE = 8,
+
+        ///
+        /// @ignore
+        ///
+        REMOTE_AUDIO_REASON_LOCAL_PLAY_FAILED = 9,
     }
 
     ///
@@ -4800,7 +4980,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 16: Your project does not have permission to use streaming services. Refer to Media Push to enable the Media Push permission.
+        /// 16: Your project does not have permission to use streaming services.
         /// </summary>
         ///
         RTMP_STREAM_PUBLISH_REASON_INVALID_PRIVILEGE = 16,
@@ -6135,7 +6315,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The video display window.
+        /// The video display window. In one VideoCanvas, you can only choose to set either view or surfaceTexture. If both are set, only the settings in view take effect.
         /// </summary>
         ///
         public view_t view;
@@ -6193,8 +6373,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (Optional) Whether the receiver enables alpha mask rendering: true : The receiver enables alpha mask rendering. false : (default) The receiver disables alpha mask rendering. Alpha mask rendering can create images with transparent effects and extract portraits from videos. When used in combination with other methods, you can implement effects such as portrait-in-picture and watermarking.
-        ///  This property applies to macOS only.
+        /// (Optional) Whether the receiver enables alpha mask rendering: true : The receiver enables alpha mask rendering. false : (Default) The receiver disables alpha mask rendering. Alpha mask rendering can create images with transparent effects and extract portraits from videos. When used in combination with other methods, you can implement effects such as portrait-in-picture and watermarking.
         ///  The receiver can render alpha channel information only when the sender enables alpha transmission.
         ///  To enable alpha transmission,.
         /// </summary>
@@ -6722,7 +6901,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The range of accuracy for identifying green colors (different shades of green) in the view. The value range is [0,1], and the default value is 0.5. The larger the value, the wider the range of identifiable shades of green. When the value of this parameter is too large, the edge of the portrait and the green color in the portrait range are also detected. Agora recommends that you dynamically adjust the value of this parameter according to the actual effect. This parameter only takes effect when modelType is set to SEG_MODEL_GREEN.
+        /// The accuracy range for recognizing background colors in the image. The value range is [0,1], and the default value is 0.5. The larger the value, the wider the range of identifiable shades of pure color. When the value of this parameter is too large, the edge of the portrait and the pure color in the portrait range are also detected. Agora recommends that you dynamically adjust the value of this parameter according to the actual effect. This parameter only takes effect when modelType is set to SEG_MODEL_GREEN.
         /// </summary>
         ///
         public float greenCapacity;
@@ -7005,6 +7184,13 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
+        /// The audio effect of chorus. Agora recommends using this effect in chorus scenarios to enhance the sense of depth and dimension in the vocals.
+        /// </summary>
+        ///
+        ROOM_ACOUSTICS_CHORUS = 0x02010D00,
+
+        ///
+        /// <summary>
         /// A middle-aged man's voice. Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
         /// </summary>
         ///
@@ -7210,9 +7396,13 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The video encoding resolution of the shared screen stream. See VideoDimensions. The default value is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 × 1080:
+        /// The video encoding resolution of the screen sharing stream. See VideoDimensions. The default value is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 × 1080:
         ///  If the value of the screen dimensions is lower than that of dimensions, for example, 1000 × 1000 pixels, the SDK uses the screen dimensions, that is, 1000 × 1000 pixels, for encoding.
-        ///  If the value of the screen dimensions is higher than that of dimensions, for example, 2000 × 1500, the SDK uses the maximum value under dimensions with the aspect ratio of the screen dimension (4:3) for encoding, that is, 1440 × 1080.
+        ///  If the value of the screen dimensions is higher than that of dimensions, for example, 2000 × 1500, the SDK uses the maximum value under dimensions with the aspect ratio of the screen dimension (4:3) for encoding, that is, 1440 × 1080. When setting the encoding resolution in the scenario of sharing documents (SCREEN_SCENARIO_DOCUMENT), choose one of the following two methods:
+        ///  If you require the best image quality, it is recommended to set the encoding resolution to be the same as the capture resolution.
+        ///  If you wish to achieve a relative balance between image quality, bandwidth, and system performance, then:
+        ///  When the capture resolution is greater than 1920 × 1080, it is recommended that the encoding resolution is not less than 1920 × 1080.
+        ///  When the capture resolution is less than 1920 × 1080, it is recommended that the encoding resolution is not less than 1280 × 720.
         /// </summary>
         ///
         public VideoDimensions dimensions;
@@ -7729,7 +7919,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 2: No server response. You can call LeaveChannel [1/2] to leave the channel. This error can also occur if your project has not enabled co-host token authentication. You can to enable the service for cohosting across channels before starting a channel media relay.
+        /// 2: No server response. This error may be caused by poor network connections. If this error occurs when initiating a channel media relay, you can try again later; if this error occurs during channel media relay, you can call LeaveChannel [2/2] to leave the channel. This error can also occur if the channel media relay service is not enabled in the project. You can contact to enable the service.
         /// </summary>
         ///
         RELAY_ERROR_SERVER_NO_RESPONSE = 2,
@@ -7771,7 +7961,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 8: The SDK disconnects from the server due to poor network connections. You can call LeaveChannel [1/2] to leave the channel.
+        /// 8: The SDK disconnects from the server due to poor network connections. You can call LeaveChannel [2/2] to leave the channel.
         /// </summary>
         ///
         RELAY_ERROR_SERVER_CONNECTION_LOST = 8,
@@ -8088,17 +8278,31 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Decryption errors. Ensure that the receiver and the sender use the same encryption mode and key.
+        /// 1: Media stream decryption error. Ensure that the receiver and the sender use the same encryption mode and key.
         /// </summary>
         ///
         ENCRYPTION_ERROR_DECRYPTION_FAILURE = 1,
 
         ///
         /// <summary>
-        /// 2: Encryption errors.
+        /// 2: Media stream encryption error.
         /// </summary>
         ///
         ENCRYPTION_ERROR_ENCRYPTION_FAILURE = 2,
+
+        ///
+        /// <summary>
+        /// 3: Data stream decryption error. Ensure that the receiver and the sender use the same encryption mode and key.
+        /// </summary>
+        ///
+        ENCRYPTION_ERROR_DATASTREAM_DECRYPTION_FAILURE = 3,
+
+        ///
+        /// <summary>
+        /// 4: Data stream encryption error.
+        /// </summary>
+        ///
+        ENCRYPTION_ERROR_DATASTREAM_ENCRYPTION_FAILURE = 4,
     }
 
     ///
@@ -8310,31 +8514,38 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The audio filter of in-ear monitoring.
+    /// The audio filter types of in-ear monitoring.
     /// </summary>
     ///
     public enum EAR_MONITORING_FILTER_TYPE
     {
         ///
         /// <summary>
-        /// 1<<0: Do not add an audio filter to the in-ear monitor.
+        /// 1<<0: No audio filter added to in-ear monitoring.
         /// </summary>
         ///
         EAR_MONITORING_FILTER_NONE = (1 << 0),
 
         ///
         /// <summary>
-        /// 1<<1: Add an audio filter to the in-ear monitor. If you implement functions such as voice beautifier and audio effect, users can hear the voice after adding these effects.
+        /// 1<<1: Add vocal effects audio filter to in-ear monitoring. If you implement functions such as voice beautifier and audio effect, users can hear the voice after adding these effects.
         /// </summary>
         ///
         EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS = (1 << 1),
 
         ///
         /// <summary>
-        /// 1<<2: Enable noise suppression to the in-ear monitor.
+        /// 1<<2: Add noise suppression audio filter to in-ear monitoring.
         /// </summary>
         ///
         EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1 << 2),
+
+        ///
+        /// <summary>
+        /// 1<<15: Reuse the audio filter that has been processed on the sending end for in-ear monitoring. This enumerator reduces CPU usage while increasing in-ear monitoring latency, which is suitable for latency-tolerant scenarios requiring low CPU consumption.
+        /// </summary>
+        ///
+        EAR_MONITORING_FILTER_REUSE_POST_PROCESSING_FILTER = (1 << 15),
     }
 
     ///
@@ -8892,7 +9103,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Whether to enable the Doppler effect: When there is a relative displacement between the sound source and the receiver of the sound source, the tone heard by the receiver changes. true : Enable the Doppler effect. false : (Default) Disable the Doppler effect.
-        ///  This parameter is suitable for scenarios where the sound source is moving at high speed (for example, racing games). It is not recommended for common audio and video interactive scenarios (for example, voice chat, cohosting, or online KTV).
+        ///  This parameter is suitable for scenarios where the sound source is moving at high speed (for example, racing games). It is not recommended for common audio and video interactive scenarios (for example, voice chat, co-streaming, or online KTV).
         ///  When this parameter is enabled, Agora recommends that you set a regular period (such as 30 ms), and then call the UpdatePlayerPositionInfo, UpdateSelfPosition, and UpdateRemotePosition methods to continuously update the relative distance between the sound source and the receiver. The following factors can cause the Doppler effect to be unpredictable or the sound to be jittery: the period of updating the distance is too long, the updating period is irregular, or the distance information is lost due to network packet loss or delay.
         /// </summary>
         ///
@@ -8913,6 +9124,9 @@ namespace Agora.Rtc
         {
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();

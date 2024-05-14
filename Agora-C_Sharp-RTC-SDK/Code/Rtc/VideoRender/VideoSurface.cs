@@ -26,12 +26,13 @@ namespace Agora.Rtc
 
         protected GameObject _TextureManagerGameObject;
         protected TextureManager _textureManager;
-        protected int _textureWidth = 0;
-        protected int _textureHeight = 0;
+        protected int _textureWidth = 2;
+        protected int _textureHeight = 2;
 
         ///
         /// <summary>
         /// This callback is triggered when the width and height of Texture are changed.
+        /// 
         /// When the width and height of Texture are changed, the SDK triggers this callback.
         /// </summary>
         ///
@@ -102,8 +103,6 @@ namespace Agora.Rtc
                 this.OnTextureSizeModify.Invoke(this._textureWidth, this._textureHeight);
             }
         }
-
-
 
         void OnDestroy()
         {
@@ -201,10 +200,12 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the local or remote video display.
-        /// Ensure that you call this method in the main thread.Ensure that you call this method before binding VideoSurface.cs.
+        /// 
+        /// Ensure that you call this method in the main thread.
+        /// Ensure that you call this method before binding VideoSurface.cs.
         /// </summary>
         ///
-        /// <param name="uid"> The ID of remote users, obtained through OnUserJoined . The default value is 0, which means you can see the local video. </param>
+        /// <param name="uid"> The ID of remote users, obtained through OnUserJoined. The default value is 0, which means you can see the local video. </param>
         ///
         /// <param name="channelId"> The ID of the channel. </param>
         ///
@@ -223,7 +224,7 @@ namespace Agora.Rtc
         /// Sets whether to enable the video rendering.
         /// </summary>
         ///
-        /// <param name="enable"> Whether to enable the video rendering:true: (Default) Enable the video rendering.false: Disable the video rendering. </param>
+        /// <param name="enable"> Whether to enable the video rendering: true : (Default) Enable the video rendering. false : Disable the video rendering. </param>
         ///
         public virtual void SetEnable(bool enable)
         {

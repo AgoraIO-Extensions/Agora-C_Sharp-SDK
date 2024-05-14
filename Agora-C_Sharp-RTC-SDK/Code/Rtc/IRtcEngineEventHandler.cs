@@ -196,18 +196,14 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the local video stream state changes.
         /// 
-        /// When the state of the local video stream changes (including the state of the video capture and encoding), the SDK triggers this callback to report the current state. This callback indicates the state of the local video stream, including camera capturing and video encoding, and allows you to troubleshoot issues when exceptions occur. The SDK triggers the OnLocalVideoStateChanged callback with the state code of LOCAL_VIDEO_STREAM_STATE_FAILED and error code of LOCAL_VIDEO_STREAM_REASON_CAPTURE_FAILURE in the following situations:
-        /// The app switches to the background, and the system gets the camera resource.
-        /// For Android 9 and later versions, after an app is in the background for a period, the system automatically revokes camera permissions.
-        /// For Android 6 and later versions, if the camera is held by a third-party app for a certain duration and then released, the SDK triggers this callback and reports the OnLocalVideoStateChanged (LOCAL_VIDEO_STREAM_STATE_CAPTURING, LOCAL_VIDEO_STREAM_REASON_OK) callback.
-        /// The camera starts normally, but does not output video frames for four consecutive seconds. When the camera outputs the captured video frames, if the video frames are the same for 15 consecutive frames, the SDK triggers the OnLocalVideoStateChanged callback with the state code of LOCAL_VIDEO_STREAM_STATE_CAPTURING and error code of LOCAL_VIDEO_STREAM_REASON_CAPTURE_FAILURE. Note that the video frame duplication detection is only available for video frames with a resolution greater than 200 × 200, a frame rate greater than or equal to 10 fps, and a bitrate less than 20 Kbps. For some device models, the SDK does not trigger this callback when the state of the local video changes while the local video capturing device is in use, so you have to make your own timeout judgment.
+        /// When the status of the local video changes, the SDK triggers this callback to report the current local video state and the reason for the state change.
         /// </summary>
         ///
         /// <param name="source"> The type of the video source. See VIDEO_SOURCE_TYPE. </param>
         ///
         /// <param name="state"> The state of the local video, see LOCAL_VIDEO_STREAM_STATE. </param>
         ///
-        /// <param name="errorCode"> The reasons for changes in local video state. See LOCAL_VIDEO_STREAM_REASON. </param>
+        /// <param name="reason"> The reasons for changes in local video state. See LOCAL_VIDEO_STREAM_REASON. </param>
         ///
         public virtual void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
@@ -600,7 +596,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the extension is enabled.
         /// 
-        /// After a successful call of EnableExtension (true), the extension triggers this callback.
+        /// The extension triggers this callback after it is successfully enabled.
         /// </summary>
         ///
         /// <param name="provider"> The name of the extension provider. </param>
@@ -615,7 +611,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the extension is disabled.
         /// 
-        /// After a successful call of EnableExtension (false), this callback is triggered.
+        /// The extension triggers this callback after it is successfully destroyed.
         /// </summary>
         ///
         /// <param name="extension"> The name of the extension. </param>
@@ -630,7 +626,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the extension runs incorrectly.
         /// 
-        /// When calling EnableExtension (true) fails or the extension runs in error, the extension triggers this callback and reports the error code and reason.
+        /// In case of extension enabling failure or runtime errors, the extension triggers this callback and reports the error code along with the reasons.
         /// </summary>
         ///
         /// <param name="provider"> The name of the extension provider. </param>
@@ -985,14 +981,14 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when a specific remote user enables/disables the local video capturing function.
         /// 
-        /// The SDK triggers this callback when the remote user resumes or stops capturing the video stream by calling the EnableLocalVideo method.
+        /// Deprecated: This callback is deprecated, use the following enumerations in the OnRemoteVideoStateChanged callback: REMOTE_VIDEO_STATE_STOPPED (0) and REMOTE_VIDEO_STATE_REASON_REMOTE_MUTED (5). REMOTE_VIDEO_STATE_DECODING (2) and REMOTE_VIDEO_STATE_REASON_REMOTE_UNMUTED (6). The SDK triggers this callback when the remote user resumes or stops capturing the video stream by calling the EnableLocalVideo method.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
         /// <param name="remoteUid"> The user ID of the remote user. </param>
         ///
-        /// <param name="enabled"> Whether the specified remote user enables/disables the local video capturing function: true : The video module is enabled. Other users in the channel can see the video of this remote user. false : The video module is disabled. Other users in the channel can no longer receive the video stream from this remote user, while this remote user can still receive the video streams from other users. </param>
+        /// <param name="enabled"> Whether the specified remote user enables/disables local video capturing: true : The video module is enabled. Other users in the channel can see the video of this remote user. false : The video module is disabled. Other users in the channel can no longer receive the video stream from this remote user, while this remote user can still receive the video streams from other users. </param>
         ///
         public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled)
         {
@@ -1524,6 +1520,13 @@ namespace Agora.Rtc
         /// <param name="uid">  </param>
         ///
         public virtual void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, ulong length)
         {
         }
         #endregion terra IRtcEngineEventHandler

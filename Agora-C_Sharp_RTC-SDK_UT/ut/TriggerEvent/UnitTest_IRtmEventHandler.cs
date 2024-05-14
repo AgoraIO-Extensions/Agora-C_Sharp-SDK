@@ -19,13 +19,15 @@ namespace Agora.Rtm.Ut
         [SetUp]
         public void Setup()
         {
-            FakeRtmClientPtr = Agora.Rtc.Ut.DLLHelper.CreateFakeRtmClient();
-            Client = Internal.RtmClient.CreateAgoraRtmClient(FakeRtmClientPtr);
-            Internal.RtmConfig config = new Internal.RtmConfig();
+            Internal.RtmConfig config;
+            ParamsHelper.InitParam(out config);
             EventHandler = new UTInternalRtmEventHandler();
             config.setEventHandler(EventHandler);
-            int nRet = Client.Initialize(config);
-            Assert.AreEqual(0, nRet);
+            int errorCode = 0;
+            FakeRtmClientPtr = DLLHelper.CreateFakeRtmClient();
+            Client = Internal.RtmClient.CreateAgoraRtmClient(IntPtr.Zero);
+            Client.Create(config);
+            Assert.AreEqual(0, errorCode);
             ApiParam.AllocResult();
         }
 
@@ -35,6 +37,27 @@ namespace Agora.Rtm.Ut
             Client.Dispose();
             ApiParam.FreeResult();
         }
+
+        [Test]
+        public void Test_OnLinkStateEvent()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLINKSTATEEVENT;
+
+            LinkStateEvent @event = ParamsHelper.CreateParam<LinkStateEvent>();
+
+            jsonObj.Clear();
+            jsonObj.Add("@event", @event);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnLinkStateEventPassed(@event));
+        }
+
 
 
         [Test]
@@ -205,6 +228,38 @@ namespace Agora.Rtm.Ut
 
 
         [Test]
+        public void Test_OnPublishTopicMessageResult()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONPUBLISHTOPICMESSAGERESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+
+            string channelName = ParamsHelper.CreateParam<string>();
+
+            string topic = ParamsHelper.CreateParam<string>();
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("channelName", channelName);
+            jsonObj.Add("topic", topic);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnPublishTopicMessageResultPassed(requestId, channelName, topic, errorCode));
+        }
+
+
+
+        [Test]
         public void Test_OnJoinTopicResult()
         {
             ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONJOINTOPICRESULT;
@@ -315,6 +370,68 @@ namespace Agora.Rtm.Ut
             Assert.AreEqual(true, EventHandler.OnSubscribeTopicResultPassed(requestId, channelName, userId, topic, succeedUsers, failedUsers, errorCode));
         }
 
+        [Test]
+        public void Test_OnUnsubscribeTopicResult()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBETOPICRESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+
+            string channelName = ParamsHelper.CreateParam<string>();
+
+            string topic = ParamsHelper.CreateParam<string>();
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("channelName", channelName);
+            jsonObj.Add("topic", topic);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnUnsubscribeTopicResultPassed(requestId, channelName, topic, errorCode));
+        }
+
+
+        [Test]
+        public void Test_OnGetSubscribedUserListResult()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONGETSUBSCRIBEDUSERLISTRESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+
+            string channelName = ParamsHelper.CreateParam<string>();
+
+            string topic = ParamsHelper.CreateParam<string>();
+
+            Internal.UserList users = ParamsHelper.CreateParam<Internal.UserList>();
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("channelName", channelName);
+            jsonObj.Add("topic", topic);
+            jsonObj.Add("users", users);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnGetSubscribedUserListResultPassed(requestId, channelName, topic, users, errorCode));
+        }
+
 
         [Test]
         public void Test_OnConnectionStateChange()
@@ -391,6 +508,33 @@ namespace Agora.Rtm.Ut
             Assert.AreEqual(true, EventHandler.OnSubscribeResultPassed(requestId, channelName, errorCode));
         }
 
+        [Test]
+        public void Test_OnUnsubscribeResult()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBERESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+
+            string channelName = ParamsHelper.CreateParam<string>();
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("channelName", channelName);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnUnsubscribeResultPassed(requestId, channelName, errorCode));
+        }
+
 
         [Test]
         public void Test_OnPublishResult()
@@ -421,9 +565,12 @@ namespace Agora.Rtm.Ut
         {
             ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLOGINRESULT;
 
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
+
+            jsonObj.Add("requestId", requestId);
             jsonObj.Add("errorCode", errorCode);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
@@ -433,9 +580,59 @@ namespace Agora.Rtm.Ut
 
             int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnLoginResultPassed(errorCode));
+            Assert.AreEqual(true, EventHandler.OnLoginResultPassed(requestId, errorCode));
         }
 
+        [Test]
+        public void Test_OnLogoutResult()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLOGOUTRESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+            jsonObj.Clear();
+
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnLogoutResultPassed(requestId, errorCode));
+        }
+
+
+        [Test]
+        public void Test_OnRenewTokenResult()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONRENEWTOKENRESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            RTM_SERVICE_TYPE serverType = ParamsHelper.CreateParam<RTM_SERVICE_TYPE>();
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+            jsonObj.Clear();
+
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("serverType", serverType);
+            jsonObj.Add("channelName", channelName);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnRenewTokenResultPassed(requestId, serverType, channelName, errorCode));
+        }
 
         [Test]
         public void Test_OnSetChannelMetadataResult()
@@ -538,7 +735,7 @@ namespace Agora.Rtm.Ut
 
             RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            Metadata data = ParamsHelper.CreateParam<Metadata>();
 
             RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
@@ -650,7 +847,7 @@ namespace Agora.Rtm.Ut
 
             string userId = ParamsHelper.CreateParam<string>();
 
-            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            Metadata data = ParamsHelper.CreateParam<Metadata>();
 
             RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
@@ -695,6 +892,32 @@ namespace Agora.Rtm.Ut
             int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSubscribeUserMetadataResultPassed(requestId, userId, errorCode));
+        }
+
+        [Test]
+        public void Test_OnUnsubscribeUserMetadataResult()
+        {
+            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBEUSERMETADATARESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+
+            string userId = ParamsHelper.CreateParam<string>();
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("userId", userId);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnUnsubscribeUserMetadataResultPassed(requestId, userId, errorCode));
         }
 
 

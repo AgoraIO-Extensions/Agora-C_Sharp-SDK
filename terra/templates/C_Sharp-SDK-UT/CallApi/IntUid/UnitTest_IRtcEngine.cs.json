@@ -41,6 +41,7 @@
             "isCameraFocusSupported": "method_unitTest_compare_false",
             "isCameraTorchSupported": "method_unitTest_compare_false",
             "isCameraZoomSupported": "method_unitTest_compare_false",
+            "isCameraCenterStageSupported": "method_unitTest_compare_true",
             "isFeatureAvailableOnDevice": "method_unitTest_compare_true",
             "isSpeakerphoneEnabled": "method_unitTest_compare_false",
             "loadExtensionProvider": "method_unitTest_greater_than_4",
@@ -59,7 +60,10 @@
             "startScreenCapture": "method_unitTest_greater_than_4",
             "startScreenCaptureByScreenRect": "method_unitTest_greater_than_4",
             "switchCamera": "method_unitTest_greater_than_4",
-            "updateScreenCapture": "method_unitTest_greater_than_4"
+            "updateScreenCapture": "method_unitTest_greater_than_4",
+            "isSupportPortraitCenterStage": "method_unitTest_compare_true",
+            "setCameraStabilizationMode": "method_unitTest_greater_than_4",
+            "queryCameraFocalLengthCapability": "method_unitTest_greater_than_4"
         },
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": ""
@@ -76,7 +80,8 @@
             "registerVideoFrameObserver",
             "registerVideoEncodedFrameObserver",
             "addVideoFrameRenderer",
-            "removeVideoFrameRenderer"
+            "removeVideoFrameRenderer",
+            "registerFaceInfoObserver"
         ],
         "specialMethodsTemplate": {
             "createCustomAudioTrack": "method_unitTest_greater_than_0",

@@ -49,10 +49,10 @@ namespace Agora.Rtc.Ut
             if (OnReadyToSendMetadata_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<Metadata>(OnReadyToSendMetadata_metadata, metadata) == false)
-            //return false;
-            // if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnReadyToSendMetadata_source_type, source_type) == false)
-            //return false;
+            if (ParamsHelper.Compare<Metadata>(OnReadyToSendMetadata_metadata, metadata) == false)
+                return false;
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnReadyToSendMetadata_source_type, source_type) == false)
+                return false;
 
             return true;
         }
@@ -75,8 +75,8 @@ namespace Agora.Rtc.Ut
             if (OnMetadataReceived_be_trigger == false)
                 return false;
 
-            // if (ParamsHelper.Compare<Metadata>(OnMetadataReceived_metadata, metadata) == false)
-            //return false;
+            if (ParamsHelper.Compare<Metadata>(OnMetadataReceived_metadata, metadata) == false)
+                return false;
 
             return true;
         }

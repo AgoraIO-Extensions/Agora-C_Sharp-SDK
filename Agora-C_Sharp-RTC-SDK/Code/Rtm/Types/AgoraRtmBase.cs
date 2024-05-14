@@ -1,6 +1,165 @@
 ﻿using System;
 namespace Agora.Rtm
 {
+
+    public enum RTM_LINK_STATE
+    {
+        ///
+        /// <summary>
+        /// The initial state.
+        /// </summary>
+        ///
+        RTM_LINK_STATE_IDLE = 0,
+        ///
+        /// <summary>
+        /// The SDK is connecting to the server.
+        /// </summary>
+        ///
+        RTM_LINK_STATE_CONNECTING = 1,
+        ///
+        /// <summary>
+        /// The SDK has connected to the server.
+        /// </summary>
+        ///
+        RTM_LINK_STATE_CONNECTED = 2,
+        ///
+        /// <summary>
+        /// The SDK is disconnected from the server.
+        /// </summary>
+        ///
+        RTM_LINK_STATE_DISCONNECTED = 3,
+        ///
+        /// <summary>
+        /// The SDK link is suspended.
+        /// </summary>
+        ///
+        RTM_LINK_STATE_SUSPENDED = 4,
+        ///
+        /// <summary>
+        /// The SDK is failed to connect to the server.
+        /// </summary>
+        ///
+        RTM_LINK_STATE_FAILED = 5,
+    };
+
+    ///
+    /// <summary>
+    /// Rtm link operation.
+    /// </summary>
+    ///
+    public enum RTM_LINK_OPERATION
+    {
+        ///
+        /// <summary>
+        /// Login.
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_LOGIN = 0,
+        ///
+        /// <summary>
+        /// Logout.
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_LOGOUT = 1,
+        ///
+        /// <summary>
+        /// Join
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_JOIN = 2,
+        ///
+        /// <summary>
+        /// Leave.
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_LEAVE = 3,
+        ///
+        /// <summary>
+        /// Server reject
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_SERVER_REJECT = 4,
+        ///
+        /// <summary>
+        /// Auto reconnect
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_AUTO_RECONNECT = 5,
+        ///
+        /// <summary>
+        /// Reconnected
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_RECONNECTED = 6,
+        ///
+        /// <summary>
+        /// Heartbeat lost
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_HEARTBEAT_LOST = 7,
+        ///
+        /// <summary>
+        /// Server timeout
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_SERVER_TIMEOUT = 8,
+        ///
+        /// <summary>
+        /// Network change
+        /// </summary>
+        ///
+        RTM_LINK_OPERATION_NETWORK_CHANGE = 9,
+    };
+
+
+    ///
+    /// <summary>
+    /// Rtm service type.
+    /// </summary>
+    ///
+    public enum RTM_SERVICE_TYPE
+    {
+        ///
+        /// <summary>
+        /// The type of rtm service not specified.
+        /// </summary>
+        ///
+        RTM_SERVICE_TYPE_NONE = 0x00000000,
+        ///
+        /// <summary>
+        /// The basic functionality of rtm service.
+        /// </summary>
+        ///
+        RTM_SERVICE_TYPE_MESSAGE = 0x00000001,
+        ///
+        /// <summary>
+        /// The advanced functionality of rtm service.
+        /// </summary>
+        ///
+        RTM_SERVICE_TYPE_STREAM = 0x00000002,
+    };
+
+    ///
+    /// <summary>
+    /// Rtm protocol type for underlying connection.
+    /// </summary>
+    ///
+    public enum RTM_PROTOCOL_TYPE
+    {
+        ///
+        /// <summary>
+        /// TCP and UDP (default).
+        /// </summary>
+        ///
+        RTM_PROTOCOL_TYPE_TCP_UDP = 0,
+        ///
+        /// <summary>
+        /// Use TCP only.
+        /// </summary>
+        ///
+        RTM_PROTOCOL_TYPE_TCP_ONLY = 1,
+    };
+
     ///
     /// <summary>
     /// IP areas.
@@ -241,6 +400,32 @@ namespace Agora.Rtm
         /// </summary>
         ///
         OPERATION_RATE_EXCEED_LIMITATION = -10021,
+
+
+        ///
+        /// <summary>
+        /// -10022: The service is not configured in private config mode.
+        /// </summary>
+        ///
+        SERVICE_NOT_SUPPORTED = -10022,
+        ///
+        /// <summary>
+        /// -10023: This login operation stopped by a new login operation or logout operation.
+        /// </summary>
+        ///
+        LOGIN_CANCELED = -10023,
+        ///
+        /// <summary>
+        /// -10024: The private config is invalid, set private config should both set serviceType and accessPointHosts.
+        /// </summary>
+        ///
+        INVALID_PRIVATE_CONFIG = -10024,
+        ///
+        /// <summary>
+        /// -10025: Perform operation failed due to RTM service is not connected.
+        /// </summary>
+        ///
+        NOT_CONNECTED = -10025,
         ///
         /// <summary>
         /// -11001 ~ -12000 : reserved for channel error.
@@ -440,6 +625,13 @@ namespace Agora.Rtm
         /// </summary>
         ///
         CHANNEL_RECEIVER_OFFLINE = -11033,
+
+        ///
+        /// <summary>
+        /// -11034: The channel join operation is canceled.
+        /// </summary>
+        ///
+        CHANNEL_JOIN_CANCELED = -11034,
         ///
         /// <summary>
         /// -12001 ~ -13000 : reserved for storage error.
@@ -848,18 +1040,25 @@ namespace Agora.Rtm
         /// </summary>
         ///
         LICENSE_VALIDATION_FAILURE = 21,
+
+        ///
+        /// <summary>
+        /// 22: The connection is failed due to certification verify failure.
+        /// </summary>
+        ///
+        CERTIFICATION_VERIFY_FAILURE = 22,
         ///
         /// <summary>
         /// 22: The connection is failed due to user vid not support stream channel.
         /// </summary>
         ///
-        STREAM_CHANNEL_NOT_AVAILABLE = 22,
+        STREAM_CHANNEL_NOT_AVAILABLE = 23,
         ///
         /// <summary>
         /// 23: The connection is failed due to token and appid inconsistent.
         /// </summary>
         ///
-        INCONSISTENT_APPID = 23,
+        INCONSISTENT_APPID = 24,
         ///
         /// <summary>
         /// 10001: The connection of rtm edge service has been successfully established.
@@ -1401,20 +1600,22 @@ namespace Agora.Rtm
         ///
         public bool withLock;
 
+        ///
+        /// <summary>
+        /// Whether to subscribe channel in quiet mode
+        /// Quiet mode means remote user will not receive any notification when we subscribe or
+        /// unsubscribe or change our presence state
+        /// </summary>
+        ///
+        public bool beQuiet;
+
         public SubscribeOptions()
         {
             withMessage = true;
             withMetadata = false;
             withPresence = true;
             withLock = false;
-        }
-
-        public SubscribeOptions(bool withMessage, bool withMetadata, bool withPresence, bool withLock)
-        {
-            this.withMessage = withMessage;
-            this.withMetadata = withMetadata;
-            this.withPresence = withPresence;
-            this.withLock = withLock;
+            beQuiet = false;
         }
     };
 
@@ -1731,17 +1932,48 @@ namespace Agora.Rtm
         }
     };
 
-    public class RtmMetadata
+    public class RtmPrivateConfig
     {
-        public Int64 majorRevision;
-        public MetadataItem[] metadataItems;
-        public UInt64 metadataItemsSize;
+        ///
+        /// <summary>
+        /// Rtm service type.
+        /// </summary>
+        ///
+        public RTM_SERVICE_TYPE serviceType;
 
-        public RtmMetadata()
+        ///
+        /// <summary>
+        /// Local access point hosts list.
+        /// </summary>
+        ///
+        public string[] accessPointHosts;
+
+        public RtmPrivateConfig()
+        {
+            serviceType = RTM_SERVICE_TYPE.RTM_SERVICE_TYPE_NONE;
+            accessPointHosts = new string[0];
+        }
+    };
+
+    public class Metadata
+    {
+        ///
+        /// <summary>
+        /// the major revision of metadata.
+        /// </summary>
+        ///
+        public Int64 majorRevision;
+        ///
+        /// <summary>
+        /// The metadata item array.
+        /// </summary>
+        ///
+        public MetadataItem[] items;
+
+        public Metadata()
         {
             majorRevision = 0;
-            metadataItems = new MetadataItem[0];
-            metadataItemsSize = 0;
+            items = new MetadataItem[0];
         }
     }
 }

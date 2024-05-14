@@ -51,6 +51,7 @@ namespace Agora.Rtc
             _agoraRtcEngine.OnRtcEngineImpleWillDispose += RtcEngineImplWillDispose;
             _videoFrameConfig = new IrisRtcVideoFrameConfig();
             _videoFrameConfig.video_view_setup_mode = 0;
+            _videoFrameConfig.observed_frame_position = (uint)(VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER | VIDEO_MODULE_POSITION.POSITION_PRE_RENDERER);
         }
 
         ~VideoStreamManager()

@@ -42,9 +42,9 @@ namespace Agora.Rtc
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter, the device ID of the default audio playback device. </param>
+        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio playback device. </param>
         ///
-        /// <param name="deviceName"> Output parameter, the device name of the default audio playback device. </param>
+        /// <param name="deviceName"> Output parameter; indicates the name of the default audio playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -55,14 +55,34 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
+        /// Get the system‘s default audio playback device and its type.
+        /// 
+        /// This method applies to macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio playback device. </param>
+        ///
+        /// <param name="deviceName"> Output parameter; indicates the name of the default audio playback device. </param>
+        ///
+        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio devices, such as built-in, USB and HDMI. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
+        ///
+        public abstract int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName);
+
+        ///
+        /// <summary>
         /// Gets the default audio capture device.
         /// 
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter, the device ID of the default audio capture device. </param>
+        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio capture device. </param>
         ///
-        /// <param name="deviceName"> Output parameter, the device name of the default audio capture device. </param>
+        /// <param name="deviceName"> Output parameter; indicates the name of the default audio capture device. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -70,6 +90,26 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName);
+
+        ///
+        /// <summary>
+        /// Gets the default audio capture device and its type.
+        /// 
+        /// This method applies to macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio devices, such as built-in, USB and HDMI. </param>
+        ///
+        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio capture device. </param>
+        ///
+        /// <param name="deviceName"> Output parameter; indicates the name of the default audio capture device. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
+        ///
+        public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName);
 
         #region terra IAudioDeviceManager
         ///
@@ -106,14 +146,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Retrieves the audio playback device associated with the device ID.
+        /// Retrieves the information of the audio playback device.
         /// 
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> The device ID of the playback device. </param>
+        /// <param name="deviceId"> Th ID of the audio playback device. </param>
         ///
-        /// <param name="deviceName"> The device name of the playback device. </param>
+        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -121,6 +161,26 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetPlaybackDeviceInfo(ref string deviceId, ref string deviceName);
+
+        ///
+        /// <summary>
+        /// Get the information and type of the audio playback device.
+        /// 
+        /// This method applies to macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
+        ///
+        /// <param name="deviceId"> Th ID of the audio playback device. </param>
+        ///
+        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio playback devices, such as built-in, USB and HDMI. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
+        ///
+        public abstract int GetPlaybackDeviceInfo(ref string deviceId, ref string deviceName, ref string deviceTypeName);
 
         ///
         /// <summary>
@@ -183,14 +243,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Retrieves the volume of the audio recording device.
+        /// Retrieves the information of the audio recording device.
         /// 
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> The device ID of the playback device. </param>
+        /// <param name="deviceId"> Th ID of the audio playback device. </param>
         ///
-        /// <param name="deviceName"> The device name of the playback device. </param>
+        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -198,6 +258,26 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetRecordingDeviceInfo(ref string deviceId, ref string deviceName);
+
+        ///
+        /// <summary>
+        /// Get the information and type of the audio capturing device.
+        /// 
+        /// This method applies to macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
+        ///
+        /// <param name="deviceId"> Th ID of the audio playback device. </param>
+        ///
+        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio capturing devices, such as built-in, USB and HDMI. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
+        ///
+        public abstract int GetRecordingDeviceInfo(ref string deviceId, ref string deviceName, ref string deviceTypeName);
 
         ///
         /// <summary>
