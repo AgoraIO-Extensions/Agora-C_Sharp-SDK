@@ -3525,6 +3525,13 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED = 27,
+
+        ///
+        /// <summary>
+        /// 30: The shared display has been disconnected.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCNNECTED = 30,
     };
 
     ///
