@@ -39,13 +39,13 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.CreateMusicPlayer();
         }
 
-        public override int GetLyric(ref string requestId, long songCode, int LyricType = 0)
+        public override int GetLyric(ref string requestId, long songCode, int lyricType = 0)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetLyric(ref requestId, songCode, LyricType);
+            return _musicContentCenterImpl.GetLyric(ref requestId, songCode, lyricType);
         }
 
         public override int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")

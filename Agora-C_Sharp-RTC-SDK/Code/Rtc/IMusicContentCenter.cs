@@ -77,7 +77,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int GetLyric(ref string requestId, Int64 songCode, int LyricType = 0);
+        public abstract int GetLyric(ref string requestId, Int64 songCode, int lyricType = 0);
 
 
         ///

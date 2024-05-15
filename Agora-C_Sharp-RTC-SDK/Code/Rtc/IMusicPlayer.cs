@@ -11,5 +11,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int Open(Int64 songCode, Int64 startPos);
+
+
+        public abstract int SetPlayMode(MusicPlayMode mode);
     }
 }

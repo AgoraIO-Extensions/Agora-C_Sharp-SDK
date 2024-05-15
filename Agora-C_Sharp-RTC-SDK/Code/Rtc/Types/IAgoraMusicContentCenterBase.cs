@@ -2,6 +2,26 @@ using System;
 
 namespace Agora.Rtc
 {
+    public enum MusicPlayMode
+    {
+        /**
+         * 0: The music player is in the original mode.
+         */
+        kMusicPlayModeOriginal = 0,
+
+        /**
+         * 1: The music player is in the accompany mode.
+         */
+        kMusicPlayModeAccompany = 1,
+
+        /**
+         * 2: The music player is in the lead sing mode.
+         */
+        kMusicPlayModeLeadSing = 2,
+
+    };
+
+
     ///
     /// @ignore
     ///
