@@ -565,6 +565,7 @@ namespace Agora.Rtc
 
         #region IMusicPlayer start
         internal const string FUNC_MUSICPLAYER_OPEN = "MusicPlayer_open";
+        internal const string FUNC_MUSICPLAYER_SETPLAYMODE = "MusicPlayer_setPlayMode";
         #endregion
     }
 }

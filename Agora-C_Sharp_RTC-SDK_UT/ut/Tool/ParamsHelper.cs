@@ -960,10 +960,10 @@ namespace Agora.Rtc
         {
             param = CAMERA_STABILIZATION_MODE.CAMERA_STABILIZATION_MODE_AUTO;
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out MusicPlayMode param)
+        {
+            param = MusicPlayMode.kMusicPlayModeAccompany;
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
