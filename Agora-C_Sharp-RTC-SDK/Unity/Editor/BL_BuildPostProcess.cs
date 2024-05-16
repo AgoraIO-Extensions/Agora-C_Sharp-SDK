@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
-#if UNITY_IOS
+#if UNITY_IOS || UNITY_VISIONOS
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
@@ -25,17 +25,24 @@ namespace Agora.Rtm
             if (buildTarget == BuildTarget.iOS)
             {
 #if UNITY_IOS
-            LinkLibraries(path);
-            UpdatePermission(path + "/Info.plist");
+                LinkLibraries(path);
+                UpdatePermission(path + "/Info.plist");
 #endif
             }
+
+#if UNITY_VISIONOS
+            if (buildTarget == BuildTarget.VisionOS)
+            {
+                UpdatePermission(path + "/Info.plist");
+            }
+#endif
         }
+
 
         //public static void DisableBitcode(string projPath)
         //{
         //    PBXProject proj = new PBXProject();
         //    proj.ReadFromString(File.ReadAllText(projPath));
-
         //    string target = GetTargetGuid(proj);
         //    proj.SetBuildProperty(target, "ENABLE_BITCODE", "false");
         //    File.WriteAllText(projPath, proj.WriteToString());
@@ -96,10 +103,12 @@ namespace Agora.Rtm
         // done, write to the project file
         File.WriteAllText(projPath, proj.WriteToString());
     }
+#endif
 
+
+#if UNITY_VISIONOS || UNITY_IOS
     static void UpdatePermission(string pListPath)
     {
-
         PlistDocument plist = new PlistDocument();
         plist.ReadFromString(File.ReadAllText(pListPath));
         PlistElementDict rootDic = plist.root;
@@ -110,8 +119,9 @@ namespace Agora.Rtm
         rootDic.SetString(micPermission, "Voice call need to user mic");
 #endif
         File.WriteAllText(pListPath, plist.WriteToString());
-    }
+    }     
 #endif
-    }
+
+}
 }
 
