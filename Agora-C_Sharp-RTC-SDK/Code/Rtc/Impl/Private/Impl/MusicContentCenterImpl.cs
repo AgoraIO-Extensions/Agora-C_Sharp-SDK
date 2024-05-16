@@ -18,7 +18,7 @@ namespace Agora.Rtc
         private RtcEventHandlerHandle _musicContentCenterHandlerHandle = new RtcEventHandlerHandle();
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         private AgoraCallbackObject _callbackObject;
 #endif
 
@@ -61,7 +61,7 @@ namespace Agora.Rtc
             if (this._musicContentCenterHandlerHandle.handle != IntPtr.Zero)
                 return;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
             MusicContentCenterEventHandlerNative.CallbackObject = _callbackObject;
 #endif
@@ -99,7 +99,7 @@ namespace Agora.Rtc
 
             /// You must release callbackObject after you release eventhandler.
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             MusicContentCenterEventHandlerNative.CallbackObject = null;
             if (_callbackObject != null)
                 _callbackObject.Release();

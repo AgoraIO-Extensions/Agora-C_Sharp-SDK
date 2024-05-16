@@ -151,7 +151,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public abstract int SetMaxMetadataSize(int size);
 #endif
 
@@ -171,7 +171,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public abstract int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
 #endif
 

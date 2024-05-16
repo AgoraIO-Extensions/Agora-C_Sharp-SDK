@@ -27,7 +27,7 @@ namespace Agora.Rtm.Internal
         private const string AgoraRtmLibName = "AgoraRtmWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         private const string AgoraRtmLibName = "AgoraRtmWrapperUnity";
-#elif UNITY_IPHONE
+#elif UNITY_IPHONE || UNITY_VISIONOS
         private const string AgoraRtmLibName = "__Internal";
 #else
         private const string AgoraRtmLibName = "AgoraRtmWrapper";

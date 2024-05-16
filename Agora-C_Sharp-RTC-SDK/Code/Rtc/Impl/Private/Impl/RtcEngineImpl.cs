@@ -5,7 +5,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using AOT;
 #endif
 
@@ -26,7 +26,7 @@ namespace Agora.Rtc
 
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         private AgoraCallbackObject _callbackObject;
 #endif
         // DirectCdnStreamingEventHandler
@@ -143,7 +143,7 @@ namespace Agora.Rtc
             /// You must release callbackObject after you release eventhandler.
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (_callbackObject != null)
             {
                 _callbackObject.Release();
@@ -181,7 +181,7 @@ namespace Agora.Rtc
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero)
                 return 0;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (_callbackObject == null)
             {
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
@@ -266,7 +266,7 @@ namespace Agora.Rtc
                 ref _apiParam);
             var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (ret == 0)
                 SetAppType(AppType.APP_TYPE_UNITY);
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
@@ -706,7 +706,7 @@ namespace Agora.Rtc
             return nRet;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public int SetMaxMetadataSize(int size)
         {
             _param.Clear();
@@ -722,7 +722,7 @@ namespace Agora.Rtc
         }
 #endif
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             _param.Clear();
@@ -796,7 +796,7 @@ namespace Agora.Rtc
             return _mediaRecorderInstance;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         internal IVideoStreamManager GetVideoStreamManager()
         {
             return new VideoStreamManager(this);

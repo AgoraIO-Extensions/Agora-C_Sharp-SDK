@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using AOT;
 #endif
 
@@ -29,7 +29,7 @@ namespace Agora.Rtm.Internal
         private IrisRtmApiParam _apiParam;
         private RtmEventHandlerHandle _rtcEventHandlerHandle = new RtmEventHandlerHandle();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         private AgoraCallbackObject _callbackObject;
 #endif
 
@@ -134,7 +134,7 @@ namespace Agora.Rtm.Internal
 
             AgoraRtmNative.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
             RtmEventHandlerNative.CallbackObject = _callbackObject;
 #endif
@@ -149,7 +149,7 @@ namespace Agora.Rtm.Internal
 
             RtmEventHandlerNative.SetEventHandler(null);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             RtmEventHandlerNative.CallbackObject = null;
             if (_callbackObject != null)
                 _callbackObject.Release();

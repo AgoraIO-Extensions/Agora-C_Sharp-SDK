@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using AOT;
 #endif
 
@@ -25,16 +25,16 @@ namespace Agora.Rtm.Internal
             rtmEventHandler = handler;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         internal static AgoraCallbackObject CallbackObject = null;
 #endif
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         [MonoPInvokeCallback(typeof(Rtm_Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null)
                 return;
 #endif
@@ -60,20 +60,20 @@ namespace Agora.Rtm.Internal
                     }
                     messageEvent.message = new RtmMessage(byteData);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 CallbackObject._CallbackQueue.EnQueue(() =>
                                                       {
 #endif
                     if (rtmEventHandler == null)
                         return;
                     rtmEventHandler.OnMessageEvent(messageEvent);
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                       });
 #endif
                     break;
 
                 case "RtmEventHandler_onLinkStateEvent":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -81,13 +81,13 @@ namespace Agora.Rtm.Internal
                         return;
                     rtmEventHandler.OnLinkStateEvent(
                         AgoraJson.JsonToStruct<LinkStateEvent>(jsonData, "event"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onPresenceEvent":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -95,13 +95,13 @@ namespace Agora.Rtm.Internal
                         return;
                     rtmEventHandler.OnPresenceEvent(
                         AgoraJson.JsonToStruct<PresenceEvent>(jsonData, "event"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onTopicEvent":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -109,13 +109,13 @@ namespace Agora.Rtm.Internal
                         return;
                     rtmEventHandler.OnTopicEvent(
                         AgoraJson.JsonToStruct<TopicEvent>(jsonData, "event"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onLockEvent":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -123,13 +123,13 @@ namespace Agora.Rtm.Internal
                         return;
                     rtmEventHandler.OnLockEvent(
                         AgoraJson.JsonToStruct<LockEvent>(jsonData, "event"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onStorageEvent":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -137,13 +137,13 @@ namespace Agora.Rtm.Internal
                         return;
                     rtmEventHandler.OnStorageEvent(
                         AgoraJson.JsonToStruct<StorageEvent>(jsonData, "event"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onJoinResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -154,13 +154,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onLeaveResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -171,13 +171,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onPublishTopicMessageResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -188,13 +188,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (string)AgoraJson.GetData<string>(jsonData, "topic"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onJoinTopicResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -207,13 +207,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "topic"),
                         (string)AgoraJson.GetData<string>(jsonData, "meta"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onLeaveTopicResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -226,13 +226,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "topic"),
                         (string)AgoraJson.GetData<string>(jsonData, "meta"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onSubscribeTopicResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -246,13 +246,13 @@ namespace Agora.Rtm.Internal
                         AgoraJson.JsonToStruct<UserList>(jsonData, "succeedUsers"),
                         AgoraJson.JsonToStruct<UserList>(jsonData, "failedUsers"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onUnsubscribeTopicResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -263,13 +263,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (string)AgoraJson.GetData<string>(jsonData, "topic"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onGetSubscribedUserListResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -281,13 +281,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "topic"),
                         AgoraJson.JsonToStruct<UserList>(jsonData, "users"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onConnectionStateChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -297,13 +297,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CONNECTION_STATE)AgoraJson.GetData<int>(jsonData, "state"),
                         (RTM_CONNECTION_CHANGE_REASON)AgoraJson.GetData<int>(jsonData, "reason"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onTokenPrivilegeWillExpire":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -311,13 +311,13 @@ namespace Agora.Rtm.Internal
                         return;
                     rtmEventHandler.OnTokenPrivilegeWillExpire(
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onSubscribeResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -327,13 +327,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onUnsubscribeResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -343,13 +343,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onPublishResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -358,13 +358,13 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnPublishResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onLoginResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -373,13 +373,13 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnLoginResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onLogoutResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -388,13 +388,13 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnLogoutResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onRenewTokenResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -405,13 +405,13 @@ namespace Agora.Rtm.Internal
                         (RTM_SERVICE_TYPE)AgoraJson.GetData<int>(jsonData, "serverType"),
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onSetChannelMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -422,13 +422,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onUpdateChannelMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -439,13 +439,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onRemoveChannelMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -456,14 +456,14 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onGetChannelMetadataResult":
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -475,13 +475,13 @@ namespace Agora.Rtm.Internal
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         AgoraJson.JsonToStruct<Metadata>(jsonData, "data"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onSetUserMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -491,13 +491,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onUpdateUserMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -507,13 +507,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onRemoveUserMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -523,13 +523,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onGetUserMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -540,13 +540,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         AgoraJson.JsonToStruct<Metadata>(jsonData, "data"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onSubscribeUserMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -556,13 +556,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onUnsubscribeUserMetadataResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -572,13 +572,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onSetLockResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -590,13 +590,13 @@ namespace Agora.Rtm.Internal
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         (string)AgoraJson.GetData<string>(jsonData, "lockName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onRemoveLockResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -608,13 +608,13 @@ namespace Agora.Rtm.Internal
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         (string)AgoraJson.GetData<string>(jsonData, "lockName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onReleaseLockResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -626,13 +626,13 @@ namespace Agora.Rtm.Internal
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         (string)AgoraJson.GetData<string>(jsonData, "lockName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onAcquireLockResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -645,13 +645,13 @@ namespace Agora.Rtm.Internal
                         (string)AgoraJson.GetData<string>(jsonData, "lockName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"),
                         (string)AgoraJson.GetData<string>(jsonData, "errorDetails"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onRevokeLockResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -663,13 +663,13 @@ namespace Agora.Rtm.Internal
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         (string)AgoraJson.GetData<string>(jsonData, "lockName"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onGetLocksResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -682,13 +682,13 @@ namespace Agora.Rtm.Internal
                         AgoraJson.JsonToStructArray<LockDetail>(jsonData, "lockDetailList"),
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onWhoNowResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -700,13 +700,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (string)AgoraJson.GetData<string>(jsonData, "nextPage"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onGetOnlineUsersResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -718,13 +718,13 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (string)AgoraJson.GetData<string>(jsonData, "nextPage"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onWhereNowResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -735,13 +735,13 @@ namespace Agora.Rtm.Internal
                         AgoraJson.JsonToStructArray<ChannelInfo>(jsonData, "channels"),
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onGetUserChannelsResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -752,13 +752,13 @@ namespace Agora.Rtm.Internal
                         AgoraJson.JsonToStructArray<ChannelInfo>(jsonData, "channels"),
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onPresenceSetStateResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -767,13 +767,13 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnPresenceSetStateResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onPresenceRemoveStateResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -782,13 +782,13 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnPresenceRemoveStateResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
                 case "RtmEventHandler_onPresenceGetStateResult":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
 #endif
@@ -798,7 +798,7 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         AgoraJson.JsonToStruct<UserState>(jsonData, "state"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;

@@ -38,7 +38,7 @@ namespace Agora.Rtc
         public const string AgoraRtcLibName = "AgoraRtcWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         public const string AgoraRtcLibName = "AgoraRtcWrapperUnity";
-#elif UNITY_IPHONE
+#elif UNITY_IPHONE || UNITY_VISIONOS
 		public const string AgoraRtcLibName = "__Internal";
 #else
         public const string AgoraRtcLibName = "AgoraRtcWrapper";
@@ -261,7 +261,7 @@ namespace Agora.Rtc
         {
             get
             {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 return Marshal.PtrToStringAnsi(result);
 #else
                 return StringFromNativeUtf8(result);

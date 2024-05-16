@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using AOT;
 #endif
 
@@ -28,17 +28,17 @@ namespace Agora.Rtc
             mediaPlayerSourceObserverDic.Clear();
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         internal static AgoraCallbackObject CallbackObject = null;
 #endif
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null)
                 return;
 #endif
@@ -60,14 +60,14 @@ namespace Agora.Rtc
                         {
                             Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
                         }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 CallbackObject._CallbackQueue.EnQueue(() =>
                                                       {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId))
                             return;
                         mediaPlayerSourceObserverDic[playerId].OnMetaData(byteData, byteLength);
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                       });
 #endif
                         break;
@@ -76,7 +76,7 @@ namespace Agora.Rtc
                 #region terra IMediaPlayerSourceObserver
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSOURCESTATECHANGED:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
@@ -84,7 +84,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(jsonData, "state"),
                             (MEDIA_PLAYER_REASON)AgoraJson.GetData<int>(jsonData, "reason")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -92,7 +92,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
@@ -100,7 +100,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             (long)AgoraJson.GetData<long>(jsonData, "positionMs"),
                             (long)AgoraJson.GetData<long>(jsonData, "timestampMs")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -108,7 +108,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYEREVENT:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
@@ -117,7 +117,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             (long)AgoraJson.GetData<long>(jsonData, "elapsedTime"),
                             (string)AgoraJson.GetData<string>(jsonData, "message")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -125,14 +125,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYBUFFERUPDATED:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnPlayBufferUpdated(
                             (long)AgoraJson.GetData<long>(jsonData, "playCachedBuffer")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -140,7 +140,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPRELOADEVENT:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
@@ -148,7 +148,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             (string)AgoraJson.GetData<string>(jsonData, "src"),
                             (PLAYER_PRELOAD_EVENT)AgoraJson.GetData<int>(jsonData, "event")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -156,14 +156,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONCOMPLETED:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnCompleted(
 
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -171,14 +171,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAGORACDNTOKENWILLEXPIRE:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnAgoraCDNTokenWillExpire(
 
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -186,7 +186,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSRCINFOCHANGED:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
@@ -194,7 +194,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             AgoraJson.JsonToStruct<SrcInfo>(jsonData, "from"),
                             AgoraJson.JsonToStruct<SrcInfo>(jsonData, "to")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -202,14 +202,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERINFOUPDATED:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnPlayerInfoUpdated(
                             AgoraJson.JsonToStruct<PlayerUpdatedInfo>(jsonData, "info")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -217,14 +217,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERCACHESTATS:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnPlayerCacheStats(
                             AgoraJson.JsonToStruct<CacheStatistics>(jsonData, "stats")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -232,14 +232,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERPLAYBACKSTATS:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnPlayerPlaybackStats(
                             AgoraJson.JsonToStruct<PlayerPlaybackStats>(jsonData, "stats")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
@@ -247,14 +247,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 
                 case AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAUDIOVOLUMEINDICATION:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnAudioVolumeIndication(
                             (int)AgoraJson.GetData<int>(jsonData, "volume")
                         );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
 #endif
                         break;
