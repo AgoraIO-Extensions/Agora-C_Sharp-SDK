@@ -38,6 +38,7 @@ namespace Agora.Rtm
 #endif
         }
 
+
         //public static void DisableBitcode(string projPath)
         //{
         //    PBXProject proj = new PBXProject();
@@ -102,6 +103,7 @@ namespace Agora.Rtm
         // done, write to the project file
         File.WriteAllText(projPath, proj.WriteToString());
     }
+#endif
 
 
 #if UNITY_VISIONOS || UNITY_IOS
@@ -119,6 +121,7 @@ namespace Agora.Rtm
         File.WriteAllText(pListPath, plist.WriteToString());
     }     
 #endif
+
 }
 }
 
