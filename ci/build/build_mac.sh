@@ -374,7 +374,7 @@ if [ "$RTC" == "false" ]; then
 fi
 
 # split vision os package as sub package
-if [ "$$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
+if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
     ZIP_FILE="Unknow"
     if [ "$RTC" == "true" ]; then
