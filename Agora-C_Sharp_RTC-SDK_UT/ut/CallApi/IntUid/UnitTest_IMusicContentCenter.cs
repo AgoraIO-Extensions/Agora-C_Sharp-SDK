@@ -132,9 +132,9 @@ namespace Agora.Rtc.Ut
         {
             string requestId = ParamsHelper.CreateParam<string>();
             long songCode = ParamsHelper.CreateParam<long>();
-            int LyricType = ParamsHelper.CreateParam<int>();
+            int lyricType = ParamsHelper.CreateParam<int>();
 
-            var nRet = MusicContentCenter.GetLyric(ref requestId, songCode, LyricType);
+            var nRet = MusicContentCenter.GetLyric(ref requestId, songCode, lyricType);
             Assert.AreEqual(0, nRet);
         }
 

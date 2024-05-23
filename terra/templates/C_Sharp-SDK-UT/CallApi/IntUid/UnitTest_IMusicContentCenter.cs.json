@@ -8,7 +8,8 @@
             "release",
             "initialize",
             "createMusicPlayer",
-            "registerEventHandler"
+            "registerEventHandler",
+            "destroyMusicPlayer"
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",

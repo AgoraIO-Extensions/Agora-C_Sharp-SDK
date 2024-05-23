@@ -1000,7 +1000,7 @@ export class SpeicalLogic {
         }
         let handlerName = handlerNameMap[clazzName] || "commonEventHandler";
         lines.push(`case ${switchKey}:\n{`);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
         lines.push(`if (rtcEngineEventHandler == null) return;`);
@@ -1019,7 +1019,7 @@ export class SpeicalLogic {
         lines.push(`${paramslines.join(",\n")}`);
 
         lines.push(`); `);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`}); `);
         lines.push(`#endif`);
         lines.push(`break;\n}`);
@@ -1138,7 +1138,7 @@ export class SpeicalLogic {
         }
         let handlerName = handlerNameMap[clazzName] || "commonEventHandler";
         lines.push(`case ${switchKey}:\n{`);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
         lines.push(`if (${handlerName} == null) return;`);
@@ -1156,7 +1156,7 @@ export class SpeicalLogic {
         lines.push(`${paramslines.join(",\n")}`);
 
         lines.push(`); `);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`}); `);
         lines.push(`#endif`);
         lines.push(`break;\n}`);
@@ -1169,7 +1169,7 @@ export class SpeicalLogic {
         let lines = [];
         let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-v", m.name, repeart)}`;
         lines.push(`case ${switchKey}:\n{`);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
         lines.push(`if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;`);
@@ -1187,7 +1187,7 @@ export class SpeicalLogic {
         lines.push(`${paramslines.join(",\n")}`);
 
         lines.push(`); `);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`});`);
         lines.push(`#endif`);
         lines.push(`break;\n}`);
@@ -1201,7 +1201,7 @@ export class SpeicalLogic {
 
         let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-v", m.name, repeart)}`;
         lines.push(`case ${switchKey}:\n{`);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
         lines.push(`if (EventHandler == null) return;`);
@@ -1219,7 +1219,7 @@ export class SpeicalLogic {
         lines.push(`${paramslines.join(",\n")}`);
 
         lines.push(`); `);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(` }); `);
         lines.push(`#endif`);
         lines.push(`break;\n}`);
@@ -1234,7 +1234,7 @@ export class SpeicalLogic {
         let lines = [];
         let switchKey = `AgoraEventType.EVENT_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-v", m.name, repeart)}`;
         lines.push(`case ${switchKey}:\n{`);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
         lines.push(`if (EventHandler == null) return;`);
@@ -1252,7 +1252,7 @@ export class SpeicalLogic {
         lines.push(`${paramslines.join(",\n")}`);
 
         lines.push(`); `);
-        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS`);
         lines.push(` }); `);
         lines.push(`#endif`);
         lines.push(`break;\n}`);

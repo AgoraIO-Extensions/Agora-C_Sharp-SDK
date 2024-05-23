@@ -538,7 +538,6 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIARECORDER_STOPRECORDING = "MediaRecorder_stopRecording";
         #endregion terra IMediaRecorder
 
-        internal const string FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER = "MusicContentCenter_destroyMusicPlayer";
         #region terra IMusicContentCenter
         internal const string FUNC_MUSICCONTENTCENTER_INITIALIZE = "MusicContentCenter_initialize_df70304";
         internal const string FUNC_MUSICCONTENTCENTER_RENEWTOKEN = "MusicContentCenter_renewToken_3a2037f";
@@ -546,6 +545,7 @@ namespace Agora.Rtc
         internal const string FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER = "MusicContentCenter_registerEventHandler_ae49451";
         internal const string FUNC_MUSICCONTENTCENTER_UNREGISTEREVENTHANDLER = "MusicContentCenter_unregisterEventHandler";
         internal const string FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER = "MusicContentCenter_createMusicPlayer";
+        internal const string FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER = "MusicContentCenter_destroyMusicPlayer_876d086";
         internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS = "MusicContentCenter_getMusicCharts_66d4ecd";
         internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCOLLECTIONBYMUSICCHARTID = "MusicContentCenter_getMusicCollectionByMusicChartId_8cd0b4d";
         internal const string FUNC_MUSICCONTENTCENTER_SEARCHMUSIC = "MusicContentCenter_searchMusic_3f8cf09";
@@ -561,6 +561,7 @@ namespace Agora.Rtc
 
         #region terra IMusicPlayer
         internal const string FUNC_MUSICPLAYER_OPEN = "MusicPlayer_open_303b92e";
+        internal const string FUNC_MUSICPLAYER_SETPLAYMODE = "MusicPlayer_setPlayMode_748bee0";
         #endregion terra IMusicPlayer
 
         #region terra IH265Transcoder

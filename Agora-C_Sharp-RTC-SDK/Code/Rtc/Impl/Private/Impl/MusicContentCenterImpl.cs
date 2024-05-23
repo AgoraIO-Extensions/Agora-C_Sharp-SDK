@@ -333,11 +333,11 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetLyric(ref string requestId, long songCode, int LyricType = 0)
+        public int GetLyric(ref string requestId, long songCode, int lyricType = 0)
         {
             _param.Clear();
             _param.Add("songCode", songCode);
-            _param.Add("LyricType", LyricType);
+            _param.Add("lyricType", lyricType);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETLYRIC,

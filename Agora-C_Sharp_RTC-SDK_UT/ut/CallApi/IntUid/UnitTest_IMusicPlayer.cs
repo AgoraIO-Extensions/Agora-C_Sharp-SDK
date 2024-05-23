@@ -27,7 +27,8 @@ namespace Agora.Rtc.Ut
         [TearDown]
         public void TearDown()
         {
-            MusicContentCenter.DestroyMusicPlayer(MusicPlayer);
+            var ret = MusicContentCenter.DestroyMusicPlayer(MusicPlayer);
+            Assert.AreEqual(0, ret);
             Engine.Dispose();
         }
 
@@ -472,6 +473,15 @@ namespace Agora.Rtc.Ut
             long startPos = ParamsHelper.CreateParam<long>();
 
             var nRet = MusicPlayer.Open(songCode, startPos);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetPlayMode()
+        {
+            MusicPlayMode mode = ParamsHelper.CreateParam<MusicPlayMode>();
+
+            var nRet = MusicPlayer.SetPlayMode(mode);
             Assert.AreEqual(0, nRet);
         }
         #endregion terra IMusicPlayer

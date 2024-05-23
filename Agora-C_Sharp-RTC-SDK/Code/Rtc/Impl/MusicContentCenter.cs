@@ -30,15 +30,6 @@ namespace Agora.Rtc
             instance = null;
         }
 
-        public override int DestroyMusicPlayer(IMusicPlayer player)
-        {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _musicContentCenterImpl.DestroyMusicPlayer(player);
-        }
-
         #region terra IMusicContentCenter
         public override int Initialize(MusicContentCenterConfiguration configuration)
         {
@@ -83,6 +74,15 @@ namespace Agora.Rtc
                 return null;
             }
             return _musicContentCenterImpl.CreateMusicPlayer();
+        }
+
+        public override int DestroyMusicPlayer(IMusicPlayer music_player)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.DestroyMusicPlayer(music_player);
         }
 
         public override int GetMusicCharts(ref string requestId)
@@ -158,13 +158,13 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.IsPreloaded(songCode);
         }
 
-        public override int GetLyric(ref string requestId, long songCode, int LyricType = 0)
+        public override int GetLyric(ref string requestId, long songCode, int lyricType = 0)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetLyric(ref requestId, songCode, LyricType);
+            return _musicContentCenterImpl.GetLyric(ref requestId, songCode, lyricType);
         }
 
         public override int GetSongSimpleInfo(ref string requestId, long songCode)

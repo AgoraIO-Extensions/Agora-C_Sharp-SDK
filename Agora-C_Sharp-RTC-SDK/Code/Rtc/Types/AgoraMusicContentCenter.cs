@@ -34,6 +34,27 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
+    public enum MusicPlayMode
+    {
+        ///
+        /// @ignore
+        ///
+        kMusicPlayModeOriginal = 0,
+
+        ///
+        /// @ignore
+        ///
+        kMusicPlayModeAccompany = 1,
+
+        ///
+        /// @ignore
+        ///
+        kMusicPlayModeLeadSing = 2,
+    }
+
+    ///
+    /// @ignore
+    ///
     public enum PreloadState
     {
         ///
