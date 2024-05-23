@@ -474,6 +474,15 @@ namespace Agora.Rtc.Ut
             var nRet = MusicPlayer.Open(songCode, startPos);
             Assert.AreEqual(0, nRet);
         }
+
+        [Test]
+        public void Test_SetPlayMode()
+        {
+            MusicPlayMode mode = ParamsHelper.CreateParam<MusicPlayMode>();
+
+            var nRet = MusicPlayer.SetPlayMode(mode);
+            Assert.AreEqual(0, nRet);
+        }
         #endregion terra IMusicPlayer
     }
 }

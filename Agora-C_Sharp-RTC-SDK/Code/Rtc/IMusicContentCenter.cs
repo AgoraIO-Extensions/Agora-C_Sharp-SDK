@@ -7,12 +7,6 @@ namespace Agora.Rtc
     ///
     public abstract class IMusicContentCenter
     {
-
-        ///
-        /// @ignore
-        ///
-        public abstract int DestroyMusicPlayer(IMusicPlayer player);
-
         #region terra IMusicContentCenter
         ///
         /// @ignore
@@ -38,6 +32,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract IMusicPlayer CreateMusicPlayer();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int DestroyMusicPlayer(IMusicPlayer music_player);
 
         ///
         /// @ignore
@@ -83,7 +82,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int GetLyric(ref string requestId, long songCode, int LyricType = 0);
+        public abstract int GetLyric(ref string requestId, long songCode, int lyricType = 0);
 
         ///
         /// @ignore

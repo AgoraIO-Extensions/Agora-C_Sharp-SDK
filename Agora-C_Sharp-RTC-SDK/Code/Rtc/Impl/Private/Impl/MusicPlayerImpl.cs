@@ -331,6 +331,22 @@ namespace Agora.Rtc
 
             return result;
         }
+
+        public int SetPlayMode(int playerId, MusicPlayMode mode)
+        {
+            _param.Clear();
+            _param.Add("playerId", playerId);
+            _param.Add("mode", mode);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICPLAYER_SETPLAYMODE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
         #endregion terra IMusicPlayer
     }
 }

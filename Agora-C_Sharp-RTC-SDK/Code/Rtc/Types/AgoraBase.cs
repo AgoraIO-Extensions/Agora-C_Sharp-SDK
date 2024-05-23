@@ -4483,11 +4483,6 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public VIDEO_STREAM_TYPE streamType;
-
-        ///
-        /// @ignore
-        ///
         public VIDEO_CODEC_TYPE codecType;
 
         ///
@@ -4511,20 +4506,18 @@ namespace Agora.Rtc
             this.ownerUid = 0;
             this.trackId = 0;
             this.channelId = "";
-            this.streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
             this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H265;
             this.encodedFrameOnly = false;
             this.sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             this.observationPosition = (uint)VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
         }
 
-        public VideoTrackInfo(bool isLocal, uint ownerUid, uint trackId, string channelId, VIDEO_STREAM_TYPE streamType, VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly, VIDEO_SOURCE_TYPE sourceType, uint observationPosition)
+        public VideoTrackInfo(bool isLocal, uint ownerUid, uint trackId, string channelId, VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly, VIDEO_SOURCE_TYPE sourceType, uint observationPosition)
         {
             this.isLocal = isLocal;
             this.ownerUid = ownerUid;
             this.trackId = trackId;
             this.channelId = channelId;
-            this.streamType = streamType;
             this.codecType = codecType;
             this.encodedFrameOnly = encodedFrameOnly;
             this.sourceType = sourceType;

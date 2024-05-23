@@ -518,6 +518,15 @@ namespace Agora.Rtc
             }
             return this._musicPlayerImpl.Open(playerId, songCode, startPos);
         }
+
+        public override int SetPlayMode(MusicPlayMode mode)
+        {
+            if (_musicPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return this._musicPlayerImpl.SetPlayMode(playerId, mode);
+        }
         #endregion terra IMusicPlayer
     }
 }

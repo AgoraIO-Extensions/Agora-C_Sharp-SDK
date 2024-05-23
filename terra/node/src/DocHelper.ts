@@ -524,7 +524,7 @@ function replaceKeyWord(fullPath: string, from: string, to: string) {
 }
 
 
-let unityDefine = "#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID";
+let unityDefine = "#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS";
 
 export function AndDocAndFormat() {
     DeleteAllOldDoc();
