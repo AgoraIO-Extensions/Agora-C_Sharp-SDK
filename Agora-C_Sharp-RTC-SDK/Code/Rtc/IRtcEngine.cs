@@ -175,6 +175,10 @@ namespace Agora.Rtc
         public abstract int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
 #endif
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+        public abstract int SetLocalVideoDataSourcePosition(VIDEO_MODULE_POSITION position);
+#endif
+
         #region terra IRtcEngine
         ///
         /// <summary>
