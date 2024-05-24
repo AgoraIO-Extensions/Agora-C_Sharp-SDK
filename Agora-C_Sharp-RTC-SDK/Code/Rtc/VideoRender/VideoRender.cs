@@ -40,6 +40,7 @@ namespace Agora.Rtc
 
     internal class VideoStreamManager : IVideoStreamManager
     {
+        public static VIDEO_MODULE_POSITION position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
         private RtcEngineImpl _agoraRtcEngine;
         private IrisRtcVideoFrameConfig _videoFrameConfig;
 
@@ -51,7 +52,7 @@ namespace Agora.Rtc
             _agoraRtcEngine.OnRtcEngineImpleWillDispose += RtcEngineImplWillDispose;
             _videoFrameConfig = new IrisRtcVideoFrameConfig();
             _videoFrameConfig.video_view_setup_mode = 0;
-            _videoFrameConfig.observed_frame_position = (uint)(VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER | VIDEO_MODULE_POSITION.POSITION_PRE_RENDERER);
+            _videoFrameConfig.observed_frame_position = (uint)(position | VIDEO_MODULE_POSITION.POSITION_PRE_RENDERER);
         }
 
         ~VideoStreamManager()

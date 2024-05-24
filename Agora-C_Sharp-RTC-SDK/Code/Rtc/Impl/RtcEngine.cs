@@ -271,6 +271,20 @@ namespace Agora.Rtc
         }
 #endif
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+        public override int SetLocalVideoDataSourcePosition(VIDEO_MODULE_POSITION position)
+        {
+            if (position != VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER && position != VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER)
+            {
+                return -(int)ERROR_CODE_TYPE.ERR_INVALID_ARGUMENT;
+            }
+
+            VideoStreamManager.position = position;
+            return 0;
+        }
+#endif
+
+
         #region terra IRtcEngine
         public override int Initialize(RtcEngineContext context)
         {
