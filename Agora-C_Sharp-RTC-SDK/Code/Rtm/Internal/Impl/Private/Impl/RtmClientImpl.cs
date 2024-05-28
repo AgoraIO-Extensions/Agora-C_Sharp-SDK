@@ -185,12 +185,12 @@ namespace Agora.Rtm.Internal
             var json = AgoraJson.ToJson(_param);
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
                                                              json, (UInt32)json.Length,
                                                              Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                              ref _apiParam);
-
+            arrayPtrHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -283,15 +283,19 @@ namespace Agora.Rtm.Internal
             _param.Add("length", length);
             _param.Add("option", option);
 
+
+            GCHandle messageHandle = GCHandle.Alloc(message, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH,
                                                              json, (UInt32)json.Length,
                                                              Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                              ref _apiParam, (uint)length);
-
+            messageHandle.Free();
+            arrayPtrHandle.Free();
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
                 requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
