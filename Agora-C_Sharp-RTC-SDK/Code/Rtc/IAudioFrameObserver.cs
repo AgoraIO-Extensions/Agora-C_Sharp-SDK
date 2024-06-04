@@ -89,12 +89,12 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Retrieves the audio frame of a specified user before mixing.
+        /// Retrieves the audio frame before mixing of subscribed remote users.
         /// </summary>
         ///
         /// <param name="channel_id"> The channel ID. </param>
         ///
-        /// <param name="uid"> The user ID of the specified user. </param>
+        /// <param name="uid"> The ID of subscribed remote users. </param>
         ///
         /// <param name="audio_Frame"> The raw audio data. See AudioFrame. </param>
         ///

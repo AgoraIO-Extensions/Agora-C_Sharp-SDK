@@ -2403,7 +2403,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The bit mask that indicates the device codec capability.
+    /// The bit mask of the codec type.
     /// </summary>
     ///
     public enum CODEC_CAP_MASK
@@ -2480,7 +2480,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The codec capability of the device.
+    /// The codec capability of the SDK.
     /// </summary>
     ///
     public class CodecCapInfo
@@ -2494,14 +2494,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The bit mask of the codec type. See CODEC_CAP_MASK.
+        /// Bit mask of the codec types in SDK. See CODEC_CAP_MASK.
         /// </summary>
         ///
         public int codecCapMask;
 
         ///
         /// <summary>
-        /// The level of the codec capability. See CodecCapLevels.
+        /// Codec capability of the SDK. See CodecCapLevels.
         /// </summary>
         ///
         public CodecCapLevels codecLevels;
@@ -2584,7 +2584,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The encoding bitrate (Kbps) of the video. See BITRATE. This parameter does not need to be set; keeping the default value STANDARD_BITRATE is sufficient. The SDK automatically matches the most suitable bitrate based on the video resolution and frame rate you have set. For the correspondence between video resolution, frame rate, and bitrate, please refer to.
+        /// The encoding bitrate (Kbps) of the video. See BITRATE. This parameter does not need to be set; keeping the default value STANDARD_BITRATE is sufficient. The SDK automatically matches the most suitable bitrate based on the video resolution and frame rate you have set. For the correspondence between video resolution and frame rate, see.
         /// </summary>
         ///
         public int bitrate;
@@ -5314,7 +5314,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Bitrate of the output video stream for Media Push in Kbps. The default value is 400 Kbps. Set this member according to the table. If you set a bitrate beyond the proper range, the SDK automatically adapts it to a value within the range.
+        /// The encoding bitrate (Kbps) of the video. See BITRATE. This parameter does not need to be set; keeping the default value STANDARD_BITRATE is sufficient. The SDK automatically matches the most suitable bitrate based on the video resolution and frame rate you have set. For the correspondence between video resolution and frame rate, see.
         /// </summary>
         ///
         public int videoBitrate;
@@ -5933,14 +5933,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 3: The connection between the SDK and the Agora edge server is banned by the Agora edge server. This error occurs when the user is kicked out of the channel by the server.
+        /// 3: The connection between the SDK and the Agora edge server is banned by the Agora edge server. For example, when a user is kicked out of the channel, this status will be returned.
         /// </summary>
         ///
         CONNECTION_CHANGED_BANNED_BY_SERVER = 3,
 
         ///
         /// <summary>
-        /// 4: The SDK fails to join the channel. When the SDK fails to join the channel for more than 20 minutes, this error occurs and the SDK stops reconnecting to the channel.
+        /// 4: The SDK fails to join the channel. When the SDK fails to join the channel for more than 20 minutes, this code will be returned and the SDK stops reconnecting to the channel. You need to prompt the user to try to switch to another network and rejoin the channel.
         /// </summary>
         ///
         CONNECTION_CHANGED_JOIN_FAILED = 4,
@@ -5954,30 +5954,39 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: The connection failed because the App ID is not valid. Please rejoin the channel with a valid App ID.
+        /// 6: The App ID is invalid. You need to rejoin the channel with a valid APP ID and make sure the App ID you are using is consistent with the one generated in the Agora Console.
         /// </summary>
         ///
         CONNECTION_CHANGED_INVALID_APP_ID = 6,
 
         ///
         /// <summary>
-        /// 7: The connection failed since channel name is not valid. Rejoin the channel with a valid channel name.
+        /// 7: Invalid channel name. Rejoin the channel with a valid channel name. A valid channel name is a string of up to 64 bytes in length. Supported characters (89 characters in total):
+        ///  All lowercase English letters: a to z.
+        ///  All uppercase English letters: A to Z.
+        ///  All numeric characters: 0 to 9.
+        ///  Space
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","
         /// </summary>
         ///
         CONNECTION_CHANGED_INVALID_CHANNEL_NAME = 7,
 
         ///
         /// <summary>
-        /// 8: The connection failed because the token is not valid. Possible reasons are as follows:
-        ///  The App Certificate for the project is enabled in Agora Console, but you do not use a token when joining the channel. If you enable the App Certificate, you must use a token to join the channel.
+        /// 8: Invalid token. Possible reasons are as follows:
+        ///  The App Certificate for the project is enabled in Agora Console, but you do not pass in a token when joining a channel.
         ///  The uid specified when calling JoinChannel [2/2] to join the channel is inconsistent with the uid passed in when generating the token.
+        ///  The generated token and the token used to join the channel are not consistent. Ensure the following:
+        ///  When your project enables App Certificate, you need to pass in a token to join a channel.
+        ///  The user ID specified when generating the token is consistent with the user ID used when joining the channel.
+        ///  The generated token is the same as the token passed in to join the channel.
         /// </summary>
         ///
         CONNECTION_CHANGED_INVALID_TOKEN = 8,
 
         ///
         /// <summary>
-        /// 9: The connection failed since token is expired.
+        /// (9): The token currently being used has expired. You need to generate a new token on your server and rejoin the channel with the new token.
         /// </summary>
         ///
         CONNECTION_CHANGED_TOKEN_EXPIRED = 9,
@@ -6007,7 +6016,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 13: The IP address of the client has changed, possibly because the network type, IP address, or port has been changed.
+        /// (13): Client IP address changed. If you receive this code multiple times, You need to prompt the user to switch networks and try joining the channel again.
         /// </summary>
         ///
         CONNECTION_CHANGED_CLIENT_IP_ADDRESS_CHANGED = 13,
@@ -7402,14 +7411,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// On Windows and macOS, this represents the video encoding frame rate (fps) of the shared screen stream. The frame rate (fps) of the shared region. The default value is 5. Agora does not recommend setting this to a value greater than 15.
+        /// On Windows and macOS, this represents the video encoding frame rate (fps) of the screen sharing stream. The frame rate (fps) of the shared region. The default value is 5. Agora does not recommend setting this to a value greater than 15.
         /// </summary>
         ///
         public int frameRate;
 
         ///
         /// <summary>
-        /// The bitrate of the shared region. On Windows and macOS, this represents the video encoding bitrate of the shared screen stream. The bitrate (Kbps) of the shared region. The default value is 0 (the SDK works out a bitrate according to the dimensions of the current screen).
+        /// The bitrate of the shared region. On Windows and macOS, this represents the video encoding bitrate of the screen sharing stream. The bitrate (Kbps) of the shared region. The default value is 0 (the SDK works out a bitrate according to the dimensions of the current screen).
         /// </summary>
         ///
         public int bitrate;
@@ -7423,7 +7432,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to bring the window to the front when calling the StartScreenCaptureByWindowId method to share it: true : Bring the window to the front. false : (Default) Do not bring the window to the front.
+        /// Whether to bring the window to the front when calling the StartScreenCaptureByWindowId method to share it: true : Bring the window to the front. false : (Default) Do not bring the window to the front. Due to macOS system limitations, when setting this member to bring the window to the front, if the current app has multiple windows, only the main window will be brought to the front.
         /// </summary>
         ///
         public bool windowFocus;
@@ -8749,29 +8758,29 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The time interval from calling the StartMediaRenderingTracing method to SDK triggering the OnVideoRenderingTracingResult callback. The unit is milliseconds. Agora recommends you call StartMediaRenderingTracing before joining a channel.
+        /// The time interval (ms) from StartMediaRenderingTracing to SDK triggering the OnVideoRenderingTracingResult callback. Agora recommends you call StartMediaRenderingTracing before joining a channel.
         /// </summary>
         ///
         public int elapsedTime;
 
         ///
         /// <summary>
-        /// The time interval from calling StartMediaRenderingTracing to calling JoinChannel [2/2]. The unit is milliseconds. A negative number means to call JoinChannel [2/2] after calling StartMediaRenderingTracing.
+        /// The time interval (ms) from StartMediaRenderingTracing to JoinChannel [1/2] or JoinChannel [2/2]. A negative number indicates that StartMediaRenderingTracing is called after calling JoinChannel [2/2].
         /// </summary>
         ///
         public int start2JoinChannel;
 
         ///
         /// <summary>
-        /// Time interval from calling JoinChannel [2/2] to successfully joining the channel. The unit is milliseconds.
+        /// The time interval (ms) from JoinChannel [1/2] or JoinChannel [2/2] to successfully joining the channel.
         /// </summary>
         ///
         public int join2JoinSuccess;
 
         ///
         /// <summary>
-        /// If the local user calls StartMediaRenderingTracing before successfully joining the channel, this value is the time interval from the local user successfully joining the channel to the remote user joining the channel. The unit is milliseconds.
-        ///  If the local user calls StartMediaRenderingTracing after successfully joining the channel, the value is the time interval from calling StartMediaRenderingTracing to when the remote user joins the channel. The unit is milliseconds.
+        /// If the local user calls StartMediaRenderingTracing before successfully joining the channel, this value is the time interval (ms) from the local user successfully joining the channel to the remote user joining the channel.
+        ///  If the local user calls StartMediaRenderingTracing after successfully joining the channel, the value is the time interval (ms) from StartMediaRenderingTracing to when the remote user joins the channel.
         ///  If the local user calls StartMediaRenderingTracing after the remote user joins the channel, the value is 0 and meaningless.
         ///  In order to reduce the time of rendering the first frame for remote users, Agora recommends that the local user joins the channel when the remote user is in the channel to reduce this value.
         /// </summary>
@@ -8780,8 +8789,8 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from when the remote user joins the channel to when the local user sets the remote view. The unit is milliseconds.
-        ///  If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to setting the remote view. The unit is milliseconds.
+        /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval (ms) from when the remote user joins the channel to when the local user sets the remote view.
+        ///  If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval (ms) from calling StartMediaRenderingTracing to setting the remote view.
         ///  If the local user calls StartMediaRenderingTracing after setting the remote view, the value is 0 and has no effect.
         ///  In order to reduce the time of rendering the first frame for remote users, Agora recommends that the local user sets the remote view before the remote user joins the channel, or sets the remote view immediately after the remote user joins the channel to reduce this value.
         /// </summary>
@@ -8790,8 +8799,8 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from the remote user joining the channel to subscribing to the remote video stream. The unit is milliseconds.
-        ///  If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to subscribing to the remote video stream. The unit is milliseconds.
+        /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval (ms) from the remote user joining the channel to subscribing to the remote video stream.
+        ///  If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval (ms) from StartMediaRenderingTracing to subscribing to the remote video stream.
         ///  If the local user calls StartMediaRenderingTracing after subscribing to the remote video stream, the value is 0 and has no effect.
         ///  In order to reduce the time of rendering the first frame for remote users, Agora recommends that after the remote user joins the channel, the local user immediately subscribes to the remote video stream to reduce this value.
         /// </summary>
@@ -8800,8 +8809,8 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from when the remote user joins the channel to when the local user receives the remote video stream. The unit is milliseconds.
-        ///  If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to receiving the remote video stream. The unit is milliseconds.
+        /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval (ms) from when the remote user joins the channel to when the local user receives the remote video stream.
+        ///  If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval (ms) from StartMediaRenderingTracing to receiving the remote video stream.
         ///  If the local user calls StartMediaRenderingTracing after receiving the remote video stream, the value is 0 and has no effect.
         ///  In order to reduce the time of rendering the first frame for remote users, Agora recommends that the remote user publishes video streams immediately after joining the channel, and the local user immediately subscribes to remote video streams to reduce this value.
         /// </summary>
