@@ -186,7 +186,7 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the first local video frame. </param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. If you call StartPreview [2/2] before calling JoinChannel [2/2], then this parameter is the time elapsed from calling the StartPreview [2/2] method until the SDK triggers this callback. </param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [1/2] or JoinChannel [2/2] to join the channel to when the SDK triggers this callback. If StartPreview [1/2] / StartPreview [2/2] is called before joining the channel, this parameter indicates the time elapsed from calling StartPreview [1/2] or StartPreview [2/2] to when this event occurred. </param>
         ///
         public virtual void OnFirstLocalVideoFrame(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed)
         {
@@ -735,9 +735,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the statistics of the current call.
-        /// 
-        /// The SDK triggers this callback once every two seconds after the user joins the channel.
+        /// Reports the statistics about the current call.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -779,14 +777,14 @@ namespace Agora.Rtc
         /// Occurs when the first video frame is published.
         /// 
         /// The SDK triggers this callback under one of the following circumstances:
-        /// The local client enables the video module and calls JoinChannel [2/2] successfully.
+        /// The local client enables the video module and calls JoinChannel [1/2] or JoinChannel [2/2] to join the channel successfully.
         /// The local client calls MuteLocalVideoStream (true) and MuteLocalVideoStream (false) in sequence.
         /// The local client calls DisableVideo and EnableVideo in sequence.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. </param>
+        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [1/2] or JoinChannel [2/2] until this callback is triggered. </param>
         ///
         public virtual void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed)
         {
@@ -812,7 +810,7 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the video stream. </param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. </param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [1/2] or JoinChannel [2/2] until the SDK triggers this callback. </param>
         ///
         public virtual void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
         {
@@ -880,7 +878,7 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the video stream. </param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. </param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [1/2] or JoinChannel [2/2] until the SDK triggers this callback. </param>
         ///
         public virtual void OnFirstRemoteVideoFrame(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
         {
@@ -1152,9 +1150,11 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the token expires.
         /// 
-        /// When the token expires during a call, the SDK triggers this callback to remind the app to renew the token. When receiving this callback, you need to generate a new token on your token server and you can renew your token through one of the following ways:
+        /// The SDK triggers this callback if the token expires. When receiving this callback, you need to generate a new token on your token server and you can renew your token through one of the following ways:
+        /// In scenarios involving one channel:
         /// Call RenewToken to pass in the new token.
         /// Call LeaveChannel [2/2] to leave the current channel and then pass in the new token when you call JoinChannel [2/2] to join a channel.
+        /// In scenarios involving mutiple channels: Call UpdateChannelMediaOptionsEx to pass in the new token.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -1174,12 +1174,16 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the token expires in 30 seconds.
         /// 
-        /// When the token is about to expire in 30 seconds, the SDK triggers this callback to remind the app to renew the token. Upon receiving this callback, you need to generate a new token on your server, and call RenewToken to pass the new token to the SDK. In scenarios involving multiple channels, you need to call UpdateChannelMediaOptionsEx to pass the new token to the SDK.
+        /// When receiving this callback, you need to generate a new token on your token server and you can renew your token through one of the following ways:
+        /// In scenarios involving one channel:
+        /// Call RenewToken to pass in the new token.
+        /// Call LeaveChannel [2/2] to leave the current channel and then pass in the new token when you call JoinChannel [2/2] to join a channel.
+        /// In scenarios involving mutiple channels: Call UpdateChannelMediaOptionsEx to pass in the new token.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
-        /// <param name="token"> The token that expires in 30 seconds. </param>
+        /// <param name="token"> The token that is about to expire. </param>
         ///
         public virtual void OnTokenPrivilegeWillExpire(RtcConnection connection, string token)
         {

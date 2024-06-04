@@ -284,7 +284,6 @@ namespace Agora.Rtc
         }
 #endif
 
-
         #region terra IRtcEngine
         public override int Initialize(RtcEngineContext context)
         {

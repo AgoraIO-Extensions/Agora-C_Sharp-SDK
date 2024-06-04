@@ -5,7 +5,7 @@ namespace Agora.Rtc
     /// <summary>
     /// Facial information observer.
     /// 
-    /// You can call RegisterFaceInfoObserver to register or unregister the IFaceInfoObserver object.
+    /// You can call RegisterFaceInfoObserver to register one IFaceInfoObserver observer.
     /// </summary>
     ///
     public abstract class IFaceInfoObserver

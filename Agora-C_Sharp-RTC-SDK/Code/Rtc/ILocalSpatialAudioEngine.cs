@@ -36,7 +36,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Updates the spatial position of the specified remote user.
         /// 
-        /// After successfully calling this method, the SDK calculates the spatial audio parameters based on the relative position of the local and remote user. Call this method after JoinChannel [2/2].
+        /// After successfully calling this method, the SDK calculates the spatial audio parameters based on the relative position of the local and remote user. Call this method after the JoinChannel [1/2] or JoinChannel [2/2] method.
         /// </summary>
         ///
         /// <param name="uid"> The user ID. This parameter must be the same as the user ID passed in when the user joined the channel. </param>
@@ -59,7 +59,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Removes the spatial position of the specified remote user.
         /// 
-        /// After successfully calling this method, the local user no longer hears the specified remote user. After leaving the channel, to avoid wasting resources, you can also call this method to delete the spatial position of the specified remote user.
+        /// After successfully calling this method, the local user no longer hears the specified remote user. After leaving the channel, to avoid wasting computing resources, call this method to delete the spatial position information of the specified remote user. Otherwise, the user's spatial position information will be saved continuously. When the number of remote users exceeds the number of audio streams that can be received as set in SetMaxAudioRecvCount, the system automatically unsubscribes from the audio stream of the user who is furthest away based on relative distance.
         /// </summary>
         ///
         /// <param name="uid"> The user ID. This parameter must be the same as the user ID passed in when the user joined the channel. </param>
@@ -184,7 +184,7 @@ namespace Agora.Rtc
         /// Stops or resumes publishing the local audio stream.
         /// 
         /// This method does not affect any ongoing audio recording, because it does not disable the audio capture device.
-        /// Call this method after JoinChannel [2/2].
+        /// Call this method after the JoinChannel [1/2] or JoinChannel [2/2] method.
         /// When using the spatial audio effect, if you need to set whether to stop subscribing to the audio stream of a specified user, Agora recommends calling this method instead of the MuteLocalAudioStream method in IRtcEngine.
         /// A successful call of this method triggers the OnUserMuteAudio and OnRemoteAudioStateChanged callbacks on the remote client.
         /// </summary>
@@ -203,7 +203,7 @@ namespace Agora.Rtc
         /// Stops or resumes subscribing to the audio streams of all remote users.
         /// 
         /// After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all remote users, including all subsequent users.
-        /// Call this method after JoinChannel [2/2].
+        /// Call this method after the JoinChannel [1/2] or JoinChannel [2/2] method.
         /// When using the spatial audio effect, if you need to set whether to stop subscribing to the audio streams of all remote users, Agora recommends calling this method instead of the MuteAllRemoteAudioStreams method in IRtcEngine.
         /// After calling this method, you need to call UpdateSelfPosition and UpdateRemotePosition to update the spatial location of the local user and the remote user; otherwise, the settings in this method do not take effect.
         /// </summary>
@@ -221,7 +221,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Stops or resumes subscribing to the audio stream of a specified user.
         /// 
-        /// Call this method after JoinChannel [2/2].
+        /// Call this method after the JoinChannel [1/2] or JoinChannel [2/2] method.
         /// When using the spatial audio effect, if you need to set whether to stop subscribing to the audio stream of a specified user, Agora recommends calling this method instead of the MuteRemoteAudioStream method in IRtcEngine.
         /// </summary>
         ///

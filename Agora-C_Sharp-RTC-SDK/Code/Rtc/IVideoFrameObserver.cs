@@ -17,13 +17,7 @@ namespace Agora.Rtc
         ///
         /// <param name="sourceType"> Video source types, including cameras, screens, or media player. See VIDEO_SOURCE_TYPE. </param>
         ///
-        /// <param name="videoFrame">
-        /// The video frame. See VideoFrame. The default value of the video frame data format obtained through this callback is as follows:
-        /// Android: I420 or RGB (GLES20.GL_TEXTURE_2D)
-        /// iOS: I420 or CVPixelBufferRef
-        /// macOS: I420 or CVPixelBufferRef
-        /// Windows: YUV420
-        /// </param>
+        /// <param name="videoFrame"> The video frame. See VideoFrame. </param>
         ///
         /// <returns>
         /// true : Sets the SDK to receive the video frame. false : Sets the SDK to discard the video frame.
@@ -43,13 +37,7 @@ namespace Agora.Rtc
         /// The video data that this callback gets has been preprocessed, with its content cropped and rotated, and the image enhanced.
         /// </summary>
         ///
-        /// <param name="videoFrame">
-        /// The video frame. See VideoFrame. The default value of the video frame data format obtained through this callback is as follows:
-        /// Android: I420 or RGB (GLES20.GL_TEXTURE_2D)
-        /// iOS: I420 or CVPixelBufferRef
-        /// macOS: I420 or CVPixelBufferRef
-        /// Windows: YUV420
-        /// </param>
+        /// <param name="videoFrame"> The video frame. See VideoFrame. </param>
         ///
         /// <param name="sourceType"> The type of the video source. See VIDEO_SOURCE_TYPE. </param>
         ///
@@ -77,13 +65,7 @@ namespace Agora.Rtc
         /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data sent from the remote end before rendering, and then process it according to the particular scenarios. If you use Unity for development, Agora only supports sending video data in YUV format to SDK. Ensure that you set mode as INTPTR when you call the RegisterVideoFrameObserver method to register a video frame observer.
         /// </summary>
         ///
-        /// <param name="videoFrame">
-        /// The video frame. See VideoFrame. The default value of the video frame data format obtained through this callback is as follows:
-        /// Android: I420 or RGB (GLES20.GL_TEXTURE_2D)
-        /// iOS: I420 or CVPixelBufferRef
-        /// macOS: I420 or CVPixelBufferRef
-        /// Windows: YUV420
-        /// </param>
+        /// <param name="videoFrame"> The video frame. See VideoFrame. </param>
         ///
         /// <param name="remoteUid"> The user ID of the remote user who sends the current video frame. </param>
         ///
