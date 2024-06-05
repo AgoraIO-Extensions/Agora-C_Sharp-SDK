@@ -314,8 +314,6 @@ namespace Agora.Rtc
 
         private int SetMediaPlayerOpenWithMediaSource(int playerId, MediaSource source, bool hadProvider)
         {
-
-
             IntPtr[] arrayPtr = new IntPtr[1] { IntPtr.Zero };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             if (hadProvider)

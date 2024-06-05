@@ -6453,7 +6453,7 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-            GCHandle RawBufferHandle = GCHandle.Alloc(RawBufferHandle, GCHandleType.Pinned);
+            GCHandle RawBufferHandle = GCHandle.Alloc(frame.RawBuffer, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
