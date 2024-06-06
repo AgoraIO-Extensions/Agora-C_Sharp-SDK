@@ -165,9 +165,10 @@ namespace Agora.Rtm.Internal
             _param.Add("option", option);
 
             var json = AgoraJson.ToJson(_param);
+            GCHandle messageHandle = GCHandle.Alloc(message, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_PUBLISHTOPICMESSAGE,
                                                              json, (UInt32)json.Length,
                                                              Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -180,7 +181,8 @@ namespace Agora.Rtm.Internal
             {
                 requestId = 0;
             }
-
+            messageHandle.Free();
+            arrayPtrHandle.Free();
             return nRet;
         }
 

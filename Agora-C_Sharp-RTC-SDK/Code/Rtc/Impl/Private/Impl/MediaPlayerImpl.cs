@@ -128,6 +128,7 @@ namespace Agora.Rtc
 
             AgoraRtcNative.AllocEventHandlerHandle(ref _mediaPlayerEventHandlerHandle, MediaPlayerSourceObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -138,7 +139,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER failed: " + nRet);
             }
             _mediaPlayerEventHandlerHandles.Add(playerId, _mediaPlayerEventHandlerHandle);
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -153,6 +154,7 @@ namespace Agora.Rtc
             var _mediaPlayerEventHandlerHandle = _mediaPlayerEventHandlerHandles[playerId];
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -176,6 +178,7 @@ namespace Agora.Rtc
                 _callbackObject.Release();
             _callbackObject = null;
 #endif
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -187,6 +190,7 @@ namespace Agora.Rtc
             var mediaPlayerAudioFrameObserverHandle = new RtcEventHandlerHandle();
             AgoraRtcNative.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, AudioPcmFrameSinkNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             _param.Clear();
             _param.Add("playerId", playerId);
 
@@ -203,6 +207,7 @@ namespace Agora.Rtc
             }
 
             _mediaPlayerAudioFrameObserverHandles.Add(playerId, mediaPlayerAudioFrameObserverHandle);
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -220,6 +225,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -230,6 +236,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER failed: " + nRet);
             }
             _mediaPlayerAudioFrameObserverHandles.Add(playerId, mediaPlayerAudioFrameObserverHandle);
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -240,6 +247,7 @@ namespace Agora.Rtc
 
             var mediaPlayerAudioFrameObserverHandle = _mediaPlayerAudioFrameObserverHandles[playerId];
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             _param.Clear();
             _param.Add("playerId", playerId);
 
@@ -256,6 +264,7 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle);
             _mediaPlayerAudioFrameObserverHandles.Remove(playerId);
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -273,7 +282,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { eventHandlerHandle.handle };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHCUSTOMSOURCE,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -285,7 +294,7 @@ namespace Agora.Rtc
             }
 
             this._mediaPlayerCustomProviderHandles.Add(playerId, eventHandlerHandle);
-
+            arrayPtrHandle.Free();
             return 0;
         }
 
@@ -300,7 +309,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { eventHandlerHandle.handle };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -313,14 +322,14 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE failed: " + nRet);
             }
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
         private int SetMediaPlayerOpenWithMediaSource(int playerId, MediaSource source, bool hadProvider)
         {
-
             IntPtr[] arrayPtr = new IntPtr[1] { IntPtr.Zero };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             if (hadProvider)
             {
                 RtcEventHandlerHandle eventHandlerHandle = new RtcEventHandlerHandle();
@@ -342,7 +351,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_OPENWITHMEDIASOURCE failed: " + nRet);
             }
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -353,7 +362,7 @@ namespace Agora.Rtc
 
             var eventHandlerHandle = _mediaPlayerMediaProviderHandles[playerId];
             IntPtr[] arrayPtr = new IntPtr[1] { eventHandlerHandle.handle };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             _param.Clear();
             _param.Add("playerId", playerId);
 
@@ -370,7 +379,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_UNOPENWITHMEDIASOURCE failed: " + nRet);
             }
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -382,6 +391,7 @@ namespace Agora.Rtc
             var mediaPlayerAudioSpectrumObserverHandle = new RtcEventHandlerHandle();
             AgoraRtcNative.AllocEventHandlerHandle(ref mediaPlayerAudioSpectrumObserverHandle, MediaPlayerAudioSpectrumObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioSpectrumObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             _param.Clear();
             _param.Add("playerId", playerId);
             _param.Add("intervalInMS", intervalInMS);
@@ -397,7 +407,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER failed: " + nRet);
             }
             _mediaPlayerAudioSpectrumObserverHandles.Add(playerId, mediaPlayerAudioSpectrumObserverHandle);
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -408,6 +418,7 @@ namespace Agora.Rtc
 
             var _mediaPlayerAudioSpectrumObserverHandle = _mediaPlayerAudioSpectrumObserverHandles[playerId];
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerAudioSpectrumObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             _param.Clear();
             _param.Add("playerId", playerId);
 
@@ -424,6 +435,7 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeEventHandlerHandle(ref _mediaPlayerAudioSpectrumObserverHandle);
             _mediaPlayerAudioSpectrumObserverHandles.Remove(playerId);
+            arrayPtrHandle.Free();
             return nRet;
         }
 
