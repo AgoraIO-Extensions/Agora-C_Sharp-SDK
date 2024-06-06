@@ -63,6 +63,7 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _musicContentCenterHandlerHandle, MusicContentCenterEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _musicContentCenterHandlerHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -77,6 +78,7 @@ namespace Agora.Rtc
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
                 MusicContentCenterEventHandlerNative.CallbackObject = _callbackObject;
 #endif
+            arrayPtrHandle.Free();
         }
 
         private void UnSetEventHandler()
@@ -85,6 +87,7 @@ namespace Agora.Rtc
                 return;
 
             IntPtr[] arrayPtr = new IntPtr[] { _musicContentCenterHandlerHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_UNREGISTEREVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -102,6 +105,7 @@ namespace Agora.Rtc
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
+            arrayPtrHandle.Free();
         }
 
 

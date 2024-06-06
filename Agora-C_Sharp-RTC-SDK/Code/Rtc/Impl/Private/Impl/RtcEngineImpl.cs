@@ -162,6 +162,7 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtcEngineEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTEREVENTHANDLER,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -178,6 +179,7 @@ namespace Agora.Rtc
             RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
 
+            arrayPtrHandle.Free();
             return nRet;
 
         }
@@ -195,6 +197,7 @@ namespace Agora.Rtc
             _callbackObject = null;
 #endif
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -206,7 +209,7 @@ namespace Agora.Rtc
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
-
+            arrayPtrHandle.Free();
         }
 
         internal IrisRtcEnginePtr GetNativeHandler()
@@ -283,6 +286,7 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _rtcAudioFrameObserverHandle, AudioFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -292,7 +296,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER failed: " + nRet);
             }
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -301,6 +305,7 @@ namespace Agora.Rtc
             if (_rtcAudioFrameObserverHandle.handle == IntPtr.Zero) return 0;
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_UNREGISTERAUDIOFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -312,6 +317,7 @@ namespace Agora.Rtc
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcAudioFrameObserverHandle);
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -334,7 +340,7 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _rtcVideoFrameObserverHandle, VideoFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcVideoFrameObserverHandle.handle };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERVIDEOFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -344,7 +350,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MEDIAENGINE_REGISTERVIDEOFRAMEOBSERVER failed: " + nRet);
             }
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -353,6 +359,7 @@ namespace Agora.Rtc
             if (_rtcVideoFrameObserverHandle.handle == IntPtr.Zero) return 0;
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcVideoFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_UNREGISTERVIDEOFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -364,7 +371,7 @@ namespace Agora.Rtc
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcVideoFrameObserverHandle);
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -387,6 +394,7 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _rtcVideoEncodedFrameObserverHandle, VideoEncodedFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcVideoEncodedFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERVIDEOENCODEDFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -396,7 +404,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MEDIAENGINE_REGISTERVIDEOENCODEDFRAMEOBSERVER failed: " + nRet);
             }
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -404,6 +412,7 @@ namespace Agora.Rtc
         {
             if (_rtcVideoEncodedFrameObserverHandle.handle == IntPtr.Zero) return 0;
             IntPtr[] arrayPtr = new IntPtr[] { _rtcVideoEncodedFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_UNREGISTERVIDEOENCODEDFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -415,7 +424,7 @@ namespace Agora.Rtc
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcVideoEncodedFrameObserverHandle);
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -425,6 +434,7 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _rtcMetaDataObserverHandle, MetadataObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcMetaDataObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERMEDIAMETADATAOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -434,6 +444,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_RTCENGINE_REGISTERMEDIAMETADATAOBSERVER failed: " + nRet);
             }
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -442,6 +453,7 @@ namespace Agora.Rtc
             if (_rtcMetaDataObserverHandle.handle == IntPtr.Zero) return 0;
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcMetaDataObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTERMEDIAMETADATAOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -453,7 +465,7 @@ namespace Agora.Rtc
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcMetaDataObserverHandle);
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -1366,10 +1378,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioEncodedFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             int ret = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERAUDIOENCODEDFRAMEOBSERVER,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+            arrayPtrHandle.Free();
             return ret;
         }
 
@@ -1378,12 +1392,13 @@ namespace Agora.Rtc
             if (_rtcAudioEncodedFrameObserverHandle.handle == IntPtr.Zero) return 0;
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioEncodedFrameObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTERAUDIOENCODEDFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
-
             AgoraUtil.FreeEventHandlerHandle(ref _rtcAudioEncodedFrameObserverHandle);
+            arrayPtrHandle.Free();
             return ret;
         }
 
@@ -2437,10 +2452,12 @@ namespace Agora.Rtc
             AgoraUtil.AllocEventHandlerHandle(ref _rtcAudioSpectrumObserverHandle, AudioSpectrumObserverNative.OnEvent);
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioSpectrumObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERAUDIOSPECTRUMOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+            arrayPtrHandle.Free();
             return ret;
         }
 
@@ -2449,12 +2466,14 @@ namespace Agora.Rtc
             if (_rtcAudioSpectrumObserverHandle.handle == IntPtr.Zero) return 0;
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioSpectrumObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTERAUDIOSPECTRUMOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcAudioSpectrumObserverHandle);
+            arrayPtrHandle.Free();
             return ret;
         }
 
@@ -4035,11 +4054,13 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTDIRECTCDNSTREAMING,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
+            arrayPtrHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -5174,11 +5195,12 @@ namespace Agora.Rtc
         public int ReleaseScreenCaptureSources(IntPtr sources)
         {
             IntPtr[] arrayPtr = new IntPtr[] { sources };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
-
+            arrayPtrHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6021,11 +6043,12 @@ namespace Agora.Rtc
 
 
             IntPtr[] arrayPtr = new IntPtr[] { (IntPtr)canvas.view };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPREMOTEVIDEO,
                json, (UInt32)json.Length,
                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                ref _apiParam);
+            arrayPtrHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6039,11 +6062,12 @@ namespace Agora.Rtc
 
 
             IntPtr[] arrayPtr = new IntPtr[] { (IntPtr)canvas.view };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPLOCALVIDEO,
                json, (UInt32)json.Length,
                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                ref _apiParam);
+            arrayPtrHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6055,15 +6079,16 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle mediaProjectionPermissionResultDataHandle = GCHandle.Alloc(mediaProjectionPermissionResultData, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(mediaProjectionPermissionResultData, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTURE,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, (uint)mediaProjectionPermissionResultData.Length);
-
+            arrayPtrHandle.Free();
+            mediaProjectionPermissionResultDataHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6075,15 +6100,16 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDSTREAMMESSAGE,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, length);
-
+            arrayPtrHandle.Free();
+            dataHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6096,15 +6122,16 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle dataHanle = GCHandle.Alloc(data, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, length);
-
+            arrayPtrHandle.Free();
+            dataHanle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6114,15 +6141,16 @@ namespace Agora.Rtc
             _param.Add("length", length);
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle metadataHandle = GCHandle.Alloc(metadata, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(metadata, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDAUDIOMETADATA,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, length);
-
+            arrayPtrHandle.Free();
+            metadataHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6133,15 +6161,16 @@ namespace Agora.Rtc
             _param.Add("length", length);
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle metadataHandle = GCHandle.Alloc(metadata, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(metadata, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDAUDIOMETADATAEX,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, length);
-
+            arrayPtrHandle.Free();
+            metadataHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6156,12 +6185,12 @@ namespace Agora.Rtc
 
 
             IntPtr[] arrayPtr = new IntPtr[] { (IntPtr)canvas.view };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETUPREMOTEVIDEOEX,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
-
+            arrayPtrHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6173,15 +6202,16 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle rawBufferHandle = GCHandle.Alloc(frame.RawBuffer, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHAUDIOFRAME,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, (uint)frame.RawBuffer.Length);
-
+            arrayPtrHandle.Free();
+            rawBufferHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6193,15 +6223,16 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle rawBufferHandle = GCHandle.Alloc(frame.RawBuffer, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHCAPTUREAUDIOFRAME,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, (uint)frame.RawBuffer.Length);
-
+            arrayPtrHandle.Free();
+            rawBufferHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6212,15 +6243,16 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle rawBufferHandle = GCHandle.Alloc(frame.RawBuffer, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHREVERSEAUDIOFRAME,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, (uint)frame.RawBuffer.Length);
-
+            arrayPtrHandle.Free();
+            rawBufferHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
         }
@@ -6231,21 +6263,26 @@ namespace Agora.Rtc
             _param.Add("frame", new ExternalVideoFrameInternal(frame));
             _param.Add("videoTrackId", videoTrackId);
 
-
+            GCHandle bufferHandle = GCHandle.Alloc(frame.buffer, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
             IntPtr eglContextPtr = IntPtr.Zero;
             IntPtr metadataPtr = IntPtr.Zero;
+
+            byte[] fakeAlphaBuffer = new byte[1];
+            GCHandle alphaBufferHandle = frame.alphaBuffer != null ? GCHandle.Alloc(frame.alphaBuffer, GCHandleType.Pinned) : GCHandle.Alloc(fakeAlphaBuffer, GCHandleType.Pinned);
             IntPtr alphaBufferPtr = frame.alphaBuffer != null ? Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0) : IntPtr.Zero;
+
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var json = AgoraJson.ToJson(_param);
-
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 4,
                 ref _apiParam, (uint)frame.buffer.Length, 0, 0);
-
+            arrayPtrHandle.Free();
+            bufferHandle.Free();
+            alphaBufferHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6260,15 +6297,16 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-
+            GCHandle imageBufferHandle = GCHandle.Alloc(imageBuffer, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, length);
-
+            arrayPtrHandle.Free();
+            imageBufferHandle.Free();
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
