@@ -79,6 +79,7 @@ namespace Agora.Rtc
 
             AgoraRtcNative.AllocEventHandlerHandle(ref _h265TranscoderObserverHandle, H265TranscoderObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -88,7 +89,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
-
+            arrayPtrHandle.Free();
             return nRet;
         }
 
@@ -98,6 +99,7 @@ namespace Agora.Rtc
                 return -1;
 
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
+            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
@@ -120,6 +122,7 @@ namespace Agora.Rtc
                 _callbackObject.Release();
             _callbackObject = null;
 #endif
+            arrayPtrHandle.Free();
             return nRet;
         }
 

@@ -102,6 +102,7 @@ namespace Agora.Rtc
                 RtcEventHandlerHandle handle = _mediaRecorderEventHandlerHandles[key];
 
                 IntPtr[] arrayPtr = new IntPtr[] { handle.handle };
+                GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
                 var json = AgoraJson.ToJson(_param);
                 int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER,
                                                               json, (UInt32)json.Length,
@@ -111,6 +112,7 @@ namespace Agora.Rtc
                 int ret = nRet == 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
                 AgoraRtcNative.FreeEventHandlerHandle(ref handle);
+                arrayPtrHandle.Free();
             }
             _mediaRecorderEventHandlerHandles.Clear();
 
@@ -142,12 +144,13 @@ namespace Agora.Rtc
                 RtcEventHandlerHandle handler = CreateEventHandler(nativeHandle);
 
                 IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
+                GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
                 var json = AgoraJson.ToJson(_param);
                 int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
                                                               json, (UInt32)json.Length,
                                                               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                               ref _apiParam);
-
+                arrayPtrHandle.Free();
                 return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             }
             else
@@ -162,6 +165,7 @@ namespace Agora.Rtc
                     RtcEventHandlerHandle handler = _mediaRecorderEventHandlerHandles[nativeHandle];
 
                     IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
+                    GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
                     var json = AgoraJson.ToJson(_param);
                     int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER,
                                                                   json, (UInt32)json.Length,
@@ -174,7 +178,7 @@ namespace Agora.Rtc
                     {
                         ReleaseEventHandler(nativeHandle);
                     }
-
+                    arrayPtrHandle.Free();
                     return ret;
                 }
 
