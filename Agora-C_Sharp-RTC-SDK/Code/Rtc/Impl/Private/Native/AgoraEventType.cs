@@ -170,10 +170,10 @@ namespace Agora.Rtc
         public const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOPUBLISHSTATECHANGED = "RtcEngineEventHandler_onVideoPublishStateChanged_5b45b6e";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODEDSTREAMLAYOUTINFO = "RtcEngineEventHandler_onTranscodedStreamLayoutInfo_3bfb91b";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMETADATARECEIVED = "RtcEngineEventHandler_onAudioMetadataReceived_77edd82";
-        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENT = "RtcEngineEventHandler_onExtensionEvent_062d13c";
-        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED = "RtcEngineEventHandler_onExtensionStarted_ccad422";
-        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED = "RtcEngineEventHandler_onExtensionStopped_ccad422";
-        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERROR = "RtcEngineEventHandler_onExtensionError_bd3489b";
+        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENTWITHCONTEXT = "RtcEngineEventHandler_onExtensionEventWithContext_a5fb27a";
+        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTEDWITHCONTEXT = "RtcEngineEventHandler_onExtensionStartedWithContext_67c38e3";
+        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPEDWITHCONTEXT = "RtcEngineEventHandler_onExtensionStoppedWithContext_67c38e3";
+        public const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERRORWITHCONTEXT = "RtcEngineEventHandler_onExtensionErrorWithContext_a452f11";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONSETRTMFLAGRESULT = "RtcEngineEventHandler_onSetRtmFlagResult_46f8ab7";
         #endregion terra IRtcEngineEventHandler
 

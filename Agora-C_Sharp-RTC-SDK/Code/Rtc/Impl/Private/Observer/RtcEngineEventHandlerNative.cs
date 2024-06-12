@@ -712,15 +712,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENT:
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENTWITHCONTEXT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnExtensionEvent(
-                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
-                        (string)AgoraJson.GetData<string>(jsonData, "extension"),
+                        rtcEngineEventHandler.OnExtensionEventWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context"),
                         (string)AgoraJson.GetData<string>(jsonData, "key"),
                         (string)AgoraJson.GetData<string>(jsonData, "value")
                         );
@@ -730,15 +729,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED:
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTEDWITHCONTEXT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnExtensionStarted(
-                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
-                        (string)AgoraJson.GetData<string>(jsonData, "extension")
+                        rtcEngineEventHandler.OnExtensionStartedWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 }); 
@@ -746,15 +744,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED:
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPEDWITHCONTEXT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnExtensionStopped(
-                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
-                        (string)AgoraJson.GetData<string>(jsonData, "extension")
+                        rtcEngineEventHandler.OnExtensionStoppedWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 }); 
@@ -762,15 +759,14 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
 
-                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERROR:
+                case AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERRORWITHCONTEXT:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnExtensionError(
-                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
-                        (string)AgoraJson.GetData<string>(jsonData, "extension"),
+                        rtcEngineEventHandler.OnExtensionErrorWithContext(
+                        AgoraJson.JsonToStruct<ExtensionContext>(jsonData, "context"),
                         (int)AgoraJson.GetData<int>(jsonData, "error"),
                         (string)AgoraJson.GetData<string>(jsonData, "message")
                         );

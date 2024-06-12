@@ -52,25 +52,6 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Opens the custom media resource file.
-        /// 
-        /// Deprecated: This method is deprecated, use OpenWithMediaSource instead. This method allows you to open custom media resource files. For example, you can call this method to open encrypted media resources.
-        /// </summary>
-        ///
-        /// <param name="startPos"> The starting position (ms) for playback. Default value is 0. </param>
-        ///
-        /// <param name="provider"> The callback for custom media resource files. See IMediaPlayerCustomDataProvider. </param>
-        ///
-        /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
-        /// </returns>
-        ///
-        [Obsolete("")]
-        public abstract int OpenWithCustomSource(long startPos, IMediaPlayerCustomDataProvider provider);
-
-        ///
-        /// <summary>
         /// Opens a media file and configures the playback scenarios.
         /// 
         /// This method supports opening media files of different sources, including a custom media source, and allows you to configure the playback scenarios.

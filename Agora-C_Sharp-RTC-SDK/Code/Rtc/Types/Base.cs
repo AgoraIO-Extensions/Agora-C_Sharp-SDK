@@ -157,7 +157,15 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public uint alpha_buffer_length;
+
+
+        public int alphaStitchMode;
+
         public Dictionary<string, string> metaInfo;
+
+        public Hdr10MetadataInfo hdr10MetadataInfo;
+
+        public ColorSpace colorSpace;
     }
 
     internal class ExternalVideoFrameInternal
@@ -180,13 +188,17 @@ namespace Agora.Rtc
 
             this.eglType = frame.eglType;
             this.textureId = frame.textureId;
+            this.fence_object = frame.fence_object;
             this.matrix = frame.matrix;
 
             this.metadata_size = frame.metadata_size;
 
             this.fillAlphaBuffer = frame.fillAlphaBuffer;
+            this.alphaStitchMode = frame.alphaStitchMode;
 
             this.texture_slice_index = frame.texture_slice_index;
+            this.hdr10MetadataInfo = frame.hdr10MetadataInfo;
+            this.colorSpace = frame.colorSpace;
             #endregion terra ExternalVideoFrameInternal_Assignment
         }
 
@@ -205,13 +217,17 @@ namespace Agora.Rtc
 
         public EGL_CONTEXT_TYPE eglType;
         public int textureId;
+        public long fence_object;
         public float[] matrix;
 
         public int metadata_size;
 
         public bool fillAlphaBuffer;
+        public int alphaStitchMode;
 
         public int texture_slice_index;
+        public Hdr10MetadataInfo hdr10MetadataInfo;
+        public ColorSpace colorSpace;
         #endregion terra ExternalVideoFrameInternal_Member_List
     }
 

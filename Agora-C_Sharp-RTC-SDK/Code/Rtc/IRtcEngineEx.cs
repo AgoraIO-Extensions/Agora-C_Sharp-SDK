@@ -915,6 +915,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        public abstract int SetSimulcastConfigEx(SimulcastConfig simulcastConfig, RtcConnection connection);
+
+        ///
+        /// @ignore
+        ///
         public abstract int SetHighPriorityUserListEx(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnection connection);
 
         ///

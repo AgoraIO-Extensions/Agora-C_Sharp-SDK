@@ -164,11 +164,26 @@ namespace Agora.Rtc
         public IntPtr alphaBufferPtr;
 
         ///
+        /// @ignore
+        ///
+        public int alphaStitchMode;
+
+        ///
         /// <summary>
         /// The meta information in the video frame. To use this parameter, please.
         /// </summary>
         ///
         public IVideoFrameMetaInfo metaInfo;
+
+        ///
+        /// @ignore
+        ///
+        public Hdr10MetadataInfo hdr10MetadataInfo;
+
+        ///
+        /// @ignore
+        ///
+        public ColorSpace colorSpace;
         #endregion terra VideoFrame_Member_List
 
         #region terra VideoFrame_Constructor
@@ -197,6 +212,7 @@ namespace Agora.Rtc
             this.d3d11Texture2d = IntPtr.Zero;
             this.alphaBuffer = new byte[0];
             this.alphaBufferPtr = IntPtr.Zero;
+            this.alphaStitchMode = 0;
             this.metaInfo = null;
             this.matrix = new float[16];
         }
@@ -328,6 +344,48 @@ namespace Agora.Rtc
     }
 
     #region terra AgoraMediaBase.h
+    ///
+    /// @ignore
+    ///
+    public class ExtensionContext
+    {
+        ///
+        /// @ignore
+        ///
+        public bool isValid;
+
+        ///
+        /// @ignore
+        ///
+        public uint uid;
+
+        ///
+        /// @ignore
+        ///
+        public string providerName;
+
+        ///
+        /// @ignore
+        ///
+        public string extensionName;
+
+        public ExtensionContext()
+        {
+            this.isValid = false;
+            this.uid = 0;
+            this.providerName = "";
+            this.extensionName = "";
+        }
+
+        public ExtensionContext(bool isValid, uint uid, string providerName, string extensionName)
+        {
+            this.isValid = isValid;
+            this.uid = uid;
+            this.providerName = providerName;
+            this.extensionName = extensionName;
+        }
+    }
+
     ///
     /// <summary>
     /// The type of the video source.
@@ -1100,6 +1158,11 @@ namespace Agora.Rtc
         VIDEO_CVPIXEL_BGRA = 14,
 
         ///
+        /// @ignore
+        ///
+        VIDEO_CVPIXEL_P010 = 15,
+
+        ///
         /// <summary>
         /// 16: The format is I422.
         /// </summary>
@@ -1179,6 +1242,405 @@ namespace Agora.Rtc
         /// @ignore
         ///
         KEY_FACE_CAPTURE = 0,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class ColorSpace
+    {
+        ///
+        /// @ignore
+        ///
+        public PrimaryID primaries;
+
+        ///
+        /// @ignore
+        ///
+        public TransferID transfer;
+
+        ///
+        /// @ignore
+        ///
+        public MatrixID matrix;
+
+        ///
+        /// @ignore
+        ///
+        public RangeID range;
+
+        public ColorSpace()
+        {
+            this.primaries = PrimaryID.PRIMARYID_UNSPECIFIED;
+            this.transfer = TransferID.TRANSFERID_UNSPECIFIED;
+            this.matrix = MatrixID.MATRIXID_UNSPECIFIED;
+            this.range = RangeID.RANGEID_INVALID;
+        }
+
+        public ColorSpace(PrimaryID primaries, TransferID transfer, MatrixID matrix, RangeID range)
+        {
+            this.primaries = primaries;
+            this.transfer = transfer;
+            this.matrix = matrix;
+            this.range = range;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum PrimaryID
+    {
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_BT709 = 1,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_UNSPECIFIED = 2,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_BT470M = 4,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_BT470BG = 5,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_SMPTE170M = 6,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_SMPTE240M = 7,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_FILM = 8,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_BT2020 = 9,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_SMPTEST428 = 10,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_SMPTEST431 = 11,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_SMPTEST432 = 12,
+
+        ///
+        /// @ignore
+        ///
+        PRIMARYID_JEDECP22 = 22,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum RangeID
+    {
+        ///
+        /// @ignore
+        ///
+        RANGEID_INVALID = 0,
+
+        ///
+        /// @ignore
+        ///
+        RANGEID_LIMITED = 1,
+
+        ///
+        /// @ignore
+        ///
+        RANGEID_FULL = 2,
+
+        ///
+        /// @ignore
+        ///
+        RANGEID_DERIVED = 3,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum MatrixID
+    {
+        ///
+        /// @ignore
+        ///
+        MATRIXID_RGB = 0,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_BT709 = 1,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_UNSPECIFIED = 2,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_FCC = 4,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_BT470BG = 5,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_SMPTE170M = 6,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_SMPTE240M = 7,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_YCOCG = 8,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_BT2020_NCL = 9,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_BT2020_CL = 10,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_SMPTE2085 = 11,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_CDNCLS = 12,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_CDCLS = 13,
+
+        ///
+        /// @ignore
+        ///
+        MATRIXID_BT2100_ICTCP = 14,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum TransferID
+    {
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_BT709 = 1,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_UNSPECIFIED = 2,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_GAMMA22 = 4,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_GAMMA28 = 5,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_SMPTE170M = 6,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_SMPTE240M = 7,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_LINEAR = 8,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_LOG = 9,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_LOG_SQRT = 10,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_IEC61966_2_4 = 11,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_BT1361_ECG = 12,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_IEC61966_2_1 = 13,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_BT2020_10 = 14,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_BT2020_12 = 15,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_SMPTEST2084 = 16,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_SMPTEST428 = 17,
+
+        ///
+        /// @ignore
+        ///
+        TRANSFERID_ARIB_STD_B67 = 18,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class Hdr10MetadataInfo
+    {
+        ///
+        /// @ignore
+        ///
+        public ushort redPrimaryX;
+
+        ///
+        /// @ignore
+        ///
+        public ushort redPrimaryY;
+
+        ///
+        /// @ignore
+        ///
+        public ushort greenPrimaryX;
+
+        ///
+        /// @ignore
+        ///
+        public ushort greenPrimaryY;
+
+        ///
+        /// @ignore
+        ///
+        public ushort bluePrimaryX;
+
+        ///
+        /// @ignore
+        ///
+        public ushort bluePrimaryY;
+
+        ///
+        /// @ignore
+        ///
+        public ushort whitePointX;
+
+        ///
+        /// @ignore
+        ///
+        public ushort whitePointY;
+
+        ///
+        /// @ignore
+        ///
+        public uint maxMasteringLuminance;
+
+        ///
+        /// @ignore
+        ///
+        public uint minMasteringLuminance;
+
+        ///
+        /// @ignore
+        ///
+        public ushort maxContentLightLevel;
+
+        ///
+        /// @ignore
+        ///
+        public ushort maxFrameAverageLightLevel;
+
+        public Hdr10MetadataInfo()
+        {
+            this.redPrimaryX = 0;
+            this.redPrimaryY = 0;
+            this.greenPrimaryX = 0;
+            this.greenPrimaryY = 0;
+            this.bluePrimaryX = 0;
+            this.bluePrimaryY = 0;
+            this.whitePointX = 0;
+            this.whitePointY = 0;
+            this.maxMasteringLuminance = 0;
+            this.minMasteringLuminance = 0;
+            this.maxContentLightLevel = 0;
+            this.maxFrameAverageLightLevel = 0;
+        }
+
+        public Hdr10MetadataInfo(ushort redPrimaryX, ushort redPrimaryY, ushort greenPrimaryX, ushort greenPrimaryY, ushort bluePrimaryX, ushort bluePrimaryY, ushort whitePointX, ushort whitePointY, uint maxMasteringLuminance, uint minMasteringLuminance, ushort maxContentLightLevel, ushort maxFrameAverageLightLevel)
+        {
+            this.redPrimaryX = redPrimaryX;
+            this.redPrimaryY = redPrimaryY;
+            this.greenPrimaryX = greenPrimaryX;
+            this.greenPrimaryY = greenPrimaryY;
+            this.bluePrimaryX = bluePrimaryX;
+            this.bluePrimaryY = bluePrimaryY;
+            this.whitePointX = whitePointX;
+            this.whitePointY = whitePointY;
+            this.maxMasteringLuminance = maxMasteringLuminance;
+            this.minMasteringLuminance = minMasteringLuminance;
+            this.maxContentLightLevel = maxContentLightLevel;
+            this.maxFrameAverageLightLevel = maxFrameAverageLightLevel;
+        }
     }
 
     ///
@@ -1291,6 +1753,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        public long fence_object;
+
+        ///
+        /// @ignore
+        ///
         public float[] matrix;
 
         ///
@@ -1318,6 +1785,11 @@ namespace Agora.Rtc
         public bool fillAlphaBuffer;
 
         ///
+        /// @ignore
+        ///
+        public int alphaStitchMode;
+
+        ///
         /// <summary>
         /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
         /// </summary>
@@ -1330,6 +1802,16 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int texture_slice_index;
+
+        ///
+        /// @ignore
+        ///
+        public Hdr10MetadataInfo hdr10MetadataInfo;
+
+        ///
+        /// @ignore
+        ///
+        public ColorSpace colorSpace;
 
         public ExternalVideoFrame()
         {
@@ -1347,15 +1829,17 @@ namespace Agora.Rtc
             this.eglContext = IntPtr.Zero;
             this.eglType = EGL_CONTEXT_TYPE.EGL_CONTEXT10;
             this.textureId = 0;
+            this.fence_object = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.alphaBuffer = null;
             this.fillAlphaBuffer = false;
+            this.alphaStitchMode = 0;
             this.d3d11_texture_2d = IntPtr.Zero;
             this.texture_slice_index = 0;
         }
 
-        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, IntPtr d3d11_texture_2d, int texture_slice_index)
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fence_object, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, int alphaStitchMode, IntPtr d3d11_texture_2d, int texture_slice_index, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
         {
             this.type = type;
             this.format = format;
@@ -1371,13 +1855,17 @@ namespace Agora.Rtc
             this.eglContext = eglContext;
             this.eglType = eglType;
             this.textureId = textureId;
+            this.fence_object = fence_object;
             this.matrix = matrix;
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
             this.alphaBuffer = alphaBuffer;
             this.fillAlphaBuffer = fillAlphaBuffer;
+            this.alphaStitchMode = alphaStitchMode;
             this.d3d11_texture_2d = d3d11_texture_2d;
             this.texture_slice_index = texture_slice_index;
+            this.hdr10MetadataInfo = hdr10MetadataInfo;
+            this.colorSpace = colorSpace;
         }
     }
 

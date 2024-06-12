@@ -17,6 +17,8 @@
         "IRtcEngine.getExtensionProperty.value": "ref value",
         "IRtcEngine.queryCameraFocalLengthCapability.focalLengthInfos": "ref focalLengthInfos",
         "IRtcEngine.queryCameraFocalLengthCapability.size": "ref size",
+        "IRtcEngine.getFaceShapeBeautyOptions.options": "ref options",
+        "IRtcEngine.getFaceShapeAreaOptions.options": "ref options",
         "IRtcEngineEx.joinChannelEx.eventHandler": "@remove",
         "IRtcEngineEx.createDataStreamEx.streamId": "ref streamId",
         "IRtcEngineEx.getUserInfoByUserAccountEx.userInfo": "ref userInfo",

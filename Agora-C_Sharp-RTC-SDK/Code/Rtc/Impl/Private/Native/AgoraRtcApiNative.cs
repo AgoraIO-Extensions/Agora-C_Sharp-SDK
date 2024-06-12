@@ -389,6 +389,68 @@ namespace Agora.Rtc
         }
     };
 
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisHdr10MetadataInfo
+    {
+        public ushort redPrimaryX;
+
+        public ushort redPrimaryY;
+
+        public ushort greenPrimaryX;
+
+        public ushort greenPrimaryY;
+
+        public ushort bluePrimaryX;
+
+        public ushort bluePrimaryY;
+
+        public ushort whitePointX;
+
+        public ushort whitePointY;
+
+        public uint maxMasteringLuminance;
+
+        public uint minMasteringLuminance;
+
+        public ushort maxContentLightLevel;
+
+        public ushort maxFrameAverageLightLevel;
+
+        public IrisHdr10MetadataInfo(Hdr10MetadataInfo hdr10MetadataInfo)
+        {
+            this.redPrimaryX = hdr10MetadataInfo.redPrimaryX;
+            this.redPrimaryY = hdr10MetadataInfo.redPrimaryY;
+            this.greenPrimaryX = hdr10MetadataInfo.greenPrimaryX;
+            this.greenPrimaryY = hdr10MetadataInfo.greenPrimaryY;
+            this.bluePrimaryX = hdr10MetadataInfo.bluePrimaryX;
+            this.bluePrimaryY = hdr10MetadataInfo.bluePrimaryY;
+            this.whitePointX = hdr10MetadataInfo.whitePointX;
+            this.whitePointY = hdr10MetadataInfo.whitePointY;
+            this.maxMasteringLuminance = hdr10MetadataInfo.maxMasteringLuminance;
+            this.minMasteringLuminance = hdr10MetadataInfo.minMasteringLuminance;
+            this.maxContentLightLevel = hdr10MetadataInfo.maxContentLightLevel;
+            this.maxFrameAverageLightLevel = hdr10MetadataInfo.maxFrameAverageLightLevel;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisColorSpace
+    {
+        public int primaries;
+        public int transfer;
+        public int matrix;
+        public int range;
+
+        public IrisColorSpace(ColorSpace colorSpace)
+        {
+            this.primaries = (int)colorSpace.primaries;
+            this.transfer = (int)colorSpace.transfer;
+            this.matrix = (int)colorSpace.matrix;
+            this.range = (int)colorSpace.range;
+        }
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisExternalVideoFrame
     {
@@ -406,14 +468,18 @@ namespace Agora.Rtc
         public IntPtr eglContext;
         public int eglType;
         public int textureId;
+        public long fence_object;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public float[] matrix;
         public IntPtr metadata_buffer;
         public int metadata_size;
         public IntPtr alphaBuffer;
         public bool fillAlphaBuffer;
+        public int alphaStitchMode;
         public IntPtr d3d11_texture_2d;
         public int texture_slice_index;
+        public IrisHdr10MetadataInfo hdr10MetadataInfo;
+        public IrisColorSpace colorSpace;
 
         public IrisExternalVideoFrame(ExternalVideoFrame frame)
         {
@@ -431,6 +497,7 @@ namespace Agora.Rtc
             this.eglContext = frame.eglContext;
             this.eglType = (int)frame.eglType;
             this.textureId = frame.textureId;
+            this.fence_object = frame.fence_object;
             if (frame.matrix != null && frame.matrix.Length == 16)
             {
                 this.matrix = frame.matrix;
@@ -443,8 +510,11 @@ namespace Agora.Rtc
             this.metadata_size = frame.metadata_size;
             this.alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
             this.fillAlphaBuffer = frame.fillAlphaBuffer;
+            this.alphaStitchMode = frame.alphaStitchMode;
             this.d3d11_texture_2d = frame.d3d11_texture_2d;
             this.texture_slice_index = frame.texture_slice_index;
+            this.hdr10MetadataInfo = new IrisHdr10MetadataInfo(frame.hdr10MetadataInfo);
+            this.colorSpace = new IrisColorSpace(frame.colorSpace);
         }
     };
 
