@@ -158,13 +158,21 @@ namespace Agora.Rtc
         ///
         public uint alpha_buffer_length;
 
-
+        ///
+        /// @ignore
+        ///
         public int alphaStitchMode;
 
         public Dictionary<string, string> metaInfo;
 
+        ///
+        /// @ignore
+        ///
         public Hdr10MetadataInfo hdr10MetadataInfo;
 
+        ///
+        /// @ignore
+        ///
         public ColorSpace colorSpace;
     }
 

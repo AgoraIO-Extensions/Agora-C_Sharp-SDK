@@ -1635,9 +1635,11 @@ namespace Agora.Rtc
         CAMERA_FOCAL_LENGTH_WIDE_ANGLE = 1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: Ultra-wide-angle lens.
+        /// </summary>
         ///
-        CAMERA_FOCAL_LENGTH_URLTRA_WIDE = 2,
+        CAMERA_FOCAL_LENGTH_ULTRA_WIDE = 2,
 
         ///
         /// <summary>
@@ -4331,7 +4333,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCNNECTED = 30,
+        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
     }
 
     ///
