@@ -419,18 +419,36 @@ namespace Agora.Rtc
 
         public IrisHdr10MetadataInfo(Hdr10MetadataInfo hdr10MetadataInfo)
         {
-            this.redPrimaryX = hdr10MetadataInfo.redPrimaryX;
-            this.redPrimaryY = hdr10MetadataInfo.redPrimaryY;
-            this.greenPrimaryX = hdr10MetadataInfo.greenPrimaryX;
-            this.greenPrimaryY = hdr10MetadataInfo.greenPrimaryY;
-            this.bluePrimaryX = hdr10MetadataInfo.bluePrimaryX;
-            this.bluePrimaryY = hdr10MetadataInfo.bluePrimaryY;
-            this.whitePointX = hdr10MetadataInfo.whitePointX;
-            this.whitePointY = hdr10MetadataInfo.whitePointY;
-            this.maxMasteringLuminance = hdr10MetadataInfo.maxMasteringLuminance;
-            this.minMasteringLuminance = hdr10MetadataInfo.minMasteringLuminance;
-            this.maxContentLightLevel = hdr10MetadataInfo.maxContentLightLevel;
-            this.maxFrameAverageLightLevel = hdr10MetadataInfo.maxFrameAverageLightLevel;
+            if (hdr10MetadataInfo != null)
+            {
+                this.redPrimaryX = hdr10MetadataInfo.redPrimaryX;
+                this.redPrimaryY = hdr10MetadataInfo.redPrimaryY;
+                this.greenPrimaryX = hdr10MetadataInfo.greenPrimaryX;
+                this.greenPrimaryY = hdr10MetadataInfo.greenPrimaryY;
+                this.bluePrimaryX = hdr10MetadataInfo.bluePrimaryX;
+                this.bluePrimaryY = hdr10MetadataInfo.bluePrimaryY;
+                this.whitePointX = hdr10MetadataInfo.whitePointX;
+                this.whitePointY = hdr10MetadataInfo.whitePointY;
+                this.maxMasteringLuminance = hdr10MetadataInfo.maxMasteringLuminance;
+                this.minMasteringLuminance = hdr10MetadataInfo.minMasteringLuminance;
+                this.maxContentLightLevel = hdr10MetadataInfo.maxContentLightLevel;
+                this.maxFrameAverageLightLevel = hdr10MetadataInfo.maxFrameAverageLightLevel;
+            }
+            else
+            {
+                this.redPrimaryX = 0;
+                this.redPrimaryY = 0;
+                this.greenPrimaryX = 0;
+                this.greenPrimaryY = 0;
+                this.bluePrimaryX = 0;
+                this.bluePrimaryY = 0;
+                this.whitePointX = 0;
+                this.whitePointY = 0;
+                this.maxMasteringLuminance = 0;
+                this.minMasteringLuminance = 0;
+                this.maxContentLightLevel = 0;
+                this.maxFrameAverageLightLevel = 0;
+            }
         }
     }
 
@@ -444,10 +462,20 @@ namespace Agora.Rtc
 
         public IrisColorSpace(ColorSpace colorSpace)
         {
-            this.primaries = (int)colorSpace.primaries;
-            this.transfer = (int)colorSpace.transfer;
-            this.matrix = (int)colorSpace.matrix;
-            this.range = (int)colorSpace.range;
+            if (colorSpace != null)
+            {
+                this.primaries = (int)colorSpace.primaries;
+                this.transfer = (int)colorSpace.transfer;
+                this.matrix = (int)colorSpace.matrix;
+                this.range = (int)colorSpace.range;
+            }
+            else
+            {
+                this.primaries = (int)PrimaryID.PRIMARYID_UNSPECIFIED;
+                this.transfer = (int)TransferID.TRANSFERID_UNSPECIFIED;
+                this.matrix = (int)MatrixID.MATRIXID_UNSPECIFIED;
+                this.range = (int)RangeID.RANGEID_INVALID;
+            }
         }
     }
 
