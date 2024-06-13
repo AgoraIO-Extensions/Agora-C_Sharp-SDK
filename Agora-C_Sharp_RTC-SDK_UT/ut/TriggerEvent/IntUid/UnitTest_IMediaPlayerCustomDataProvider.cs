@@ -28,13 +28,16 @@ namespace Agora.Rtc.Ut.Event
 
             MediaPlayer = Engine.CreateMediaPlayer();
             EventHandler = new UTMediaPlayerCustomDataProvider();
-            int ret = MediaPlayer.OpenWithCustomSource(0, EventHandler);
+            MediaSource mediaSource = new MediaSource();
+            mediaSource.provider = EventHandler;
+            int ret = MediaPlayer.OpenWithMediaSource(mediaSource);
             Assert.AreEqual(0, ret);
         }
 
         [TearDown]
         public void TearDown()
         {
+            MediaPlayer.Dispose();
             var ret = Engine.InitEventHandler(null);
             Assert.AreEqual(0, ret);
             Engine.Dispose();
