@@ -860,105 +860,89 @@ namespace Agora.Rtc.Ut
         }
         //////////////////
 
-        public bool OnExtensionEvent_be_trigger = false;
-        public string OnExtensionEvent_provider;
-        public string OnExtensionEvent_extension;
-        public string OnExtensionEvent_key;
-        public string OnExtensionEvent_value;
-        public override void OnExtensionEvent(string provider, string extension, string key, string value)
+        public bool OnExtensionEventWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionEventWithContext_context;
+        public string OnExtensionEventWithContext_key;
+        public string OnExtensionEventWithContext_value;
+        public override void OnExtensionEventWithContext(ExtensionContext context, string key, string value)
         {
-            OnExtensionEvent_be_trigger = true;
-            OnExtensionEvent_provider = provider;
-            OnExtensionEvent_extension = extension;
-            OnExtensionEvent_key = key;
-            OnExtensionEvent_value = value;
+            OnExtensionEventWithContext_be_trigger = true;
+            OnExtensionEventWithContext_context = context;
+            OnExtensionEventWithContext_key = key;
+            OnExtensionEventWithContext_value = value;
         }
 
-        public bool OnExtensionEventPassed(string provider, string extension, string key, string value)
+        public bool OnExtensionEventWithContextPassed(ExtensionContext context, string key, string value)
         {
-            if (OnExtensionEvent_be_trigger == false)
+            if (OnExtensionEventWithContext_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnExtensionEvent_provider, provider) == false)
+            if (ParamsHelper.Compare<ExtensionContext>(OnExtensionEventWithContext_context, context) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnExtensionEvent_extension, extension) == false)
+            if (ParamsHelper.Compare<string>(OnExtensionEventWithContext_key, key) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnExtensionEvent_key, key) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnExtensionEvent_value, value) == false)
+            if (ParamsHelper.Compare<string>(OnExtensionEventWithContext_value, value) == false)
                 return false;
             return true;
         }
         //////////////////
 
-        public bool OnExtensionStarted_be_trigger = false;
-        public string OnExtensionStarted_provider;
-        public string OnExtensionStarted_extension;
-        public override void OnExtensionStarted(string provider, string extension)
+        public bool OnExtensionStartedWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionStartedWithContext_context;
+        public override void OnExtensionStartedWithContext(ExtensionContext context)
         {
-            OnExtensionStarted_be_trigger = true;
-            OnExtensionStarted_provider = provider;
-            OnExtensionStarted_extension = extension;
+            OnExtensionStartedWithContext_be_trigger = true;
+            OnExtensionStartedWithContext_context = context;
         }
 
-        public bool OnExtensionStartedPassed(string provider, string extension)
+        public bool OnExtensionStartedWithContextPassed(ExtensionContext context)
         {
-            if (OnExtensionStarted_be_trigger == false)
+            if (OnExtensionStartedWithContext_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnExtensionStarted_provider, provider) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnExtensionStarted_extension, extension) == false)
+            if (ParamsHelper.Compare<ExtensionContext>(OnExtensionStartedWithContext_context, context) == false)
                 return false;
             return true;
         }
         //////////////////
 
-        public bool OnExtensionStopped_be_trigger = false;
-        public string OnExtensionStopped_provider;
-        public string OnExtensionStopped_extension;
-        public override void OnExtensionStopped(string provider, string extension)
+        public bool OnExtensionStoppedWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionStoppedWithContext_context;
+        public override void OnExtensionStoppedWithContext(ExtensionContext context)
         {
-            OnExtensionStopped_be_trigger = true;
-            OnExtensionStopped_provider = provider;
-            OnExtensionStopped_extension = extension;
+            OnExtensionStoppedWithContext_be_trigger = true;
+            OnExtensionStoppedWithContext_context = context;
         }
 
-        public bool OnExtensionStoppedPassed(string provider, string extension)
+        public bool OnExtensionStoppedWithContextPassed(ExtensionContext context)
         {
-            if (OnExtensionStopped_be_trigger == false)
+            if (OnExtensionStoppedWithContext_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnExtensionStopped_provider, provider) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnExtensionStopped_extension, extension) == false)
+            if (ParamsHelper.Compare<ExtensionContext>(OnExtensionStoppedWithContext_context, context) == false)
                 return false;
             return true;
         }
         //////////////////
 
-        public bool OnExtensionError_be_trigger = false;
-        public string OnExtensionError_provider;
-        public string OnExtensionError_extension;
-        public int OnExtensionError_error;
-        public string OnExtensionError_message;
-        public override void OnExtensionError(string provider, string extension, int error, string message)
+        public bool OnExtensionErrorWithContext_be_trigger = false;
+        public ExtensionContext OnExtensionErrorWithContext_context;
+        public int OnExtensionErrorWithContext_error;
+        public string OnExtensionErrorWithContext_message;
+        public override void OnExtensionErrorWithContext(ExtensionContext context, int error, string message)
         {
-            OnExtensionError_be_trigger = true;
-            OnExtensionError_provider = provider;
-            OnExtensionError_extension = extension;
-            OnExtensionError_error = error;
-            OnExtensionError_message = message;
+            OnExtensionErrorWithContext_be_trigger = true;
+            OnExtensionErrorWithContext_context = context;
+            OnExtensionErrorWithContext_error = error;
+            OnExtensionErrorWithContext_message = message;
         }
 
-        public bool OnExtensionErrorPassed(string provider, string extension, int error, string message)
+        public bool OnExtensionErrorWithContextPassed(ExtensionContext context, int error, string message)
         {
-            if (OnExtensionError_be_trigger == false)
+            if (OnExtensionErrorWithContext_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnExtensionError_provider, provider) == false)
+            if (ParamsHelper.Compare<ExtensionContext>(OnExtensionErrorWithContext_context, context) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnExtensionError_extension, extension) == false)
+            if (ParamsHelper.Compare<int>(OnExtensionErrorWithContext_error, error) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnExtensionError_error, error) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnExtensionError_message, message) == false)
+            if (ParamsHelper.Compare<string>(OnExtensionErrorWithContext_message, message) == false)
                 return false;
             return true;
         }

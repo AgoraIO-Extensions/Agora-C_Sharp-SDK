@@ -1767,6 +1767,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AUDIO_CODEC_LPCNET = 12,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_CODEC_OPUSMC = 13,
     }
 
     ///
@@ -2077,6 +2082,36 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_STREAM_LOW = 1,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_1 = 4,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_2 = 5,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_3 = 6,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_4 = 7,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_5 = 8,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_6 = 9,
     }
 
     ///
@@ -2399,6 +2434,22 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_MIRROR_MODE_DISABLED = 2,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum CAMERA_FORMAT_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        CAMERA_FORMAT_NV12,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_FORMAT_BGRA,
     }
 
     ///
@@ -2786,11 +2837,119 @@ namespace Agora.Rtc
             this.framerate = 5;
         }
 
+        public SimulcastStreamConfig(SimulcastStreamConfig other)
+        {
+            this.dimensions = other.dimensions;
+            this.kBitrate = other.kBitrate;
+            this.framerate = other.framerate;
+        }
+
         public SimulcastStreamConfig(VideoDimensions dimensions, int kBitrate, int framerate)
         {
             this.dimensions = dimensions;
             this.kBitrate = kBitrate;
             this.framerate = framerate;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class SimulcastConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public StreamLayerConfig[] configs;
+
+        public SimulcastConfig(StreamLayerConfig[] configs)
+        {
+            this.configs = configs;
+        }
+        public SimulcastConfig()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum StreamLayerIndex
+    {
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_1 = 0,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_2 = 1,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_3 = 2,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_4 = 3,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_5 = 4,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_6 = 5,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LOW = 6,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_COUNT_MAX = 7,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class StreamLayerConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public VideoDimensions dimensions;
+
+        ///
+        /// @ignore
+        ///
+        public int framerate;
+
+        ///
+        /// @ignore
+        ///
+        public bool enable;
+
+        public StreamLayerConfig()
+        {
+            this.dimensions = new VideoDimensions(0, 0);
+            this.framerate = 0;
+            this.enable = false;
+        }
+
+        public StreamLayerConfig(VideoDimensions dimensions, int framerate, bool enable)
+        {
+            this.dimensions = dimensions;
+            this.framerate = framerate;
+            this.enable = enable;
         }
     }
 
@@ -3705,6 +3864,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         APPLICATION_SCENARIO_MEETING = 1,
+
+        ///
+        /// @ignore
+        ///
+        APPLICATION_SCENARIO_1V1 = 2,
     }
 
     ///
@@ -4165,6 +4329,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_RESUMED = 29,
+
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
     }
 
     ///
@@ -6562,6 +6731,151 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public class FaceShapeAreaOptions
+    {
+        ///
+        /// @ignore
+        ///
+        public FACE_SHAPE_AREA shapeArea;
+
+        ///
+        /// @ignore
+        ///
+        public int shapeIntensity;
+
+        public FaceShapeAreaOptions(FACE_SHAPE_AREA shapeArea, int areaIntensity)
+        {
+            this.shapeArea = shapeArea;
+            this.shapeIntensity = areaIntensity;
+        }
+
+        public FaceShapeAreaOptions()
+        {
+            this.shapeArea = FACE_SHAPE_AREA.FACE_SHAPE_AREA_NONE;
+            this.shapeIntensity = 0;
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum FACE_SHAPE_AREA
+    {
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NONE = -1,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_HEADSCALE = 0,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FOREHEAD = 1,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FACECONTOUR = 2,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FACELENGTH = 3,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FACEWIDTH = 4,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_CHEEKBONE = 5,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_CHEEK = 6,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_CHIN = 7,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYESCALE = 8,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSELENGTH = 9,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSEWIDTH = 10,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_MOUTHSCALE = 11,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class FaceShapeBeautyOptions
+    {
+        ///
+        /// @ignore
+        ///
+        public FACE_SHAPE_STYLE shapeStyle;
+
+        ///
+        /// @ignore
+        ///
+        public int styleIntensity;
+
+        public FaceShapeBeautyOptions(FACE_SHAPE_STYLE shapeStyle, int styleIntensity)
+        {
+            this.shapeStyle = shapeStyle;
+            this.styleIntensity = styleIntensity;
+        }
+
+        public FaceShapeBeautyOptions()
+        {
+            this.shapeStyle = FACE_SHAPE_STYLE.FACE_SHAPE_STYLE_FEMALE;
+            this.styleIntensity = 50;
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum FACE_SHAPE_STYLE
+    {
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_STYLE_FEMALE = 0,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_STYLE_MALE = 1,
+    }
+
+    ///
     /// <summary>
     /// The low-light enhancement options.
     /// </summary>
@@ -7390,6 +7704,62 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum VOICE_AI_TUNER_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_MATURE_MALE,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_FRESH_MALE,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_ELEGANT_FEMALE,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_SWEET_FEMALE,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_WARM_MALE_SINGING,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_GENTLE_FEMALE_SINGING,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_HUSKY_MALE_SINGING,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_WARM_ELEGANT_FEMALE_SINGING,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_POWERFUL_MALE_SINGING,
+
+        ///
+        /// @ignore
+        ///
+        VOICE_AI_TUNER_DREAMY_FEMALE_SINGING,
+    }
+
+    ///
     /// <summary>
     /// Screen sharing configurations.
     /// </summary>
@@ -7891,6 +8261,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AREA_CODE_US = 0x00000800,
+
+        ///
+        /// @ignore
+        ///
+        AREA_CODE_RU = 0x00001000,
 
         ///
         /// @ignore

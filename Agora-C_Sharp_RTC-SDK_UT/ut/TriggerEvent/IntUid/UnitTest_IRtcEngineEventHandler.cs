@@ -948,17 +948,14 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
-        public void Test_IRtcEngineEventHandler_OnExtensionEvent()
+        public void Test_IRtcEngineEventHandler_OnExtensionEventWithContext()
         {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENT;
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENTWITHCONTEXT;
 
             jsonObj.Clear();
 
-            string provider = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("provider", provider);
-
-            string extension = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("extension", extension);
+            ExtensionContext context = ParamsHelper.CreateParam<ExtensionContext>();
+            jsonObj.Add("context", context);
 
             string key = ParamsHelper.CreateParam<string>();
             jsonObj.Add("key", key);
@@ -972,21 +969,18 @@ namespace Agora.Rtc.Ut.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnExtensionEventPassed(provider, extension, key, value));
+            Assert.AreEqual(true, EventHandler.OnExtensionEventWithContextPassed(context, key, value));
         }
 
         [Test]
-        public void Test_IRtcEngineEventHandler_OnExtensionStarted()
+        public void Test_IRtcEngineEventHandler_OnExtensionStartedWithContext()
         {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED;
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTEDWITHCONTEXT;
 
             jsonObj.Clear();
 
-            string provider = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("provider", provider);
-
-            string extension = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("extension", extension);
+            ExtensionContext context = ParamsHelper.CreateParam<ExtensionContext>();
+            jsonObj.Add("context", context);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -994,21 +988,18 @@ namespace Agora.Rtc.Ut.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnExtensionStartedPassed(provider, extension));
+            Assert.AreEqual(true, EventHandler.OnExtensionStartedWithContextPassed(context));
         }
 
         [Test]
-        public void Test_IRtcEngineEventHandler_OnExtensionStopped()
+        public void Test_IRtcEngineEventHandler_OnExtensionStoppedWithContext()
         {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED;
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPEDWITHCONTEXT;
 
             jsonObj.Clear();
 
-            string provider = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("provider", provider);
-
-            string extension = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("extension", extension);
+            ExtensionContext context = ParamsHelper.CreateParam<ExtensionContext>();
+            jsonObj.Add("context", context);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -1016,21 +1007,18 @@ namespace Agora.Rtc.Ut.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnExtensionStoppedPassed(provider, extension));
+            Assert.AreEqual(true, EventHandler.OnExtensionStoppedWithContextPassed(context));
         }
 
         [Test]
-        public void Test_IRtcEngineEventHandler_OnExtensionError()
+        public void Test_IRtcEngineEventHandler_OnExtensionErrorWithContext()
         {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERROR;
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERRORWITHCONTEXT;
 
             jsonObj.Clear();
 
-            string provider = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("provider", provider);
-
-            string extension = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("extension", extension);
+            ExtensionContext context = ParamsHelper.CreateParam<ExtensionContext>();
+            jsonObj.Add("context", context);
 
             int error = ParamsHelper.CreateParam<int>();
             jsonObj.Add("error", error);
@@ -1044,7 +1032,7 @@ namespace Agora.Rtc.Ut.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnExtensionErrorPassed(provider, extension, error, message));
+            Assert.AreEqual(true, EventHandler.OnExtensionErrorWithContextPassed(context, error, message));
         }
 
         [Test]

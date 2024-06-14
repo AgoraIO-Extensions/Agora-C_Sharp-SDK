@@ -566,44 +566,6 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int StartEchoTest();
-
-        ///
-        /// <summary>
-        /// Starts an audio call test.
-        /// 
-        /// Deprecated: This method is deprecated as of v4.0.1. Use StartEchoTest [3/3] instead. This method starts an audio call test to determine whether the audio devices (for example, headset and speaker) and the network connection are working properly. To conduct the test, let the user speak for a while, and the recording is played back within the set interval. If the user can hear the recording within the interval, the audio devices and network connection are working properly.
-        /// Call this method before joining a channel.
-        /// After calling StartEchoTest [2/3], you must call StopEchoTest to end the test. Otherwise, the app cannot perform the next echo test, and you cannot join the channel.
-        /// In the live streaming channels, only a host can call this method.
-        /// </summary>
-        ///
-        /// <param name="intervalInSeconds"> The time interval (s) between when you speak and when the recording plays back. The value range is [2, 10]. </param>
-        ///
-        /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int StartEchoTest(int intervalInSeconds);
-
-        ///
-        /// <summary>
-        /// Starts an audio device loopback test.
-        /// 
-        /// To test whether the user's local sending and receiving streams are normal, you can call this method to perform an audio and video call loop test, which tests whether the audio and video devices and the user's upstream and downstream networks are working properly. After starting the test, the user needs to make a sound or face the camera. The audio or video is output after about two seconds. If the audio playback is normal, the audio device and the user's upstream and downstream networks are working properly; if the video playback is normal, the video device and the user's upstream and downstream networks are working properly.
-        /// You can call this method either before or after joining a channel. When calling in a channel, make sure that no audio or video stream is being published.
-        /// After calling this method, call StopEchoTest to end the test; otherwise, the user cannot perform the next audio and video call loop test and cannot join the channel.
-        /// In live streaming scenarios, this method only applies to hosts.
-        /// </summary>
-        ///
-        /// <param name="config"> The configuration of the audio and video call loop test. See EchoTestConfiguration. </param>
-        ///
-        /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
-        /// </returns>
-        ///
         public abstract int StartEchoTest(EchoTestConfiguration config);
 
         ///
@@ -804,6 +766,26 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetFaceShapeBeautyOptions(bool enabled, FaceShapeBeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetFaceShapeAreaOptions(FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int GetFaceShapeBeautyOptions(ref FaceShapeBeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int GetFaceShapeAreaOptions(ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         ///
         /// <summary>
@@ -2465,6 +2447,11 @@ namespace Agora.Rtc
         public abstract int SetHeadphoneEQParameters(int lowGain, int highGain);
 
         ///
+        /// @ignore
+        ///
+        public abstract int EnableVoiceAITuner(bool enabled, VOICE_AI_TUNER_TYPE type);
+
+        ///
         /// <summary>
         /// Sets the log file.
         /// 
@@ -2686,6 +2673,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetSimulcastConfig(SimulcastConfig simulcastConfig);
 
         ///
         /// <summary>
@@ -4288,51 +4280,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
-
-        ///
-        /// <summary>
-        /// Sets the built-in encryption mode.
-        /// 
-        /// Deprecated: Use EnableEncryption instead. The SDK supports built-in encryption schemes, AES-128-GCM is supported by default. Call this method to use other encryption modes. All users in the same channel must use the same encryption mode and secret. Refer to the information related to the AES encryption algorithm on the differences between the encryption modes. Before calling this method, please call SetEncryptionSecret to enable the built-in encryption function.
-        /// </summary>
-        ///
-        /// <param name="encryptionMode">
-        /// The following encryption modes:
-        /// " aes-128-xts ": 128-bit AES encryption, XTS mode.
-        /// " aes-128-ecb ": 128-bit AES encryption, ECB mode.
-        /// " aes-256-xts ": 256-bit AES encryption, XTS mode.
-        /// " sm4-128-ecb ": 128-bit SM4 encryption, ECB mode.
-        /// " aes-128-gcm ": 128-bit AES encryption, GCM mode.
-        /// " aes-256-gcm ": 256-bit AES encryption, GCM mode.
-        /// "": When this parameter is set as null, the encryption mode is set as " aes-128-gcm " by default.
-        /// </param>
-        ///
-        /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
-        /// </returns>
-        ///
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
-        public abstract int SetEncryptionMode(string encryptionMode);
-
-        ///
-        /// <summary>
-        /// Enables built-in encryption with an encryption password before users join a channel.
-        /// 
-        /// Deprecated: Use EnableEncryption instead. Before joining the channel, you need to call this method to set the secret parameter to enable the built-in encryption. All users in the same channel should use the same secret. The secret is automatically cleared once a user leaves the channel. If you do not specify the secret or secret is set as null, the built-in encryption is disabled.
-        /// Do not use this method for Media Push.
-        /// For optimal transmission, ensure that the encrypted data size does not exceed the original data size + 16 bytes. 16 bytes is the maximum padding size for AES encryption.
-        /// </summary>
-        ///
-        /// <param name="secret"> The encryption password. </param>
-        ///
-        /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
-        /// </returns>
-        ///
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
-        public abstract int SetEncryptionSecret(string secret);
 
         ///
         /// <summary>

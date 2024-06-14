@@ -234,24 +234,6 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_IRtcEngine_StartEchoTest()
         {
-
-
-            var nRet = RtcEngine.StartEchoTest();
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngine_StartEchoTest2()
-        {
-            int intervalInSeconds = ParamsHelper.CreateParam<int>();
-
-            var nRet = RtcEngine.StartEchoTest(intervalInSeconds);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngine_StartEchoTest3()
-        {
             EchoTestConfiguration config = ParamsHelper.CreateParam<EchoTestConfiguration>();
 
             var nRet = RtcEngine.StartEchoTest(config);
@@ -366,6 +348,47 @@ namespace Agora.Rtc.Ut
             MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
 
             var nRet = RtcEngine.SetBeautyEffectOptions(enabled, options, type);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetFaceShapeBeautyOptions()
+        {
+            bool enabled = ParamsHelper.CreateParam<bool>();
+            FaceShapeBeautyOptions options = ParamsHelper.CreateParam<FaceShapeBeautyOptions>();
+            MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
+
+            var nRet = RtcEngine.SetFaceShapeBeautyOptions(enabled, options, type);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetFaceShapeAreaOptions()
+        {
+            FaceShapeAreaOptions options = ParamsHelper.CreateParam<FaceShapeAreaOptions>();
+            MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
+
+            var nRet = RtcEngine.SetFaceShapeAreaOptions(options, type);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_GetFaceShapeBeautyOptions()
+        {
+            FaceShapeBeautyOptions options = ParamsHelper.CreateParam<FaceShapeBeautyOptions>();
+            MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
+
+            var nRet = RtcEngine.GetFaceShapeBeautyOptions(ref options, type);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_GetFaceShapeAreaOptions()
+        {
+            FaceShapeAreaOptions options = ParamsHelper.CreateParam<FaceShapeAreaOptions>();
+            MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
+
+            var nRet = RtcEngine.GetFaceShapeAreaOptions(ref options, type);
             Assert.AreEqual(0, nRet);
         }
 
@@ -1208,6 +1231,16 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_EnableVoiceAITuner()
+        {
+            bool enabled = ParamsHelper.CreateParam<bool>();
+            VOICE_AI_TUNER_TYPE type = ParamsHelper.CreateParam<VOICE_AI_TUNER_TYPE>();
+
+            var nRet = RtcEngine.EnableVoiceAITuner(enabled, type);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_SetLogFile()
         {
             string filePath = ParamsHelper.CreateParam<string>();
@@ -1326,6 +1359,15 @@ namespace Agora.Rtc.Ut
             SIMULCAST_STREAM_MODE mode = ParamsHelper.CreateParam<SIMULCAST_STREAM_MODE>();
 
             var nRet = RtcEngine.SetDualStreamMode(mode);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetSimulcastConfig()
+        {
+            SimulcastConfig simulcastConfig = ParamsHelper.CreateParam<SimulcastConfig>();
+
+            var nRet = RtcEngine.SetSimulcastConfig(simulcastConfig);
             Assert.AreEqual(0, nRet);
         }
 
@@ -2210,24 +2252,6 @@ namespace Agora.Rtc.Ut
             PRIORITY_TYPE userPriority = ParamsHelper.CreateParam<PRIORITY_TYPE>();
 
             var nRet = RtcEngine.SetRemoteUserPriority(uid, userPriority);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngine_SetEncryptionMode()
-        {
-            string encryptionMode = ParamsHelper.CreateParam<string>();
-
-            var nRet = RtcEngine.SetEncryptionMode(encryptionMode);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngine_SetEncryptionSecret()
-        {
-            string secret = ParamsHelper.CreateParam<string>();
-
-            var nRet = RtcEngine.SetEncryptionSecret(secret);
             Assert.AreEqual(0, nRet);
         }
 

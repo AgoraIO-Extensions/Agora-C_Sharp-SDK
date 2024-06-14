@@ -574,70 +574,30 @@ namespace Agora.Rtc
         }
 
         ///
-        /// <summary>
-        /// The event callback of the extension.
-        /// 
-        /// To listen for events while the extension is running, you need to register this callback.
-        /// </summary>
+        /// @ignore
         ///
-        /// <param name="value"> The value of the extension key. </param>
-        ///
-        /// <param name="key"> The key of the extension. </param>
-        ///
-        /// <param name="provider"> The name of the extension provider. </param>
-        ///
-        /// <param name="extension"> The name of the extension. </param>
-        ///
-        public virtual void OnExtensionEvent(string provider, string extension, string key, string value)
+        public virtual void OnExtensionEventWithContext(ExtensionContext context, string key, string value)
         {
         }
 
         ///
-        /// <summary>
-        /// Occurs when the extension is enabled.
-        /// 
-        /// The extension triggers this callback after it is successfully enabled.
-        /// </summary>
+        /// @ignore
         ///
-        /// <param name="provider"> The name of the extension provider. </param>
-        ///
-        /// <param name="extension"> The name of the extension. </param>
-        ///
-        public virtual void OnExtensionStarted(string provider, string extension)
+        public virtual void OnExtensionStartedWithContext(ExtensionContext context)
         {
         }
 
         ///
-        /// <summary>
-        /// Occurs when the extension is disabled.
-        /// 
-        /// The extension triggers this callback after it is successfully destroyed.
-        /// </summary>
+        /// @ignore
         ///
-        /// <param name="extension"> The name of the extension. </param>
-        ///
-        /// <param name="provider"> The name of the extension provider. </param>
-        ///
-        public virtual void OnExtensionStopped(string provider, string extension)
+        public virtual void OnExtensionStoppedWithContext(ExtensionContext context)
         {
         }
 
         ///
-        /// <summary>
-        /// Occurs when the extension runs incorrectly.
-        /// 
-        /// In case of extension enabling failure or runtime errors, the extension triggers this callback and reports the error code along with the reasons.
-        /// </summary>
+        /// @ignore
         ///
-        /// <param name="provider"> The name of the extension provider. </param>
-        ///
-        /// <param name="extension"> The name of the extension. </param>
-        ///
-        /// <param name="error"> Error code. For details, see the extension documentation provided by the extension provider. </param>
-        ///
-        /// <param name="message"> Reason. For details, see the extension documentation provided by the extension provider. </param>
-        ///
-        public virtual void OnExtensionError(string provider, string extension, int error, string message)
+        public virtual void OnExtensionErrorWithContext(ExtensionContext context, int error, string message)
         {
         }
 

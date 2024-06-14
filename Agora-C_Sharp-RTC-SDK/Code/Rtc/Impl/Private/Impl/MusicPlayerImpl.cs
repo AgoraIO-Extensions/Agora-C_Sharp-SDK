@@ -58,11 +58,6 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.Open(playerId, url, startPos);
         }
 
-        public int OpenWithCustomSource(int playerId, long startPos, IMediaPlayerCustomDataProvider provider)
-        {
-            return _mediaPlayerImpl.OpenWithCustomSource(playerId, startPos, provider);
-        }
-
         public int OpenWithMediaSource(int playerId, MediaSource source)
         {
             return _mediaPlayerImpl.OpenWithMediaSource(playerId, source);

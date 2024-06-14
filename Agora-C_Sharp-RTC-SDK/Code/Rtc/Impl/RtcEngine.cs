@@ -438,24 +438,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetClientRole(role, options);
         }
 
-        public override int StartEchoTest()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StartEchoTest();
-        }
-
-        public override int StartEchoTest(int intervalInSeconds)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StartEchoTest(intervalInSeconds);
-        }
-
         public override int StartEchoTest(EchoTestConfiguration config)
         {
             if (_rtcEngineImpl == null)
@@ -571,6 +553,42 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetBeautyEffectOptions(enabled, options, type);
+        }
+
+        public override int SetFaceShapeBeautyOptions(bool enabled, FaceShapeBeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetFaceShapeBeautyOptions(enabled, options, type);
+        }
+
+        public override int SetFaceShapeAreaOptions(FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetFaceShapeAreaOptions(options, type);
+        }
+
+        public override int GetFaceShapeBeautyOptions(ref FaceShapeBeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetFaceShapeBeautyOptions(ref options, type);
+        }
+
+        public override int GetFaceShapeAreaOptions(ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetFaceShapeAreaOptions(ref options, type);
         }
 
         public override int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
@@ -1368,6 +1386,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetHeadphoneEQParameters(lowGain, highGain);
         }
 
+        public override int EnableVoiceAITuner(bool enabled, VOICE_AI_TUNER_TYPE type)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableVoiceAITuner(enabled, type);
+        }
+
         public override int SetLogFile(string filePath)
         {
             if (_rtcEngineImpl == null)
@@ -1483,6 +1510,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDualStreamMode(mode);
+        }
+
+        public override int SetSimulcastConfig(SimulcastConfig simulcastConfig)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetSimulcastConfig(simulcastConfig);
         }
 
         public override int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
@@ -2338,26 +2374,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteUserPriority(uid, userPriority);
-        }
-
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
-        public override int SetEncryptionMode(string encryptionMode)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetEncryptionMode(encryptionMode);
-        }
-
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
-        public override int SetEncryptionSecret(string secret)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetEncryptionSecret(secret);
         }
 
         public override int EnableEncryption(bool enabled, EncryptionConfig config)
@@ -3245,6 +3261,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDualStreamModeEx(mode, streamConfig, connection);
+        }
+
+        public override int SetSimulcastConfigEx(SimulcastConfig simulcastConfig, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetSimulcastConfigEx(simulcastConfig, connection);
         }
 
         public override int SetHighPriorityUserListEx(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnection connection)
