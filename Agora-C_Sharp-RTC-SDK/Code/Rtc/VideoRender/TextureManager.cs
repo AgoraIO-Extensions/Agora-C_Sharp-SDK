@@ -65,7 +65,7 @@ namespace Agora.Rtc
 
         protected virtual void Awake()
         {
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
             InitTexture();
             InitIrisVideoFrame();
         }
