@@ -13,6 +13,7 @@ namespace Agora.Rtc
 {
     using track_id_t = System.UInt32;
     using IrisRtcEnginePtr = IntPtr;
+    using RtcEngineHandler = IntPtr;
     using IrisRtcRenderingHandle = IntPtr;
     using view_t = System.UInt64;
 
@@ -22,6 +23,8 @@ namespace Agora.Rtc
         private static RtcEngineImpl engineInstance = null;
 
         private IrisRtcEnginePtr _irisRtcEngine;
+        //IRtcEngine * 
+        private RtcEngineHandler _rtcEngine;
         private IrisRtcCApiParam _apiParam;
 
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
@@ -68,12 +71,16 @@ namespace Agora.Rtc
 
             // AgoraRtcNative.CreateApiParamsPtr();
             _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(nativePtr);
-
+            var ret = this.GetNativeHandler(ref _rtcEngine);
+            if (ret != 0)
+            {
+                AgoraLog.LogError("GetNativeHandler failed: " + ret);
+            }
             _videoDeviceManagerInstance = new VideoDeviceManagerImpl(_irisRtcEngine);
             _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
             _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
             _musicContentCenterImpl = new MusicContentCenterImpl(_irisRtcEngine, _mediaPlayerInstance);
-            _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine);
+            _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine, _rtcEngine);
             _h265TranscoderImpl = new H265TranscoderImpl(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
@@ -231,11 +238,6 @@ namespace Agora.Rtc
             {
                 AgoraRtcNative.FreeEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle);
             }
-        }
-
-        internal IrisRtcEnginePtr GetNativeHandler()
-        {
-            return _irisRtcEngine;
         }
 
         internal IrisRtcRenderingHandle GetRtcRenderingHandle()
@@ -6063,7 +6065,7 @@ namespace Agora.Rtc
             IrisAudioFrame irisFrame = new IrisAudioFrame(frame);
             GCHandle RawBufferHandle = GCHandle.Alloc(frame.RawBuffer, GCHandleType.Pinned);
             irisFrame.buffer = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
-            var result = AgoraRtcNative.IMediaEngine_PushAudioFrame(_irisRtcEngine, ref irisFrame, trackId);
+            var result = AgoraRtcNative.IMediaEngine_PushAudioFrame(_rtcEngine, ref irisFrame, trackId);
             RawBufferHandle.Free();
             return result;
         }
@@ -6071,7 +6073,7 @@ namespace Agora.Rtc
         public int PullAudioFrame(AudioFrame frame)
         {
             IrisAudioFrame irisFrame = new IrisAudioFrame(frame);
-            return AgoraRtcNative.IMediaEngine_PullAudioFrame(_irisRtcEngine, ref irisFrame);
+            return AgoraRtcNative.IMediaEngine_PullAudioFrame(_rtcEngine, ref irisFrame);
         }
 
         public int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId)
@@ -6080,7 +6082,7 @@ namespace Agora.Rtc
             GCHandle metadata_bufferHandle = frame.metadata_buffer == null ? GCHandle.Alloc(new byte[1], GCHandleType.Pinned) : GCHandle.Alloc(frame.metadata_buffer, GCHandleType.Pinned);
             GCHandle alphaBufferHandle = frame.alphaBuffer == null ? GCHandle.Alloc(new byte[1], GCHandleType.Pinned) : GCHandle.Alloc(frame.alphaBuffer, GCHandleType.Pinned);
             IrisExternalVideoFrame irisFrame = new IrisExternalVideoFrame(frame);
-            var result = AgoraRtcNative.IMediaEngine_PushVideoFrame(_irisRtcEngine, ref irisFrame, videoTrackId);
+            var result = AgoraRtcNative.IMediaEngine_PushVideoFrame(_rtcEngine, ref irisFrame, videoTrackId);
             bufferHandle.Free();
             metadata_bufferHandle.Free();
             alphaBufferHandle.Free();
@@ -6093,7 +6095,7 @@ namespace Agora.Rtc
             GCHandle imageBufferHandle = GCHandle.Alloc(imageBuffer, GCHandleType.Pinned);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
             IrisEncodedVideoFrameInfo irisFrameInfo = new IrisEncodedVideoFrameInfo(videoEncodedFrameInfo);
-            var result = AgoraRtcNative.IMediaEngine_PushEncodedVideoImage(_irisRtcEngine, bufferPtr, length, ref irisFrameInfo, videoTrackId);
+            var result = AgoraRtcNative.IMediaEngine_PushEncodedVideoImage(_rtcEngine, bufferPtr, length, ref irisFrameInfo, videoTrackId);
             imageBufferHandle.Free();
             return result;
         }
