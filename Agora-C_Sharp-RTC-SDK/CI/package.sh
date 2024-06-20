@@ -41,6 +41,18 @@ UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
 BUILD_PACKAGE=$9
 BUILD_WAYANG=${10}
 WAYANG_BRANCH=${11}
+EXCLUDE_LIST_IN_DESKTOP=${12}
+EXCLUDE_LIST_IN_MOBILE=${13}
+
+delete_files() {
+    local path=$1
+    local exclude_list=$2
+
+    IFS=',' read -ra files <<<"$exclude_list"
+    for file in "${files[@]}"; do
+        find "$path" -type f -name "$file" -delete
+    done
+}
 
 #--------------------------------------
 # Prepare all the required resources
@@ -131,15 +143,19 @@ fi
 
 cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
+delete_files "$ANDROID_DST_PATH"/libs/arm64-v8a "$EXCLUDE_LIST_IN_MOBILE"
 
 cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
+delete_files "$ANDROID_DST_PATH"/libs/armeabi-v7a "$EXCLUDE_LIST_IN_MOBILE"
 
 cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86
+delete_files "$ANDROID_DST_PATH"/libs/x86 "$EXCLUDE_LIST_IN_MOBILE"
 
 cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+delete_files "$ANDROID_DST_PATH"/libs/x86_64 "$EXCLUDE_LIST_IN_MOBILE"
 
 # iOS
 echo "[Unity CI] copying iOS ..."
@@ -157,11 +173,13 @@ for filename in $files; do
 
 done
 cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 
 # macOS
 echo "[Unity CI] copying macOS ..."
 MAC_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
 cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
+delete_files "$MAC_DST_PATH/*.bundle/Contents/Frameworks" "$EXCLUDE_LIST_IN_DESKTOP"
 
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."
@@ -181,6 +199,7 @@ for filename in $files; do
     fi
 
 done
+delete_files "$WIN64_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
@@ -198,6 +217,7 @@ for filename in $files; do
     fi
 
 done
+delete_files "$WIN32_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
 echo "[Unity CI] finish copying files"
 
