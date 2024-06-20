@@ -48,13 +48,18 @@ delete_files() {
     local path=$1
     local exclude_list=$2
 
-    if [ -z "$exclude_list" ]; then
-        return
-    fi
-
     IFS=',' read -ra files <<<"$exclude_list"
     for file in "${files[@]}"; do
-        find "$path" -type f -name "$file" -delete
+        for item in $(find "$path" -name "$file"); do
+            # 第二步：检查每个匹配项的类型并删除它
+            if [ -f "$item" ]; then
+                # 如果是文件，直接删除
+                rm "$item"
+            elif [ -d "$item" ]; then
+                # 如果是目录，递归删除
+                rm -rf "$item"
+            fi
+        done
     done
 }
 
