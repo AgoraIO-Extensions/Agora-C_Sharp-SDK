@@ -48,6 +48,10 @@ delete_files() {
     local path=$1
     local exclude_list=$2
 
+    if [ -z "$exclude_list" ]; then
+        return
+    fi
+
     IFS=',' read -ra files <<<"$exclude_list"
     for file in "${files[@]}"; do
         find "$path" -type f -name "$file" -delete
