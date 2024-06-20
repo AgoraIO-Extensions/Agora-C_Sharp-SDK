@@ -183,7 +183,7 @@ delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 echo "[Unity CI] copying macOS ..."
 MAC_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
 cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
-delete_files "$MAC_DST_PATH/*.bundle/Contents/Frameworks" "$EXCLUDE_LIST_IN_DESKTOP"
+delete_files "$MAC_DST_PATH/AgoraRtcWrapperUnity.bundle/Contents/Frameworks" "$EXCLUDE_LIST_IN_DESKTOP"
 
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."
