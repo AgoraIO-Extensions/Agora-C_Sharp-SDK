@@ -69,7 +69,7 @@ namespace Agora.Rtc
                 return (int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
             }
 
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetIrisHandler();
             IntPtr rtcRenderingHandle = (_agoraRtcEngine as RtcEngineImpl).GetRtcRenderingHandle();
 
             if (irisEngine != IntPtr.Zero)
@@ -93,7 +93,7 @@ namespace Agora.Rtc
                 return;
             }
 
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetIrisHandler();
             IntPtr rtcRenderingHandle = (_agoraRtcEngine as RtcEngineImpl).GetRtcRenderingHandle();
 
             if (irisEngine != IntPtr.Zero)
@@ -114,7 +114,7 @@ namespace Agora.Rtc
                 return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
             }
 
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetIrisHandler();
             IntPtr rtcRenderingHandle = (_agoraRtcEngine as RtcEngineImpl).GetRtcRenderingHandle();
 
             if (irisEngine != IntPtr.Zero)
@@ -130,7 +130,7 @@ namespace Agora.Rtc
 
         internal void RtcEngineImplWillDispose(RtcEngineImpl impl)
         {
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetIrisHandler();
             IntPtr rtcRenderingHandle = (_agoraRtcEngine as RtcEngineImpl).GetRtcRenderingHandle();
 
             if (irisEngine != IntPtr.Zero)
