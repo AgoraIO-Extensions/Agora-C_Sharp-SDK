@@ -240,6 +240,11 @@ namespace Agora.Rtc
             }
         }
 
+        internal IrisRtcEnginePtr GetIrisHandler()
+        {
+            return _irisRtcEngine;
+        }
+
         internal IrisRtcRenderingHandle GetRtcRenderingHandle()
         {
             return _rtcRenderingHandle;
