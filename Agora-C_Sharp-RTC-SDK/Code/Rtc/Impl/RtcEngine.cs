@@ -70,6 +70,10 @@ namespace Agora.Rtc
             MediaPlayerCacheManager.ReleaseInstance();
 
             instance = null;
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+            VideoStreamManager.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
+#endif
         }
 
         private static IRtcEngine instance = null;
