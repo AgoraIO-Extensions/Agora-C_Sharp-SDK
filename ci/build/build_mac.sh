@@ -96,6 +96,27 @@ echo STRING_UID: $STRING_UID
 echo SUFFIX: $SUFFIX
 echo robot_key: $robot_key
 echo SPLIT_VISIONOS: $SPLIT_VISIONOS
+echo EXCLUDE_LIST_IN_DESKTOP $EXCLUDE_LIST_IN_DESKTOP
+echo EXCLUDE_LIST_IN_MOBILE $EXCLUDE_LIST_IN_MOBILE
+
+delete_files() {
+    local path=$1
+    local exclude_list=$2
+
+    IFS=',' read -ra files <<<"$exclude_list"
+    for file in "${files[@]}"; do
+        for item in $(find "$path" -name "$file"); do
+            # 第二步：检查每个匹配项的类型并删除它
+            if [ -f "$item" ]; then
+                # 如果是文件，直接删除
+                rm "$item"
+            elif [ -d "$item" ]; then
+                # 如果是目录，递归删除
+                rm -rf "$item"
+            fi
+        done
+    done
+}
 
 if [ "$RTC" == "true" ]; then
     PLUGIN_NAME="Agora-RTC-Plugin"
@@ -227,15 +248,19 @@ if [ "$ANDROID_URL" != "" ]; then
     #copy iris
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
+    delete_files "$ANDROID_DST_PATH"/libs/arm64-v8a "$EXCLUDE_LIST_IN_MOBILE"
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
+    delete_files "$ANDROID_DST_PATH"/libs/armeabi-v7a "$EXCLUDE_LIST_IN_MOBILE"
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86
+    delete_files "$ANDROID_DST_PATH"/libs/x86 "$EXCLUDE_LIST_IN_MOBILE"
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+    delete_files "$ANDROID_DST_PATH"/libs/x86_64 "$EXCLUDE_LIST_IN_MOBILE"
 
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
@@ -262,6 +287,7 @@ if [ "$IOS_URL" != "" ]; then
     done
 
     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+    delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 
     files=$(ls $IOS_DST_PATH)
     for filename in $files; do
@@ -303,6 +329,7 @@ if [ "$VISIONOS_URL" != "" ]; then
 
     rm $VISIONOS_DST_PATH/devices.meta
     rm $VISIONOS_DST_PATH/simulator.meta
+    delete_files "$VISIONOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 fi
 
 # macOS
@@ -313,6 +340,12 @@ if [ "$MAC_URL" != "" ]; then
     MAC_SRC_PATH="./iris_*_Mac"
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
     cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
+
+    if [ "$RTC" == "true" ]; then
+        delete_files "$MAC_DST_PATH"/AgoraRtcWrapperUnity.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
+    else
+        delete_files "$MAC_DST_PATH"/AgoraRtmWrapperUnity.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
+    fi
 fi
 
 #Windows
@@ -328,6 +361,7 @@ if [ "$WIN_URL" != "" ]; then
     cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
     cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
     cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
+    delete_files "$WIN64_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
     # Windows x86
     echo "[Unity CI] copying Windows x86 ..."
@@ -336,6 +370,7 @@ if [ "$WIN_URL" != "" ]; then
     cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
+    delete_files "$WIN32_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
     #create dll.meta
     files=$(ls $WIN64_DST_PATH)
