@@ -586,13 +586,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetFaceShapeBeautyOptions(ref options, type);
         }
 
-        public override int GetFaceShapeAreaOptions(ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        public override int GetFaceShapeAreaOptions(FACE_SHAPE_AREA shapeArea, ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.GetFaceShapeAreaOptions(ref options, type);
+            return _rtcEngineImpl.GetFaceShapeAreaOptions(shapeArea, ref options, type);
         }
 
         public override int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)

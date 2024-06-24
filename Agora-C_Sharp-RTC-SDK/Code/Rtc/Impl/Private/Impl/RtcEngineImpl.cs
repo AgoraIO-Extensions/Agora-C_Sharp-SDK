@@ -1399,9 +1399,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetFaceShapeAreaOptions(ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        public int GetFaceShapeAreaOptions(FACE_SHAPE_AREA shapeArea, ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
             _param.Clear();
+            _param.Add("shapeArea", shapeArea);
             _param.Add("type", type);
 
             var json = AgoraJson.ToJson(_param);

@@ -785,7 +785,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int GetFaceShapeAreaOptions(ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+        public abstract int GetFaceShapeAreaOptions(FACE_SHAPE_AREA shapeArea, ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         ///
         /// <summary>
