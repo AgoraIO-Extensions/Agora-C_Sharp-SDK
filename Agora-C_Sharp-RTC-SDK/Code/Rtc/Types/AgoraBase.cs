@@ -6838,14 +6838,14 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public FACE_SHAPE_STYLE shapeStyle;
+        public FACE_SHAPE_BEAUTY_STYLE shapeStyle;
 
         ///
         /// @ignore
         ///
         public int styleIntensity;
 
-        public FaceShapeBeautyOptions(FACE_SHAPE_STYLE shapeStyle, int styleIntensity)
+        public FaceShapeBeautyOptions(FACE_SHAPE_BEAUTY_STYLE shapeStyle, int styleIntensity)
         {
             this.shapeStyle = shapeStyle;
             this.styleIntensity = styleIntensity;
@@ -6853,7 +6853,7 @@ namespace Agora.Rtc
 
         public FaceShapeBeautyOptions()
         {
-            this.shapeStyle = FACE_SHAPE_STYLE.FACE_SHAPE_STYLE_FEMALE;
+            this.shapeStyle = FACE_SHAPE_BEAUTY_STYLE.FACE_SHAPE_BEAUTY_STYLE_FEMALE;
             this.styleIntensity = 50;
         }
 
@@ -6862,17 +6862,17 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum FACE_SHAPE_STYLE
+    public enum FACE_SHAPE_BEAUTY_STYLE
     {
         ///
         /// @ignore
         ///
-        FACE_SHAPE_STYLE_FEMALE = 0,
+        FACE_SHAPE_BEAUTY_STYLE_FEMALE = 0,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_STYLE_MALE = 1,
+        FACE_SHAPE_BEAUTY_STYLE_MALE = 1,
     }
 
     ///

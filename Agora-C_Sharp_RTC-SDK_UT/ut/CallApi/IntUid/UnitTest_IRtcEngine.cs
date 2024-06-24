@@ -385,10 +385,11 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_IRtcEngine_GetFaceShapeAreaOptions()
         {
+            FACE_SHAPE_AREA shapeArea = ParamsHelper.CreateParam<FACE_SHAPE_AREA>();
             FaceShapeAreaOptions options = ParamsHelper.CreateParam<FaceShapeAreaOptions>();
             MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
 
-            var nRet = RtcEngine.GetFaceShapeAreaOptions(ref options, type);
+            var nRet = RtcEngine.GetFaceShapeAreaOptions(shapeArea, ref options, type);
             Assert.AreEqual(0, nRet);
         }
 

@@ -48,7 +48,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETFACESHAPEBEAUTYOPTIONS = "RtcEngine_setFaceShapeBeautyOptions_a862ce7";
         internal const string FUNC_RTCENGINE_SETFACESHAPEAREAOPTIONS = "RtcEngine_setFaceShapeAreaOptions_2e242a3";
         internal const string FUNC_RTCENGINE_GETFACESHAPEBEAUTYOPTIONS = "RtcEngine_getFaceShapeBeautyOptions_8382895";
-        internal const string FUNC_RTCENGINE_GETFACESHAPEAREAOPTIONS = "RtcEngine_getFaceShapeAreaOptions_f7106b5";
+        internal const string FUNC_RTCENGINE_GETFACESHAPEAREAOPTIONS = "RtcEngine_getFaceShapeAreaOptions_0783e2c";
         internal const string FUNC_RTCENGINE_SETLOWLIGHTENHANCEOPTIONS = "RtcEngine_setLowlightEnhanceOptions_4f9f013";
         internal const string FUNC_RTCENGINE_SETVIDEODENOISEROPTIONS = "RtcEngine_setVideoDenoiserOptions_4e9fccc";
         internal const string FUNC_RTCENGINE_SETCOLORENHANCEOPTIONS = "RtcEngine_setColorEnhanceOptions_ecae2b3";
