@@ -49,6 +49,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         LOG_LEVEL_API_CALL = 0x0010,
+
+        ///
+        /// @ignore
+        ///
+        LOG_LEVEL_DEBUG = 0x0020,
     }
 
     ///

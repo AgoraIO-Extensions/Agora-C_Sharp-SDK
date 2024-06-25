@@ -152,6 +152,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_ENABLEDUALSTREAMMODE = "RtcEngine_enableDualStreamMode_5039d15";
         internal const string FUNC_RTCENGINE_ENABLEDUALSTREAMMODE2 = "RtcEngine_enableDualStreamMode_9822d8a";
         internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE = "RtcEngine_setDualStreamMode_3a7f662";
+        internal const string FUNC_RTCENGINE_SETSIMULCASTCONFIG = "RtcEngine_setSimulcastConfig_3dcdfd7";
         internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE2 = "RtcEngine_setDualStreamMode_b3a4f6c";
         internal const string FUNC_RTCENGINE_ENABLECUSTOMAUDIOLOCALPLAYBACK = "RtcEngine_enableCustomAudioLocalPlayback_9566341";
         internal const string FUNC_RTCENGINE_SETRECORDINGAUDIOFRAMEPARAMETERS = "RtcEngine_setRecordingAudioFrameParameters_bd46d1d";
@@ -353,6 +354,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_GETUSERINFOBYUIDEX = "RtcEngineEx_getUserInfoByUidEx_1e78da1";
         internal const string FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX = "RtcEngineEx_enableDualStreamModeEx_4b18f41";
         internal const string FUNC_RTCENGINEEX_SETDUALSTREAMMODEEX = "RtcEngineEx_setDualStreamModeEx_622d0f3";
+        internal const string FUNC_RTCENGINEEX_SETSIMULCASTCONFIGEX = "RtcEngineEx_setSimulcastConfigEx_bd8d7d0";
         internal const string FUNC_RTCENGINEEX_SETHIGHPRIORITYUSERLISTEX = "RtcEngineEx_setHighPriorityUserListEx_8736b5c";
         internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX = "RtcEngineEx_takeSnapshotEx_de1c015";
         internal const string FUNC_RTCENGINEEX_ENABLECONTENTINSPECTEX = "RtcEngineEx_enableContentInspectEx_c4e7f69";

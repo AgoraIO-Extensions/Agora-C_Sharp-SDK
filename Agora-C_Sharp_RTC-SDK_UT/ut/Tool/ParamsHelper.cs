@@ -70,6 +70,14 @@ namespace Agora.Rtc.Ut
             {
                 var elementType = instType.GetElementType();
                 int length = 10;
+
+                if (instType.Name == "VideoDimensions[]")
+                {
+                    //LocalVideoStats.simulcastDimensions must be 7
+                    length = 7;
+                }
+
+
                 var array = Array.CreateInstance(elementType, length);
                 for (int i = 0; i < length; i++)
                 {

@@ -2929,6 +2929,21 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SetSimulcastConfig(SimulcastConfig simulcastConfig)
+        {
+            _param.Clear();
+            _param.Add("simulcastConfig", simulcastConfig);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETSIMULCASTCONFIG,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
         public int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
         {
             _param.Clear();
@@ -5933,6 +5948,22 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETDUALSTREAMMODEEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int SetSimulcastConfigEx(SimulcastConfig simulcastConfig, RtcConnection connection)
+        {
+            _param.Clear();
+            _param.Add("simulcastConfig", simulcastConfig);
+            _param.Add("connection", connection);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETSIMULCASTCONFIGEX,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
