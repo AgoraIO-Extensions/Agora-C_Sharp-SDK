@@ -514,6 +514,16 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_SetSimulcastConfigEx()
+        {
+            SimulcastConfig simulcastConfig = ParamsHelper.CreateParam<SimulcastConfig>();
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = RtcEngineEx.SetSimulcastConfigEx(simulcastConfig, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_SetHighPriorityUserListEx()
         {
             uint[] uidList = ParamsHelper.CreateParam<uint[]>();

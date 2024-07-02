@@ -371,6 +371,36 @@ namespace Agora.Rtc
         /// </summary>
         ///
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_1 = 3,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_2 = 4,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_3 = 5,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_4 = 6,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_5 = 7,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_6 = 8,
     }
 
     ///
@@ -557,7 +587,12 @@ namespace Agora.Rtc
         ///
         public int hwEncoderAccelerating;
 
-        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating)
+        ///
+        /// @ignore
+        ///
+        public VideoDimensions[] simulcastDimensions;
+
+        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating, VideoDimensions[] simulcastDimensions)
         {
             this.uid = uid;
             this.sentBitrate = sentBitrate;
@@ -582,6 +617,7 @@ namespace Agora.Rtc
             this.captureBrightnessLevel = captureBrightnessLevel;
             this.dualStreamEnabled = dualStreamEnabled;
             this.hwEncoderAccelerating = hwEncoderAccelerating;
+            this.simulcastDimensions = simulcastDimensions;
         }
         public LocalVideoStats()
         {
@@ -820,6 +856,11 @@ namespace Agora.Rtc
         public int receivedBitrate;
 
         ///
+        /// @ignore
+        ///
+        public int decoderInputFrameRate;
+
+        ///
         /// <summary>
         /// The frame rate (fps) of decoding the remote video.
         /// </summary>
@@ -899,7 +940,7 @@ namespace Agora.Rtc
         ///
         public uint rxVideoBytes;
 
-        public RemoteVideoStats(uint uid, int delay, int e2eDelay, int width, int height, int receivedBitrate, int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate, VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime, int publishDuration, int mosValue, uint rxVideoBytes)
+        public RemoteVideoStats(uint uid, int delay, int e2eDelay, int width, int height, int receivedBitrate, int decoderInputFrameRate, int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate, VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime, int publishDuration, int mosValue, uint rxVideoBytes)
         {
             this.uid = uid;
             this.delay = delay;
@@ -907,6 +948,7 @@ namespace Agora.Rtc
             this.width = width;
             this.height = height;
             this.receivedBitrate = receivedBitrate;
+            this.decoderInputFrameRate = decoderInputFrameRate;
             this.decoderOutputFrameRate = decoderOutputFrameRate;
             this.rendererOutputFrameRate = rendererOutputFrameRate;
             this.frameLossRate = frameLossRate;
@@ -2062,11 +2104,16 @@ namespace Agora.Rtc
         ///
         public Optional<bool> isAudioFilterable = new Optional<bool>();
 
+        ///
+        /// @ignore
+        ///
+        public Optional<string> parameters = new Optional<string>();
+
         public ChannelMediaOptions()
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
@@ -2104,6 +2151,7 @@ namespace Agora.Rtc
             this.isInteractiveAudience = isInteractiveAudience;
             this.customVideoTrackId = customVideoTrackId;
             this.isAudioFilterable = isAudioFilterable;
+            this.parameters = parameters;
         }
 
         ///
@@ -2327,6 +2375,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("isAudioFilterable");
                 writer.Write(this.isAudioFilterable.GetValue());
+            }
+
+            if (this.parameters.HasValue())
+            {
+                writer.WritePropertyName("parameters");
+                writer.Write(this.parameters.GetValue());
             }
 
             writer.WriteObjectEnd();

@@ -2077,6 +2077,36 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_STREAM_LOW = 1,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_1 = 4,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_2 = 5,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_3 = 6,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_4 = 7,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_5 = 8,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_6 = 9,
     }
 
     ///
@@ -2786,11 +2816,119 @@ namespace Agora.Rtc
             this.framerate = 5;
         }
 
+        public SimulcastStreamConfig(SimulcastStreamConfig other)
+        {
+            this.dimensions = other.dimensions;
+            this.kBitrate = other.kBitrate;
+            this.framerate = other.framerate;
+        }
+
         public SimulcastStreamConfig(VideoDimensions dimensions, int kBitrate, int framerate)
         {
             this.dimensions = dimensions;
             this.kBitrate = kBitrate;
             this.framerate = framerate;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class SimulcastConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public StreamLayerConfig[] configs;
+
+        public SimulcastConfig(StreamLayerConfig[] configs)
+        {
+            this.configs = configs;
+        }
+        public SimulcastConfig()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum StreamLayerIndex
+    {
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_1 = 0,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_2 = 1,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_3 = 2,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_4 = 3,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_5 = 4,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_6 = 5,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LOW = 6,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_COUNT_MAX = 7,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class StreamLayerConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public VideoDimensions dimensions;
+
+        ///
+        /// @ignore
+        ///
+        public int framerate;
+
+        ///
+        /// @ignore
+        ///
+        public bool enable;
+
+        public StreamLayerConfig()
+        {
+            this.dimensions = new VideoDimensions(0, 0);
+            this.framerate = 0;
+            this.enable = false;
+        }
+
+        public StreamLayerConfig(VideoDimensions dimensions, int framerate, bool enable)
+        {
+            this.dimensions = dimensions;
+            this.framerate = framerate;
+            this.enable = enable;
         }
     }
 
@@ -4165,6 +4303,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_RESUMED = 29,
+
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
     }
 
     ///
@@ -7891,6 +8034,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AREA_CODE_US = 0x00000800,
+
+        ///
+        /// @ignore
+        ///
+        AREA_CODE_RU = 0x00001000,
 
         ///
         /// @ignore

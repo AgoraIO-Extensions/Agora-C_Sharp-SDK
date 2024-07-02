@@ -1489,6 +1489,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetDualStreamMode(mode);
         }
 
+        public override int SetSimulcastConfig(SimulcastConfig simulcastConfig)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetSimulcastConfig(simulcastConfig);
+        }
+
         public override int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
         {
             if (_rtcEngineImpl == null)
@@ -3249,6 +3258,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDualStreamModeEx(mode, streamConfig, connection);
+        }
+
+        public override int SetSimulcastConfigEx(SimulcastConfig simulcastConfig, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetSimulcastConfigEx(simulcastConfig, connection);
         }
 
         public override int SetHighPriorityUserListEx(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnection connection)

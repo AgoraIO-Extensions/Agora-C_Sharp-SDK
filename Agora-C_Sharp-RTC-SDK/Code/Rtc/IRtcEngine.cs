@@ -2688,6 +2688,11 @@ namespace Agora.Rtc
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetSimulcastConfig(SimulcastConfig simulcastConfig);
+
+        ///
         /// <summary>
         /// Sets dual-stream mode configuration on the sender side.
         /// 

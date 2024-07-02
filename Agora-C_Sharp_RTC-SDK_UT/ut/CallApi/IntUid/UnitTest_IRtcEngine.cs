@@ -1330,6 +1330,15 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_SetSimulcastConfig()
+        {
+            SimulcastConfig simulcastConfig = ParamsHelper.CreateParam<SimulcastConfig>();
+
+            var nRet = RtcEngine.SetSimulcastConfig(simulcastConfig);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_SetDualStreamMode2()
         {
             SIMULCAST_STREAM_MODE mode = ParamsHelper.CreateParam<SIMULCAST_STREAM_MODE>();
