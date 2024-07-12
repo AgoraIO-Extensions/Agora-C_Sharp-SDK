@@ -41,7 +41,8 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnLinkStateEvent()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLINKSTATEEVENT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONLINKSTATEEVENT;
+            
 
             LinkStateEvent @event = ParamsHelper.CreateParam<LinkStateEvent>();
 
@@ -63,7 +64,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnMessageEvent()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONMESSAGEEVENT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONMESSAGEEVENT;
 
             MessageEvent @event;
             ParamsHelper.InitParam(out @event);
@@ -85,7 +86,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnPresenceEvent()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONPRESENCEEVENT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCEEVENT;
 
             Internal.PresenceEvent @event = ParamsHelper.CreateParam<Internal.PresenceEvent>();
 
@@ -106,7 +107,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnTopicEvent()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONTOPICEVENT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONTOPICEVENT;
 
             TopicEvent @event = ParamsHelper.CreateParam<TopicEvent>();
 
@@ -127,7 +128,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnLockEvent()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLOCKEVENT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONLOCKEVENT;
 
             LockEvent @event = ParamsHelper.CreateParam<LockEvent>();
 
@@ -148,7 +149,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnStorageEvent()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONSTORAGEEVENT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONSTORAGEEVENT;
 
             StorageEvent @event = ParamsHelper.CreateParam<StorageEvent>();
 
@@ -169,7 +170,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnJoinResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONJOINRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONJOINRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -199,7 +200,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnLeaveResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLEAVERESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONLEAVERESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -230,7 +231,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnPublishTopicMessageResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONPUBLISHTOPICMESSAGERESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONPUBLISHTOPICMESSAGERESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -262,7 +263,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnJoinTopicResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONJOINTOPICRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONJOINTOPICRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -299,7 +300,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnLeaveTopicResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLEAVETOPICRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONLEAVETOPICRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -335,7 +336,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnSubscribeTopicResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONSUBSCRIBETOPICRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONSUBSCRIBETOPICRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -373,7 +374,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnUnsubscribeTopicResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBETOPICRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONUNSUBSCRIBETOPICRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -403,7 +404,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnGetSubscribedUserListResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONGETSUBSCRIBEDUSERLISTRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETSUBSCRIBEDUSERLISTRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -436,7 +437,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnConnectionStateChange()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGED;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGED;
 
             string channelName = ParamsHelper.CreateParam<string>();
 
@@ -463,7 +464,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnTokenPrivilegeWillExpire()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONTOKENPRIVILEGEWILLEXPIRE;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONTOKENPRIVILEGEWILLEXPIRE;
 
             string channelName = ParamsHelper.CreateParam<string>();
 
@@ -484,7 +485,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnSubscribeResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONSUBSCRIBERESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONSUBSCRIBERESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -511,7 +512,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnUnsubscribeResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBERESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONUNSUBSCRIBERESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -539,7 +540,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnPublishResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONPUBLISHRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONPUBLISHRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -563,7 +564,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnLoginResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLOGINRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONLOGINRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
             RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
@@ -586,7 +587,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnLogoutResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONLOGOUTRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONLOGOUTRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
             RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
@@ -610,7 +611,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnRenewTokenResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONRENEWTOKENRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONRENEWTOKENRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
             RTM_SERVICE_TYPE serverType = ParamsHelper.CreateParam<RTM_SERVICE_TYPE>();
@@ -637,7 +638,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnSetChannelMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONSETCHANNELMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONSETCHANNELMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -667,7 +668,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnUpdateChannelMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUPDATECHANNELMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATECHANNELMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -697,7 +698,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnRemoveChannelMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONREMOVECHANNELMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONREMOVECHANNELMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -727,7 +728,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnGetChannelMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONGETCHANNELMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETCHANNELMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -761,7 +762,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnSetUserMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONSETUSERMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONSETUSERMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -788,7 +789,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnUpdateUserMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUPDATEUSERMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATEUSERMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
             string userId = ParamsHelper.CreateParam<string>();
@@ -814,7 +815,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnRemoveUserMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONREMOVEUSERMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONREMOVEUSERMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -841,7 +842,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnGetUserMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONGETUSERMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETUSERMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -871,7 +872,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnSubscribeUserMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONSUBSCRIBEUSERMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONSUBSCRIBEUSERMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -897,7 +898,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnUnsubscribeUserMetadataResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONUNSUBSCRIBEUSERMETADATARESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONUNSUBSCRIBEUSERMETADATARESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -924,7 +925,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnSetLockResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONSETLOCKRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONSETLOCKRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -958,7 +959,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnRemoveLockResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONREMOVELOCKRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONREMOVELOCKRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -991,7 +992,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnReleaseLockResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONRELEASELOCKRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONRELEASELOCKRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1025,7 +1026,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnAcquireLockResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONACQUIRELOCKRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONACQUIRELOCKRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1061,7 +1062,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnRevokeLockResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONREVOKELOCKRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONREVOKELOCKRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1094,7 +1095,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnGetLocksResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONGETLOCKSRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETLOCKSRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1131,7 +1132,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnWhoNowResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONWHONOWRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONWHONOWRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1166,7 +1167,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnGetOnlineUsersResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONGETONLINEUSERSRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETONLINEUSERSRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1202,7 +1203,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnWhereNowResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONWHERENOWRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONWHERENOWRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1232,7 +1233,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnGetUserChannelsResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONGETUSERCHANNELSRESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETUSERCHANNELSRESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1262,7 +1263,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnPresenceSetStateResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONPRESENCESETSTATERESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCESETSTATERESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1286,7 +1287,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnPresenceRemoveStateResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONPRESENCEREMOVESTATERESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCEREMOVESTATERESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
@@ -1310,7 +1311,7 @@ namespace Agora.Rtm.Ut
         [Test]
         public void Test_OnPresenceGetStateResult()
         {
-            ApiParam.@event = AgoraRtmEventType.EVENT_RTMEVENTHANDLER_ONPRESENCEGETSTATERESULT;
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCEGETSTATERESULT;
 
             ulong requestId = ParamsHelper.CreateParam<ulong>();
 
