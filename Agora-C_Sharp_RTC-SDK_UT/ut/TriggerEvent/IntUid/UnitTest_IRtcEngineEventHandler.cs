@@ -1317,31 +1317,6 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
-        public void Test_IRtcEngineEventHandlerEx_OnLocalVideoStateChanged2()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALVIDEOSTATECHANGED;
-
-            jsonObj.Clear();
-
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-            jsonObj.Add("connection", connection);
-
-            LOCAL_VIDEO_STREAM_STATE state = ParamsHelper.CreateParam<LOCAL_VIDEO_STREAM_STATE>();
-            jsonObj.Add("state", state);
-
-            LOCAL_VIDEO_STREAM_REASON reason = ParamsHelper.CreateParam<LOCAL_VIDEO_STREAM_REASON>();
-            jsonObj.Add("reason", reason);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnLocalVideoStateChanged2Passed(connection, state, reason));
-        }
-
-        [Test]
         public void Test_IRtcEngineEventHandlerEx_OnRemoteVideoStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOSTATECHANGED;

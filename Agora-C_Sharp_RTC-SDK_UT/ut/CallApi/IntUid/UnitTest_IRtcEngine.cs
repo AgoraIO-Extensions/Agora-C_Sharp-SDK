@@ -548,15 +548,6 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
-        public void Test_IRtcEngine_SetDefaultMuteAllRemoteAudioStreams()
-        {
-            bool mute = ParamsHelper.CreateParam<bool>();
-
-            var nRet = RtcEngine.SetDefaultMuteAllRemoteAudioStreams(mute);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_IRtcEngine_MuteRemoteAudioStream()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
@@ -590,15 +581,6 @@ namespace Agora.Rtc.Ut
             bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.MuteAllRemoteVideoStreams(mute);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngine_SetDefaultMuteAllRemoteVideoStreams()
-        {
-            bool mute = ParamsHelper.CreateParam<bool>();
-
-            var nRet = RtcEngine.SetDefaultMuteAllRemoteVideoStreams(mute);
             Assert.AreEqual(0, nRet);
         }
 

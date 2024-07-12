@@ -65,12 +65,10 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_ENABLELOCALAUDIO = "RtcEngine_enableLocalAudio_5039d15";
         internal const string FUNC_RTCENGINE_MUTELOCALAUDIOSTREAM = "RtcEngine_muteLocalAudioStream_5039d15";
         internal const string FUNC_RTCENGINE_MUTEALLREMOTEAUDIOSTREAMS = "RtcEngine_muteAllRemoteAudioStreams_5039d15";
-        internal const string FUNC_RTCENGINE_SETDEFAULTMUTEALLREMOTEAUDIOSTREAMS = "RtcEngine_setDefaultMuteAllRemoteAudioStreams_5039d15";
         internal const string FUNC_RTCENGINE_MUTEREMOTEAUDIOSTREAM = "RtcEngine_muteRemoteAudioStream_dbdc15a";
         internal const string FUNC_RTCENGINE_MUTELOCALVIDEOSTREAM = "RtcEngine_muteLocalVideoStream_5039d15";
         internal const string FUNC_RTCENGINE_ENABLELOCALVIDEO = "RtcEngine_enableLocalVideo_5039d15";
         internal const string FUNC_RTCENGINE_MUTEALLREMOTEVIDEOSTREAMS = "RtcEngine_muteAllRemoteVideoStreams_5039d15";
-        internal const string FUNC_RTCENGINE_SETDEFAULTMUTEALLREMOTEVIDEOSTREAMS = "RtcEngine_setDefaultMuteAllRemoteVideoStreams_5039d15";
         internal const string FUNC_RTCENGINE_SETREMOTEDEFAULTVIDEOSTREAMTYPE = "RtcEngine_setRemoteDefaultVideoStreamType_5a94eb0";
         internal const string FUNC_RTCENGINE_MUTEREMOTEVIDEOSTREAM = "RtcEngine_muteRemoteVideoStream_dbdc15a";
         internal const string FUNC_RTCENGINE_SETREMOTEVIDEOSTREAMTYPE = "RtcEngine_setRemoteVideoStreamType_9e6406e";

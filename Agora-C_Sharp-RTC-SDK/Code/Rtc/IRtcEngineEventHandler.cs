@@ -798,13 +798,6 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
-        ///
-        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
-        {
-        }
-
-        ///
         /// <summary>
         /// Occurs when the remote video stream state changes.
         /// 

@@ -166,7 +166,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int alphaStitchMode;
+        public ALPHA_STITCH_MODE alphaStitchMode;
 
         ///
         /// <summary>
@@ -212,7 +212,7 @@ namespace Agora.Rtc
             this.d3d11Texture2d = IntPtr.Zero;
             this.alphaBuffer = new byte[0];
             this.alphaBufferPtr = IntPtr.Zero;
-            this.alphaStitchMode = 0;
+            this.alphaStitchMode = ALPHA_STITCH_MODE.NO_ALPHA_STITCH;
             this.metaInfo = null;
             this.matrix = new float[16];
         }
@@ -1024,6 +1024,11 @@ namespace Agora.Rtc
         ///
         public int16_t[] data_;
 
+        ///
+        /// @ignore
+        ///
+        public bool is_stereo_;
+
         public AudioPcmFrame()
         {
             this.capture_timestamp = 0;
@@ -1031,6 +1036,7 @@ namespace Agora.Rtc
             this.sample_rate_hz_ = 0;
             this.num_channels_ = 0;
             this.bytes_per_sample = BYTES_PER_SAMPLE.TWO_BYTES_PER_SAMPLE;
+            this.is_stereo_ = false;
         }
 
         public AudioPcmFrame(AudioPcmFrame src)
@@ -1040,9 +1046,10 @@ namespace Agora.Rtc
             this.sample_rate_hz_ = src.sample_rate_hz_;
             this.num_channels_ = src.num_channels_;
             this.bytes_per_sample = src.bytes_per_sample;
+            this.is_stereo_ = src.is_stereo_;
         }
 
-        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_)
+        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_, bool is_stereo_)
         {
             this.capture_timestamp = capture_timestamp;
             this.samples_per_channel_ = samples_per_channel_;
@@ -1050,6 +1057,7 @@ namespace Agora.Rtc
             this.num_channels_ = num_channels_;
             this.bytes_per_sample = bytes_per_sample;
             this.data_ = data_;
+            this.is_stereo_ = is_stereo_;
         }
     }
 
@@ -1644,6 +1652,37 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum ALPHA_STITCH_MODE
+    {
+        ///
+        /// @ignore
+        ///
+        NO_ALPHA_STITCH = 0,
+
+        ///
+        /// @ignore
+        ///
+        ALPHA_STITCH_UP = 1,
+
+        ///
+        /// @ignore
+        ///
+        ALPHA_STITCH_BELOW = 2,
+
+        ///
+        /// @ignore
+        ///
+        ALPHA_STITCH_LEFT = 3,
+
+        ///
+        /// @ignore
+        ///
+        ALPHA_STITCH_RIGHT = 4,
+    }
+
+    ///
     /// <summary>
     /// The external video frame.
     /// </summary>
@@ -1787,7 +1826,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int alphaStitchMode;
+        public ALPHA_STITCH_MODE alphaStitchMode;
 
         ///
         /// <summary>
@@ -1834,12 +1873,12 @@ namespace Agora.Rtc
             this.metadata_size = 0;
             this.alphaBuffer = null;
             this.fillAlphaBuffer = false;
-            this.alphaStitchMode = 0;
+            this.alphaStitchMode = ALPHA_STITCH_MODE.NO_ALPHA_STITCH;
             this.d3d11_texture_2d = IntPtr.Zero;
             this.texture_slice_index = 0;
         }
 
-        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fence_object, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, int alphaStitchMode, IntPtr d3d11_texture_2d, int texture_slice_index, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fence_object, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11_texture_2d, int texture_slice_index, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
         {
             this.type = type;
             this.format = format;

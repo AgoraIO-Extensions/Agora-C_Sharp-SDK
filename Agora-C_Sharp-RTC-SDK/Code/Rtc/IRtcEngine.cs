@@ -1112,12 +1112,6 @@ namespace Agora.Rtc
         public abstract int MuteAllRemoteAudioStreams(bool mute);
 
         ///
-        /// @ignore
-        ///
-        [Obsolete("This method is deprecated. To set whether to receive remote audio streams by default, call \ref IRtcEngine::muteAllRemoteAudioStreams \"muteAllRemoteAudioStreams\" before calling `joinChannel`")]
-        public abstract int SetDefaultMuteAllRemoteAudioStreams(bool mute);
-
-        ///
         /// <summary>
         /// Stops or resumes subscribing to the audio stream of a specified user.
         /// </summary>
@@ -1182,12 +1176,6 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int MuteAllRemoteVideoStreams(bool mute);
-
-        ///
-        /// @ignore
-        ///
-        [Obsolete("This method is deprecated. To set whether to receive remote video streams by default, call \ref IRtcEngine::muteAllRemoteVideoStreams \"muteAllRemoteVideoStreams\" before calling `joinChannel`.")]
-        public abstract int SetDefaultMuteAllRemoteVideoStreams(bool mute);
 
         ///
         /// <summary>
