@@ -740,16 +740,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.MuteAllRemoteAudioStreams(mute);
         }
 
-        [Obsolete("This method is deprecated. To set whether to receive remote audio streams by default, call \ref IRtcEngine::muteAllRemoteAudioStreams \"muteAllRemoteAudioStreams\" before calling `joinChannel`")]
-        public override int SetDefaultMuteAllRemoteAudioStreams(bool mute)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetDefaultMuteAllRemoteAudioStreams(mute);
-        }
-
         public override int MuteRemoteAudioStream(uint uid, bool mute)
         {
             if (_rtcEngineImpl == null)
@@ -784,16 +774,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteAllRemoteVideoStreams(mute);
-        }
-
-        [Obsolete("This method is deprecated. To set whether to receive remote video streams by default, call \ref IRtcEngine::muteAllRemoteVideoStreams \"muteAllRemoteVideoStreams\" before calling `joinChannel`.")]
-        public override int SetDefaultMuteAllRemoteVideoStreams(bool mute)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetDefaultMuteAllRemoteVideoStreams(mute);
         }
 
         public override int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType)

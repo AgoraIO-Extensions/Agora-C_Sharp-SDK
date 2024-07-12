@@ -161,7 +161,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int alphaStitchMode;
+        public ALPHA_STITCH_MODE alphaStitchMode;
 
         public Dictionary<string, string> metaInfo;
 
@@ -231,7 +231,7 @@ namespace Agora.Rtc
         public int metadata_size;
 
         public bool fillAlphaBuffer;
-        public int alphaStitchMode;
+        public ALPHA_STITCH_MODE alphaStitchMode;
 
         public int texture_slice_index;
         public Hdr10MetadataInfo hdr10MetadataInfo;

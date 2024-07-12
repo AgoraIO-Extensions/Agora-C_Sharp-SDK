@@ -1242,32 +1242,6 @@ namespace Agora.Rtc.Ut
         }
         //////////////////
 
-        public bool OnLocalVideoStateChanged2_be_trigger = false;
-        public RtcConnection OnLocalVideoStateChanged2_connection;
-        public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged2_state;
-        public LOCAL_VIDEO_STREAM_REASON OnLocalVideoStateChanged2_reason;
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
-        {
-            OnLocalVideoStateChanged2_be_trigger = true;
-            OnLocalVideoStateChanged2_connection = connection;
-            OnLocalVideoStateChanged2_state = state;
-            OnLocalVideoStateChanged2_reason = reason;
-        }
-
-        public bool OnLocalVideoStateChanged2Passed(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
-        {
-            if (OnLocalVideoStateChanged2_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStateChanged2_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged2_state, state) == false)
-                return false;
-            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_REASON>(OnLocalVideoStateChanged2_reason, reason) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnRemoteVideoStateChanged_be_trigger = false;
         public RtcConnection OnRemoteVideoStateChanged_connection;
         public uint OnRemoteVideoStateChanged_remoteUid;

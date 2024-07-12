@@ -190,7 +190,6 @@ namespace Agora.Rtc
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAMEPUBLISHED = "RtcEngineEventHandler_onFirstLocalVideoFramePublished_263e4cd";
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEODECODED = "RtcEngineEventHandler_onFirstRemoteVideoDecoded_a68170a";
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEOSIZECHANGED = "RtcEngineEventHandler_onVideoSizeChanged_99bf45c";
-        public const string EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALVIDEOSTATECHANGED = "RtcEngineEventHandler_onLocalVideoStateChanged_b202b1b";
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOSTATECHANGED = "RtcEngineEventHandler_onRemoteVideoStateChanged_a14e9d1";
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEOFRAME = "RtcEngineEventHandler_onFirstRemoteVideoFrame_a68170a";
         public const string EVENT_RTCENGINEEVENTHANDLEREX_ONUSERJOINED = "RtcEngineEventHandler_onUserJoined_c5499bd";

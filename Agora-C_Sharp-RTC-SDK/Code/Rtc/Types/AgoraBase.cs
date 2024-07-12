@@ -2391,16 +2391,23 @@ namespace Agora.Rtc
         ///
         public COMPRESSION_PREFERENCE compressionPreference;
 
+        ///
+        /// @ignore
+        ///
+        public bool encodeAlpha;
+
         public AdvanceOptions()
         {
             this.encodingPreference = ENCODING_PREFERENCE.PREFER_AUTO;
             this.compressionPreference = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY;
+            this.encodeAlpha = false;
         }
 
-        public AdvanceOptions(ENCODING_PREFERENCE encoding_preference, COMPRESSION_PREFERENCE compression_preference)
+        public AdvanceOptions(ENCODING_PREFERENCE encoding_preference, COMPRESSION_PREFERENCE compression_preference, bool encode_alpha)
         {
             this.encodingPreference = encoding_preference;
             this.compressionPreference = compression_preference;
+            this.encodeAlpha = encode_alpha;
         }
 
     }
@@ -2685,7 +2692,7 @@ namespace Agora.Rtc
             this.orientationMode = m;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = mirror;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
         }
 
         public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
@@ -2698,7 +2705,7 @@ namespace Agora.Rtc
             this.orientationMode = m;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = mirror;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
         }
 
         public VideoEncoderConfiguration(VideoEncoderConfiguration config)
@@ -2724,7 +2731,7 @@ namespace Agora.Rtc
             this.orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
         }
 
         public VideoEncoderConfiguration(VIDEO_CODEC_TYPE codecType, VideoDimensions dimensions, int frameRate, int bitrate, int minBitrate, ORIENTATION_MODE orientationMode, DEGRADATION_PREFERENCE degradationPreference, VIDEO_MIRROR_MODE_TYPE mirrorMode, AdvanceOptions advanceOptions)
@@ -6286,6 +6293,7 @@ namespace Agora.Rtc
         /// 3: The request is timed out. Agora recommends you prompt the user to check the network connection and try to switch their user role again.
         /// </summary>
         ///
+        [Obsolete("This reason is deprecated.")]
         CLIENT_ROLE_CHANGE_FAILED_REQUEST_TIME_OUT = 3,
 
         ///
@@ -6293,6 +6301,7 @@ namespace Agora.Rtc
         /// 4: The SDK connection fails. You can use reason reported in the OnConnectionStateChanged callback to troubleshoot the failure.
         /// </summary>
         ///
+        [Obsolete("This reason is deprecated.")]
         CLIENT_ROLE_CHANGE_FAILED_CONNECTION_FAILED = 4,
     }
 

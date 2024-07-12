@@ -539,7 +539,7 @@ namespace Agora.Rtc
             this.metadata_size = frame.metadata_size;
             this.alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
             this.fillAlphaBuffer = frame.fillAlphaBuffer;
-            this.alphaStitchMode = frame.alphaStitchMode;
+            this.alphaStitchMode = (int)frame.alphaStitchMode;
             this.d3d11_texture_2d = frame.d3d11_texture_2d;
             this.texture_slice_index = frame.texture_slice_index;
             this.hdr10MetadataInfo = new IrisHdr10MetadataInfo(frame.hdr10MetadataInfo);
