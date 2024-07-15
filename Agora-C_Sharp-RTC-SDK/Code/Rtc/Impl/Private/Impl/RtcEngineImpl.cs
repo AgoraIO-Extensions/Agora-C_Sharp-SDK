@@ -274,9 +274,18 @@ namespace Agora.Rtc
                 ref _apiParam);
             var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (ret == 0)
+            {
                 SetAppType(AppType.APP_TYPE_UNITY);
+                Dictionary<string, object> dic = new Dictionary<string, object>
+                {
+                { "rtc.capture_disable_metal_comp", true }
+                };
+                string parameters = AgoraJson.ToJson<Dictionary<string, object>>(dic);
+                SetParameters(parameters);
+            }
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             if (ret == 0)
                 SetAppType(AppType.APP_TYPE_C_SHARP);
