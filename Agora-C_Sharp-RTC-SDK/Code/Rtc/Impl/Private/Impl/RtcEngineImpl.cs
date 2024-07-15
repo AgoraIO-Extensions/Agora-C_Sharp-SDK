@@ -44,7 +44,7 @@ namespace Agora.Rtc
         private EventHandlerHandle _rtcAudioSpectrumObserverHandle = new EventHandlerHandle();
 
 
-        private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
+        //private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
         private VideoDeviceManagerImpl _videoDeviceManagerInstance;
         private AudioDeviceManagerImpl _audioDeviceManagerInstance;
@@ -75,8 +75,8 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
 
-            _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
-            AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
+            //_videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
+            //AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
 
 
         }
@@ -121,11 +121,11 @@ namespace Agora.Rtc
                 _mediaRecorderInstance.Dispose();
                 _mediaRecorderInstance = null;
 
-                AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
+                //AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
             }
 
             Release(sync);
-            AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
+            //AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
             _disposed = true;
         }
 
@@ -219,7 +219,8 @@ namespace Agora.Rtc
 
         internal IrisVideoFrameBufferManagerPtr GetVideoFrameBufferManager()
         {
-            return _videoFrameBufferManagerPtr;
+            return IntPtr.Zero;
+            //return _videoFrameBufferManagerPtr;
         }
 
         public static RtcEngineImpl GetInstance(IntPtr nativePtr)
@@ -6342,12 +6343,14 @@ namespace Agora.Rtc
 
         public bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir)
         {
-            return AgoraRtcNative.StartDumpVideo(_videoFrameBufferManagerPtr, type, dir);
+            return false;
+            //return AgoraRtcNative.StartDumpVideo(_videoFrameBufferManagerPtr, type, dir);
         }
 
         public bool StopDumpVideo()
         {
-            return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
+            return false;
+            //return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
         }
 
 

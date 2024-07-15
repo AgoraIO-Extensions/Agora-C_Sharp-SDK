@@ -30,9 +30,9 @@ namespace Agora.Rtc
 
         public VideoStreamManager(RtcEngineImpl agoraRtcEngine)
         {
-            _agoraRtcEngine = agoraRtcEngine;
-            _agoraRtcEngine.OnRtcEngineImpleWillDispose += RtcEngineImplWillDispose;
-            _videoFrameBufferConfig = new IrisVideoFrameBufferConfig();
+            //_agoraRtcEngine = agoraRtcEngine;
+            //_agoraRtcEngine.OnRtcEngineImpleWillDispose += RtcEngineImplWillDispose;
+            //_videoFrameBufferConfig = new IrisVideoFrameBufferConfig();
         }
 
         ~VideoStreamManager()
@@ -43,100 +43,100 @@ namespace Agora.Rtc
         internal override int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "",
             VIDEO_OBSERVER_FRAME_TYPE frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_BGRA)
         {
-            if (_agoraRtcEngine == null)
-            {
-                AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
-                return (int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
-            }
+            //if (_agoraRtcEngine == null)
+            //{
+            //    AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
+            //    return (int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
+            //}
 
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
-            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
+            //IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            //IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
 
-            if (irisEngine != IntPtr.Zero && _irisVideoFrameBufferHandle == IntPtr.Zero)
-            {
-                _videoFrameBuffer = new IrisCVideoFrameBufferNative
-                {
-                    type = (int)frameType,
-                    OnVideoFrameReceived = IntPtr.Zero,
-                    bytes_per_row_alignment = 2
-                };
+            //if (irisEngine != IntPtr.Zero && _irisVideoFrameBufferHandle == IntPtr.Zero)
+            //{
+            //    _videoFrameBuffer = new IrisCVideoFrameBufferNative
+            //    {
+            //        type = (int)frameType,
+            //        OnVideoFrameReceived = IntPtr.Zero,
+            //        bytes_per_row_alignment = 2
+            //    };
 
-                _videoFrameBufferConfig.type = (int)sourceType;
-                _videoFrameBufferConfig.id = uid;
-                _videoFrameBufferConfig.key = channel_id;
-                _irisVideoFrameBufferHandle = AgoraRtcNative.EnableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBuffer, ref _videoFrameBufferConfig);
-                AgoraLog.Log("EnableVideoFrameBufferByConfig");
-                return (int)ERROR_CODE_TYPE.ERR_OK;
-            }
+            //    _videoFrameBufferConfig.type = (int)sourceType;
+            //    _videoFrameBufferConfig.id = uid;
+            //    _videoFrameBufferConfig.key = channel_id;
+            //    _irisVideoFrameBufferHandle = AgoraRtcNative.EnableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBuffer, ref _videoFrameBufferConfig);
+            //    AgoraLog.Log("EnableVideoFrameBufferByConfig");
+            //    return (int)ERROR_CODE_TYPE.ERR_OK;
+            //}
             return (int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
         }
 
         internal override void DisableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "")
         {
-            if (_agoraRtcEngine == null)
-            {
-                AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
-                return;
-            }
+            //if (_agoraRtcEngine == null)
+            //{
+            //    AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
+            //    return;
+            //}
 
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
-            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
+            //IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            //IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
 
-            if (irisEngine != IntPtr.Zero && _irisVideoFrameBufferHandle != IntPtr.Zero)
-            {
-                _videoFrameBufferConfig.type = (int)sourceType;
-                _videoFrameBufferConfig.id = uid;
-                _videoFrameBufferConfig.key = key;
-                AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig, _irisVideoFrameBufferHandle);
-                AgoraLog.Log("DisableVideoFrameBufferByConfig");
-                _irisVideoFrameBufferHandle = IntPtr.Zero;
-            }
+            //if (irisEngine != IntPtr.Zero && _irisVideoFrameBufferHandle != IntPtr.Zero)
+            //{
+            //    _videoFrameBufferConfig.type = (int)sourceType;
+            //    _videoFrameBufferConfig.id = uid;
+            //    _videoFrameBufferConfig.key = key;
+            //    AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig, _irisVideoFrameBufferHandle);
+            //    AgoraLog.Log("DisableVideoFrameBufferByConfig");
+            //    _irisVideoFrameBufferHandle = IntPtr.Zero;
+            //}
         }
 
         internal override IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisVideoFrame video_frame, ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
         {
-            if (_agoraRtcEngine == null)
-            {
-                AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
-                return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
-            }
+            //if (_agoraRtcEngine == null)
+            //{
+            //    AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
+            //    return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
+            //}
 
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
-            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
+            //IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            //IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
 
-            if (irisEngine != IntPtr.Zero)
-            {
-                _videoFrameBufferConfig.type = (int)sourceType;
-                _videoFrameBufferConfig.id = uid;
-                _videoFrameBufferConfig.key = key;
-                return AgoraRtcNative.GetVideoFrameByConfig(videoFrameBufferManagerPtr, ref video_frame, out is_new_frame, ref _videoFrameBufferConfig);
-            }
+            //if (irisEngine != IntPtr.Zero)
+            //{
+            //    _videoFrameBufferConfig.type = (int)sourceType;
+            //    _videoFrameBufferConfig.id = uid;
+            //    _videoFrameBufferConfig.key = key;
+            //    return AgoraRtcNative.GetVideoFrameByConfig(videoFrameBufferManagerPtr, ref video_frame, out is_new_frame, ref _videoFrameBufferConfig);
+            //}
             return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
         }
 
         internal void RtcEngineImplWillDispose(RtcEngineImpl impl)
         {
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
-            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
+            //IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            //IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
 
-            if (irisEngine != IntPtr.Zero && _irisVideoFrameBufferHandle != IntPtr.Zero)
-            {
-                AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig, _irisVideoFrameBufferHandle);
-                AgoraLog.Log("DisableVideoFrameBufferByConfig on RtcEngineImplWillDispose");
-                _irisVideoFrameBufferHandle = IntPtr.Zero;
-            }
+            //if (irisEngine != IntPtr.Zero && _irisVideoFrameBufferHandle != IntPtr.Zero)
+            //{
+            //    AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig, _irisVideoFrameBufferHandle);
+            //    AgoraLog.Log("DisableVideoFrameBufferByConfig on RtcEngineImplWillDispose");
+            //    _irisVideoFrameBufferHandle = IntPtr.Zero;
+            //}
         }
 
         internal void Dispose(bool disposing)
         {
-            if (_disposed) return;
+            //if (_disposed) return;
 
-            if (disposing)
-            {
-                _agoraRtcEngine.OnRtcEngineImpleWillDispose -= RtcEngineImplWillDispose;
-                _agoraRtcEngine = null;
-                _disposed = true;
-            }
+            //if (disposing)
+            //{
+            //    _agoraRtcEngine.OnRtcEngineImpleWillDispose -= RtcEngineImplWillDispose;
+            //    _agoraRtcEngine = null;
+            //    _disposed = true;
+            //}
         }
 
         public override void Dispose()
