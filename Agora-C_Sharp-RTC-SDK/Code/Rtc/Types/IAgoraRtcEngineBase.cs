@@ -2150,6 +2150,7 @@ namespace Agora.Rtc
             useExternalEglContext = false;
             domainLimit = false;
             autoRegisterAgoraExtensions = true;
+            this.pairedWithMccEx = false;
         }
 
         public RtcEngineContext(string appId, UInt64 context,
@@ -2164,6 +2165,7 @@ namespace Agora.Rtc
             this.audioScenario = audioScenario;
             this.areaCode = areaCode;
             this.logConfig = logConfig ?? new LogConfig();
+            this.pairedWithMccEx = false;
         }
 
         private IRtcEngineEventHandler eventHandler = null;
@@ -2244,6 +2246,8 @@ namespace Agora.Rtc
 
         public bool autoRegisterAgoraExtensions;
 
+        public bool pairedWithMccEx;
+
         public override void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2278,6 +2282,10 @@ namespace Agora.Rtc
 
             writer.WritePropertyName("useExternalEglContext");
             writer.Write(this.useExternalEglContext);
+
+
+            writer.WritePropertyName("pairedWithMccEx");
+            writer.Write(this.pairedWithMccEx);
 
             writer.WriteObjectEnd();
         }

@@ -65,7 +65,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onJoinChannelSuccessEx":
+                case "RtcEngineEventHandler_onJoinChannelSuccess":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -80,7 +80,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRejoinChannelSuccessEx":
+                case "RtcEngineEventHandler_onRejoinChannelSuccess":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -114,7 +114,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onAudioQualityEx":
+                case "RtcEngineEventHandler_onAudioQuality":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -122,7 +122,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnAudioQuality(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (int)AgoraJson.GetData<int>(jsonData, "quality"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "delay"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "lost")
@@ -132,7 +132,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onLeaveChannelEx":
+                case "RtcEngineEventHandler_onLeaveChannel":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -147,7 +147,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onClientRoleChangedEx":
+                case "RtcEngineEventHandler_onClientRoleChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -164,7 +164,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onClientRoleChangeFailedEx":
+                case "RtcEngineEventHandler_onClientRoleChangeFailed":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -180,7 +180,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onUserJoinedEx":
+                case "RtcEngineEventHandler_onUserJoined":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -188,7 +188,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserJoined(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -196,7 +196,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onUserOfflineEx":
+                case "RtcEngineEventHandler_onUserOffline":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -204,7 +204,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserOffline(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (USER_OFFLINE_REASON_TYPE)AgoraJson.GetData<int>(jsonData, "reason")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -212,7 +212,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onUserMuteAudioEx":
+                case "RtcEngineEventHandler_onUserMuteAudio":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -220,7 +220,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserMuteAudio(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (bool)AgoraJson.GetData<bool>(jsonData, "muted")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -229,7 +229,7 @@ namespace Agora.Rtc
                     break;
 
 
-                case "RtcEngineEventHandler_onUserMuteVideoEx":
+                case "RtcEngineEventHandler_onUserMuteVideo":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -237,7 +237,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserMuteVideo(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
                         (bool)AgoraJson.GetData<bool>(jsonData, "muted")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -246,7 +246,7 @@ namespace Agora.Rtc
                     break;
 
 
-                case "RtcEngineEventHandler_onUserEnableVideoEx":
+                case "RtcEngineEventHandler_onUserEnableVideo":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -254,7 +254,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserEnableVideo(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (bool)AgoraJson.GetData<bool>(jsonData, "enabled")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -263,7 +263,7 @@ namespace Agora.Rtc
                     break;
 
 
-                case "RtcEngineEventHandler_onUserEnableLocalVideoEx":
+                case "RtcEngineEventHandler_onUserEnableLocalVideo":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -271,7 +271,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserEnableLocalVideo(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (bool)AgoraJson.GetData<bool>(jsonData, "enabled")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -307,7 +307,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onConnectionInterruptedEx":
+                case "RtcEngineEventHandler_onConnectionInterrupted":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -321,7 +321,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onConnectionLostEx":
+                case "RtcEngineEventHandler_onConnectionLost":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -335,7 +335,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onConnectionBannedEx":
+                case "RtcEngineEventHandler_onConnectionBanned":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -365,7 +365,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRequestTokenEx":
+                case "RtcEngineEventHandler_onRequestToken":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -379,7 +379,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onTokenPrivilegeWillExpireEx":
+                case "RtcEngineEventHandler_onTokenPrivilegeWillExpire":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -394,7 +394,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onLicenseValidationFailureEx":
+                case "RtcEngineEventHandler_onLicenseValidationFailure":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -402,14 +402,14 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnLicenseValidationFailure(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (LICENSE_ERROR_TYPE)AgoraJson.GetData<int>(jsonData, "reason")
+                        (LICENSE_ERROR_TYPE)AgoraJson.GetData<int>(jsonData, "error")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRtcStatsEx":
+                case "RtcEngineEventHandler_onRtcStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -424,7 +424,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onNetworkQualityEx":
+                case "RtcEngineEventHandler_onNetworkQuality":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -432,7 +432,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnNetworkQuality(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (int)AgoraJson.GetData<int>(jsonData, "txQuality"),
                         (int)AgoraJson.GetData<int>(jsonData, "rxQuality")
                     );
@@ -441,7 +441,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onLocalVideoStatsEx":
+                case "RtcEngineEventHandler_onLocalVideoStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -456,7 +456,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRemoteVideoStatsEx":
+                case "RtcEngineEventHandler_onRemoteVideoStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -471,7 +471,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onLocalAudioStatsEx":
+                case "RtcEngineEventHandler_onLocalAudioStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -486,7 +486,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRemoteAudioStatsEx":
+                case "RtcEngineEventHandler_onRemoteAudioStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -501,7 +501,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onLocalAudioStateChangedEx":
+                case "RtcEngineEventHandler_onLocalAudioStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -517,7 +517,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRemoteAudioStateChangedEx":
+                case "RtcEngineEventHandler_onRemoteAudioStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -525,7 +525,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnRemoteAudioStateChanged(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (REMOTE_AUDIO_STATE)AgoraJson.GetData<int>(jsonData, "state"),
                         (REMOTE_AUDIO_STATE_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
@@ -606,7 +606,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onAudioVolumeIndicationEx":
+                case "RtcEngineEventHandler_onAudioVolumeIndication":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -626,7 +626,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onActiveSpeakerEx":
+                case "RtcEngineEventHandler_onActiveSpeaker":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -634,7 +634,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnActiveSpeaker(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "uid")
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -653,7 +653,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstLocalVideoFrameEx":
+                case "RtcEngineEventHandler_onFirstLocalVideoFrame":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -670,7 +670,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstLocalVideoFramePublishedEx":
+                case "RtcEngineEventHandler_onFirstLocalVideoFramePublished":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -685,7 +685,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstRemoteVideoFrameEx":
+                case "RtcEngineEventHandler_onFirstRemoteVideoFrame":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -693,7 +693,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnFirstRemoteVideoFrame(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
                         (int)AgoraJson.GetData<int>(jsonData, "width"),
                         (int)AgoraJson.GetData<int>(jsonData, "height"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
@@ -703,7 +703,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstRemoteVideoDecodedEx":
+                case "RtcEngineEventHandler_onFirstRemoteVideoDecoded":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -711,7 +711,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnFirstRemoteVideoDecoded(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (int)AgoraJson.GetData<int>(jsonData, "width"),
                         (int)AgoraJson.GetData<int>(jsonData, "height"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
@@ -919,7 +919,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onVideoSizeChangedEx":
+                case "RtcEngineEventHandler_onVideoSizeChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -952,7 +952,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onSnapshotTakenEx":
+                case "RtcEngineEventHandler_onSnapshotTaken":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -971,7 +971,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRemoteVideoStateChangedEx":
+                case "RtcEngineEventHandler_onRemoteVideoStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -979,7 +979,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnRemoteVideoStateChanged(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (REMOTE_VIDEO_STATE)AgoraJson.GetData<int>(jsonData, "state"),
                         (REMOTE_VIDEO_STATE_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
@@ -989,7 +989,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onUserStateChangedEx":
+                case "RtcEngineEventHandler_onUserStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -997,7 +997,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserStateChanged(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "state")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1005,7 +1005,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onStreamMessageErrorEx":
+                case "RtcEngineEventHandler_onStreamMessageError":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1013,7 +1013,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnStreamMessageError(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
                         (int)AgoraJson.GetData<int>(jsonData, "streamId"),
                         (int)AgoraJson.GetData<int>(jsonData, "code"),
                         (int)AgoraJson.GetData<int>(jsonData, "missed"),
@@ -1053,7 +1053,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstLocalAudioFramePublishedEx":
+                case "RtcEngineEventHandler_onFirstLocalAudioFramePublished":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1068,7 +1068,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstRemoteAudioFrameEx":
+                case "RtcEngineEventHandler_onFirstRemoteAudioFrame":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1076,7 +1076,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnFirstRemoteAudioFrame(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1084,7 +1084,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstRemoteAudioDecodedEx":
+                case "RtcEngineEventHandler_onFirstRemoteAudioDecoded":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1201,7 +1201,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRemoteAudioTransportStatsEx":
+                case "RtcEngineEventHandler_onRemoteAudioTransportStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1209,7 +1209,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnRemoteAudioTransportStats(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "delay"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "lost"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "rxKBitRate")
@@ -1219,7 +1219,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onRemoteVideoTransportStatsEx":
+                case "RtcEngineEventHandler_onRemoteVideoTransportStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1227,7 +1227,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnRemoteVideoTransportStats(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "delay"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "lost"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "rxKBitRate")
@@ -1237,7 +1237,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onConnectionStateChangedEx":
+                case "RtcEngineEventHandler_onConnectionStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1253,7 +1253,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onWlAccMessageEx":
+                case "RtcEngineEventHandler_onWlAccMessage":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1270,7 +1270,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onWlAccStatsEx":
+                case "RtcEngineEventHandler_onWlAccStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1287,7 +1287,7 @@ namespace Agora.Rtc
                     break;
 
 
-                case "RtcEngineEventHandler_onNetworkTypeChangedEx":
+                case "RtcEngineEventHandler_onNetworkTypeChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1332,7 +1332,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onIntraRequestReceivedEx":
+                case "RtcEngineEventHandler_onIntraRequestReceived":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1374,7 +1374,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onVideoSourceFrameSizeChangedEx":
+                case "RtcEngineEventHandler_onVideoSourceFrameSizeChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1391,7 +1391,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onEncryptionErrorEx":
+                case "RtcEngineEventHandler_onEncryptionError":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1406,7 +1406,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onUploadLogResultEx":
+                case "RtcEngineEventHandler_onUploadLogResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1423,7 +1423,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onUserAccountUpdatedEx":
+                case "RtcEngineEventHandler_onUserAccountUpdated":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1431,7 +1431,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnUserAccountUpdated(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (string)AgoraJson.GetData<string>(jsonData, "userAccount")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1531,7 +1531,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onVideoRenderingTracingResultEx":
+                case "RtcEngineEventHandler_onVideoRenderingTracingResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1564,7 +1564,7 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onTranscodedStreamLayoutInfoEx":
+                case "RtcEngineEventHandler_onTranscodedStreamLayoutInfo":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1614,7 +1614,7 @@ namespace Agora.Rtc
                 #endregion no buffer end
 
                 #region withBuffer start
-                case "RtcEngineEventHandler_onStreamMessageEx":
+                case "RtcEngineEventHandler_onStreamMessage":
                     {
                         var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
                         var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
@@ -1631,7 +1631,7 @@ namespace Agora.Rtc
                         if (rtcEngineEventHandler == null) return;
                         rtcEngineEventHandler.OnStreamMessage(
                             AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                            (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
                             (int)AgoraJson.GetData<int>(jsonData, "streamId"),
                             byteData,
                             byteLength,
@@ -1642,7 +1642,7 @@ namespace Agora.Rtc
                     }
                     break;
 
-                case "RtcEngineEventHandler_onAudioMetadataReceivedEx":
+                case "RtcEngineEventHandler_onAudioMetadataReceived":
                     {
                         var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
                         var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "metadata");
@@ -1666,6 +1666,10 @@ namespace Agora.Rtc
                     });
 #endif
                     }
+                    break;
+
+                default:
+                    AgoraLog.LogWarning(string.Format( "unknow event: {0}, {1}", @event, data));
                     break;
                     #endregion withBuffer end
             }
