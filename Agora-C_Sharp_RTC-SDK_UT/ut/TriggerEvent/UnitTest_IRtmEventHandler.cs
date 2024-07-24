@@ -42,7 +42,7 @@ namespace Agora.Rtm.Ut
         public void Test_OnLinkStateEvent()
         {
             ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONLINKSTATEEVENT;
-            
+
 
             LinkStateEvent @event = ParamsHelper.CreateParam<LinkStateEvent>();
 

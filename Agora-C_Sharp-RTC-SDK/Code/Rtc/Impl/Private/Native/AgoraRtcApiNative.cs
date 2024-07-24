@@ -497,16 +497,16 @@ namespace Agora.Rtc
         public IntPtr eglContext;
         public int eglType;
         public int textureId;
-        public long fence_object;
+        public long fenceObject;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public float[] matrix;
-        public IntPtr metadata_buffer;
-        public int metadata_size;
+        public IntPtr metadataBuffer;
+        public int metadataSize;
         public IntPtr alphaBuffer;
         public bool fillAlphaBuffer;
         public int alphaStitchMode;
-        public IntPtr d3d11_texture_2d;
-        public int texture_slice_index;
+        public IntPtr d3d11Texture2d;
+        public int textureSliceIndex;
         public IrisHdr10MetadataInfo hdr10MetadataInfo;
         public IrisColorSpace colorSpace;
 
@@ -526,7 +526,7 @@ namespace Agora.Rtc
             this.eglContext = frame.eglContext;
             this.eglType = (int)frame.eglType;
             this.textureId = frame.textureId;
-            this.fence_object = frame.fence_object;
+            this.fenceObject = frame.fenceObject;
             if (frame.matrix != null && frame.matrix.Length == 16)
             {
                 this.matrix = frame.matrix;
@@ -535,13 +535,13 @@ namespace Agora.Rtc
             {
                 this.matrix = new float[16];
             }
-            this.metadata_buffer = frame.metadata_buffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.metadata_buffer, 0);
-            this.metadata_size = frame.metadata_size;
+            this.metadataBuffer = frame.metadataBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.metadataBuffer, 0);
+            this.metadataSize = frame.metadataSize;
             this.alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
             this.fillAlphaBuffer = frame.fillAlphaBuffer;
             this.alphaStitchMode = (int)frame.alphaStitchMode;
-            this.d3d11_texture_2d = frame.d3d11_texture_2d;
-            this.texture_slice_index = frame.texture_slice_index;
+            this.d3d11Texture2d = frame.d3d11Texture2d;
+            this.textureSliceIndex = frame.textureSliceIndex;
             this.hdr10MetadataInfo = new IrisHdr10MetadataInfo(frame.hdr10MetadataInfo);
             this.colorSpace = new IrisColorSpace(frame.colorSpace);
         }

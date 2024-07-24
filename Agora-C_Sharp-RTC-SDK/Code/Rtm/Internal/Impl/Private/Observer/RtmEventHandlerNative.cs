@@ -427,7 +427,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case  AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATECHANNELMETADATARESULT:
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATECHANNELMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -496,7 +496,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATEUSERMETADATARESULT :
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATEUSERMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -650,7 +650,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONREVOKELOCKRESULT :
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONREVOKELOCKRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
