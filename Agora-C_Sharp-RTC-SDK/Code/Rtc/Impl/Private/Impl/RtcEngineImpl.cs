@@ -6112,7 +6112,7 @@ namespace Agora.Rtc
         public int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId)
         {
             GCHandle bufferHandle = frame.buffer == null ? GCHandle.Alloc(new byte[1], GCHandleType.Pinned) : GCHandle.Alloc(frame.buffer, GCHandleType.Pinned);
-            GCHandle metadata_bufferHandle = frame.metadata_buffer == null ? GCHandle.Alloc(new byte[1], GCHandleType.Pinned) : GCHandle.Alloc(frame.metadata_buffer, GCHandleType.Pinned);
+            GCHandle metadata_bufferHandle = frame.metadataBuffer == null ? GCHandle.Alloc(new byte[1], GCHandleType.Pinned) : GCHandle.Alloc(frame.metadataBuffer, GCHandleType.Pinned);
             GCHandle alphaBufferHandle = frame.alphaBuffer == null ? GCHandle.Alloc(new byte[1], GCHandleType.Pinned) : GCHandle.Alloc(frame.alphaBuffer, GCHandleType.Pinned);
             IrisExternalVideoFrame irisFrame = new IrisExternalVideoFrame(frame);
             var result = AgoraRtcNative.IMediaEngine_PushVideoFrame(_rtcEngine, ref irisFrame, videoTrackId);

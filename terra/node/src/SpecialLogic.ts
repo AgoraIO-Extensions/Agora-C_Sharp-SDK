@@ -231,7 +231,7 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_ExternalVideoFrameInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
-        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer", "d3d11_texture_2d"];
+        let excludeList = ["buffer", "eglContext", "metadataBuffer", "alphaBuffer", "d3d11Texture2d"];
         if (excludeList.includes(m.name)) {
             return "";
         }
@@ -241,7 +241,7 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_ExternalVideoFrameInternalMemberList(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
-        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer", "d3d11_texture_2d"];
+        let excludeList = ["buffer", "eglContext", "metadataBuffer", "alphaBuffer", "d3d11Texture2d"];
         if (excludeList.includes(m.name)) {
             return "";
         }

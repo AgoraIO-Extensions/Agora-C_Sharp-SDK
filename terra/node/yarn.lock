@@ -41,14 +41,14 @@ __metadata:
 
 "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#head=main":
   version: 1.0.2
-  resolution: "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#commit=e8c8ec7ba6f0fbcb7d00eb8dd3384b21bbc41f7b"
+  resolution: "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#commit=2d8c25dcc2b33a0e9922584a4396f286c0f0e324"
   dependencies:
     "@agoraio-extensions/cxx-parser": "git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=cxx-parser"
     "@agoraio-extensions/terra-core": "git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=terra-core"
     lodash: "npm:^4.17.21"
     mustache: "npm:^4.2.0"
     openai: "npm:^4.29.1"
-  checksum: b8ec1cf25a78ad8b52adc1a57e48daf124c64ed465a1e208d7b51fb135bc513a82962fd07ac5c6ec809efcfaf02077e28ca2001ece6a5d04d9234c5b5e85cf39
+  checksum: 5172024ec96d430539de774cfc3d8adf3a128cdfa6392da7a4fbd0125c4b55e9ce78c6f578f120cfac8abe597e9ce11a1dbca368e6906ae1c86f09b942294dcd
   languageName: node
   linkType: hard
 
@@ -152,20 +152,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 20.14.10
-  resolution: "@types/node@npm:20.14.10"
+  version: 20.14.12
+  resolution: "@types/node@npm:20.14.12"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 0b06cff14365c2d0085dc16cc8cbea5c40ec09cfc1fea966be9eeecf35562760bfde8f88e86de6edfaf394501236e229d9c1084fad04fb4dec472ae245d8ae69
+  checksum: 59bc5fa11fdd23fd517f859063118f54a1ab53d3399ef63c926f8902429d7453abc0db22ef4b0a6110026b6ab81b6472fee894e1d235c24b01a0b3e10cfae0bb
   languageName: node
   linkType: hard
 
 "@types/node@npm:^18.11.18, @types/node@npm:^18.17.9":
-  version: 18.19.39
-  resolution: "@types/node@npm:18.19.39"
+  version: 18.19.42
+  resolution: "@types/node@npm:18.19.42"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: a9eb33bc093beba6bd5d4e839de7d1d1f496cd7e741c2f6c7161318dba0f37227bb25d8306907194992488d6c59a7363a419d72298549483d33402227a2d435b
+  checksum: eaacbbcb376748bddaf6cd04569ebf3f0069a1b6f821db4f85ef9f60c2c63608ddcaf3e67a3c44e1cd8111a26e9da7c83d54ae7c41dd21e7b35cbab9436bfe1e
   languageName: node
   linkType: hard
 
@@ -572,8 +572,8 @@ __metadata:
   linkType: hard
 
 "openai@npm:^4.29.1":
-  version: 4.52.7
-  resolution: "openai@npm:4.52.7"
+  version: 4.53.0
+  resolution: "openai@npm:4.53.0"
   dependencies:
     "@types/node": "npm:^18.11.18"
     "@types/node-fetch": "npm:^2.6.4"
@@ -585,7 +585,7 @@ __metadata:
     web-streams-polyfill: "npm:^3.2.1"
   bin:
     openai: bin/cli
-  checksum: 9689b08ee26bad4834d5b8fb57d05a5a956450b699f0b78d56fc3c89304ef6ac621c3458fa269fb059c33e871faaaecd1f4899287dfbc1ac1039228b247260cd
+  checksum: a41c9caf9b7c1a0ff44e7ec97a49aa6a459cfd4810acb69750aaa39b2b5c4c4ff8dcc8c3c5d1a5cb862e63522443c22b7326c8fbaf2668e82ee5181f7e91d30e
   languageName: node
   linkType: hard
 
@@ -722,22 +722,22 @@ __metadata:
   linkType: hard
 
 "typescript@npm:^5.1.6":
-  version: 5.5.3
-  resolution: "typescript@npm:5.5.3"
+  version: 5.5.4
+  resolution: "typescript@npm:5.5.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f52c71ccbc7080b034b9d3b72051d563601a4815bf3e39ded188e6ce60813f75dbedf11ad15dd4d32a12996a9ed8c7155b46c93a9b9c9bad1049766fe614bbdd
+  checksum: 422be60f89e661eab29ac488c974b6cc0a660fb2228003b297c3d10c32c90f3bcffc1009b43876a082515a3c376b1eefcce823d6e78982e6878408b9a923199c
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@npm%3A^5.1.6#optional!builtin<compat/typescript>":
-  version: 5.5.3
-  resolution: "typescript@patch:typescript@npm%3A5.5.3#optional!builtin<compat/typescript>::version=5.5.3&hash=e012d7"
+  version: 5.5.4
+  resolution: "typescript@patch:typescript@npm%3A5.5.4#optional!builtin<compat/typescript>::version=5.5.4&hash=e012d7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 5a437c416251334deeaf29897157032311f3f126547cfdc4b133768b606cb0e62bcee733bb97cf74c42fe7268801aea1392d8e40988cdef112e9546eba4c03c5
+  checksum: 10dd9881baba22763de859e8050d6cb6e2db854197495c6f1929b08d1eb2b2b00d0b5d9b0bcee8472f1c3f4a7ef6a5d7ebe0cfd703f853aa5ae465b8404bc1ba
   languageName: node
   linkType: hard
 

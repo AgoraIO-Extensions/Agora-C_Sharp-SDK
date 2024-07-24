@@ -2,7 +2,7 @@
     "special_class_param": {
         "ExternalVideoFrame.buffer": "byte[]",
         "ExternalVideoFrame.eglContext": "IntPtr",
-        "ExternalVideoFrame.metadata_buffer": "byte[]",
+        "ExternalVideoFrame.metadataBuffer": "byte[]",
         "ExternalVideoFrame.alphaBuffer": "byte[]",
         "AudioSpectrumData.audioSpectrumData": "float[]",
         "ThumbImageBuffer.buffer": "byte[]",
@@ -96,7 +96,7 @@
         "AudioSpectrumData.AudioSpectrumData.data": "float[]",
         "ExternalVideoFrame.ExternalVideoFrame.buffer": "byte[]",
         "ExternalVideoFrame.ExternalVideoFrame.eglContext": "IntPtr",
-        "ExternalVideoFrame.ExternalVideoFrame.metadata_buffer": "byte[]",
+        "ExternalVideoFrame.ExternalVideoFrame.metadataBuffer": "byte[]",
         "ExternalVideoFrame.ExternalVideoFrame.alphaBuffer": "byte[]",
         "MediaRecorderConfiguration.MediaRecorderConfiguration.path": "string",
         "RecorderInfo.RecorderInfo.name": "string",

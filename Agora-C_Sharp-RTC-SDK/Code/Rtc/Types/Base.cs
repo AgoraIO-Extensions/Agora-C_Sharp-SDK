@@ -196,15 +196,15 @@ namespace Agora.Rtc
 
             this.eglType = frame.eglType;
             this.textureId = frame.textureId;
-            this.fence_object = frame.fence_object;
+            this.fenceObject = frame.fenceObject;
             this.matrix = frame.matrix;
 
-            this.metadata_size = frame.metadata_size;
+            this.metadataSize = frame.metadataSize;
 
             this.fillAlphaBuffer = frame.fillAlphaBuffer;
             this.alphaStitchMode = frame.alphaStitchMode;
 
-            this.texture_slice_index = frame.texture_slice_index;
+            this.textureSliceIndex = frame.textureSliceIndex;
             this.hdr10MetadataInfo = frame.hdr10MetadataInfo;
             this.colorSpace = frame.colorSpace;
             #endregion terra ExternalVideoFrameInternal_Assignment
@@ -225,15 +225,15 @@ namespace Agora.Rtc
 
         public EGL_CONTEXT_TYPE eglType;
         public int textureId;
-        public long fence_object;
+        public long fenceObject;
         public float[] matrix;
 
-        public int metadata_size;
+        public int metadataSize;
 
         public bool fillAlphaBuffer;
         public ALPHA_STITCH_MODE alphaStitchMode;
 
-        public int texture_slice_index;
+        public int textureSliceIndex;
         public Hdr10MetadataInfo hdr10MetadataInfo;
         public ColorSpace colorSpace;
         #endregion terra ExternalVideoFrameInternal_Member_List

@@ -1792,7 +1792,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public long fence_object;
+        public long fenceObject;
 
         ///
         /// @ignore
@@ -1800,18 +1800,14 @@ namespace Agora.Rtc
         public float[] matrix;
 
         ///
-        /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
-        /// </summary>
+        /// @ignore
         ///
-        public byte[] metadata_buffer;
+        public byte[] metadataBuffer;
 
         ///
-        /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
-        /// </summary>
+        /// @ignore
         ///
-        public int metadata_size;
+        public int metadataSize;
 
         ///
         /// @ignore
@@ -1829,18 +1825,14 @@ namespace Agora.Rtc
         public ALPHA_STITCH_MODE alphaStitchMode;
 
         ///
-        /// <summary>
-        /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
-        /// </summary>
+        /// @ignore
         ///
-        public IntPtr d3d11_texture_2d;
+        public IntPtr d3d11Texture2d;
 
         ///
-        /// <summary>
-        /// This parameter only applies to video data in Windows Texture format. It represents an index of an ID3D11Texture2D texture object used by the video frame in the ID3D11Texture2D array.
-        /// </summary>
+        /// @ignore
         ///
-        public int texture_slice_index;
+        public int textureSliceIndex;
 
         ///
         /// @ignore
@@ -1868,17 +1860,17 @@ namespace Agora.Rtc
             this.eglContext = IntPtr.Zero;
             this.eglType = EGL_CONTEXT_TYPE.EGL_CONTEXT10;
             this.textureId = 0;
-            this.fence_object = 0;
-            this.metadata_buffer = null;
-            this.metadata_size = 0;
+            this.fenceObject = 0;
+            this.metadataBuffer = null;
+            this.metadataSize = 0;
             this.alphaBuffer = null;
             this.fillAlphaBuffer = false;
             this.alphaStitchMode = ALPHA_STITCH_MODE.NO_ALPHA_STITCH;
-            this.d3d11_texture_2d = IntPtr.Zero;
-            this.texture_slice_index = 0;
+            this.d3d11Texture2d = IntPtr.Zero;
+            this.textureSliceIndex = 0;
         }
 
-        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fence_object, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11_texture_2d, int texture_slice_index, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fenceObject, float[] matrix, byte[] metadataBuffer, int metadataSize, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11Texture2d, int textureSliceIndex, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
         {
             this.type = type;
             this.format = format;
@@ -1894,15 +1886,15 @@ namespace Agora.Rtc
             this.eglContext = eglContext;
             this.eglType = eglType;
             this.textureId = textureId;
-            this.fence_object = fence_object;
+            this.fenceObject = fenceObject;
             this.matrix = matrix;
-            this.metadata_buffer = metadata_buffer;
-            this.metadata_size = metadata_size;
+            this.metadataBuffer = metadataBuffer;
+            this.metadataSize = metadataSize;
             this.alphaBuffer = alphaBuffer;
             this.fillAlphaBuffer = fillAlphaBuffer;
             this.alphaStitchMode = alphaStitchMode;
-            this.d3d11_texture_2d = d3d11_texture_2d;
-            this.texture_slice_index = texture_slice_index;
+            this.d3d11Texture2d = d3d11Texture2d;
+            this.textureSliceIndex = textureSliceIndex;
             this.hdr10MetadataInfo = hdr10MetadataInfo;
             this.colorSpace = colorSpace;
         }

@@ -3101,11 +3101,6 @@ namespace Agora.Rtc
         MEDIA_DEVICE_STATE_DISABLED = 2,
 
         ///
-        /// @ignore
-        ///
-        MEDIA_DEVICE_STATE_PLUGGED_IN = 3,
-
-        ///
         /// <summary>
         /// 4: The device is not found.
         /// </summary>
