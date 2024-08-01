@@ -50,7 +50,7 @@ namespace Agora.Rtm.Internal
 
     public delegate void OnRemoveChannelMetadataResultHandler(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode);
 
-    public delegate void OnGetChannelMetadataResultHandler(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, RTM_ERROR_CODE errorCode);
+    public delegate void OnGetChannelMetadataResultHandler(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Rtm.Metadata data, RTM_ERROR_CODE errorCode);
 
     public delegate void OnSetUserMetadataResultHandler(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode);
 
@@ -58,7 +58,7 @@ namespace Agora.Rtm.Internal
 
     public delegate void OnRemoveUserMetadataResultHandler(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode);
 
-    public delegate void OnGetUserMetadataResultHandler(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode);
+    public delegate void OnGetUserMetadataResultHandler(UInt64 requestId, string userId, Rtm.Metadata data, RTM_ERROR_CODE errorCode);
 
     public delegate void OnSubscribeUserMetadataResultHandler(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode);
 
@@ -347,7 +347,7 @@ namespace Agora.Rtm.Internal
             EventOnRemoveChannelMetadataResult.Invoke(requestId, channelName, channelType, errorCode);
         }
 
-        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, Rtm.Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (EventOnGetChannelMetadataResult == null)
                 return;
@@ -375,7 +375,7 @@ namespace Agora.Rtm.Internal
             EventOnRemoveUserMetadataResult.Invoke(requestId, userId, errorCode);
         }
 
-        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, Metadata data, RTM_ERROR_CODE errorCode)
+        public override void OnGetUserMetadataResult(UInt64 requestId, string userId, Rtm.Metadata data, RTM_ERROR_CODE errorCode)
         {
             if (EventOnGetUserMetadataResult == null)
                 return;
