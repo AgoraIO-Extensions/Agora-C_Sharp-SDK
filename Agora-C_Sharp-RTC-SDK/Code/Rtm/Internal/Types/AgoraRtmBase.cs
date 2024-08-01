@@ -61,4 +61,29 @@ namespace Agora.Rtm.Internal
         public uint userCount;
     };
 
+    public class Metadata
+    {
+        ///
+        /// <summary>
+        /// the major revision of metadata.
+        /// </summary>
+        ///
+        public Int64 majorRevision;
+        ///
+        /// <summary>
+        /// The metadata item array.
+        /// </summary>
+        ///
+        public MetadataItem[] items;
+
+        public ulong itemCount;
+
+        public Metadata(Agora.Rtm.Metadata metadata)
+        {
+            this.majorRevision = metadata.majorRevision;
+            this.items = metadata.items;
+            this.itemCount = (ulong)metadata.items.Length;
+        }
+    }
+
 }
