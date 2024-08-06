@@ -141,7 +141,6 @@ namespace Agora.Rtc
 
             if (ret != 0)
             {
-                AgoraLog.LogError("create music player errorCode: " + ret);
                 return null;
             }
             else
@@ -149,7 +148,6 @@ namespace Agora.Rtc
                 int playId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
                 if (playId < 0)
                 {
-                    AgoraLog.LogError("create music player errorCode: " + playId);
                     return null;
                 }
                 var musicPlayer = new MusicPlayer(this._musicPlayerImpl, playId);
