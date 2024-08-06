@@ -127,6 +127,8 @@ namespace Agora.Rtm.Internal
             {
                 return ErrorCode;
             }
+            //jira RTM2-1276
+            DisposeAllStreamChannel();
             return _rtmClientImpl.Logout(ref requestId);
         }
 
@@ -218,6 +220,22 @@ namespace Agora.Rtm.Internal
             if (this._streamChannelDic.ContainsKey(channelName))
             {
                 this._streamChannelDic.Remove(channelName);
+            }
+        }
+
+        public void DisposeAllStreamChannel()
+        {
+            List<StreamChannel> streamChannels = new List<StreamChannel>();
+
+            foreach (var e in this._streamChannelDic)
+            {
+                streamChannels.Add(e.Value);
+            }
+            this._streamChannelDic.Clear();
+
+            foreach (var channel in streamChannels)
+            {
+                channel.Dispose();
             }
         }
 
