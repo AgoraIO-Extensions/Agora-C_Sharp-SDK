@@ -8,12 +8,14 @@ namespace Agora.Rtc
     {
         void OnApplicationQuit()
         {
+#if UNITY_IOS || UNITY_ANDROID
             IRtcEngine rtcEngine = RtcEngine.Get();
 
             if (rtcEngine != null)
             {
                 rtcEngine.Dispose();
             }
+#endif
         }
     }
 }
