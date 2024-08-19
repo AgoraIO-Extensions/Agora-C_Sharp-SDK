@@ -318,6 +318,8 @@ function GetDocs(): DocData[] {
     str = str.replaceAll("api_Imediaplayer_selectmultiaudiotrack", "api_imediaplayer_selectmultiaudiotrack");
     str = str.replaceAll("api_imediaengine_registerfaceinfoobserver", "api_irtcengine_registerfaceinfoobserver");
     str = str.replaceAll("api_imediaengine_unregisterfaceinfoobserver", "api_irtcengine_unregisterfaceinfoobserver");
+    str = str.replaceAll("api_irtcengine_startechotest3", "api_irtcengine_startechotest");
+
 
     fs.writeFileSync(path.join(process.cwd(), "process_json"), str);
 

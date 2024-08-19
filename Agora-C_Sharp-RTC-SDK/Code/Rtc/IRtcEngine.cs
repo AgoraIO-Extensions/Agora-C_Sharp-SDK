@@ -536,7 +536,18 @@ namespace Agora.Rtc
         public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ClientRoleOptions options);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Starts an audio device loopback test.
+        /// 
+        /// To test whether the user's local sending and receiving streams are normal, you can call this method to perform an audio and video call loop test, which tests whether the audio and video devices and the user's upstream and downstream networks are working properly. After starting the test, the user needs to make a sound or face the camera. The audio or video is output after about two seconds. If the audio playback is normal, the audio device and the user's upstream and downstream networks are working properly; if the video playback is normal, the video device and the user's upstream and downstream networks are working properly.
+        /// </summary>
+        ///
+        /// <param name="config"> The configuration of the audio and video call loop test. See EchoTestConfiguration. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int StartEchoTest(EchoTestConfiguration config);
 
