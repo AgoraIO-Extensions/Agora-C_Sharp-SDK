@@ -142,7 +142,9 @@ namespace Agora.Rtc
         public int textureId;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
+        /// </summary>
         ///
         public IntPtr d3d11Texture2d;
 
@@ -154,7 +156,9 @@ namespace Agora.Rtc
         public float[] matrix;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The alpha channel data output by using portrait segmentation algorithm. This data matches the size of the video frame, with each pixel value ranging from [0,255], where 0 represents the background and 255 represents the foreground (portrait). By setting this parameter, you can render the video background into various effects, such as transparent, solid color, image, video, etc. In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are of the Full Range type; other types may cause abnormal alpha data rendering.
+        /// </summary>
         ///
         public byte[] alphaBuffer;
 
@@ -164,13 +168,15 @@ namespace Agora.Rtc
         public IntPtr alphaBufferPtr;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// When the video frame contains alpha channel data, it represents the relative position of alphaBuffer and the video frame. See ALPHA_STITCH_MODE.
+        /// </summary>
         ///
         public ALPHA_STITCH_MODE alphaStitchMode;
 
         ///
         /// <summary>
-        /// The meta information in the video frame. To use this parameter, please.
+        /// The meta information in the video frame. To use this parameter, please contact.
         /// </summary>
         ///
         public IVideoFrameMetaInfo metaInfo;
@@ -345,27 +351,37 @@ namespace Agora.Rtc
 
     #region terra AgoraMediaBase.h
     ///
-    /// @ignore
+    /// <summary>
+    /// The context information of the extension.
+    /// </summary>
     ///
     public class ExtensionContext
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether the uid in ExtensionContext is valid: true : The uid is valid. false : The uid is invalid.
+        /// </summary>
         ///
         public bool isValid;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The user ID. 0 represents a local user, while greater than 0 represents a remote user.
+        /// </summary>
         ///
         public uint uid;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The name of the extension provider.
+        /// </summary>
         ///
         public string providerName;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The name of the extension.
+        /// </summary>
         ///
         public string extensionName;
 
@@ -838,7 +854,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// A ContentInspectModule structure used to configure the frequency of video screenshot and upload.
+    /// ContentInspectModule A structure used to configure the frequency of video screenshot and upload.
     /// </summary>
     ///
     public class ContentInspectModule
@@ -870,7 +886,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Configuration of video screenshot and upload.
+    /// Screenshot and upload configuration.
     /// </summary>
     ///
     public class ContentInspectConfig
@@ -1213,7 +1229,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Deprecated: 3: This mode is deprecated.
+        /// 3: Adaptive mode. Deprecated: This enumerator is deprecated and not recommended for use.
         /// </summary>
         ///
         [Obsolete("")]
@@ -1800,32 +1816,46 @@ namespace Agora.Rtc
         public float[] matrix;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
+        /// </summary>
         ///
         public byte[] metadataBuffer;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
+        /// </summary>
         ///
         public int metadataSize;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The alpha channel data output by using portrait segmentation algorithm. This data matches the size of the video frame, with each pixel value ranging from [0,255], where 0 represents the background and 255 represents the foreground (portrait). By setting this parameter, you can render the video background into various effects, such as transparent, solid color, image, video, etc. In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are of the Full Range type; other types may cause abnormal alpha data rendering.
+        /// </summary>
         ///
         public byte[] alphaBuffer;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in BGRA or RGBA format. Whether to extract the alpha channel data from the video frame and automatically fill it into alphaBuffer : true ：Extract and fill the alpha channel data. false : (Default) Do not extract and fill the Alpha channel data. For video data in BGRA or RGBA format, you can set the Alpha channel data in either of the following ways:
+        ///  Automatically by setting this parameter to true.
+        ///  Manually through the alphaBuffer parameter.
+        /// </summary>
         ///
         public bool fillAlphaBuffer;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// When the video frame contains alpha channel data, it represents the relative position of alphaBuffer and the video frame. See ALPHA_STITCH_MODE.
+        /// </summary>
         ///
         public ALPHA_STITCH_MODE alphaStitchMode;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
+        /// </summary>
         ///
         public IntPtr d3d11Texture2d;
 

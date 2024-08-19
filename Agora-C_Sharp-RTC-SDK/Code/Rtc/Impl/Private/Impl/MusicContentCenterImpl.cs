@@ -146,7 +146,8 @@ namespace Agora.Rtc
             else
             {
                 int playId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-                if (playId < 0) {
+                if (playId < 0)
+                {
                     return null;
                 }
                 var musicPlayer = new MusicPlayer(this._musicPlayerImpl, playId);
