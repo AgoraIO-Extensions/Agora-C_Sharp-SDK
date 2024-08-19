@@ -33,6 +33,7 @@ namespace Agora.Rtc
         /// Occurs each time the SDK receives a video frame before encoding.
         /// 
         /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data before encoding and then process the data according to your particular scenarios. After processing, you can send the processed video data back to the SDK in this callback.
+        /// It is recommended that you ensure the modified parameters in videoFrame are consistent with the actual situation of the video frames in the video frame buffer. Otherwise, it may cause unexpected rotation, distortion, and other issues in the local preview and remote video display.
         /// To get the video data captured from the second screen before encoding, you need to set POSITION_PRE_ENCODER (1 << 2) as a frame position through the position parameter of the RegisterVideoFrameObserver method.
         /// The video data that this callback gets has been preprocessed, with its content cropped and rotated, and the image enhanced.
         /// </summary>
