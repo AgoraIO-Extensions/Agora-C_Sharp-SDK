@@ -4073,6 +4073,21 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SetExternalMediaProjection(IntPtr mediaProjection)
+        {
+            _param.Clear();
+            _param.Add("mediaProjection", mediaProjection);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTERNALMEDIAPROJECTION,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
         public int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
         {
             _param.Clear();
@@ -4912,6 +4927,22 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int TakeSnapshot(uint uid, SnapshotConfig config)
+        {
+            _param.Clear();
+            _param.Add("uid", uid);
+            _param.Add("config", config);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_TAKESNAPSHOT2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
         public int EnableContentInspect(bool enabled, ContentInspectConfig config)
         {
             _param.Clear();
@@ -5216,6 +5247,39 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_LEAVECHANNELEX2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int LeaveChannelWithUserAccountEx(string channelId, string userAccount)
+        {
+            _param.Clear();
+            _param.Add("channelId", channelId);
+            _param.Add("userAccount", userAccount);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_LEAVECHANNELWITHUSERACCOUNTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int LeaveChannelWithUserAccountEx(string channelId, string userAccount, LeaveChannelOptions options)
+        {
+            _param.Clear();
+            _param.Add("channelId", channelId);
+            _param.Add("userAccount", userAccount);
+            _param.Add("options", options);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_LEAVECHANNELWITHUSERACCOUNTEX2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -5999,6 +6063,23 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_TAKESNAPSHOTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int TakeSnapshotEx(RtcConnection connection, uint uid, SnapshotConfig config)
+        {
+            _param.Clear();
+            _param.Add("connection", connection);
+            _param.Add("uid", uid);
+            _param.Add("config", config);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_TAKESNAPSHOTEX2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

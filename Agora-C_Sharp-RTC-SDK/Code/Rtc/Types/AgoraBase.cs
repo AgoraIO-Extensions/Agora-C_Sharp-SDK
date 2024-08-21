@@ -2432,6 +2432,22 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum CAMERA_FORMAT_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        CAMERA_FORMAT_NV12,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_FORMAT_BGRA,
+    }
+
+    ///
     /// <summary>
     /// The bit mask of the codec type.
     /// </summary>
