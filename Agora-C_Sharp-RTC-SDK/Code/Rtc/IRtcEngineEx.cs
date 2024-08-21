@@ -85,6 +85,16 @@ namespace Agora.Rtc
         public abstract int LeaveChannelEx(RtcConnection connection, LeaveChannelOptions options);
 
         ///
+        /// @ignore
+        ///
+        public abstract int LeaveChannelWithUserAccountEx(string channelId, string userAccount);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int LeaveChannelWithUserAccountEx(string channelId, string userAccount, LeaveChannelOptions options);
+
+        ///
         /// <summary>
         /// Updates the channel media options after joining the channel.
         /// </summary>
@@ -950,6 +960,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, SnapshotConfig config);
 
         ///
         /// <summary>

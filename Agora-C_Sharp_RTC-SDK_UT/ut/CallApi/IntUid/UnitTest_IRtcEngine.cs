@@ -2044,6 +2044,15 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_SetExternalMediaProjection()
+        {
+            IntPtr mediaProjection = ParamsHelper.CreateParam<IntPtr>();
+
+            var nRet = RtcEngine.SetExternalMediaProjection(mediaProjection);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_SetScreenCaptureScenario()
         {
             SCREEN_SCENARIO_TYPE screenScenario = ParamsHelper.CreateParam<SCREEN_SCENARIO_TYPE>();
@@ -2567,6 +2576,16 @@ namespace Agora.Rtc.Ut
             string filePath = ParamsHelper.CreateParam<string>();
 
             var nRet = RtcEngine.TakeSnapshot(uid, filePath);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_TakeSnapshot2()
+        {
+            uint uid = ParamsHelper.CreateParam<uint>();
+            SnapshotConfig config = ParamsHelper.CreateParam<SnapshotConfig>();
+
+            var nRet = RtcEngine.TakeSnapshot(uid, config);
             Assert.AreEqual(0, nRet);
         }
 

@@ -953,6 +953,11 @@ namespace Agora.Rtc
         public ulong num_channels_;
 
         ///
+        /// @ignore
+        ///
+        public int audio_track_number_;
+
+        ///
         /// <summary>
         /// The number of bytes per sample.
         /// </summary>
@@ -972,6 +977,7 @@ namespace Agora.Rtc
             this.samples_per_channel_ = 0;
             this.sample_rate_hz_ = 0;
             this.num_channels_ = 0;
+            this.audio_track_number_ = 0;
             this.bytes_per_sample = BYTES_PER_SAMPLE.TWO_BYTES_PER_SAMPLE;
         }
 
@@ -981,15 +987,17 @@ namespace Agora.Rtc
             this.samples_per_channel_ = src.samples_per_channel_;
             this.sample_rate_hz_ = src.sample_rate_hz_;
             this.num_channels_ = src.num_channels_;
+            this.audio_track_number_ = src.audio_track_number_;
             this.bytes_per_sample = src.bytes_per_sample;
         }
 
-        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_)
+        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, int audio_track_number_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_)
         {
             this.capture_timestamp = capture_timestamp;
             this.samples_per_channel_ = samples_per_channel_;
             this.sample_rate_hz_ = sample_rate_hz_;
             this.num_channels_ = num_channels_;
+            this.audio_track_number_ = audio_track_number_;
             this.bytes_per_sample = bytes_per_sample;
             this.data_ = data_;
         }
@@ -1484,6 +1492,34 @@ namespace Agora.Rtc
         /// </summary>
         ///
         POSITION_POST_CAPTURER_ORIGIN = 1 << 3,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class SnapshotConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public string filePath;
+
+        ///
+        /// @ignore
+        ///
+        public VIDEO_MODULE_POSITION position;
+
+        public SnapshotConfig()
+        {
+            this.filePath = "";
+            this.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
+        }
+
+        public SnapshotConfig(string filePath, VIDEO_MODULE_POSITION position)
+        {
+            this.filePath = filePath;
+            this.position = position;
+        }
     }
 
     ///

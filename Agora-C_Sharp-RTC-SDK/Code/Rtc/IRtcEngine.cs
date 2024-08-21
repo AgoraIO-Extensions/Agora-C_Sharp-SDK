@@ -3965,6 +3965,11 @@ namespace Agora.Rtc
         public abstract int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetExternalMediaProjection(IntPtr mediaProjection);
+
+        ///
         /// <summary>
         /// Sets the screen sharing scenario.
         /// 
@@ -4963,6 +4968,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int TakeSnapshot(uint uid, string filePath);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int TakeSnapshot(uint uid, SnapshotConfig config);
 
         ///
         /// <summary>
