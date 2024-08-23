@@ -101,6 +101,17 @@ namespace Agora.Rtc
                 _mediaPlayerAudioSpectrumObserverHandles.Clear();
             }
 
+
+            //move this code from ReleaseEventHandler because:
+            //If there are multiple mediaPlayers, one of the InitEventHandler (null) will cause the _callbackObject to be destroyed,
+            //and then all remaining mediaPlayer callbacks cannot be triggered
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+            MediaPlayerSourceObserverNative.CallbackObject = null;
+            if (_callbackObject != null)
+                _callbackObject.Release();
+            _callbackObject = null;
+#endif
+
             _irisApiEngine = IntPtr.Zero;
             _apiParam.FreeResult();
 
@@ -118,8 +129,11 @@ namespace Agora.Rtc
             if (_mediaPlayerEventHandlerHandles.ContainsKey(playerId) == true) return 0;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            _callbackObject = new AgoraCallbackObject(identifier);
-            MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
+            if (_callbackObject == null)
+            {
+                _callbackObject = new AgoraCallbackObject(identifier);
+                MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
+            }
 #endif
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -172,12 +186,7 @@ namespace Agora.Rtc
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
             MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            MediaPlayerSourceObserverNative.CallbackObject = null;
-            if (_callbackObject != null)
-                _callbackObject.Release();
-            _callbackObject = null;
-#endif
+
             arrayPtrHandle.Free();
             return nRet;
         }
