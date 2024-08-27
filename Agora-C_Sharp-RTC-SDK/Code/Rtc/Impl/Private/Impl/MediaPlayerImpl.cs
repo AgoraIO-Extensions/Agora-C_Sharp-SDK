@@ -162,11 +162,6 @@ namespace Agora.Rtc
 
             MediaPlayerSourceObserverNative.ClearSourceObserver();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-            MediaPlayerSourceObserverNative.CallbackObject = null;
-            if (_callbackObject != null) _callbackObject.Release();
-            _callbackObject = null;
-#endif
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
@@ -182,6 +177,13 @@ namespace Agora.Rtc
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerEventHandlerHandle);
             arrayPtrHandle.Free();
+
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            MediaPlayerSourceObserverNative.CallbackObject = null;
+            if (_callbackObject != null) _callbackObject.Release();
+            _callbackObject = null;
+#endif
         }
 
         private int SetIrisAudioFrameObserver(int playerId)

@@ -189,13 +189,6 @@ namespace Agora.Rtc
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
 
 
-            RtcEngineEventHandlerNative.SetEventHandler(null);
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            RtcEngineEventHandlerNative.CallbackObject = null;
-            if (_callbackObject != null) _callbackObject.Release();
-            _callbackObject = null;
-#endif
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
@@ -210,6 +203,16 @@ namespace Agora.Rtc
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
             arrayPtrHandle.Free();
+
+
+
+            RtcEngineEventHandlerNative.SetEventHandler(null);
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            RtcEngineEventHandlerNative.CallbackObject = null;
+            if (_callbackObject != null) _callbackObject.Release();
+            _callbackObject = null;
+#endif
         }
 
         internal IrisRtcEnginePtr GetNativeHandler()
