@@ -189,12 +189,7 @@ namespace Agora.Rtm.Internal
                                                              Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                              ref _apiParam);
             arrayPtrHandle.Free();
-
-
-
-
             var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (ret == 0)
             {
