@@ -189,6 +189,39 @@ namespace Agora.Rtm.Internal
                                                              Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                              ref _apiParam);
             arrayPtrHandle.Free();
+
+
+
+
+            var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+            if (ret == 0)
+            {
+                SetAppType(AppType.APP_TYPE_UNITY);
+            }
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            if (ret == 0)
+            {
+                SetAppType(AppType.APP_TYPE_C_SHARP);
+            }
+#endif
+
+            return ret;
+        }
+
+
+        private int SetAppType(Internal.AppType appType)
+        {
+            _param.Clear();
+            _param.Add("appType", appType);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETAPPTYPE,
+                                                              json, (UInt32)json.Length,
+                                                              IntPtr.Zero, 0,
+                                                              ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
