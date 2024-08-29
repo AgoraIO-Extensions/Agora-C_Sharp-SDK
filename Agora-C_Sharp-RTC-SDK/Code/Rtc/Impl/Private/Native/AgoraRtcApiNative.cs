@@ -5,6 +5,7 @@ using System.Text;
 namespace Agora.Rtc
 {
     using IrisRtcEnginePtr = IntPtr;
+    using RtcEngineHandle = IntPtr;
     using IrisEventHandlerMarshal = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
     //using IrisRtcAudioFrameObserverHandle = IntPtr;
@@ -145,92 +146,92 @@ namespace Agora.Rtc
 
         // ILocalSpatialAudioEngine
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_SetMaxAudioRecvCount(IrisRtcEnginePtr enginePtr, int maxCount);
+        internal static extern int ILocalSpatialAudioEngine_SetMaxAudioRecvCount(RtcEngineHandle enginePtr, int maxCount);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_SetAudioRecvRange(IrisRtcEnginePtr enginePtr, float range);
+        internal static extern int ILocalSpatialAudioEngine_SetAudioRecvRange(RtcEngineHandle enginePtr, float range);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_SetDistanceUnit(IrisRtcEnginePtr enginePtr, float unit);
+        internal static extern int ILocalSpatialAudioEngine_SetDistanceUnit(RtcEngineHandle enginePtr, float unit);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_UpdateSelfPosition(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_UpdateSelfPosition(RtcEngineHandle enginePtr,
           float positionX, float positionY, float positionZ, float axisForwardX,
           float axisForwardY, float axisForwardZ, float axisRightX, float axisRightY,
           float axisRightZ, float axisUpX, float axisUpY, float axisUpZ);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_UpdateSelfPositionEx(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_UpdateSelfPositionEx(RtcEngineHandle enginePtr,
           float positionX, float positionY, float positionZ, float axisForwardX,
           float axisForwardY, float axisForwardZ, float axisRightX, float axisRightY,
           float axisRightZ, float axisUpX, float axisUpY, float axisUpZ,
           string channelId, uint localUid);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_UpdatePlayerPositionInfo(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_UpdatePlayerPositionInfo(RtcEngineHandle enginePtr,
           int playerId, float positionX, float positionY, float positionZ,
           float forwardX, float forwardY, float forwardZ);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_MuteLocalAudioStream(IrisRtcEnginePtr enginePtr, bool mute);
+        internal static extern int ILocalSpatialAudioEngine_MuteLocalAudioStream(RtcEngineHandle enginePtr, bool mute);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_MuteAllRemoteAudioStreams(IrisRtcEnginePtr enginePtr, bool mute);
+        internal static extern int ILocalSpatialAudioEngine_MuteAllRemoteAudioStreams(RtcEngineHandle enginePtr, bool mute);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_SetZones(IrisRtcEnginePtr enginePtr, IrisSpatialAudioZone[] zones, uint zoneCount);
+        internal static extern int ILocalSpatialAudioEngine_SetZones(RtcEngineHandle enginePtr, IrisSpatialAudioZone[] zones, uint zoneCount);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_SetPlayerAttenuation(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_SetPlayerAttenuation(RtcEngineHandle enginePtr,
           int playerId, double attenuation, bool forceSet);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_MuteRemoteAudioStream(IrisRtcEnginePtr enginePtr, uint uid, bool mute);
+        internal static extern int ILocalSpatialAudioEngine_MuteRemoteAudioStream(RtcEngineHandle enginePtr, uint uid, bool mute);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_UpdateRemotePosition(IrisRtcEnginePtr engine_ptr,
+        internal static extern int ILocalSpatialAudioEngine_UpdateRemotePosition(RtcEngineHandle engine_ptr,
           uint uid, float positionX, float positionY, float positionZ,
           float forwardX, float forwardY, float forwardZ);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_UpdateRemotePositionEx(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_UpdateRemotePositionEx(RtcEngineHandle enginePtr,
           uint uid, float positionX, float positionY, float positionZ,
           float forwardX, float forwardY, float forwardZ, string channelId,
           uint localUid);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_RemoveRemotePosition(IrisRtcEnginePtr enginePtr, uint uid);
+        internal static extern int ILocalSpatialAudioEngine_RemoveRemotePosition(RtcEngineHandle enginePtr, uint uid);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_RemoveRemotePositionEx(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_RemoveRemotePositionEx(RtcEngineHandle enginePtr,
           uint uid, string channelId, uint localUid);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_ClearRemotePositions(IrisRtcEnginePtr enginePtr);
+        internal static extern int ILocalSpatialAudioEngine_ClearRemotePositions(RtcEngineHandle enginePtr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_ClearRemotePositionsEx(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_ClearRemotePositionsEx(RtcEngineHandle enginePtr,
            string channelId, uint localUid);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngine_SetRemoteAudioAttenuation(IrisRtcEnginePtr enginePtr,
+        internal static extern int ILocalSpatialAudioEngine_SetRemoteAudioAttenuation(RtcEngineHandle enginePtr,
           uint uid, double attenuation, bool forceSet);
 
         //
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IMediaEngine_PushAudioFrame(IrisRtcEnginePtr enginePtr,
+        internal static extern int IMediaEngine_PushAudioFrame(RtcEngineHandle enginePtr,
         ref IrisAudioFrame frame, uint trackId);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IMediaEngine_PullAudioFrame(IrisRtcEnginePtr enginePtr,
+        internal static extern int IMediaEngine_PullAudioFrame(RtcEngineHandle enginePtr,
         ref IrisAudioFrame frame);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IMediaEngine_PushVideoFrame(IrisRtcEnginePtr enginePtr,
+        internal static extern int IMediaEngine_PushVideoFrame(RtcEngineHandle enginePtr,
         ref IrisExternalVideoFrame frame, uint videoTrackId);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int IMediaEngine_PushEncodedVideoImage(IrisRtcEnginePtr enginePtr,
+        internal static extern int IMediaEngine_PushEncodedVideoImage(RtcEngineHandle enginePtr,
         IntPtr imageBuffer, ulong length, ref IrisEncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId);
         #endregion
 
@@ -389,6 +390,96 @@ namespace Agora.Rtc
         }
     };
 
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisHdr10MetadataInfo
+    {
+        public ushort redPrimaryX;
+
+        public ushort redPrimaryY;
+
+        public ushort greenPrimaryX;
+
+        public ushort greenPrimaryY;
+
+        public ushort bluePrimaryX;
+
+        public ushort bluePrimaryY;
+
+        public ushort whitePointX;
+
+        public ushort whitePointY;
+
+        public uint maxMasteringLuminance;
+
+        public uint minMasteringLuminance;
+
+        public ushort maxContentLightLevel;
+
+        public ushort maxFrameAverageLightLevel;
+
+        public IrisHdr10MetadataInfo(Hdr10MetadataInfo hdr10MetadataInfo)
+        {
+            if (hdr10MetadataInfo != null)
+            {
+                this.redPrimaryX = hdr10MetadataInfo.redPrimaryX;
+                this.redPrimaryY = hdr10MetadataInfo.redPrimaryY;
+                this.greenPrimaryX = hdr10MetadataInfo.greenPrimaryX;
+                this.greenPrimaryY = hdr10MetadataInfo.greenPrimaryY;
+                this.bluePrimaryX = hdr10MetadataInfo.bluePrimaryX;
+                this.bluePrimaryY = hdr10MetadataInfo.bluePrimaryY;
+                this.whitePointX = hdr10MetadataInfo.whitePointX;
+                this.whitePointY = hdr10MetadataInfo.whitePointY;
+                this.maxMasteringLuminance = hdr10MetadataInfo.maxMasteringLuminance;
+                this.minMasteringLuminance = hdr10MetadataInfo.minMasteringLuminance;
+                this.maxContentLightLevel = hdr10MetadataInfo.maxContentLightLevel;
+                this.maxFrameAverageLightLevel = hdr10MetadataInfo.maxFrameAverageLightLevel;
+            }
+            else
+            {
+                this.redPrimaryX = 0;
+                this.redPrimaryY = 0;
+                this.greenPrimaryX = 0;
+                this.greenPrimaryY = 0;
+                this.bluePrimaryX = 0;
+                this.bluePrimaryY = 0;
+                this.whitePointX = 0;
+                this.whitePointY = 0;
+                this.maxMasteringLuminance = 0;
+                this.minMasteringLuminance = 0;
+                this.maxContentLightLevel = 0;
+                this.maxFrameAverageLightLevel = 0;
+            }
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisColorSpace
+    {
+        public int primaries;
+        public int transfer;
+        public int matrix;
+        public int range;
+
+        public IrisColorSpace(ColorSpace colorSpace)
+        {
+            if (colorSpace != null)
+            {
+                this.primaries = (int)colorSpace.primaries;
+                this.transfer = (int)colorSpace.transfer;
+                this.matrix = (int)colorSpace.matrix;
+                this.range = (int)colorSpace.range;
+            }
+            else
+            {
+                this.primaries = (int)PrimaryID.PRIMARYID_UNSPECIFIED;
+                this.transfer = (int)TransferID.TRANSFERID_UNSPECIFIED;
+                this.matrix = (int)MatrixID.MATRIXID_UNSPECIFIED;
+                this.range = (int)RangeID.RANGEID_INVALID;
+            }
+        }
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisExternalVideoFrame
     {
@@ -406,14 +497,18 @@ namespace Agora.Rtc
         public IntPtr eglContext;
         public int eglType;
         public int textureId;
+        public long fenceObject;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public float[] matrix;
-        public IntPtr metadata_buffer;
-        public int metadata_size;
+        public IntPtr metadataBuffer;
+        public int metadataSize;
         public IntPtr alphaBuffer;
         public bool fillAlphaBuffer;
-        public IntPtr d3d11_texture_2d;
-        public int texture_slice_index;
+        public int alphaStitchMode;
+        public IntPtr d3d11Texture2d;
+        public int textureSliceIndex;
+        public IrisHdr10MetadataInfo hdr10MetadataInfo;
+        public IrisColorSpace colorSpace;
 
         public IrisExternalVideoFrame(ExternalVideoFrame frame)
         {
@@ -431,6 +526,7 @@ namespace Agora.Rtc
             this.eglContext = frame.eglContext;
             this.eglType = (int)frame.eglType;
             this.textureId = frame.textureId;
+            this.fenceObject = frame.fenceObject;
             if (frame.matrix != null && frame.matrix.Length == 16)
             {
                 this.matrix = frame.matrix;
@@ -439,12 +535,15 @@ namespace Agora.Rtc
             {
                 this.matrix = new float[16];
             }
-            this.metadata_buffer = frame.metadata_buffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.metadata_buffer, 0);
-            this.metadata_size = frame.metadata_size;
+            this.metadataBuffer = frame.metadataBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.metadataBuffer, 0);
+            this.metadataSize = frame.metadataSize;
             this.alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
             this.fillAlphaBuffer = frame.fillAlphaBuffer;
-            this.d3d11_texture_2d = frame.d3d11_texture_2d;
-            this.texture_slice_index = frame.texture_slice_index;
+            this.alphaStitchMode = (int)frame.alphaStitchMode;
+            this.d3d11Texture2d = frame.d3d11Texture2d;
+            this.textureSliceIndex = frame.textureSliceIndex;
+            this.hdr10MetadataInfo = new IrisHdr10MetadataInfo(frame.hdr10MetadataInfo);
+            this.colorSpace = new IrisColorSpace(frame.colorSpace);
         }
     };
 

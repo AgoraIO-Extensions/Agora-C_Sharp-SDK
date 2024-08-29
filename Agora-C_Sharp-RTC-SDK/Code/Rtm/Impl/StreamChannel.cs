@@ -114,7 +114,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, TopicMessageOptions option)
         {
-            Internal.TopicMessageOptions internalOptions = new Internal.TopicMessageOptions(option, RTM_MESSAGE_TYPE.BINARY);
+            Internal.TopicMessageOptions internalOptions = new Internal.TopicMessageOptions(option, RTM_MESSAGE_TYPE.STRING);
             TaskCompletionSource<RtmResult<PublishTopicMessageResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishTopicMessageResult>>();
             UInt64 requestId = 0;
             int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions, ref requestId);

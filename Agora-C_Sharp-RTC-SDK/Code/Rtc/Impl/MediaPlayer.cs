@@ -69,16 +69,6 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.Open(playerId, url, startPos);
         }
 
-        [Obsolete("")]
-        public override int OpenWithCustomSource(long startPos, IMediaPlayerCustomDataProvider provider)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.OpenWithCustomSource(playerId, startPos, provider);
-        }
-
         public override int OpenWithMediaSource(MediaSource source)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)

@@ -371,6 +371,36 @@ namespace Agora.Rtc
         /// </summary>
         ///
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_1 = 3,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_2 = 4,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_3 = 5,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_4 = 6,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_5 = 7,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_FALLBACK_OPTION_VIDEO_STREAM_LAYER_6 = 8,
     }
 
     ///
@@ -557,7 +587,12 @@ namespace Agora.Rtc
         ///
         public int hwEncoderAccelerating;
 
-        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating)
+        ///
+        /// @ignore
+        ///
+        public VideoDimensions[] simulcastDimensions;
+
+        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating, VideoDimensions[] simulcastDimensions)
         {
             this.uid = uid;
             this.sentBitrate = sentBitrate;
@@ -582,6 +617,7 @@ namespace Agora.Rtc
             this.captureBrightnessLevel = captureBrightnessLevel;
             this.dualStreamEnabled = dualStreamEnabled;
             this.hwEncoderAccelerating = hwEncoderAccelerating;
+            this.simulcastDimensions = simulcastDimensions;
         }
         public LocalVideoStats()
         {
@@ -820,6 +856,11 @@ namespace Agora.Rtc
         public int receivedBitrate;
 
         ///
+        /// @ignore
+        ///
+        public int decoderInputFrameRate;
+
+        ///
         /// <summary>
         /// The frame rate (fps) of decoding the remote video.
         /// </summary>
@@ -899,7 +940,7 @@ namespace Agora.Rtc
         ///
         public uint rxVideoBytes;
 
-        public RemoteVideoStats(uint uid, int delay, int e2eDelay, int width, int height, int receivedBitrate, int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate, VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime, int publishDuration, int mosValue, uint rxVideoBytes)
+        public RemoteVideoStats(uint uid, int delay, int e2eDelay, int width, int height, int receivedBitrate, int decoderInputFrameRate, int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate, VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime, int publishDuration, int mosValue, uint rxVideoBytes)
         {
             this.uid = uid;
             this.delay = delay;
@@ -907,6 +948,7 @@ namespace Agora.Rtc
             this.width = width;
             this.height = height;
             this.receivedBitrate = receivedBitrate;
+            this.decoderInputFrameRate = decoderInputFrameRate;
             this.decoderOutputFrameRate = decoderOutputFrameRate;
             this.rendererOutputFrameRate = rendererOutputFrameRate;
             this.frameLossRate = frameLossRate;
@@ -2062,11 +2104,16 @@ namespace Agora.Rtc
         ///
         public Optional<bool> isAudioFilterable = new Optional<bool>();
 
+        ///
+        /// @ignore
+        ///
+        public Optional<string> parameters = new Optional<string>();
+
         public ChannelMediaOptions()
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
@@ -2104,6 +2151,7 @@ namespace Agora.Rtc
             this.isInteractiveAudience = isInteractiveAudience;
             this.customVideoTrackId = customVideoTrackId;
             this.isAudioFilterable = isAudioFilterable;
+            this.parameters = parameters;
         }
 
         ///
@@ -2327,6 +2375,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("isAudioFilterable");
                 writer.Write(this.isAudioFilterable.GetValue());
+            }
+
+            if (this.parameters.HasValue())
+            {
+                writer.WritePropertyName("parameters");
+                writer.Write(this.parameters.GetValue());
             }
 
             writer.WriteObjectEnd();
@@ -2639,6 +2693,13 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
+        /// The channel name.
+        /// </summary>
+        ///
+        public string channelId;
+
+        ///
+        /// <summary>
         /// The user ID.
         ///  For the recipient: The ID of the remote user who sent the Metadata.
         ///  For the sender: Ignore it.
@@ -2655,28 +2716,30 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The buffer address of the sent or received Metadata.
+        /// The buffer address of the received Metadata.
         /// </summary>
         ///
         public IntPtr buffer;
 
         ///
         /// <summary>
-        /// The timestamp (ms) of Metadata.
+        /// The timestamp (ms) of when the Metadata is sent.
         /// </summary>
         ///
         public long timeStampMs;
 
         public Metadata()
         {
+            this.channelId = "";
             this.uid = 0;
             this.size = 0;
             this.buffer = IntPtr.Zero;
             this.timeStampMs = 0;
         }
 
-        public Metadata(uint uid, uint size, IntPtr buffer, long timeStampMs)
+        public Metadata(string channelId, uint uid, uint size, IntPtr buffer, long timeStampMs)
         {
+            this.channelId = channelId;
             this.uid = uid;
             this.size = size;
             this.buffer = buffer;
@@ -3055,226 +3118,162 @@ namespace Agora.Rtc
     }
 
     ///
-    /// <summary>
-    /// Video profile.
-    /// </summary>
+    /// @ignore
     ///
     public enum VIDEO_PROFILE_TYPE
     {
         ///
-        /// <summary>
-        /// 0: 160 × 120, frame rate 15 fps, bitrate 65 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_120P = 0,
 
         ///
-        /// <summary>
-        /// 2: 120 × 120, frame rate 15 fps, bitrate 50 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_120P_3 = 2,
 
         ///
-        /// <summary>
-        /// 10: 320 × 180, frame rate 15 fps, bitrate 140 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_180P = 10,
 
         ///
-        /// <summary>
-        /// 12: 180 × 180, frame rate 15 fps, bitrate 100 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_180P_3 = 12,
 
         ///
-        /// <summary>
-        /// 13: 240 × 180, frame rate 15 fps, bitrate 120 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_180P_4 = 13,
 
         ///
-        /// <summary>
-        /// 20: 320 × 240, frame rate 15 fps, bitrate 200 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_240P = 20,
 
         ///
-        /// <summary>
-        /// 22: 240 × 240, frame rate 15 fps, bitrate 140 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_240P_3 = 22,
 
         ///
-        /// <summary>
-        /// 23: 424 × 240, frame rate 15 fps, bitrate 220 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_240P_4 = 23,
 
         ///
-        /// <summary>
-        /// 30: 640 × 360, frame rate 15 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P = 30,
 
         ///
-        /// <summary>
-        /// 32: 360 × 360, frame rate 15 fps, bitrate 260 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_3 = 32,
 
         ///
-        /// <summary>
-        /// 33: 640 × 360, frame rate 30 fps, bitrate 600 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_4 = 33,
 
         ///
-        /// <summary>
-        /// 35: 360 × 360, frame rate 30 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_6 = 35,
 
         ///
-        /// <summary>
-        /// 36: 480 × 360, frame rate 15 fps, bitrate 320 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_7 = 36,
 
         ///
-        /// <summary>
-        /// 37: 480 × 360, frame rate 30 fps, bitrate 490 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_8 = 37,
 
         ///
-        /// <summary>
-        /// 38: 640 × 360, frame rate 15 fps, bitrate 800 Kbps. This profile applies only to the live streaming channel profile.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_9 = 38,
 
         ///
-        /// <summary>
-        /// 39: 640 × 360, frame rate 24 fps, bitrate 800 Kbps. This profile applies only to the live streaming channel profile.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_10 = 39,
 
         ///
-        /// <summary>
-        /// 100: 640 × 360, frame rate 24 fps, bitrate 1000 Kbps. This profile applies only to the live streaming channel profile.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_360P_11 = 100,
 
         ///
-        /// <summary>
-        /// 40: 640 × 480, frame rate 15 fps, bitrate 500 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_480P = 40,
 
         ///
-        /// <summary>
-        /// 42: 480 × 480, frame rate 15 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_480P_3 = 42,
 
         ///
-        /// <summary>
-        /// 43: 640 × 480, frame rate 30 fps, bitrate 750 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_480P_4 = 43,
 
         ///
-        /// <summary>
-        /// 45: 480 × 480, frame rate 30 fps, bitrate 600 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_480P_6 = 45,
 
         ///
-        /// <summary>
-        /// 47: 848 × 480, frame rate 15 fps, bitrate 610 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_480P_8 = 47,
 
         ///
-        /// <summary>
-        /// 48: 848 × 480, frame rate 30 fps, bitrate 930 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_480P_9 = 48,
 
         ///
-        /// <summary>
-        /// 49: 640 × 480, frame rate 10 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_480P_10 = 49,
 
         ///
-        /// <summary>
-        /// 50: 1280 × 720, frame rate 15 fps, bitrate 1130 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_720P = 50,
 
         ///
-        /// <summary>
-        /// 52: 1280 × 720, frame rate 30 fps, bitrate 1710 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_720P_3 = 52,
 
         ///
-        /// <summary>
-        /// 54: 960 × 720, frame rate 15 fps, bitrate 910 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_720P_5 = 54,
 
         ///
-        /// <summary>
-        /// 55: 960 × 720, frame rate 30 fps, bitrate 1380 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_720P_6 = 55,
 
         ///
-        /// <summary>
-        /// 60: 1920 × 1080, frame rate 15 fps, bitrate 2080 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_1080P = 60,
 
         ///
-        /// <summary>
-        /// 60: 1920 × 1080, frame rate 30 fps, bitrate 3150 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_1080P_3 = 62,
 
         ///
-        /// <summary>
-        /// 64: 1920 × 1080, frame rate 60 fps, bitrate 4780 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_LANDSCAPE_1080P_5 = 64,
 
@@ -3299,219 +3298,157 @@ namespace Agora.Rtc
         VIDEO_PROFILE_LANDSCAPE_4K_3 = 72,
 
         ///
-        /// <summary>
-        /// 1000: 120 × 160, frame rate 15 fps, bitrate 65 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_120P = 1000,
 
         ///
-        /// <summary>
-        /// 1002: 120 × 120, frame rate 15 fps, bitrate 50 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_120P_3 = 1002,
 
         ///
-        /// <summary>
-        /// 1010: 180 × 320, frame rate 15 fps, bitrate 140 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_180P = 1010,
 
         ///
-        /// <summary>
-        /// 1012: 180 × 180, frame rate 15 fps, bitrate 100 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_180P_3 = 1012,
 
         ///
-        /// <summary>
-        /// 1013: 180 × 240, frame rate 15 fps, bitrate 120 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_180P_4 = 1013,
 
         ///
-        /// <summary>
-        /// 1020: 240 × 320, frame rate 15 fps, bitrate 200 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_240P = 1020,
 
         ///
-        /// <summary>
-        /// 1022: 240 × 240, frame rate 15 fps, bitrate 140 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_240P_3 = 1022,
 
         ///
-        /// <summary>
-        /// 1023: 240 × 424, frame rate 15 fps, bitrate 220 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_240P_4 = 1023,
 
         ///
-        /// <summary>
-        /// 1030: 360 × 640, frame rate 15 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P = 1030,
 
         ///
-        /// <summary>
-        /// 1032: 360 × 360, frame rate 15 fps, bitrate 260 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_3 = 1032,
 
         ///
-        /// <summary>
-        /// 1033: 360 × 640, frame rate 15 fps, bitrate 600 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_4 = 1033,
 
         ///
-        /// <summary>
-        /// 1035: 360 × 360, frame rate 30 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_6 = 1035,
 
         ///
-        /// <summary>
-        /// 1036: 360 × 480, frame rate 15 fps, bitrate 320 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_7 = 1036,
 
         ///
-        /// <summary>
-        /// 1037: 360 × 480, frame rate 30 fps, bitrate 490 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_8 = 1037,
 
         ///
-        /// <summary>
-        /// 1038: 360 × 640, frame rate 15 fps, bitrate 800 Kbps. This profile applies only to the live streaming channel profile.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_9 = 1038,
 
         ///
-        /// <summary>
-        /// 1039: 360 × 640, frame rate 24 fps, bitrate 800 Kbps. This profile applies only to the live streaming channel profile.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_10 = 1039,
 
         ///
-        /// <summary>
-        /// 1100: 360 × 640, frame rate 24 fps, bitrate 1000 Kbps. This profile applies only to the live streaming channel profile.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_360P_11 = 1100,
 
         ///
-        /// <summary>
-        /// 1040: 480 × 640, frame rate 15 fps, bitrate 500 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_480P = 1040,
 
         ///
-        /// <summary>
-        /// 1042: 480 × 480, frame rate 15 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_480P_3 = 1042,
 
         ///
-        /// <summary>
-        /// 1043: 480 × 640, frame rate 30 fps, bitrate 750 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_480P_4 = 1043,
 
         ///
-        /// <summary>
-        /// 1045: 480 × 480, frame rate 30 fps, bitrate 600 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_480P_6 = 1045,
 
         ///
-        /// <summary>
-        /// 1047: 480 × 848, frame rate 15 fps, bitrate 610 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_480P_8 = 1047,
 
         ///
-        /// <summary>
-        /// 1048: 480 × 848, frame rate 30 fps, bitrate 930 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_480P_9 = 1048,
 
         ///
-        /// <summary>
-        /// 1049: 480 × 640, frame rate 10 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_480P_10 = 1049,
 
         ///
-        /// <summary>
-        /// 1050: 720 × 1280, frame rate 15 fps, bitrate 1130 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_720P = 1050,
 
         ///
-        /// <summary>
-        /// 1052: 720 × 1280, frame rate 30 fps, bitrate 1710 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_720P_3 = 1052,
 
         ///
-        /// <summary>
-        /// 1054: 720 × 960, frame rate 15 fps, bitrate 910 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_720P_5 = 1054,
 
         ///
-        /// <summary>
-        /// 1055: 720 × 960, frame rate 30 fps, bitrate 1380 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_720P_6 = 1055,
 
         ///
-        /// <summary>
-        /// 1060: 1080 × 1920, frame rate 15 fps, bitrate 2080 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_1080P = 1060,
 
         ///
-        /// <summary>
-        /// 1062: 1080 × 1920, frame rate 30 fps, bitrate 3150 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_1080P_3 = 1062,
 
         ///
-        /// <summary>
-        /// 1064: 1080 × 1920, frame rate 60 fps, bitrate 4780 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_PORTRAIT_1080P_5 = 1064,
 
@@ -3536,9 +3473,7 @@ namespace Agora.Rtc
         VIDEO_PROFILE_PORTRAIT_4K_3 = 1072,
 
         ///
-        /// <summary>
-        /// (Default) 640 × 360, frame rate 15 fps, bitrate 400 Kbps.
-        /// </summary>
+        /// @ignore
         ///
         VIDEO_PROFILE_DEFAULT = VIDEO_PROFILE_LANDSCAPE_360P,
     }

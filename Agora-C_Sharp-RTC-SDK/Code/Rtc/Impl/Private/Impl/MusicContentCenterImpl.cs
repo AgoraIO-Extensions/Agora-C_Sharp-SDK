@@ -62,8 +62,11 @@ namespace Agora.Rtc
                 return;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
-            MusicContentCenterEventHandlerNative.CallbackObject = _callbackObject;
+            if (_callbackObject == null)
+            {
+                _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
+                MusicContentCenterEventHandlerNative.CallbackObject = _callbackObject;
+            }
 #endif
 
             AgoraRtcNative.AllocEventHandlerHandle(ref _musicContentCenterHandlerHandle, MusicContentCenterEventHandlerNative.OnEvent);
@@ -146,6 +149,10 @@ namespace Agora.Rtc
             else
             {
                 int playId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                if (playId < 0)
+                {
+                    return null;
+                }
                 var musicPlayer = new MusicPlayer(this._musicPlayerImpl, playId);
                 return musicPlayer;
             }

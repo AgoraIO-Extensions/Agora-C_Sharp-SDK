@@ -28,16 +28,6 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
-        public void Test_OpenWithCustomSource()
-        {
-            long startPos = ParamsHelper.CreateParam<long>();
-            IMediaPlayerCustomDataProvider provider = new UTMediaPlayerCustomDataProvider(); // ParamsHelper.CreateParam<IMediaPlayerCustomDataProvider>();
-
-            var nRet = MediaPlayer.OpenWithCustomSource(startPos, provider);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_OpenWithMediaSource()
         {
             MediaSource source = new MediaSource();

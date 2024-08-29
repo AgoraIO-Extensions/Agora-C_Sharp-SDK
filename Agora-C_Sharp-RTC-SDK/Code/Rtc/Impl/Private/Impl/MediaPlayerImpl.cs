@@ -28,9 +28,6 @@ namespace Agora.Rtc
         // audioFrameObserver
         private Dictionary<int, RtcEventHandlerHandle> _mediaPlayerAudioFrameObserverHandles = new Dictionary<int, RtcEventHandlerHandle>();
 
-        // openWithCustomSource
-        private Dictionary<int, RtcEventHandlerHandle> _mediaPlayerCustomProviderHandles = new Dictionary<int, RtcEventHandlerHandle>();
-
         // openWithMediaSource
         private Dictionary<int, RtcEventHandlerHandle> _mediaPlayerMediaProviderHandles = new Dictionary<int, RtcEventHandlerHandle>();
 
@@ -79,13 +76,6 @@ namespace Agora.Rtc
                 }
                 _mediaPlayerAudioFrameObserverHandles.Clear();
 
-                keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerCustomProviderHandles);
-                foreach (var playerId in keys)
-                {
-                    this.UnSetMediaPlayerOpenWithCustomSource(playerId);
-                }
-                _mediaPlayerCustomProviderHandles.Clear();
-
                 keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(this._mediaPlayerMediaProviderHandles);
                 foreach (var playerId in keys)
                 {
@@ -100,6 +90,17 @@ namespace Agora.Rtc
                 }
                 _mediaPlayerAudioSpectrumObserverHandles.Clear();
             }
+
+
+            //move this code from ReleaseEventHandler because:
+            //If there are multiple mediaPlayers, one of the InitEventHandler (null) will cause the _callbackObject to be destroyed,
+            //and then all remaining mediaPlayer callbacks cannot be triggered
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+            MediaPlayerSourceObserverNative.CallbackObject = null;
+            if (_callbackObject != null)
+                _callbackObject.Release();
+            _callbackObject = null;
+#endif
 
             _irisApiEngine = IntPtr.Zero;
             _apiParam.FreeResult();
@@ -118,8 +119,11 @@ namespace Agora.Rtc
             if (_mediaPlayerEventHandlerHandles.ContainsKey(playerId) == true) return 0;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            _callbackObject = new AgoraCallbackObject(identifier);
-            MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
+            if (_callbackObject == null)
+            {
+                _callbackObject = new AgoraCallbackObject(identifier);
+                MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
+            }
 #endif
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -172,12 +176,7 @@ namespace Agora.Rtc
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
             MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            MediaPlayerSourceObserverNative.CallbackObject = null;
-            if (_callbackObject != null)
-                _callbackObject.Release();
-            _callbackObject = null;
-#endif
+
             arrayPtrHandle.Free();
             return nRet;
         }
@@ -264,64 +263,6 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle);
             _mediaPlayerAudioFrameObserverHandles.Remove(playerId);
-            arrayPtrHandle.Free();
-            return nRet;
-        }
-
-        private int SetMediaPlayerOpenWithCustomSource(int playerId, Int64 startPos)
-        {
-            if (_mediaPlayerCustomProviderHandles.ContainsKey(playerId))
-                return -(int)ERROR_CODE_TYPE.ERR_ALREADY_IN_USE;
-
-            RtcEventHandlerHandle eventHandlerHandle = new RtcEventHandlerHandle();
-            AgoraRtcNative.AllocEventHandlerHandle(ref eventHandlerHandle, MediaPlayerCustomDataProviderNative.OnEvent);
-
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("startPos", startPos);
-
-            var json = AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { eventHandlerHandle.handle };
-            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHCUSTOMSOURCE,
-                                                          json, (uint)json.Length,
-                                                          Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                                                          ref _apiParam);
-
-            if (nRet != 0)
-            {
-                AgoraLog.LogError("FUNC_MEDIAPLAYER_OPENWITHCUSTOMSOURCE failed: " + nRet);
-            }
-
-            this._mediaPlayerCustomProviderHandles.Add(playerId, eventHandlerHandle);
-            arrayPtrHandle.Free();
-            return 0;
-        }
-
-        private int UnSetMediaPlayerOpenWithCustomSource(int playerId)
-        {
-            if (_mediaPlayerCustomProviderHandles.ContainsKey(playerId) == false)
-                return 0;
-
-            var eventHandlerHandle = _mediaPlayerCustomProviderHandles[playerId];
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { eventHandlerHandle.handle };
-            GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE,
-                                                          json, (uint)json.Length,
-                                                          Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                                                          ref _apiParam);
-
-            AgoraRtcNative.FreeEventHandlerHandle(ref eventHandlerHandle);
-            this._mediaPlayerCustomProviderHandles.Remove(playerId);
-
-            if (nRet != 0)
-            {
-                AgoraLog.LogError("FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE failed: " + nRet);
-            }
             arrayPtrHandle.Free();
             return nRet;
         }
@@ -542,32 +483,9 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
-        {
-            if (provider == null)
-            {
-                AgoraLog.LogError("provide can not set as null");
-                return -(int)ERROR_CODE_TYPE.ERR_INVALID_ARGUMENT;
-            }
-
-            UnsetMediaPlayerOpenWithMediaSource(playerId);
-            UnSetMediaPlayerOpenWithCustomSource(playerId);
-
-            // you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
-            // because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
-            // and this time you dont have observer be trigger
-            MediaPlayerCustomDataProviderNative.RemoveCustomDataProvider(playerId);
-            MediaPlayerCustomDataProviderNative.AddCustomDataProvider(playerId, provider);
-            SetMediaPlayerOpenWithCustomSource(playerId, startPos);
-
-            return 0;
-        }
-
         public int OpenWithMediaSource(int playerId, MediaSource source)
         {
             UnsetMediaPlayerOpenWithMediaSource(playerId);
-            UnSetMediaPlayerOpenWithCustomSource(playerId);
-
             var provider = source.provider;
             if (provider != null)
             {

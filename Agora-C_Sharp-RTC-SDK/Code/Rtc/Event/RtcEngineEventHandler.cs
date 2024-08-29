@@ -302,36 +302,36 @@ namespace Agora.Rtc
             EventOnVideoPublishStateChanged.Invoke(source, channel, oldState, newState, elapseSinceLastState);
         }
 
-        public event Action<string, string, string, string> EventOnExtensionEvent;
+        public event Action<ExtensionContext, string, string> EventOnExtensionEventWithContext;
 
-        public override void OnExtensionEvent(string provider, string extension, string key, string value)
+        public override void OnExtensionEventWithContext(ExtensionContext context, string key, string value)
         {
-            if (EventOnExtensionEvent == null) return;
-            EventOnExtensionEvent.Invoke(provider, extension, key, value);
+            if (EventOnExtensionEventWithContext == null) return;
+            EventOnExtensionEventWithContext.Invoke(context, key, value);
         }
 
-        public event Action<string, string> EventOnExtensionStarted;
+        public event Action<ExtensionContext> EventOnExtensionStartedWithContext;
 
-        public override void OnExtensionStarted(string provider, string extension)
+        public override void OnExtensionStartedWithContext(ExtensionContext context)
         {
-            if (EventOnExtensionStarted == null) return;
-            EventOnExtensionStarted.Invoke(provider, extension);
+            if (EventOnExtensionStartedWithContext == null) return;
+            EventOnExtensionStartedWithContext.Invoke(context);
         }
 
-        public event Action<string, string> EventOnExtensionStopped;
+        public event Action<ExtensionContext> EventOnExtensionStoppedWithContext;
 
-        public override void OnExtensionStopped(string provider, string extension)
+        public override void OnExtensionStoppedWithContext(ExtensionContext context)
         {
-            if (EventOnExtensionStopped == null) return;
-            EventOnExtensionStopped.Invoke(provider, extension);
+            if (EventOnExtensionStoppedWithContext == null) return;
+            EventOnExtensionStoppedWithContext.Invoke(context);
         }
 
-        public event Action<string, string, int, string> EventOnExtensionError;
+        public event Action<ExtensionContext, int, string> EventOnExtensionErrorWithContext;
 
-        public override void OnExtensionError(string provider, string extension, int error, string message)
+        public override void OnExtensionErrorWithContext(ExtensionContext context, int error, string message)
         {
-            if (EventOnExtensionError == null) return;
-            EventOnExtensionError.Invoke(provider, extension, error, message);
+            if (EventOnExtensionErrorWithContext == null) return;
+            EventOnExtensionErrorWithContext.Invoke(context, error, message);
         }
 
         public event Action<RtcConnection, int> EventOnJoinChannelSuccess;
@@ -420,14 +420,6 @@ namespace Agora.Rtc
         {
             if (EventOnVideoSizeChanged == null) return;
             EventOnVideoSizeChanged.Invoke(connection, sourceType, uid, width, height, rotation);
-        }
-
-        public event Action<RtcConnection, LOCAL_VIDEO_STREAM_STATE, LOCAL_VIDEO_STREAM_REASON> EventOnLocalVideoStateChanged2;
-
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
-        {
-            if (EventOnLocalVideoStateChanged2 == null) return;
-            EventOnLocalVideoStateChanged2.Invoke(connection, state, reason);
         }
 
         public event Action<RtcConnection, uint, REMOTE_VIDEO_STATE, REMOTE_VIDEO_STATE_REASON, int> EventOnRemoteVideoStateChanged;

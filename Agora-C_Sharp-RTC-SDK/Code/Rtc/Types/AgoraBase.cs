@@ -603,8 +603,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// 17: The request to join the channel is rejected. Possible reasons include the following:
-        ///  The user is already in the channel. Agora recommends that you use the OnConnectionStateChanged callback to determine whether the user exists in the channel. Do not call this method to join the channel unless you receive the CONNECTION_STATE_DISCONNECTED (1) state.
-        ///  After calling StartEchoTest [3/3] for the call test, the user tries to join the channel without calling StopEchoTest to end the current test. To join a channel, the call test must be ended by calling StopEchoTest.
+        ///  The user is already in the channel. Agora recommends that you use the OnConnectionStateChanged callback to see whether the user is in the channel. Do not call this method to join the channel unless you receive the CONNECTION_STATE_DISCONNECTED (1) state.
+        ///  After calling StartEchoTest for the call test, the user tries to join the channel without calling StopEchoTest to end the current test. To join a channel, the call test must be ended by calling StopEchoTest.
         /// </summary>
         ///
         ERR_JOIN_CHANNEL_REJECTED = 17,
@@ -1172,9 +1172,7 @@ namespace Agora.Rtc
         QUALITY_DOWN = 6,
 
         ///
-        /// <summary>
-        /// 7: Users cannot detect the network quality (not in use).
-        /// </summary>
+        /// @ignore
         ///
         QUALITY_UNSUPPORTED = 7,
 
@@ -1767,6 +1765,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AUDIO_CODEC_LPCNET = 12,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_CODEC_OPUSMC = 13,
     }
 
     ///
@@ -2077,6 +2080,36 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_STREAM_LOW = 1,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_1 = 4,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_2 = 5,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_3 = 6,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_4 = 7,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_5 = 8,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_STREAM_LAYER_6 = 9,
     }
 
     ///
@@ -2356,16 +2389,25 @@ namespace Agora.Rtc
         ///
         public COMPRESSION_PREFERENCE compressionPreference;
 
+        ///
+        /// <summary>
+        /// Whether to encode and send the Alpha data present in the video frame to the remote end: true : Encode and send Alpha data. false : (Default) Do not encode and send Alpha data.
+        /// </summary>
+        ///
+        public bool encodeAlpha;
+
         public AdvanceOptions()
         {
             this.encodingPreference = ENCODING_PREFERENCE.PREFER_AUTO;
             this.compressionPreference = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY;
+            this.encodeAlpha = false;
         }
 
-        public AdvanceOptions(ENCODING_PREFERENCE encoding_preference, COMPRESSION_PREFERENCE compression_preference)
+        public AdvanceOptions(ENCODING_PREFERENCE encoding_preference, COMPRESSION_PREFERENCE compression_preference, bool encode_alpha)
         {
             this.encodingPreference = encoding_preference;
             this.compressionPreference = compression_preference;
+            this.encodeAlpha = encode_alpha;
         }
 
     }
@@ -2399,6 +2441,22 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_MIRROR_MODE_DISABLED = 2,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum CAMERA_FORMAT_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        CAMERA_FORMAT_NV12,
+
+        ///
+        /// @ignore
+        ///
+        CAMERA_FORMAT_BGRA,
     }
 
     ///
@@ -2605,7 +2663,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Video degradation preference under limited bandwidth. See DEGRADATION_PREFERENCE.
+        /// Video degradation preference under limited bandwidth. See DEGRADATION_PREFERENCE. When this parameter is set to MAINTAIN_FRAMERATE (1) or MAINTAIN_BALANCED (2), orientationMode needs to be set to ORIENTATION_MODE_ADAPTIVE (0) at the same time, otherwise the setting will not take effect.
         /// </summary>
         ///
         public DEGRADATION_PREFERENCE degradationPreference;
@@ -2634,7 +2692,7 @@ namespace Agora.Rtc
             this.orientationMode = m;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = mirror;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
         }
 
         public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
@@ -2647,7 +2705,7 @@ namespace Agora.Rtc
             this.orientationMode = m;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = mirror;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
         }
 
         public VideoEncoderConfiguration(VideoEncoderConfiguration config)
@@ -2673,7 +2731,7 @@ namespace Agora.Rtc
             this.orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
         }
 
         public VideoEncoderConfiguration(VIDEO_CODEC_TYPE codecType, VideoDimensions dimensions, int frameRate, int bitrate, int minBitrate, ORIENTATION_MODE orientationMode, DEGRADATION_PREFERENCE degradationPreference, VIDEO_MIRROR_MODE_TYPE mirrorMode, AdvanceOptions advanceOptions)
@@ -2786,11 +2844,119 @@ namespace Agora.Rtc
             this.framerate = 5;
         }
 
+        public SimulcastStreamConfig(SimulcastStreamConfig other)
+        {
+            this.dimensions = other.dimensions;
+            this.kBitrate = other.kBitrate;
+            this.framerate = other.framerate;
+        }
+
         public SimulcastStreamConfig(VideoDimensions dimensions, int kBitrate, int framerate)
         {
             this.dimensions = dimensions;
             this.kBitrate = kBitrate;
             this.framerate = framerate;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class SimulcastConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public StreamLayerConfig[] configs;
+
+        public SimulcastConfig(StreamLayerConfig[] configs)
+        {
+            this.configs = configs;
+        }
+        public SimulcastConfig()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum StreamLayerIndex
+    {
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_1 = 0,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_2 = 1,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_3 = 2,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_4 = 3,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_5 = 4,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_6 = 5,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LOW = 6,
+
+        ///
+        /// @ignore
+        ///
+        STREAM_LAYER_COUNT_MAX = 7,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class StreamLayerConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public VideoDimensions dimensions;
+
+        ///
+        /// @ignore
+        ///
+        public int framerate;
+
+        ///
+        /// @ignore
+        ///
+        public bool enable;
+
+        public StreamLayerConfig()
+        {
+            this.dimensions = new VideoDimensions(0, 0);
+            this.framerate = 0;
+            this.enable = false;
+        }
+
+        public StreamLayerConfig(VideoDimensions dimensions, int framerate, bool enable)
+        {
+            this.dimensions = dimensions;
+            this.framerate = framerate;
+            this.enable = enable;
         }
     }
 
@@ -3536,7 +3702,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 5: Chatroom scenario, where users need to frequently switch the user role or mute and unmute the microphone. For example, education scenarios. In this scenario, audience members receive a pop-up window to request permission of using microphones.
+        /// 5: Chatroom scenario, where users need to frequently switch the user role or mute and unmute the microphone. For example, education scenarios.
         /// </summary>
         ///
         AUDIO_SCENARIO_CHATROOM = 5,
@@ -3688,7 +3854,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// If set to APPLICATION_SCENARIO_MEETING (1), the SDK automatically enables the following strategies:
+        /// APPLICATION_SCENARIO_MEETING (1) is suitable for meeting scenarios. The SDK automatically enables the following strategies:
         ///  In meeting scenarios where low-quality video streams are required to have a high bitrate, the SDK automatically enables multiple technologies used to deal with network congestions, to enhance the performance of the low-quality streams and to ensure the smooth reception by subscribers.
         ///  The SDK monitors the number of subscribers to the high-quality video stream in real time and dynamically adjusts its configuration based on the number of subscribers.
         ///  If nobody subscribers to the high-quality stream, the SDK automatically reduces its bitrate and frame rate to save upstream bandwidth.
@@ -3705,6 +3871,13 @@ namespace Agora.Rtc
         /// </summary>
         ///
         APPLICATION_SCENARIO_MEETING = 1,
+
+        ///
+        /// <summary>
+        /// APPLICATION_SCENARIO_1V1 (2) is suitable for 1v1 video call scenarios. To meet the requirements for low latency and high-quality video in this scenario, the SDK optimizes its strategies, improving performance in terms of video quality, first frame rendering, latency on mid-to-low-end devices, and smoothness under weak network conditions. 2: 1v1 video call scenario.
+        /// </summary>
+        ///
+        APPLICATION_SCENARIO_1V1 = 2,
     }
 
     ///
@@ -4165,6 +4338,13 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_RESUMED = 29,
+
+        ///
+        /// <summary>
+        /// 30: (Windows and macOS only) The displayer used for screen capture is disconnected.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
     }
 
     ///
@@ -5965,7 +6145,6 @@ namespace Agora.Rtc
         ///  All lowercase English letters: a to z.
         ///  All uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
-        ///  Space
         ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","
         /// </summary>
         ///
@@ -6100,7 +6279,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 1: The number of hosts in the channel is already at the upper limit. This enumerator is reported only when the support for 128 users is enabled. The maximum number of hosts is based on the actual number of hosts configured when you enable the 128-user feature.
+        /// 1: The number of hosts in the channel exceeds the limit. This enumerator is reported only when the support for 128 users is enabled. The maximum number of hosts is based on the actual number of hosts configured when you enable the 128-user feature.
         /// </summary>
         ///
         CLIENT_ROLE_CHANGE_FAILED_TOO_MANY_BROADCASTERS = 1,
@@ -6114,16 +6293,18 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 3: The request is timed out. Agora recommends you prompt the user to check the network connection and try to switch their user role again.
+        /// 3: The request is timed out. Agora recommends you prompt the user to check the network connection and try to switch their user role again. Deprecated: This enumerator is deprecated since v4.4.0 and is not recommended for use.
         /// </summary>
         ///
+        [Obsolete("This reason is deprecated.")]
         CLIENT_ROLE_CHANGE_FAILED_REQUEST_TIME_OUT = 3,
 
         ///
         /// <summary>
-        /// 4: The SDK connection fails. You can use reason reported in the OnConnectionStateChanged callback to troubleshoot the failure.
+        /// 4: The SDK is disconnected from the Agora edge server. You can troubleshoot the failure through the reason reported by OnConnectionStateChanged. Deprecated: This enumerator is deprecated since v4.4.0 and is not recommended for use.
         /// </summary>
         ///
+        [Obsolete("This reason is deprecated.")]
         CLIENT_ROLE_CHANGE_FAILED_CONNECTION_FAILED = 4,
     }
 
@@ -6274,7 +6455,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: (Default) Replaces a view.
+        /// 0: (Default) Clear all added views and replace with a new view.
         /// </summary>
         ///
         VIDEO_VIEW_SETUP_REPLACE = 0,
@@ -6303,7 +6484,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The user ID.
+        /// User ID that publishes the video source.
         /// </summary>
         ///
         public uint uid;
@@ -6375,7 +6556,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (Optional) Whether the receiver enables alpha mask rendering: true : The receiver enables alpha mask rendering. false : (Default) The receiver disables alpha mask rendering. Alpha mask rendering can create images with transparent effects and extract portraits from videos. When used in combination with other methods, you can implement effects such as portrait-in-picture and watermarking.
+        /// (Optional) Whether to enable alpha mask rendering: true : Enable alpha mask rendering. false : (Default) Disable alpha mask rendering. Alpha mask rendering can create images with transparent effects and extract portraits from videos. When used in combination with other methods, you can implement effects such as portrait-in-picture and watermarking.
         ///  The receiver can render alpha channel information only when the sender enables alpha transmission.
         ///  To enable alpha transmission,.
         /// </summary>
@@ -6559,6 +6740,151 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LIGHTENING_CONTRAST_HIGH = 2,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class FaceShapeAreaOptions
+    {
+        ///
+        /// @ignore
+        ///
+        public FACE_SHAPE_AREA shapeArea;
+
+        ///
+        /// @ignore
+        ///
+        public int shapeIntensity;
+
+        public FaceShapeAreaOptions(FACE_SHAPE_AREA shapeArea, int areaIntensity)
+        {
+            this.shapeArea = shapeArea;
+            this.shapeIntensity = areaIntensity;
+        }
+
+        public FaceShapeAreaOptions()
+        {
+            this.shapeArea = FACE_SHAPE_AREA.FACE_SHAPE_AREA_NONE;
+            this.shapeIntensity = 0;
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum FACE_SHAPE_AREA
+    {
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NONE = -1,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_HEADSCALE = 0,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FOREHEAD = 1,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FACECONTOUR = 2,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FACELENGTH = 3,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FACEWIDTH = 4,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_CHEEKBONE = 5,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_CHEEK = 6,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_CHIN = 7,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYESCALE = 8,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSELENGTH = 9,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSEWIDTH = 10,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_MOUTHSCALE = 11,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class FaceShapeBeautyOptions
+    {
+        ///
+        /// @ignore
+        ///
+        public FACE_SHAPE_BEAUTY_STYLE shapeStyle;
+
+        ///
+        /// @ignore
+        ///
+        public int styleIntensity;
+
+        public FaceShapeBeautyOptions(FACE_SHAPE_BEAUTY_STYLE shapeStyle, int styleIntensity)
+        {
+            this.shapeStyle = shapeStyle;
+            this.styleIntensity = styleIntensity;
+        }
+
+        public FaceShapeBeautyOptions()
+        {
+            this.shapeStyle = FACE_SHAPE_BEAUTY_STYLE.FACE_SHAPE_BEAUTY_STYLE_FEMALE;
+            this.styleIntensity = 50;
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum FACE_SHAPE_BEAUTY_STYLE
+    {
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_BEAUTY_STYLE_FEMALE = 0,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_BEAUTY_STYLE_MALE = 1,
     }
 
     ///
@@ -6824,7 +7150,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: Process the background as alpha information without replacement, only separating the portrait and the background. After setting this value, you can call StartLocalVideoTranscoder to implement the picture-in-picture effect.
+        /// 0: Process the background as alpha data without replacement, only separating the portrait and the background. After setting this value, you can call StartLocalVideoTranscoder to implement the picture-in-picture effect.
         /// </summary>
         ///
         BACKGROUND_NONE = 0,
@@ -7391,6 +7717,84 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
+    /// Voice AI tuner sound types.
+    /// </summary>
+    ///
+    public enum VOICE_AI_TUNER_TYPE
+    {
+        ///
+        /// <summary>
+        /// 0: Mature male voice. A deep and magnetic male voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_MATURE_MALE,
+
+        ///
+        /// <summary>
+        /// 1: Fresh male voice. A fresh and slightly sweet male voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_FRESH_MALE,
+
+        ///
+        /// <summary>
+        /// 2: Elegant female voice. A deep and charming female voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_ELEGANT_FEMALE,
+
+        ///
+        /// <summary>
+        /// 3: Sweet female voice. A high-pitched and cute female voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_SWEET_FEMALE,
+
+        ///
+        /// <summary>
+        /// 4: Warm male singing. A warm and melodious male voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_WARM_MALE_SINGING,
+
+        ///
+        /// <summary>
+        /// 5: Gentle female singing. A soft and delicate female voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_GENTLE_FEMALE_SINGING,
+
+        ///
+        /// <summary>
+        /// 6: Husky male singing. A unique husky male voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_HUSKY_MALE_SINGING,
+
+        ///
+        /// <summary>
+        /// 7: Warm elegant female singing. A warm and mature female voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_WARM_ELEGANT_FEMALE_SINGING,
+
+        ///
+        /// <summary>
+        /// 8: Powerful male singing. A strong and powerful male voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_POWERFUL_MALE_SINGING,
+
+        ///
+        /// <summary>
+        /// 9: Dreamy female singing. A dreamy and soft female voice.
+        /// </summary>
+        ///
+        VOICE_AI_TUNER_DREAMY_FEMALE_SINGING,
+    }
+
+    ///
+    /// <summary>
     /// Screen sharing configurations.
     /// </summary>
     ///
@@ -7891,6 +8295,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AREA_CODE_US = 0x00000800,
+
+        ///
+        /// @ignore
+        ///
+        AREA_CODE_RU = 0x00001000,
 
         ///
         /// @ignore

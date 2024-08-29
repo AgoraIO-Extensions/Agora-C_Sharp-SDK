@@ -126,6 +126,7 @@ namespace Agora.Rtc
             localVideoFrame.matrix = videoFrameConverted.matrix;
             localVideoFrame.textureId = videoFrameConverted.textureId;
             localVideoFrame.alphaBufferPtr = videoFrameConverted.alphaBuffer;
+            localVideoFrame.alphaStitchMode = videoFrameConverted.alphaStitchMode;
             if (videoFrameConverted.metaInfo != null && videoFrameConverted.metaInfo.Keys.Count > 0)
             {
                 localVideoFrame.metaInfo = new VideoFrameMetaInfo(videoFrameConverted.metaInfo);
@@ -134,6 +135,8 @@ namespace Agora.Rtc
             {
                 localVideoFrame.metaInfo = null;
             }
+            localVideoFrame.hdr10MetadataInfo = videoFrameConverted.hdr10MetadataInfo;
+            localVideoFrame.colorSpace = videoFrameConverted.colorSpace;
 
         }
 

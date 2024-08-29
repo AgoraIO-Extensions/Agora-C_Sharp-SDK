@@ -584,26 +584,22 @@ namespace Agora.Rtc
         ///
         /// <param name="key"> The key of the extension. </param>
         ///
-        /// <param name="provider"> The name of the extension provider. </param>
+        /// <param name="context"> The context information of the extension, see ExtensionContext. </param>
         ///
-        /// <param name="extension"> The name of the extension. </param>
-        ///
-        public virtual void OnExtensionEvent(string provider, string extension, string key, string value)
+        public virtual void OnExtensionEventWithContext(ExtensionContext context, string key, string value)
         {
         }
 
         ///
         /// <summary>
-        /// Occurs when the extension is enabled.
+        /// Occurrs when the extension is enabled.
         /// 
-        /// The extension triggers this callback after it is successfully enabled.
+        /// The callback is triggered after the extension is successfully enabled.
         /// </summary>
         ///
-        /// <param name="provider"> The name of the extension provider. </param>
+        /// <param name="context"> The context information of the extension, see ExtensionContext. </param>
         ///
-        /// <param name="extension"> The name of the extension. </param>
-        ///
-        public virtual void OnExtensionStarted(string provider, string extension)
+        public virtual void OnExtensionStartedWithContext(ExtensionContext context)
         {
         }
 
@@ -611,14 +607,12 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the extension is disabled.
         /// 
-        /// The extension triggers this callback after it is successfully destroyed.
+        /// The callback is triggered after the extension is successfully disabled.
         /// </summary>
         ///
-        /// <param name="extension"> The name of the extension. </param>
+        /// <param name="context"> The context information of the extension, see ExtensionContext. </param>
         ///
-        /// <param name="provider"> The name of the extension provider. </param>
-        ///
-        public virtual void OnExtensionStopped(string provider, string extension)
+        public virtual void OnExtensionStoppedWithContext(ExtensionContext context)
         {
         }
 
@@ -629,15 +623,13 @@ namespace Agora.Rtc
         /// In case of extension enabling failure or runtime errors, the extension triggers this callback and reports the error code along with the reasons.
         /// </summary>
         ///
-        /// <param name="provider"> The name of the extension provider. </param>
-        ///
-        /// <param name="extension"> The name of the extension. </param>
+        /// <param name="context"> The context information of the extension, see ExtensionContext. </param>
         ///
         /// <param name="error"> Error code. For details, see the extension documentation provided by the extension provider. </param>
         ///
         /// <param name="message"> Reason. For details, see the extension documentation provided by the extension provider. </param>
         ///
-        public virtual void OnExtensionError(string provider, string extension, int error, string message)
+        public virtual void OnExtensionErrorWithContext(ExtensionContext context, int error, string message)
         {
         }
 
@@ -659,8 +651,6 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when a user rejoins the channel.
-        /// 
-        /// When a user loses connection with the server because of network problems, the SDK automatically tries to reconnect and triggers this callback upon reconnection.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -722,12 +712,12 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when a user leaves a channel.
         /// 
-        /// This callback notifies the app that the user leaves the channel by calling LeaveChannel [2/2]. From this callback, the app can get information such as the call duration and statistics.
+        /// You can obtain information such as the total duration of a call, and the data traffic that the SDK transmits and receives.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
-        /// <param name="stats"> The statistics of the call. See RtcStats. </param>
+        /// <param name="stats"> Call statistics. See RtcStats. </param>
         ///
         public virtual void OnLeaveChannel(RtcConnection connection, RtcStats stats)
         {
@@ -750,7 +740,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Reports the last mile network quality of each user in the channel.
         /// 
-        /// This callback reports the last mile network conditions of each user in the channel. Last mile refers to the connection between the local device and Agora's edge server. The SDK triggers this callback once every two seconds. If a channel includes multiple users, the SDK triggers this callback as many times. txQuality is UNKNOWN when the user is not sending a stream; rxQuality is UNKNOWN when the user is not receiving a stream.
+        /// This callback reports the last mile network conditions of each user in the channel. Last mile refers to the connection between the local device and Agora's edge server. The SDK triggers this callback once every two seconds. If a channel includes multiple users, the SDK triggers this callback as many times. This callback provides feedback on network quality through sending and receiving broadcast packets within the channel. Excessive broadcast packets can lead to broadcast storms. To prevent broadcast storms from causing a large amount of data transmission within the channel, this callback supports feedback on the network quality of up to 4 remote hosts simultaneously by default. txQuality is UNKNOWN when the user is not sending a stream; rxQuality is UNKNOWN when the user is not receiving a stream.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -838,13 +828,6 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
-        ///
-        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
-        {
-        }
-
-        ///
         /// <summary>
         /// Occurs when the remote video stream state changes.
         /// 
@@ -868,6 +851,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the renderer receives the first frame of the remote video.
+        /// 
+        /// This callback is only triggered when the video frame is rendered by the SDK; it will not be triggered if the user employs custom video rendering.You need to implement this independently using methods outside the SDK.
         /// </summary>
         ///
         /// <param name="remoteUid"> The user ID of the remote user sending the video stream. </param>
@@ -889,10 +874,7 @@ namespace Agora.Rtc
         /// Occurs when a remote user (in the communication profile)/ host (in the live streaming profile) joins the channel.
         /// 
         /// In a communication channel, this callback indicates that a remote user joins the channel. The SDK also triggers this callback to report the existing users in the channel when a user joins the channel.
-        /// In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of hosts to 17. The SDK triggers this callback under one of the following circumstances:
-        /// A remote user/host joins the channel.
-        /// A remote user switches the user role to the host after joining the channel.
-        /// A remote user/host rejoins the channel after a network interruption.
+        /// In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of hosts to 17.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -909,16 +891,16 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when a remote user (in the communication profile)/ host (in the live streaming profile) leaves the channel.
         /// 
-        /// There are two reasons for users to become offline:
-        /// Leave the channel: When a user/host leaves the channel, the user/host sends a goodbye message. When this message is received, the SDK determines that the user/host leaves the channel.
-        /// Drop offline: When no data packet of the user or host is received for a certain period of time (20 seconds for the communication profile, and more for the live broadcast profile), the SDK assumes that the user/host drops offline. A poor network connection may lead to false detections. It's recommended to use the Agora RTM SDK for reliable offline detection.
+        /// There are generally two reasons for users to become offline:
+        /// Leave the channel: When a user/host leaves the channel, the user/host sends a goodbye message.
+        /// Drop offline: When no data packet of the user or host is received for a certain period of time (20 seconds for the communication profile, and more for the live broadcast profile), the SDK assumes that the user/host drops offline. A poor network connection may lead to false detections. It is recommended to use the Agora RTM SDK for reliable offline detection.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
         /// <param name="remoteUid"> The ID of the user who leaves the channel or goes offline. </param>
         ///
-        /// <param name="reason"> Reasons why the user goes offline: USER_OFFLINE_REASON_TYPE. </param>
+        /// <param name="reason"> Reasons why a remote user (in the communication profile) or host (in the live streaming profile) goes offline. See USER_OFFLINE_REASON_TYPE. </param>
         ///
         public virtual void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
@@ -1305,9 +1287,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when the user role switches during the interactive live streaming.
-        /// 
-        /// The SDK triggers this callback when the local user switches their user role by calling SetClientRole [2/2] after joining the channel.
+        /// Occurs when the user role or the audience latency level changes.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -1324,9 +1304,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when the user role switching fails in the interactive live streaming.
+        /// Occurs when switching a user role fails.
         /// 
-        /// In the live broadcasting channel profile, when the local user calls SetClientRole [2/2] to switch the user role after joining the channel but the switch fails, the SDK triggers this callback to report the reason for the failure and the current user role.
+        /// This callback informs you about the reason for failing to switching and your current user role.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>

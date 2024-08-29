@@ -49,7 +49,7 @@ namespace Agora.Rtm.Internal
 
             switch (@event)
             {
-                case "RtmEventHandler_onMessageEvent":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONMESSAGEEVENT:
                     MessageEventInternal messageEventInternal = AgoraJson.JsonToStruct<MessageEventInternal>(jsonData, "event");
                     MessageEvent messageEvent = messageEventInternal.GenerateMessageEvent();
 
@@ -72,7 +72,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onLinkStateEvent":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONLINKSTATEEVENT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -86,7 +86,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onPresenceEvent":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCEEVENT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -100,7 +100,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onTopicEvent":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONTOPICEVENT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -114,7 +114,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onLockEvent":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONLOCKEVENT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -128,7 +128,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onStorageEvent":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONSTORAGEEVENT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -142,7 +142,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onJoinResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONJOINRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -159,7 +159,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onLeaveResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONLEAVERESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -176,7 +176,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onPublishTopicMessageResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONPUBLISHTOPICMESSAGERESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -193,7 +193,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onJoinTopicResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONJOINTOPICRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -212,7 +212,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onLeaveTopicResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONLEAVETOPICRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -231,7 +231,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onSubscribeTopicResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONSUBSCRIBETOPICRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -251,7 +251,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onUnsubscribeTopicResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUNSUBSCRIBETOPICRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -268,7 +268,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onGetSubscribedUserListResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETSUBSCRIBEDUSERLISTRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -286,7 +286,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onConnectionStateChanged":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGED:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -302,7 +302,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onTokenPrivilegeWillExpire":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONTOKENPRIVILEGEWILLEXPIRE:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -316,7 +316,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onSubscribeResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONSUBSCRIBERESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -332,7 +332,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onUnsubscribeResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUNSUBSCRIBERESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -348,7 +348,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onPublishResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONPUBLISHRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -363,7 +363,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onLoginResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONLOGINRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -378,7 +378,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onLogoutResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONLOGOUTRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -393,7 +393,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onRenewTokenResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONRENEWTOKENRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -410,7 +410,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onSetChannelMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONSETCHANNELMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -427,7 +427,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onUpdateChannelMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATECHANNELMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -444,7 +444,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onRemoveChannelMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONREMOVECHANNELMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -461,7 +461,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onGetChannelMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETCHANNELMETADATARESULT:
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
@@ -473,14 +473,14 @@ namespace Agora.Rtm.Internal
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
-                        AgoraJson.JsonToStruct<Metadata>(jsonData, "data"),
+                        AgoraJson.JsonToStruct<Rtm.Metadata>(jsonData, "data"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
-                case "RtmEventHandler_onSetUserMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONSETUSERMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -496,7 +496,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onUpdateUserMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUPDATEUSERMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -512,7 +512,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onRemoveUserMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONREMOVEUSERMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -528,7 +528,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onGetUserMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETUSERMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -538,14 +538,14 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnGetUserMetadataResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
-                        AgoraJson.JsonToStruct<Metadata>(jsonData, "data"),
+                        AgoraJson.JsonToStruct<Rtm.Metadata>(jsonData, "data"),
                         (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                           });
 #endif
                     break;
 
-                case "RtmEventHandler_onSubscribeUserMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONSUBSCRIBEUSERMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -561,7 +561,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onUnsubscribeUserMetadataResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONUNSUBSCRIBEUSERMETADATARESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -577,7 +577,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onSetLockResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONSETLOCKRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -595,7 +595,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onRemoveLockResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONREMOVELOCKRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -613,7 +613,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onReleaseLockResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONRELEASELOCKRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -631,7 +631,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onAcquireLockResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONACQUIRELOCKRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -650,7 +650,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onRevokeLockResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONREVOKELOCKRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -668,7 +668,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onGetLocksResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETLOCKSRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -687,7 +687,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onWhoNowResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONWHONOWRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -705,7 +705,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onGetOnlineUsersResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETONLINEUSERSRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -723,7 +723,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onWhereNowResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONWHERENOWRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -740,7 +740,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onGetUserChannelsResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETUSERCHANNELSRESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -757,7 +757,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onPresenceSetStateResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCESETSTATERESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -772,7 +772,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onPresenceRemoveStateResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCEREMOVESTATERESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {
@@ -787,7 +787,7 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onPresenceGetStateResult":
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONPRESENCEGETSTATERESULT:
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     CallbackObject._CallbackQueue.EnQueue(() =>
                                                           {

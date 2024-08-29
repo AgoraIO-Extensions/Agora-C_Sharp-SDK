@@ -1249,10 +1249,27 @@ namespace Agora.Rtm
 
     public enum RTM_PROXY_TYPE
     {
-
+        ///
+        /// <summary>
+        /// 0: Link without proxy
+        /// </summary>
+        ///
         NONE = 0,
 
+        ///
+        /// <summary>
+        /// 1: Link with http proxy
+        /// </summary>
+        ///
         HTTP = 1,
+
+
+        ///
+        /// <summary>
+        /// 2: Link with tcp cloud proxy
+        /// </summary>
+        ///
+        CLOUD_TCP = 2,
     }
 
     ///

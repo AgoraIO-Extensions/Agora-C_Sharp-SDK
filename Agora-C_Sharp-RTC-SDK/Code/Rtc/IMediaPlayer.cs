@@ -36,7 +36,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Opens the media resource.
         /// 
-        /// This method is called asynchronously. If you need to play a media file, make sure you receive the OnPlayerSourceStateChanged callback reporting PLAYER_STATE_OPEN_COMPLETED before calling the Play method to play the file.
+        /// This method is called asynchronously.
         /// </summary>
         ///
         /// <param name="url"> The path of the media file. Both local path and online path are supported. </param>
@@ -49,25 +49,6 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int Open(string url, long startPos);
-
-        ///
-        /// <summary>
-        /// Opens the custom media resource file.
-        /// 
-        /// Deprecated: This method is deprecated, use OpenWithMediaSource instead. This method allows you to open custom media resource files. For example, you can call this method to open encrypted media resources.
-        /// </summary>
-        ///
-        /// <param name="startPos"> The starting position (ms) for playback. Default value is 0. </param>
-        ///
-        /// <param name="provider"> The callback for custom media resource files. See IMediaPlayerCustomDataProvider. </param>
-        ///
-        /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
-        /// </returns>
-        ///
-        [Obsolete("")]
-        public abstract int OpenWithCustomSource(long startPos, IMediaPlayerCustomDataProvider provider);
 
         ///
         /// <summary>
@@ -88,8 +69,6 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Plays the media file.
-        /// 
-        /// After calling Open or Seek, you can call this method to play the media file.
         /// </summary>
         ///
         /// <returns>
@@ -114,6 +93,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Stops playing the media track.
+        /// 
+        /// After calling this method to stop playback, if you want to play again, you need to call Open or OpenWithMediaSource to open the media resource.
         /// </summary>
         ///
         /// <returns>
@@ -139,9 +120,8 @@ namespace Agora.Rtc
         /// <summary>
         /// Seeks to a new playback position.
         /// 
-        /// After successfully calling this method, you will receive the OnPlayerEvent callback, reporting the result of the seek operation to the new playback position. To play the media file from a specific position, do the following:
-        /// Call this method to seek to the position you want to begin playback.
-        /// Call the Play method to play the media file.
+        /// If you call Seek after the playback has completed (upon receiving callback OnPlayerSourceStateChanged reporting playback status as PLAYER_STATE_PLAYBACK_COMPLETED or PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED), the SDK will play the media file from the specified position. At this point, you will receive callback OnPlayerSourceStateChanged reporting playback status as PLAYER_STATE_PLAYING.
+        /// If you call Seek while the playback is paused, upon successful call of this method, the SDK will seek to the specified position. To resume playback, call Resume or Play .
         /// </summary>
         ///
         /// <param name="newPos"> The new playback position (ms). </param>
@@ -216,8 +196,6 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the detailed information of the media stream.
-        /// 
-        /// Call this method after calling GetStreamCount.
         /// </summary>
         ///
         /// <param name="index"> The index of the media stream. This parameter needs to be less than the count parameter of GetStreamCount. </param>
@@ -238,7 +216,11 @@ namespace Agora.Rtc
         /// If you want to loop, call this method and set the number of the loops. When the loop finishes, the SDK triggers OnPlayerSourceStateChanged and reports the playback state as PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED.
         /// </summary>
         ///
-        /// <param name="loopCount"> The number of times the audio effect loops: </param>
+        /// <param name="loopCount">
+        /// The number of times the audio effect loops:
+        /// ≥0: Number of times for playing. For example, setting it to 0 means no loop playback, playing only once; setting it to 1 means loop playback once, playing a total of twice.
+        /// -1: Play the audio file in an infinite loop.
+        /// </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -304,9 +286,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Set media player options for providing technical previews or special customization features.
+        /// Sets media player options.
         /// 
-        /// The media player supports setting options through key and value. In general, you don't need to know about the option settings. You can use the default option settings of the media player. The difference between this method and setPlayerOption [2/2] is that the value parameter of this method is of type Int, while the value of setPlayerOption [2/2] is of type String. These two methods cannot be used together. Ensure that you call this method before Open or OpenWithMediaSource.
+        /// The media player supports setting options through key and value. The difference between this method and setPlayerOption [2/2] is that the value parameter of this method is of type Int, while the value of setPlayerOption [2/2] is of type String. These two methods cannot be used together.
         /// </summary>
         ///
         /// <param name="key"> The key of the option. </param>
@@ -322,9 +304,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Set media player options for providing technical previews or special customization features.
+        /// Sets media player options.
         /// 
-        /// Ensure that you call this method before Open or OpenWithMediaSource. The media player supports setting options through key and value. In general, you don't need to know about the option settings. You can use the default option settings of the media player. The difference between this method and SetPlayerOption [1/2] is that the value parameter of this method is of type String, while the value of SetPlayerOption [1/2] is of type String. These two methods cannot be used together.
+        /// The media player supports setting options through key and value. The difference between this method and SetPlayerOption [1/2] is that the value parameter of this method is of type String, while the value of SetPlayerOption [1/2] is of type String. These two methods cannot be used together.
         /// </summary>
         ///
         /// <param name="key"> The key of the option. </param>
@@ -383,7 +365,7 @@ namespace Agora.Rtc
         /// Reports whether the media resource is muted.
         /// </summary>
         ///
-        /// <param name="muted"> An output parameter. Whether the media file is muted: true : The media file is muted. false : The media file is unmuted. </param>
+        /// <param name="muted"> An output parameter. Whether the media file is muted: true : The media file is muted. false : The media file is not muted. </param>
         ///
         /// <returns>
         /// 0: Success.
