@@ -358,18 +358,18 @@ if [ "$WIN_URL" != "" ]; then
     echo "[Unity CI] copying Windows x86-64 ..."
     WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
     cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
+    # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
     cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
+    # cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
     delete_files "$WIN64_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
     # Windows x86
     echo "[Unity CI] copying Windows x86 ..."
     WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
     cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
+    # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
+    # cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
     delete_files "$WIN32_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
     #create dll.meta
