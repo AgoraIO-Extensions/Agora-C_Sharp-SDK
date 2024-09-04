@@ -194,9 +194,9 @@ delete_files "$MAC_DST_PATH/AgoraRtcWrapperUnity.bundle/Contents/Frameworks" "$E
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
 cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
+# cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
 cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
+# cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
 
 #create dll.meta
 files=$(ls $WIN64_DST_PATH)
@@ -214,9 +214,9 @@ delete_files "$WIN64_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
 cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
+# cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
+# cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
 files=$(ls $WIN32_DST_PATH)
 for filename in $files; do
     extension=${filename##*.}
