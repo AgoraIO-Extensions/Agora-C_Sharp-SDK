@@ -182,6 +182,24 @@ namespace Agora.Rtc.Ut
         }
         //////////////////
 
+        public bool OnPipStateChanged_be_trigger = false;
+        public PIP_STATE OnPipStateChanged_state;
+        public override void OnPipStateChanged(PIP_STATE state)
+        {
+            OnPipStateChanged_be_trigger = true;
+            OnPipStateChanged_state = state;
+        }
+
+        public bool OnPipStateChangedPassed(PIP_STATE state)
+        {
+            if (OnPipStateChanged_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<PIP_STATE>(OnPipStateChanged_state, state) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
         public bool OnUplinkNetworkInfoUpdated_be_trigger = false;
         public UplinkNetworkInfo OnUplinkNetworkInfoUpdated_info;
         public override void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info)

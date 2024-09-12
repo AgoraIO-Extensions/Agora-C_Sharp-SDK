@@ -280,6 +280,25 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
+        public void Test_IRtcEngineEventHandler_OnPipStateChanged()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONPIPSTATECHANGED;
+
+            jsonObj.Clear();
+
+            PIP_STATE state = ParamsHelper.CreateParam<PIP_STATE>();
+            jsonObj.Add("state", state);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnPipStateChangedPassed(state));
+        }
+
+        [Test]
         public void Test_IRtcEngineEventHandler_OnUplinkNetworkInfoUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONUPLINKNETWORKINFOUPDATED;

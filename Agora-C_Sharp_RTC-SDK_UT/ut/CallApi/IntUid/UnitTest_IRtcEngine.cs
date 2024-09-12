@@ -333,6 +333,42 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_IsPipSupported()
+        {
+
+
+            var nRet = RtcEngine.IsPipSupported();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetupPip()
+        {
+            PipOptions options = ParamsHelper.CreateParam<PipOptions>();
+
+            var nRet = RtcEngine.SetupPip(options);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_StartPip()
+        {
+
+
+            var nRet = RtcEngine.StartPip();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_StopPip()
+        {
+
+
+            var nRet = RtcEngine.StopPip();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_StartLastmileProbeTest()
         {
             LastmileProbeConfig config = ParamsHelper.CreateParam<LastmileProbeConfig>();

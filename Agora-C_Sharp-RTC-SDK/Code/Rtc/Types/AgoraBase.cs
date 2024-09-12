@@ -6630,6 +6630,74 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum PIP_STATE
+    {
+        ///
+        /// @ignore
+        ///
+        PIP_STATE_STARTED = 0,
+
+        ///
+        /// @ignore
+        ///
+        PIP_STATE_STOPPED = 1,
+
+        ///
+        /// @ignore
+        ///
+        PIP_STATE_FAILED = 2,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class PipOptions
+    {
+        ///
+        /// @ignore
+        ///
+        public IntPtr contentSource;
+
+        ///
+        /// @ignore
+        ///
+        public int contentWidth;
+
+        ///
+        /// @ignore
+        ///
+        public int contentHeight;
+
+        ///
+        /// @ignore
+        ///
+        public bool autoEnterPip;
+
+        ///
+        /// @ignore
+        ///
+        public VideoCanvas canvas;
+
+        public PipOptions()
+        {
+            this.contentSource = IntPtr.Zero;
+            this.contentWidth = 0;
+            this.contentHeight = 0;
+        }
+
+        public PipOptions(IntPtr contentSource, int contentWidth, int contentHeight, bool autoEnterPip, VideoCanvas canvas)
+        {
+            this.contentSource = contentSource;
+            this.contentWidth = contentWidth;
+            this.contentHeight = contentHeight;
+            this.autoEnterPip = autoEnterPip;
+            this.canvas = canvas;
+        }
+    }
+
+    ///
     /// <summary>
     /// Image enhancement options.
     /// </summary>
