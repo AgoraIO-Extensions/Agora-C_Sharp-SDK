@@ -141,6 +141,13 @@ namespace Agora.Rtc
         }
 
         ///
+        /// @ignore
+        ///
+        public virtual void OnPipStateChanged(PIP_STATE state)
+        {
+        }
+
+        ///
         /// <summary>
         /// Occurs when the uplink network information changes.
         /// 

@@ -43,6 +43,10 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_STARTPREVIEW2 = "RtcEngine_startPreview_4fd718e";
         internal const string FUNC_RTCENGINE_STOPPREVIEW = "RtcEngine_stopPreview";
         internal const string FUNC_RTCENGINE_STOPPREVIEW2 = "RtcEngine_stopPreview_4fd718e";
+        internal const string FUNC_RTCENGINE_ISPIPSUPPORTED = "RtcEngine_isPipSupported";
+        internal const string FUNC_RTCENGINE_SETUPPIP = "RtcEngine_setupPip_b0b4d39";
+        internal const string FUNC_RTCENGINE_STARTPIP = "RtcEngine_startPip";
+        internal const string FUNC_RTCENGINE_STOPPIP = "RtcEngine_stopPip";
         internal const string FUNC_RTCENGINE_STARTLASTMILEPROBETEST = "RtcEngine_startLastmileProbeTest_c4de423";
         internal const string FUNC_RTCENGINE_STOPLASTMILEPROBETEST = "RtcEngine_stopLastmileProbeTest";
         internal const string FUNC_RTCENGINE_SETVIDEOENCODERCONFIGURATION = "RtcEngine_setVideoEncoderConfiguration_89677d8";

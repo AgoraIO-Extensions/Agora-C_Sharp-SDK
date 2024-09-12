@@ -70,6 +70,14 @@ namespace Agora.Rtc
             EventOnVideoDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
         }
 
+        public event Action<PIP_STATE> EventOnPipStateChanged;
+
+        public override void OnPipStateChanged(PIP_STATE state)
+        {
+            if (EventOnPipStateChanged == null) return;
+            EventOnPipStateChanged.Invoke(state);
+        }
+
         public event Action<UplinkNetworkInfo> EventOnUplinkNetworkInfoUpdated;
 
         public override void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info)

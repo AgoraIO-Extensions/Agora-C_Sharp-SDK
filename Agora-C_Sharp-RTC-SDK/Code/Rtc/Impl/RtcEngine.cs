@@ -541,6 +541,42 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StopPreview(sourceType);
         }
 
+        public override bool IsPipSupported()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return false;
+            }
+            return _rtcEngineImpl.IsPipSupported();
+        }
+
+        public override int SetupPip(PipOptions options)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetupPip(options);
+        }
+
+        public override int StartPip()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.StartPip();
+        }
+
+        public override int StopPip()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.StopPip();
+        }
+
         public override int StartLastmileProbeTest(LastmileProbeConfig config)
         {
             if (_rtcEngineImpl == null)

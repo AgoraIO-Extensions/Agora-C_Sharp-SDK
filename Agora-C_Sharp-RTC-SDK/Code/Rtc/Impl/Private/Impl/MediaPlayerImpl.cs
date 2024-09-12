@@ -101,7 +101,6 @@ namespace Agora.Rtc
                 _mediaPlayerAudioSpectrumObserverHandles.Clear();
             }
 
-
             //move this code from ReleaseEventHandler because:
             //If there are multiple mediaPlayers, one of the InitEventHandler (null) will cause the _callbackObject to be destroyed,
             //and then all remaining mediaPlayer callbacks cannot be triggered
@@ -185,7 +184,6 @@ namespace Agora.Rtc
             /// You must release callbackObject after you release eventhandler.
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
             MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
-
 
             arrayPtrHandle.Free();
             return nRet;

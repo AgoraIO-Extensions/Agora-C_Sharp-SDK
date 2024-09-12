@@ -76,7 +76,8 @@
             "getConnectionState": "method_interface_return_CONNECTION_STATE_TYPE",
             "getNtpWallTimeInMs": "method_interface_return_uint",
             "isFeatureAvailableOnDevice": "method_interface_return_bool",
-            "isCameraCenterStageSupported": "method_interface_return_bool"
+            "isCameraCenterStageSupported": "method_interface_return_bool",
+            "isPipSupported": "method_interface_return_bool"
         },
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",

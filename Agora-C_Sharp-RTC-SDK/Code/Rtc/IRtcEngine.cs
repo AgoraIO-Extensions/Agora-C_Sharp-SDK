@@ -734,6 +734,26 @@ namespace Agora.Rtc
         public abstract int StopPreview(VIDEO_SOURCE_TYPE sourceType);
 
         ///
+        /// @ignore
+        ///
+        public abstract bool IsPipSupported();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetupPip(PipOptions options);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int StartPip();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int StopPip();
+
+        ///
         /// <summary>
         /// Starts the last mile network probe test.
         /// 

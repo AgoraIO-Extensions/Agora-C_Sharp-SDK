@@ -94,6 +94,7 @@ namespace Agora.Rtc
         public const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGFINISHED = "RtcEngineEventHandler_onAudioMixingFinished";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOEFFECTFINISHED = "RtcEngineEventHandler_onAudioEffectFinished_46f8ab7";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEODEVICESTATECHANGED = "RtcEngineEventHandler_onVideoDeviceStateChanged_976d8c3";
+        public const string EVENT_RTCENGINEEVENTHANDLER_ONPIPSTATECHANGED = "RtcEngineEventHandler_onPipStateChanged_941b366";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONNETWORKQUALITY = "RtcEngineEventHandler_onNetworkQuality_68a324c";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONINTRAREQUESTRECEIVED = "RtcEngineEventHandler_onIntraRequestReceived";
         public const string EVENT_RTCENGINEEVENTHANDLER_ONUPLINKNETWORKINFOUPDATED = "RtcEngineEventHandler_onUplinkNetworkInfoUpdated_cbb1856";
