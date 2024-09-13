@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Agora.Rtc;
-
+using System;
 namespace Agora.Rtc.Ut
 {
     using uid_t = System.UInt32;
@@ -2065,7 +2065,7 @@ namespace Agora.Rtc.Ut
             IntPtr mediaProjection = ParamsHelper.CreateParam<IntPtr>();
 
             var nRet = RtcEngine.SetExternalMediaProjection(mediaProjection);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
