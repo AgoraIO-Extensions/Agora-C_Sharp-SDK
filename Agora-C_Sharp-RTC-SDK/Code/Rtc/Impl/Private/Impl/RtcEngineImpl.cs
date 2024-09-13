@@ -2411,6 +2411,22 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation)
+        {
+            _param.Clear();
+            _param.Add("uid", uid);
+            _param.Add("rotation", rotation);
+
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTERENDERROTATION,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
         {
             _param.Clear();
@@ -4492,6 +4508,26 @@ namespace Agora.Rtc
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
+
+
+        public int SetRemoteRenderRotationEx(uint uid, VIDEO_ORIENTATION rotation, RtcConnection connection)
+        {
+            _param.Clear();
+            _param.Add("uid", uid);
+            _param.Add("rotation", rotation);
+            _param.Add("connection", connection);
+
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTERENDERROTATIONEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
 
         public int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName)
         {

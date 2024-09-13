@@ -143,6 +143,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_WRITELOG = "RtcEngine_writeLog";
         internal const string FUNC_RTCENGINE_SETLOCALRENDERMODE = "RtcEngine_setLocalRenderMode";
         internal const string FUNC_RTCENGINE_SETREMOTERENDERMODE = "RtcEngine_setRemoteRenderMode";
+        internal const string FUNC_RTCENGINE_SETREMOTERENDERROTATION = "RtcEngine_setRemoteRenderRotation";
         internal const string FUNC_RTCENGINE_SETLOCALRENDERMODE2 = "RtcEngine_setLocalRenderMode2";
         internal const string FUNC_RTCENGINE_SETLOCALVIDEOMIRRORMODE = "RtcEngine_setLocalVideoMirrorMode";
         internal const string FUNC_RTCENGINE_ENABLEDUALSTREAMMODE = "RtcEngine_enableDualStreamMode";
@@ -310,6 +311,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_UPDATECHANNELMEDIAOPTIONSEX = "RtcEngineEx_updateChannelMediaOptionsEx";
         internal const string FUNC_RTCENGINEEX_SETVIDEOENCODERCONFIGURATIONEX = "RtcEngineEx_setVideoEncoderConfigurationEx";
         internal const string FUNC_RTCENGINEEX_SETUPREMOTEVIDEOEX = "RtcEngineEx_setupRemoteVideoEx";
+        internal const string FUNC_RTCENGINEEX_SETREMOTERENDERROTATIONEX = "RtcEngineEx_setRemoteRenderRotationEx";
         internal const string FUNC_RTCENGINEEX_MUTEREMOTEAUDIOSTREAMEX = "RtcEngineEx_muteRemoteAudioStreamEx";
         internal const string FUNC_RTCENGINEEX_MUTEREMOTEVIDEOSTREAMEX = "RtcEngineEx_muteRemoteVideoStreamEx";
         internal const string FUNC_RTCENGINEEX_SETREMOTEVIDEOSTREAMTYPEEX = "RtcEngineEx_setRemoteVideoStreamTypeEx";

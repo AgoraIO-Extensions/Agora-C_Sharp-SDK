@@ -1108,6 +1108,9 @@ namespace Agora.Rtc
         ///
         public virtual void OnPermissionError(PERMISSION_TYPE permissionType) { }
 
+
+
+        public virtual void OnPermissionGranted(PERMISSION_TYPE permissionType) { }
         ///
         /// <summary>
         /// Occurs when the local user registers a user account.

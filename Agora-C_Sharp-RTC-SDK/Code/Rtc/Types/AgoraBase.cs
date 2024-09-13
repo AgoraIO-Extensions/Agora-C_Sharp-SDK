@@ -3531,7 +3531,7 @@ namespace Agora.Rtc
         /// 30: The shared display has been disconnected.
         /// </summary>
         ///
-        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCNNECTED = 30,
+        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
     };
 
     ///
@@ -5677,6 +5677,7 @@ namespace Agora.Rtc
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
             enableAlphaMask = false;
+            rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
 
         }
 
@@ -5692,6 +5693,7 @@ namespace Agora.Rtc
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
             enableAlphaMask = false;
+            rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, string u)
@@ -5706,6 +5708,7 @@ namespace Agora.Rtc
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
             enableAlphaMask = false;
+            rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
         }
 
         ///
@@ -5784,6 +5787,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public bool enableAlphaMask;
+
+
+        public VIDEO_ORIENTATION rotation;
     };
 
     ///
@@ -7158,6 +7164,9 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AREA_CODE_US = 0x00000800,
+
+
+        AREA_CODE_RU = 0x00001000,
 
         ///
         /// @ignore
