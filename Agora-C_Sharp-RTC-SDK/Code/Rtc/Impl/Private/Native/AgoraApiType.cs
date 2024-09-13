@@ -229,6 +229,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_UPDATESCREENCAPTURE = "RtcEngine_updateScreenCapture_270da41";
         internal const string FUNC_RTCENGINE_QUERYSCREENCAPTURECAPABILITY = "RtcEngine_queryScreenCaptureCapability";
         internal const string FUNC_RTCENGINE_QUERYCAMERAFOCALLENGTHCAPABILITY = "RtcEngine_queryCameraFocalLengthCapability_2dee6af";
+        internal const string FUNC_RTCENGINE_SETEXTERNALMEDIAPROJECTION = "RtcEngine_setExternalMediaProjection_f337cbf";
         internal const string FUNC_RTCENGINE_SETSCREENCAPTURESCENARIO = "RtcEngine_setScreenCaptureScenario_13de7b4";
         internal const string FUNC_RTCENGINE_STOPSCREENCAPTURE = "RtcEngine_stopScreenCapture";
         internal const string FUNC_RTCENGINE_GETCALLID = "RtcEngine_getCallId_66d4ecd";
@@ -287,6 +288,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_STOPRHYTHMPLAYER = "RtcEngine_stopRhythmPlayer";
         internal const string FUNC_RTCENGINE_CONFIGRHYTHMPLAYER = "RtcEngine_configRhythmPlayer_b36c805";
         internal const string FUNC_RTCENGINE_TAKESNAPSHOT = "RtcEngine_takeSnapshot_1922dd1";
+        internal const string FUNC_RTCENGINE_TAKESNAPSHOT2 = "RtcEngine_takeSnapshot_5669ea6";
         internal const string FUNC_RTCENGINE_ENABLECONTENTINSPECT = "RtcEngine_enableContentInspect_e15e514";
         internal const string FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPUBLISHVOLUME = "RtcEngine_adjustCustomAudioPublishVolume_f8da2ca";
         internal const string FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPLAYOUTVOLUME = "RtcEngine_adjustCustomAudioPlayoutVolume_f8da2ca";
@@ -356,6 +358,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_SETSIMULCASTCONFIGEX = "RtcEngineEx_setSimulcastConfigEx_bd8d7d0";
         internal const string FUNC_RTCENGINEEX_SETHIGHPRIORITYUSERLISTEX = "RtcEngineEx_setHighPriorityUserListEx_8736b5c";
         internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX = "RtcEngineEx_takeSnapshotEx_de1c015";
+        internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX2 = "RtcEngineEx_takeSnapshotEx_b856417";
         internal const string FUNC_RTCENGINEEX_ENABLECONTENTINSPECTEX = "RtcEngineEx_enableContentInspectEx_c4e7f69";
         internal const string FUNC_RTCENGINEEX_STARTMEDIARENDERINGTRACINGEX = "RtcEngineEx_startMediaRenderingTracingEx_c81e1a4";
         internal const string FUNC_RTCENGINEEX_SETPARAMETERSEX = "RtcEngineEx_setParametersEx_8225ea3";

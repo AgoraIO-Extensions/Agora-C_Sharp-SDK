@@ -547,6 +547,17 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_TakeSnapshotEx2()
+        {
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            uint uid = ParamsHelper.CreateParam<uint>();
+            SnapshotConfig config = ParamsHelper.CreateParam<SnapshotConfig>();
+
+            var nRet = RtcEngineEx.TakeSnapshotEx(connection, uid, config);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_EnableContentInspectEx()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
