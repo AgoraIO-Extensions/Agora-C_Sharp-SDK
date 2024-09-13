@@ -950,6 +950,11 @@ namespace Agora.Rtc
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
 
         ///
+        /// @ignore
+        ///
+        public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, SnapshotConfig config);
+
+        ///
         /// <summary>
         /// Enables or disables video screenshot and upload.
         /// 

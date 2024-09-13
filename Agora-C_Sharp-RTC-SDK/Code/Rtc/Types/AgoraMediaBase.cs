@@ -2036,6 +2036,34 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public class SnapshotConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public string filePath;
+
+        ///
+        /// @ignore
+        ///
+        public VIDEO_MODULE_POSITION position;
+
+        public SnapshotConfig()
+        {
+            this.filePath = "";
+            this.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
+        }
+
+        public SnapshotConfig(string filePath, VIDEO_MODULE_POSITION position)
+        {
+            this.filePath = filePath;
+            this.position = position;
+        }
+    }
+
+    ///
     /// <summary>
     /// Audio frame type.
     /// </summary>

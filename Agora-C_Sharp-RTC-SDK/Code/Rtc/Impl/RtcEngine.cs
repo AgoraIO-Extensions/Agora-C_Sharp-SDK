@@ -2180,6 +2180,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.QueryCameraFocalLengthCapability(ref focalLengthInfos, ref size);
         }
 
+        public override int SetExternalMediaProjection(IntPtr mediaProjection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetExternalMediaProjection(mediaProjection);
+        }
+
         public override int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
         {
             if (_rtcEngineImpl == null)
@@ -2667,6 +2676,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.TakeSnapshot(uid, filePath);
+        }
+
+        public override int TakeSnapshot(uint uid, SnapshotConfig config)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.TakeSnapshot(uid, config);
         }
 
         public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
@@ -3272,6 +3290,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.TakeSnapshotEx(connection, uid, filePath);
+        }
+
+        public override int TakeSnapshotEx(RtcConnection connection, uint uid, SnapshotConfig config)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.TakeSnapshotEx(connection, uid, config);
         }
 
         public override int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection)
