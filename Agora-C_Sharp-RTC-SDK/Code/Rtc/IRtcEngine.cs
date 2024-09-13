@@ -944,6 +944,10 @@ namespace Agora.Rtc
         ///
         public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
+
+
+        public abstract int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation);
+
         ///
         /// <summary>
         /// Sets the local video mirror mode.
@@ -5528,6 +5532,9 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
+
+
+        public abstract int SetRemoteRenderRotationEx(uint uid, VIDEO_ORIENTATION rotation, RtcConnection connection);
 
         ///
         /// <summary>

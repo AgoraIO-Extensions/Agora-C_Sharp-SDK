@@ -1428,6 +1428,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetRemoteRenderMode(uid, renderMode, mirrorMode);
         }
 
+        public override int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetRemoteRenderRotation(uid, rotation);
+        }
+
         public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
         {
             if (_rtcEngineImpl == null)
@@ -2580,6 +2589,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
+        }
+
+        public override int SetRemoteRenderRotationEx(uint uid, VIDEO_ORIENTATION rotation, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetRemoteRenderRotationEx(uid, rotation, connection);
         }
 
         public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName)
