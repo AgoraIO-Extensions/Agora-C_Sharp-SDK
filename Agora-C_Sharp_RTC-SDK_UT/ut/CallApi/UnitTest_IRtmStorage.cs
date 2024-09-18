@@ -1,8 +1,10 @@
 ﻿using System;
 using Agora.Rtc.Ut;
 using NUnit.Framework;
+
 namespace Agora.Rtm.Ut
 {
+    using Metadata = Agora.Rtm.Internal.Metadata;
     public class UnitTest_IRtmStorage
     {
         public Internal.IRtmClient RtmClient;

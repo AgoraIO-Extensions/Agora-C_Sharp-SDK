@@ -77,7 +77,8 @@
         "LocalSpatialAudioConfig.LocalSpatialAudioConfig.rtcEngine:NULL": "null",
         "IMusicContentCenter.getMusicCollectionByMusicChartId.jsonOption:nullptr": "\"\"",
         "IMusicContentCenter.searchMusic.jsonOption:nullptr": "\"\"",
-        "Metadata.Metadata.buffer:NULL": "IntPtr.Zero"
+        "Metadata.Metadata.buffer:NULL": "IntPtr.Zero",
+        "MixedAudioStream.MixedAudioStream.trackId:-1": "0xffffffff"
     },
     "normal": {
         "agora::media::PRIMARY_CAMERA_SOURCE": "MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE",

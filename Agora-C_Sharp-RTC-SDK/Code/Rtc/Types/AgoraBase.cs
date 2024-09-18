@@ -2325,18 +2325,23 @@ namespace Agora.Rtc
     public enum COMPRESSION_PREFERENCE
     {
         ///
+        /// @ignore
+        ///
+        PREFER_COMPRESSION_AUTO = -1,
+
+        ///
         /// <summary>
         /// 0: Low latency preference. The SDK compresses video frames to reduce latency. This preference is suitable for scenarios where smoothness is prioritized and reduced video quality is acceptable.
         /// </summary>
         ///
-        PREFER_LOW_LATENCY,
+        PREFER_LOW_LATENCY = 0,
 
         ///
         /// <summary>
         /// 1: (Default) High quality preference. The SDK compresses video frames while maintaining video quality. This preference is suitable for scenarios where video quality is prioritized.
         /// </summary>
         ///
-        PREFER_QUALITY,
+        PREFER_QUALITY = 1,
     }
 
     ///
@@ -2399,7 +2404,7 @@ namespace Agora.Rtc
         public AdvanceOptions()
         {
             this.encodingPreference = ENCODING_PREFERENCE.PREFER_AUTO;
-            this.compressionPreference = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY;
+            this.compressionPreference = COMPRESSION_PREFERENCE.PREFER_COMPRESSION_AUTO;
             this.encodeAlpha = false;
         }
 
@@ -2457,6 +2462,63 @@ namespace Agora.Rtc
         /// @ignore
         ///
         CAMERA_FORMAT_BGRA,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum VIDEO_MODULE_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        VIDEO_MODULE_CAPTURER = 0,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_MODULE_SOFTWARE_ENCODER = 1,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_MODULE_HARDWARE_ENCODER = 2,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_MODULE_SOFTWARE_DECODER = 3,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_MODULE_HARDWARE_DECODER = 4,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_MODULE_RENDERER = 5,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum HDR_CAPABILITY
+    {
+        ///
+        /// @ignore
+        ///
+        HDR_CAPABILITY_UNKNOWN = -1,
+
+        ///
+        /// @ignore
+        ///
+        HDR_CAPABILITY_UNSUPPORTED = 0,
+
+        ///
+        /// @ignore
+        ///
+        HDR_CAPABILITY_SUPPORTED = 1,
     }
 
     ///
@@ -2692,7 +2754,7 @@ namespace Agora.Rtc
             this.orientationMode = m;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = mirror;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_COMPRESSION_AUTO, false);
         }
 
         public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
@@ -2705,7 +2767,7 @@ namespace Agora.Rtc
             this.orientationMode = m;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = mirror;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_COMPRESSION_AUTO, false);
         }
 
         public VideoEncoderConfiguration(VideoEncoderConfiguration config)
@@ -2731,7 +2793,7 @@ namespace Agora.Rtc
             this.orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             this.mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED;
-            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY, false);
+            this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_COMPRESSION_AUTO, false);
         }
 
         public VideoEncoderConfiguration(VIDEO_CODEC_TYPE codecType, VideoDimensions dimensions, int frameRate, int bitrate, int minBitrate, ORIENTATION_MODE orientationMode, DEGRADATION_PREFERENCE degradationPreference, VIDEO_MIRROR_MODE_TYPE mirrorMode, AdvanceOptions advanceOptions)
@@ -3878,6 +3940,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         APPLICATION_SCENARIO_1V1 = 2,
+
+        ///
+        /// @ignore
+        ///
+        APPLICATION_SCENARIO_LIVESHOW = 3,
     }
 
     ///
@@ -5914,6 +5981,100 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public class MixedAudioStream
+    {
+        ///
+        /// @ignore
+        ///
+        public AUDIO_SOURCE_TYPE sourceType;
+
+        ///
+        /// @ignore
+        ///
+        public uint remoteUserUid;
+
+        ///
+        /// @ignore
+        ///
+        public string channelName;
+
+        ///
+        /// @ignore
+        ///
+        public uint trackId;
+
+        public MixedAudioStream(AUDIO_SOURCE_TYPE source)
+        {
+            this.sourceType = source;
+            this.remoteUserUid = 0;
+            this.channelName = "";
+            this.trackId = 0xffffffff;
+        }
+
+        public MixedAudioStream(AUDIO_SOURCE_TYPE source, uint track)
+        {
+            this.sourceType = source;
+            this.trackId = track;
+        }
+
+        public MixedAudioStream(AUDIO_SOURCE_TYPE source, uint uid, string channel)
+        {
+            this.sourceType = source;
+            this.remoteUserUid = uid;
+            this.channelName = channel;
+        }
+
+        public MixedAudioStream(AUDIO_SOURCE_TYPE source, uint uid, string channel, uint track)
+        {
+            this.sourceType = source;
+            this.remoteUserUid = uid;
+            this.channelName = channel;
+            this.trackId = track;
+        }
+
+        public MixedAudioStream()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class LocalAudioMixerConfiguration
+    {
+        ///
+        /// @ignore
+        ///
+        public uint streamCount;
+
+        ///
+        /// @ignore
+        ///
+        public MixedAudioStream[] sourceStreams;
+
+        ///
+        /// @ignore
+        ///
+        public bool syncWithLocalMic;
+
+        public LocalAudioMixerConfiguration()
+        {
+            this.streamCount = 0;
+            this.syncWithLocalMic = true;
+        }
+
+        public LocalAudioMixerConfiguration(uint streamCount, MixedAudioStream[] sourceStreams, bool syncWithLocalMic)
+        {
+            this.streamCount = streamCount;
+            this.sourceStreams = sourceStreams;
+            this.syncWithLocalMic = syncWithLocalMic;
+        }
+    }
+
+    ///
     /// <summary>
     /// Configurations of the last-mile network test.
     /// </summary>
@@ -6888,6 +7049,35 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public class FilterEffectOptions
+    {
+        ///
+        /// @ignore
+        ///
+        public string path;
+
+        ///
+        /// @ignore
+        ///
+        public float strength;
+
+        public FilterEffectOptions(string lut3dPath, float filterStrength)
+        {
+            this.path = lut3dPath;
+            this.strength = filterStrength;
+        }
+
+        public FilterEffectOptions()
+        {
+            this.path = "";
+            this.strength = 0.5f;
+        }
+
+    }
+
+    ///
     /// <summary>
     /// The low-light enhancement options.
     /// </summary>
@@ -7043,13 +7233,6 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_DENOISER_LEVEL_FAST = 1,
-
-        ///
-        /// <summary>
-        /// 2: Enhanced video noise reduction. prioritizes video noise reduction quality over reducing performance consumption. The performance consumption is higher, the video noise reduction speed is slower, and the video noise reduction quality is better. If VIDEO_DENOISER_LEVEL_HIGH_QUALITY is not enough for your video noise reduction needs, you can use this enumerator.
-        /// </summary>
-        ///
-        VIDEO_DENOISER_LEVEL_STRENGTH = 2,
     }
 
     ///
@@ -9407,6 +9590,22 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum RecorderStreamType
+    {
+        ///
+        /// @ignore
+        ///
+        RTC,
+
+        ///
+        /// @ignore
+        ///
+        PREVIEW,
+    }
+
+    ///
     /// <summary>
     /// The information about the media streams to be recorded.
     /// </summary>
@@ -9427,16 +9626,30 @@ namespace Agora.Rtc
         ///
         public uint uid;
 
+        ///
+        /// @ignore
+        ///
+        public RecorderStreamType type;
+
         public RecorderStreamInfo()
         {
             this.channelId = "";
             this.uid = 0;
+            this.type = RecorderStreamType.RTC;
         }
 
         public RecorderStreamInfo(string channelId, uint uid)
         {
             this.channelId = channelId;
             this.uid = uid;
+            this.type = RecorderStreamType.RTC;
+        }
+
+        public RecorderStreamInfo(string channelId, uint uid, RecorderStreamType recorderStreamType)
+        {
+            this.channelId = channelId;
+            this.uid = uid;
+            this.type = RecorderStreamType.RTC;
         }
 
     }
