@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Agora.Rtc;
-
+using System;
 namespace Agora.Rtc.Ut
 {
     using uid_t = System.UInt32;
@@ -17,7 +17,8 @@ namespace Agora.Rtc.Ut
             RtcEngine = Rtc.RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
             MediaEngine = RtcEngine;
             MediaEngineBase = MediaEngine;
-            RtcEngineContext rtcEngineContext = ParamsHelper.CreateParam<RtcEngineContext>();
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = RtcEngine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
         }
@@ -71,6 +72,15 @@ namespace Agora.Rtc.Ut
             ScreenCaptureConfiguration config = ParamsHelper.CreateParam<ScreenCaptureConfiguration>();
 
             var nRet = RtcEngine.StartScreenCapture(sourceType, config);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetLogFile()
+        {
+            string filePath = "/Users/xiayangqun/Documents/agoraSpace/ut2.log";
+
+            var nRet = RtcEngine.SetLogFile(filePath);
             Assert.AreEqual(0, nRet);
         }
 
@@ -390,6 +400,17 @@ namespace Agora.Rtc.Ut
             MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
 
             var nRet = RtcEngine.GetFaceShapeAreaOptions(shapeArea, ref options, type);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetFilterEffectOptions()
+        {
+            bool enabled = ParamsHelper.CreateParam<bool>();
+            FilterEffectOptions options = ParamsHelper.CreateParam<FilterEffectOptions>();
+            MEDIA_SOURCE_TYPE type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
+
+            var nRet = RtcEngine.SetFilterEffectOptions(enabled, options, type);
             Assert.AreEqual(0, nRet);
         }
 
@@ -1224,15 +1245,6 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
-        public void Test_IRtcEngine_SetLogFile()
-        {
-            string filePath = ParamsHelper.CreateParam<string>();
-
-            var nRet = RtcEngine.SetLogFile(filePath);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_IRtcEngine_SetLogFilter()
         {
             uint filter = ParamsHelper.CreateParam<uint>();
@@ -1296,6 +1308,25 @@ namespace Agora.Rtc.Ut
             VIDEO_MIRROR_MODE_TYPE mirrorMode = ParamsHelper.CreateParam<VIDEO_MIRROR_MODE_TYPE>();
 
             var nRet = RtcEngine.SetRemoteRenderMode(uid, renderMode, mirrorMode);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetLocalRenderTargetFps()
+        {
+            VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
+            int targetFps = ParamsHelper.CreateParam<int>();
+
+            var nRet = RtcEngine.SetLocalRenderTargetFps(sourceType, targetFps);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetRemoteRenderTargetFps()
+        {
+            int targetFps = ParamsHelper.CreateParam<int>();
+
+            var nRet = RtcEngine.SetRemoteRenderTargetFps(targetFps);
             Assert.AreEqual(0, nRet);
         }
 
@@ -1996,7 +2027,7 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_IRtcEngine_StartScreenCaptureByWindowId()
         {
-            view_t windowId = ParamsHelper.CreateParam<view_t>();
+            long windowId = ParamsHelper.CreateParam<long>();
             Rectangle regionRect = ParamsHelper.CreateParam<Rectangle>();
             ScreenCaptureParameters captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters>();
 
@@ -2056,6 +2087,15 @@ namespace Agora.Rtc.Ut
             int size = ParamsHelper.CreateParam<int>();
 
             var nRet = RtcEngine.QueryCameraFocalLengthCapability(ref focalLengthInfos, ref size);
+            Assert.AreEqual(-4, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_SetExternalMediaProjection()
+        {
+            IntPtr mediaProjection = ParamsHelper.CreateParam<IntPtr>();
+
+            var nRet = RtcEngine.SetExternalMediaProjection(mediaProjection);
             Assert.AreEqual(-4, nRet);
         }
 
@@ -2168,6 +2208,33 @@ namespace Agora.Rtc.Ut
 
 
             var nRet = RtcEngine.StopLocalVideoTranscoder();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_StartLocalAudioMixer()
+        {
+            LocalAudioMixerConfiguration config = ParamsHelper.CreateParam<LocalAudioMixerConfiguration>();
+
+            var nRet = RtcEngine.StartLocalAudioMixer(config);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_UpdateLocalAudioMixerConfiguration()
+        {
+            LocalAudioMixerConfiguration config = ParamsHelper.CreateParam<LocalAudioMixerConfiguration>();
+
+            var nRet = RtcEngine.UpdateLocalAudioMixerConfiguration(config);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_StopLocalAudioMixer()
+        {
+
+
+            var nRet = RtcEngine.StopLocalAudioMixer();
             Assert.AreEqual(0, nRet);
         }
 
@@ -2569,6 +2636,16 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_TakeSnapshot2()
+        {
+            uint uid = ParamsHelper.CreateParam<uint>();
+            SnapshotConfig config = ParamsHelper.CreateParam<SnapshotConfig>();
+
+            var nRet = RtcEngine.TakeSnapshot(uid, config);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_EnableContentInspect()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
@@ -2727,6 +2804,16 @@ namespace Agora.Rtc.Ut
             var nRet = RtcEngine.SendAudioMetadata(metadata, length);
             Assert.AreEqual(0, nRet);
         }
+
+        [Test]
+        public void Test_IRtcEngine_QueryHDRCapability()
+        {
+            VIDEO_MODULE_TYPE videoModule = ParamsHelper.CreateParam<VIDEO_MODULE_TYPE>();
+            HDR_CAPABILITY capability = ParamsHelper.CreateParam<HDR_CAPABILITY>();
+
+            var nRet = RtcEngine.QueryHDRCapability(videoModule, capability);
+            Assert.AreEqual(0, nRet);
+        }
         #endregion terra IRtcEngine
 
         #region terra IMediaEngine
@@ -2759,6 +2846,15 @@ namespace Agora.Rtc.Ut
 
             var nRet = MediaEngine.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
             Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_IMediaEngine_SetExternalRemoteEglContext()
+        {
+            IntPtr eglContext = ParamsHelper.CreateParam<IntPtr>();
+
+            var nRet = MediaEngine.SetExternalRemoteEglContext(eglContext);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]

@@ -55,6 +55,27 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_LeaveChannelWithUserAccountEx()
+        {
+            string channelId = ParamsHelper.CreateParam<string>();
+            string userAccount = ParamsHelper.CreateParam<string>();
+
+            var nRet = RtcEngineEx.LeaveChannelWithUserAccountEx(channelId, userAccount);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_LeaveChannelWithUserAccountEx2()
+        {
+            string channelId = ParamsHelper.CreateParam<string>();
+            string userAccount = ParamsHelper.CreateParam<string>();
+            LeaveChannelOptions options = ParamsHelper.CreateParam<LeaveChannelOptions>();
+
+            var nRet = RtcEngineEx.LeaveChannelWithUserAccountEx(channelId, userAccount, options);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_UpdateChannelMediaOptionsEx()
         {
             ChannelMediaOptions options = ParamsHelper.CreateParam<ChannelMediaOptions>();
@@ -543,6 +564,17 @@ namespace Agora.Rtc.Ut
             string filePath = ParamsHelper.CreateParam<string>();
 
             var nRet = RtcEngineEx.TakeSnapshotEx(connection, uid, filePath);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_TakeSnapshotEx2()
+        {
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            uint uid = ParamsHelper.CreateParam<uint>();
+            SnapshotConfig config = ParamsHelper.CreateParam<SnapshotConfig>();
+
+            var nRet = RtcEngineEx.TakeSnapshotEx(connection, uid, config);
             Assert.AreEqual(0, nRet);
         }
 

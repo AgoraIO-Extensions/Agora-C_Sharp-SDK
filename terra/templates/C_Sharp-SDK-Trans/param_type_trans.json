@@ -23,7 +23,8 @@
         "LocalAccessPointConfiguration.domainList": "string[]",
         "Music.lyricList": "int[]",
         "Music.climaxSegmentList": "ClimaxSegment[]",
-        "Music.mvPropertyList": "MvProperty[]"
+        "Music.mvPropertyList": "MvProperty[]",
+        "LocalAudioMixerConfiguration.sourceStreams": "MixedAudioStream[]"
     },
     "special_method_param": {
         "IRtcEngine.getVersion.build": "ref int",
@@ -146,7 +147,8 @@
         "IMediaPlayerCustomDataProvider.onReadData.buffer": "IntPtr",
         "IMetadataObserver.onReadyToSendMetadata.metadata": "ref Metadata",
         "UserAudioSpectrumInfo.UserAudioSpectrumInfo.data": "float[]",
-        "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove"
+        "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove",
+        "LocalAudioMixerConfiguration.LocalAudioMixerConfiguration.sourceStreams": "MixedAudioStream[]"
     },
     "normal": {
         "char*": "string",
@@ -157,6 +159,7 @@
         "const int": "int",
         "unsigned int": "uint",
         "uid_t": "uint",
+        "track_id_t": "uint",
         "rtc::uid_t": "uint",
         "agora::rtc::uid_t": "uint",
         "rtc::track_id_t": "uint",

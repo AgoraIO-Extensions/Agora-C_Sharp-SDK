@@ -542,6 +542,52 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum AUDIO_SOURCE_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_MICROPHONE = 0,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_CUSTOM = 1,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_MEDIA_PLAYER = 2,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_LOOPBACK_RECORDING = 3,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_MIXED_STREAM = 4,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_REMOTE_USER = 5,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_REMOTE_CHANNEL = 6,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_UNKNOWN = 100,
+    }
+
+    ///
     /// <summary>
     /// The type of the audio route.
     /// </summary>
@@ -2036,6 +2082,34 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public class SnapshotConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public string filePath;
+
+        ///
+        /// @ignore
+        ///
+        public VIDEO_MODULE_POSITION position;
+
+        public SnapshotConfig()
+        {
+            this.filePath = "";
+            this.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
+        }
+
+        public SnapshotConfig(string filePath, VIDEO_MODULE_POSITION position)
+        {
+            this.filePath = filePath;
+            this.position = position;
+        }
+    }
+
+    ///
     /// <summary>
     /// Audio frame type.
     /// </summary>
@@ -2397,6 +2471,36 @@ namespace Agora.Rtc
         ///
         public int recorderInfoUpdateInterval;
 
+        ///
+        /// @ignore
+        ///
+        public int width;
+
+        ///
+        /// @ignore
+        ///
+        public int height;
+
+        ///
+        /// @ignore
+        ///
+        public int fps;
+
+        ///
+        /// @ignore
+        ///
+        public int sample_rate;
+
+        ///
+        /// @ignore
+        ///
+        public int channel_num;
+
+        ///
+        /// @ignore
+        ///
+        public VIDEO_SOURCE_TYPE videoSourceType;
+
         public MediaRecorderConfiguration()
         {
             this.storagePath = "";
@@ -2404,6 +2508,12 @@ namespace Agora.Rtc
             this.streamType = MediaRecorderStreamType.STREAM_TYPE_BOTH;
             this.maxDurationMs = 120000;
             this.recorderInfoUpdateInterval = 0;
+            this.width = 1280;
+            this.height = 720;
+            this.fps = 30;
+            this.sample_rate = 48000;
+            this.channel_num = 1;
+            this.videoSourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         }
 
         public MediaRecorderConfiguration(string path, MediaRecorderContainerFormat format, MediaRecorderStreamType type, int duration, int interval)
@@ -2413,8 +2523,28 @@ namespace Agora.Rtc
             this.streamType = type;
             this.maxDurationMs = duration;
             this.recorderInfoUpdateInterval = interval;
+            this.width = 1280;
+            this.height = 720;
+            this.fps = 30;
+            this.sample_rate = 48000;
+            this.channel_num = 1;
+            this.videoSourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         }
 
+        public MediaRecorderConfiguration(string storagePath, MediaRecorderContainerFormat containerFormat, MediaRecorderStreamType streamType, int maxDurationMs, int recorderInfoUpdateInterval, int width, int height, int fps, int sample_rate, int channel_num, VIDEO_SOURCE_TYPE videoSourceType)
+        {
+            this.storagePath = storagePath;
+            this.containerFormat = containerFormat;
+            this.streamType = streamType;
+            this.maxDurationMs = maxDurationMs;
+            this.recorderInfoUpdateInterval = recorderInfoUpdateInterval;
+            this.width = width;
+            this.height = height;
+            this.fps = fps;
+            this.sample_rate = sample_rate;
+            this.channel_num = channel_num;
+            this.videoSourceType = videoSourceType;
+        }
     }
 
     ///

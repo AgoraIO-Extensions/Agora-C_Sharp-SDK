@@ -20,12 +20,14 @@
             "registerAudioEncodedFrameObserver",
             "registerAudioSpectrumObserver",
             "registerMediaMetadataObserver",
-            "startScreenCapture"
+            "startScreenCapture",
+            "setLogFile"
         ],
         "specialMethodsTemplate": {
             "createCustomEncodedVideoTrack": "method_unitTest_greater_than_0",
             "createCustomVideoTrack": "method_unitTest_greater_than_0",
             "enableFaceDetection": "method_unitTest_greater_than_4",
+            "setExternalMediaProjection": "method_unitTest_greater_than_4",
             "enableMultiCamera": "method_unitTest_greater_than_4",
             "getAudioDeviceInfo": "method_unitTest_greater_than_4",
             "getConnectionState": "method_unitTest_connectionState",
@@ -85,7 +87,8 @@
         ],
         "specialMethodsTemplate": {
             "createCustomAudioTrack": "method_unitTest_greater_than_0",
-            "pushVideoFrame": "method_unitTest_greater_pushVideoFrame"
+            "pushVideoFrame": "method_unitTest_greater_pushVideoFrame",
+            "setExternalRemoteEglContext": "method_unitTest_greater_than_4"
         },
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",

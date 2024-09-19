@@ -62,7 +62,7 @@ export class Tool {
                         }
                         else {
                             type = eachTrim;
-                            name = null;
+                            name = Tool._processStringWithL(type);
                         }
                         cppConstructor.parameters.push({ type, name, value });
                     }

@@ -768,6 +768,11 @@ namespace Agora.Rtc
         public abstract int GetFaceShapeAreaOptions(FACE_SHAPE_AREA shapeArea, ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetFilterEffectOptions(bool enabled, FilterEffectOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        ///
         /// <summary>
         /// Sets low-light enhancement.
         /// 
@@ -2529,6 +2534,16 @@ namespace Agora.Rtc
         public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetLocalRenderTargetFps(VIDEO_SOURCE_TYPE sourceType, int targetFps);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetRemoteRenderTargetFps(int targetFps);
+
+        ///
         /// <summary>
         /// Updates the display mode of the local video view.
         /// 
@@ -3764,7 +3779,7 @@ namespace Agora.Rtc
         /// -8: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture [1/2] to stop the current sharing and start sharing the screen again.
         /// </returns>
         ///
-        public abstract int StartScreenCaptureByWindowId(view_t windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
+        public abstract int StartScreenCaptureByWindowId(long windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         ///
         /// <summary>
@@ -3894,6 +3909,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetExternalMediaProjection(IntPtr mediaProjection);
 
         ///
         /// <summary>
@@ -4108,6 +4128,21 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int StopLocalVideoTranscoder();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int StartLocalAudioMixer(LocalAudioMixerConfiguration config);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int UpdateLocalAudioMixerConfiguration(LocalAudioMixerConfiguration config);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int StopLocalAudioMixer();
 
         ///
         /// <summary>
@@ -4846,6 +4881,11 @@ namespace Agora.Rtc
         public abstract int TakeSnapshot(uint uid, string filePath);
 
         ///
+        /// @ignore
+        ///
+        public abstract int TakeSnapshot(uint uid, SnapshotConfig config);
+
+        ///
         /// <summary>
         /// Enables or disables video screenshot and upload.
         /// 
@@ -5085,6 +5125,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SendAudioMetadata(byte[] metadata, ulong length);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, HDR_CAPABILITY capability);
         #endregion terra IRtcEngine
 
         ///
@@ -5284,6 +5329,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetExternalRemoteEglContext(IntPtr eglContext);
 
         ///
         /// @ignore
