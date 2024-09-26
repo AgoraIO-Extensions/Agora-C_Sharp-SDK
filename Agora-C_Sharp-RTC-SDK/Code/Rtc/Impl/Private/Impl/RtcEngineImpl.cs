@@ -5302,11 +5302,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, HDR_CAPABILITY capability)
+        public int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, ref HDR_CAPABILITY capability)
         {
             _param.Clear();
             _param.Add("videoModule", videoModule);
-            _param.Add("capability", capability);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_QUERYHDRCAPABILITY,
@@ -5314,7 +5313,10 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
+            if (nRet == 0)
+            {
+                capability = (HDR_CAPABILITY)AgoraJson.GetData<int>(_apiParam.Result, "capability");
+            }
             return result;
         }
         #endregion terra IRtcEngine

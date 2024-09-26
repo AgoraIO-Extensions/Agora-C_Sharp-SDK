@@ -1404,6 +1404,11 @@ namespace Agora.Rtc
     public enum DEGRADATION_PREFERENCE
     {
         ///
+        /// @ignore
+        ///
+        MAINTAIN_AUTO = -1,
+
+        ///
         /// <summary>
         /// 0: (Default) Prefers to reduce the video frame rate while maintaining video resolution during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where video quality is prioritized.
         /// </summary>
@@ -1589,6 +1594,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        [Obsolete("This codec type is deprecated.")]
         VIDEO_CODEC_GENERIC_H264 = 7,
 
         ///
@@ -2752,7 +2758,7 @@ namespace Agora.Rtc
             this.bitrate = b;
             this.minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             this.orientationMode = m;
-            this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
+            this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_AUTO;
             this.mirrorMode = mirror;
             this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_COMPRESSION_AUTO, false);
         }
@@ -2765,7 +2771,7 @@ namespace Agora.Rtc
             this.bitrate = b;
             this.minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             this.orientationMode = m;
-            this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
+            this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_AUTO;
             this.mirrorMode = mirror;
             this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_COMPRESSION_AUTO, false);
         }
@@ -2791,7 +2797,7 @@ namespace Agora.Rtc
             this.bitrate = (int)BITRATE.STANDARD_BITRATE;
             this.minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             this.orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
-            this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
+            this.degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_AUTO;
             this.mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED;
             this.advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_COMPRESSION_AUTO, false);
         }

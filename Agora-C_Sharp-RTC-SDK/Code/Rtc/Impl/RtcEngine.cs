@@ -2894,13 +2894,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SendAudioMetadata(metadata, length);
         }
 
-        public override int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, HDR_CAPABILITY capability)
+        public override int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, ref HDR_CAPABILITY capability)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.QueryHDRCapability(videoModule, capability);
+            return _rtcEngineImpl.QueryHDRCapability(videoModule, ref capability);
         }
         #endregion terra IRtcEngine
 
