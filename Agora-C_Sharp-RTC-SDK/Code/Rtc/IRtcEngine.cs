@@ -5129,7 +5129,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, HDR_CAPABILITY capability);
+        public abstract int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, ref HDR_CAPABILITY capability);
         #endregion terra IRtcEngine
 
         ///

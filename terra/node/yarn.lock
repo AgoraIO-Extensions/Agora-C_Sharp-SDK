@@ -41,14 +41,14 @@ __metadata:
 
 "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#head=main":
   version: 1.0.2
-  resolution: "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#commit=699af530dc7b94a12d7b9f3b8466d70ab2500da5"
+  resolution: "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#commit=31fe9b2d7d01b24016b375310cda54d93e845422"
   dependencies:
     "@agoraio-extensions/cxx-parser": "git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=cxx-parser"
     "@agoraio-extensions/terra-core": "git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=terra-core"
     lodash: "npm:^4.17.21"
     mustache: "npm:^4.2.0"
     openai: "npm:^4.29.1"
-  checksum: 893578fc626cb9b5194cebbada7f33112b36fffd6d28b4f5f165dfd206594c9a85fe35e30411e28a393d97c4e6e810eea8ed449ef7c5f9fe778a11264d123e19
+  checksum: 84150783f5cf8ea40cc25c7ab86f8b40b8fae5e916c2a9826ba77efdd7aaa396dc462a13e903d87e07bdc0258a028630cf9d5e1d7d413d25898b6a51a6a23abb
   languageName: node
   linkType: hard
 
@@ -152,20 +152,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.5.5
-  resolution: "@types/node@npm:22.5.5"
+  version: 22.7.2
+  resolution: "@types/node@npm:22.7.2"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: ead9495cfc6b1da5e7025856dcce2591e9bae635357410c0d2dd619fce797d2a1d402887580ca4b336cb78168b195224869967de370a23f61663cf1e4836121c
+  checksum: 987e4df034e4af0ce76b938c2c0d94373da376b228f1c93081a661c77e682795c599bcad47c93c70a25b8ea443587137cf23088fb7f62ef442955f13046eae3d
   languageName: node
   linkType: hard
 
 "@types/node@npm:^18.11.18, @types/node@npm:^18.17.9":
-  version: 18.19.50
-  resolution: "@types/node@npm:18.19.50"
+  version: 18.19.53
+  resolution: "@types/node@npm:18.19.53"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 36e6bc9eb47213ce94a868dad9504465ad89fba6af9f7954e22bb27fb17a32ac495f263d0cf4fdaee74becd7b2629609a446ec8c2b59b7a07bd587567c8a4782
+  checksum: 9612c38f63928abffbdabfa8e61c3adf30ff5483884eadd2fab4a790f0b2b51efdf773c76a21601c627850763da216140a4d163b27d8c6d1fa5250b0d11f683b
   languageName: node
   linkType: hard
 
@@ -572,8 +572,8 @@ __metadata:
   linkType: hard
 
 "openai@npm:^4.29.1":
-  version: 4.62.0
-  resolution: "openai@npm:4.62.0"
+  version: 4.64.0
+  resolution: "openai@npm:4.64.0"
   dependencies:
     "@types/node": "npm:^18.11.18"
     "@types/node-fetch": "npm:^2.6.4"
@@ -589,7 +589,7 @@ __metadata:
       optional: true
   bin:
     openai: bin/cli
-  checksum: 4b7fa4e401a787fc377fdecdc8aca23b4563829ea3073297e2d48c0ee9dd4e6ba2c49824928fdfd4bf6f6c960964b5dde048a8986f4fffdaa30ff8b5e6070837
+  checksum: 662f58607e12aa92104421b93a648179d44bf2032f63d6e19601037e81dc073194a3f32910943981d3b9dea93b52e9b3ecf17d7c1dc3d0ac2ce217a8bb1dba98
   languageName: node
   linkType: hard
 

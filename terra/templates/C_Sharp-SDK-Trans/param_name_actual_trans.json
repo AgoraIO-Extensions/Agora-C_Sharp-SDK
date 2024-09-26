@@ -10,6 +10,7 @@
         "IRtcEngine.getAudioDeviceInfo.deviceInfo": "ref deviceInfo",
         "IRtcEngine.uploadLogFile.requestId": "ref requestId",
         "IRtcEngine.getCallId.callId": "ref callId",
+        "IRtcEngine.queryHDRCapability.capability": "ref capability",
         "IRtcEngine.unregisterAudioSpectrumObserver.observer": "@remove",
         "IRtcEngine.unregisterMediaMetadataObserver.observer": "@remove",
         "IRtcEngine.unregisterMediaMetadataObserver.type": "@remove",

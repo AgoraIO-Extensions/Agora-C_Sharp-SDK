@@ -2811,7 +2811,7 @@ namespace Agora.Rtc.Ut
             VIDEO_MODULE_TYPE videoModule = ParamsHelper.CreateParam<VIDEO_MODULE_TYPE>();
             HDR_CAPABILITY capability = ParamsHelper.CreateParam<HDR_CAPABILITY>();
 
-            var nRet = RtcEngine.QueryHDRCapability(videoModule, capability);
+            var nRet = RtcEngine.QueryHDRCapability(videoModule, ref capability);
             Assert.AreEqual(0, nRet);
         }
         #endregion terra IRtcEngine
