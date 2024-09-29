@@ -296,6 +296,8 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETNTPWALLTIMEINMS = "RtcEngine_getNtpWallTimeInMs";
         internal const string FUNC_RTCENGINE_ISFEATUREAVAILABLEONDEVICE = "RtcEngine_isFeatureAvailableOnDevice";
         internal const string FUNC_RTCENGINE_SENDAUDIOMETADATA = "RtcEngine_sendAudioMetadata";
+        internal const string FUNC_RTCENGINE_ENABLEECHOCANCELLATIONEXTERNAL = "RtcEngine_enableEchoCancellationExternal";
+        internal const string FUNC_RTCENGINE_GETPARAMETER = "RtcEngine_getParameter";
 
         #endregion
 

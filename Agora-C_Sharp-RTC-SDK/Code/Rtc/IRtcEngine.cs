@@ -4050,6 +4050,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetNativeHandler(ref IntPtr nativeHandler);
+
+
+        public abstract int EnableEchoCancellationExternal(bool enabled, bool pushReverseOnly, int audioSourceDelay);
+
+        public abstract int GetParameter(string key, ref string value);
     };
 
     ///

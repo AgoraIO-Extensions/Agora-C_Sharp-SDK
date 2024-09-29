@@ -3427,5 +3427,23 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SendAudioMetadataEx(connection, metadata, length);
         }
+
+        public override int EnableEchoCancellationExternal(bool enabled, bool pushReverseOnly, int audioSourceDelay)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableEchoCancellationExternal(enabled, pushReverseOnly, audioSourceDelay);
+        }
+
+        public override int GetParameter(string key, ref string value)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetParameter(key, ref value);
+        }
     }
 }

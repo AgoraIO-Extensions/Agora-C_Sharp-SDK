@@ -6034,6 +6034,45 @@ namespace Agora.Rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
         }
 
+        public int EnableEchoCancellationExternal(bool enabled, bool pushReverseOnly, int audioSourceDelay)
+        {
+            _param.Clear();
+            _param.Add("enabled", enabled);
+            _param.Add("pushReverseOnly", pushReverseOnly);
+            _param.Add("audioSourceDelay", audioSourceDelay);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEECHOCANCELLATIONEXTERNAL,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+
+            return nRet != 0 ? 0 : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int GetParameter(string key, ref string value)
+        {
+            _param.Clear();
+            _param.Add("key", key);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEECHOCANCELLATIONEXTERNAL,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            if (nRet == 0)
+            {
+                value = (string)AgoraJson.GetData<string>(_apiParam.Result, "value");
+            }
+
+
+            return nRet != 0 ? 0 : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+
         #region CallIrisApiWithBuffer
 
         public int SetupRemoteVideo(VideoCanvas canvas)
