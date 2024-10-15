@@ -9,23 +9,44 @@ namespace Agora.Rtc
 {
     internal static class MediaPlayerSourceObserverNative
     {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+        private static Object observerLock = new Object();
+#endif
         private static Dictionary<int, IMediaPlayerSourceObserver> mediaPlayerSourceObserverDic = new Dictionary<int, IMediaPlayerSourceObserver>();
 
         internal static void AddSourceObserver(int playerId, IMediaPlayerSourceObserver observer)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             if (mediaPlayerSourceObserverDic.ContainsKey(playerId) == false)
                 mediaPlayerSourceObserverDic.Add(playerId, observer);
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
         internal static void RemoveSourceObserver(int playerId)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             if (mediaPlayerSourceObserverDic.ContainsKey(playerId))
                 mediaPlayerSourceObserverDic.Remove(playerId);
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
         internal static void ClearSourceObserver()
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             mediaPlayerSourceObserverDic.Clear();
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -37,6 +58,10 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null)
@@ -261,6 +286,9 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                     }
                     #endregion terra IMediaPlayerSourceObserver
             }
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
     }
 

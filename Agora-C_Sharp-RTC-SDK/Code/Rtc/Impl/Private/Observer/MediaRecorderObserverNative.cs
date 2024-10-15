@@ -9,31 +9,57 @@ namespace Agora.Rtc
 {
     internal static class MediaRecorderObserverNative
     {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+        private static Object observerLock = new Object();
+#endif
         private static Dictionary<string, object> mediaRecorderObserverDic = new Dictionary<string, object>();
 
         internal static void AddMediaRecorderObserver(string nativeHandle, object observer)
         {
-
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             if (mediaRecorderObserverDic.ContainsKey(nativeHandle))
                 mediaRecorderObserverDic.Remove(nativeHandle);
 
             mediaRecorderObserverDic.Add(nativeHandle, observer);
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
         internal static bool ContainsMediaRecorderObserver(string nativeHandle)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             return mediaRecorderObserverDic.ContainsKey(nativeHandle);
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
         internal static void RemoveMediaRecorderObserver(string nativeHandle)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             if (mediaRecorderObserverDic.ContainsKey(nativeHandle))
                 mediaRecorderObserverDic.Remove(nativeHandle);
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
         internal static void ClearMediaRecorderObserver()
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             mediaRecorderObserverDic.Clear();
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
 
@@ -46,6 +72,10 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
@@ -97,7 +127,9 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                         break;
                     }
             }
-
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
 
         }
 
