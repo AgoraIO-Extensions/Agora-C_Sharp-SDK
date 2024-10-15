@@ -9,11 +9,20 @@ namespace Agora.Rtc
 {
     internal static class RtcEngineEventHandlerNative
     {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+        private static Object observerLock = new Object();
+#endif
         private static IRtcEngineEventHandler rtcEngineEventHandler = null;
 
         internal static void SetEventHandler(IRtcEngineEventHandler handler)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             rtcEngineEventHandler = handler;
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            }
+#endif
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -25,7 +34,9 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
-
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             if (rtcEngineEventHandler == null) return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
@@ -1604,6 +1615,9 @@ namespace Agora.Rtc
                     break;
                     #endregion withBuffer end
             }
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
 
@@ -1612,6 +1626,9 @@ namespace Agora.Rtc
 #endif
         internal static void OnEventForDirectCdnStreaming(IntPtr param)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             if (rtcEngineEventHandler == null) return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
@@ -1659,6 +1676,9 @@ namespace Agora.Rtc
 #endif
                     break;
             }
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
     }

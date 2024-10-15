@@ -8,10 +8,19 @@ namespace Agora.Rtc
 {
     public class MusicContentCenterEventHandlerNative
     {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+        private static Object observerLock = new Object();
+#endif
         private static IMusicContentCenterEventHandler EventHandler = null;
         internal static void SetMusicContentCenterEventHandler(IMusicContentCenterEventHandler handler)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             EventHandler = handler;
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
 
 
@@ -24,6 +33,9 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+lock (observerLock){
+#endif
             if (EventHandler == null) return;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -133,6 +145,9 @@ namespace Agora.Rtc
 
 
             }
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+}
+#endif
         }
     }
 }
