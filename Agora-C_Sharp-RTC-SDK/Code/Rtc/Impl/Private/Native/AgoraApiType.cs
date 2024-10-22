@@ -302,6 +302,9 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_ISFEATUREAVAILABLEONDEVICE = "RtcEngine_isFeatureAvailableOnDevice";
         internal const string FUNC_RTCENGINE_SETMAXMETADATASIZE = "RtcEngine_setMaxMetadataSize";
         internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetaData";
+        internal const string FUNC_RTCENGINE_SETLOCALRENDERTARGETFPS = "RtcEngine_setLocalRenderTargetFps";
+        internal const string FUNC_RTCENGINE_SETREMOTERENDERTARGETFPS = "RtcEngine_setRemoteRenderTargetFps";
+
         #endregion
 
         #region IRtcEngineEx start

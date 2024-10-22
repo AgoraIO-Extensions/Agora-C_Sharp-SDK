@@ -948,6 +948,11 @@ namespace Agora.Rtc
 
         public abstract int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation);
 
+
+        public abstract int SetLocalRenderTargetFps(VIDEO_SOURCE_TYPE sourceType, int targetFps);
+
+
+        public abstract int SetRemoteRenderTargetFps(int targetFps);
         ///
         /// <summary>
         /// Sets the local video mirror mode.
