@@ -2411,6 +2411,37 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int SetLocalRenderTargetFps(VIDEO_SOURCE_TYPE sourceType, int targetFps)
+        {
+            _param.Clear();
+            _param.Add("sourceType", sourceType);
+            _param.Add("targetFps", targetFps);
+
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERTARGETFPS,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int SetRemoteRenderTargetFps(int targetFps)
+        {
+            _param.Clear();
+            _param.Add("targetFps", targetFps);
+             
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTERENDERTARGETFPS,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation)
         {
             _param.Clear();

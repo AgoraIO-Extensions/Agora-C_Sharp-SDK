@@ -1428,6 +1428,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetRemoteRenderMode(uid, renderMode, mirrorMode);
         }
 
+        public override int SetLocalRenderTargetFps(VIDEO_SOURCE_TYPE sourceType, int targetFps)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetLocalRenderTargetFps(sourceType, targetFps);
+        }
+
+        public override int SetRemoteRenderTargetFps(int targetFps)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetRemoteRenderTargetFps(targetFps);
+        }
+
         public override int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation)
         {
             if (_rtcEngineImpl == null)

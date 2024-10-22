@@ -91,7 +91,7 @@ namespace Agora.Rtc
 
         [Test]
         public void Test_QueryDeviceScore()
-        { 
+        {
             var nRet = Engine.QueryDeviceScore();
 
             Assert.AreEqual(0, nRet);
@@ -1646,6 +1646,30 @@ namespace Agora.Rtc
 
             Assert.AreEqual(0, nRet);
         }
+
+        [Test]
+        public void Test_SetLocalRenderTargetFps()
+        {
+            VIDEO_SOURCE_TYPE sourceType;
+            ParamsHelper.InitParam(out sourceType);
+            int targetFps;
+            ParamsHelper.InitParam(out targetFps);
+            var nRet = Engine.SetLocalRenderTargetFps(sourceType, targetFps);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetRemoteRenderTargetFps()
+        {
+            int targetFps;
+            ParamsHelper.InitParam(out targetFps);
+            var nRet = Engine.SetRemoteRenderTargetFps(targetFps);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+
 
         [Test]
         public void Test_SetLocalRenderMode2()
@@ -3250,7 +3274,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetNtpWallTimeInMs()
         {
-           
+
             var nRet = Engine.GetNtpWallTimeInMs();
 
             Assert.Greater(nRet, 0);
