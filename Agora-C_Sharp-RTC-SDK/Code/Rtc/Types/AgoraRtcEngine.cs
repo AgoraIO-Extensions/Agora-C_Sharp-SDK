@@ -155,6 +155,11 @@ namespace Agora.Rtc
         AUDIO_MIXING_REASON_STOPPED_BY_USER = 724,
 
         ///
+        /// @ignore
+        ///
+        AUDIO_MIXING_REASON_RESUMED_BY_USER = 726,
+
+        ///
         /// <summary>
         /// 0: The SDK opens music file successfully.
         /// </summary>

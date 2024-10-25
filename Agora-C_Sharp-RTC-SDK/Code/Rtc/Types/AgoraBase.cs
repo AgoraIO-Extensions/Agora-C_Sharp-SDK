@@ -6004,7 +6004,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public string channelName;
+        public string channelId;
 
         ///
         /// @ignore
@@ -6015,7 +6015,7 @@ namespace Agora.Rtc
         {
             this.sourceType = source;
             this.remoteUserUid = 0;
-            this.channelName = "";
+            this.channelId = "";
             this.trackId = 0xffffffff;
         }
 
@@ -6029,14 +6029,14 @@ namespace Agora.Rtc
         {
             this.sourceType = source;
             this.remoteUserUid = uid;
-            this.channelName = channel;
+            this.channelId = channel;
         }
 
         public MixedAudioStream(AUDIO_SOURCE_TYPE source, uint uid, string channel, uint track)
         {
             this.sourceType = source;
             this.remoteUserUid = uid;
-            this.channelName = channel;
+            this.channelId = channel;
             this.trackId = track;
         }
 
@@ -6059,7 +6059,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public MixedAudioStream[] sourceStreams;
+        public MixedAudioStream[] audioInputStreams;
 
         ///
         /// @ignore
@@ -6072,10 +6072,10 @@ namespace Agora.Rtc
             this.syncWithLocalMic = true;
         }
 
-        public LocalAudioMixerConfiguration(uint streamCount, MixedAudioStream[] sourceStreams, bool syncWithLocalMic)
+        public LocalAudioMixerConfiguration(uint streamCount, MixedAudioStream[] audioInputStreams, bool syncWithLocalMic)
         {
             this.streamCount = streamCount;
-            this.sourceStreams = sourceStreams;
+            this.audioInputStreams = audioInputStreams;
             this.syncWithLocalMic = syncWithLocalMic;
         }
     }
@@ -7499,14 +7499,21 @@ namespace Agora.Rtc
         ///
         public bool enableLocalPlayback;
 
+        ///
+        /// @ignore
+        ///
+        public bool enableAudioProcessing;
+
         public AudioTrackConfig()
         {
             this.enableLocalPlayback = true;
+            this.enableAudioProcessing = false;
         }
 
-        public AudioTrackConfig(bool enableLocalPlayback)
+        public AudioTrackConfig(bool enableLocalPlayback, bool enableAudioProcessing)
         {
             this.enableLocalPlayback = enableLocalPlayback;
+            this.enableAudioProcessing = enableAudioProcessing;
         }
     }
 
@@ -9651,11 +9658,11 @@ namespace Agora.Rtc
             this.type = RecorderStreamType.RTC;
         }
 
-        public RecorderStreamInfo(string channelId, uint uid, RecorderStreamType recorderStreamType)
+        public RecorderStreamInfo(string channelId, uint uid, RecorderStreamType type)
         {
             this.channelId = channelId;
             this.uid = uid;
-            this.type = RecorderStreamType.RTC;
+            this.type = type;
         }
 
     }
