@@ -24,7 +24,7 @@
         "Music.lyricList": "int[]",
         "Music.climaxSegmentList": "ClimaxSegment[]",
         "Music.mvPropertyList": "MvProperty[]",
-        "LocalAudioMixerConfiguration.sourceStreams": "MixedAudioStream[]"
+        "LocalAudioMixerConfiguration.audioInputStreams": "MixedAudioStream[]"
     },
     "special_method_param": {
         "IRtcEngine.getVersion.build": "ref int",
@@ -149,7 +149,7 @@
         "IMetadataObserver.onReadyToSendMetadata.metadata": "ref Metadata",
         "UserAudioSpectrumInfo.UserAudioSpectrumInfo.data": "float[]",
         "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove",
-        "LocalAudioMixerConfiguration.LocalAudioMixerConfiguration.sourceStreams": "MixedAudioStream[]"
+        "LocalAudioMixerConfiguration.LocalAudioMixerConfiguration.audioInputStreams": "MixedAudioStream[]"
     },
     "normal": {
         "char*": "string",
