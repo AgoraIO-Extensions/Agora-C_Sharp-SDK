@@ -21,7 +21,11 @@ namespace Agora.Rtc
         }
 
         [TearDown]
-        public void TearDown() { Engine.Dispose(); }
+        public void TearDown()
+        {
+            Engine.InitEventHandler(null);
+            Engine.Dispose();
+        }
 
         #region custom
 

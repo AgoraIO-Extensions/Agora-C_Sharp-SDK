@@ -23,10 +23,11 @@ namespace Agora.Rtc
         public void TearDown()
         {
             Engine.DestroyMediaPlayer(MediaPlayer);
+            Engine.DestroyMpkCallback();
             Engine.Dispose();
         }
 
-#region custom
+        #region custom
 
         [Test]
         public void Test_GetDuration()
@@ -157,9 +158,9 @@ namespace Agora.Rtc
 
             Assert.AreEqual(MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE, nRet);
         }
-#endregion
+        #endregion
 
-#region terr
+        #region terr
         [Test]
         public void Test_Open()
         {
@@ -576,7 +577,7 @@ namespace Agora.Rtc
         {
             int delay_ms;
             ParamsHelper.InitParam(out delay_ms);
-           
+
             var nRet = MediaPlayer.SetAudioPlaybackDelay(delay_ms);
 
             Assert.AreEqual(0, nRet);

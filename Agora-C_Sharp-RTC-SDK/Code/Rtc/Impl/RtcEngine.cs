@@ -18,6 +18,7 @@ namespace Agora.Rtc
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
         private IMediaRecorder _mediaRecorder = null;
         private const int ErrorCode = -7;
+        private static System.Object rtcLock = new System.Object();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private GameObject _agoraEngineObject;
@@ -53,7 +54,10 @@ namespace Agora.Rtc
         {
             get
             {
-                return instance ?? (instance = new RtcEngine(IntPtr.Zero));
+                lock (rtcLock)
+                {
+                    return instance ?? (instance = new RtcEngine(IntPtr.Zero));
+                }
             }
         }
 
@@ -61,31 +65,49 @@ namespace Agora.Rtc
         {
             get
             {
-                return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
+                lock (rtcLock)
+                {
+                    return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
+                }
             }
         }
 
         public static IRtcEngine CreateAgoraRtcEngine()
         {
-            return instance ?? (instance = new RtcEngine(IntPtr.Zero));
+            lock (rtcLock)
+            {
+                return instance ?? (instance = new RtcEngine(IntPtr.Zero));
+            }
         }
         public static IRtcEngine CreateAgoraRtcEngine(IntPtr nativePtr)
         {
-            return instance ?? (instance = new RtcEngine(nativePtr));
+            lock (rtcLock)
+            {
+                return instance ?? (instance = new RtcEngine(nativePtr));
+            }
         }
 
         public static IRtcEngineEx CreateAgoraRtcEngineEx()
         {
-            return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
+            lock (rtcLock)
+            {
+                return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
+            }
         }
         public static IRtcEngineEx CreateAgoraRtcEngineEx(IntPtr nativePtr)
         {
-            return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(nativePtr)));
+            lock (rtcLock)
+            {
+                return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(nativePtr)));
+            }
         }
 
         public static IRtcEngine Get()
         {
-            return instance;
+            lock (rtcLock)
+            {
+                return instance;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -104,93 +126,132 @@ namespace Agora.Rtc
 
         public override int Initialize(RtcEngineContext context)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.Initialize(context);
             }
-            return _rtcEngineImpl.Initialize(context);
         }
 
         public override void Dispose(bool sync = false)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return;
+                if (_rtcEngineImpl == null)
+                {
+                    return;
+                }
+
+                _rtcEngineImpl.Dispose(sync);
+                _rtcEngineImpl = null;
+
+                AudioDeviceManager.ReleaseInstance();
+                VideoDeviceManager.ReleaseInstance();
+                MusicContentCenter.ReleaseInstance();
+                LocalSpatialAudioEngine.ReleaseInstance();
+                MediaPlayerCacheManager.ReleaseInstance();
+                MediaRecorder.ReleaseInstance();
+                instance = null;
             }
-
-            _rtcEngineImpl.Dispose(sync);
-            _rtcEngineImpl = null;
-
-            AudioDeviceManager.ReleaseInstance();
-            VideoDeviceManager.ReleaseInstance();
-            MusicContentCenter.ReleaseInstance();
-            LocalSpatialAudioEngine.ReleaseInstance();
-            MediaPlayerCacheManager.ReleaseInstance();
-            MediaRecorder.ReleaseInstance();
-            instance = null;
         }
 
         public override int InitEventHandler(IRtcEngineEventHandler engineEventHandler, bool needExtensionContext = false)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.InitEventHandler(engineEventHandler, needExtensionContext);
             }
-            return _rtcEngineImpl.InitEventHandler(engineEventHandler, needExtensionContext);
+        }
+
+        public override int DestroyMpkCallback()
+        {
+            lock (rtcLock)
+            {
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.DestroyMpkCallback();
+            }
         }
 
         public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
             }
-            return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
         }
 
         public override int UnRegisterAudioFrameObserver()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnRegisterAudioFrameObserver();
             }
-            return _rtcEngineImpl.UnRegisterAudioFrameObserver();
         }
 
         public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, mode);
             }
-            return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, mode);
         }
 
         public override int UnRegisterVideoFrameObserver()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnRegisterVideoFrameObserver();
             }
-            return _rtcEngineImpl.UnRegisterVideoFrameObserver();
         }
 
         public override int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterVideoEncodedFrameObserver(videoEncodedImageReceiver, mode);
             }
-            return _rtcEngineImpl.RegisterVideoEncodedFrameObserver(videoEncodedImageReceiver, mode);
         }
 
         public override int UnRegisterVideoEncodedFrameObserver()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
             }
-            return _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
         }
 
         public override IAudioDeviceManager GetAudioDeviceManager()
@@ -240,24 +301,32 @@ namespace Agora.Rtc
 
         public override IMediaPlayer CreateMediaPlayer()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return null;
+                if (_rtcEngineImpl == null)
+                {
+                    return null;
+                }
+                return new MediaPlayer(this, _rtcEngineImpl.GetMediaPlayer());
             }
-            return new MediaPlayer(this, _rtcEngineImpl.GetMediaPlayer());
         }
 
         public override int DestroyMediaPlayer(IMediaPlayer mediaPlayer)
         {
-            if (_rtcEngineImpl == null || mediaPlayer == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null || mediaPlayer == null)
+                {
+                    return ErrorCode;
+                }
+                MediaPlayer player = (MediaPlayer)mediaPlayer;
+                return player.Destroy();
             }
-            MediaPlayer player = (MediaPlayer)mediaPlayer;
-            return player.Destroy();
         }
 
         //public override ICloudSpatialAudioEngine GetCloudSpatialAudioEngine()
+        //{
+        //lock (rtcLock)
         //{
         //    if (_rtcEngineImpl == null)
         //    {
@@ -265,6 +334,7 @@ namespace Agora.Rtc
         //        return null;
         //    }
         //    return _cloudSpatialAudioEngine;
+        //}
         //}
 
         public override ILocalSpatialAudioEngine GetLocalSpatialAudioEngine()
@@ -278,1716 +348,2285 @@ namespace Agora.Rtc
 
         public override string GetVersion(ref int build)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                build = 0;
-                return null;
+                if (_rtcEngineImpl == null)
+                {
+                    build = 0;
+                    return null;
+                }
+                return _rtcEngineImpl.GetVersion(ref build);
             }
-            return _rtcEngineImpl.GetVersion(ref build);
         }
 
         public override string GetErrorDescription(int code)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return null;
+                if (_rtcEngineImpl == null)
+                {
+                    return null;
+                }
+                return _rtcEngineImpl.GetErrorDescription(code);
             }
-            return _rtcEngineImpl.GetErrorDescription(code);
         }
 
         public override int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.QueryCodecCapability(ref codec_info, ref size);
             }
-            return _rtcEngineImpl.QueryCodecCapability(ref codec_info, ref size);
         }
 
         public override int QueryDeviceScore()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.QueryDeviceScore();
             }
-            return _rtcEngineImpl.QueryDeviceScore();
         }
 
         public override int JoinChannel(string token, string channelId, string info = "", uint uid = 0)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.JoinChannel(token, channelId, info, uid);
             }
-            return _rtcEngineImpl.JoinChannel(token, channelId, info, uid);
         }
 
         public override int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.JoinChannel(token, channelId, uid, options);
             }
-            return _rtcEngineImpl.JoinChannel(token, channelId, uid, options);
         }
 
         public override int UpdateChannelMediaOptions(ChannelMediaOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateChannelMediaOptions(options);
             }
-            return _rtcEngineImpl.UpdateChannelMediaOptions(options);
         }
 
         public override int LeaveChannel()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.LeaveChannel();
             }
-            return _rtcEngineImpl.LeaveChannel();
         }
 
         public override int LeaveChannel(LeaveChannelOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.LeaveChannel(options);
             }
-            return _rtcEngineImpl.LeaveChannel(options);
         }
 
         public override int RenewToken(string token)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RenewToken(token);
             }
-            return _rtcEngineImpl.RenewToken(token);
         }
 
         public override int SetChannelProfile(CHANNEL_PROFILE_TYPE profile)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetChannelProfile(profile);
             }
-            return _rtcEngineImpl.SetChannelProfile(profile);
         }
 
         public override int SetClientRole(CLIENT_ROLE_TYPE role)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetClientRole(role);
             }
-            return _rtcEngineImpl.SetClientRole(role);
         }
 
         public override int SetClientRole(CLIENT_ROLE_TYPE role, ClientRoleOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetClientRole(role, options);
             }
-            return _rtcEngineImpl.SetClientRole(role, options);
         }
 
         public override int StartEchoTest()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartEchoTest();
             }
-            return _rtcEngineImpl.StartEchoTest();
         }
 
         public override int StartEchoTest(int intervalInSeconds)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartEchoTest(intervalInSeconds);
             }
-            return _rtcEngineImpl.StartEchoTest(intervalInSeconds);
         }
 
         public override int StartEchoTest(EchoTestConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartEchoTest(config);
             }
-            return _rtcEngineImpl.StartEchoTest(config);
         }
 
         public override int StopEchoTest()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopEchoTest();
             }
-            return _rtcEngineImpl.StopEchoTest();
         }
 
         public override int EnableVideo()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableVideo();
             }
-            return _rtcEngineImpl.EnableVideo();
         }
 
         public override int DisableVideo()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.DisableVideo();
             }
-            return _rtcEngineImpl.DisableVideo();
         }
 
         public override int StartPreview()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartPreview();
             }
-            return _rtcEngineImpl.StartPreview();
         }
 
         public override int StartPreview(VIDEO_SOURCE_TYPE sourceType)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartPreview(sourceType);
             }
-            return _rtcEngineImpl.StartPreview(sourceType);
         }
 
         public override int StopPreview()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopPreview();
             }
-            return _rtcEngineImpl.StopPreview();
         }
 
         public override int StopPreview(VIDEO_SOURCE_TYPE sourceType)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopPreview(sourceType);
             }
-            return _rtcEngineImpl.StopPreview(sourceType);
         }
 
         public override int StartLastmileProbeTest(LastmileProbeConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartLastmileProbeTest(config);
             }
-            return _rtcEngineImpl.StartLastmileProbeTest(config);
         }
 
         public override int StopLastmileProbeTest()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopLastmileProbeTest();
             }
-            return _rtcEngineImpl.StopLastmileProbeTest();
         }
 
         public override int GetNetworkType()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetNetworkType();
             }
-            return _rtcEngineImpl.GetNetworkType();
         }
 
         public override int SetVideoEncoderConfiguration(VideoEncoderConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVideoEncoderConfiguration(config);
             }
-            return _rtcEngineImpl.SetVideoEncoderConfiguration(config);
         }
 
         public override int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetBeautyEffectOptions(enabled, options, type);
             }
-            return _rtcEngineImpl.SetBeautyEffectOptions(enabled, options, type);
         }
 
         public override int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableVirtualBackground(enabled, backgroundSource, segproperty, type);
             }
-            return _rtcEngineImpl.EnableVirtualBackground(enabled, backgroundSource, segproperty, type);
         }
 
         public override int SetupRemoteVideo(VideoCanvas canvas)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetupRemoteVideo(canvas);
             }
-            return _rtcEngineImpl.SetupRemoteVideo(canvas);
         }
 
         public override int SetupLocalVideo(VideoCanvas canvas)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetupLocalVideo(canvas);
             }
-            return _rtcEngineImpl.SetupLocalVideo(canvas);
         }
 
         public override int EnableAudio()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableAudio();
             }
-            return _rtcEngineImpl.EnableAudio();
         }
 
         public override int DisableAudio()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.DisableAudio();
             }
-            return _rtcEngineImpl.DisableAudio();
         }
 
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioProfile(profile, scenario);
             }
-            return _rtcEngineImpl.SetAudioProfile(profile, scenario);
         }
 
         public override int SetAudioScenario(AUDIO_SCENARIO_TYPE scenario)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioScenario(scenario);
             }
-            return _rtcEngineImpl.SetAudioScenario(scenario);
         }
 
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioProfile(profile);
             }
-            return _rtcEngineImpl.SetAudioProfile(profile);
         }
 
         public override int EnableLocalAudio(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableLocalAudio(enabled);
             }
-            return _rtcEngineImpl.EnableLocalAudio(enabled);
         }
 
         public override int MuteLocalAudioStream(bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteLocalAudioStream(mute);
             }
-            return _rtcEngineImpl.MuteLocalAudioStream(mute);
         }
 
         public override int MuteAllRemoteAudioStreams(bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteAllRemoteAudioStreams(mute);
             }
-            return _rtcEngineImpl.MuteAllRemoteAudioStreams(mute);
         }
 
         public override int SetDefaultMuteAllRemoteAudioStreams(bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDefaultMuteAllRemoteAudioStreams(mute);
             }
-            return _rtcEngineImpl.SetDefaultMuteAllRemoteAudioStreams(mute);
         }
 
         public override int MuteRemoteAudioStream(uint uid, bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteRemoteAudioStream(uid, mute);
             }
-            return _rtcEngineImpl.MuteRemoteAudioStream(uid, mute);
         }
 
         public override int MuteLocalVideoStream(bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteLocalVideoStream(mute);
             }
-            return _rtcEngineImpl.MuteLocalVideoStream(mute);
         }
 
         public override int EnableLocalVideo(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableLocalVideo(enabled);
             }
-            return _rtcEngineImpl.EnableLocalVideo(enabled);
         }
 
         public override int MuteAllRemoteVideoStreams(bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteAllRemoteVideoStreams(mute);
             }
-            return _rtcEngineImpl.MuteAllRemoteVideoStreams(mute);
         }
 
         public override int SetDefaultMuteAllRemoteVideoStreams(bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDefaultMuteAllRemoteVideoStreams(mute);
             }
-            return _rtcEngineImpl.SetDefaultMuteAllRemoteVideoStreams(mute);
         }
 
         public override int EnableVideoImageSource(bool enable, ImageTrackOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableVideoImageSource(enable, options);
             }
-            return _rtcEngineImpl.EnableVideoImageSource(enable, options);
         }
 
         public override int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetColorEnhanceOptions(enabled, options, type);
             }
-            return _rtcEngineImpl.SetColorEnhanceOptions(enabled, options, type);
         }
 
         public override int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLowlightEnhanceOptions(enabled, options, type);
             }
-            return _rtcEngineImpl.SetLowlightEnhanceOptions(enabled, options, type);
         }
 
         public override int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteVideoSubscriptionOptions(uid, options);
             }
-            return _rtcEngineImpl.SetRemoteVideoSubscriptionOptions(uid, options);
         }
 
         public override int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVideoDenoiserOptions(enabled, options, type);
             }
-            return _rtcEngineImpl.SetVideoDenoiserOptions(enabled, options, type);
         }
 
 
         public override int MuteRemoteVideoStream(uint uid, bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteRemoteVideoStream(uid, mute);
             }
-            return _rtcEngineImpl.MuteRemoteVideoStream(uid, mute);
         }
 
         public override int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteVideoStreamType(uid, streamType);
             }
-            return _rtcEngineImpl.SetRemoteVideoStreamType(uid, streamType);
         }
 
         public override int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteDefaultVideoStreamType(streamType);
             }
-            return _rtcEngineImpl.SetRemoteDefaultVideoStreamType(streamType);
         }
 
         public override int SetDualStreamMode(SIMULCAST_STREAM_MODE mode)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDualStreamMode(mode);
             }
-            return _rtcEngineImpl.SetDualStreamMode(mode);
         }
 
         public override int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDualStreamMode(mode, streamConfig);
             }
-            return _rtcEngineImpl.SetDualStreamMode(mode, streamConfig);
         }
 
         public override int SetDualStreamModeEx(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDualStreamModeEx(mode, streamConfig, connection);
             }
-            return _rtcEngineImpl.SetDualStreamModeEx(mode, streamConfig, connection);
         }
 
         public override int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.TakeSnapshotEx(connection, uid, filePath);
             }
-            return _rtcEngineImpl.TakeSnapshotEx(connection, uid, filePath);
         }
 
         public override int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableContentInspectEx(enabled, config, connection);
             }
-            return _rtcEngineImpl.EnableContentInspectEx(enabled, config, connection);
         }
 
         public override int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableAudioVolumeIndication(interval, smooth, reportVad);
             }
-            return _rtcEngineImpl.EnableAudioVolumeIndication(interval, smooth, reportVad);
         }
 
         public override int StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartAudioRecording(filePath, quality);
             }
-            return _rtcEngineImpl.StartAudioRecording(filePath, quality);
         }
 
         public override int StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartAudioRecording(filePath, sampleRate, quality);
             }
-            return _rtcEngineImpl.StartAudioRecording(filePath, sampleRate, quality);
         }
 
         public override int StartAudioRecording(AudioRecordingConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartAudioRecording(config);
             }
-            return _rtcEngineImpl.StartAudioRecording(config);
         }
 
         public override int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterAudioEncodedFrameObserver(config, observer);
             }
-            return _rtcEngineImpl.RegisterAudioEncodedFrameObserver(config, observer);
         }
 
         public override int UnRegisterAudioEncodedFrameObserver()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnRegisterAudioEncodedFrameObserver();
             }
-            return _rtcEngineImpl.UnRegisterAudioEncodedFrameObserver();
         }
 
         public override int StopAudioRecording()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopAudioRecording();
             }
-            return _rtcEngineImpl.StopAudioRecording();
         }
 
         public override int StartAudioMixing(string filePath, bool loopback, int cycle)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle);
             }
-            return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle);
         }
 
         public override int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle, startPos);
             }
-            return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle, startPos);
         }
 
         public override int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioMixingDualMonoMode(mode);
             }
-            return _rtcEngineImpl.SetAudioMixingDualMonoMode(mode);
         }
 
 
         public override int StopAudioMixing()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopAudioMixing();
             }
-            return _rtcEngineImpl.StopAudioMixing();
         }
 
         public override int PauseAudioMixing()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PauseAudioMixing();
             }
-            return _rtcEngineImpl.PauseAudioMixing();
         }
 
         public override int ResumeAudioMixing()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ResumeAudioMixing();
             }
-            return _rtcEngineImpl.ResumeAudioMixing();
         }
 
         public override int AdjustAudioMixingVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustAudioMixingVolume(volume);
             }
-            return _rtcEngineImpl.AdjustAudioMixingVolume(volume);
         }
 
         public override int AdjustAudioMixingPublishVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustAudioMixingPublishVolume(volume);
             }
-            return _rtcEngineImpl.AdjustAudioMixingPublishVolume(volume);
         }
 
         public override int GetAudioMixingPublishVolume()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetAudioMixingPublishVolume();
             }
-            return _rtcEngineImpl.GetAudioMixingPublishVolume();
         }
 
         public override int AdjustAudioMixingPlayoutVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustAudioMixingPlayoutVolume(volume);
             }
-            return _rtcEngineImpl.AdjustAudioMixingPlayoutVolume(volume);
         }
 
         public override int GetAudioMixingPlayoutVolume()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetAudioMixingPlayoutVolume();
             }
-            return _rtcEngineImpl.GetAudioMixingPlayoutVolume();
         }
 
         public override int GetAudioMixingDuration()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetAudioMixingDuration();
             }
-            return _rtcEngineImpl.GetAudioMixingDuration();
         }
 
         public override int GetAudioMixingCurrentPosition()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetAudioMixingCurrentPosition();
             }
-            return _rtcEngineImpl.GetAudioMixingCurrentPosition();
         }
 
         public override int SetAudioMixingPosition(int pos)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioMixingPosition(pos);
             }
-            return _rtcEngineImpl.SetAudioMixingPosition(pos);
         }
 
         public override int SetAudioMixingPitch(int pitch)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioMixingPitch(pitch);
             }
-            return _rtcEngineImpl.SetAudioMixingPitch(pitch);
         }
 
         public override int GetEffectsVolume()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetEffectsVolume();
             }
-            return _rtcEngineImpl.GetEffectsVolume();
         }
 
         public override int SetEffectsVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetEffectsVolume(volume);
             }
-            return _rtcEngineImpl.SetEffectsVolume(volume);
         }
 
         public override int PreloadEffect(int soundId, string filePath, int startPos = 0)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PreloadEffect(soundId, filePath, startPos);
             }
-            return _rtcEngineImpl.PreloadEffect(soundId, filePath, startPos);
         }
 
         public override int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PlayEffect(soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
             }
-            return _rtcEngineImpl.PlayEffect(soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
         }
 
         public override int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PlayAllEffects(loopCount, pitch, pan, gain, publish);
             }
-            return _rtcEngineImpl.PlayAllEffects(loopCount, pitch, pan, gain, publish);
         }
 
         public override int GetVolumeOfEffect(int soundId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetVolumeOfEffect(soundId);
             }
-            return _rtcEngineImpl.GetVolumeOfEffect(soundId);
         }
 
         public override int SetVolumeOfEffect(int soundId, int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVolumeOfEffect(soundId, volume);
             }
-            return _rtcEngineImpl.SetVolumeOfEffect(soundId, volume);
         }
 
         public override int PauseEffect(int soundId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PauseEffect(soundId);
             }
-            return _rtcEngineImpl.PauseEffect(soundId);
         }
 
         public override int PauseAllEffects()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PauseAllEffects();
             }
-            return _rtcEngineImpl.PauseAllEffects();
         }
 
         public override int ResumeEffect(int soundId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ResumeEffect(soundId);
             }
-            return _rtcEngineImpl.ResumeEffect(soundId);
         }
 
         public override int ResumeAllEffects()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ResumeAllEffects();
             }
-            return _rtcEngineImpl.ResumeAllEffects();
         }
 
         public override int StopEffect(int soundId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopEffect(soundId);
             }
-            return _rtcEngineImpl.StopEffect(soundId);
         }
 
         public override int StopAllEffects()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopAllEffects();
             }
-            return _rtcEngineImpl.StopAllEffects();
         }
 
         public override int UnloadEffect(int soundId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnloadEffect(soundId);
             }
-            return _rtcEngineImpl.UnloadEffect(soundId);
         }
 
         public override int UnloadAllEffects()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnloadAllEffects();
             }
-            return _rtcEngineImpl.UnloadAllEffects();
         }
 
         public override int GetEffectCurrentPosition(int soundId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetEffectCurrentPosition(soundId);
             }
-            return _rtcEngineImpl.GetEffectCurrentPosition(soundId);
         }
 
         public override int GetEffectDuration(string filePath)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetEffectDuration(filePath);
             }
-            return _rtcEngineImpl.GetEffectDuration(filePath);
         }
 
         public override int SetEffectPosition(int soundId, int pos)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetEffectPosition(soundId, pos);
             }
-            return _rtcEngineImpl.SetEffectPosition(soundId, pos);
         }
 
         public override int EnableSoundPositionIndication(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableSoundPositionIndication(enabled);
             }
-            return _rtcEngineImpl.EnableSoundPositionIndication(enabled);
         }
 
         public override int SetRemoteVoicePosition(uint uid, double pan, double gain)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteVoicePosition(uid, pan, gain);
             }
-            return _rtcEngineImpl.SetRemoteVoicePosition(uid, pan, gain);
         }
 
         public override int EnableSpatialAudio(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableSpatialAudio(enabled);
             }
-            return _rtcEngineImpl.EnableSpatialAudio(enabled);
         }
 
         public override int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteUserSpatialAudioParams(uid, param);
             }
-            return _rtcEngineImpl.SetRemoteUserSpatialAudioParams(uid, param);
         }
 
         public override int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVoiceBeautifierPreset(preset);
             }
-            return _rtcEngineImpl.SetVoiceBeautifierPreset(preset);
         }
 
         public override int SetAudioEffectPreset(AUDIO_EFFECT_PRESET preset)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioEffectPreset(preset);
             }
-            return _rtcEngineImpl.SetAudioEffectPreset(preset);
         }
 
         public override int SetVoiceConversionPreset(VOICE_CONVERSION_PRESET preset)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVoiceConversionPreset(preset);
             }
-            return _rtcEngineImpl.SetVoiceConversionPreset(preset);
         }
 
         public override int SetAudioEffectParameters(AUDIO_EFFECT_PRESET preset, int param1, int param2)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioEffectParameters(preset, param1, param2);
             }
-            return _rtcEngineImpl.SetAudioEffectParameters(preset, param1, param2);
         }
 
         public override int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset, int param1, int param2)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVoiceBeautifierParameters(preset, param1, param2);
             }
-            return _rtcEngineImpl.SetVoiceBeautifierParameters(preset, param1, param2);
         }
 
         public override int SetVoiceConversionParameters(VOICE_CONVERSION_PRESET preset, int param1, int param2)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVoiceConversionParameters(preset, param1, param2);
             }
-            return _rtcEngineImpl.SetVoiceConversionParameters(preset, param1, param2);
         }
 
         public override int SetLocalVoicePitch(double pitch)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalVoicePitch(pitch);
             }
-            return _rtcEngineImpl.SetLocalVoicePitch(pitch);
         }
 
         public override int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency, int bandGain)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalVoiceEqualization(bandFrequency, bandGain);
             }
-            return _rtcEngineImpl.SetLocalVoiceEqualization(bandFrequency, bandGain);
         }
 
         public override int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalVoiceReverb(reverbKey, value);
             }
-            return _rtcEngineImpl.SetLocalVoiceReverb(reverbKey, value);
         }
 
         public override int SetHeadphoneEQParameters(int lowGain, int highGain)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetHeadphoneEQParameters(lowGain, highGain);
             }
-            return _rtcEngineImpl.SetHeadphoneEQParameters(lowGain, highGain);
         }
 
         public override int SetHeadphoneEQPreset(HEADPHONE_EQUALIZER_PRESET preset)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetHeadphoneEQPreset(preset);
             }
-            return _rtcEngineImpl.SetHeadphoneEQPreset(preset);
         }
 
         public override int SetLogFile(string filePath)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLogFile(filePath);
             }
-            return _rtcEngineImpl.SetLogFile(filePath);
         }
 
         public override int SetLogFilter(uint filter)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLogFilter(filter);
             }
-            return _rtcEngineImpl.SetLogFilter(filter);
         }
 
         public override int SetLogLevel(LOG_LEVEL level)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLogLevel(level);
             }
-            return _rtcEngineImpl.SetLogLevel(level);
         }
 
         public override int SetLogFileSize(uint fileSizeInKBytes)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLogFileSize(fileSizeInKBytes);
             }
-            return _rtcEngineImpl.SetLogFileSize(fileSizeInKBytes);
         }
 
         public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalRenderMode(renderMode, mirrorMode);
             }
-            return _rtcEngineImpl.SetLocalRenderMode(renderMode, mirrorMode);
         }
 
         public override int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteRenderMode(uid, renderMode, mirrorMode);
             }
-            return _rtcEngineImpl.SetRemoteRenderMode(uid, renderMode, mirrorMode);
         }
 
         public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalRenderMode(renderMode);
             }
-            return _rtcEngineImpl.SetLocalRenderMode(renderMode);
         }
 
         public override int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalVideoMirrorMode(mirrorMode);
             }
-            return _rtcEngineImpl.SetLocalVideoMirrorMode(mirrorMode);
         }
 
         public override int EnableDualStreamMode(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableDualStreamMode(enabled);
             }
-            return _rtcEngineImpl.EnableDualStreamMode(enabled);
         }
 
         public override int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableDualStreamMode(enabled, streamConfig);
             }
-            return _rtcEngineImpl.EnableDualStreamMode(enabled, streamConfig);
         }
 
 
         public override int SetExternalAudioSink(bool enabled, int sampleRate, int channels)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetExternalAudioSink(enabled, sampleRate, channels);
             }
-            return _rtcEngineImpl.SetExternalAudioSink(enabled, sampleRate, channels);
         }
 
         public override int EnableMultiCamera(bool enabled, CameraCapturerConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableMultiCamera(enabled, config);
             }
-            return _rtcEngineImpl.EnableMultiCamera(enabled, config);
         }
 
         public override int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
             }
-            return _rtcEngineImpl.SetRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
         }
 
         public override int SetPublishAudioFrameParameters(int sampleRate, int channel, int samplesPerCall)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetPublishAudioFrameParameters(sampleRate, channel, samplesPerCall);
             }
-            return _rtcEngineImpl.SetPublishAudioFrameParameters(sampleRate, channel, samplesPerCall);
         }
 
         public override int SetPlaybackAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetPlaybackAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
             }
-            return _rtcEngineImpl.SetPlaybackAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
         }
 
         public override int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetMixedAudioFrameParameters(sampleRate, channel, samplesPerCall);
             }
-            return _rtcEngineImpl.SetMixedAudioFrameParameters(sampleRate, channel, samplesPerCall);
         }
 
         public override int SetEarMonitoringAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetEarMonitoringAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
             }
-            return _rtcEngineImpl.SetEarMonitoringAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
         }
 
 
         public override int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel);
             }
-            return _rtcEngineImpl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel);
         }
 
         public override int EnableAudioSpectrumMonitor(int intervalInMS = 100)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableAudioSpectrumMonitor(intervalInMS);
             }
-            return _rtcEngineImpl.EnableAudioSpectrumMonitor(intervalInMS);
         }
 
         public override int DisableAudioSpectrumMonitor()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.DisableAudioSpectrumMonitor();
             }
-            return _rtcEngineImpl.DisableAudioSpectrumMonitor();
         }
 
         public override int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterAudioSpectrumObserver(observer);
             }
-            return _rtcEngineImpl.RegisterAudioSpectrumObserver(observer);
         }
 
         public override int UnregisterAudioSpectrumObserver()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnregisterAudioSpectrumObserver();
             }
-            return _rtcEngineImpl.UnregisterAudioSpectrumObserver();
         }
 
         public override int AdjustRecordingSignalVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustRecordingSignalVolume(volume);
             }
-            return _rtcEngineImpl.AdjustRecordingSignalVolume(volume);
         }
 
         public override int MuteRecordingSignal(bool mute)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteRecordingSignal(mute);
             }
-            return _rtcEngineImpl.MuteRecordingSignal(mute);
         }
 
         public override int AdjustPlaybackSignalVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustPlaybackSignalVolume(volume);
             }
-            return _rtcEngineImpl.AdjustPlaybackSignalVolume(volume);
         }
 
         public override int AdjustLoopbackSignalVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustLoopbackSignalVolume(volume);
             }
-            return _rtcEngineImpl.AdjustLoopbackSignalVolume(volume);
         }
 
 
         public override int AdjustUserPlaybackSignalVolume(uint uid, int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustUserPlaybackSignalVolume(uid, volume);
             }
-            return _rtcEngineImpl.AdjustUserPlaybackSignalVolume(uid, volume);
         }
 
         public override int EnableLoopbackRecording(bool enabled, string deviceName = "")
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableLoopbackRecording(enabled, deviceName);
             }
-            return _rtcEngineImpl.EnableLoopbackRecording(enabled, deviceName);
         }
 
         public override int GetLoopbackRecordingVolume()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetLoopbackRecordingVolume();
             }
-            return _rtcEngineImpl.GetLoopbackRecordingVolume();
         }
 
         public override int EnableInEarMonitoring(bool enabled, int includeAudioFilters)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableInEarMonitoring(enabled, includeAudioFilters);
             }
-            return _rtcEngineImpl.EnableInEarMonitoring(enabled, includeAudioFilters);
         }
 
         public override int SetInEarMonitoringVolume(int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetInEarMonitoringVolume(volume);
             }
-            return _rtcEngineImpl.SetInEarMonitoringVolume(volume);
         }
 
         public override int LoadExtensionProvider(string path, bool unload_after_use = false)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.LoadExtensionProvider(path, unload_after_use);
             }
-            return _rtcEngineImpl.LoadExtensionProvider(path, unload_after_use);
         }
 
         public override int SetExtensionProviderProperty(string provider, string key, string value)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetExtensionProviderProperty(provider, key, value);
             }
-            return _rtcEngineImpl.SetExtensionProviderProperty(provider, key, value);
         }
 
         public override int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableExtension(provider, extension, enable, type);
             }
-            return _rtcEngineImpl.EnableExtension(provider, extension, enable, type);
         }
 
         public override int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableExtension(provider, extension, extensionInfo, enable);
             }
-            return _rtcEngineImpl.EnableExtension(provider, extension, extensionInfo, enable);
         }
 
 
         public override int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetExtensionProperty(provider, extension, key, value, type);
             }
-            return _rtcEngineImpl.SetExtensionProperty(provider, extension, key, value, type);
         }
 
 
         public override int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetExtensionProperty(provider, extension, extensionInfo, key, value);
             }
-            return _rtcEngineImpl.SetExtensionProperty(provider, extension, extensionInfo, key, value);
         }
 
         public override int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetExtensionProperty(provider, extension, key, ref value, buf_len, type);
             }
-            return _rtcEngineImpl.GetExtensionProperty(provider, extension, key, ref value, buf_len, type);
         }
 
         public override int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
             }
-            return _rtcEngineImpl.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
         }
 
         public override int SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraCapturerConfiguration(config);
             }
-            return _rtcEngineImpl.SetCameraCapturerConfiguration(config);
         }
 
         public override int SwitchCamera()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SwitchCamera();
             }
-            return _rtcEngineImpl.SwitchCamera();
         }
 
         public override bool IsCameraZoomSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraZoomSupported();
             }
-            return _rtcEngineImpl.IsCameraZoomSupported();
         }
 
         public override bool IsCameraFaceDetectSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraFaceDetectSupported();
             }
-            return _rtcEngineImpl.IsCameraFaceDetectSupported();
         }
 
         public override bool IsCameraTorchSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraTorchSupported();
             }
-            return _rtcEngineImpl.IsCameraTorchSupported();
         }
 
         public override bool IsCameraFocusSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraFocusSupported();
             }
-            return _rtcEngineImpl.IsCameraFocusSupported();
         }
 
         public override bool IsCameraAutoFocusFaceModeSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraAutoFocusFaceModeSupported();
             }
-            return _rtcEngineImpl.IsCameraAutoFocusFaceModeSupported();
         }
 
         public override int SetCameraZoomFactor(float factor)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraZoomFactor(factor);
             }
-            return _rtcEngineImpl.SetCameraZoomFactor(factor);
         }
 
         public override int EnableFaceDetection(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableFaceDetection(enabled);
             }
-            return _rtcEngineImpl.EnableFaceDetection(enabled);
         }
 
         public override float GetCameraMaxZoomFactor()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetCameraMaxZoomFactor();
             }
-            return _rtcEngineImpl.GetCameraMaxZoomFactor();
         }
 
         public override int SetCameraFocusPositionInPreview(float positionX, float positionY)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraFocusPositionInPreview(positionX, positionY);
             }
-            return _rtcEngineImpl.SetCameraFocusPositionInPreview(positionX, positionY);
         }
 
         public override int SetCameraTorchOn(bool isOn)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraTorchOn(isOn);
             }
-            return _rtcEngineImpl.SetCameraTorchOn(isOn);
         }
 
         public override int SetCameraAutoFocusFaceModeEnabled(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraAutoFocusFaceModeEnabled(enabled);
             }
-            return _rtcEngineImpl.SetCameraAutoFocusFaceModeEnabled(enabled);
         }
 
         public override bool IsCameraExposurePositionSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraExposurePositionSupported();
             }
-            return _rtcEngineImpl.IsCameraExposurePositionSupported();
         }
 
         public override int SetCameraExposurePosition(float positionXinView, float positionYinView)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraExposurePosition(positionXinView, positionYinView);
             }
-            return _rtcEngineImpl.SetCameraExposurePosition(positionXinView, positionYinView);
         }
 
         public override bool IsCameraExposureSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraExposureSupported();
             }
-            return _rtcEngineImpl.IsCameraExposureSupported();
         }
 
         public override int SetCameraExposureFactor(float factor)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraExposureFactor(factor);
             }
-            return _rtcEngineImpl.SetCameraExposureFactor(factor);
         }
 
         public override bool IsCameraAutoExposureFaceModeSupported()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsCameraAutoExposureFaceModeSupported();
             }
-            return _rtcEngineImpl.IsCameraAutoExposureFaceModeSupported();
         }
 
         public override int SetCameraAutoExposureFaceModeEnabled(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraAutoExposureFaceModeEnabled(enabled);
             }
-            return _rtcEngineImpl.SetCameraAutoExposureFaceModeEnabled(enabled);
         }
 
         public override int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
             }
-            return _rtcEngineImpl.SetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
         }
 
         public override int SetEnableSpeakerphone(bool speakerOn)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetEnableSpeakerphone(speakerOn);
             }
-            return _rtcEngineImpl.SetEnableSpeakerphone(speakerOn);
         }
 
         public override bool IsSpeakerphoneEnabled()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsSpeakerphoneEnabled();
             }
-            return _rtcEngineImpl.IsSpeakerphoneEnabled();
         }
 
         public override int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartScreenCaptureByDisplayId(displayId, regionRect, captureParams);
             }
-            return _rtcEngineImpl.StartScreenCaptureByDisplayId(displayId, regionRect, captureParams);
         }
 
         public override int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
             }
-            return _rtcEngineImpl.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
         }
 
         public override int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartScreenCapture(mediaProjectionPermissionResultData, captureParams);
             }
-            return _rtcEngineImpl.StartScreenCapture(mediaProjectionPermissionResultData, captureParams);
         }
 
         //only in android 
         public override int StartScreenCapture(ScreenCaptureParameters2 captureParams)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartScreenCapture(captureParams);
             }
-            return _rtcEngineImpl.StartScreenCapture(captureParams);
         }
 
         //only in android 
         public override int UpdateScreenCapture(ScreenCaptureParameters2 captureParams)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateScreenCapture(captureParams);
             }
-            return _rtcEngineImpl.UpdateScreenCapture(captureParams);
         }
 
         public override int QueryScreenCaptureCapability()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.QueryScreenCaptureCapability();
             }
-            return _rtcEngineImpl.QueryScreenCaptureCapability();
         }
 
         public override int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect, ScreenCaptureParameters captureParams)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartScreenCaptureByWindowId(windowId, regionRect, captureParams);
             }
-            return _rtcEngineImpl.StartScreenCaptureByWindowId(windowId, regionRect, captureParams);
         }
 
         public override int SetScreenCaptureContentHint(VIDEO_CONTENT_HINT contentHint)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetScreenCaptureContentHint(contentHint);
             }
-            return _rtcEngineImpl.SetScreenCaptureContentHint(contentHint);
         }
 
         public override int UpdateScreenCaptureRegion(Rectangle regionRect)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateScreenCaptureRegion(regionRect);
             }
-            return _rtcEngineImpl.UpdateScreenCaptureRegion(regionRect);
         }
 
         public override int UpdateScreenCaptureParameters(ScreenCaptureParameters captureParams)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateScreenCaptureParameters(captureParams);
             }
-            return _rtcEngineImpl.UpdateScreenCaptureParameters(captureParams);
         }
 
         public override int StopScreenCapture()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopScreenCapture();
             }
-            return _rtcEngineImpl.StopScreenCapture();
         }
 
         public override int GetCallId(ref string callId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetCallId(ref callId);
             }
-            return _rtcEngineImpl.GetCallId(ref callId);
         }
 
         public override int GetCallIdEx(ref string callId, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetCallIdEx(ref callId, connection);
             }
-            return _rtcEngineImpl.GetCallIdEx(ref callId, connection);
         }
 
         public override int Rate(string callId, int rating, string description)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.Rate(callId, rating, description);
             }
-            return _rtcEngineImpl.Rate(callId, rating, description);
         }
 
         public override int Complain(string callId, string description)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.Complain(callId, description);
             }
-            return _rtcEngineImpl.Complain(callId, description);
         }
 
         //public override int AddPublishStreamUrl(string url, bool transcodingEnabled)
+        //{
+        //lock (rtcLock)
         //{
         //    if (_rtcEngineImpl == null)
         //    {
@@ -1996,8 +2635,11 @@ namespace Agora.Rtc
         //    }
         //    return _rtcEngineImpl.AddPublishStreamUrl(url, transcodingEnabled);
         //}
+        //}
 
         //public override int RemovePublishStreamUrl(string url)
+        //{
+        // lock (rtcLock)
         //{
         //    if (_rtcEngineImpl == null)
         //    {
@@ -2006,8 +2648,11 @@ namespace Agora.Rtc
         //    }
         //    return _rtcEngineImpl.RemovePublishStreamUrl(url);
         //}
+        //}
 
         //public override int SetLiveTranscoding(LiveTranscoding transcoding)
+        //{
+        //lock (rtcLock)
         //{
         //    if (_rtcEngineImpl == null)
         //    {
@@ -2016,107 +2661,143 @@ namespace Agora.Rtc
         //    }
         //    return _rtcEngineImpl.SetLiveTranscoding(transcoding);
         //}
+        //}
 
         public override int StartLocalVideoTranscoder(LocalTranscoderConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartLocalVideoTranscoder(config);
             }
-            return _rtcEngineImpl.StartLocalVideoTranscoder(config);
         }
 
         public override int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateLocalTranscoderConfiguration(config);
             }
-            return _rtcEngineImpl.UpdateLocalTranscoderConfiguration(config);
         }
 
         public override int StopLocalVideoTranscoder()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopLocalVideoTranscoder();
             }
-            return _rtcEngineImpl.StopLocalVideoTranscoder();
         }
 
         public override int StartCameraCapture(VIDEO_SOURCE_TYPE type, CameraCapturerConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartCameraCapture(type, config);
             }
-            return _rtcEngineImpl.StartCameraCapture(type, config);
         }
 
         public override int StopCameraCapture(VIDEO_SOURCE_TYPE type)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopCameraCapture(type);
             }
-            return _rtcEngineImpl.StopCameraCapture(type);
         }
 
         public override int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCameraDeviceOrientation(type, orientation);
             }
-            return _rtcEngineImpl.SetCameraDeviceOrientation(type, orientation);
         }
 
         public override int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetScreenCaptureOrientation(type, orientation);
             }
-            return _rtcEngineImpl.SetScreenCaptureOrientation(type, orientation);
         }
 
         public override int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartScreenCapture(type, config);
             }
-            return _rtcEngineImpl.StartScreenCapture(type, config);
         }
 
         public override int StopScreenCapture(VIDEO_SOURCE_TYPE type)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopScreenCapture(type);
             }
-            return _rtcEngineImpl.StopScreenCapture(type);
         }
 
         public override CONNECTION_STATE_TYPE GetConnectionState()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
+                if (_rtcEngineImpl == null)
+                {
+                    return CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
+                }
+                return _rtcEngineImpl.GetConnectionState();
             }
-            return _rtcEngineImpl.GetConnectionState();
         }
 
         public override int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteUserPriority(uid, userPriority);
             }
-            return _rtcEngineImpl.SetRemoteUserPriority(uid, userPriority);
         }
 
         //public override int RegisterPacketObserver(IPacketObserver observer)
+        //{
+        //lock (rtcLock)
         //{
         // if (_rtcEngineImpl == null)
         // {
@@ -2124,633 +2805,843 @@ namespace Agora.Rtc
         // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
+        //}
 
         public override int SetEncryptionMode(string encryptionMode)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetEncryptionMode(encryptionMode);
             }
-            return _rtcEngineImpl.SetEncryptionMode(encryptionMode);
         }
 
         public override int SetEncryptionSecret(string secret)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetEncryptionSecret(secret);
             }
-            return _rtcEngineImpl.SetEncryptionSecret(secret);
         }
 
         public override int EnableEncryption(bool enabled, EncryptionConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableEncryption(enabled, config);
             }
-            return _rtcEngineImpl.EnableEncryption(enabled, config);
         }
 
         public override int CreateDataStream(ref int streamId, bool reliable, bool ordered)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.CreateDataStream(ref streamId, reliable, ordered);
             }
-            return _rtcEngineImpl.CreateDataStream(ref streamId, reliable, ordered);
         }
 
         public override int CreateDataStream(ref int streamId, DataStreamConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.CreateDataStream(ref streamId, config);
             }
-            return _rtcEngineImpl.CreateDataStream(ref streamId, config);
         }
 
         public override int SendStreamMessage(int streamId, byte[] data, uint length)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SendStreamMessage(streamId, data, length);
             }
-            return _rtcEngineImpl.SendStreamMessage(streamId, data, length);
         }
 
         public override int AddVideoWatermark(RtcImage watermark)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AddVideoWatermark(watermark);
             }
-            return _rtcEngineImpl.AddVideoWatermark(watermark);
         }
 
         public override int AddVideoWatermark(string watermarkUrl, WatermarkOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AddVideoWatermark(watermarkUrl, options);
             }
-            return _rtcEngineImpl.AddVideoWatermark(watermarkUrl, options);
         }
 
         public override int ClearVideoWatermarks()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ClearVideoWatermarks();
             }
-            return _rtcEngineImpl.ClearVideoWatermarks();
         }
 
         public override int PauseAudio()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PauseAudio();
             }
-            return _rtcEngineImpl.PauseAudio();
         }
 
         public override int ResumeAudio()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ResumeAudio();
             }
-            return _rtcEngineImpl.ResumeAudio();
         }
 
         public override int EnableWebSdkInteroperability(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableWebSdkInteroperability(enabled);
             }
-            return _rtcEngineImpl.EnableWebSdkInteroperability(enabled);
         }
 
         public override int SendCustomReportMessage(string id, string category, string @event, string label, int value)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SendCustomReportMessage(id, category, @event, label, value);
             }
-            return _rtcEngineImpl.SendCustomReportMessage(id, category, @event, label, value);
         }
 
         public override int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type);
             }
-            return _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type);
         }
 
         public override int UnregisterMediaMetadataObserver()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UnregisterMediaMetadataObserver();
             }
-            return _rtcEngineImpl.UnregisterMediaMetadataObserver();
         }
 
         public override int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartAudioFrameDump(channel_id, user_id, location, uuid, passwd, duration_ms, auto_upload);
             }
-            return _rtcEngineImpl.StartAudioFrameDump(channel_id, user_id, location, uuid, passwd, duration_ms, auto_upload);
         }
 
         public override int StopAudioFrameDump(string channel_id, uint user_id, string location)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopAudioFrameDump(channel_id, user_id, location);
             }
-            return _rtcEngineImpl.StopAudioFrameDump(channel_id, user_id, location);
         }
 
         public override int RegisterLocalUserAccount(string appId, string userAccount)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterLocalUserAccount(appId, userAccount);
             }
-            return _rtcEngineImpl.RegisterLocalUserAccount(appId, userAccount);
         }
 
         public override int JoinChannelWithUserAccount(string token, string channelId, string userAccount)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount);
             }
-            return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount);
         }
 
         public override int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount, options);
             }
-            return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount, options);
         }
 
         public override int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetUserInfoByUserAccount(userAccount, ref userInfo);
             }
-            return _rtcEngineImpl.GetUserInfoByUserAccount(userAccount, ref userInfo);
         }
 
         public override int GetUserInfoByUid(uint uid, ref UserInfo userInfo)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetUserInfoByUid(uid, ref userInfo);
             }
-            return _rtcEngineImpl.GetUserInfoByUid(uid, ref userInfo);
         }
 
         public override int PreloadChannel(string token, string channelId, uint uid)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PreloadChannel(token, channelId, uid);
             }
-            return _rtcEngineImpl.PreloadChannel(token, channelId, uid);
         }
 
         public override int PreloadChannel(string token, string channelId, string userAccount)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PreloadChannel(token, channelId, userAccount);
             }
-            return _rtcEngineImpl.PreloadChannel(token, channelId, userAccount);
         }
 
         public override int UpdatePreloadChannelToken(string token)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdatePreloadChannelToken(token);
             }
-            return _rtcEngineImpl.UpdatePreloadChannelToken(token);
         }
 
         public override int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartChannelMediaRelay(configuration);
             }
-            return _rtcEngineImpl.StartChannelMediaRelay(configuration);
         }
 
         public override int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateChannelMediaRelay(configuration);
             }
-            return _rtcEngineImpl.UpdateChannelMediaRelay(configuration);
         }
 
         public override int StopChannelMediaRelay()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopChannelMediaRelay();
             }
-            return _rtcEngineImpl.StopChannelMediaRelay();
         }
 
         public override int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDirectCdnStreamingAudioConfiguration(profile);
             }
-            return _rtcEngineImpl.SetDirectCdnStreamingAudioConfiguration(profile);
         }
 
         public override int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetDirectCdnStreamingVideoConfiguration(config);
             }
-            return _rtcEngineImpl.SetDirectCdnStreamingVideoConfiguration(config);
         }
 
         public override int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartDirectCdnStreaming(publishUrl, options);
             }
-            return _rtcEngineImpl.StartDirectCdnStreaming(publishUrl, options);
         }
 
         public override int StopDirectCdnStreaming()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopDirectCdnStreaming();
             }
-            return _rtcEngineImpl.StopDirectCdnStreaming();
         }
 
         public override int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateDirectCdnStreamingMediaOptions(options);
             }
-            return _rtcEngineImpl.UpdateDirectCdnStreamingMediaOptions(options);
         }
 
         public override int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.JoinChannelEx(token, connection, options);
             }
-            return _rtcEngineImpl.JoinChannelEx(token, connection, options);
         }
 
         public override int LeaveChannelEx(RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.LeaveChannelEx(connection);
             }
-            return _rtcEngineImpl.LeaveChannelEx(connection);
         }
 
         public override int LeaveChannelEx(RtcConnection connection, LeaveChannelOptions options)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.LeaveChannelEx(connection, options);
             }
-            return _rtcEngineImpl.LeaveChannelEx(connection, options);
         }
 
 
         public override int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateChannelMediaOptionsEx(options, connection);
             }
-            return _rtcEngineImpl.UpdateChannelMediaOptionsEx(options, connection);
         }
 
         public override int SetVideoEncoderConfigurationEx(VideoEncoderConfiguration config, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVideoEncoderConfigurationEx(config, connection);
             }
-            return _rtcEngineImpl.SetVideoEncoderConfigurationEx(config, connection);
         }
 
         public override int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetupRemoteVideoEx(canvas, connection);
             }
-            return _rtcEngineImpl.SetupRemoteVideoEx(canvas, connection);
         }
 
         public override int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteRemoteAudioStreamEx(uid, mute, connection);
             }
-            return _rtcEngineImpl.MuteRemoteAudioStreamEx(uid, mute, connection);
         }
 
         public override int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteRemoteVideoStreamEx(uid, mute, connection);
             }
-            return _rtcEngineImpl.MuteRemoteVideoStreamEx(uid, mute, connection);
         }
 
         public override int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteVoicePositionEx(uid, pan, gain, connection);
             }
-            return _rtcEngineImpl.SetRemoteVoicePositionEx(uid, pan, gain, connection);
         }
 
         public override int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteUserSpatialAudioParamsEx(uid, param, connection);
             }
-            return _rtcEngineImpl.SetRemoteUserSpatialAudioParamsEx(uid, param, connection);
         }
 
         public override int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
             }
-            return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
         }
 
         public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableLoopbackRecordingEx(connection, enabled, deviceName);
             }
-            return _rtcEngineImpl.EnableLoopbackRecordingEx(connection, enabled, deviceName);
         }
 
         public override int AdjustRecordingSignalVolumeEx(int volume, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustRecordingSignalVolumeEx(volume, connection);
             }
-            return _rtcEngineImpl.AdjustRecordingSignalVolumeEx(volume, connection);
         }
 
         public override int MuteRecordingSignalEx(bool mute, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteRecordingSignalEx(mute, connection);
             }
-            return _rtcEngineImpl.MuteRecordingSignalEx(mute, connection);
         }
 
         public override CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
+                if (_rtcEngineImpl == null)
+                {
+                    return CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
+                }
             }
             return _rtcEngineImpl.GetConnectionStateEx(connection);
         }
 
         public override int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableEncryptionEx(connection, enabled, config);
             }
-            return _rtcEngineImpl.EnableEncryptionEx(connection, enabled, config);
         }
 
         public override int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
             }
-            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
         }
 
         public override int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.CreateDataStreamEx(ref streamId, config, connection);
             }
-            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, config, connection);
         }
 
         public override int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SendStreamMessageEx(streamId, data, length, connection);
             }
-            return _rtcEngineImpl.SendStreamMessageEx(streamId, data, length, connection);
         }
 
         public override int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AddVideoWatermarkEx(watermarkUrl, options, connection);
             }
-            return _rtcEngineImpl.AddVideoWatermarkEx(watermarkUrl, options, connection);
         }
 
         public override int ClearVideoWatermarkEx(RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ClearVideoWatermarkEx(connection);
             }
-            return _rtcEngineImpl.ClearVideoWatermarkEx(connection);
         }
 
         public override int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SendCustomReportMessageEx(id, category, @event, label, value, connection);
             }
-            return _rtcEngineImpl.SendCustomReportMessageEx(id, category, @event, label, value, connection);
         }
 
         public override int PushAudioFrame(AudioFrame frame, track_id_t trackId = 0)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PushAudioFrame(frame, trackId);
             }
-            return _rtcEngineImpl.PushAudioFrame(frame, trackId);
         }
 
         public override int PullAudioFrame(AudioFrame frame)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PullAudioFrame(frame);
             }
-            return _rtcEngineImpl.PullAudioFrame(frame);
         }
 
         public override int PushCaptureAudioFrame(AudioFrame frame)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PushCaptureAudioFrame(frame);
             }
-            return _rtcEngineImpl.PushCaptureAudioFrame(frame);
         }
 
         public override int PushReverseAudioFrame(AudioFrame frame)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PushReverseAudioFrame(frame);
             }
-            return _rtcEngineImpl.PushReverseAudioFrame(frame);
         }
 
         public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
             }
-            return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
         }
 
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetExternalAudioSource(enabled, sampleRate, channels, localPlayback, publish);
             }
-            return _rtcEngineImpl.SetExternalAudioSource(enabled, sampleRate, channels, localPlayback, publish);
         }
 
 
         public override track_id_t CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return 0;
+                if (_rtcEngineImpl == null)
+                {
+                    return 0;
+                }
+                return _rtcEngineImpl.CreateCustomAudioTrack(trackType, config);
             }
-            return _rtcEngineImpl.CreateCustomAudioTrack(trackType, config);
         }
 
         public override int DestroyCustomAudioTrack(track_id_t trackId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return 0;
+                if (_rtcEngineImpl == null)
+                {
+                    return 0;
+                }
+                return _rtcEngineImpl.DestroyCustomAudioTrack(trackId);
             }
-            return _rtcEngineImpl.DestroyCustomAudioTrack(trackId);
         }
 
         public override int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PushVideoFrame(frame, videoTrackId);
             }
-            return _rtcEngineImpl.PushVideoFrame(frame, videoTrackId);
         }
 
 
         public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
             }
-            return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
         }
 
         public override video_track_id_t CreateCustomEncodedVideoTrack(SenderOptions sender_option)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return 0;
+                if (_rtcEngineImpl == null)
+                {
+                    return 0;
+                }
+                return _rtcEngineImpl.CreateCustomEncodedVideoTrack(sender_option);
             }
-            return _rtcEngineImpl.CreateCustomEncodedVideoTrack(sender_option);
         }
 
         public override int DestroyCustomEncodedVideoTrack(video_track_id_t video_track_id)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.DestroyCustomEncodedVideoTrack(video_track_id);
             }
-            return _rtcEngineImpl.DestroyCustomEncodedVideoTrack(video_track_id);
         }
 
         public override video_track_id_t CreateCustomVideoTrack()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return 0;
+                if (_rtcEngineImpl == null)
+                {
+                    return 0;
+                }
+                return _rtcEngineImpl.CreateCustomVideoTrack();
             }
-            return _rtcEngineImpl.CreateCustomVideoTrack();
         }
 
         public override int DestroyCustomVideoTrack(video_track_id_t video_track_id)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return 0;
+                if (_rtcEngineImpl == null)
+                {
+                    return 0;
+                }
+                return _rtcEngineImpl.DestroyCustomVideoTrack(video_track_id);
             }
-            return _rtcEngineImpl.DestroyCustomVideoTrack(video_track_id);
         }
 
 
         //public override int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len)
+        //{
+        //lock (rtcLock)
         //{
         // if (_rtcEngineImpl == null)
         // {
@@ -2758,41 +3649,54 @@ namespace Agora.Rtc
         // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
+        //}
 
         public override int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAudioSessionOperationRestriction(restriction);
             }
-            return _rtcEngineImpl.SetAudioSessionOperationRestriction(restriction);
         }
 
         public override int AdjustCustomAudioPublishVolume(track_id_t trackId, int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustCustomAudioPublishVolume(trackId, volume);
             }
-            return _rtcEngineImpl.AdjustCustomAudioPublishVolume(trackId, volume);
         }
 
         public override int AdjustCustomAudioPlayoutVolume(track_id_t trackId, int volume)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustCustomAudioPlayoutVolume(trackId, volume);
             }
-            return _rtcEngineImpl.AdjustCustomAudioPlayoutVolume(trackId, volume);
         }
 
         public override int SetParameters(string parameters)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetParameters(parameters);
             }
-            return _rtcEngineImpl.SetParameters(parameters);
         }
 
 
@@ -2806,104 +3710,127 @@ namespace Agora.Rtc
 
         public override int GetAudioDeviceInfo(ref DeviceInfo deviceInfo)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetAudioDeviceInfo(ref deviceInfo);
             }
-            return _rtcEngineImpl.GetAudioDeviceInfo(ref deviceInfo);
         }
 
         public override int EnableCustomAudioLocalPlayback(track_id_t trackId, bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableCustomAudioLocalPlayback(trackId, enabled);
             }
-            return _rtcEngineImpl.EnableCustomAudioLocalPlayback(trackId, enabled);
         }
 
         public override int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalPublishFallbackOption(option);
             }
-            return _rtcEngineImpl.SetLocalPublishFallbackOption(option);
         }
 
         public override int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteSubscribeFallbackOption(option);
             }
-            return _rtcEngineImpl.SetRemoteSubscribeFallbackOption(option);
         }
 
         public override int PauseAllChannelMediaRelay()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PauseAllChannelMediaRelay();
             }
-            return _rtcEngineImpl.PauseAllChannelMediaRelay();
         }
 
         public override int ResumeAllChannelMediaRelay()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ResumeAllChannelMediaRelay();
             }
-            return _rtcEngineImpl.ResumeAllChannelMediaRelay();
         }
 
         public override int TakeSnapshot(uint uid, string filePath)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.TakeSnapshot(uid, filePath);
             }
-            return _rtcEngineImpl.TakeSnapshot(uid, filePath);
         }
 
         public override int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartRhythmPlayer(sound1, sound2, config);
             }
-            return _rtcEngineImpl.StartRhythmPlayer(sound1, sound2, config);
         }
 
         public override int StopRhythmPlayer()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopRhythmPlayer();
             }
-            return _rtcEngineImpl.StopRhythmPlayer();
         }
 
         public override int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ConfigRhythmPlayer(config);
             }
-            return _rtcEngineImpl.ConfigRhythmPlayer(config);
         }
 
         //public override int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options)
         //{
-        // if (_rtcEngineImpl == null)
-        // {
-        //     AgoraLog.LogError(ErrorMsgLog);
-        // }
-        //    return _rtcEngineImpl.Initialize(context);
-        //}
-
-        //public override int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
+        //lock (rtcLock)
         //{
         // if (_rtcEngineImpl == null)
         // {
@@ -2911,26 +3838,47 @@ namespace Agora.Rtc
         // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
+        //}
+
+        //public override int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
+        //{
+        //lock (rtcLock)
+        //{
+        // if (_rtcEngineImpl == null)
+        // {
+        //     AgoraLog.LogError(ErrorMsgLog);
+        // }
+        //    return _rtcEngineImpl.Initialize(context);
+        //}
+        //}
 
         public override int SetCloudProxy(CLOUD_PROXY_TYPE proxyType)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetCloudProxy(proxyType);
             }
-            return _rtcEngineImpl.SetCloudProxy(proxyType);
         }
 
         public override int SetLocalAccessPoint(LocalAccessPointConfiguration config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetLocalAccessPoint(config);
             }
-            return _rtcEngineImpl.SetLocalAccessPoint(config);
         }
 
         //public override int EnableFishEyeCorrection(bool enabled, FishEyeCorrectionParams @params)
+        //{
+        //lock (rtcLock)
         //{
         //    if (_rtcEngineImpl == null)
         //    {
@@ -2939,493 +3887,659 @@ namespace Agora.Rtc
         //    }
         //    return _rtcEngineImpl.EnableFishEyeCorrection(enabled, @params);
         //}
+        //}
 
         public override int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType = 0)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAdvancedAudioOptions(options, sourceType);
             }
-            return _rtcEngineImpl.SetAdvancedAudioOptions(options, sourceType);
         }
 
         public override int SetAVSyncSource(string channelId, uint uid)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetAVSyncSource(channelId, uid);
             }
-            return _rtcEngineImpl.SetAVSyncSource(channelId, uid);
         }
 
         public override int StartRtmpStreamWithoutTranscoding(string url)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartRtmpStreamWithoutTranscoding(url);
             }
-            return _rtcEngineImpl.StartRtmpStreamWithoutTranscoding(url);
         }
 
         public override int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartRtmpStreamWithTranscoding(url, transcoding);
             }
-            return _rtcEngineImpl.StartRtmpStreamWithTranscoding(url, transcoding);
         }
 
         public override int UpdateRtmpTranscoding(LiveTranscoding transcoding)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateRtmpTranscoding(transcoding);
             }
-            return _rtcEngineImpl.UpdateRtmpTranscoding(transcoding);
         }
 
         public override int StopRtmpStream(string url)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopRtmpStream(url);
             }
-            return _rtcEngineImpl.StopRtmpStream(url);
         }
 
         public override int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetUserInfoByUserAccountEx(userAccount, ref userInfo, connection);
             }
-            return _rtcEngineImpl.GetUserInfoByUserAccountEx(userAccount, ref userInfo, connection);
         }
 
         public override int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetUserInfoByUidEx(uid, ref userInfo, connection);
             }
-            return _rtcEngineImpl.GetUserInfoByUidEx(uid, ref userInfo, connection);
         }
 
         public override int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteVideoSubscriptionOptionsEx(uid, options, connection);
             }
-            return _rtcEngineImpl.SetRemoteVideoSubscriptionOptionsEx(uid, options, connection);
         }
 
         public override int SetSubscribeAudioBlocklistEx(uint[] uidList, int uidNumber, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeAudioBlocklistEx(uidList, uidNumber, connection);
             }
-            return _rtcEngineImpl.SetSubscribeAudioBlocklistEx(uidList, uidNumber, connection);
         }
 
         public override int SetSubscribeAudioAllowlistEx(uint[] uidList, int uidNumber, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeAudioAllowlistEx(uidList, uidNumber, connection);
             }
-            return _rtcEngineImpl.SetSubscribeAudioAllowlistEx(uidList, uidNumber, connection);
         }
 
         public override int SetSubscribeVideoBlocklistEx(uint[] uidList, int uidNumber, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeVideoBlocklistEx(uidList, uidNumber, connection);
             }
-            return _rtcEngineImpl.SetSubscribeVideoBlocklistEx(uidList, uidNumber, connection);
         }
 
         public override int SetSubscribeVideoAllowlistEx(uint[] uidList, int uidNumber, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeVideoAllowlistEx(uidList, uidNumber, connection);
             }
-            return _rtcEngineImpl.SetSubscribeVideoAllowlistEx(uidList, uidNumber, connection);
         }
 
         public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableContentInspect(enabled, config);
             }
-            return _rtcEngineImpl.EnableContentInspect(enabled, config);
         }
 
         public override int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetRemoteVideoStreamTypeEx(uid, streamType, connection);
             }
-            return _rtcEngineImpl.SetRemoteVideoStreamTypeEx(uid, streamType, connection);
         }
 
         public override int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connection);
             }
-            return _rtcEngineImpl.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connection);
         }
 
         public override int SetVideoProfileEx(int width, int height, int frameRate, int bitrate)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetVideoProfileEx(width, height, frameRate, bitrate);
             }
-            return _rtcEngineImpl.SetVideoProfileEx(width, height, frameRate, bitrate);
         }
 
         public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableDualStreamModeEx(enabled, streamConfig, connection);
             }
-            return _rtcEngineImpl.EnableDualStreamModeEx(enabled, streamConfig, connection);
         }
 
         public override int UploadLogFile(ref string requestId)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UploadLogFile(ref requestId);
             }
-            return _rtcEngineImpl.UploadLogFile(ref requestId);
         }
 
         public override int WriteLog(LOG_LEVEL level, string fmt)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.WriteLog(level, fmt);
             }
-            return _rtcEngineImpl.WriteLog(level, fmt);
         }
 
         public override int SetSubscribeAudioBlocklist(uint[] uidList, int uidNumber)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeAudioBlocklist(uidList, uidNumber);
             }
-            return _rtcEngineImpl.SetSubscribeAudioBlocklist(uidList, uidNumber);
         }
 
         public override int SetSubscribeAudioAllowlist(uint[] uidList, int uidNumber)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeAudioAllowlist(uidList, uidNumber);
             }
-            return _rtcEngineImpl.SetSubscribeAudioAllowlist(uidList, uidNumber);
         }
 
         public override int SetSubscribeVideoBlocklist(uint[] uidList, int uidNumber)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeVideoBlocklist(uidList, uidNumber);
             }
-            return _rtcEngineImpl.SetSubscribeVideoBlocklist(uidList, uidNumber);
         }
 
         public override int SetSubscribeVideoAllowlist(uint[] uidList, int uidNumber)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetSubscribeVideoAllowlist(uidList, uidNumber);
             }
-            return _rtcEngineImpl.SetSubscribeVideoAllowlist(uidList, uidNumber);
         }
 
         public override ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return null;
+                if (_rtcEngineImpl == null)
+                {
+                    return null;
+                }
+                return _rtcEngineImpl.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
             }
-            return _rtcEngineImpl.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
         }
 
         public override int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SetScreenCaptureScenario(screenScenario);
             }
-            return _rtcEngineImpl.SetScreenCaptureScenario(screenScenario);
         }
 
 
         public override bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir)
         {
-            return _rtcEngineImpl.StartDumpVideo(type, dir);
+            lock (rtcLock)
+            {
+                return _rtcEngineImpl.StartDumpVideo(type, dir);
+            }
         }
 
         public override bool StopDumpVideo()
         {
-            return _rtcEngineImpl.StopDumpVideo();
+            lock (rtcLock)
+            {
+                return _rtcEngineImpl.StopDumpVideo();
+            }
         }
 
         public override int EnableWirelessAccelerate(bool enabled)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableWirelessAccelerate(enabled);
             }
-            return _rtcEngineImpl.EnableWirelessAccelerate(enabled);
         }
 
         public override int GetAudioTrackCount()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetAudioTrackCount();
             }
-            return _rtcEngineImpl.GetAudioTrackCount();
         }
 
         public override int SelectAudioTrack(int index)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SelectAudioTrack(index);
             }
-            return _rtcEngineImpl.SelectAudioTrack(index);
         }
 
         public override long GetCurrentMonotonicTimeInMs()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetCurrentMonotonicTimeInMs();
             }
-            return _rtcEngineImpl.GetCurrentMonotonicTimeInMs();
         }
 
         public override int MuteLocalAudioStreamEx(bool mute, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteLocalAudioStreamEx(mute, connection);
             }
-            return _rtcEngineImpl.MuteLocalAudioStreamEx(mute, connection);
         }
 
         public override int MuteLocalVideoStreamEx(bool mute, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteLocalVideoStreamEx(mute, connection);
             }
-            return _rtcEngineImpl.MuteLocalVideoStreamEx(mute, connection);
         }
 
         public override int MuteAllRemoteAudioStreamsEx(bool mute, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteAllRemoteAudioStreamsEx(mute, connection);
             }
-            return _rtcEngineImpl.MuteAllRemoteAudioStreamsEx(mute, connection);
         }
 
         public override int MuteAllRemoteVideoStreamsEx(bool mute, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.MuteAllRemoteVideoStreamsEx(mute, connection);
             }
-            return _rtcEngineImpl.MuteAllRemoteVideoStreamsEx(mute, connection);
         }
 
         public override int AdjustUserPlaybackSignalVolumeEx(uint uid, int volume, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.AdjustUserPlaybackSignalVolumeEx(uid, volume, connection);
             }
-            return _rtcEngineImpl.AdjustUserPlaybackSignalVolumeEx(uid, volume, connection);
         }
 
         public override int StartRtmpStreamWithoutTranscodingEx(string url, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartRtmpStreamWithoutTranscodingEx(url, connection);
             }
-            return _rtcEngineImpl.StartRtmpStreamWithoutTranscodingEx(url, connection);
         }
 
         public override int StartRtmpStreamWithTranscodingEx(string url, LiveTranscoding transcoding, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartRtmpStreamWithTranscodingEx(url, transcoding, connection);
             }
-            return _rtcEngineImpl.StartRtmpStreamWithTranscodingEx(url, transcoding, connection);
         }
 
         public override int UpdateRtmpTranscodingEx(LiveTranscoding transcoding, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateRtmpTranscodingEx(transcoding, connection);
             }
-            return _rtcEngineImpl.UpdateRtmpTranscodingEx(transcoding, connection);
         }
 
         public override int StopRtmpStreamEx(string url, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopRtmpStreamEx(url, connection);
             }
-            return _rtcEngineImpl.StopRtmpStreamEx(url, connection);
         }
 
         public override int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartChannelMediaRelayEx(configuration, connection);
             }
-            return _rtcEngineImpl.StartChannelMediaRelayEx(configuration, connection);
         }
 
         public override int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.UpdateChannelMediaRelayEx(configuration, connection);
             }
-            return _rtcEngineImpl.UpdateChannelMediaRelayEx(configuration, connection);
         }
 
         public override int StopChannelMediaRelayEx(RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StopChannelMediaRelayEx(connection);
             }
-            return _rtcEngineImpl.StopChannelMediaRelayEx(connection);
         }
 
         public override int PauseAllChannelMediaRelayEx(RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.PauseAllChannelMediaRelayEx(connection);
             }
-            return _rtcEngineImpl.PauseAllChannelMediaRelayEx(connection);
         }
 
         public override int ResumeAllChannelMediaRelayEx(RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.ResumeAllChannelMediaRelayEx(connection);
             }
-            return _rtcEngineImpl.ResumeAllChannelMediaRelayEx(connection);
         }
 
         public override int GetNativeHandler(ref IntPtr nativeHandler)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.GetNativeHandler(ref nativeHandler);
             }
-            return _rtcEngineImpl.GetNativeHandler(ref nativeHandler);
         }
 
         public override int RegisterExtension(string provider, string extension, MEDIA_SOURCE_TYPE type)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.RegisterExtension(provider, extension, type);
             }
-            return _rtcEngineImpl.RegisterExtension(provider, extension, type);
         }
 
         public override int StartMediaRenderingTracing()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartMediaRenderingTracing();
             }
-            return _rtcEngineImpl.StartMediaRenderingTracing();
         }
 
         public override int EnableInstantMediaRendering()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.EnableInstantMediaRendering();
             }
-            return _rtcEngineImpl.EnableInstantMediaRendering();
         }
 
         public override int StartMediaRenderingTracingEx(RtcConnection connection)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.StartMediaRenderingTracingEx(connection);
             }
-            return _rtcEngineImpl.StartMediaRenderingTracingEx(connection);
         }
 
         public override UInt64 GetNtpWallTimeInMs()
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return 0;
+                if (_rtcEngineImpl == null)
+                {
+                    return 0;
+                }
+                return _rtcEngineImpl.GetNtpWallTimeInMs();
             }
-            return _rtcEngineImpl.GetNtpWallTimeInMs();
         }
 
         public override bool IsFeatureAvailableOnDevice(FeatureType type)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return false;
+                if (_rtcEngineImpl == null)
+                {
+                    return false;
+                }
+                return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
             }
-            return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
 
         public override int SendAudioMetadata(byte[] metadata, uint length)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SendAudioMetadata(metadata, length);
             }
-            return _rtcEngineImpl.SendAudioMetadata(metadata, length);
         }
 
         public override int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, uint length)
         {
-            if (_rtcEngineImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _rtcEngineImpl.SendAudioMetadataEx(connection, metadata, length);
             }
-            return _rtcEngineImpl.SendAudioMetadataEx(connection, metadata, length);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Agora.Rtc
         private IRtcEngine _rtcEngineInstance = null;
         private MusicContentCenterImpl _musicContentCenterImpl = null;
         private const int ErrorCode = -7;
+        private static System.Object rtcLock = new System.Object();
 
         public MusicContentCenter(IRtcEngine rtcEngine, MusicContentCenterImpl impl)
         {
@@ -22,166 +23,223 @@ namespace Agora.Rtc
         private static IMusicContentCenter instance = null;
         internal static IMusicContentCenter GetInstance(IRtcEngine rtcEngine, MusicContentCenterImpl impl)
         {
-            return instance ?? (instance = new MusicContentCenter(rtcEngine, impl));
+            lock (rtcLock)
+            {
+                return instance ?? (instance = new MusicContentCenter(rtcEngine, impl));
+            }
         }
 
         internal static void ReleaseInstance()
         {
-            instance = null;
+            lock (rtcLock)
+            {
+                instance = null;
+            }
         }
 
         public override IMusicPlayer CreateMusicPlayer()
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return null;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return null;
+                }
+                return _musicContentCenterImpl.CreateMusicPlayer();
             }
-            return _musicContentCenterImpl.CreateMusicPlayer();
         }
 
         public override int GetLyric(ref string requestId, long songCode, int LyricType = 0)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.GetLyric(ref requestId, songCode, LyricType);
             }
-            return _musicContentCenterImpl.GetLyric(ref requestId, songCode, LyricType);
         }
 
         public override int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.GetMusicCollectionByMusicChartId(ref requestId, musicChartType, page, pageSize, jsonOption);
             }
-            return _musicContentCenterImpl.GetMusicCollectionByMusicChartId(ref requestId, musicChartType, page, pageSize, jsonOption);
         }
 
         public override int GetMusicCharts(ref string requestId)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.GetMusicCharts(ref requestId);
             }
-            return _musicContentCenterImpl.GetMusicCharts(ref requestId);
         }
 
         public override int Initialize(MusicContentCenterConfiguration configuration)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.Initialize(configuration);
             }
-            return _musicContentCenterImpl.Initialize(configuration);
         }
 
         public override int IsPreloaded(long songCode)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.IsPreloaded(songCode);
             }
-            return _musicContentCenterImpl.IsPreloaded(songCode);
         }
 
         public override int Preload(long songCode, string jsonOption = "")
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.Preload(songCode, jsonOption);
             }
-            return _musicContentCenterImpl.Preload(songCode, jsonOption);
         }
 
         public override int Preload(ref string requestId, Int64 songCode)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.Preload(ref requestId, songCode);
             }
-            return _musicContentCenterImpl.Preload(ref requestId, songCode);
         }
 
         public override int RemoveCache(Int64 songCode)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.RemoveCache(songCode);
             }
-            return _musicContentCenterImpl.RemoveCache(songCode);
         }
 
         public override int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.GetCaches(ref cacheInfo, ref cacheInfoSize);
             }
-            return _musicContentCenterImpl.GetCaches(ref cacheInfo, ref cacheInfoSize);
         }
 
 
         public override int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.RegisterEventHandler(eventHandler);
             }
-            return _musicContentCenterImpl.RegisterEventHandler(eventHandler);
         }
 
         public override int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.SearchMusic(ref requestId, keyWord, page, pageSize, jsonOption);
             }
-            return _musicContentCenterImpl.SearchMusic(ref requestId, keyWord, page, pageSize, jsonOption);
         }
 
         public override int UnregisterEventHandler()
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.UnregisterEventHandler();
             }
-            return _musicContentCenterImpl.UnregisterEventHandler();
         }
 
         public override int DestroyMusicPlayer(IMusicPlayer player)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.DestroyMusicPlayer(player);
             }
-            return _musicContentCenterImpl.DestroyMusicPlayer(player);
         }
 
         public override int RenewToken(string token)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.RenewToken(token);
             }
-            return _musicContentCenterImpl.RenewToken(token);
         }
 
         public override int GetSongSimpleInfo(ref string requestId, Int64 songCode)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.GetSongSimpleInfo(ref requestId, songCode);
             }
-            return _musicContentCenterImpl.GetSongSimpleInfo(ref requestId, songCode);
         }
 
         public override int GetInternalSongCode(Int64 songCode, string jsonOption, ref Int64 internalSongCode)
         {
-            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _musicContentCenterImpl.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
             }
-            return _musicContentCenterImpl.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
         }
     }
 }

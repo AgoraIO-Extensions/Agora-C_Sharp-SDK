@@ -6,7 +6,7 @@ namespace Agora.Rtc
         private IRtcEngine _rtcEngineInstance = null;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManagerImpl = null;
         private const int ErrorCode = -7;
-
+        private static System.Object rtcLock = new System.Object();
 
         private MediaPlayerCacheManager(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
         {
@@ -25,118 +25,160 @@ namespace Agora.Rtc
         {
             get
             {
-                return instance;
+                lock (rtcLock)
+                {
+                    return instance;
+                }
             }
         }
 
         internal static MediaPlayerCacheManager GetInstance(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
         {
-            return instance ?? (instance = new MediaPlayerCacheManager(rtcEngine, impl));
+            lock (rtcLock)
+            {
+                return instance ?? (instance = new MediaPlayerCacheManager(rtcEngine, impl));
+            }
         }
 
         internal static void ReleaseInstance()
         {
-            instance = null;
+            lock (rtcLock)
+            {
+                instance = null;
+            }
         }
 
         public override int RemoveAllCaches()
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.RemoveAllCaches();
             }
-            return _mediaPlayerCacheManagerImpl.RemoveAllCaches();
         }
 
         public override int RemoveOldCache()
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.RemoveOldCache();
             }
-            return _mediaPlayerCacheManagerImpl.RemoveOldCache();
         }
 
         public override int RemoveCacheByUri(string uri)
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.RemoveCacheByUri(uri);
             }
-            return _mediaPlayerCacheManagerImpl.RemoveCacheByUri(uri);
         }
 
         public override int SetCacheDir(string path)
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.SetCacheDir(path);
             }
-            return _mediaPlayerCacheManagerImpl.SetCacheDir(path);
         }
 
         public override int SetMaxCacheFileCount(int count)
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.SetMaxCacheFileCount(count);
             }
-            return _mediaPlayerCacheManagerImpl.SetMaxCacheFileCount(count);
         }
 
         public override int SetMaxCacheFileSize(long cacheSize)
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.SetMaxCacheFileSize(cacheSize);
             }
-            return _mediaPlayerCacheManagerImpl.SetMaxCacheFileSize(cacheSize);
         }
 
         public override int EnableAutoRemoveCache(bool enable)
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.EnableAutoRemoveCache(enable);
             }
-            return _mediaPlayerCacheManagerImpl.EnableAutoRemoveCache(enable);
         }
 
         public override int GetCacheDir(out string path, int length)
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                path = "";
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    path = "";
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.GetCacheDir(out path, length);
             }
-            return _mediaPlayerCacheManagerImpl.GetCacheDir(out path, length);
         }
 
         public override int GetMaxCacheFileCount()
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.GetMaxCacheFileCount();
             }
-            return _mediaPlayerCacheManagerImpl.GetMaxCacheFileCount();
         }
 
         public override long GetMaxCacheFileSize()
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.GetMaxCacheFileSize();
             }
-            return _mediaPlayerCacheManagerImpl.GetMaxCacheFileSize();
         }
 
         public override int GetCacheFileCount()
         {
-            if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaPlayerCacheManagerImpl.GetCacheFileCount();
             }
-            return _mediaPlayerCacheManagerImpl.GetCacheFileCount();
         }
     }
 }
