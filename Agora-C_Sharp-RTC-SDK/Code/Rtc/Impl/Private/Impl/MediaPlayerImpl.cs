@@ -156,7 +156,7 @@ namespace Agora.Rtc
             return nRet;
         }
 
-        private void ReleaseEventHandler()
+        internal void ReleaseEventHandler()
         {
             if (_mediaPlayerEventHandlerHandle.handle == IntPtr.Zero) return;
 

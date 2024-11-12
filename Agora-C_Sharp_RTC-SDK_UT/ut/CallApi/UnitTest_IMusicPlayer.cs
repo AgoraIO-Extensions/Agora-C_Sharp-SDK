@@ -27,6 +27,7 @@ namespace Agora.Rtc
         public void TearDown()
         {
             MusicContentCenter.DestroyMusicPlayer(MusicPlayer);
+            Engine.PreDispose();
             Engine.Dispose();
         }
 

@@ -81,7 +81,7 @@ namespace Agora.Rtc
             arrayPtrHandle.Free();
         }
 
-        private void UnSetEventHandler()
+        internal void UnSetEventHandler()
         {
             if (this._musicContentCenterHandlerHandle.handle == IntPtr.Zero)
                 return;

@@ -18,7 +18,6 @@ namespace Agora.Rtc
         private static RtcEngineImpl engineInstance = null;
         private static readonly string identifier = "AgoraRtcEngine";
 
-
         private IrisRtcEnginePtr _irisRtcEngine;
         private IrisCApiParam _apiParam;
 
@@ -53,8 +52,6 @@ namespace Agora.Rtc
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
         private MediaRecorderImpl _mediaRecorderInstance;
-
-
 
 
         public event Action<RtcEngineImpl> OnRtcEngineImpleWillDispose;
@@ -266,9 +263,28 @@ namespace Agora.Rtc
 
         public int InitEventHandler(IRtcEngineEventHandler engineEventHandler, bool needExtensionContext)
         {
-            int ret = CreateEventHandler(needExtensionContext);
+            int ret = 0;
+            if (engineEventHandler != null)
+            {
+                ret = CreateEventHandler(needExtensionContext);
+            }
+            else
+            {
+                ReleaseEventHandler();
+            }
+
             RtcEngineEventHandlerNative.SetEventHandler(engineEventHandler);
+
             return ret;
+        }
+
+        public int PreDispose()
+        {
+            _mediaRecorderInstance.ReleaseEventHandler();
+            _mediaPlayerInstance.ReleaseEventHandler();
+            _musicContentCenterImpl.UnSetEventHandler();
+            this.ReleaseEventHandler();
+            return 0;
         }
 
         public int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)

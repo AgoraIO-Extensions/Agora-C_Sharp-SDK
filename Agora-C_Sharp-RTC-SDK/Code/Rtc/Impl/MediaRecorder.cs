@@ -5,6 +5,7 @@ namespace Agora.Rtc
         private IRtcEngine _rtcEngineInstance = null;
         private MediaRecorderImpl _mediaRecorderImpl = null;
         private const int ErrorCode = -7;
+        private static System.Object rtcLock = new System.Object();
 
         internal MediaRecorder(IRtcEngine rtcEngine, MediaRecorderImpl impl)
         {
@@ -23,45 +24,62 @@ namespace Agora.Rtc
         {
             get
             {
-                return instance;
+                lock (rtcLock)
+                {
+                    return instance;
+                }
             }
         }
 
         internal static IMediaRecorder GetInstance(IRtcEngine rtcEngine, MediaRecorderImpl impl)
         {
-            return instance ?? (instance = new MediaRecorder(rtcEngine, impl));
+            {
+                return instance ?? (instance = new MediaRecorder(rtcEngine, impl));
+            }
         }
 
         internal static void ReleaseInstance()
         {
-            instance = null;
+            lock (rtcLock)
+            {
+                instance = null;
+            }
         }
 
         public override int SetMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver callback)
         {
-            if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaRecorderImpl.SetMediaRecorderObserver(connection, callback);
             }
-            return _mediaRecorderImpl.SetMediaRecorderObserver(connection, callback);
         }
 
         public override int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
         {
-            if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaRecorderImpl.StartRecording(connection, config);
             }
-            return _mediaRecorderImpl.StartRecording(connection, config);
         }
 
         public override int StopRecording(RtcConnection connection)
         {
-            if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+            lock (rtcLock)
             {
-                return ErrorCode;
+                if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+                {
+                    return ErrorCode;
+                }
+                return _mediaRecorderImpl.StopRecording(connection);
             }
-            return _mediaRecorderImpl.StopRecording(connection);
         }
     }
 }
