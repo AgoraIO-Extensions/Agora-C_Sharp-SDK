@@ -170,7 +170,7 @@ namespace Agora.Rtc
             }
         }
 
-        public override int DestroyMpkCallback()
+        public override int PreDispose()
         {
             lock (rtcLock)
             {
@@ -178,7 +178,7 @@ namespace Agora.Rtc
                 {
                     return ErrorCode;
                 }
-                return _rtcEngineImpl.DestroyMpkCallback();
+                return _rtcEngineImpl.PreDispose();
             }
         }
 

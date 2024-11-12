@@ -20,9 +20,13 @@ namespace Agora.Rtc
         }
 
         [TearDown]
-        public void TearDown() { Engine.Dispose(); }
+        public void TearDown()
+        {
+            Engine.PreDispose();
+            Engine.Dispose();
+        }
 
-#region terr
+        #region terr
         [Test]
         public void Test_SetMediaRecorderObserver()
         {
@@ -57,6 +61,6 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+        #endregion
     }
 }

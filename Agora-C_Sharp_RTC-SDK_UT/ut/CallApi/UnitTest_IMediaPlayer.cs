@@ -23,7 +23,7 @@ namespace Agora.Rtc
         public void TearDown()
         {
             Engine.DestroyMediaPlayer(MediaPlayer);
-            Engine.DestroyMpkCallback();
+            Engine.PreDispose();
             Engine.Dispose();
         }
 

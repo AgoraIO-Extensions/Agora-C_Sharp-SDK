@@ -278,9 +278,12 @@ namespace Agora.Rtc
             return ret;
         }
 
-        public int DestroyMpkCallback()
+        public int PreDispose()
         {
+            _mediaRecorderInstance.ReleaseEventHandler();
             _mediaPlayerInstance.ReleaseEventHandler();
+            _musicContentCenterImpl.UnSetEventHandler();
+
             return 0;
         }
 

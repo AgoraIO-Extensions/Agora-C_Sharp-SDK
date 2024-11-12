@@ -305,7 +305,7 @@ namespace Agora.Rtc
 
 
 
-        public abstract int DestroyMpkCallback();
+        public abstract int PreDispose();
 
         #endregion
 

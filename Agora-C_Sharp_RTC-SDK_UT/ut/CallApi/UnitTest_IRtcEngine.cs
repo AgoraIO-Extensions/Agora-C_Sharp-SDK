@@ -24,6 +24,7 @@ namespace Agora.Rtc
         public void TearDown()
         {
             Engine.InitEventHandler(null);
+            Engine.PreDispose();
             Engine.Dispose();
         }
 

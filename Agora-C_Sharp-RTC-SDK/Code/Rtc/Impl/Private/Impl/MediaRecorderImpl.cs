@@ -77,7 +77,7 @@ namespace Agora.Rtc
 #endif
         }
 
-        private void ReleaseEventHandler()
+        internal void ReleaseEventHandler()
         {
             if (_mediaRecorderEventHandlerHandle.handle == IntPtr.Zero) return;
 

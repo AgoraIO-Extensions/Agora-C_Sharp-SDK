@@ -20,7 +20,11 @@ namespace Agora.Rtc
         }
 
         [TearDown]
-        public void TearDown() { Engine.Dispose(); }
+        public void TearDown()
+        {
+            Engine.PreDispose();
+            Engine.Dispose();
+        }
 
         #region custom
         [Test]
