@@ -283,7 +283,7 @@ namespace Agora.Rtc
             _mediaRecorderInstance.ReleaseEventHandler();
             _mediaPlayerInstance.ReleaseEventHandler();
             _musicContentCenterImpl.UnSetEventHandler();
-
+            this.ReleaseEventHandler();
             return 0;
         }
 
