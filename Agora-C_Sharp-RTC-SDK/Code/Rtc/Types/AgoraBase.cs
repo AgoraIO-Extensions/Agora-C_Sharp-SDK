@@ -420,6 +420,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_INVALID_USER_ID = 121,
+
+
+        ERR_DATASTREAM_DECRYPTION_FAILED = 122,
         ///
         /// <summary>
         /// 123: The user is banned from the server.
@@ -7377,6 +7380,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ENCRYPTION_ERROR_ENCRYPTION_FAILURE = 2,
+
+        ENCRYPTION_ERROR_DATASTREAM_DECRYPTION_FAILURE = 3,
+      
+        ENCRYPTION_ERROR_DATASTREAM_ENCRYPTION_FAILURE = 4,
     };
 
     ///
