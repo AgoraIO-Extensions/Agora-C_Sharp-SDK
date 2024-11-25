@@ -155,6 +155,11 @@ namespace Agora.Rtc
         AUDIO_MIXING_REASON_STOPPED_BY_USER = 724,
 
         ///
+        /// @ignore
+        ///
+        AUDIO_MIXING_REASON_RESUMED_BY_USER = 726,
+
+        ///
         /// <summary>
         /// 0: The SDK opens music file successfully.
         /// </summary>
@@ -720,6 +725,16 @@ namespace Agora.Rtc
         public uint plcCount;
 
         ///
+        /// @ignore
+        ///
+        public uint frozenCntByCustom;
+
+        ///
+        /// @ignore
+        ///
+        public uint frozenTimeByCustom;
+
+        ///
         /// <summary>
         /// The total active time (ms) between the start of the audio call and the callback of the remote user. The active time refers to the total duration of the remote user without the mute state.
         /// </summary>
@@ -774,6 +789,8 @@ namespace Agora.Rtc
             this.mosValue = 0;
             this.frozenRateByCustomPlcCount = 0;
             this.plcCount = 0;
+            this.frozenCntByCustom = 0;
+            this.frozenTimeByCustom = 0;
             this.totalActiveTime = 0;
             this.publishDuration = 0;
             this.qoeQuality = 0;
@@ -782,7 +799,7 @@ namespace Agora.Rtc
             this.e2eDelay = 0;
         }
 
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
+        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, uint frozenCntByCustom, uint frozenTimeByCustom, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
         {
             this.uid = uid;
             this.quality = quality;
@@ -797,6 +814,8 @@ namespace Agora.Rtc
             this.mosValue = mosValue;
             this.frozenRateByCustomPlcCount = frozenRateByCustomPlcCount;
             this.plcCount = plcCount;
+            this.frozenCntByCustom = frozenCntByCustom;
+            this.frozenTimeByCustom = frozenTimeByCustom;
             this.totalActiveTime = totalActiveTime;
             this.publishDuration = publishDuration;
             this.qoeQuality = qoeQuality;

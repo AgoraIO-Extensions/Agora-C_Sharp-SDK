@@ -7195,6 +7195,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         AUDIO_TRACK_DIRECT = 1,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_TRACK_EXTERNAL_AEC_REFERENCE = 3,
     }
 
     ///
@@ -7211,14 +7216,28 @@ namespace Agora.Rtc
         ///
         public bool enableLocalPlayback;
 
+        ///
+        /// @ignore
+        ///
+        public bool enableAudioProcessing;
+
+        ///
+        /// @ignore
+        ///
+        public bool enableDirectPublish;
+
         public AudioTrackConfig()
         {
             this.enableLocalPlayback = true;
+            this.enableAudioProcessing = false;
+            this.enableDirectPublish = false;
         }
 
-        public AudioTrackConfig(bool enableLocalPlayback)
+        public AudioTrackConfig(bool enableLocalPlayback, bool enableAudioProcessing, bool enableDirectPublish)
         {
             this.enableLocalPlayback = enableLocalPlayback;
+            this.enableAudioProcessing = enableAudioProcessing;
+            this.enableDirectPublish = enableDirectPublish;
         }
     }
 
