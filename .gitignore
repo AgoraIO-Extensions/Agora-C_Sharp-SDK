@@ -16,5 +16,5 @@ CSharp-API_Example/binx86
 terra/node/dist
 terra/node/node_modules
 process_json
-terra/node/.yarn
 terra/node/.terra
+install-state.gz
