@@ -1178,7 +1178,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 8: Detecting the network quality.
+        /// 8: The last-mile network probe test is in progress.
         /// </summary>
         ///
         QUALITY_DETECTING = 8,
@@ -1404,13 +1404,15 @@ namespace Agora.Rtc
     public enum DEGRADATION_PREFERENCE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 0: (Default) Automatic mode. The SDK will automatically select MAINTAIN_FRAMERATE, MAINTAIN_BALANCED or MAINTAIN_RESOLUTION based on the video scenario you set, in order to achieve the best overall quality of experience (QoE).
+        /// </summary>
         ///
         MAINTAIN_AUTO = -1,
 
         ///
         /// <summary>
-        /// 0: (Default) Prefers to reduce the video frame rate while maintaining video resolution during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where video quality is prioritized.
+        /// 0: Prefers to reduce the video frame rate while maintaining video resolution during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where video quality is prioritized. Deprecated: This enumerator is deprecated. Use other enumerations instead.
         /// </summary>
         ///
         MAINTAIN_QUALITY = 0,
@@ -2331,7 +2333,9 @@ namespace Agora.Rtc
     public enum COMPRESSION_PREFERENCE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// -1: (Default) Automatic mode. The SDK will automatically select PREFER_LOW_LATENCY or PREFER_QUALITY based on the video scenario you set to achieve the best user experience.
+        /// </summary>
         ///
         PREFER_COMPRESSION_AUTO = -1,
 
@@ -2344,7 +2348,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: (Default) High quality preference. The SDK compresses video frames while maintaining video quality. This preference is suitable for scenarios where video quality is prioritized.
+        /// 1: High quality preference. The SDK compresses video frames while maintaining video quality. This preference is suitable for scenarios where video quality is prioritized.
         /// </summary>
         ///
         PREFER_QUALITY = 1,
@@ -3942,13 +3946,15 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// APPLICATION_SCENARIO_1V1 (2) is suitable for 1v1 video call scenarios. To meet the requirements for low latency and high-quality video in this scenario, the SDK optimizes its strategies, improving performance in terms of video quality, first frame rendering, latency on mid-to-low-end devices, and smoothness under weak network conditions. 2: 1v1 video call scenario.
+        /// APPLICATION_SCENARIO_1V1 (2) This is applicable to the scenario. To meet the requirements for low latency and high-quality video in this scenario, the SDK optimizes its strategies, improving performance in terms of video quality, first frame rendering, latency on mid-to-low-end devices, and smoothness under weak network conditions. 2: 1v1 video call scenario.
         /// </summary>
         ///
         APPLICATION_SCENARIO_1V1 = 2,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// APPLICATION_SCENARIO_LIVESHOW (3) This is applicable to the scenario. In this scenario, fast video rendering and high image quality are crucial. The SDK implements several performance optimizations, including automatically enabling accelerated audio and video frame rendering to minimize first-frame latency (no need to call EnableInstantMediaRendering), and B-frame encoding to achieve better image quality and bandwidth efficiency. The SDK also provides enhanced video quality and smooth playback, even in poor network conditions or on lower-end devices. 3. Live show scenario.
+        /// </summary>
         ///
         APPLICATION_SCENARIO_LIVESHOW = 3,
     }
@@ -4294,7 +4300,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 9: (macOS only) The video capture device currently in use is disconnected (such as being unplugged).
+        /// 9: (macOS and Windows only) The video capture device currently in use is disconnected (such as being unplugged).
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_DEVICE_DISCONNECTED = 9,
@@ -4359,7 +4365,9 @@ namespace Agora.Rtc
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 21: (Windows and Android only) The currently captured window has no data.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_FAILURE = 21,
 
@@ -5987,27 +5995,41 @@ namespace Agora.Rtc
     }
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The source of the audio streams that are mixed locally.
+    /// </summary>
     ///
     public class MixedAudioStream
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// The type of the audio source. See AUDIO_SOURCE_TYPE.
+        /// </summary>
         ///
         public AUDIO_SOURCE_TYPE sourceType;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The user ID of the remote user. Set this parameter if the source type of the locally mixed audio steams is AUDIO_SOURCE_REMOTE_USER.
+        /// </summary>
         ///
         public uint remoteUserUid;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):
+        ///  All lowercase English letters: a to z.
+        ///  All uppercase English letters: A to Z.
+        ///  All numeric characters: 0 to 9.
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", "," Set this parameter if the source type of the locally mixed audio streams is AUDIO_SOURCE_REMOTE_CHANNEL or AUDIO_SOURCE_REMOTE_USER.
+        /// </summary>
         ///
         public string channelId;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The audio track ID. Set this parameter to the custom audio track ID returned in CreateCustomAudioTrack. Set this parameter if the source type of the locally mixed audio steams is AUDIO_SOURCE_CUSTOM.
+        /// </summary>
         ///
         public uint trackId;
 
@@ -6047,22 +6069,30 @@ namespace Agora.Rtc
     }
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The configurations for mixing the lcoal audio.
+    /// </summary>
     ///
     public class LocalAudioMixerConfiguration
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// The number of the audio streams that are mixed locally.
+        /// </summary>
         ///
         public uint streamCount;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The source of the audio streams that are mixed locally. See MixedAudioStream.
+        /// </summary>
         ///
         public MixedAudioStream[] audioInputStreams;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether the mxied audio stream uses the timestamp of the audio frames captured by the local microphone. true : (Default) Yes. Set to this value if you want all locally captured audio streams synchronized. false : No. The SDK uses the timestamp of the audio frames at the time when they are mixed.
+        /// </summary>
         ///
         public bool syncWithLocalMic;
 
@@ -7055,17 +7085,30 @@ namespace Agora.Rtc
     }
 
     ///
-    /// @ignore
+    /// <summary>
+    /// Filter effect options.
+    /// </summary>
     ///
     public class FilterEffectOptions
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// The absolute path to the local cube map texture file, which can be used to customize the filter effect. The specified .cude file should strictly follow the Cube LUT Format Specification; otherwise, the filter options do not take effect. The following is a sample of the .cude file:
+        /// LUT_3D_SIZE 32
+        /// 0.0039215689 0 0.0039215682
+        /// 0.0086021447 0.0037950677 0
+        /// ...
+        /// 0.0728652592 0.0039215689 0
+        ///  The identifier LUT_3D_SIZE on the first line of the cube map file represents the size of the three-dimensional lookup table. The LUT size for filter effect can only be set to 32.
+        ///  The SDK provides a built-in built_in_whiten_filter.cube file. You can pass the absolute path of this file to get the whitening filter effect.
+        /// </summary>
         ///
         public string path;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The intensity of the filter effect, with a range value of [0.0,1.0], in which 0.0 represents no filter effect. The default value is 0.5. The higher the value, the stronger the filter effect.
+        /// </summary>
         ///
         public float strength;
 
@@ -7171,14 +7214,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Video noise reduction mode.
+        /// Video noise reduction mode..
         /// </summary>
         ///
         public VIDEO_DENOISER_MODE mode;
 
         ///
         /// <summary>
-        /// Video noise reduction level.
+        /// Video noise reduction level..
         /// </summary>
         ///
         public VIDEO_DENOISER_LEVEL level;
@@ -7221,7 +7264,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The video noise reduction level.
+    /// Video noise reduction level.
     /// </summary>
     ///
     public enum VIDEO_DENOISER_LEVEL
@@ -7235,7 +7278,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Promotes reducing performance consumption during video noise reduction. prioritizes reducing performance consumption over video noise reduction quality. The performance consumption is lower, and the video noise reduction speed is faster. To avoid a noticeable shadowing effect (shadows trailing behind moving objects) in the processed video, Agora recommends that you use this settinging when the camera is fixed.
+        /// 1: Promotes reducing performance consumption during video noise reduction. It prioritizes reducing performance consumption over video noise reduction quality. The performance consumption is lower, and the video noise reduction speed is faster. To avoid a noticeable shadowing effect (shadows trailing behind moving objects) in the processed video, Agora recommends that you use this setting when the camera is fixed.
         /// </summary>
         ///
         VIDEO_DENOISER_LEVEL_FAST = 1,
@@ -7500,7 +7543,9 @@ namespace Agora.Rtc
         public bool enableLocalPlayback;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to enable audio processing module: true Enable the audio processing module to apply the Automatic Echo Cancellation (AEC), Automatic Noise Suppression (ANS), and Automatic Gain Control (AGC) effects. false : (Default) Do not enable the audio processing module. This parameter only takes effect on AUDIO_TRACK_DIRECT in custom audio capturing.
+        /// </summary>
         ///
         public bool enableAudioProcessing;
 
@@ -8308,7 +8353,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Recording quality. See AUDIO_RECORDING_QUALITY_TYPE. Note: This parameter applies to AAC files only.
+        /// Recording quality. See AUDIO_RECORDING_QUALITY_TYPE. This parameter applies to AAC files only.
         /// </summary>
         ///
         public AUDIO_RECORDING_QUALITY_TYPE quality;
@@ -8695,7 +8740,7 @@ namespace Agora.Rtc
         /// <summary>
         /// The information of the target channel ChannelMediaInfo. It contains the following members: channelName : The name of the target channel. token : The token for joining the target channel. It is generated with the channelName and uid you set in destInfos.
         ///  If you have not enabled the App Certificate, set this parameter as the default value NULL, which means the SDK applies the App ID.
-        ///  If you have enabled the App Certificate, you must use the token generated with the channelName and uid. If the token of any target channel expires, the whole media relay stops; hence Agora recommends that you specify the same expiration time for the tokens of all the target channels. uid : The unique user ID to identify the relay stream in the target channel. The value ranges from 0 to (2 32 -1). To avoid user ID conflicts, this user ID must be different from any other user ID in the target channel. The default value is 0, which means the SDK generates a random user ID.
+        ///  If you have enabled the App Certificate, you must use the token generated with the channelName and uid. If the token of any target channel expires, the whole media relay stops; hence Agora recommends that you specify the same expiration time for the tokens of all the target channels. uid : The unique user ID to identify the relay stream in the target channel. The value ranges from 0 to (2 32 -1). To avoid user ID conflicts, this user ID must be different from any other user ID in the target channel. The default value is 0, which means the SDK generates a random UID.
         /// </summary>
         ///
         public ChannelMediaInfo[] destInfos;
@@ -9221,7 +9266,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The content hint for screen sharing.
+        /// The content hint for screen sharing..
         /// </summary>
         ///
         public VIDEO_CONTENT_HINT contentHint;
