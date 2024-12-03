@@ -603,9 +603,8 @@ namespace Agora.Rtc
         /// Sends data stream messages.
         /// 
         /// A successful method call triggers the OnStreamMessage callback on the remote client, from which the remote user gets the stream message. A failed method call triggers the OnStreamMessageError callback on the remote client. The SDK has the following restrictions on this method:
-        /// Each user can have up to five data streams simultaneously.
-        /// Up to 60 packets can be sent per second in a data stream with each packet having a maximum size of 1 KB.
-        /// Up to 30 KB of data can be sent per second in a data stream. After calling CreateDataStreamEx [2/2], you can call this method to send data stream messages to all users in the channel.
+        /// Each client within the channel can have up to 5 data channels simultaneously, with a total shared packet bitrate limit of 30 KB/s for all data channels.
+        /// Each data channel can send up to 60 packets per second, with each packet being a maximum of 1 KB. After calling CreateDataStreamEx [2/2], you can call this method to send data stream messages to all users in the channel.
         /// Call this method after JoinChannelEx.
         /// Ensure that you call CreateDataStreamEx [2/2] to create a data channel before calling this method.
         /// This method applies only to the COMMUNICATION profile or to the hosts in the LIVE_BROADCASTING profile. If an audience in the LIVE_BROADCASTING profile calls this method, the audience may be switched to a host.
@@ -902,7 +901,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Sets the dual-stream mode on the sender side.
         /// 
-        /// The SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sending end, which means the sender does not actively send low-quality video stream. The receiver with the role of the host can initiate a low-quality video stream request by calling SetRemoteVideoStreamTypeEx, and upon receiving the request, the sending end automatically starts sending the low-quality video stream.
+        /// The SDK defaults to enabling low-quality video stream adaptive mode (AUTO_SIMULCAST_STREAM) on the sender side, which means the sender does not actively send low-quality video stream. The receiving end with the role of the host can initiate a low-quality video stream request by calling SetRemoteVideoStreamTypeEx, and upon receiving the request, the sending end automatically starts sending low-quality stream.
         /// If you want to modify this behavior, you can call this method and set mode to DISABLE_SIMULCAST_STREAM (never send low-quality video streams) or ENABLE_SIMULCAST_STREAM (always send low-quality video streams).
         /// If you want to restore the default behavior after making changes, you can call this method again with mode set to AUTO_SIMULCAST_STREAM. The difference and connection between this method and EnableDualStreamModeEx is as follows:
         /// When calling this method and setting mode to DISABLE_SIMULCAST_STREAM, it has the same effect as EnableDualStreamModeEx (false).
@@ -960,7 +959,22 @@ namespace Agora.Rtc
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets a video screenshot of the specified observation point using the connection ID.
+        /// 
+        /// This method takes a snapshot of a video stream from the specified user, generates a JPG image, and saves it to the specified path.
+        /// </summary>
+        ///
+        /// <param name="config"> The configuration of the snaptshot. See SnapshotConfig. </param>
+        ///
+        /// <param name="uid"> The user ID. Set uid as 0 if you want to take a snapshot of the local user's video. </param>
+        ///
+        /// <param name="connection"> The connection information. See RtcConnection. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, SnapshotConfig config);
 
@@ -973,7 +987,7 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
-        /// <param name="config"> Screenshot and upload configuration. See ContentInspectConfig. When the video moderation module is set to video moderation via Agora self-developed extension(CONTENT_INSPECT_SUPERVISION), the video screenshot and upload dynamic library libagora_content_inspect_extension.dll is required. Deleting this library disables the screenshot and upload feature. </param>
+        /// <param name="config"> Screenshot and upload configuration. See ContentInspectConfig. </param>
         ///
         /// <param name="enabled"> Whether to enalbe video screenshot and upload: true : Enables video screenshot and upload. false : Disables video screenshot and upload. </param>
         ///
@@ -1010,7 +1024,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Gets the call ID with the connection ID.
         /// 
-        /// When a user joins a channel on a client, a callId is generated to identify the call from the client. You can call this method to get the callId parameter, and pass it in when calling methods such as Rate and Complain.
+        /// When a user joins a channel on a client, a callId is generated to identify the call from the client. You can call this method to get callId, and pass it in when calling methods such as Rate and Complain.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>

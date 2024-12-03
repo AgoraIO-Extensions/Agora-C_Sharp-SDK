@@ -176,7 +176,20 @@ namespace Agora.Rtc
 #endif
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the observation position of the local video frame.
+        /// </summary>
+        ///
+        /// <param name="position">
+        /// The observation position of the video frame. See VIDEO_MODULE_POSITION.
+        /// This method currently only supports setting the observation position to POSITION_POST_CAPTURER or POSITION_PRE_ENCODER.
+        /// The video frames obtained at POSITION_POST_CAPTURER are not cropped and have a high frame rate, while the video frames obtained at POSITION_PRE_ENCODER are cropped before being sent, with a frame rate lower than or equal to the frame rate of the camera capture.
+        /// </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public abstract int SetLocalVideoDataSourcePosition(VIDEO_MODULE_POSITION position);
@@ -222,10 +235,10 @@ namespace Agora.Rtc
         /// Gets the warning or error description.
         /// </summary>
         ///
-        /// <param name="code"> The error code or warning code reported by the SDK. </param>
+        /// <param name="code"> The error code reported by the SDK. </param>
         ///
         /// <returns>
-        /// The specific error or warning description.
+        /// The specific error description.
         /// </returns>
         ///
         public abstract string GetErrorDescription(int code);
@@ -301,7 +314,44 @@ namespace Agora.Rtc
         public abstract int PreloadChannel(string token, string channelId, uint uid);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Preloads a channel with token, channelId, and userAccount.
+        /// 
+        /// When audience members need to switch between different channels frequently, calling the method can help shortening the time of joining a channel, thus reducing the time it takes for audience members to hear and see the host. If you join a preloaded channel, leave it and want to rejoin the same channel, you do not need to call this method unless the token for preloading the channel expires. Failing to preload a channel does not mean that you can't join a channel, nor will it increase the time of joining a channel.
+        /// </summary>
+        ///
+        /// <param name="userAccount">
+        /// The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are as follows(89 in total):
+        /// The 26 lowercase English letters: a to z.
+        /// The 26 uppercase English letters: A to Z.
+        /// All numeric characters: 0 to 9.
+        /// Space
+        /// "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","
+        /// </param>
+        ///
+        /// <param name="channelId">
+        /// The channel name that you want to preload. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):
+        /// All lowercase English letters: a to z.
+        /// All uppercase English letters: A to Z.
+        /// All numeric characters: 0 to 9.
+        /// "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","
+        /// </param>
+        ///
+        /// <param name="token">
+        /// The token generated on your server for authentication. When the token for preloading channels expires, you can update the token based on the number of channels you preload.
+        /// When preloading one channel, calling this method to pass in the new token.
+        /// When preloading more than one channels:
+        /// If you use a wildcard token for all preloaded channels, call UpdatePreloadChannelToken to update the token. When generating a wildcard token, ensure the user ID is not set as 0.
+        /// If you use different tokens to preload different channels, call this method to pass in your user ID, channel name and the new token.
+        /// </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// -2: The parameter is invalid. For example, the User Account is empty. You need to pass in a valid parameter and join the channel again.
+        /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
+        /// -102: The channel name is invalid. You need to pass in a valid channel name and join the channel again.
+        /// </returns>
         ///
         public abstract int PreloadChannelWithUserAccount(string token, string channelId, string userAccount);
 
@@ -517,7 +567,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Set the user role and the audience latency level in a live streaming scenario.
         /// 
-        /// By default,the SDK sets the user role as audience. You can call this method to set the user role as host. The user role (roles) determines the users' permissions at the SDK level, including whether they can publish audio and video streams in a channel. The difference between this method and SetClientRole [1/2] is that, the former supports setting the audienceLatencyLevel. audienceLatencyLevel needs to be used together with role to determine the level of service that users can enjoy within their permissions. For example, an audience member can choose to receive remote streams with low latency or ultra-low latency. Latency of different levels differ in billing.
+        /// By default,the SDK sets the user role as audience. You can call this method to set the user role as host. The user role (roles) determines the users' permissions at the SDK level, including whether they can publish audio and video streams in a channel. The difference between this method and SetClientRole [1/2] is that, the former supports setting the audienceLatencyLevel. audienceLatencyLevel needs to be used together with role to determine the level of service that users can enjoy within their permissions. For example, an audience member can choose to receive remote streams with low latency or ultra-low latency. Latency of different levels differs in billing.
         /// </summary>
         ///
         /// <param name="role"> The user role. See CLIENT_ROLE_TYPE. If you set the user role as an audience member, you cannot publish audio and video streams in the channel. If you want to publish media streams in a channel during live streaming, ensure you set the user role as broadcaster. </param>
@@ -731,7 +781,11 @@ namespace Agora.Rtc
         /// Enables or disables image enhancement, and sets the options.
         /// </summary>
         ///
-        /// <param name="type"> Source type of the extension. See MEDIA_SOURCE_TYPE. </param>
+        /// <param name="type">
+        /// The type of the media source to which the filter effect is applied. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:
+        /// Use the default value PRIMARY_CAMERA_SOURCE if you use camera to capture local video.
+        /// Set this parameter to CUSTOM_VIDEO_SOURCE if you use custom video source.
+        /// </param>
         ///
         /// <param name="enabled"> Whether to enable the image enhancement function: true : Enable the image enhancement function. false : (Default) Disable the image enhancement function. </param>
         ///
@@ -768,7 +822,24 @@ namespace Agora.Rtc
         public abstract int GetFaceShapeAreaOptions(FACE_SHAPE_AREA shapeArea, ref FaceShapeAreaOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the filter effect options and specifies the media source.
+        /// </summary>
+        ///
+        /// <param name="enabled"> Whether to enable the filter effect: true : Yes. false : (Default) No. </param>
+        ///
+        /// <param name="options"> The filter effect options. See FilterEffectOptions. </param>
+        ///
+        /// <param name="type">
+        /// The type of the media source to which the filter effect is applied. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:
+        /// Use the default value PRIMARY_CAMERA_SOURCE if you use camera to capture local video.
+        /// Set this parameter to CUSTOM_VIDEO_SOURCE if you use custom video source.
+        /// </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetFilterEffectOptions(bool enabled, FilterEffectOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
@@ -776,20 +847,18 @@ namespace Agora.Rtc
         /// <summary>
         /// Sets low-light enhancement.
         /// 
-        /// The low-light enhancement feature can adaptively adjust the brightness value of the video captured in situations with low or uneven lighting, such as backlit, cloudy, or dark scenes. It restores or highlights the image details and improves the overall visual effect of the video. You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.
-        /// Call this method after calling EnableVideo.
-        /// Dark light enhancement has certain requirements for equipment performance. The low-light enhancement feature has certain performance requirements on devices. If your device overheats after you enable low-light enhancement, Agora recommends modifying the low-light enhancement options to a less performance-consuming level or disabling low-light enhancement entirely.
-        /// Both this method and SetExtensionProperty can turn on low-light enhancement:
-        /// When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).
-        /// When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends using SetExtensionProperty.
-        /// This method relies on the image enhancement dynamic library libagora_clear_vision_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.
+        /// You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable low-light enhancement: true : Enable low-light enhancement. false : (Default) Disable low-light enhancement. </param>
         ///
         /// <param name="options"> The low-light enhancement options. See LowlightEnhanceOptions. </param>
         ///
-        /// <param name="type"> The type of the video source. See MEDIA_SOURCE_TYPE. </param>
+        /// <param name="type">
+        /// The type of the media source to which the filter effect is applied. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:
+        /// Use the default value PRIMARY_CAMERA_SOURCE if you use camera to capture local video.
+        /// Set this parameter to CUSTOM_VIDEO_SOURCE if you use custom video source.
+        /// </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -802,16 +871,14 @@ namespace Agora.Rtc
         /// <summary>
         /// Sets video noise reduction.
         /// 
-        /// Underlit environments and low-end video capture devices can cause video images to contain significant noise, which affects video quality. In real-time interactive scenarios, video noise also consumes bitstream resources and reduces encoding efficiency during encoding. You can call this method to enable the video noise reduction feature and set the options of the video noise reduction effect.
-        /// Call this method after calling EnableVideo.
-        /// Video noise reduction has certain requirements for equipment performance. If your device overheats after you enable video noise reduction, Agora recommends modifying the video noise reduction options to a less performance-consuming level or disabling video noise reduction entirely.
-        /// Both this method and SetExtensionProperty can turn on video noise reduction function:
-        /// When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).
-        /// When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends using SetExtensionProperty.
-        /// This method relies on the image enhancement dynamic library libagora_clear_vision_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.
+        /// You can call this method to enable the video noise reduction feature and set the options of the video noise reduction effect. If the noise reduction implemented by this method does not meet your needs, Agora recommends that you call the SetBeautyEffectOptions method to enable the beauty and skin smoothing function to achieve better video noise reduction effects. The recommended BeautyOptions settings for intense noise reduction effect are as follows: lighteningContrastLevel LIGHTENING_CONTRAST_NORMAL lighteningLevel : 0.0 smoothnessLevel : 0.5 rednessLevel : 0.0 sharpnessLevel : 0.1
         /// </summary>
         ///
-        /// <param name="type"> The type of the video source. See MEDIA_SOURCE_TYPE. </param>
+        /// <param name="type">
+        /// The type of the media source to which the filter effect is applied. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:
+        /// Use the default value PRIMARY_CAMERA_SOURCE if you use camera to capture local video.
+        /// Set this parameter to CUSTOM_VIDEO_SOURCE if you use custom video source.
+        /// </param>
         ///
         /// <param name="enabled"> Whether to enable video noise reduction: true : Enable video noise reduction. false : (Default) Disable video noise reduction. </param>
         ///
@@ -831,13 +898,14 @@ namespace Agora.Rtc
         /// The video images captured by the camera can have color distortion. The color enhancement feature intelligently adjusts video characteristics such as saturation and contrast to enhance the video color richness and color reproduction, making the video more vivid. You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.
         /// Call this method after calling EnableVideo.
         /// The color enhancement feature has certain performance requirements on devices. With color enhancement turned on, Agora recommends that you change the color enhancement level to one that consumes less performance or turn off color enhancement if your device is experiencing severe heat problems.
-        /// Both this method and SetExtensionProperty can enable color enhancement:
-        /// When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).
-        /// When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends using SetExtensionProperty.
         /// This method relies on the image enhancement dynamic library libagora_clear_vision_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.
         /// </summary>
         ///
-        /// <param name="type"> The type of the video source. See MEDIA_SOURCE_TYPE. </param>
+        /// <param name="type">
+        /// The type of the media source to which the filter effect is applied. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:
+        /// Use the default value PRIMARY_CAMERA_SOURCE if you use camera to capture local video.
+        /// Set this parameter to CUSTOM_VIDEO_SOURCE if you use custom video source.
+        /// </param>
         ///
         /// <param name="enabled"> Whether to enable color enhancement: true Enable color enhancement. false : (Default) Disable color enhancement. </param>
         ///
@@ -874,17 +942,17 @@ namespace Agora.Rtc
         /// This method relies on the virtual background dynamic library libagora_segmentation_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.
         /// </summary>
         ///
+        /// <param name="type">
+        /// The type of the media source to which the filter effect is applied. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:
+        /// Use the default value PRIMARY_CAMERA_SOURCE if you use camera to capture local video.
+        /// Set this parameter to CUSTOM_VIDEO_SOURCE if you use custom video source.
+        /// </param>
+        ///
         /// <param name="enabled"> Whether to enable virtual background: true : Enable virtual background. false : Disable virtual background. </param>
         ///
         /// <param name="backgroundSource"> The custom background. See VirtualBackgroundSource. To adapt the resolution of the custom background image to that of the video captured by the SDK, the SDK scales and crops the custom background image while ensuring that the content of the custom background image is not distorted. </param>
         ///
         /// <param name="segproperty"> Processing properties for background images. See SegmentationProperty. </param>
-        ///
-        /// <param name="type">
-        /// The type of the video source. See MEDIA_SOURCE_TYPE. In this method, this parameter supports only the following two settings:
-        /// The default value is PRIMARY_CAMERA_SOURCE.
-        /// If you want to use the second camera to capture video, set this parameter to SECONDARY_CAMERA_SOURCE.
-        /// </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -952,7 +1020,7 @@ namespace Agora.Rtc
         /// If someone subscribes to the low-quality stream, the SDK enables the low-quality stream and resets it to the SimulcastStreamConfig configuration used in the most recent calling of SetDualStreamMode [2/2]. If no configuration has been set by the user previously, the following values are used:
         /// Resolution: 480 × 272
         /// Frame rate: 15 fps
-        /// Bitrate: 500 Kbps APPLICATION_SCENARIO_1V1 (2) is suitable for 1v1 video call scenarios. To meet the requirements for low latency and high-quality video in this scenario, the SDK optimizes its strategies, improving performance in terms of video quality, first frame rendering, latency on mid-to-low-end devices, and smoothness under weak network conditions.
+        /// Bitrate: 500 Kbps APPLICATION_SCENARIO_1V1 (2) This is applicable to the scenario. To meet the requirements for low latency and high-quality video in this scenario, the SDK optimizes its strategies, improving performance in terms of video quality, first frame rendering, latency on mid-to-low-end devices, and smoothness under weak network conditions. APPLICATION_SCENARIO_LIVESHOW (3) This is applicable to the scenario. In this scenario, fast video rendering and high image quality are crucial. The SDK implements several performance optimizations, including automatically enabling accelerated audio and video frame rendering to minimize first-frame latency (no need to call EnableInstantMediaRendering), and B-frame encoding to achieve better image quality and bandwidth efficiency. The SDK also provides enhanced video quality and smooth playback, even in poor network conditions or on lower-end devices.
         /// </param>
         ///
         /// <returns>
@@ -1223,14 +1291,10 @@ namespace Agora.Rtc
         /// <summary>
         /// Options for subscribing to remote video streams.
         /// 
-        /// When a remote user has enabled dual-stream mode, you can call this method to choose the option for subscribing to the video streams sent by the remote user.
-        /// If you only register one IVideoFrameObserver object, the SDK subscribes to the raw video data and encoded video data by default (the effect is equivalent to setting encodedFrameOnly to false).
-        /// If you only register one IVideoEncodedFrameObserver object, the SDK only subscribes to the encoded video data by default (the effect is equivalent to setting encodedFrameOnly to true).
-        /// If you register one IVideoFrameObserver object and one IVideoEncodedFrameObserver object successively, the SDK subscribes to the encoded video data by default (the effect is equivalent to setting encodedFrameOnly to false).
-        /// If you call this method first with the options parameter set, and then register one IVideoFrameObserver or IVideoEncodedFrameObserver object, you need to call this method again and set the options parameter as described in the above two items to get the desired results. Agora recommends the following steps:
-        /// Set autoSubscribeVideo to false when calling JoinChannel [2/2] to join a channel.
-        /// Call this method after receiving the OnUserJoined callback to set the subscription options for the specified remote user's video stream.
-        /// Call the MuteRemoteVideoStream method to resume subscribing to the video stream of the specified remote user. If you set encodedFrameOnly to true in the previous step, the SDK triggers the OnEncodedVideoFrameReceived callback locally to report the received encoded video frame information.
+        /// When a remote user has enabled dual-stream mode, you can call this method to choose the option for subscribing to the video streams sent by the remote user. The default subscription behavior of the SDK for remote video streams depends on the type of registered video observer:
+        /// If the IVideoFrameObserver observer is registered, the default is to subscribe to both raw data and encoded data.
+        /// If the IVideoEncodedFrameObserver observer is registered, the default is to subscribe only to the encoded data.
+        /// If both types of observers are registered, the default behavior follows the last registered video observer. For example, if the last registered observer is the IVideoFrameObserver observer, the default is to subscribe to both raw data and encoded data. If you want to modify the default behavior, or set different subscription options for different uids, you can call this method to set it.
         /// </summary>
         ///
         /// <param name="uid"> The user ID of the remote user. </param>
@@ -1637,7 +1701,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Adjusts the volume during audio mixing.
         /// 
-        /// This method adjusts the audio mixing volume on both the local client and remote clients.
+        /// This method adjusts the audio mixing volume on both the local client and remote clients. This method does not affect the volume of the audio file set in the PlayEffect method.
         /// </summary>
         ///
         /// <param name="volume"> Audio mixing volume. The value ranges between 0 and 100. The default value is 100, which means the original volume. </param>
@@ -2534,12 +2598,32 @@ namespace Agora.Rtc
         public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the maximum frame rate for rendering local video.
+        /// </summary>
+        ///
+        /// <param name="sourceType"> The type of the video source. See VIDEO_SOURCE_TYPE. </param>
+        ///
+        /// <param name="targetFps"> The capture frame rate (fps) of the local video. Sopported values are: 1, 7, 10, 15, 24, 30, 60. Set this parameter to a value lower than the actual video frame rate; otherwise, the settings do not take effect. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetLocalRenderTargetFps(VIDEO_SOURCE_TYPE sourceType, int targetFps);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the maximum frame rate for rendering remote video.
+        /// </summary>
+        ///
+        /// <param name="targetFps"> The capture frame rate (fps) of the local video. Sopported values are: 1, 7, 10, 15, 24, 30, 60. Set this parameter to a value lower than the actual video frame rate; otherwise, the settings do not take effect. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetRemoteRenderTargetFps(int targetFps);
 
@@ -3004,12 +3088,12 @@ namespace Agora.Rtc
         /// 
         /// If you enable loopback audio capturing, the output of the sound card is mixed into the audio stream sent to the other end.
         /// This method applies to the macOS and Windows only.
-        /// macOS does not support loopback audio capture of the default sound card. If you need to use this function, use a virtual sound card and pass its name to the deviceName parameter. Agora recommends using AgoraALD as the virtual sound card for audio capturing.
+        /// The macOS system's default sound card does not support recording functionality. As of v4.5.0, when you call this method for the first time, the SDK will automatically install the built-in AgoraALD virtual sound card developed by Agora. After successful installation, the audio routing will automatically switch to the virtual sound card and use it for audio capturing.
         /// You can call this method either before or after joining a channel.
         /// If you call the DisableAudio method to disable the audio module, audio capturing will be disabled as well. If you need to enable audio capturing, call the EnableAudio method to enable the audio module and then call the EnableLoopbackRecording method.
         /// </summary>
         ///
-        /// <param name="enabled"> Sets whether to enable loopback audio capturing. true : Enable loopback audio capturing. false : (Default) Disable loopback audio capturing. </param>
+        /// <param name="enabled"> Sets whether to enable loopback audio capturing. true : Enable sound card capturing. You can find the name of the virtual sound card in your system's Audio Devices > Output. false : Disable sound card capturing. The name of the virtual sound card will not be shown in your system's Audio Devices > Output. </param>
         ///
         /// <param name="deviceName">
         /// macOS: The device name of the virtual sound card. The default value is set to NULL, which means using AgoraALD for loopback audio capturing.
@@ -3283,7 +3367,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Checks whether the device camera supports face detection.
         /// 
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// This method is for Android and iOS only.
         /// </summary>
         ///
@@ -3297,7 +3381,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Checks whether the device supports camera flash.
         /// 
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// This method is for Android and iOS only.
         /// The app enables the front camera by default. If your front camera does not support flash, this method returns false. If you want to check whether the rear camera supports the flash function, call SwitchCamera before this method.
         /// On iPads with system version 15, even if IsCameraTorchSupported returns true, you might fail to successfully enable the flash by calling SetCameraTorchOn due to system issues.
@@ -3313,7 +3397,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Check whether the device supports the manual focus function.
         /// 
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// This method is for Android and iOS only.
         /// </summary>
         ///
@@ -3327,7 +3411,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Checks whether the device supports the face auto-focus function.
         /// 
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// This method is for Android and iOS only.
         /// </summary>
         ///
@@ -3375,7 +3459,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Gets the maximum zoom ratio supported by the camera.
         /// 
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// This method is for Android and iOS only.
         /// </summary>
         ///
@@ -3442,7 +3526,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Checks whether the device supports manual exposure.
         /// 
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// This method is for Android and iOS only.
         /// </summary>
         ///
@@ -3477,7 +3561,7 @@ namespace Agora.Rtc
         /// Queries whether the current camera supports adjusting exposure value.
         /// 
         /// This method is for Android and iOS only.
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// Before calling SetCameraExposureFactor, Agora recoomends that you call this method to query whether the current camera supports adjusting the exposure value.
         /// By calling this method, you adjust the exposure value of the currently active camera, that is, the camera specified when calling SetCameraCapturerConfiguration.
         /// </summary>
@@ -3512,7 +3596,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Checks whether the device supports auto exposure.
         /// 
-        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_ENCODING (2).
+        /// This method must be called after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
         /// This method applies to iOS only.
         /// </summary>
         ///
@@ -3825,7 +3909,7 @@ namespace Agora.Rtc
         /// Call this method after starting screen sharing or window sharing.
         /// </summary>
         ///
-        /// <param name="captureParams"> The screen sharing encoding parameters. The default video resolution is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters. The video properties of the screen sharing stream only need to be set through this parameter, and are unrelated to SetVideoEncoderConfiguration. </param>
+        /// <param name="captureParams"> The screen sharing encoding parameters. See ScreenCaptureParameters. The video properties of the screen sharing stream only need to be set through this parameter, and are unrelated to SetVideoEncoderConfiguration. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -3846,7 +3930,7 @@ namespace Agora.Rtc
         /// When you pass in a value, Agora bills you at that value.
         /// </summary>
         ///
-        /// <param name="captureParams"> The screen sharing encoding parameters. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters2. </param>
+        /// <param name="captureParams"> The screen sharing encoding parameters. See ScreenCaptureParameters2. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -3869,7 +3953,7 @@ namespace Agora.Rtc
         /// On the iOS platform, screen sharing is only available on iOS 12.0 and later.
         /// </summary>
         ///
-        /// <param name="captureParams"> The screen sharing encoding parameters. The default video resolution is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters2. </param>
+        /// <param name="captureParams"> The screen sharing encoding parameters. See ScreenCaptureParameters2. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -3911,7 +3995,18 @@ namespace Agora.Rtc
         public abstract int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Configures MediaProjection outside of the SDK to capture screen video streams.
+        /// 
+        /// This method is for Android only. After successfully calling this method, the external MediaProjection you set will replace the MediaProjection requested by the SDK to capture the screen video stream. When the screen sharing is stopped or IRtcEngine is destroyed, the SDK will automatically release the MediaProjection.
+        /// </summary>
+        ///
+        /// <param name="mediaProjection"> An object used to capture screen video streams. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetExternalMediaProjection(IntPtr mediaProjection);
 
@@ -3947,7 +4042,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Retrieves the call ID.
         /// 
-        /// When a user joins a channel on a client, a callId is generated to identify the call from the client. You can call this method to get the callId parameter, and pass it in when calling methods such as Rate and Complain.
+        /// When a user joins a channel on a client, a callId is generated to identify the call from the client. You can call this method to get callId, and pass it in when calling methods such as Rate and Complain.
         /// </summary>
         ///
         /// <param name="callId"> Output parameter, the current call ID. </param>
@@ -4130,17 +4225,53 @@ namespace Agora.Rtc
         public abstract int StopLocalVideoTranscoder();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Starts local audio mixing.
+        /// 
+        /// This method supports merging multiple audio streams into one audio stream locally. For example, merging the audio streams captured from the local microphone, and that from the media player, the sound card, and the remote users into one audio stream, and then publish the merged audio stream to the channel.
+        /// If you want to mix the locally captured audio streams, you can set publishMixedAudioTrack in ChannelMediaOptions to true, and then publish the mixed audio stream to the channel.
+        /// If you want to mix the remote audio stream, ensure that the remote audio stream has been published in the channel and you have subcribed to the audio stream that you need to mix.
+        /// </summary>
+        ///
+        /// <param name="config"> The configurations for mixing the lcoal audio. See LocalAudioMixerConfiguration. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
+        /// </returns>
         ///
         public abstract int StartLocalAudioMixer(LocalAudioMixerConfiguration config);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Updates the configurations for mixing audio streams locally.
+        /// 
+        /// After calling StartLocalAudioMixer, call this method if you want to update the local audio mixing configuration.
+        /// </summary>
+        ///
+        /// <param name="config"> The configurations for mixing the lcoal audio. See LocalAudioMixerConfiguration. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
+        /// </returns>
         ///
         public abstract int UpdateLocalAudioMixerConfiguration(LocalAudioMixerConfiguration config);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Stops the local audio mixing.
+        /// 
+        /// After calling StartLocalAudioMixer, call this method if you want to stop the local audio mixing.
+        /// </summary>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
+        /// </returns>
         ///
         public abstract int StopLocalAudioMixer();
 
@@ -4322,9 +4453,8 @@ namespace Agora.Rtc
         /// Sends data stream messages.
         /// 
         /// After calling CreateDataStream [2/2], you can call this method to send data stream messages to all users in the channel. The SDK has the following restrictions on this method:
-        /// Each user can have up to five data streams simultaneously.
-        /// Up to 60 packets can be sent per second in a data stream with each packet having a maximum size of 1 KB.
-        /// Up to 30 KB of data can be sent per second in a data stream. A successful method call triggers the OnStreamMessage callback on the remote client, from which the remote user gets the stream message. A failed method call triggers the OnStreamMessageError callback on the remote client.
+        /// Each client within the channel can have up to 5 data channels simultaneously, with a total shared packet bitrate limit of 30 KB/s for all data channels.
+        /// Each data channel can send up to 60 packets per second, with each packet being a maximum of 1 KB. A successful method call triggers the OnStreamMessage callback on the remote client, from which the remote user gets the stream message. A failed method call triggers the OnStreamMessageError callback on the remote client.
         /// This method needs to be called after CreateDataStream [2/2] and joining the channel.
         /// In live streaming scenarios, this method only applies to hosts.
         /// </summary>
@@ -4881,7 +5011,20 @@ namespace Agora.Rtc
         public abstract int TakeSnapshot(uint uid, string filePath);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Takes a screenshot of the video at the specified observation point.
+        /// 
+        /// This method takes a snapshot of a video stream from the specified user, generates a JPG image, and saves it to the specified path.
+        /// </summary>
+        ///
+        /// <param name="uid"> The user ID. Set uid as 0 if you want to take a snapshot of the local user's video. </param>
+        ///
+        /// <param name="config"> The configuration of the snaptshot. See SnapshotConfig. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int TakeSnapshot(uint uid, SnapshotConfig config);
 
@@ -4894,7 +5037,7 @@ namespace Agora.Rtc
         ///
         /// <param name="enabled"> Whether to enalbe video screenshot and upload: true : Enables video screenshot and upload. false : Disables video screenshot and upload. </param>
         ///
-        /// <param name="config"> Screenshot and upload configuration. See ContentInspectConfig. When the video moderation module is set to video moderation via Agora self-developed extension(CONTENT_INSPECT_SUPERVISION), the video screenshot and upload dynamic library libagora_content_inspect_extension.dll is required. Deleting this library disables the screenshot and upload feature. </param>
+        /// <param name="config"> Screenshot and upload configuration. See ContentInspectConfig. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -4944,7 +5087,7 @@ namespace Agora.Rtc
         /// Sets up cloud proxy service.
         /// 
         /// When users' network access is restricted by a firewall, configure the firewall to allow specific IP addresses and ports provided by Agora; then, call this method to enable the cloud proxyType and set the cloud proxy type with the proxyType parameter. After successfully connecting to the cloud proxy, the SDK triggers the OnConnectionStateChanged (CONNECTION_STATE_CONNECTING, CONNECTION_CHANGED_SETTING_PROXY_SERVER) callback. To disable the cloud proxy that has been set, call the SetCloudProxy (NONE_PROXY). To change the cloud proxy type that has been set, call the SetCloudProxy (NONE_PROXY) first, and then call the SetCloudProxy to set the proxyType you want.
-        /// Agora recommends that you call this method after joining a channel.
+        /// Agora recommends that you call this method before joining a channel.
         /// When a user is behind a firewall and uses the Force UDP cloud proxy, the services for Media Push and cohosting across channels are not available.
         /// When you use the Force TCP cloud proxy, note that an error would occur when calling the StartAudioMixing [2/2] method to play online music files in the HTTP protocol. The services for Media Push and cohosting across channels use the cloud proxy with the TCP protocol.
         /// </summary>
@@ -5136,13 +5279,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Registers a raw video frame observer object.
         /// 
-        /// If you want to obtain the original video data of some remote users (referred to as group A) and the encoded video data of other remote users (referred to as group B), you can refer to the following steps:
-        /// Call RegisterVideoFrameObserver to register the raw video frame observer before joining the channel.
-        /// Call RegisterVideoEncodedFrameObserver to register the encoded video frame observer before joining the channel.
-        /// After joining the channel, get the user IDs of group B users through OnUserJoined, and then call SetRemoteVideoSubscriptionOptions to set the encodedFrameOnly of this group of users to true.
-        /// Call MuteAllRemoteVideoStreams (false) to start receiving the video streams of all remote users. Then:
-        /// The raw video data of group A users can be obtained through the callback in IVideoFrameObserver, and the SDK renders the data by default.
-        /// The encoded video data of group B users can be obtained through the callback in IVideoEncodedFrameObserver. If you want to observe raw video frames (such as YUV or RGBA format), Agora recommends that you implement one IVideoFrameObserver class with this method. When calling this method to register a video observer, you can register callbacks in the IVideoFrameObserver class as needed. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
+        /// If you want to observe raw video frames (such as YUV or RGBA format), Agora recommends that you implement one IVideoFrameObserver class with this method. When calling this method to register a video observer, you can register callbacks in the IVideoFrameObserver class as needed. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
         /// </summary>
         ///
         /// <param name="videoFrameObserver"> The observer instance. See IVideoFrameObserver. To release the instance, set the value as NULL. </param>
@@ -5176,14 +5313,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Registers a receiver object for the encoded video image.
         /// 
-        /// If you only want to observe encoded video frames (such as h.264 format) without decoding and rendering the video, Agora recommends that you implement one IVideoEncodedFrameObserver class through this method. If you want to obtain the original video data of some remote users (referred to as group A) and the encoded video data of other remote users (referred to as group B), you can refer to the following steps:
-        /// Call RegisterVideoFrameObserver to register the raw video frame observer before joining the channel.
-        /// Call RegisterVideoEncodedFrameObserver to register the encoded video frame observer before joining the channel.
-        /// After joining the channel, get the user IDs of group B users through OnUserJoined, and then call SetRemoteVideoSubscriptionOptions to set the encodedFrameOnly of this group of users to true.
-        /// Call MuteAllRemoteVideoStreams (false) to start receiving the video streams of all remote users. Then:
-        /// The raw video data of group A users can be obtained through the callback in IVideoFrameObserver, and the SDK renders the data by default.
-        /// The encoded video data of group B users can be obtained through the callback in IVideoEncodedFrameObserver.
-        /// Call this method before joining a channel.
+        /// If you only want to observe encoded video frames (such as H.264 format) without decoding and rendering the video, Agora recommends that you implement one IVideoEncodedFrameObserver class through this method. Call this method before joining a channel.
         /// </summary>
         ///
         /// <param name="videoEncodedImageReceiver"> The video frame observer object. See IVideoEncodedFrameObserver. </param>
@@ -5331,7 +5461,18 @@ namespace Agora.Rtc
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the EGL context for rendering remote video streams.
+        /// 
+        /// This method can replace the default remote EGL context within the SDK, making it easier to manage the EGL context. When the engine is destroyed, the SDK will automatically release the EGL context. This method is for Android only.
+        /// </summary>
+        ///
+        /// <param name="eglContext"> The EGL context for rendering remote video streams. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetExternalRemoteEglContext(IntPtr eglContext);
 

@@ -107,8 +107,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// The complete path of the log files. Agora recommends using the default log directory. If you need to modify the default directory, ensure that the directory you specify exists and is writable. The default log directory is:
-        ///  Android： /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.
-        ///  iOS： App Sandbox/Library/caches/agorasdk.log.
+        ///  Android: /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.
+        ///  iOS: App Sandbox/Library/caches/agorasdk.log.
         ///  macOS:
         ///  If Sandbox is enabled: App Sandbox/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.
         ///  If Sandbox is disabled: ~/Library/Logs/agorasdk.log

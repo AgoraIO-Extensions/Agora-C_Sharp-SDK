@@ -1947,7 +1947,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The ID of the custom audio source to publish. The default value is 0. If you have set sourceNumber in SetExternalAudioSource to a value greater than 1, the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track, starting from 0.
+        /// The ID of the custom audio track to be published. The default value is 0. You can obtain the custom audio track ID through the CreateCustomAudioTrack method.
         /// </summary>
         ///
         public Optional<int> publishCustomAudioTrackId = new Optional<int>();
@@ -1988,7 +1988,9 @@ namespace Agora.Rtc
         public Optional<bool> publishTranscodedVideoTrack = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the mixed audio track: true : Publish the mixed audio track. false : Do not publish the mixed audio track.
+        /// </summary>
         ///
         public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
 
@@ -3108,7 +3110,9 @@ namespace Agora.Rtc
         MEDIA_DEVICE_STATE_DISABLED = 2,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 3: The device is plugged in.
+        /// </summary>
         ///
         MEDIA_DEVICE_STATE_PLUGGED_IN = 3,
 

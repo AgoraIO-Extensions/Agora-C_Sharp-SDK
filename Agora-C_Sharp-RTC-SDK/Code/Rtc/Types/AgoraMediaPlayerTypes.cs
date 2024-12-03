@@ -771,7 +771,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to enable autoplay once the media file is opened: true : (Default) Enables autoplay. false : Disables autoplay. If autoplay is disabled, you need to call the Play method to play a media file after it is opened.
+        /// Whether to enable autoplay once the media file is opened: true : (Default) Yes. false : No. If autoplay is disabled, you need to call the Play method to play a media file after it is opened.
         /// </summary>
         ///
         public bool autoPlay;
