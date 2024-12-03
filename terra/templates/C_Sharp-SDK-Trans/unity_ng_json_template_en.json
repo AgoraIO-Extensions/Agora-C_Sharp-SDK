@@ -2781,10 +2781,10 @@
     "description": "Gets a list of shareable screens and windows.\n\nYou can call this method before sharing a screen or window to get a list of shareable screens and windows, which enables a user to use thumbnails in the list to easily choose a particular screen or window to share. This list also contains important information such as window ID and screen ID, with which you can call StartScreenCaptureByWindowId or StartScreenCaptureByDisplayId to start the sharing. This method applies to macOS and Windows only.",
     "parameters": [
       {
-        "thumbSize": "The target size of the screen or window thumbnail (the width and height are in pixels).. The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and thumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it."
+        "thumbSize": "The target size of the screen or window thumbnail (the width and height are in pixels). The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and thumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it."
       },
       {
-        "iconSize": "The target size of the icon corresponding to the application program (the width and height are in pixels).. The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and iconSize is 100 × 100, the actual size of the icon is 100 × 75. If the target size is larger than the original size, the icon is the original image and the SDK does not scale it."
+        "iconSize": "The target size of the icon corresponding to the application program (the width and height are in pixels). The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and iconSize is 100 × 100, the actual size of the icon is 100 × 75. If the target size is larger than the original size, the icon is the original image and the SDK does not scale it."
       },
       {
         "includeScreen": "Whether the SDK returns the screen information in addition to the window information: true : The SDK returns screen and window information. false : The SDK returns window information only."
@@ -4413,7 +4413,7 @@
     "description": "Sets the log output level of the SDK.\n\nDeprecated: Use logConfig in Initialize instead.",
     "parameters": [
       {
-        "filter": "The output log level of the SDK.."
+        "filter": "The output log level of the SDK."
       }
     ],
     "returns": "0: Success.\n < 0: Failure.",
@@ -6634,7 +6634,7 @@
     "description": "Occurs each time the player receives an audio frame.\n\nAfter registering the audio frame observer, the callback occurs every time the player receives an audio frame, reporting the detailed information of the audio frame.",
     "parameters": [
       {
-        "frame": "The audio frame information.. See AudioPcmFrame."
+        "frame": "The audio frame information. See AudioPcmFrame."
       }
     ],
     "returns": "Without practical meaning.",
@@ -10169,7 +10169,7 @@
         "captureBrightnessLevel": "The brightness level of the video image captured by the local camera. See CAPTURE_BRIGHTNESS_LEVEL_TYPE."
       },
       {
-        "hwEncoderAccelerating": "The local video encoding acceleration type..\n 0: Software encoding is applied without acceleration.\n 1: Hardware encoding is applied for acceleration."
+        "hwEncoderAccelerating": "The local video encoding acceleration type.\n 0: Software encoding is applied without acceleration.\n 1: Hardware encoding is applied for acceleration."
       }
     ],
     "returns": "",
@@ -11030,7 +11030,7 @@
         "primaryMonitor": "Determines whether the screen is the primary display: true : The screen is the primary display. false : The screen is not the primary display."
       },
       {
-        "position": "The position of a window relative to the entire screen space (including all shareable screens). See Rectangle.."
+        "position": "The position of a window relative to the entire screen space (including all shareable screens). See Rectangle."
       },
       {
         "sourceDisplayId": "(For Windows only) Screen ID where the window is located. If the window is displayed across multiple screens, this parameter indicates the ID of the screen with which the window has the largest intersection area. If the window is located outside of the visible screens, the value of this member is -2."
@@ -11054,7 +11054,7 @@
         "bitrate": "The video encoding bitrate (Kbps)."
       },
       {
-        "contentHint": "The content hint for screen sharing.."
+        "contentHint": "The content hint for screen sharing."
       }
     ],
     "returns": "",
@@ -11381,10 +11381,10 @@
     "description": "Video noise reduction options.",
     "parameters": [
       {
-        "level": "Video noise reduction level.."
+        "level": "Video noise reduction level."
       },
       {
-        "mode": "Video noise reduction mode.."
+        "mode": "Video noise reduction mode."
       }
     ],
     "returns": "",

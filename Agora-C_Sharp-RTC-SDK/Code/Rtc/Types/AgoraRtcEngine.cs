@@ -585,7 +585,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The local video encoding acceleration type..
+        /// The local video encoding acceleration type.
         ///  0: Software encoding is applied without acceleration.
         ///  1: Hardware encoding is applied for acceleration.
         /// </summary>
@@ -1724,7 +1724,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The position of a window relative to the entire screen space (including all shareable screens). See Rectangle..
+        /// The position of a window relative to the entire screen space (including all shareable screens). See Rectangle.
         /// </summary>
         ///
         public Rectangle position;

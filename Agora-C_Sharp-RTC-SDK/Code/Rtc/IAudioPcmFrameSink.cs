@@ -16,7 +16,7 @@ namespace Agora.Rtc
         /// After registering the audio frame observer, the callback occurs every time the player receives an audio frame, reporting the detailed information of the audio frame.
         /// </summary>
         ///
-        /// <param name="frame"> The audio frame information.. See AudioPcmFrame. </param>
+        /// <param name="frame"> The audio frame information. See AudioPcmFrame. </param>
         ///
         /// <returns>
         /// Without practical meaning.

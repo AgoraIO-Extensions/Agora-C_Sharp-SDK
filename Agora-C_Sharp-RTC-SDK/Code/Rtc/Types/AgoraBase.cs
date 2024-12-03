@@ -7214,14 +7214,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Video noise reduction mode..
+        /// Video noise reduction mode.
         /// </summary>
         ///
         public VIDEO_DENOISER_MODE mode;
 
         ///
         /// <summary>
-        /// Video noise reduction level..
+        /// Video noise reduction level.
         /// </summary>
         ///
         public VIDEO_DENOISER_LEVEL level;
@@ -9266,7 +9266,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The content hint for screen sharing..
+        /// The content hint for screen sharing.
         /// </summary>
         ///
         public VIDEO_CONTENT_HINT contentHint;
