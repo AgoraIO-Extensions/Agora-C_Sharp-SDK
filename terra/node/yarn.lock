@@ -7,26 +7,26 @@ __metadata:
 
 "@agoraio-extensions/cxx-parser@git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=cxx-parser":
   version: 0.1.9
-  resolution: "@agoraio-extensions/cxx-parser@git@github.com:AgoraIO-Extensions/terra.git#workspace=cxx-parser&commit=033a8b49da226f8020b7c2040f4b38fe7239e134"
+  resolution: "@agoraio-extensions/cxx-parser@git@github.com:AgoraIO-Extensions/terra.git#workspace=cxx-parser&commit=f536230ad5b2912f91b8f3dba9f17dcb12a632ad"
   dependencies:
     glob: "npm:^10.3.4"
     yaml: "npm:^2.1.3"
   peerDependencies:
     "@agoraio-extensions/terra-core": "*"
-  checksum: 5730d813e1b14f518402f31e83681c0fb645e1dd56a780d1c33ed62a366e66ff60860249aa74d3a495e7371c3bc771cf4ab044a0bc233a9fcfc7430e5482236f
+  checksum: 83916201f1f51021093bcc973b93dc1979614dcb081d34a0925ba0ad9d3d0547deb3d6576964607795bd91b7191971345ea69278f435e3b00d34ca6cdd0b44db
   languageName: node
   linkType: hard
 
 "@agoraio-extensions/terra-core@git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=terra-core":
   version: 0.1.5
-  resolution: "@agoraio-extensions/terra-core@git@github.com:AgoraIO-Extensions/terra.git#workspace=terra-core&commit=033a8b49da226f8020b7c2040f4b38fe7239e134"
+  resolution: "@agoraio-extensions/terra-core@git@github.com:AgoraIO-Extensions/terra.git#workspace=terra-core&commit=f536230ad5b2912f91b8f3dba9f17dcb12a632ad"
   checksum: d7113225ab004b2ff09de3c3718262925dc335f5ffb8ac2800bb96bfb2ad67a307063a425bd14654356d804586a785efe3856462e1087472463eb233a6793e44
   languageName: node
   linkType: hard
 
 "@agoraio-extensions/terra@git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=terra":
   version: 0.1.5
-  resolution: "@agoraio-extensions/terra@git@github.com:AgoraIO-Extensions/terra.git#workspace=terra&commit=033a8b49da226f8020b7c2040f4b38fe7239e134"
+  resolution: "@agoraio-extensions/terra@git@github.com:AgoraIO-Extensions/terra.git#workspace=terra&commit=f536230ad5b2912f91b8f3dba9f17dcb12a632ad"
   dependencies:
     commander: "npm:^9.4.1"
     mustache: "npm:^4.2.0"
@@ -35,20 +35,20 @@ __metadata:
     "@agoraio-extensions/terra-core": "*"
   bin:
     terra: ./bin/terra
-  checksum: d63492c162aea0e42a39b56287fd502be9bbb92e49fb3ee6b070a4deaff6bd2568d5f96afc12af85a0f337665af385198da80133bb59283fe5bc8d5b6ef733b7
+  checksum: 9f48f711575be8b2cb7918bba9fc6ec3714e91ad14a9fa5f3533e49116309d45b05175e25081d198d669662a54b80614272dc6ef20881cb889a9ce6c799aa959
   languageName: node
   linkType: hard
 
 "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#head=main":
   version: 1.0.2
-  resolution: "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#commit=bc2d246bbfc686ec1338e58f9635943c2a60437b"
+  resolution: "@agoraio-extensions/terra_shared_configs@git@github.com:AgoraIO-Extensions/terra_shared_configs.git#commit=fd251ac18fa61f8e0da59c16547815b19f04f7e2"
   dependencies:
     "@agoraio-extensions/cxx-parser": "git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=cxx-parser"
     "@agoraio-extensions/terra-core": "git@github.com:AgoraIO-Extensions/terra.git#head=main&workspace=terra-core"
     lodash: "npm:^4.17.21"
     mustache: "npm:^4.2.0"
     openai: "npm:^4.29.1"
-  checksum: eaceeecc90edb90a3cf5a1f597105b4d9a135c00fc3dd268b91243de0f30224a0d7617dbef2f0afdfa6d06a2ee480ac9e6b85f335632442949c4383f0b1757f6
+  checksum: cfd137e7f41b87f519bcb0f340eb6cfa39aafa77ad1a339d46d476cfdebf5eab0b91f12e864e72eef37ea35faaf53fa96f8b7d216b27ef86a70c952841924a40
   languageName: node
   linkType: hard
 
@@ -152,20 +152,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.9.3
-  resolution: "@types/node@npm:22.9.3"
+  version: 22.10.1
+  resolution: "@types/node@npm:22.10.1"
   dependencies:
-    undici-types: "npm:~6.19.8"
-  checksum: 954ec72bf29436ea62425a9563914a9c1e93f97b18194acd51d74d13998a701977547ed2985ed3a0e97211b785436d28377116e5f613bfcf3182d9bd81d784dc
+    undici-types: "npm:~6.20.0"
+  checksum: 0fbb6d29fa35d807f0223a4db709c598ac08d66820240a2cd6a8a69b8f0bc921d65b339d850a666b43b4e779f967e6ed6cf6f0fca3575e08241e6b900364c234
   languageName: node
   linkType: hard
 
 "@types/node@npm:^18.11.18, @types/node@npm:^18.17.9":
-  version: 18.19.65
-  resolution: "@types/node@npm:18.19.65"
+  version: 18.19.67
+  resolution: "@types/node@npm:18.19.67"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 9c093f13749dccd16a3e9cd17080db057d1e94cb5205a871d2818ad51ec19d7d392a7c12a11661c6a6f4404cbd85b19d09ab6c564a4763cab2ff5bb0e198617d
+  checksum: 72b06802ac291c2e710bcf527b040f5490e1f85f26fdedad417e13ce3ed3aeb67e1bf3eef0ba5f581986bf361dcdc5f2d1229a9e284bf3dbd85db5c595e67bc6
   languageName: node
   linkType: hard
 
@@ -572,8 +572,8 @@ __metadata:
   linkType: hard
 
 "openai@npm:^4.29.1":
-  version: 4.73.0
-  resolution: "openai@npm:4.73.0"
+  version: 4.76.0
+  resolution: "openai@npm:4.76.0"
   dependencies:
     "@types/node": "npm:^18.11.18"
     "@types/node-fetch": "npm:^2.6.4"
@@ -589,7 +589,7 @@ __metadata:
       optional: true
   bin:
     openai: bin/cli
-  checksum: ff2c1086e98563f3b164c25be94c2b299b6d38ea8556a14577dd7f57d3999fb1298913437dc011bf582f20f126ec5553900cd295d9ba30c29561abfe197a2cbd
+  checksum: f0b53906ba72e6d21405353f26ae3dd4327f3cbe212787fac321089772fccaaabfcd699abb8632e19c1eb536bd31e9fff3d1f90f7de693d86ae9624c04a9d74b
   languageName: node
   linkType: hard
 
@@ -752,10 +752,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.19.8":
-  version: 6.19.8
-  resolution: "undici-types@npm:6.19.8"
-  checksum: 078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
+"undici-types@npm:~6.20.0":
+  version: 6.20.0
+  resolution: "undici-types@npm:6.20.0"
+  checksum: 68e659a98898d6a836a9a59e6adf14a5d799707f5ea629433e025ac90d239f75e408e2e5ff086afc3cace26f8b26ee52155293564593fbb4a2f666af57fc59bf
   languageName: node
   linkType: hard
 

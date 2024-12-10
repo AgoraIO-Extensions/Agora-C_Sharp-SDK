@@ -371,6 +371,8 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_SETPARAMETERSEX = "RtcEngineEx_setParametersEx_8225ea3";
         internal const string FUNC_RTCENGINEEX_GETCALLIDEX = "RtcEngineEx_getCallIdEx_b13f7c4";
         internal const string FUNC_RTCENGINEEX_SENDAUDIOMETADATAEX = "RtcEngineEx_sendAudioMetadataEx_e2bf1c4";
+        internal const string FUNC_RTCENGINEEX_PRELOADEFFECTEX = "RtcEngineEx_preloadEffectEx_c9fae88";
+        internal const string FUNC_RTCENGINEEX_PLAYEFFECTEX = "RtcEngineEx_playEffectEx_ae5345c";
         #endregion terra IRtcEngineEx
 
         internal const string FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE = "MediaPlayer_unOpenWithCustomSource";

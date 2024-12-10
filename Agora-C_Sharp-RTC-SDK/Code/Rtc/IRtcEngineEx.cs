@@ -1030,6 +1030,16 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
         #endregion terra IRtcEngineEx
 
         ///
