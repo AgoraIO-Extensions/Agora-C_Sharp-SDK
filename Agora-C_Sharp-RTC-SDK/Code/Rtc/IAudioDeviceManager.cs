@@ -369,12 +369,27 @@ namespace Agora.Rtc
         public abstract int GetPlaybackDeviceMute(ref bool mute);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the mute status of the audio capture device.
+        /// </summary>
+        ///
+        /// <param name="mute"> Whether to mute the audio recording device: true : Mute the audio capture device. false : Unmute the audio capture device. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetRecordingDeviceMute(bool mute);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets whether the audio capture device is muted.
+        /// </summary>
+        ///
+        /// <returns>
+        /// true : The microphone is muted. false : The microphone is unmuted.
+        /// </returns>
         ///
         public abstract int GetRecordingDeviceMute(ref bool mute);
 

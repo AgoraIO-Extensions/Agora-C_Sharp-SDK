@@ -157,7 +157,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The alpha channel data output by using portrait segmentation algorithm. This data matches the size of the video frame, with each pixel value ranging from [0,255], where 0 represents the background and 255 represents the foreground (portrait). By setting this parameter, you can render the video background into various effects, such as transparent, solid color, image, video, etc. In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are of the Full Range type; other types may cause abnormal alpha data rendering.
+        /// The alpha channel data output by using portrait segmentation algorithm. This data matches the size of the video frame, with each pixel value ranging from [0,255], where 0 represents the background and 255 represents the foreground (portrait). By setting this parameter, you can render the video background into various effects, such as transparent, solid color, image, video, etc.
+        ///  In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are of the Full Range type; other types may cause abnormal alpha data rendering.
+        ///  Make sure that alphaBuffer is exactly the same size as the video frame (width × height), otherwise it may cause the app to crash.
         /// </summary>
         ///
         public byte[] alphaBuffer;
@@ -176,7 +178,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The meta information in the video frame. To use this parameter, please contact.
+        /// The meta information in the video frame. To use this parameter, contact.
         /// </summary>
         ///
         public IVideoFrameMetaInfo metaInfo;
@@ -187,7 +189,9 @@ namespace Agora.Rtc
         public Hdr10MetadataInfo hdr10MetadataInfo;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// By default, the color space properties of video frames will apply the Full Range and BT.709 standard configurations. You can configure the settings according your needs for custom video capturing and rendering.
+        /// </summary>
         ///
         public ColorSpace colorSpace;
         #endregion terra VideoFrame_Member_List
@@ -539,6 +543,68 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_SOURCE_UNKNOWN = 100,
+    }
+
+    ///
+    /// <summary>
+    /// The audio source type.
+    /// </summary>
+    ///
+    public enum AUDIO_SOURCE_TYPE
+    {
+        ///
+        /// <summary>
+        /// 0: (Default) Microphone.
+        /// </summary>
+        ///
+        AUDIO_SOURCE_MICROPHONE = 0,
+
+        ///
+        /// <summary>
+        /// 1: Custom audio stream.
+        /// </summary>
+        ///
+        AUDIO_SOURCE_CUSTOM = 1,
+
+        ///
+        /// <summary>
+        /// 2: Media player.
+        /// </summary>
+        ///
+        AUDIO_SOURCE_MEDIA_PLAYER = 2,
+
+        ///
+        /// <summary>
+        /// 3: System audio stream captured during screen sharing.
+        /// </summary>
+        ///
+        AUDIO_SOURCE_LOOPBACK_RECORDING = 3,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SOURCE_MIXED_STREAM = 4,
+
+        ///
+        /// <summary>
+        /// 5: Audio stream from a specified remote user.
+        /// </summary>
+        ///
+        AUDIO_SOURCE_REMOTE_USER = 5,
+
+        ///
+        /// <summary>
+        /// 6: Mixed audio streams from all users in the current channel.
+        /// </summary>
+        ///
+        AUDIO_SOURCE_REMOTE_CHANNEL = 6,
+
+        ///
+        /// <summary>
+        /// 100: An unknown audio source.
+        /// </summary>
+        ///
+        AUDIO_SOURCE_UNKNOWN = 100,
     }
 
     ///
@@ -1215,14 +1281,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 1: Hidden mode. Uniformly scale the video until one of its dimension fits the boundary (zoomed to fit). One dimension of the video may have clipped contents.
+        /// 1: Hidden mode. The priority is to fill the window. Any excess video that does not match the window size will be cropped.
         /// </summary>
         ///
         RENDER_MODE_HIDDEN = 1,
 
         ///
         /// <summary>
-        /// 2: Fit mode. Uniformly scale the video until one of its dimension fits the boundary (zoomed to fit). Areas that are not filled due to disparity in the aspect ratio are filled with black.
+        /// 2: Fit mode. The priority is to ensure that all video content is displayed. Any areas of the window that are not filled due to the mismatch between video size and window size will be filled with black.
         /// </summary>
         ///
         RENDER_MODE_FIT = 2,
@@ -1668,32 +1734,44 @@ namespace Agora.Rtc
     }
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The relative position of alphaBuffer and video frames.
+    /// </summary>
     ///
     public enum ALPHA_STITCH_MODE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 0: (Default) Only video frame, that is, alphaBuffer is not stitched with the video frame.
+        /// </summary>
         ///
         NO_ALPHA_STITCH = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: alphaBuffer is above the video frame.
+        /// </summary>
         ///
         ALPHA_STITCH_UP = 1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: alphaBuffer is below the video frame.
+        /// </summary>
         ///
         ALPHA_STITCH_BELOW = 2,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 3: alphaBuffer is to the left of the video frame.
+        /// </summary>
         ///
         ALPHA_STITCH_LEFT = 3,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 4: alphaBuffer is to the right of the video frame.
+        /// </summary>
         ///
         ALPHA_STITCH_RIGHT = 4,
     }
@@ -1860,7 +1938,9 @@ namespace Agora.Rtc
         public IntPtr d3d11Texture2d;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in Windows Texture format. It represents an index of an ID3D11Texture2D texture object used by the video frame in the ID3D11Texture2D array.
+        /// </summary>
         ///
         public int textureSliceIndex;
 
@@ -1870,7 +1950,9 @@ namespace Agora.Rtc
         public Hdr10MetadataInfo hdr10MetadataInfo;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// By default, the color space properties of video frames will apply the Full Range and BT.709 standard configurations. You can configure the settings according your needs for custom video capturing and rendering.
+        /// </summary>
         ///
         public ColorSpace colorSpace;
 
@@ -2033,6 +2115,44 @@ namespace Agora.Rtc
         /// </summary>
         ///
         POSITION_POST_CAPTURER_ORIGIN = 1 << 3,
+    }
+
+    ///
+    /// <summary>
+    /// The snapshot configuration.
+    /// </summary>
+    ///
+    public class SnapshotConfig
+    {
+        ///
+        /// <summary>
+        /// The local path (including filename extensions) of the snapshot. For example:
+        ///  Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.jpg
+        ///  iOS: /App Sandbox/Library/Caches/example.jpg
+        ///  macOS: ～/Library/Logs/example.jpg
+        ///  Android: /storage/emulated/0/Android/data/<package name>/files/example.jpg Ensure that the path you specify exists and is writable.
+        /// </summary>
+        ///
+        public string filePath;
+
+        ///
+        /// <summary>
+        /// The position of the snapshot video frame in the video pipeline. See VIDEO_MODULE_POSITION.
+        /// </summary>
+        ///
+        public VIDEO_MODULE_POSITION position;
+
+        public SnapshotConfig()
+        {
+            this.filePath = "";
+            this.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
+        }
+
+        public SnapshotConfig(string filePath, VIDEO_MODULE_POSITION position)
+        {
+            this.filePath = filePath;
+            this.position = position;
+        }
     }
 
     ///
@@ -2397,6 +2517,36 @@ namespace Agora.Rtc
         ///
         public int recorderInfoUpdateInterval;
 
+        ///
+        /// @ignore
+        ///
+        public int width;
+
+        ///
+        /// @ignore
+        ///
+        public int height;
+
+        ///
+        /// @ignore
+        ///
+        public int fps;
+
+        ///
+        /// @ignore
+        ///
+        public int sample_rate;
+
+        ///
+        /// @ignore
+        ///
+        public int channel_num;
+
+        ///
+        /// @ignore
+        ///
+        public VIDEO_SOURCE_TYPE videoSourceType;
+
         public MediaRecorderConfiguration()
         {
             this.storagePath = "";
@@ -2404,6 +2554,12 @@ namespace Agora.Rtc
             this.streamType = MediaRecorderStreamType.STREAM_TYPE_BOTH;
             this.maxDurationMs = 120000;
             this.recorderInfoUpdateInterval = 0;
+            this.width = 1280;
+            this.height = 720;
+            this.fps = 30;
+            this.sample_rate = 48000;
+            this.channel_num = 1;
+            this.videoSourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         }
 
         public MediaRecorderConfiguration(string path, MediaRecorderContainerFormat format, MediaRecorderStreamType type, int duration, int interval)
@@ -2413,8 +2569,28 @@ namespace Agora.Rtc
             this.streamType = type;
             this.maxDurationMs = duration;
             this.recorderInfoUpdateInterval = interval;
+            this.width = 1280;
+            this.height = 720;
+            this.fps = 30;
+            this.sample_rate = 48000;
+            this.channel_num = 1;
+            this.videoSourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         }
 
+        public MediaRecorderConfiguration(string storagePath, MediaRecorderContainerFormat containerFormat, MediaRecorderStreamType streamType, int maxDurationMs, int recorderInfoUpdateInterval, int width, int height, int fps, int sample_rate, int channel_num, VIDEO_SOURCE_TYPE videoSourceType)
+        {
+            this.storagePath = storagePath;
+            this.containerFormat = containerFormat;
+            this.streamType = streamType;
+            this.maxDurationMs = maxDurationMs;
+            this.recorderInfoUpdateInterval = recorderInfoUpdateInterval;
+            this.width = width;
+            this.height = height;
+            this.fps = fps;
+            this.sample_rate = sample_rate;
+            this.channel_num = channel_num;
+            this.videoSourceType = videoSourceType;
+        }
     }
 
     ///

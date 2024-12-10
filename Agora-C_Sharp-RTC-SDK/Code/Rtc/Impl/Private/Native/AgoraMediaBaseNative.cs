@@ -107,7 +107,7 @@ namespace Agora.Rtc
     {
         #region terra ScreenCaptureSourceInfoInternal_List
         public ScreenCaptureSourceType type;
-        public view_t sourceId;
+        public long sourceId;
         public string sourceName;
         public ThumbImageBufferInternal thumbImage;
         public ThumbImageBufferInternal iconImage;
@@ -117,7 +117,7 @@ namespace Agora.Rtc
         public bool isOccluded;
         public Rectangle position;
         public bool minimizeWindow;
-        public view_t sourceDisplayId;
+        public long sourceDisplayId;
         #endregion terra ScreenCaptureSourceInfoInternal_List
 
         public ScreenCaptureSourceInfoInternal()

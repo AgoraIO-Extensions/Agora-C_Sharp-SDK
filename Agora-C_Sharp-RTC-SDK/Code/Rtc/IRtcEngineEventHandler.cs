@@ -167,7 +167,7 @@ namespace Agora.Rtc
         /// This callback reports the last-mile network conditions of the local user before the user joins the channel. Last mile refers to the connection between the local device and Agora's edge server. Before the user joins the channel, this callback is triggered by the SDK once StartLastmileProbeTest is called and reports the last-mile network conditions of the local user.
         /// </summary>
         ///
-        /// <param name="quality"> The last-mile network quality. QUALITY_UNKNOWN (0): The quality is unknown. QUALITY_EXCELLENT (1): The quality is excellent. QUALITY_GOOD (2): The network quality seems excellent, but the bitrate can be slightly lower than excellent. QUALITY_POOR (3): Users can feel the communication is slightly impaired. QUALITY_BAD (4): Users cannot communicate smoothly. QUALITY_VBAD (5): The quality is so bad that users can barely communicate. QUALITY_DOWN (6): The network is down, and users cannot communicate at all. See QUALITY_TYPE. </param>
+        /// <param name="quality"> The last-mile network quality. QUALITY_UNKNOWN (0): The quality is unknown. QUALITY_EXCELLENT (1): The quality is excellent. QUALITY_GOOD (2): The network quality seems excellent, but the bitrate can be slightly lower than excellent. QUALITY_POOR (3): Users can feel the communication is slightly impaired. QUALITY_BAD (4): Users cannot communicate smoothly. QUALITY_VBAD (5): The quality is so bad that users can barely communicate. QUALITY_DOWN (6): The network is down, and users cannot communicate at all. QUALITY_DETECTING (8): The last-mile probe test is in progress. See QUALITY_TYPE. </param>
         ///
         public virtual void OnLastmileQuality(int quality)
         {
@@ -1118,7 +1118,7 @@ namespace Agora.Rtc
         ///
         /// <param name="streamId"> The stream ID of the received message. </param>
         ///
-        /// <param name="code"> The error code. </param>
+        /// <param name="code"> Error code. </param>
         ///
         /// <param name="missed"> The number of lost messages. </param>
         ///
@@ -1440,7 +1440,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Reports the result of taking a video snapshot.
         /// 
-        /// After a successful TakeSnapshot method call, the SDK triggers this callback to report whether the snapshot is successfully taken as well as the details for the snapshot taken.
+        /// After a successful TakeSnapshot [1/2] method call, the SDK triggers this callback to report whether the snapshot is successfully taken as well as the details for the snapshot taken.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -1458,8 +1458,8 @@ namespace Agora.Rtc
         /// 0: Success.
         /// < 0: Failure:
         /// -1: The SDK fails to write data to a file or encode a JPEG image.
-        /// -2: The SDK does not find the video stream of the specified user within one second after the TakeSnapshot method call succeeds. The possible reasons are: local capture stops, remote end stops publishing, or video data processing is blocked.
-        /// -3: Calling the TakeSnapshot method too frequently.
+        /// -2: The SDK does not find the video stream of the specified user within one second after the TakeSnapshot [1/2] method call succeeds. The possible reasons are: local capture stops, remote end stops publishing, or video data processing is blocked.
+        /// -3: Calling the TakeSnapshot [1/2] method too frequently.
         /// </param>
         ///
         public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode)
@@ -1470,7 +1470,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Video frame rendering event callback.
         /// 
-        /// After calling the StartMediaRenderingTracing method or joining the channel, the SDK triggers this callback to report the events of video frame rendering and the indicators during the rendering process. Developers can optimize the indicators to improve the efficiency of the first video frame rendering.
+        /// After calling the StartMediaRenderingTracing method or joining a channel, the SDK triggers this callback to report the events of video frame rendering and the indicators during the rendering process. Developers can optimize the indicators to improve the efficiency of the first video frame rendering.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -1501,7 +1501,15 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
-        /// <param name="uid">  </param>
+        /// <param name="uid"> User ID who published this mixed video stream. </param>
+        ///
+        /// <param name="width"> Width (px) of the mixed video stream. </param>
+        ///
+        /// <param name="height"> Heitht (px) of the mixed video stream. </param>
+        ///
+        /// <param name="layoutCount"> The number of layout information in the mixed video stream. </param>
+        ///
+        /// <param name="layoutlist"> Layout information of a specific sub-video stream within the mixed stream. See VideoLayout. </param>
         ///
         public virtual void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {

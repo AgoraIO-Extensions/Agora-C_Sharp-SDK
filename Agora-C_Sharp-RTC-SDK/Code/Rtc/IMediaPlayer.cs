@@ -237,8 +237,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <param name="speed">
-        /// The playback speed. Agora recommends that you limit this value to a range between 50 and 400, which is defined as follows:
-        /// 50: Half the original speed.
+        /// The playback speed. Agora recommends that you set this to a value between 30 and 400, defined as follows:
+        /// 30: 0.3 times the original speed.
         /// 100: The original speed.
         /// 400: 4 times the original speed.
         /// </param>
@@ -601,7 +601,7 @@ namespace Agora.Rtc
         /// 
         /// You can call this method to switch the media resource to be played according to the current network status. For example:
         /// When the network is poor, the media resource to be played is switched to a media resource address with a lower bitrate.
-        /// When the network is good, the media resource to be played is switched to a media resource address with a higher bitrate. After calling this method, if you receive the PLAYER_EVENT_SWITCH_COMPLETE event in the OnPlayerEvent callback, the switch is successful; If you receive the PLAYER_EVENT_SWITCH_ERROR event in the OnPlayerEvent callback, the switch fails.
+        /// When the network is good, the media resource to be played is switched to a media resource address with a higher bitrate. After calling this method, if you receive the OnPlayerEvent callback report the PLAYER_EVENT_SWITCH_COMPLETE event, the switching is successful. If the switching fails, the SDK will automatically retry 3 times. If it still fails, you will receive the OnPlayerEvent callback reporting the PLAYER_EVENT_SWITCH_ERROR event indicating an error occurred during media resource switching.
         /// Ensure that you call this method after Open.
         /// To ensure normal playback, pay attention to the following when calling this method:
         /// Do not call this method when playback is paused.
@@ -611,7 +611,7 @@ namespace Agora.Rtc
         ///
         /// <param name="src"> The URL of the media resource. </param>
         ///
-        /// <param name="syncPts"> Whether to synchronize the playback position (ms) before and after the switch: true : Synchronize the playback position before and after the switch. false : (Default) Do not synchronize the playback position before and after the switch. Make sure to set this parameter as false if you need to play live streams, or the switch fails. If you need to play on-demand streams, you can set the value of this parameter according to your scenarios. </param>
+        /// <param name="syncPts"> Whether to synchronize the playback position (ms) before and after the switch: true : Synchronize the playback position before and after the switch. false : (Default) Do not synchronize the playback position before and after the switch. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -624,7 +624,9 @@ namespace Agora.Rtc
         /// <summary>
         /// Preloads a media resource.
         /// 
-        /// You can call this method to preload a media resource into the playlist. If you need to preload multiple media resources, you can call this method multiple times. If the preload is successful and you want to play the media resource, call PlayPreloadedSrc; if you want to clear the playlist, call Stop. Agora does not support preloading duplicate media resources to the playlist. However, you can preload the media resources that are being played to the playlist again.
+        /// You can call this method to preload a media resource into the playlist. If you need to preload multiple media resources, you can call this method multiple times. If the preload is successful and you want to play the media resource, call PlayPreloadedSrc; if you want to clear the playlist, call Stop.
+        /// Before calling this method, ensure that you have called Open or OpenWithMediaSource to open the media resource successfully.
+        /// Agora does not support preloading duplicate media resources to the playlist. However, you can preload the media resources that are being played to the playlist again.
         /// </summary>
         ///
         /// <param name="src"> The URL of the media resource. </param>

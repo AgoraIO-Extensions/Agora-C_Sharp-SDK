@@ -155,6 +155,11 @@ namespace Agora.Rtc
         AUDIO_MIXING_REASON_STOPPED_BY_USER = 724,
 
         ///
+        /// @ignore
+        ///
+        AUDIO_MIXING_REASON_RESUMED_BY_USER = 726,
+
+        ///
         /// <summary>
         /// 0: The SDK opens music file successfully.
         /// </summary>
@@ -1487,7 +1492,7 @@ namespace Agora.Rtc
         /// (macOS only) The display ID of the screen. This parameter takes effect only when you want to capture the screen on macOS.
         /// </summary>
         ///
-        public uint displayId;
+        public long displayId;
 
         ///
         /// <summary>
@@ -1501,7 +1506,7 @@ namespace Agora.Rtc
         /// (For Windows and macOS only) Window ID. This parameter takes effect only when you want to capture the window.
         /// </summary>
         ///
-        public view_t windowId;
+        public long windowId;
 
         public ScreenCaptureParameters @params;
 
@@ -1519,7 +1524,7 @@ namespace Agora.Rtc
             this.windowId = 0;
         }
 
-        public ScreenCaptureConfiguration(bool isCaptureWindow, uint displayId, Rectangle screenRect, view_t windowId, ScreenCaptureParameters @params, Rectangle regionRect)
+        public ScreenCaptureConfiguration(bool isCaptureWindow, long displayId, Rectangle screenRect, long windowId, ScreenCaptureParameters @params, Rectangle regionRect)
         {
             this.isCaptureWindow = isCaptureWindow;
             this.displayId = displayId;
@@ -1668,7 +1673,7 @@ namespace Agora.Rtc
         /// The window ID for a window or the display ID for a screen.
         /// </summary>
         ///
-        public view_t sourceId;
+        public long sourceId;
 
         ///
         /// <summary>
@@ -1734,7 +1739,7 @@ namespace Agora.Rtc
         /// (For Windows only) Screen ID where the window is located. If the window is displayed across multiple screens, this parameter indicates the ID of the screen with which the window has the largest intersection area. If the window is located outside of the visible screens, the value of this member is -2.
         /// </summary>
         ///
-        public view_t sourceDisplayId;
+        public long sourceDisplayId;
 
         public ScreenCaptureSourceInfo()
         {
@@ -1746,10 +1751,10 @@ namespace Agora.Rtc
             this.primaryMonitor = false;
             this.isOccluded = false;
             this.minimizeWindow = false;
-            this.sourceDisplayId = AgoraUtil.ConvertNegativeToUInt64(-2);
+            this.sourceDisplayId = -2;
         }
 
-        public ScreenCaptureSourceInfo(ScreenCaptureSourceType type, view_t sourceId, string sourceName, ThumbImageBuffer thumbImage, ThumbImageBuffer iconImage, string processPath, string sourceTitle, bool primaryMonitor, bool isOccluded, Rectangle position, bool minimizeWindow, view_t sourceDisplayId)
+        public ScreenCaptureSourceInfo(ScreenCaptureSourceType type, long sourceId, string sourceName, ThumbImageBuffer thumbImage, ThumbImageBuffer iconImage, string processPath, string sourceTitle, bool primaryMonitor, bool isOccluded, Rectangle position, bool minimizeWindow, long sourceDisplayId)
         {
             this.type = type;
             this.sourceId = sourceId;
@@ -1942,7 +1947,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The ID of the custom audio source to publish. The default value is 0. If you have set sourceNumber in SetExternalAudioSource to a value greater than 1, the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track, starting from 0.
+        /// The ID of the custom audio track to be published. The default value is 0. You can obtain the custom audio track ID through the CreateCustomAudioTrack method.
         /// </summary>
         ///
         public Optional<int> publishCustomAudioTrackId = new Optional<int>();
@@ -1983,7 +1988,9 @@ namespace Agora.Rtc
         public Optional<bool> publishTranscodedVideoTrack = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the mixed audio track: true : Publish the mixed audio track. false : Do not publish the mixed audio track.
+        /// </summary>
         ///
         public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
 
@@ -3101,6 +3108,13 @@ namespace Agora.Rtc
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_DISABLED = 2,
+
+        ///
+        /// <summary>
+        /// 3: The device is plugged in.
+        /// </summary>
+        ///
+        MEDIA_DEVICE_STATE_PLUGGED_IN = 3,
 
         ///
         /// <summary>
