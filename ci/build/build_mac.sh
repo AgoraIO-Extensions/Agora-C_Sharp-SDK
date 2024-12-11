@@ -404,7 +404,7 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_MAC_URL}
     temp_zip_name=$(basename "$NATIVE_MAC_URL")
     7za x ./${temp_zip_name} || exit 1
-    NATIVE_MAC_SRC_PATH="./_Native_SDK_for_Mac_*"
+    NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_Mac_*"
 
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
 
