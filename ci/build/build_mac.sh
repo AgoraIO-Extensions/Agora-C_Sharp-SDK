@@ -102,7 +102,7 @@ echo robot_key: $robot_key
 echo SPLIT_VISIONOS: $SPLIT_VISIONOS
 echo EXCLUDE_LIST_IN_DESKTOP $EXCLUDE_LIST_IN_DESKTOP
 echo EXCLUDE_LIST_IN_MOBILE $EXCLUDE_LIST_IN_MOBILE
-ehco BRAND $BRAND
+echo BRAND $BRAND
 
 delete_files() {
     local path=$1
