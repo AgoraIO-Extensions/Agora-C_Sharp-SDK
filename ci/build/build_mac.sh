@@ -219,12 +219,12 @@ rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/*.csproj
 
 # Android
 if [ "$IRIS_ANDROID_URL" != "" ]; then
-    if [ "$NATIVE_ANDROID_URL" == ""]; then
+    if [ "$NATIVE_ANDROID_URL" == "" ]; then
         ehco "NATIVE_ANDROID_URL is null"
         exit 1
     fi
 
-    if ["$IRIS_ANDROID_URL" != *"Standalone"* ]; then
+    if [ "$IRIS_ANDROID_URL" != *"Standalone"* ]; then
         echo "IRIS_ANDROID_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -296,12 +296,12 @@ fi
 # iOS
 if [ "$IRIS_IOS_URL" != "" ]; then
 
-    if [ "$NATIVE_IOS_URL" == ""]; then
+    if [ "$NATIVE_IOS_URL" == "" ]; then
         ehco "NATIVE_IOS_URL is null"
         exit 1
     fi
 
-    if ["$IRIS_IOS_URL" != *"Standalone"* ]; then
+    if [ "$IRIS_IOS_URL" != *"Standalone"* ]; then
         echo "IRIS_IOS_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -385,12 +385,12 @@ fi
 # macOS
 if [ "$IRIS_MAC_URL" != "" ]; then
 
-    if [ "$NATIVE_MAC_URL" == ""]; then
+    if [ "$NATIVE_MAC_URL" == "" ]; then
         echo "NATIVE_MAC_URL is null"
         exit 1
     fi
 
-    if ["$IRIS_MAC_URL" != *"_Unity_"* ]; then
+    if [ "$IRIS_MAC_URL" != *"_Unity_"* ]; then
         echo "IRIS_MAC_URL does not contain 'Unity'"
         exit 1
     fi
@@ -421,7 +421,7 @@ fi
 #Windows
 if [ "$IRIS_WIN_URL" != "" ]; then
 
-    if [ "$NATIVE_WIN_URL" == ""]; then
+    if [ "$NATIVE_WIN_URL" == "" ]; then
         echo "NATIVE_WIN_URL is null"
         exit 1
     fi
