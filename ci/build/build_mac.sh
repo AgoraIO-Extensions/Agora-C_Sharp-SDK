@@ -408,14 +408,16 @@ if [ "$IRIS_MAC_URL" != "" ]; then
 
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
 
+    bundle_name=(ls $IRIS_MAC_SRC_PATH/MAC/Release/)
+
     #copy iris
-    cp -PRf $IRIS_MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
-    rm -rf "$MAC_DST_PATH/*.bundle/Contents/Frameworks/*.framework"
+    cp -PRf $IRIS_MAC_SRC_PATH/MAC/Release/$bundle_name "$MAC_DST_PATH"
+    rm -rf "$MAC_DST_PATH/$bundle_name/Contents/Frameworks/*.framework"
 
     #copy native
-    cp -PRf $NATIVE_MAC_SRC_PATH/libs/*.xcframework/macos-arm64_x86_64/*.framework $MAC_DST_PATH/*.bundle/Contents/Frameworks
+    cp -PRf $NATIVE_MAC_SRC_PATH/libs/*.xcframework/macos-arm64_x86_64/*.framework $MAC_DST_PATH/$bundle_name/Contents/Frameworks
 
-    delete_files "$MAC_DST_PATH"/*.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
+    delete_files "$MAC_DST_PATH"/$bundle_name/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
 fi
 
 #Windows
