@@ -432,7 +432,7 @@ if [ "$IRIS_WIN_URL" != "" ]; then
     fi
 
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IRIS_WIN_URL}
-    temp_zip_name=$(basename "$NATIVE_MAC_URL")
+    temp_zip_name=$(basename "$IRIS_WIN_URL")
     7za x ./${temp_zip_name} || exit 1
     IRIS_WIN_SRC_PATH="./iris_*_Windows"
 
