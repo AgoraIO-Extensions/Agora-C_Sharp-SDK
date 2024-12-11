@@ -333,7 +333,7 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     done
 
     #copy iris ios
-    cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+    cp -PRf $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
     #copy native ios
     cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
     #remove framework
@@ -409,7 +409,7 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
 
     #copy iris
-    cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
+    cp -PRf $IRIS_MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
     rm -rf "$MAC_DST_PATH/*.bundle/Contents/Frameworks/*.framework"
 
     #copy native
