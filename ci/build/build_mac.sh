@@ -271,10 +271,10 @@ if [ "$IRIS_ANDROID_URL" != "" ]; then
         cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
     fi
 
-    cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
-    cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
-    cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
-    cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
 
     #copy iris
     cp $IRIS_ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
