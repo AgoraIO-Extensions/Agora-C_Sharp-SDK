@@ -224,7 +224,7 @@ if [ "$IRIS_ANDROID_URL" != "" ]; then
         exit 1
     fi
 
-    if [ "$IRIS_ANDROID_URL" != *"Standalone"* ]; then
+    if [[ "$IRIS_ANDROID_URL" != *"Standalone"* ]]; then
         echo "IRIS_ANDROID_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -301,7 +301,7 @@ if [ "$IRIS_IOS_URL" != "" ]; then
         exit 1
     fi
 
-    if [ "$IRIS_IOS_URL" != *"Standalone"* ]; then
+    if [[ "$IRIS_IOS_URL" != *"Standalone"* ]]; then
         echo "IRIS_IOS_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -390,7 +390,7 @@ if [ "$IRIS_MAC_URL" != "" ]; then
         exit 1
     fi
 
-    if [ "$IRIS_MAC_URL" != *"_Unity_"* ]; then
+    if [[ "$IRIS_MAC_URL" != *"_Unity_"* ]]; then
         echo "IRIS_MAC_URL does not contain 'Unity'"
         exit 1
     fi
@@ -426,7 +426,7 @@ if [ "$IRIS_WIN_URL" != "" ]; then
         exit 1
     fi
 
-    if [ "$IRIS_WIN_URL" != *"Standalone"* ]; then
+    if [[ "$IRIS_WIN_URL" != *"Standalone"* ]]; then
         echo "IRIS_WIN_URL does not contain 'Standalone'"
         exit 1
     fi
