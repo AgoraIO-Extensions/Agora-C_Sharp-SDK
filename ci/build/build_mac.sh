@@ -328,7 +328,7 @@ if [ "$IRIS_IOS_URL" != "" ]; then
         extension=${filename##*.}
         basename=${filename%.*}
         if [ "$extension" == "framework" ]; then
-            lipo -remove x86_64 $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
+            lipo -remove x86_64 $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
         fi
     done
 
