@@ -413,7 +413,7 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     rm -rf "$MAC_DST_PATH/*.bundle/Contents/Frameworks/*.framework"
 
     #copy native
-    cp -PRf $NATIVE_MAC_SRC_PATH/lib/*.xcframework/macos-arm64_x86_64/*.framework $MAC_DST_PATH/*.bundle/Contents/Frameworks
+    cp -PRf $NATIVE_MAC_SRC_PATH/libs/*.xcframework/macos-arm64_x86_64/*.framework $MAC_DST_PATH/*.bundle/Contents/Frameworks
 
     delete_files "$MAC_DST_PATH"/*.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
 fi
