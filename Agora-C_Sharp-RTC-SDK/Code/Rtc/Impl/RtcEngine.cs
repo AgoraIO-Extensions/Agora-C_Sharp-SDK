@@ -3412,6 +3412,24 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SendAudioMetadataEx(connection, metadata, length);
         }
+
+        public override int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadEffectEx(connection, soundId, filePath, startPos);
+        }
+
+        public override int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
+        }
         #endregion terra IRtcEngineEx
 
         public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)

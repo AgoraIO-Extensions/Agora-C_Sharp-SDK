@@ -6232,6 +6232,47 @@ namespace Agora.Rtc
             arrayPtrHandle.Free();
             return result;
         }
+
+        public int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
+        {
+            _param.Clear();
+            _param.Add("connection", connection);
+            _param.Add("soundId", soundId);
+            _param.Add("filePath", filePath);
+            _param.Add("startPos", startPos);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_PRELOADEFFECTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
+        {
+            _param.Clear();
+            _param.Add("connection", connection);
+            _param.Add("soundId", soundId);
+            _param.Add("filePath", filePath);
+            _param.Add("loopCount", loopCount);
+            _param.Add("pitch", pitch);
+            _param.Add("pan", pan);
+            _param.Add("gain", gain);
+            _param.Add("publish", publish);
+            _param.Add("startPos", startPos);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_PLAYEFFECTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
         #endregion terra IRtcEngineEx
 
         public int PushAudioFrame(AudioFrame frame, uint trackId)

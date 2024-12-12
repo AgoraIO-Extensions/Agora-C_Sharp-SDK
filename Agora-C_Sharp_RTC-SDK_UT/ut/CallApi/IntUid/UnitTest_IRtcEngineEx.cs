@@ -628,6 +628,35 @@ namespace Agora.Rtc.Ut
             var nRet = RtcEngineEx.SendAudioMetadataEx(connection, metadata, length);
             Assert.AreEqual(0, nRet);
         }
+
+        [Test]
+        public void Test_PreloadEffectEx()
+        {
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            int soundId = ParamsHelper.CreateParam<int>();
+            string filePath = ParamsHelper.CreateParam<string>();
+            int startPos = ParamsHelper.CreateParam<int>();
+
+            var nRet = RtcEngineEx.PreloadEffectEx(connection, soundId, filePath, startPos);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_PlayEffectEx()
+        {
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            int soundId = ParamsHelper.CreateParam<int>();
+            string filePath = ParamsHelper.CreateParam<string>();
+            int loopCount = ParamsHelper.CreateParam<int>();
+            double pitch = ParamsHelper.CreateParam<double>();
+            double pan = ParamsHelper.CreateParam<double>();
+            int gain = ParamsHelper.CreateParam<int>();
+            bool publish = ParamsHelper.CreateParam<bool>();
+            int startPos = ParamsHelper.CreateParam<int>();
+
+            var nRet = RtcEngineEx.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
+            Assert.AreEqual(0, nRet);
+        }
         #endregion terra IRtcEngineEx
     }
 
