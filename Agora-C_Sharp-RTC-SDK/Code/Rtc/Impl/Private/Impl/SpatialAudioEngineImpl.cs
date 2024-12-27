@@ -31,6 +31,11 @@ namespace Agora.Rtc
             _rtcEngine = rtcEngine;
         }
 
+        public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
+            _irisApiEngine = irisApiEngine;
+        }
+
         ~LocalSpatialAudioEngineImpl()
         {
             Dispose();

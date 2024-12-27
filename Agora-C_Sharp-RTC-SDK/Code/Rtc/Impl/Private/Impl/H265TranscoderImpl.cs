@@ -38,6 +38,11 @@ namespace Agora.Rtc
             _irisApiEngine = irisApiEngine;
         }
 
+        public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
+            _irisApiEngine = irisApiEngine;
+        }
+
         ~H265TranscoderImpl()
         {
             Dispose(false);

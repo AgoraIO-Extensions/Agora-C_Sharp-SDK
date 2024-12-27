@@ -22,6 +22,11 @@ namespace Agora.Rtc
             _mediaPlayerImpl = impl;
         }
 
+        public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
+            _irisApiEngine = irisApiEngine;
+        }
+
         ~MusicPlayerImpl()
         {
             Dispose(false);

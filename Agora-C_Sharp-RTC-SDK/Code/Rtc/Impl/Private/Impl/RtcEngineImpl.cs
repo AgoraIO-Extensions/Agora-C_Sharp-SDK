@@ -12,7 +12,7 @@ using AOT;
 namespace Agora.Rtc
 {
     using track_id_t = System.UInt32;
-    using IrisRtcEnginePtr = IntPtr;
+    using IrisApiEnginePtr = IntPtr;
     using RtcEngineHandler = IntPtr;
     using IrisRtcRenderingHandle = IntPtr;
     using view_t = System.UInt64;
@@ -22,7 +22,7 @@ namespace Agora.Rtc
         private bool _disposed = false;
         private static RtcEngineImpl engineInstance = null;
 
-        private IrisRtcEnginePtr _irisRtcEngine;
+        private IrisApiEnginePtr _irisRtcEngine;
         //IRtcEngine * 
         private RtcEngineHandler _rtcEngine;
         private IrisRtcCApiParam _apiParam;
@@ -85,8 +85,26 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
 
+            //todo
             _rtcRenderingHandle = AgoraRtcNative.CreateIrisRtcRendering(_irisRtcEngine);
         }
+
+        private void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
+            _irisRtcEngine = irisApiEngine;
+            _videoDeviceManagerInstance.SetIrisApiEngine(irisApiEngine);
+            _audioDeviceManagerInstance.SetIrisApiEngine(irisApiEngine);
+            _mediaPlayerInstance.SetIrisApiEngine(irisApiEngine);
+            _musicContentCenterImpl.SetIrisApiEngine(irisApiEngine);
+            _spatialAudioEngineInstance.SetIrisApiEngine(irisApiEngine);
+            _h265TranscoderImpl.SetIrisApiEngine(irisApiEngine);
+            _mediaPlayerCacheManager.SetIrisApiEngine(irisApiEngine);
+            _mediaRecorderInstance.SetIrisApiEngine(irisApiEngine);
+            _rtcRenderingHandle = AgoraRtcNative.CreateIrisRtcRendering(_irisRtcEngine);
+        }
+
+
+
 
         ~RtcEngineImpl()
         {
@@ -240,7 +258,7 @@ namespace Agora.Rtc
             }
         }
 
-        internal IrisRtcEnginePtr GetIrisHandler()
+        internal IrisApiEnginePtr GetIrisHandler()
         {
             return _irisRtcEngine;
         }

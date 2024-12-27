@@ -18,6 +18,11 @@ namespace Agora.Rtc
             _irisApiEngine = irisApiEngine;
         }
 
+        public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
+            _irisApiEngine = irisApiEngine;
+        }
+
         ~AudioDeviceManagerImpl()
         {
             Dispose(false);
