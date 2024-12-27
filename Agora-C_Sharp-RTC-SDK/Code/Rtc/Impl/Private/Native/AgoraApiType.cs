@@ -259,6 +259,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SENDSTREAMMESSAGE = "RtcEngine_sendStreamMessage_8715a45";
         internal const string FUNC_RTCENGINE_ADDVIDEOWATERMARK = "RtcEngine_addVideoWatermark_eaef16d";
         internal const string FUNC_RTCENGINE_ADDVIDEOWATERMARK2 = "RtcEngine_addVideoWatermark_7480410";
+        internal const string FUNC_RTCENGINE_ADDVIDEOWATERMARK3 = "RtcEngine_addVideoWatermark_d3b69c4";
         internal const string FUNC_RTCENGINE_CLEARVIDEOWATERMARKS = "RtcEngine_clearVideoWatermarks";
         internal const string FUNC_RTCENGINE_PAUSEAUDIO = "RtcEngine_pauseAudio";
         internal const string FUNC_RTCENGINE_RESUMEAUDIO = "RtcEngine_resumeAudio";
@@ -340,6 +341,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_CREATEDATASTREAMEX2 = "RtcEngineEx_createDataStreamEx_9f641b6";
         internal const string FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX = "RtcEngineEx_sendStreamMessageEx_0c34857";
         internal const string FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX = "RtcEngineEx_addVideoWatermarkEx_ad7daa3";
+        internal const string FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX2 = "RtcEngineEx_addVideoWatermarkEx_c1875b9";
         internal const string FUNC_RTCENGINEEX_CLEARVIDEOWATERMARKEX = "RtcEngineEx_clearVideoWatermarkEx_c81e1a4";
         internal const string FUNC_RTCENGINEEX_SENDCUSTOMREPORTMESSAGEEX = "RtcEngineEx_sendCustomReportMessageEx_833b8a5";
         internal const string FUNC_RTCENGINEEX_ENABLEAUDIOVOLUMEINDICATIONEX = "RtcEngineEx_enableAudioVolumeIndicationEx_ac84f2a";

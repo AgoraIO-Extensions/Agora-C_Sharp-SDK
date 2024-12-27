@@ -23,7 +23,8 @@
         "LocalAccessPointConfiguration.domainList": "string[]",
         "Music.lyricList": "int[]",
         "Music.climaxSegmentList": "ClimaxSegment[]",
-        "Music.mvPropertyList": "MvProperty[]"
+        "Music.mvPropertyList": "MvProperty[]",
+        "ImageBuffer.buffer": "byte[]"
     },
     "special_method_param": {
         "IRtcEngine.getVersion.build": "ref int",
@@ -146,9 +147,11 @@
         "IMediaPlayerCustomDataProvider.onReadData.buffer": "IntPtr",
         "IMetadataObserver.onReadyToSendMetadata.metadata": "ref Metadata",
         "UserAudioSpectrumInfo.UserAudioSpectrumInfo.data": "float[]",
-        "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove"
+        "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove",
+        "ImageBuffer.ImageBuffer.buffer": "byte[]"
     },
     "normal": {
+        "base::VIDEO_MODULE_POSITION": "VIDEO_MODULE_POSITION",
         "char*": "string",
         "char const*": "string",
         "const char*": "string",

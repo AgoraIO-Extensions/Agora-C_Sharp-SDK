@@ -2423,6 +2423,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.AddVideoWatermark(watermarkUrl, options);
         }
 
+        public override int AddVideoWatermark(ImageBuffer watermarkImageBuffer, WatermarkOptions options)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.AddVideoWatermark(watermarkImageBuffer, options);
+        }
+
         public override int ClearVideoWatermarks()
         {
             if (_rtcEngineImpl == null)
@@ -3127,6 +3136,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.AddVideoWatermarkEx(watermarkUrl, options, connection);
+        }
+
+        public override int AddVideoWatermarkEx(ImageBuffer watermarkImageBuffer, WatermarkOptions options, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.AddVideoWatermarkEx(watermarkImageBuffer, options, connection);
         }
 
         public override int ClearVideoWatermarkEx(RtcConnection connection)

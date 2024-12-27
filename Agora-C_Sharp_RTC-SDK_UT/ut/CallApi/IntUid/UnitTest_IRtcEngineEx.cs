@@ -357,6 +357,17 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_AddVideoWatermarkEx2()
+        {
+            ImageBuffer watermarkImageBuffer = ParamsHelper.CreateParam<ImageBuffer>();
+            WatermarkOptions options = ParamsHelper.CreateParam<WatermarkOptions>();
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = RtcEngineEx.AddVideoWatermarkEx(watermarkImageBuffer, options, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_ClearVideoWatermarkEx()
         {
             RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();

@@ -17,11 +17,12 @@ namespace Agora.Rtc
         internal static void SetEventHandler(IRtcEngineEventHandler handler)
         {
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-lock (observerLock){
+            lock (observerLock)
+            {
 #endif
-            rtcEngineEventHandler = handler;
+                rtcEngineEventHandler = handler;
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-}
+            }
 #endif
         }
 
@@ -35,29 +36,30 @@ lock (observerLock){
         internal static void OnEvent(IntPtr param)
         {
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-lock (observerLock){
+            lock (observerLock)
+            {
 #endif
-            if (rtcEngineEventHandler == null)
-                return;
+                if (rtcEngineEventHandler == null)
+                    return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null)
                 return;
 #endif
 
-            IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
-            string @event = eventParam.@event;
-            string data = eventParam.data;
+                string @event = eventParam.@event;
+                string data = eventParam.data;
 
-            LitJson.JsonData jsonData = null;
-            if (data != null)
-            {
-                jsonData = AgoraJson.ToObject(data);
-            }
+                LitJson.JsonData jsonData = null;
+                if (data != null)
+                {
+                    jsonData = AgoraJson.ToObject(data);
+                }
 
-            OnRtcEngineEvent(@event, jsonData);
+                OnRtcEngineEvent(@event, jsonData);
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-}
+            }
 #endif
         }
 
@@ -1689,65 +1691,66 @@ CallbackObject._CallbackQueue.EnQueue(() => {
         internal static void OnEventForDirectCdnStreaming(IntPtr param)
         {
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-lock (observerLock){
+            lock (observerLock)
+            {
 #endif
-            if (rtcEngineEventHandler == null)
-                return;
+                if (rtcEngineEventHandler == null)
+                    return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (CallbackObject == null || CallbackObject._CallbackQueue == null)
                 return;
 #endif
 
-            IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
-            string @event = eventParam.@event;
-            string data = eventParam.data;
+                string @event = eventParam.@event;
+                string data = eventParam.data;
 
-            LitJson.JsonData jsonData = null;
-            if (data != null)
-            {
-                jsonData = AgoraJson.ToObject(data);
-            }
+                LitJson.JsonData jsonData = null;
+                if (data != null)
+                {
+                    jsonData = AgoraJson.ToObject(data);
+                }
 
-            switch (@event)
-            {
+                switch (@event)
+                {
 
-                #region terra IDirectCdnStreamingEventHandler
-                case AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED:
-                    {
+                    #region terra IDirectCdnStreamingEventHandler
+                    case AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED:
+                        {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnDirectCdnStreamingStateChanged(
-                        (DIRECT_CDN_STREAMING_STATE)AgoraJson.GetData<int>(jsonData, "state"),
-                        (DIRECT_CDN_STREAMING_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
-                        (string)AgoraJson.GetData<string>(jsonData, "message")
-                        );
+                            if (rtcEngineEventHandler == null) return;
+                            rtcEngineEventHandler.OnDirectCdnStreamingStateChanged(
+                            (DIRECT_CDN_STREAMING_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                            (DIRECT_CDN_STREAMING_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
+                            (string)AgoraJson.GetData<string>(jsonData, "message")
+                            );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 }); 
 #endif
-                        break;
-                    }
+                            break;
+                        }
 
-                case AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS:
-                    {
+                    case AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS:
+                        {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnDirectCdnStreamingStats(
-                        AgoraJson.JsonToStruct<DirectCdnStreamingStats>(jsonData, "stats")
-                        );
+                            if (rtcEngineEventHandler == null) return;
+                            rtcEngineEventHandler.OnDirectCdnStreamingStats(
+                            AgoraJson.JsonToStruct<DirectCdnStreamingStats>(jsonData, "stats")
+                            );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 }); 
 #endif
-                        break;
-                    }
-                    #endregion terra IDirectCdnStreamingEventHandler
-            }
+                            break;
+                        }
+                        #endregion terra IDirectCdnStreamingEventHandler
+                }
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-}
+            }
 #endif
         }
     }

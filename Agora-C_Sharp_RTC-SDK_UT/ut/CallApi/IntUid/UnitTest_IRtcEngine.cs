@@ -2310,6 +2310,16 @@ namespace Agora.Rtc.Ut
         }
 
         [Test]
+        public void Test_IRtcEngine_AddVideoWatermark3()
+        {
+            ImageBuffer watermarkImageBuffer = ParamsHelper.CreateParam<ImageBuffer>();
+            WatermarkOptions options = ParamsHelper.CreateParam<WatermarkOptions>();
+
+            var nRet = RtcEngine.AddVideoWatermark(watermarkImageBuffer, options);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IRtcEngine_ClearVideoWatermarks()
         {
 

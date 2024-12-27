@@ -23,7 +23,8 @@
             "registerMediaMetadataObserver",
             "unregisterMediaMetadataObserver",
             "registerAudioEncodedFrameObserver",
-            "startDirectCdnStreaming"
+            "startDirectCdnStreaming",
+            "addVideoWatermark"
         ],
         "specialMethodsTemplate": {
             "queryCodecCapability": "method_interface_impl_queryCodecCapability",
@@ -49,7 +50,8 @@
             "registerPacketObserver",
             "registerEventHandler",
             "unregisterEventHandler",
-            "joinChannelWithUserAccountEx"
+            "joinChannelWithUserAccountEx",
+            "addVideoWatermarkEx"
         ],
         "specialMethodsTemplate": {
             "sendStreamMessageEx": "method_interface_impl_sendStreamMessage",
