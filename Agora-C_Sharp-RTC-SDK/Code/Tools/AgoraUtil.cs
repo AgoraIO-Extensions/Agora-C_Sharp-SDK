@@ -14,6 +14,8 @@ namespace Agora.Rtm
     using LitJson;
     using IrisEventHandlerMarshal = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
+    using UnityEngine;
+
     public class AgoraJson
     {
         private const string ErrorTag = "AgoraJsonError";
@@ -240,7 +242,7 @@ namespace Agora.Rtm
             return new JsonData();
         }
 
-        public static void WriteEnum(LitJson.JsonWriter writer, Object obj)
+        public static void WriteEnum(LitJson.JsonWriter writer, System.Object obj)
         {
             Type obj_type = obj.GetType();
             Type e_type = Enum.GetUnderlyingType(obj_type);
@@ -302,4 +304,23 @@ namespace Agora.Rtm
         }
 
     }
+
+#if UNITY_OPENHARMONY
+    public class AgoraOhosUntil
+    {
+        /*
+        'ohos.permission.INTERNET',
+        'ohos.permission.MICROPHONE',
+        "ohos.permission.CAMERA",
+        "ohos.permission.WRITE_MEDIA",
+        "ohos.permission.READ_MEDIA",
+        "ohos.permission.CAPTURE_SCREEN"
+        */
+        public static void RequestOhosPermission(string permission)
+        {
+            OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
+            AgoraRtcWrapperNative.CallStatic("requestPermission", permission);
+        }
+    }
+#endif
 }

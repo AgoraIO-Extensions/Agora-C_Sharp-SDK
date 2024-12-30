@@ -1,6 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+#if UNITY_OPENHARMONY
+using UnityEngine;
+#endif
 
 namespace Agora.Rtc
 {
@@ -34,8 +37,9 @@ namespace Agora.Rtc
     internal static class AgoraRtcNative
     {
         #region DllImport
-
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if UNITY_OPENHARMONY
+        public const string AgoraRtcLibName = "AgoraRtcWrapper";
+#elif UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN                                         
         public const string AgoraRtcLibName = "AgoraRtcWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         public const string AgoraRtcLibName = "AgoraRtcWrapperUnity";
@@ -62,6 +66,12 @@ namespace Agora.Rtc
             string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtcCApiParam apiParam,
             uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0, uint buffer3Length = 0)
         {
+            if (engine_ptr == IntPtr.Zero)
+            {
+                AgoraLog.LogError("iris api engine is null");
+                return -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
+            }
+
             apiParam.@event = func_name;
             apiParam.data = @params;
             apiParam.data_size = paramLength;
@@ -235,6 +245,23 @@ namespace Agora.Rtc
         IntPtr imageBuffer, ulong length, ref IrisEncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId);
         #endregion
 
+#if UNITY_OPENHARMONY
+        #region ohos
+        internal static string CreateOhosRtcEngine(RtcEngineContext context)
+        {
+            OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
+            string json = AgoraJson.ToJson<RtcEngineContext>(context);
+            string nativeHandler = AgoraRtcWrapperNative.CallStatic<string>("createOhosRtcEngine", json);
+            return nativeHandler;
+        }
+
+        internal static bool DestroyOhosRtcEngine()
+        {
+            OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
+            return AgoraRtcWrapperNative.CallStatic<bool>("destroyOhosRtcEngine");
+        }
+        #endregion
+#endif
     }
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -262,7 +289,7 @@ namespace Agora.Rtc
         {
             get
             {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
                 return Marshal.PtrToStringAnsi(result);
 #else
                 return StringFromNativeUtf8(result);

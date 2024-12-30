@@ -1,0 +1,152 @@
+import { RtcEngineEx, RtcEngineConfig, LogConfig, RtcEngine } from '@shengwang/rtc-full';
+import { JSON } from '@kit.ArkTS';
+import hilog from '@ohos.hilog';
+import bundleManager from '@ohos.bundle.bundleManager';
+import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
+import { BusinessError } from '@ohos.base';
+import { TuanjiePermissions } from './utils/TuanjiePermissions'
+
+async function checkAccessToken(permission: Permissions): Promise<abilityAccessCtrl.GrantStatus> {
+  let atManager = abilityAccessCtrl.createAtManager();
+  let grantStatus: abilityAccessCtrl.GrantStatus = abilityAccessCtrl.GrantStatus.PERMISSION_DENIED;
+  // 获取应用程序的accessTokenID
+  let tokenId: number = 0;
+  try {
+    let bundleInfo: bundleManager.BundleInfo =
+      await bundleManager.getBundleInfoForSelf(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION);
+    let appInfo: bundleManager.ApplicationInfo = bundleInfo.appInfo;
+    tokenId = appInfo.accessTokenId;
+  } catch (error) {
+    let err: BusinessError = error as BusinessError;
+    console.error(`Failed to get bundle info for self. Code is ${err.code}, message is ${err.message}`);
+  }
+
+  // 校验应用是否被授予权限
+  try {
+    grantStatus = await atManager.checkAccessToken(tokenId, permission);
+  } catch (error) {
+    let err: BusinessError = error as BusinessError;
+    console.error(`Failed to check access token. Code is ${err.code}, message is ${err.message}`);
+  }
+
+  return grantStatus;
+}
+
+class UnityLogConfig {
+  public filePath: string = "";
+  public fileSizeInKB: number = 1024;
+  public level: number = 0x0001;
+}
+
+class UnityRtcEngineContext {
+  public appId: string = "";
+  public channelProfile: number = 0;
+  public license: string = "";
+  public audioScenario: number = 0;
+  public areaCode: number = 0xFFFFFFFF;
+  public logConfig: UnityLogConfig = new LogConfig();
+  public threadPriority: number | null = null;
+  public useExternalEglContext: boolean = false;
+  public domainLimit: boolean = false;
+  public autoRegisterAgoraExtensions: boolean = false;
+}
+
+class AgoraRtcWrapperNative {
+  public static rtcEngine: RtcEngineEx | null = null;
+
+  public static createOhosRtcEngine(params: string): string {
+    hilog.info(0x0000, "AgoraRtcWrapperNative", "createOhosRtcEngine");
+    if (AgoraRtcWrapperNative.rtcEngine != null) {
+      hilog.error(0x0000, "AgoraRtcWrapperNative", "rtcEngine already created");
+      return "";
+    }
+
+    let unityContext: UnityRtcEngineContext = JSON.parse(params) as UnityRtcEngineContext;
+    let rtcEngineConfig: RtcEngineConfig = new RtcEngineConfig();
+
+    let context: Context = globalThis.context;
+    if (context == null) {
+      hilog.error(0x0000, "AgoraRtcWrapperNative", "context is null");
+    }
+
+    rtcEngineConfig.mContext = context;
+    rtcEngineConfig.mAppId = unityContext.appId;
+    rtcEngineConfig.mLogConfig = new LogConfig();
+    rtcEngineConfig.mLogConfig.filePath = unityContext.logConfig.filePath;
+    rtcEngineConfig.mLogConfig.fileSizeInKB = unityContext.logConfig.fileSizeInKB;
+    rtcEngineConfig.mLogConfig.level = unityContext.logConfig.level;
+    rtcEngineConfig.areaCode = unityContext.areaCode;
+    AgoraRtcWrapperNative.rtcEngine = RtcEngine.create(rtcEngineConfig) as RtcEngineEx;
+    let nativeHandler: bigint = AgoraRtcWrapperNative.rtcEngine.getNativeHandle();
+    return nativeHandler.toString();
+  }
+
+  public static enableVideo(): number {
+    if (AgoraRtcWrapperNative.rtcEngine != null) {
+      return AgoraRtcWrapperNative.rtcEngine.enableVideo();
+    }
+    return -7;
+  }
+
+  public static disableVideo(): number {
+    if (AgoraRtcWrapperNative.rtcEngine != null) {
+      return AgoraRtcWrapperNative.rtcEngine.disableVideo();
+    }
+    return -7;
+  }
+
+  public static destroyOhosRtcEngine(): boolean {
+    hilog.info(0x0000, "AgoraRtcWrapperNative", "destroyOhosRtcEngine");
+    if (AgoraRtcWrapperNative.rtcEngine != null) {
+      RtcEngine.destroySync();
+      AgoraRtcWrapperNative.rtcEngine = null;
+      return true;
+    }
+    return false;
+  }
+
+  private static requestPermission(permissionStr: string) {
+    hilog.info(0x0000, 'AgoraRtcWrapperNative', `requestPermission:${permissionStr}}`);
+    // TuanjiePermissions.requestUserPermissions(permissionStr, 1,1);
+    let context: Context = globalThis.context;
+    if (context == null) {
+      hilog.error(0x0000, "AgoraRtcWrapperNative", "context is null");
+    }
+    let permission = permissionStr as Permissions;
+    let atManager = abilityAccessCtrl.createAtManager();
+    let granted: boolean = false;
+    checkAccessToken(permission).then((value) => {
+      if (value == abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED) {
+        granted = true;
+        hilog.info(0x0000, 'AgoraRtcWrapperNative', '%{public}s', 'Permission granted');
+      } else {
+        atManager.requestPermissionsFromUser(context, [permission]).then((data) => {
+          let grantStatus: Array<number> = data.authResults;
+          let length: number = grantStatus.length;
+          for (let i = 0; i < length; i++) {
+            if (grantStatus[i] === 0) {
+              // 用户授权，可以继续访问目标操作
+            } else {
+              // 用户拒绝授权，提示用户必须授权才能访问当前页面的功能，并引导用户到系统设置中打开相应的权限
+              hilog.info(0x0000, 'AgoraRtcWrapperNative', '%{public}s', 'Permission denied');
+              return;
+            }
+          }
+          // 授权成功
+        }).catch((err: BusinessError) => {
+          hilog.info(0x0000, 'AgoraRtcWrapperNative', '%{public}s',
+            `Failed to request permissions from user. Code is ${err.code}, message is ${err.message}`);
+        })
+      }
+    })
+  }
+}
+
+
+export function RegisterAgoraRtcWrapperNative() {
+  let register: Record<string, Object> = {};
+  register["AgoraRtcWrapperNative"] = AgoraRtcWrapperNative;
+  return register;
+}
+
+

@@ -5,7 +5,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
 using AOT;
 #endif
 
@@ -29,7 +29,7 @@ namespace Agora.Rtc
 
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         private AgoraCallbackObject _callbackObject;
 #endif
         // DirectCdnStreamingEventHandler
@@ -69,13 +69,17 @@ namespace Agora.Rtc
             _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
 
-            // AgoraRtcNative.CreateApiParamsPtr();
+#if UNITY_OPENHARMONY
+            _irisRtcEngine = IntPtr.Zero;
+#else
             _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(nativePtr);
+
             var ret = this.GetNativeHandler(ref _rtcEngine);
             if (ret != 0)
             {
                 AgoraLog.LogError("GetNativeHandler failed: " + ret);
             }
+#endif
             _videoDeviceManagerInstance = new VideoDeviceManagerImpl(_irisRtcEngine);
             _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
             _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
@@ -85,13 +89,21 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
 
-            //todo
+#if UNITY_OPENHARMONY
+            _rtcRenderingHandle = IntPtr.Zero;
+#else
             _rtcRenderingHandle = AgoraRtcNative.CreateIrisRtcRendering(_irisRtcEngine);
+#endif
         }
 
         private void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
         {
             _irisRtcEngine = irisApiEngine;
+            var ret = this.GetNativeHandler(ref _rtcEngine);
+            if (ret != 0)
+            {
+                AgoraLog.LogError("GetNativeHandler failed: " + ret);
+            }
             _videoDeviceManagerInstance.SetIrisApiEngine(irisApiEngine);
             _audioDeviceManagerInstance.SetIrisApiEngine(irisApiEngine);
             _mediaPlayerInstance.SetIrisApiEngine(irisApiEngine);
@@ -168,13 +180,16 @@ namespace Agora.Rtc
             /// You must release callbackObject after you release eventhandler.
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             if (_callbackObject != null)
             {
                 _callbackObject.Release();
                 _callbackObject = null;
                 RtcEngineEventHandlerNative.CallbackObject = null;
             }
+#endif
+#if UNITY_OPENHARMONY
+            AgoraRtcNative.DestroyOhosRtcEngine();
 #endif
             _disposed = true;
         }
@@ -206,7 +221,7 @@ namespace Agora.Rtc
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero)
                 return 0;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             if (_callbackObject == null)
             {
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
@@ -280,6 +295,17 @@ namespace Agora.Rtc
 
         public int Initialize(RtcEngineContext context)
         {
+#if UNITY_OPENHARMONY
+            string nativeRtcEngineHandle = AgoraRtcNative.CreateOhosRtcEngine(context);
+            UInt64 uint64Value = UInt64.Parse(nativeRtcEngineHandle);
+            byte[] byteArray = BitConverter.GetBytes(uint64Value);
+            Int64 int64Value = BitConverter.ToInt64(byteArray);
+            IntPtr ptr = new IntPtr(int64Value);
+            IntPtr irisApiEngine = AgoraRtcNative.CreateIrisApiEngine(ptr);
+            SetIrisApiEngine(irisApiEngine);
+#endif
+
+
             _param.Clear();
             _param.Add("context", context);
 
@@ -292,7 +318,7 @@ namespace Agora.Rtc
                 ref _apiParam);
             var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             if (ret == 0)
             {
                 SetAppType(AppType.APP_TYPE_UNITY);
@@ -762,7 +788,7 @@ namespace Agora.Rtc
             return nRet;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         public int SetMaxMetadataSize(int size)
         {
             _param.Clear();
@@ -778,7 +804,7 @@ namespace Agora.Rtc
         }
 #endif
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         public int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             _param.Clear();
@@ -854,7 +880,7 @@ namespace Agora.Rtc
             return _mediaRecorderInstance;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         internal IVideoStreamManager GetVideoStreamManager()
         {
             return new VideoStreamManager(this);
@@ -1227,33 +1253,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnableVideo()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEVIDEO,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int DisableVideo()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEVIDEO,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
+        
 
         public int StartPreview()
         {
@@ -6166,6 +6166,44 @@ namespace Agora.Rtc
             return result;
         }
         #endregion terra IRtcEngineEx
+
+        public int EnableVideo()
+        {
+#if UNITY_OPENHARMONY
+            OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
+            return AgoraRtcWrapperNative.CallStatic<int>("enableVideo");
+#else
+            _param.Clear();
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEVIDEO,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+#endif
+        }
+
+        public int DisableVideo()
+        {
+#if UNITY_OPENHARMONY
+            OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
+            return AgoraRtcWrapperNative.CallStatic<int>("disableVideo");
+#else
+            _param.Clear();
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEVIDEO,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+#endif
+        }
 
         public int PushAudioFrame(AudioFrame frame, uint trackId)
         {
