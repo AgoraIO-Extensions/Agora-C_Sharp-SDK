@@ -4358,6 +4358,11 @@ namespace Agora.Rtc
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
 
         ///
+        /// @ignore
+        ///
+        public abstract int AddVideoWatermark(ImageBuffer watermarkImageBuffer, WatermarkOptions options);
+
+        ///
         /// <summary>
         /// Removes the watermark image from the video stream.
         /// </summary>

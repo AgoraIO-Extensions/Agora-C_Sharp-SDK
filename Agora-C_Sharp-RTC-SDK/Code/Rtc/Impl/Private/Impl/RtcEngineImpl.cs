@@ -4506,37 +4506,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int AddVideoWatermark(RtcImage watermark)
-        {
-            _param.Clear();
-            _param.Add("watermark", watermark);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int AddVideoWatermark(string watermarkUrl, WatermarkOptions options)
-        {
-            _param.Clear();
-            _param.Add("watermarkUrl", watermarkUrl);
-            _param.Add("options", options);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK2,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
         public int ClearVideoWatermarks()
         {
             _param.Clear();
@@ -5724,23 +5693,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
-        {
-            _param.Clear();
-            _param.Add("watermarkUrl", watermarkUrl);
-            _param.Add("options", options);
-            _param.Add("connection", connection);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
         public int ClearVideoWatermarkEx(RtcConnection connection)
         {
             _param.Clear();
@@ -6185,6 +6137,109 @@ namespace Agora.Rtc
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
             IrisEncodedVideoFrameInfo irisFrameInfo = new IrisEncodedVideoFrameInfo(videoEncodedFrameInfo);
             var result = AgoraRtcNative.IMediaEngine_PushEncodedVideoImage(_rtcEngine, bufferPtr, length, ref irisFrameInfo, videoTrackId);
+            imageBufferHandle.Free();
+            return result;
+        }
+
+        public int AddVideoWatermark(RtcImage watermark)
+        {
+            _param.Clear();
+            _param.Add("watermark", watermark);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int AddVideoWatermark(string watermarkUrl, WatermarkOptions options)
+        {
+            _param.Clear();
+            _param.Add("watermarkUrl", watermarkUrl);
+            _param.Add("options", options);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int AddVideoWatermark(ImageBuffer watermarkImageBuffer, WatermarkOptions options)
+        {
+            GCHandle imageBufferHandle = GCHandle.Alloc(watermarkImageBuffer.buffer, GCHandleType.Pinned);
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(watermarkImageBuffer.buffer, 0);
+
+            Dictionary<string, System.Object> watermarkImageBufferDic = new Dictionary<string, object>
+            {
+                { "buffer", bufferPtr },
+                { "width", watermarkImageBuffer.width },
+                { "height", watermarkImageBuffer.height },
+                { "length", watermarkImageBuffer.length },
+                { "format", watermarkImageBuffer.format }
+            };
+
+            _param.Clear();
+            _param.Add("watermarkImageBuffer", watermarkImageBufferDic);
+            _param.Add("options", options);
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK3,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            imageBufferHandle.Free();
+            return result;
+        }
+
+        public int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
+        {
+            _param.Clear();
+            _param.Add("watermarkUrl", watermarkUrl);
+            _param.Add("options", options);
+            _param.Add("connection", connection);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
+        public int AddVideoWatermarkEx(ImageBuffer watermarkImageBuffer, WatermarkOptions options, RtcConnection connection)
+        {
+            GCHandle imageBufferHandle = GCHandle.Alloc(watermarkImageBuffer.buffer, GCHandleType.Pinned);
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(watermarkImageBuffer.buffer, 0);
+
+            Dictionary<string, System.Object> watermarkImageBufferDic = new Dictionary<string, object>
+            {
+                { "buffer", bufferPtr },
+                { "width", watermarkImageBuffer.width },
+                { "height", watermarkImageBuffer.height },
+                { "length", watermarkImageBuffer.length },
+                { "format", watermarkImageBuffer.format }
+            };
+
+            _param.Clear();
+            _param.Add("watermarkImageBuffer", watermarkImageBufferDic);
+            _param.Add("options", options);
+            _param.Add("connection", connection);
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             imageBufferHandle.Free();
             return result;
         }

@@ -62,7 +62,7 @@ export class Tool {
                         }
                         else {
                             type = eachTrim;
-                            name = null;
+                            name = eachTrim.charAt(0).toLowerCase() + eachTrim.slice(1);
                         }
                         cppConstructor.parameters.push({ type, name, value });
                     }
@@ -70,7 +70,8 @@ export class Tool {
 
                 //解析初始化列表
                 let initializePos = e.indexOf(":", e.indexOf(")"));
-                if (initializePos != -1) {
+                //exclude :: 
+                if (initializePos != -1 && e[initializePos + 1] != ':') {
                     let initializeStr = e.substring(initializePos + 1, e.indexOf("{"));
                     initializeStr = initializeStr.replace(/\ +/g, "");
                     initializeStr = initializeStr.replace(/[\r\n]/g, "");
