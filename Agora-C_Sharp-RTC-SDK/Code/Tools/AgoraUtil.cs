@@ -14,8 +14,7 @@ namespace Agora.Rtm
     using LitJson;
     using IrisEventHandlerMarshal = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
-    using UnityEngine;
-
+  
     public class AgoraJson
     {
         private const string ErrorTag = "AgoraJsonError";
