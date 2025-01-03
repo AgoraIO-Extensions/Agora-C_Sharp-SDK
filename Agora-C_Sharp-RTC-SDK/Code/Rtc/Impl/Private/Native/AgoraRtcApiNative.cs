@@ -247,18 +247,17 @@ namespace Agora.Rtc
 
 #if UNITY_OPENHARMONY
         #region ohos
-        internal static string CreateOhosRtcEngine(RtcEngineContext context)
+        internal static void CreateOhosRtcEngine(RtcEngineContext context)
         {
             OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
             string json = AgoraJson.ToJson<RtcEngineContext>(context);
-            string nativeHandler = AgoraRtcWrapperNative.CallStatic<string>("createOhosRtcEngine", json);
-            return nativeHandler;
+            AgoraRtcWrapperNative.CallStatic("createOhosRtcEngine", json);
         }
 
-        internal static bool DestroyOhosRtcEngine()
+        internal static void DestroyOhosRtcEngine()
         {
             OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
-            return AgoraRtcWrapperNative.CallStatic<bool>("destroyOhosRtcEngine");
+            AgoraRtcWrapperNative.CallStatic("destroyOhosRtcEngine");
         }
         #endregion
 #endif

@@ -5,6 +5,7 @@ using System;
 using view_t = System.UInt64;
 using track_id_t = System.UInt32;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
 using UnityEngine;
 #endif
@@ -52,14 +53,16 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = null;
         }
 
-        public override void Dispose(bool sync = false)
+        public override Task<int> Dispose(bool sync = false)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(0);
+                return task.Task;
             }
 
-            _rtcEngineImpl.Dispose(sync);
+            var result =  _rtcEngineImpl.Dispose(sync);
             _rtcEngineImpl = null;
 
             AudioDeviceManager.ReleaseInstance();
@@ -74,6 +77,7 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             VideoStreamManager.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
 #endif
+            return result;
         }
 
         private static IRtcEngine instance = null;
@@ -289,11 +293,13 @@ namespace Agora.Rtc
 #endif
 
         #region terra IRtcEngine
-        public override int Initialize(RtcEngineContext context)
+        public override Task<int> Initialize(RtcEngineContext context)
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(ErrorCode);
+                return task.Task;
             }
             return _rtcEngineImpl.Initialize(context);
         }
@@ -469,20 +475,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.EnableMultiCamera(enabled, config);
         }
 
-        public override int EnableVideo()
+        public override Task<int> EnableVideo()
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
-            }
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(ErrorCode);
+                return task.Task;
+            } 
             return _rtcEngineImpl.EnableVideo();
         }
 
-        public override int DisableVideo()
+        public override Task<int> DisableVideo()
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(ErrorCode);
+                return task.Task;
             }
             return _rtcEngineImpl.DisableVideo();
         }

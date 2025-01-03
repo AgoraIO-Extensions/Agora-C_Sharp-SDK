@@ -5,6 +5,11 @@ using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
+#if UNITY_OPENHARMONY
+using UnityEngine;
+#endif
+using System.Threading.Tasks;
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
 using AOT;
 #endif
@@ -32,6 +37,12 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         private AgoraCallbackObject _callbackObject;
 #endif
+
+#if UNITY_OPENHARMONY
+        private AgoraOhosCallback _ohosCallback;
+        Dictionary<string, TaskCompletionSource<int>> _ohosTasks = new Dictionary<string, TaskCompletionSource<int>>();
+#endif
+
         // DirectCdnStreamingEventHandler
         private RtcEventHandlerHandle _rtcDirectCdnStreamingEventHandle = new RtcEventHandlerHandle();
         // rtcEventHandler
@@ -94,6 +105,12 @@ namespace Agora.Rtc
 #else
             _rtcRenderingHandle = AgoraRtcNative.CreateIrisRtcRendering(_irisRtcEngine);
 #endif
+
+#if UNITY_OPENHARMONY
+            var agoraTuanjieNode = new GameObject("AgoraTuanjieNode");
+            _ohosCallback = agoraTuanjieNode.AddComponent<AgoraOhosCallback>();
+            _ohosCallback.impl = this;
+#endif
         }
 
         private void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
@@ -116,17 +133,29 @@ namespace Agora.Rtc
         }
 
 
-
-
         ~RtcEngineImpl()
         {
+#if !UNITY_OPENHARMONY
             Dispose(false, false);
+#endif
         }
 
-        private void Dispose(bool disposing, bool sync)
+#if UNITY_OPENHARMONY
+        private Task<int> Dispose(bool disposing, bool sync)
+#else
+        private int Dispose(bool disposing, bool sync)
+#endif
         {
             if (_disposed)
-                return;
+            {
+#if UNITY_OPENHARMONY
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(0);
+                return task.Task;
+#else
+                return 0;
+#endif
+            }
 
             if (disposing)
             {
@@ -189,10 +218,30 @@ namespace Agora.Rtc
             }
 #endif
 #if UNITY_OPENHARMONY
-            AgoraRtcNative.DestroyOhosRtcEngine();
+            var result = this.DestroyOhosRtcEngine();
+#else
+            var result = 0;
 #endif
             _disposed = true;
+
+#if UNITY_OPENHARMONY
+            GameObject.DestroyImmediate(_ohosCallback.gameObject);
+            _ohosCallback = null;
+#endif
+            return result;
         }
+
+
+#if UNITY_OPENHARMONY
+        internal Task<int> DestroyOhosRtcEngine()
+        {
+            AgoraRtcNative.DestroyOhosRtcEngine();
+            var _ohosTask = new TaskCompletionSource<int>();
+            _ohosTasks.Add("destroyOhosRtcEngine", _ohosTask);
+            return _ohosTask.Task;
+        }
+#endif
+
 
         private void Release(bool sync = false)
         {
@@ -293,18 +342,70 @@ namespace Agora.Rtc
             return engineInstance;
         }
 
-        public int Initialize(RtcEngineContext context)
-        {
+
 #if UNITY_OPENHARMONY
-            string nativeRtcEngineHandle = AgoraRtcNative.CreateOhosRtcEngine(context);
+        private RtcEngineContext _context;
+
+        public void OnInitializeFinishFromOhos(string nativeRtcEngineHandle)
+        {
             UInt64 uint64Value = UInt64.Parse(nativeRtcEngineHandle);
-            byte[] byteArray = BitConverter.GetBytes(uint64Value);
-            Int64 int64Value = BitConverter.ToInt64(byteArray);
-            IntPtr ptr = new IntPtr(int64Value);
-            IntPtr irisApiEngine = AgoraRtcNative.CreateIrisApiEngine(ptr);
-            SetIrisApiEngine(irisApiEngine);
+            if (uint64Value != 0)
+            {
+                byte[] byteArray = BitConverter.GetBytes(uint64Value);
+                Int64 int64Value = BitConverter.ToInt64(byteArray);
+                IntPtr ptr = new IntPtr(int64Value);
+                IntPtr irisApiEngine = AgoraRtcNative.CreateIrisApiEngine(ptr);
+                SetIrisApiEngine(irisApiEngine);
+
+                _param.Clear();
+                _param.Add("context", _context);
+
+                var json = AgoraJson.ToJson(_param);
+
+                var nRet = AgoraRtcNative.CallIrisApiWithArgs(
+                    _irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_INITIALIZE,
+                    json, (UInt32)json.Length,
+                    IntPtr.Zero, 0,
+                    ref _apiParam);
+                var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
+                if (ret == 0)
+                {
+                    SetAppType(AppType.APP_TYPE_UNITY);
+                    Dictionary<string, object> dic = new Dictionary<string, object>
+                {
+                { "rtc.capture_disable_metal_comp", true }
+                };
+                    string parameters = AgoraJson.ToJson<Dictionary<string, object>>(dic);
+                    SetParameters(parameters);
+                }
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                if (ret == 0)
+                    SetAppType(AppType.APP_TYPE_C_SHARP);
+#endif
+                var _ohosTask = _ohosTasks["createOhosRtcEngine"];
+                _ohosTask.SetResult(0);
+                _ohosTasks.Remove("createOhosRtcEngine");
+            }
+            else
+            {
+                var _ohosTask = _ohosTasks["createOhosRtcEngine"];
+                _ohosTask.SetResult(0);
+                _ohosTasks.Remove("createOhosRtcEngine");
+            }
+        }
 #endif
 
+        public Task<int> Initialize(RtcEngineContext context)
+        {
+#if UNITY_OPENHARMONY
+            this._context = context;
+            AgoraRtcNative.CreateOhosRtcEngine(context);
+            var _ohosTask = new TaskCompletionSource<int>();
+            _ohosTasks.Add("createOhosRtcEngine", _ohosTask);
+            return _ohosTask.Task;
+#else
 
             _param.Clear();
             _param.Add("context", context);
@@ -333,7 +434,12 @@ namespace Agora.Rtc
             if (ret == 0)
                 SetAppType(AppType.APP_TYPE_C_SHARP);
 #endif
-            return ret;
+
+            var _task = new TaskCompletionSource<int>();
+            _task.SetResult(ret);
+            return _task.Task;
+#endif
+
         }
 
         private int SetAppType(AppType appType)
@@ -350,10 +456,19 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public void Dispose(bool sync = false)
+        public Task<int> Dispose(bool sync = false)
         {
-            Dispose(true, sync);
+#if UNITY_OPENHARMONY
+            var result = Dispose(true, sync);
             GC.SuppressFinalize(this);
+            return result;
+#else
+            var result = Dispose(true, sync);
+            GC.SuppressFinalize(this);
+            var task = new TaskCompletionSource<int>();
+            task.SetResult(result);
+            return task.Task;
+#endif
         }
 
         public int InitEventHandler(IRtcEngineEventHandler engineEventHandler)
@@ -1253,7 +1368,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        
+
 
         public int StartPreview()
         {
@@ -6167,14 +6282,26 @@ namespace Agora.Rtc
         }
         #endregion terra IRtcEngineEx
 
-        public int EnableVideo()
+#if UNITY_OPENHARMONY
+        public void OnCommonApiFinishFromOhos(string type, int result)
+        {
+            var _ohosTask = _ohosTasks[type];
+            _ohosTask.SetResult(result);
+            _ohosTasks.Remove(type);
+        }
+#endif
+
+        public Task<int> EnableVideo()
         {
 #if UNITY_OPENHARMONY
             OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
-            return AgoraRtcWrapperNative.CallStatic<int>("enableVideo");
+            AgoraRtcWrapperNative.CallStatic("enableVideo");
+            var _ohosTask = new TaskCompletionSource<int>();
+            _ohosTasks.Add("enableVideo", _ohosTask);
+            return _ohosTask.Task;
 #else
-            _param.Clear();
 
+            _param.Clear();
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEVIDEO,
                 json, (UInt32)json.Length,
@@ -6182,15 +6309,20 @@ namespace Agora.Rtc
                 ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
-            return result;
+            var _task = new TaskCompletionSource<int>();
+            _task.SetResult(result);
+            return _task.Task;
 #endif
         }
 
-        public int DisableVideo()
+        public Task<int> DisableVideo()
         {
 #if UNITY_OPENHARMONY
             OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
-            return AgoraRtcWrapperNative.CallStatic<int>("disableVideo");
+            AgoraRtcWrapperNative.CallStatic("disableVideo");
+            var _ohosTask = new TaskCompletionSource<int>();
+            _ohosTasks.Add("disableVideo", _ohosTask);
+            return _ohosTask.Task;
 #else
             _param.Clear();
 
@@ -6201,7 +6333,9 @@ namespace Agora.Rtc
                 ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
-            return result;
+            var _task = new TaskCompletionSource<int>();
+            _task.SetResult(result);
+            return _task.Task;
 #endif
         }
 
