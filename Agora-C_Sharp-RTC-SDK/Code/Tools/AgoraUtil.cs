@@ -5,6 +5,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Collections.Generic;
 
+#if UNITY_OPENHARMONY
+using UnityEngine;
+#endif
+
 #if AGORA_RTC
 namespace Agora.Rtc
 #elif AGORA_RTM
@@ -14,7 +18,8 @@ namespace Agora.Rtm
     using LitJson;
     using IrisEventHandlerMarshal = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
-  
+   
+
     public class AgoraJson
     {
         private const string ErrorTag = "AgoraJsonError";
