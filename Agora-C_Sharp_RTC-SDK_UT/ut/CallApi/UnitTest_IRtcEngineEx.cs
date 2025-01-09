@@ -701,7 +701,7 @@ namespace Agora.Rtc
 
             RtcConnection connection;
             ParamsHelper.InitParam(out connection);
-          
+
             var nRet = EngineEx.EnableContentInspectEx(enabled, config, connection);
 
             Assert.AreEqual(0, nRet);
@@ -726,6 +726,49 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.GetCallIdEx(ref callId, connection);
 
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_PreloadEffectEx()
+        {
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            int soundId;
+            ParamsHelper.InitParam(out soundId);
+            string filePath;
+            ParamsHelper.InitParam(out filePath);
+            int startPos;
+            ParamsHelper.InitParam(out startPos);
+
+            var nRet = EngineEx.PreloadEffectEx(connection, soundId, filePath, startPos);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_PlayEffectEx()
+        {
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            int soundId;
+            ParamsHelper.InitParam(out soundId);
+            string filePath;
+            ParamsHelper.InitParam(out filePath);
+            int loopCount;
+            ParamsHelper.InitParam(out loopCount);
+            double pitch;
+            ParamsHelper.InitParam(out pitch);
+            double pan;
+            ParamsHelper.InitParam(out pan);
+            int gain;
+            ParamsHelper.InitParam(out gain);
+            bool publish;
+            ParamsHelper.InitParam(out publish);
+            int startPos;
+            ParamsHelper.InitParam(out startPos);
+            var nRet = EngineEx.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
             Assert.AreEqual(0, nRet);
         }
 
