@@ -6277,5 +6277,10 @@ namespace Agora.Rtc
 
 
         public abstract int GetCallIdEx(ref string callId, RtcConnection connection);
+
+        public abstract int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0);
+
+        public abstract int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
+
     }
 }

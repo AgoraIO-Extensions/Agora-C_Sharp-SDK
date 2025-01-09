@@ -3482,6 +3482,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
 
+        public override int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadEffectEx(connection, soundId, filePath, startPos);
+        }
+
+        public override int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
+        }
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public override int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {

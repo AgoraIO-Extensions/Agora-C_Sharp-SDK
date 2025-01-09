@@ -2431,7 +2431,7 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("targetFps", targetFps);
-             
+
 
             var json = AgoraJson.ToJson(_param);
 
@@ -6330,6 +6330,46 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+
+        public int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos)
+        {
+            _param.Clear();
+            _param.Add("connection", connection);
+            _param.Add("soundId", soundId);
+            _param.Add("filePath", filePath);
+            _param.Add("startPos", startPos);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_PRELOADEFFECTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish, int startPos)
+        {
+            _param.Clear();
+            _param.Add("connection", connection);
+            _param.Add("soundId", soundId);
+            _param.Add("filePath", filePath);
+            _param.Add("loopCount", loopCount);
+            _param.Add("pitch", pitch);
+            _param.Add("pan", pan);
+            _param.Add("gain", gain);
+            _param.Add("publish", publish);
+            _param.Add("startPos", startPos);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_PLAYEFFECTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+        }
+
+
         public UInt64 GetNtpWallTimeInMs()
         {
             _param.Clear();
@@ -6356,6 +6396,9 @@ namespace Agora.Rtc
                 ref _apiParam);
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
         }
+
+
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public int SetMaxMetadataSize(int size)
