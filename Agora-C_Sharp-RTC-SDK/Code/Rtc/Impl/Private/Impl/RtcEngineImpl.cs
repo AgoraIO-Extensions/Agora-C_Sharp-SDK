@@ -110,6 +110,8 @@ namespace Agora.Rtc
             var agoraTuanjieNode = new GameObject("AgoraTuanjieNode");
             _ohosCallback = agoraTuanjieNode.AddComponent<AgoraOhosCallback>();
             _ohosCallback.impl = this;
+            UnityEngine.Object.DontDestroyOnLoad(agoraTuanjieNode);
+            agoraTuanjieNode.hideFlags = HideFlags.HideInHierarchy;
 #endif
         }
 
