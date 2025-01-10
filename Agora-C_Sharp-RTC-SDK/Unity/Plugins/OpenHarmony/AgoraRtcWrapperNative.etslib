@@ -1,0 +1,345 @@
+import { RtcEngineEx, RtcEngineConfig, LogConfig, RtcEngine } from '@shengwang/rtc-full';
+import { buffer, JSON, MessageEvents, ThreadWorkerGlobalScope } from '@kit.ArkTS';
+import hilog from '@ohos.hilog';
+import bundleManager from '@ohos.bundle.bundleManager';
+import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
+import { BusinessError } from '@ohos.base';
+import fs from '@ohos.file.fs';
+import worker from '@ohos.worker';
+import { TuanjieMainWorker } from './workers/TuanjieMainWorker';
+import tuanjie from 'libtuanjie.so';
+
+async function checkAccessToken(permission: Permissions): Promise<abilityAccessCtrl.GrantStatus> {
+  let atManager = abilityAccessCtrl.createAtManager();
+  let grantStatus: abilityAccessCtrl.GrantStatus = abilityAccessCtrl.GrantStatus.PERMISSION_DENIED;
+  // 获取应用程序的accessTokenID
+  let tokenId: number = 0;
+  try {
+    let bundleInfo: bundleManager.BundleInfo =
+      await bundleManager.getBundleInfoForSelf(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION);
+    let appInfo: bundleManager.ApplicationInfo = bundleInfo.appInfo;
+    tokenId = appInfo.accessTokenId;
+  } catch (error) {
+    let err: BusinessError = error as BusinessError;
+    console.error(`Failed to get bundle info for self. Code is ${err.code}, message is ${err.message}`);
+  }
+
+  // 校验应用是否被授予权限
+  try {
+    grantStatus = await atManager.checkAccessToken(tokenId, permission);
+  } catch (error) {
+    let err: BusinessError = error as BusinessError;
+    console.error(`Failed to check access token. Code is ${err.code}, message is ${err.message}`);
+  }
+
+  return grantStatus;
+}
+
+
+class AgoraMessage2Unity {
+  public type: string;
+  public data: string;
+
+  constructor(type: string, data: string) {
+    this.type = type;
+    this.data = data;
+  }
+}
+
+export class AgoraRtcWrapperNative {
+  // public static rtcEngine: RtcEngineEx | null = null;
+  public static nativeHandler: string = '';
+
+  public static onMessage(msg: MessageEvents):boolean {
+    let node: string = 'AgoraTuanjieNode'
+    let fun:string = 'OnAgoraMessageCall'
+    let type: string = msg.data.type;
+    switch (type) {
+      case 'createOhosRtcEngine': {
+        tuanjie.TuanjieSendMessage(node, fun,
+          JSON.stringify(new AgoraMessage2Unity('createOhosRtcEngine', msg.data.nativeHandler)));
+        return true;
+        break;
+      }
+      case 'enableVideo':
+      case 'disableVideo':
+      case 'destroyOhosRtcEngine':
+      {
+        tuanjie.TuanjieSendMessage(node, fun,
+          JSON.stringify(new AgoraMessage2Unity(type, msg.data.result)));
+        return true;
+        break;
+      }
+    }
+    return false;
+  }
+
+  public static createOhosRtcEngine(params: string) {
+    let worker: ThreadWorkerGlobalScope = globalThis.workerPort;
+    worker.postMessage({
+      type: "createOhosRtcEngine",
+      params
+    });
+    // hilog.info(0x0000, "AgoraRtcWrapperNative", "createOhosRtcEngine");
+    // if (AgoraRtcWrapperNative.rtcEngine != null) {
+    //   hilog.error(0x0000, "AgoraRtcWrapperNative", "rtcEngine already created");
+    //   return "";
+    // }
+    //
+    // let unityContext: UnityRtcEngineContext = JSON.parse(params) as UnityRtcEngineContext;
+    // let rtcEngineConfig: RtcEngineConfig = new RtcEngineConfig();
+    //
+    // let context: Context = globalThis.context;
+    // if (context == null) {
+    //   hilog.error(0x0000, "AgoraRtcWrapperNative", "context is null");
+    // }
+    //
+    // rtcEngineConfig.mContext = context;
+    // rtcEngineConfig.mAppId = unityContext.appId;
+    // rtcEngineConfig.mLogConfig = new LogConfig();
+    // rtcEngineConfig.mLogConfig.filePath = unityContext.logConfig.filePath;
+    // rtcEngineConfig.mLogConfig.fileSizeInKB = unityContext.logConfig.fileSizeInKB;
+    // rtcEngineConfig.mLogConfig.level = unityContext.logConfig.level;
+    // rtcEngineConfig.areaCode = unityContext.areaCode;
+    // AgoraRtcWrapperNative.rtcEngine = RtcEngine.create(rtcEngineConfig) as RtcEngineEx;
+    // let nativeHandler: bigint = AgoraRtcWrapperNative.rtcEngine.getNativeHandle();
+    // return nativeHandler.toString();
+  }
+
+  public static enableVideo() {
+    let worker: ThreadWorkerGlobalScope = globalThis.workerPort;
+    worker.postMessage({
+      type: "enableVideo",
+    });
+    // if (AgoraRtcWrapperNative.rtcEngine != null) {
+    //   return AgoraRtcWrapperNative.rtcEngine.enableVideo();
+    // }
+    // return -7;
+  }
+
+  public static disableVideo() {
+    let worker: ThreadWorkerGlobalScope = globalThis.workerPort;
+    worker.postMessage({
+      type: "disableVideo",
+    });
+    // if (AgoraRtcWrapperNative.rtcEngine != null) {
+    //   return AgoraRtcWrapperNative.rtcEngine.disableVideo();
+    // }
+    // return -7;
+  }
+
+  public static copyFileToSandBox(streamingAssetsPath: string): string {
+
+    let extractFileName: (filePath: string) => string = (filePath: string): string => {
+      // 使用 split 方法根据 '/' 分割路径字符串
+      const parts = filePath.split('/');
+      // 文件名是分割后数组的最后一个元素
+      return parts[parts.length - 1];
+    };
+
+    streamingAssetsPath = streamingAssetsPath.replace('jar:file://', '');
+    let fileName = extractFileName(streamingAssetsPath);
+    hilog.info(0x0000, "AgoraRtcWrapperNative", `streamingAssetsPath: ${streamingAssetsPath} fileName: ${fileName}`)
+    let context: Context = globalThis.context;
+    if (context == null) {
+      hilog.error(0x0000, "AgoraRtcWrapperNative", "context is null");
+    }
+    let boxPath = context.getApplicationContext().filesDir;
+    let filePath = boxPath + '/' + fileName;
+    hilog.info(0x0000, "AgoraRtcWrapperNative", `filePath: ${filePath}`)
+    let uint8Array: Uint8Array = context.resourceManager.getRawFileContentSync(streamingAssetsPath);
+    let bf = buffer.from(uint8Array).buffer;
+    const fsOpen =
+      fs.openSync(filePath, fs.OpenMode.READ_WRITE | fs.OpenMode.READ_ONLY | fs.OpenMode.CREATE | fs.OpenMode.TRUNC)
+    let destFile = fs.writeSync(fsOpen.fd, bf);
+    fs.close(destFile)
+
+    return filePath;
+  }
+
+  public static destroyOhosRtcEngine() {
+    let worker: ThreadWorkerGlobalScope = globalThis.workerPort;
+    worker.postMessage({
+      type: "destroyOhosRtcEngine",
+    });
+    // hilog.info(0x0000, "AgoraRtcWrapperNative", "destroyOhosRtcEngine");
+    // if (AgoraRtcWrapperNative.rtcEngine != null) {
+    //   RtcEngine.destroySync();
+    //   AgoraRtcWrapperNative.rtcEngine = null;
+    //   return true;
+    // }
+    // return false;
+  }
+
+  private static requestPermission(permissionStr: string) {
+    // let worker: ThreadWorkerGlobalScope = globalThis.workerPort;
+    // worker.postMessage({
+    //   type: "Agora_RequestPermission"
+    // });
+    hilog.info(0x0000, 'AgoraRtcWrapperNative', `requestPermission:${permissionStr}}`);
+    // TuanjiePermissions.requestUserPermissions(permissionStr, 1,1);
+    let context: Context = globalThis.context;
+    if (context == null) {
+      hilog.error(0x0000, "AgoraRtcWrapperNative", "context is null");
+    }
+    let permission = permissionStr as Permissions;
+    let atManager = abilityAccessCtrl.createAtManager();
+    let granted: boolean = false;
+    checkAccessToken(permission).then((value) => {
+      if (value == abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED) {
+        granted = true;
+        hilog.info(0x0000, 'AgoraRtcWrapperNative', '%{public}s', 'Permission granted');
+      } else {
+        atManager.requestPermissionsFromUser(context, [permission]).then((data) => {
+          let grantStatus: Array<number> = data.authResults;
+          let length: number = grantStatus.length;
+          for (let i = 0; i < length; i++) {
+            if (grantStatus[i] === 0) {
+              // 用户授权，可以继续访问目标操作
+            } else {
+              // 用户拒绝授权，提示用户必须授权才能访问当前页面的功能，并引导用户到系统设置中打开相应的权限
+              hilog.info(0x0000, 'AgoraRtcWrapperNative', '%{public}s', 'Permission denied');
+              return;
+            }
+          }
+          // 授权成功
+        }).catch((err: BusinessError) => {
+          hilog.info(0x0000, 'AgoraRtcWrapperNative', '%{public}s',
+            `Failed to request permissions from user. Code is ${err.code}, message is ${err.message}`);
+        })
+      }
+    })
+  }
+}
+
+class UnityLogConfig {
+  public filePath: string = "";
+  public fileSizeInKB: number = 1024;
+  public level: number = 0x0001;
+}
+
+class UnityRtcEngineContext {
+  public appId: string = "";
+  public channelProfile: number = 0;
+  public license: string = "";
+  public audioScenario: number = 0;
+  public areaCode: number = 0xFFFFFFFF;
+  public logConfig: UnityLogConfig = new UnityLogConfig();
+  public threadPriority: number | null = null;
+  public useExternalEglContext: boolean = false;
+  public domainLimit: boolean = false;
+  public autoRegisterAgoraExtensions: boolean = false;
+}
+
+export class AgoraRtcWrapperNativeRunInMainThread {
+  public static _rtcEngine: RtcEngineEx | null = null;
+
+  public static createOhosRtcEngine(params: string): string {
+    hilog.info(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "createOhosRtcEngine");
+    if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
+      hilog.error(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "rtcEngine already created");
+      return "";
+    }
+
+    let unityContext: UnityRtcEngineContext = JSON.parse(params) as UnityRtcEngineContext;
+    let rtcEngineConfig: RtcEngineConfig = new RtcEngineConfig();
+
+    let context: Context = globalThis.AbilityContext;
+    if (context == null) {
+      hilog.error(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "context is null");
+    }
+
+    rtcEngineConfig.mContext = context;
+    rtcEngineConfig.mAppId = unityContext.appId;
+    if (unityContext.logConfig.filePath != '') {
+      rtcEngineConfig.mLogConfig = new LogConfig();
+      rtcEngineConfig.mLogConfig.filePath = unityContext.logConfig.filePath;
+      rtcEngineConfig.mLogConfig.fileSizeInKB = unityContext.logConfig.fileSizeInKB;
+      rtcEngineConfig.mLogConfig.level = unityContext.logConfig.level;
+    }
+    rtcEngineConfig.areaCode = unityContext.areaCode;
+    AgoraRtcWrapperNativeRunInMainThread._rtcEngine = RtcEngine.create(rtcEngineConfig) as RtcEngineEx;
+    let nativeHandler: bigint = AgoraRtcWrapperNativeRunInMainThread._rtcEngine.getNativeHandle();
+    TuanjieMainWorker.getInstance().postMessage({
+      type: 'createOhosRtcEngine',
+      nativeHandler: nativeHandler.toString()
+    })
+    return nativeHandler.toString();
+  }
+
+  public static enableVideo() {
+    let ret:number =-7;
+    if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
+      ret = AgoraRtcWrapperNativeRunInMainThread._rtcEngine.enableVideo();
+    }
+    TuanjieMainWorker.getInstance().postMessage({
+      type: 'enableVideo',
+      result: ret
+    })
+  }
+
+  public static disableVideo() {
+    let ret:number =-7;
+    if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
+      ret =  AgoraRtcWrapperNativeRunInMainThread._rtcEngine.disableVideo();
+    }
+    TuanjieMainWorker.getInstance().postMessage({
+      type: 'disableVideo',
+      result: ret
+    })
+  }
+
+  public static destroyOhosRtcEngine() {
+    hilog.info(0x0000, "AgoraRtcWrapperNative", "destroyOhosRtcEngine");
+    let ret = -7;
+    if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
+      RtcEngine.destroySync();
+      AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
+      ret =  0;
+    }
+    TuanjieMainWorker.getInstance().postMessage({
+      type: 'destroyOhosRtcEngine',
+      result: ret
+    })
+  }
+
+
+  //true: handle this message
+  public static onMessage(msg: MessageEvents):boolean {
+    const type: string = msg.data.type;
+    switch (type) {
+      case 'createOhosRtcEngine': {
+        AgoraRtcWrapperNativeRunInMainThread.createOhosRtcEngine(msg.data.params);
+        return true;
+        break;
+      }
+      case 'enableVideo': {
+        AgoraRtcWrapperNativeRunInMainThread.enableVideo();
+        return true;
+        break;
+      }
+      case 'disableVideo': {
+        AgoraRtcWrapperNativeRunInMainThread.disableVideo();
+        return true;
+        break;
+      }
+      case 'destroyOhosRtcEngine': {
+        AgoraRtcWrapperNativeRunInMainThread.destroyOhosRtcEngine();
+        return true;
+        break;
+      }
+      default:
+        break;
+    }
+    return false
+  }
+}
+
+
+export function RegisterAgoraRtcWrapperNative() {
+  let register: Record<string, Object> = {};
+  register["AgoraRtcWrapperNative"] = AgoraRtcWrapperNative;
+  return register;
+}
+
+

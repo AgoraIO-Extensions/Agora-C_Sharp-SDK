@@ -5,7 +5,8 @@ using System;
 using view_t = System.UInt64;
 using track_id_t = System.UInt32;
 using System.Collections.Generic;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+using System.Threading.Tasks;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
 using UnityEngine;
 #endif
 
@@ -23,7 +24,7 @@ namespace Agora.Rtc
 
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         private GameObject _agoraEngineObject;
 #endif
 
@@ -37,7 +38,7 @@ namespace Agora.Rtc
             _h265Transcoder = H265Transcoder.GetInstance(this, _rtcEngineImpl.GetH265Transcoder());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             InitAgoraEngineObject();
 #endif
         }
@@ -52,14 +53,16 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = null;
         }
 
-        public override void Dispose(bool sync = false)
+        public override Task<int> Dispose(bool sync = false)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(0);
+                return task.Task;
             }
 
-            _rtcEngineImpl.Dispose(sync);
+            var result =  _rtcEngineImpl.Dispose(sync);
             _rtcEngineImpl = null;
 
             AudioDeviceManager.ReleaseInstance();
@@ -71,9 +74,10 @@ namespace Agora.Rtc
 
             instance = null;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             VideoStreamManager.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
 #endif
+            return result;
         }
 
         private static IRtcEngine instance = null;
@@ -116,7 +120,7 @@ namespace Agora.Rtc
             return instance;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         private void InitAgoraEngineObject()
         {
             _agoraEngineObject = GameObject.Find("AgoraRtcEngineObj");
@@ -255,7 +259,7 @@ namespace Agora.Rtc
             return SetParameters(parameters);
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         public override int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             if (_rtcEngineImpl == null)
@@ -275,7 +279,7 @@ namespace Agora.Rtc
         }
 #endif
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         public override int SetLocalVideoDataSourcePosition(VIDEO_MODULE_POSITION position)
         {
             if (position != VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER && position != VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER)
@@ -289,11 +293,13 @@ namespace Agora.Rtc
 #endif
 
         #region terra IRtcEngine
-        public override int Initialize(RtcEngineContext context)
+        public override Task<int> Initialize(RtcEngineContext context)
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(ErrorCode);
+                return task.Task;
             }
             return _rtcEngineImpl.Initialize(context);
         }
@@ -469,20 +475,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.EnableMultiCamera(enabled, config);
         }
 
-        public override int EnableVideo()
+        public override Task<int> EnableVideo()
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
-            }
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(ErrorCode);
+                return task.Task;
+            } 
             return _rtcEngineImpl.EnableVideo();
         }
 
-        public override int DisableVideo()
+        public override Task<int> DisableVideo()
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
+                var task = new TaskCompletionSource<int>();
+                task.SetResult(ErrorCode);
+                return task.Task;
             }
             return _rtcEngineImpl.DisableVideo();
         }

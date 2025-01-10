@@ -1,6 +1,7 @@
 #define AGORA_RTC
 #define AGORA_RTM
 using System;
+using System.Threading.Tasks;
 using view_t = System.UInt64;
 namespace Agora.Rtc
 {
@@ -17,7 +18,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract void Dispose(bool sync = false);
+        public abstract Task<int> Dispose(bool sync = false);
 
         ///
         /// <summary>
@@ -151,7 +152,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         public abstract int SetMaxMetadataSize(int size);
 #endif
 
@@ -171,14 +172,14 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         public abstract int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
 #endif
 
         ///
         /// @ignore
         ///
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         public abstract int SetLocalVideoDataSourcePosition(VIDEO_MODULE_POSITION position);
 #endif
 
@@ -202,7 +203,7 @@ namespace Agora.Rtc
         /// -101: The App ID is invalid.
         /// </returns>
         ///
-        public abstract int Initialize(RtcEngineContext context);
+        public abstract Task<int> Initialize(RtcEngineContext context);
 
         ///
         /// <summary>
@@ -608,13 +609,13 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int EnableVideo();
+        public abstract Task<int> EnableVideo();
 
         ///
         /// <summary>
         /// Disables the video module.
         /// 
-        /// This method is used to disable the video module.
+        /// This method is used tisable the video module.
         /// </summary>
         ///
         /// <returns>
@@ -622,7 +623,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int DisableVideo();
+        public abstract Task<int> DisableVideo();
 
         ///
         /// <summary>

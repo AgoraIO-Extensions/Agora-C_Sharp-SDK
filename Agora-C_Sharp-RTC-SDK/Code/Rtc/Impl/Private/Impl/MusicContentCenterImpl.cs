@@ -18,7 +18,7 @@ namespace Agora.Rtc
         private RtcEventHandlerHandle _musicContentCenterHandlerHandle = new RtcEventHandlerHandle();
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         private AgoraCallbackObject _callbackObject;
 #endif
 
@@ -29,6 +29,11 @@ namespace Agora.Rtc
             _irisApiEngine = irisApiEngine;
             _mediaPlayerImpl = impl;
             _musicPlayerImpl = new MusicPlayerImpl(irisApiEngine, _mediaPlayerImpl);
+        }
+
+        public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
+            _irisApiEngine = irisApiEngine;
         }
 
         ~MusicContentCenterImpl()
@@ -61,7 +66,7 @@ namespace Agora.Rtc
             if (this._musicContentCenterHandlerHandle.handle != IntPtr.Zero)
                 return;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             if (_callbackObject == null)
             {
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
@@ -105,7 +110,7 @@ namespace Agora.Rtc
 
             /// You must release callbackObject after you release eventhandler.
             /// Otherwise may be agcallback and unity main loop can will both access callback object. make crash
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             MusicContentCenterEventHandlerNative.CallbackObject = null;
             if (_callbackObject != null)
                 _callbackObject.Release();

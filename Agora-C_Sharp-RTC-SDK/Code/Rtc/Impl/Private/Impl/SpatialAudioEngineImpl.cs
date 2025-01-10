@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY 
 using AOT;
 #endif
 
@@ -29,6 +29,11 @@ namespace Agora.Rtc
             _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
             _rtcEngine = rtcEngine;
+        }
+
+        public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
+            _irisApiEngine = irisApiEngine;
         }
 
         ~LocalSpatialAudioEngineImpl()

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
 using AOT;
 #endif
 
@@ -36,7 +36,7 @@ namespace Agora.Rtc
 
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
         private AgoraCallbackObject _callbackObject;
         private static readonly string identifier = "AgoraMediaPlayer";
 #endif
@@ -45,6 +45,11 @@ namespace Agora.Rtc
         {
             _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
+            _irisApiEngine = irisApiEngine;
+        }
+
+        public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
+        {
             _irisApiEngine = irisApiEngine;
         }
 
@@ -94,7 +99,7 @@ namespace Agora.Rtc
             //move this code from ReleaseEventHandler because:
             //If there are multiple mediaPlayers, one of the InitEventHandler (null) will cause the _callbackObject to be destroyed,
             //and then all remaining mediaPlayer callbacks cannot be triggered
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             MediaPlayerSourceObserverNative.CallbackObject = null;
             if (_callbackObject != null)
                 _callbackObject.Release();
@@ -117,7 +122,7 @@ namespace Agora.Rtc
         {
             if (_mediaPlayerEventHandlerHandles.ContainsKey(playerId) == true) return 0;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS || UNITY_OPENHARMONY
             if (_callbackObject == null)
             {
                 _callbackObject = new AgoraCallbackObject(identifier);
