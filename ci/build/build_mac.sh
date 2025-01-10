@@ -83,10 +83,16 @@ echo short_version: $short_version
 echo pwd: $(pwd)
 echo UNITY_VERSION: $UNITY_VERSION
 echo SDK_VERSION: $SDK_VERSION
+MAC_URL=$IRIS_MAC_URL
+WIN_URL=$IRIS_WIN_URL
+ANDROID_URL=$IRIS_ANDROID_URL
+IOS_URL=$IRIS_IOS_URL
+OHOS_URL=$IRIS_OHOS_URL
 echo MAC_URL: $MAC_URL
 echo WIN_URL: $WIN_URL
 echo ANDROID_URL: $ANDROID_URL
 echo IOS_URL: $IOS_URL
+echo OHOS_URL: $OHOS_URL
 echo VISIONOS_URL: $VISIONOS_URL
 echo TYPE: $TYPE
 echo RTC: $RTC
@@ -393,6 +399,17 @@ if [ "$WIN_URL" != "" ]; then
 
     done
 
+fi
+
+#OpenHarmony
+if [ "$OHOS_URL" != "" ]; then
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${OHOS_URL}
+    7za x ./iris_*_OHOS_*.zip || exit 1
+    OHOS_SRC_PATH="./iris_*_OHOS"
+    OHOS_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/OpenHarmony
+    cp $OHOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.har "$OHOS_DST_PATH"
+    # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
+    cp $OHOS_SRC_PATH/DCG/Agora_*.har "$OHOS_DST_PATH"
 fi
 
 echo "[Unity CI] finish copying files"
