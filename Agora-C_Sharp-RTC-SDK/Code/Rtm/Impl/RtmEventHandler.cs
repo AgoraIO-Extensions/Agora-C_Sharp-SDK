@@ -10,6 +10,7 @@ using Agora.Rtm;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Agora.Rtm
 {
@@ -55,6 +56,8 @@ namespace Agora.Rtm
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<SetStateResult>>> presenceSetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SetStateResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>> presenceRemoveStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>> presenceGetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetHistoryMessagesResult>>> histroyGetMessagesResultTaskMap = new Dictionary<ulong, TaskCompletionSource<RtmResult<GetHistoryMessagesResult>>>();
+
 
         public RtmEventHandler(RtmClient rtmClient)
         {
@@ -245,6 +248,11 @@ namespace Agora.Rtm
         public void PutPresenceGetStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<GetStateResult>> task)
         {
             presenceGetStateResultTaskMap.Add(requestId, task);
+        }
+
+        public void PutHistroyGetMessagesResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<GetHistoryMessagesResult>> task)
+        {
+            histroyGetMessagesResultTaskMap.Add(requestId, task);
         }
         #endregion
 
@@ -1178,8 +1186,34 @@ namespace Agora.Rtm
             {
                 AgoraLog.LogWarning("OnPresenceGetStateResult unrecorded requestId: " + requestId);
             }
-
-            #endregion
         }
+
+        public override void OnGetHistoryMessagesResult(ulong requestId, HistoryMessage[] messageList, ulong count, ulong newStart, RTM_ERROR_CODE errorCode)
+        {
+            if (histroyGetMessagesResultTaskMap.ContainsKey(requestId))
+            {
+                GetHistoryMessagesResult historyMessagesResult = new GetHistoryMessagesResult();
+                historyMessagesResult.MessageList = messageList;
+                historyMessagesResult.NewStart = newStart;
+
+                RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMHistoryGetMessagesOperation, this.rtmClient.GetInternalRtmClient());
+
+                RtmResult<GetHistoryMessagesResult> rtmResult = new RtmResult<GetHistoryMessagesResult>();
+                rtmResult.Status = status;
+                rtmResult.Response = historyMessagesResult;
+
+                var task = histroyGetMessagesResultTaskMap[requestId];
+                task.SetResult(rtmResult);
+
+                histroyGetMessagesResultTaskMap.Remove(requestId);
+            }
+            else
+            {
+                AgoraLog.LogWarning("OnGetHistoryMessagesResult unrecorded requestId: " + requestId);
+            }
+        }
+
+
     }
+    #endregion
 }

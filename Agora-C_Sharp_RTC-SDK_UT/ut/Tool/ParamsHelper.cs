@@ -331,11 +331,19 @@ namespace Agora.Rtc.Ut
             param.logConfig.filePath = "/Users/xiayangqun/Documents/agoraSpace";
         }
 
-        public static void InitParam(out MessageEvent @event)
+        public static void InitParam(out Rtm.Internal.MessageEvent @event)
         {
-            @event = new MessageEvent();
+            @event = new Rtm.Internal.MessageEvent();
         }
 
+        public static void InitParam(out Rtm.Internal.HistoryMessage[] messageList)
+        {
+            messageList = new Rtm.Internal.HistoryMessage[10];
+            for (var i = 0; i < 10; i++)
+            {
+                messageList[i] = new Rtm.Internal.HistoryMessage();
+            }
+        }
     }
 
 

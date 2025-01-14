@@ -223,6 +223,14 @@ namespace Agora.Rtm
         ///
         IRtmPresence GetPresence();
 
+        /**
+ * Get the history instance.
+ *
+ * @return
+ * - return NULL if error occurred
+ */
+        IRtmHistory GetHistory();
+
         ///
         /// <summary>
         /// Renews the token. Once a token is enabled and used, it expires after a certain period of time.

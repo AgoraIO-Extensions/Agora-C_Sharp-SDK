@@ -37,6 +37,7 @@ namespace Agora.Rtm.Internal
         private RtmLockImpl _rtmLockImpl;
         private RtmPresenceImpl _rtmPresenceImpl;
         private RtmStorageImpl _rtmStorageImpl;
+        private RtmHistoryImpl _rtmHistoryImpl;
 
         public event Action<RtmClientImpl> OnRtmClientImpleWillDispose;
 
@@ -49,6 +50,7 @@ namespace Agora.Rtm.Internal
             _rtmLockImpl = new RtmLockImpl(_irisApiRtmEngine);
             _rtmPresenceImpl = new RtmPresenceImpl(_irisApiRtmEngine);
             _rtmStorageImpl = new RtmStorageImpl(_irisApiRtmEngine);
+            _rtmHistoryImpl = new RtmHistoryImpl(_irisApiRtmEngine);
         }
 
         ~RtmClientImpl()
@@ -125,6 +127,11 @@ namespace Agora.Rtm.Internal
         internal RtmStorageImpl GetRtmStorageImpl()
         {
             return _rtmStorageImpl;
+        }
+
+        internal RtmHistoryImpl GetRtmHistoryImpl()
+        {
+            return _rtmHistoryImpl;
         }
 
         private void CreateEventHandler()

@@ -49,17 +49,31 @@ namespace Agora.Rtm.Internal
 
             switch (@event)
             {
-                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONMESSAGEEVENT:
-                    MessageEventInternal messageEventInternal = AgoraJson.JsonToStruct<MessageEventInternal>(jsonData, "event");
-                    MessageEvent messageEvent = messageEventInternal.GenerateMessageEvent();
-
-                    var byteData = new byte[messageEventInternal.messageLength];
-                    if (messageEventInternal.messageLength != 0)
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETHISTORYMESSAGESRESULT:
+                    UInt64 requestId = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId");
+                    Internal.HistoryMessage[] messageListInternal = AgoraJson.JsonToStructArray<Internal.HistoryMessage>(jsonData, "messageList");
+                    UInt64 count = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count");
+                    UInt64 newStart = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "newStart");
+                    RTM_ERROR_CODE errorCode = (RTM_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode");
+                    Rtm.HistoryMessage[] messageList = new Rtm.HistoryMessage[messageListInternal.Length];
+                    for (int i = 0; i < messageListInternal.Length; i++)
                     {
-                        Marshal.Copy((IntPtr)messageEventInternal.message, byteData, 0, (int)messageEventInternal.messageLength);
+                        messageList[i] = messageListInternal[i].GenerateHistoryMessage();
                     }
-                    messageEvent.message = new RtmMessage(byteData);
-
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                CallbackObject._CallbackQueue.EnQueue(() =>
+                                                      {
+#endif
+                    if (rtmEventHandler == null)
+                        return;
+                    rtmEventHandler.OnGetHistoryMessagesResult(requestId, messageList, count, newStart, errorCode);
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                                                      });
+#endif
+                    break;
+                case AgoraApiType.FUNC_RTMEVENTHANDLER_ONMESSAGEEVENT:
+                    Internal.MessageEvent messageEventInternal = AgoraJson.JsonToStruct<Internal.MessageEvent>(jsonData, "event");
+                    Rtm.MessageEvent messageEvent = messageEventInternal.GenerateMessageEvent();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 CallbackObject._CallbackQueue.EnQueue(() =>
                                                       {
