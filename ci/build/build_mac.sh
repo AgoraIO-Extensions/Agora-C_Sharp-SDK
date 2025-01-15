@@ -236,12 +236,14 @@ if [ "$IRIS_ANDROID_URL" != "" ]; then
     temp_zip_name=$(basename "$IRIS_ANDROID_URL")
     7za x ./${temp_zip_name} || exit 1
     IRIS_ANDROID_SRC_PATH="./iris_*_Android"
+    rm ./${temp_zip_name}
 
     #download native
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_ANDROID_URL}
     temp_zip_name=$(basename "$NATIVE_ANDROID_URL")
     7za x ./${temp_zip_name} || exit 1
     NATIVE_ANDROID_SRC_PATH="./*_Native_SDK_for_Android_*"
+    rm ./${temp_zip_name}
 
     if [ "$RTC" == "true" ]; then
         ANDROID_PATH="AgoraRtcEngineKit.plugin"
@@ -291,6 +293,8 @@ if [ "$IRIS_ANDROID_URL" != "" ]; then
 
     cp $IRIS_ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
+    rm -rf ${IRIS_ANDROID_SRC_PATH}
+    rm -rf ${NATIVE_ANDROID_SRC_PATH}
 fi
 
 # iOS
@@ -313,12 +317,19 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     temp_zip_name=$(basename "$IRIS_IOS_URL")
     7za x ./${temp_zip_name} || exit 1
     IRIS_IOS_SRC_PATH="./iris_*_iOS"
+    rm ./${temp_zip_name}
 
     #download native ios
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_IOS_URL}
     temp_zip_name=$(basename "$NATIVE_IOS_URL")
     7za x ./${temp_zip_name} || exit 1
-    NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_iOS_*"
+
+    if [ -d "./*_Native_SDK_for_iOS_*" ]; then
+        NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_iOS_*"
+    else if [ -d "./*_Native_SDK_for_APPLE_*" ];then 
+        NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_APPLE_*"
+    fi
+    rm ./${temp_zip_name}
 
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
 
@@ -345,6 +356,8 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     done
 
     rm $IOS_DST_PATH/ios.meta
+    rm -rf ${IRIS_IOS_SRC_PATH}
+    rm -rf ${NATIVE_IOS_SRC_PATH}
 
 fi
 
@@ -353,6 +366,7 @@ if [ "$VISIONOS_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${VISIONOS_URL}
     7za x ./iris_*_xrOS_*.zip || exit 1
     VISIONOS_SRC_PATH="./iris_*_xrOS"
+    rm ./iris_*_xrOS_*.zip
     VISIONOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/visionOS"
     cp -PRf $VISIONOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework "$VISIONOS_DST_PATH"
     cp -PRf $VISIONOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.xcframework "$VISIONOS_DST_PATH"
@@ -384,7 +398,6 @@ fi
 
 # macOS
 if [ "$IRIS_MAC_URL" != "" ]; then
-
     if [ "$NATIVE_MAC_URL" == "" ]; then
         echo "NATIVE_MAC_URL is null"
         exit 1
@@ -400,11 +413,18 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     temp_zip_name=$(basename "$IRIS_MAC_URL")
     7za x ./${temp_zip_name} || exit 1
     IRIS_MAC_SRC_PATH="./iris_*_Mac"
+    rm ./${temp_zip_name}
 
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_MAC_URL}
     temp_zip_name=$(basename "$NATIVE_MAC_URL")
     7za x ./${temp_zip_name} || exit 1
-    NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_Mac_*"
+
+    if [ -d "./*_Native_SDK_for_Mac_*" ];then 
+        NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_Mac_*"
+    else if [ -d "./*_Native_SDK_for_APPLE_*" ]; then 
+        NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_APPLE_*"
+    fi
+    rm ./${temp_zip_name}
 
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
 
@@ -418,6 +438,9 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     cp -r $NATIVE_MAC_SRC_PATH/libs/*.xcframework/macos-arm64_x86_64/*.framework $MAC_DST_PATH/$bundle_name/Contents/Frameworks
 
     delete_files "$MAC_DST_PATH"/$bundle_name/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
+
+    rm -rf ${IRIS_MAC_SRC_PATH}
+    rm -rf ${NATIVE_MAC_SRC_PATH}
 fi
 
 #Windows
@@ -437,11 +460,13 @@ if [ "$IRIS_WIN_URL" != "" ]; then
     temp_zip_name=$(basename "$IRIS_WIN_URL")
     7za x ./${temp_zip_name} || exit 1
     IRIS_WIN_SRC_PATH="./iris_*_Windows"
+    rm ./${temp_zip_name}
 
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_WIN_URL}
     temp_zip_name=$(basename "$NATIVE_WIN_URL")
     7za x ./${temp_zip_name} || exit 1
     NATIVE_WIN_SRC_PATH="./*_Native_SDK_for_Windows_*"
+    rm ./${temp_zip_name}
 
     WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
     WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
@@ -479,6 +504,8 @@ if [ "$IRIS_WIN_URL" != "" ]; then
 
     done
 
+    rm ${IRIS_WIN_SRC_PATH}
+    rm ${NATIVE_WIN_SRC_PATH}
 fi
 
 echo "[Unity CI] finish copying files"
