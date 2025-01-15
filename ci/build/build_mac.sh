@@ -123,6 +123,13 @@ delete_files() {
     done
 }
 
+decode_uri() {
+    local uri="$1"
+    # 使用 sed 命令将 %2B 替换为 +，将 %20 替换为空格
+    local decoded_uri=$(echo "$uri" | sed 's/%2B/+/g' | sed 's/%20/ /g')
+    echo "$decoded_uri"
+}
+
 if [ "$RTC" == "true" ]; then
     PLUGIN_NAME="${BRAND}-RTC-Plugin"
     PLUGIN_CODE_NAME="${BRAND}-Unity-RTC-SDK"
@@ -464,6 +471,8 @@ if [ "$IRIS_WIN_URL" != "" ]; then
 
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_WIN_URL}
     temp_zip_name=$(basename "$NATIVE_WIN_URL")
+    #for rtm url like https://download.agora.io/rtm2/release/Agora_RTM_C%2B%2B_SDK_for_Windows_v2.2.2.1.zip
+    temp_zip_name=$(decode_uri $temp_zip_name)
     7za x ./${temp_zip_name} || exit 1
     NATIVE_WIN_SRC_PATH="./*_Native_SDK_for_Windows_*"
     rm ./${temp_zip_name}
