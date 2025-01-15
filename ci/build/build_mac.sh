@@ -512,8 +512,8 @@ if [ "$IRIS_WIN_URL" != "" ]; then
 
     done
 
-    rm ${IRIS_WIN_SRC_PATH}
-    rm ${NATIVE_WIN_SRC_PATH}
+    rm -rf ${IRIS_WIN_SRC_PATH}
+    rm -rf ${NATIVE_WIN_SRC_PATH}
 fi
 
 echo "[Unity CI] finish copying files"
