@@ -193,9 +193,11 @@ namespace Agora.Rtm
         ///
         public RTM_LINK_OPERATION operation;
 
-        /**
-    * The reason code of this state change event
-    */
+        ///
+        /// <summary>
+        /// The reason code of this state change event
+        /// </summary>
+        ///
         RTM_LINK_STATE_CHANGE_REASON reasonCode;
         ///
         /// <summary>

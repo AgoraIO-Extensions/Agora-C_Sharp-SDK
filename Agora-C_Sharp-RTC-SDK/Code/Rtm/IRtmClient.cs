@@ -223,12 +223,16 @@ namespace Agora.Rtm
         ///
         IRtmPresence GetPresence();
 
-        /**
- * Get the history instance.
- *
- * @return
- * - return NULL if error occurred
- */
+        ///
+        /// <summary>
+        /// Get the history instance.
+        /// </summary>
+        ///
+        /// <returns>
+        /// 
+        /// - return NULL if error occurred
+        /// </returns>
+        ///
         IRtmHistory GetHistory();
 
         ///

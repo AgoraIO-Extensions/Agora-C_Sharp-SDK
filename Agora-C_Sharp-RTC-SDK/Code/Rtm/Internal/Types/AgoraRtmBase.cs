@@ -166,25 +166,35 @@ namespace Agora.Rtm.Internal
     {
 
         public RTM_MESSAGE_TYPE messageType;
-        /**
-         * The publisher
-         */
+        ///
+        /// <summary>
+        /// The publisher
+        /// </summary>
+        ///
         public string publisher;
-        /**
-         * The payload
-         */
+        ///
+        /// <summary>
+        /// The payload
+        /// </summary>
+        ///
         public IntPtr message;
-        /**
-         * The payload length
-         */
+        ///
+        /// <summary>
+        /// The payload length
+        /// </summary>
+        ///
         public UInt64 messageLength;
-        /**
-         * The custom type of the message
-         */
+        ///
+        /// <summary>
+        /// The custom type of the message
+        /// </summary>
+        ///
         public string customType;
-        /**
-         * Timestamp of the message received by rtm server
-         */
+        ///
+        /// <summary>
+        /// Timestamp of the message received by rtm server
+        /// </summary>
+        ///
         public UInt64 timestamp;
 
 

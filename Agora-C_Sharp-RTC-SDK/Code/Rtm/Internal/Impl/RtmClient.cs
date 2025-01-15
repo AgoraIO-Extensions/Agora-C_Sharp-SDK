@@ -162,7 +162,8 @@ namespace Agora.Rtm.Internal
             return _rtmPresence;
         }
 
-        public override IRtmHistory GetHistory() {
+        public override IRtmHistory GetHistory()
+        {
             if (_rtmClientImpl == null)
             {
                 return null;
