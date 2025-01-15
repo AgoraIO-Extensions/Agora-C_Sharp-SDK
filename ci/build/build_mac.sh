@@ -331,9 +331,9 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     temp_zip_name=$(basename "$NATIVE_IOS_URL")
     7za x ./${temp_zip_name} || exit 1
 
-    if [ -d "./*_Native_SDK_for_iOS_*" ]; then
+    if [ -d ./*_Native_SDK_for_iOS_* ]; then
         NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_iOS_*"
-    elif [ -d "./*_Native_SDK_for_APPLE_*" ]; then
+    elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
         NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_APPLE_*"
     fi
     rm ./${temp_zip_name}
@@ -426,9 +426,9 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     temp_zip_name=$(basename "$NATIVE_MAC_URL")
     7za x ./${temp_zip_name} || exit 1
 
-    if [ -d "./*_Native_SDK_for_Mac_*" ]; then
+    if [ -d ./*_Native_SDK_for_Mac_* ]; then
         NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_Mac_*"
-    elif [ -d "./*_Native_SDK_for_APPLE_*" ]; then
+    elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
         NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_APPLE_*"
     fi
     rm ./${temp_zip_name}
