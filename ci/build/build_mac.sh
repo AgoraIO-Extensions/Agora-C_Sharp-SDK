@@ -471,8 +471,6 @@ if [ "$IRIS_WIN_URL" != "" ]; then
 
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_WIN_URL}
     temp_zip_name=$(basename "$NATIVE_WIN_URL")
-    #for rtm url like https://download.agora.io/rtm2/release/Agora_RTM_C%2B%2B_SDK_for_Windows_v2.2.2.1.zip
-    temp_zip_name=$(decode_uri $temp_zip_name)
     ls ./
     7za x ./${temp_zip_name} || exit 1
     NATIVE_WIN_SRC_PATH="./*_Native_SDK_for_Windows_*"
