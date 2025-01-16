@@ -697,6 +697,22 @@ namespace Agora.Rtm
         public UserState State;
     };
 
+    public class GetHistoryMessagesResult
+    {
+        ///
+        /// <summary>
+        /// The history message list.
+        /// </summary>
+        ///
+        public HistoryMessage[] MessageList;
+        ///
+        /// <summary>
+        /// The timestamp of next history message. If newStart is 0, means there are no more history messages
+        /// </summary>
+        ///
+        public UInt64 NewStart;
+    }
+
     ///
     /// <summary>
     /// The exception with rtm

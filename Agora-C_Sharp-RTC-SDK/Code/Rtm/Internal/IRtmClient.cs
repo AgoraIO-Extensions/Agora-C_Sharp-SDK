@@ -20,6 +20,8 @@ namespace Agora.Rtm.Internal
 
         public abstract IRtmPresence GetPresence();
 
+        public abstract IRtmHistory GetHistory();
+
         public abstract int RenewToken(string token, ref UInt64 requestId);
 
         public abstract int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId);

@@ -164,6 +164,12 @@ namespace Agora.Rtm
             return new RtmStorage(internalRtmStorage, _rtmEventHandler, _internalRtmClient);
         }
 
+        public IRtmHistory GetHistory()
+        {
+            Internal.IRtmHistory internalRtmHistory = this._internalRtmClient.GetHistory();
+            return new RtmHistory(internalRtmHistory, _rtmEventHandler, _internalRtmClient);
+        }
+
         private int Create(RtmConfig config)
         {
             Internal.RtmConfig internalConfig = new Internal.RtmConfig(config, _rtmEventHandler);

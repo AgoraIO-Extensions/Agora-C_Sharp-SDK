@@ -4,7 +4,7 @@ namespace Agora.Rtm.Internal
 {
     public delegate void OnLinkStateEventHandler(LinkStateEvent @event);
 
-    public delegate void OnMessageEventHandler(MessageEvent @event);
+    public delegate void OnMessageEventHandler(Rtm.MessageEvent @event);
 
     public delegate void OnPresenceEventHandler(PresenceEvent @event);
 
@@ -186,7 +186,7 @@ namespace Agora.Rtm.Internal
             EventOnLinkStateEvent.Invoke(@event);
         }
 
-        public override void OnMessageEvent(MessageEvent @event)
+        public override void OnMessageEvent(Rtm.MessageEvent @event)
         {
             if (EventOnMessageEvent == null)
                 return;

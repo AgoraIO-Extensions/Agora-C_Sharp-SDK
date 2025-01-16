@@ -9,37 +9,37 @@ namespace Agora.Rtm
         /// The initial state.
         /// </summary>
         ///
-        RTM_LINK_STATE_IDLE = 0,
+        IDLE = 0,
         ///
         /// <summary>
         /// The SDK is connecting to the server.
         /// </summary>
         ///
-        RTM_LINK_STATE_CONNECTING = 1,
+        CONNECTING = 1,
         ///
         /// <summary>
         /// The SDK has connected to the server.
         /// </summary>
         ///
-        RTM_LINK_STATE_CONNECTED = 2,
+        CONNECTED = 2,
         ///
         /// <summary>
         /// The SDK is disconnected from the server.
         /// </summary>
         ///
-        RTM_LINK_STATE_DISCONNECTED = 3,
+        DISCONNECTED = 3,
         ///
         /// <summary>
         /// The SDK link is suspended.
         /// </summary>
         ///
-        RTM_LINK_STATE_SUSPENDED = 4,
+        SUSPENDED = 4,
         ///
         /// <summary>
         /// The SDK is failed to connect to the server.
         /// </summary>
         ///
-        RTM_LINK_STATE_FAILED = 5,
+        FAILED = 5,
     };
 
     ///
@@ -54,61 +54,61 @@ namespace Agora.Rtm
         /// Login.
         /// </summary>
         ///
-        RTM_LINK_OPERATION_LOGIN = 0,
+        LOGIN = 0,
         ///
         /// <summary>
         /// Logout.
         /// </summary>
         ///
-        RTM_LINK_OPERATION_LOGOUT = 1,
+        LOGOUT = 1,
         ///
         /// <summary>
         /// Join
         /// </summary>
         ///
-        RTM_LINK_OPERATION_JOIN = 2,
+        JOIN = 2,
         ///
         /// <summary>
         /// Leave.
         /// </summary>
         ///
-        RTM_LINK_OPERATION_LEAVE = 3,
+        LEAVE = 3,
         ///
         /// <summary>
         /// Server reject
         /// </summary>
         ///
-        RTM_LINK_OPERATION_SERVER_REJECT = 4,
+        SERVER_REJECT = 4,
         ///
         /// <summary>
         /// Auto reconnect
         /// </summary>
         ///
-        RTM_LINK_OPERATION_AUTO_RECONNECT = 5,
+        AUTO_RECONNECT = 5,
         ///
         /// <summary>
         /// Reconnected
         /// </summary>
         ///
-        RTM_LINK_OPERATION_RECONNECTED = 6,
+        RECONNECTED = 6,
         ///
         /// <summary>
         /// Heartbeat lost
         /// </summary>
         ///
-        RTM_LINK_OPERATION_HEARTBEAT_LOST = 7,
+        HEARTBEAT_LOST = 7,
         ///
         /// <summary>
         /// Server timeout
         /// </summary>
         ///
-        RTM_LINK_OPERATION_SERVER_TIMEOUT = 8,
+        SERVER_TIMEOUT = 8,
         ///
         /// <summary>
         /// Network change
         /// </summary>
         ///
-        RTM_LINK_OPERATION_NETWORK_CHANGE = 9,
+        NETWORK_CHANGE = 9,
     };
 
 
@@ -124,19 +124,250 @@ namespace Agora.Rtm
         /// The type of rtm service not specified.
         /// </summary>
         ///
-        RTM_SERVICE_TYPE_NONE = 0x00000000,
+        NONE = 0x00000000,
         ///
         /// <summary>
         /// The basic functionality of rtm service.
         /// </summary>
         ///
-        RTM_SERVICE_TYPE_MESSAGE = 0x00000001,
+        MESSAGE = 0x00000001,
         ///
         /// <summary>
         /// The advanced functionality of rtm service.
         /// </summary>
         ///
-        RTM_SERVICE_TYPE_STREAM = 0x00000002,
+        STREAM = 0x00000002,
+    };
+
+    ///
+    /// <summary>
+    /// Rtm link state change reason.
+    /// </summary>
+    ///
+    public enum RTM_LINK_STATE_CHANGE_REASON
+    {
+        ///
+        /// <summary>
+        /// Unknown reason.
+        /// </summary>
+        ///
+        UNKNOWN = 0,
+        ///
+        /// <summary>
+        /// Login.
+        /// </summary>
+        ///
+        LOGIN = 1,
+        ///
+        /// <summary>
+        /// Login success.
+        /// </summary>
+        ///
+        LOGIN_SUCCESS = 2,
+        ///
+        /// <summary>
+        /// Login timeout.
+        /// </summary>
+        ///
+        LOGIN_TIMEOUT = 3,
+        ///
+        /// <summary>
+        /// Login not authorized.
+        /// </summary>
+        ///
+        LOGIN_NOT_AUTHORIZED = 4,
+        ///
+        /// <summary>
+        /// Login rejected.
+        /// </summary>
+        ///
+        LOGIN_REJECTED = 5,
+        ///
+        /// <summary>
+        /// Re-login.
+        /// </summary>
+        ///
+        RELOGIN = 6,
+        ///
+        /// <summary>
+        /// Logout.
+        /// </summary>
+        ///
+        LOGOUT = 7,
+        ///
+        /// <summary>
+        /// Auto reconnect.
+        /// </summary>
+        ///
+        AUTO_RECONNECT = 8,
+        ///
+        /// <summary>
+        /// Reconnect timeout.
+        /// </summary>
+        ///
+        RECONNECT_TIMEOUT = 9,
+        ///
+        /// <summary>
+        /// Reconnect success.
+        /// </summary>
+        ///
+        RECONNECT_SUCCESS = 10,
+        ///
+        /// <summary>
+        /// Join.
+        /// </summary>
+        ///
+        JOIN = 11,
+        ///
+        /// <summary>
+        /// Join success.
+        /// </summary>
+        ///
+        JOIN_SUCCESS = 12,
+        ///
+        /// <summary>
+        /// Join failed.
+        /// </summary>
+        ///
+        JOIN_FAILED = 13,
+        ///
+        /// <summary>
+        /// Rejoin.
+        /// </summary>
+        ///
+        REJOIN = 14,
+        ///
+        /// <summary>
+        /// Leave.
+        /// </summary>
+        ///
+        LEAVE = 15,
+        ///
+        /// <summary>
+        /// Invalid token.
+        /// </summary>
+        ///
+        INVALID_TOKEN = 16,
+        ///
+        /// <summary>
+        /// Token expired.
+        /// </summary>
+        ///
+        TOKEN_EXPIRED = 17,
+        ///
+        /// <summary>
+        /// Inconsistent app ID.
+        /// </summary>
+        ///
+        INCONSISTENT_APP_ID = 18,
+        ///
+        /// <summary>
+        /// Invalid channel name.
+        /// </summary>
+        ///
+        INVALID_CHANNEL_NAME = 19,
+        ///
+        /// <summary>
+        /// Invalid user ID.
+        /// </summary>
+        ///
+        INVALID_USER_ID = 20,
+        ///
+        /// <summary>
+        /// Not initialized.
+        /// </summary>
+        ///
+        NOT_INITIALIZED = 21,
+        ///
+        /// <summary>
+        /// Rtm service not connected.
+        /// </summary>
+        ///
+        RTM_SERVICE_NOT_CONNECTED = 22,
+        ///
+        /// <summary>
+        /// Channel instance exceed limitation.
+        /// </summary>
+        ///
+        CHANNEL_INSTANCE_EXCEED_LIMITATION = 23,
+        ///
+        /// <summary>
+        /// Operation rate exceed limitation.
+        /// </summary>
+        ///
+        OPERATION_RATE_EXCEED_LIMITATION = 24,
+        ///
+        /// <summary>
+        /// Channel in error state.
+        /// </summary>
+        ///
+        CHANNEL_IN_ERROR_STATE = 25,
+        ///
+        /// <summary>
+        /// Presence not connected.
+        /// </summary>
+        ///
+        PRESENCE_NOT_CONNECTED = 26,
+        ///
+        /// <summary>
+        /// Same UID login.
+        /// </summary>
+        ///
+        SAME_UID_LOGIN = 27,
+        ///
+        /// <summary>
+        /// Kicked out by server.
+        /// </summary>
+        ///
+        KICKED_OUT_BY_SERVER = 28,
+        ///
+        /// <summary>
+        /// Keep alive timeout.
+        /// </summary>
+        ///
+        KEEP_ALIVE_TIMEOUT = 29,
+        ///
+        /// <summary>
+        /// Connection error.
+        /// </summary>
+        ///
+        CONNECTION_ERROR = 30,
+        ///
+        /// <summary>
+        /// Presence not ready.
+        /// </summary>
+        ///
+        PRESENCE_NOT_READY = 31,
+        ///
+        /// <summary>
+        /// Network change.
+        /// </summary>
+        ///
+        NETWORK_CHANGE = 32,
+        ///
+        /// <summary>
+        /// Service not supported.
+        /// </summary>
+        ///
+        SERVICE_NOT_SUPPORTED = 33,
+        ///
+        /// <summary>
+        /// Stream channel not available.
+        /// </summary>
+        ///
+        STREAM_CHANNEL_NOT_AVAILABLE = 34,
+        ///
+        /// <summary>
+        /// storage not available.
+        /// </summary>
+        ///
+        STORAGE_NOT_AVAILABLE = 35,
+        ///
+        /// <summary>
+        /// Lock not available.
+        /// </summary>
+        ///
+        LOCK_NOT_AVAILABLE = 36,
     };
 
     ///
@@ -151,13 +382,13 @@ namespace Agora.Rtm
         /// TCP and UDP (default).
         /// </summary>
         ///
-        RTM_PROTOCOL_TYPE_TCP_UDP = 0,
+        TCP_UDP = 0,
         ///
         /// <summary>
         /// Use TCP only.
         /// </summary>
         ///
-        RTM_PROTOCOL_TYPE_TCP_ONLY = 1,
+        TCP_ONLY = 1,
     };
 
     ///
@@ -632,6 +863,25 @@ namespace Agora.Rtm
         /// </summary>
         ///
         CHANNEL_JOIN_CANCELED = -11034,
+
+        ///
+        /// <summary>
+        /// -11035: The message receiver is offline but the message store in history succeeded.
+        /// </summary>
+        ///
+        CHANNEL_RECEIVER_OFFLINE_BUT_STORE_SUCCEEDED = -11035,
+        ///
+        /// <summary>
+        /// -11036: The message receiver is offline and the message store in history failed.
+        /// </summary>
+        ///
+        CHANNEL_RECEIVER_OFFLINE_AND_STORE_FAILED = -11036,
+        ///
+        /// <summary>
+        /// -11037: The message delivered successfully but store in history failed.
+        /// </summary>
+        ///
+        CHANNEL_MESSAGE_DELIVERED_BUT_STORE_FAILED = -11037,
         ///
         /// <summary>
         /// -12001 ~ -13000 : reserved for storage error.
@@ -883,8 +1133,39 @@ namespace Agora.Rtm
         /// </summary>
         ///
         LOCK_NOT_AVAILABLE = -14009,
+        ///
+        /// <summary>
+        /// -15001 ~ -16000 : reserved for history error.
+        /// -15001: The history operation failed.
+        /// </summary>
+        ///
+        HISTORY_OPERATION_FAILED = -15001,
+        ///
+        /// <summary>
+        /// -15002: The timestamp is invalid.
+        /// </summary>
+        ///
+        HISTORY_INVALID_TIMESTAMP = -15002,
+        ///
+        /// <summary>
+        /// -15003: The history operation timeout.
+        /// </summary>
+        ///
+        HISTORY_OPERATION_TIMEOUT = -15003,
+        ///
+        /// <summary>
+        /// -15004: The history operation is not permitted.
+        /// </summary>
+        ///
+        HISTORY_OPERATION_NOT_PERMITTED = -15004,
+        ///
+        /// <summary>
+        /// -15005: The history service not available.
+        /// </summary>
+        ///
+        HISTORY_NOT_AVAILABLE = -15005,
     }
-    ;
+
 
     public enum RTM_CONNECTION_STATE
     {
@@ -1774,16 +2055,25 @@ namespace Agora.Rtm
         ///
         public string customType;
 
+        ///
+        /// <summary>
+        /// Whether to store in history, true to enable
+        /// </summary>
+        ///
+        public bool storeInHistory;
+
         public PublishOptions()
         {
             channelType = RTM_CHANNEL_TYPE.MESSAGE;
             customType = "";
+            storeInHistory = false;
         }
 
-        public PublishOptions(RTM_CHANNEL_TYPE channelType, string customType)
+        public PublishOptions(RTM_CHANNEL_TYPE channelType, string customType, bool storeInHistory)
         {
             this.channelType = channelType;
             this.customType = customType;
+            this.storeInHistory = storeInHistory;
         }
     };
 
@@ -1949,6 +2239,11 @@ namespace Agora.Rtm
         }
     };
 
+    ///
+    /// <summary>
+    /// Private configuration
+    /// </summary>
+    ///
     public class RtmPrivateConfig
     {
         ///
@@ -1967,10 +2262,93 @@ namespace Agora.Rtm
 
         public RtmPrivateConfig()
         {
-            serviceType = RTM_SERVICE_TYPE.RTM_SERVICE_TYPE_NONE;
+            serviceType = RTM_SERVICE_TYPE.NONE;
             accessPointHosts = new string[0];
         }
     };
+
+    ///
+    /// <summary>
+    /// The option to query history message.
+    /// </summary>
+    ///
+    public class GetHistoryMessagesOptions
+    {
+        ///
+        /// <summary>
+        /// The maximum count of messages to get.
+        /// </summary>
+        ///
+        public ushort messageCount;
+        ///
+        /// <summary>
+        /// The start timestamp of this query range.
+        /// </summary>
+        ///
+        public UInt64 start;
+        ///
+        /// <summary>
+        /// The end timestamp of this query range.
+        /// </summary>
+        ///
+        public UInt64 end;
+
+        public GetHistoryMessagesOptions()
+        {
+            messageCount = 100;
+            start = 0;
+            end = 0;
+        }
+    };
+
+    ///
+    /// <summary>
+    /// The details of history message
+    /// </summary>
+    ///
+    public class HistoryMessage
+    {
+        ///
+        /// <summary>
+        /// Message type
+        /// </summary>
+        ///
+        public RTM_MESSAGE_TYPE messageType;
+        ///
+        /// <summary>
+        /// The publisher
+        /// </summary>
+        ///
+        public string publisher;
+        ///
+        /// <summary>
+        /// The payload
+        /// </summary>
+        ///
+        public IRtmMessage message;
+        ///
+        /// <summary>
+        /// The custom type of the message
+        /// </summary>
+        ///
+        public string customType;
+        ///
+        /// <summary>
+        /// Timestamp of the message received by rtm server
+        /// </summary>
+        ///
+        public UInt64 timestamp;
+
+        public HistoryMessage()
+        {
+            messageType = RTM_MESSAGE_TYPE.BINARY;
+            publisher = "";
+            message = null;
+            customType = "";
+            timestamp = 0;
+        }
+    };
+
 
     public class Metadata
     {

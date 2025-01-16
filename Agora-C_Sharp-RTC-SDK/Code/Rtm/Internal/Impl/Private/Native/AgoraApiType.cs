@@ -49,6 +49,8 @@
         public const string FUNC_RTMEVENTHANDLER_ONPRESENCESETSTATERESULT = "RtmEventHandler_onPresenceSetStateResult_4f46899";
         public const string FUNC_RTMEVENTHANDLER_ONPRESENCEREMOVESTATERESULT = "RtmEventHandler_onPresenceRemoveStateResult_4f46899";
         public const string FUNC_RTMEVENTHANDLER_ONPRESENCEGETSTATERESULT = "RtmEventHandler_onPresenceGetStateResult_3d764cc";
+        public const string FUNC_RTMEVENTHANDLER_ONGETHISTORYMESSAGESRESULT = "RtmEventHandler_onGetHistoryMessagesResult_c5dd08c";
+
         /// IRtmEventHandler
         /// IRtmClient
 
@@ -111,5 +113,7 @@
         public const string FUNC_STREAMCHANNEL_UNSUBSCRIBETOPIC = "StreamChannel_unsubscribeTopic_b801234";
         public const string FUNC_STREAMCHANNEL_GETSUBSCRIBEDUSERLIST = "StreamChannel_getSubscribedUserList_1fa04dd";
         public const string FUNC_STREAMCHANNEL_RELEASE = "StreamChannel_release";
+        ///
+        public const string FUNC_RTMHISTORY_GETMESSAGES = "RtmHistory_getMessages_e5877fc";
     }
 }

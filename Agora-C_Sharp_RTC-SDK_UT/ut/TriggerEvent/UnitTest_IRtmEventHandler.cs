@@ -66,20 +66,20 @@ namespace Agora.Rtm.Ut
         {
             ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONMESSAGEEVENT;
 
-            MessageEvent @event;
+            Rtm.Internal.MessageEvent @event;
             ParamsHelper.InitParam(out @event);
 
             jsonObj.Clear();
             jsonObj.Add("@event", @event);
 
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            var jsonString = Agora.Rtc.LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
             int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnMessageEventPassed(@event));
+            Assert.AreEqual(true, EventHandler.OnMessageEventPassed(new Rtm.MessageEvent()));
         }
 
 
@@ -1332,6 +1332,36 @@ namespace Agora.Rtm.Ut
             int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPresenceGetStateResultPassed(requestId, state, errorCode));
+        }
+
+        [Test]
+        public void Test_OnGetHistoryMessagesResult()
+        {
+            ApiParam.@event = Internal.AgoraApiType.FUNC_RTMEVENTHANDLER_ONGETHISTORYMESSAGESRESULT;
+
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            Internal.HistoryMessage[] messageList = null;
+            ParamsHelper.InitParam(out messageList);
+            UInt64 count = ParamsHelper.CreateParam<UInt64>();
+            UInt64 newStart = ParamsHelper.CreateParam<UInt64>();
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
+
+            jsonObj.Clear();
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("message", messageList);
+            jsonObj.Add("count", count);
+            jsonObj.Add("newStart", newStart);
+            jsonObj.Add("errorCode", errorCode);
+
+            var jsonString = Agora.Rtc.LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnGetHistoryMessagesResultPassed(requestId, null, count, newStart, errorCode));
         }
     }
 }

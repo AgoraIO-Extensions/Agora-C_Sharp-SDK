@@ -57,5 +57,7 @@ namespace Agora.Rtm
         public static readonly string RTMSubscribeTopicOperation = "RTMSubscribeTopicOperation";
         public static readonly string RTMUnsubscribeTopicOperation = "RTMUnsubscribeTopicOperation";
         public static readonly string RTMGetSubscribedUserListOperation = "RTMGetSubscribedUserListOperation";
+
+        public static readonly string RTMHistoryGetMessagesOperation = "RTMHistoryGetMessagesOperation";
     }
 }

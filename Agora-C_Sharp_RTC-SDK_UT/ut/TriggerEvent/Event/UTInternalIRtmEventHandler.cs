@@ -597,7 +597,7 @@ namespace Agora.Rtm.Ut
 
         public bool OnRenewTokenResult_be_trigger = false;
         public UInt64 OnRenewTokenResult_requestId = 0;
-        public RTM_SERVICE_TYPE OnRenewTokenResult_serverType = RTM_SERVICE_TYPE.RTM_SERVICE_TYPE_NONE;
+        public RTM_SERVICE_TYPE OnRenewTokenResult_serverType = RTM_SERVICE_TYPE.NONE;
         public string OnRenewTokenResult_channelName = "";
         public RTM_ERROR_CODE OnRenewTokenResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
@@ -1418,6 +1418,29 @@ namespace Agora.Rtm.Ut
 
         ///////////////////////////////////
 
+        public bool OnGetHistoryMessagesResult_be_trigger = false;
+        public ulong OnGetHistoryMessagesResult_requestId = 0;
+        public HistoryMessage[] OnGetHistoryMessagesResult_messageList = null;
+        public ulong OnGetHistoryMessagesResult_count = 0;
+        public ulong OnGetHistoryMessagesResult_newStart = 0;
+        public RTM_ERROR_CODE OnGetHistoryMessagesResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
+        public override void OnGetHistoryMessagesResult(ulong requestId, HistoryMessage[] messageList, ulong count, ulong newStart, RTM_ERROR_CODE errorCode)
+        {
+            OnGetHistoryMessagesResult_be_trigger = true;
+            OnGetHistoryMessagesResult_requestId = requestId;
+            OnGetHistoryMessagesResult_messageList = messageList;
+            OnGetHistoryMessagesResult_count = count;
+            OnGetHistoryMessagesResult_newStart = newStart;
+            OnGetHistoryMessagesResult_errorCode = errorCode;
+        }
+
+        public bool OnGetHistoryMessagesResultPassed(ulong requestId, HistoryMessage[] messageList, ulong count, ulong newStart, RTM_ERROR_CODE errorCode)
+        {
+            if (OnGetHistoryMessagesResult_be_trigger == false)
+                return false;
+
+            return true;
+        }
     }
 }

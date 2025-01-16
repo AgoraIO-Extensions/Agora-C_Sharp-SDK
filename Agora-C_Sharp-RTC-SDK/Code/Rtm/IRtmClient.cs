@@ -225,6 +225,18 @@ namespace Agora.Rtm
 
         ///
         /// <summary>
+        /// Get the history instance.
+        /// </summary>
+        ///
+        /// <returns>
+        /// 
+        /// - return NULL if error occurred
+        /// </returns>
+        ///
+        IRtmHistory GetHistory();
+
+        ///
+        /// <summary>
         /// Renews the token. Once a token is enabled and used, it expires after a certain period of time.
         /// You should generate a new token on your server, call this method to renew it.
         /// </summary>

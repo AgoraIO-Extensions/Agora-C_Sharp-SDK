@@ -16,7 +16,7 @@ namespace Agora.Rtm
             appId = "";
             userId = "";
             areaCode = RTM_AREA_CODE.GLOB;
-            protocolType = RTM_PROTOCOL_TYPE.RTM_PROTOCOL_TYPE_TCP_UDP;
+            protocolType = RTM_PROTOCOL_TYPE.TCP_UDP;
             presenceTimeout = 300;
             heartbeatInterval = 5;
             useStringUserId = true;
@@ -192,6 +192,13 @@ namespace Agora.Rtm
         /// </summary>
         ///
         public RTM_LINK_OPERATION operation;
+
+        ///
+        /// <summary>
+        /// The reason code of this state change event
+        /// </summary>
+        ///
+        RTM_LINK_STATE_CHANGE_REASON reasonCode;
         ///
         /// <summary>
         /// The reason of this state change event
@@ -227,10 +234,11 @@ namespace Agora.Rtm
 
         public LinkStateEvent()
         {
-            currentState = RTM_LINK_STATE.RTM_LINK_STATE_IDLE;
-            previousState = RTM_LINK_STATE.RTM_LINK_STATE_IDLE;
-            serviceType = RTM_SERVICE_TYPE.RTM_SERVICE_TYPE_MESSAGE;
-            operation = RTM_LINK_OPERATION.RTM_LINK_OPERATION_LOGIN;
+            currentState = RTM_LINK_STATE.IDLE;
+            previousState = RTM_LINK_STATE.IDLE;
+            serviceType = RTM_SERVICE_TYPE.MESSAGE;
+            operation = RTM_LINK_OPERATION.LOGIN;
+            reasonCode = RTM_LINK_STATE_CHANGE_REASON.UNKNOWN;
             reason = "";
             affectedChannels = null;
             unrestoredChannels = null;

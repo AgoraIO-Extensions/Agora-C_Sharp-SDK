@@ -13,6 +13,7 @@ namespace Agora.Rtm.Internal
         private RtmLock _rtmLock = null;
         private RtmPresence _rtmPresence = null;
         private RtmStorage _rtmStorage = null;
+        private RtmHistory _rtmHistory = null;
 
         private RtmClient(IntPtr engine_ptr)
         {
@@ -20,6 +21,7 @@ namespace Agora.Rtm.Internal
             _rtmLock = RtmLock.GetInstance(_rtmClientImpl.GetRtmLockImpl());
             _rtmPresence = RtmPresence.GetInstance(_rtmClientImpl.GetRtmPresenceImpl());
             _rtmStorage = RtmStorage.GetInstance(_rtmClientImpl.GetRtmStorageImpl());
+            _rtmHistory = RtmHistory.GetInstance(_rtmClientImpl.GetRtmHistoryImpl());
         }
 
         ~RtmClient()
@@ -158,6 +160,15 @@ namespace Agora.Rtm.Internal
                 return null;
             }
             return _rtmPresence;
+        }
+
+        public override IRtmHistory GetHistory()
+        {
+            if (_rtmClientImpl == null)
+            {
+                return null;
+            }
+            return _rtmHistory;
         }
 
         public override int RenewToken(string token, ref UInt64 requestId)

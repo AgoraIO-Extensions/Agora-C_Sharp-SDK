@@ -6,7 +6,7 @@ namespace Agora.Rtm.Internal
     {
         public virtual void OnLinkStateEvent(LinkStateEvent @event) { }
 
-        public virtual void OnMessageEvent(MessageEvent @event) { }
+        public virtual void OnMessageEvent(Rtm.MessageEvent @event) { }
 
         public virtual void OnPresenceEvent(PresenceEvent @event) { }
 
@@ -109,5 +109,9 @@ namespace Agora.Rtm.Internal
         public virtual void OnPresenceRemoveStateResult(UInt64 requestId, RTM_ERROR_CODE errorCode) { }
 
         public virtual void OnPresenceGetStateResult(UInt64 requestId, UserState state, RTM_ERROR_CODE errorCode) { }
+
+        public virtual void OnGetHistoryMessagesResult(UInt64 requestId, Rtm.HistoryMessage[] messageList,
+                                                    UInt64 count, UInt64 newStart, RTM_ERROR_CODE errorCode)
+        { }
     }
 }
