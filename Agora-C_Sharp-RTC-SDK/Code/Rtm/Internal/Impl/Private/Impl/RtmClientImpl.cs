@@ -81,6 +81,9 @@ namespace Agora.Rtm.Internal
 
                 _rtmStorageImpl.Dispose();
                 _rtmStorageImpl = null;
+
+                _rtmHistoryImpl.Dispose();
+                _rtmHistoryImpl = null;
             }
 
             Release();
