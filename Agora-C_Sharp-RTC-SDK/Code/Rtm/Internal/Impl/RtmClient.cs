@@ -63,6 +63,7 @@ namespace Agora.Rtm.Internal
             RtmLock.ReleaseInstance();
             RtmPresence.ReleaseInstance();
             RtmStorage.ReleaseInstance();
+            RtmHistory.ReleaseInstance();
 
             _rtmClientImpl.Dispose();
             _rtmClientImpl = null;
