@@ -330,13 +330,13 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_IOS_URL}
     temp_zip_name=$(basename "$NATIVE_IOS_URL")
     7za x ./${temp_zip_name} || exit 1
+    rm ./${temp_zip_name}
 
     if [ -d ./*_Native_SDK_for_iOS_* ]; then
         NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_iOS_*"
     elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
         NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_APPLE_*"
     fi
-    rm ./${temp_zip_name}
 
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
 
@@ -425,13 +425,13 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_MAC_URL}
     temp_zip_name=$(basename "$NATIVE_MAC_URL")
     7za x ./${temp_zip_name} || exit 1
+    rm ./${temp_zip_name}
 
     if [ -d ./*_Native_SDK_for_Mac_* ]; then
         NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_Mac_*"
     elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
         NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_APPLE_*"
     fi
-    rm ./${temp_zip_name}
 
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
 
