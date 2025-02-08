@@ -9,7 +9,12 @@
             "MusicCollection",
             "IMusicContentCenterEventHandler",
             "IMusicPlayer",
-            "IMusicContentCenter"
+            "IMusicContentCenter",
+            "IWord",
+            "ISentence",
+            "ILyricInfo",
+            "IScoreEventHandler",
+            "MusicContentCenterConfiguration"
         ],
         "commmonEnumTemplate": "commmon_enum_template",
         "specialEnumTemplate": {

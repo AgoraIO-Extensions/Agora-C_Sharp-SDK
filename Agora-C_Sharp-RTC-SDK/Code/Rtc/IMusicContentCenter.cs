@@ -7,6 +7,16 @@ namespace Agora.Rtc
     ///
     public abstract class IMusicContentCenter
     {
+        ///
+        /// @ignore
+        ///
+        public abstract int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int UnregisterAudioFrameObserver();
+
         #region terra IMusicContentCenter
         ///
         /// @ignore
@@ -16,7 +26,17 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int RenewToken(string token);
+        public abstract int AddVendor(MusicContentCenterVendorID vendorId, string jsonVendorConfig);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int RemoveVendor(MusicContentCenterVendorID vendorId);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int RenewToken(MusicContentCenterVendorID vendorID, string token);
 
         ///
         /// @ignore
@@ -56,18 +76,52 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
-        public abstract int Preload(long songCode, string jsonOption);
+        public abstract int Preload(ref string requestId, long internalSongCode);
 
         ///
         /// @ignore
         ///
-        public abstract int Preload(ref string requestId, long songCode);
+        public abstract int RegisterScoreEventHandler(IScoreEventHandler scoreEventHandler);
 
         ///
         /// @ignore
         ///
-        public abstract int RemoveCache(long songCode);
+        public abstract int UnregisterScoreEventHandler();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetScoreLevel(ScoreLevel level);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int StartScore(long internalSongCode);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int StopScore();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int PauseScore();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int ResumeScore();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int GetCumulativeScoreData(ref CumulativeScoreData cumulativeScoreData);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int RemoveCache(long internalSongCode);
 
         ///
         /// @ignore
@@ -77,22 +131,27 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int IsPreloaded(long songCode);
+        public abstract int IsPreloaded(long internalSongCode);
 
         ///
         /// @ignore
         ///
-        public abstract int GetLyric(ref string requestId, long songCode, int lyricType = 0);
+        public abstract int GetLyric(ref string requestId, long internalSongCode, int lyricType = 0);
 
         ///
         /// @ignore
         ///
-        public abstract int GetSongSimpleInfo(ref string requestId, long songCode);
+        public abstract int GetLyricInfo(ref string requestId, long internalSongCode);
 
         ///
         /// @ignore
         ///
-        public abstract int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode);
+        public abstract int GetSongSimpleInfo(ref string requestId, long internalSongCode);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int GetInternalSongCode(MusicContentCenterVendorID vendorId, string songCode, string jsonOption, ref long internalSongCode);
         #endregion terra IMusicContentCenter
     }
 }

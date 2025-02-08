@@ -9,7 +9,8 @@
             "initialize",
             "createMusicPlayer",
             "registerEventHandler",
-            "destroyMusicPlayer"
+            "destroyMusicPlayer",
+            "registerScoreEventHandler"
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",

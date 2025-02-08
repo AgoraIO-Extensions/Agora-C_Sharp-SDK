@@ -83,6 +83,14 @@
         "commonMethodTemplate": "api_name_h265",
         "excludeMethods": []
     },
+    "IScoreEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IScoreEventHandler",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name_h265",
+        "excludeMethods": []
+    },
     "IRtcEngineEventHandler": {
         "type": "ClazzStruct",
         "name": "IRtcEngineEventHandler",

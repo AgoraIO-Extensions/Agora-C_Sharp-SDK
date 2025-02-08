@@ -72,21 +72,21 @@ namespace Agora.Rtc.Ut
 
         public bool OnLyricResult_be_trigger = false;
         public string OnLyricResult_requestId;
-        public long OnLyricResult_songCode;
-        public string OnLyricResult_lyricUrl;
+        public long OnLyricResult_internalSongCode;
+        public string OnLyricResult_payload;
         public MusicContentCenterStateReason OnLyricResult_reason;
 
-        public override void OnLyricResult(string requestId, long songCode, string lyricUrl, MusicContentCenterStateReason reason)
+        public override void OnLyricResult(string requestId, long internalSongCode, string payload, MusicContentCenterStateReason reason)
         {
             OnLyricResult_be_trigger = true;
             OnLyricResult_requestId = requestId;
-            OnLyricResult_songCode = songCode;
-            OnLyricResult_lyricUrl = lyricUrl;
+            OnLyricResult_internalSongCode = internalSongCode;
+            OnLyricResult_payload = payload;
             OnLyricResult_reason = reason;
 
         }
 
-        public bool OnLyricResultPassed(string requestId, long songCode, string lyricUrl, MusicContentCenterStateReason reason)
+        public bool OnLyricResultPassed(string requestId, long internalSongCode, string payload, MusicContentCenterStateReason reason)
         {
 
             if (OnLyricResult_be_trigger == false)
@@ -94,11 +94,47 @@ namespace Agora.Rtc.Ut
 
             if (ParamsHelper.Compare<string>(OnLyricResult_requestId, requestId) == false)
                 return false;
-            if (ParamsHelper.Compare<long>(OnLyricResult_songCode, songCode) == false)
+            if (ParamsHelper.Compare<long>(OnLyricResult_internalSongCode, internalSongCode) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnLyricResult_lyricUrl, lyricUrl) == false)
+            if (ParamsHelper.Compare<string>(OnLyricResult_payload, payload) == false)
                 return false;
             if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnLyricResult_reason, reason) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnLyricInfoResult_be_trigger = false;
+        public string OnLyricInfoResult_requestId;
+        public long OnLyricInfoResult_songCode;
+        public ILyricInfo OnLyricInfoResult_lyricInfo;
+        public MusicContentCenterStateReason OnLyricInfoResult_reason;
+
+        public override void OnLyricInfoResult(string requestId, long songCode, ILyricInfo lyricInfo, MusicContentCenterStateReason reason)
+        {
+            OnLyricInfoResult_be_trigger = true;
+            OnLyricInfoResult_requestId = requestId;
+            OnLyricInfoResult_songCode = songCode;
+            OnLyricInfoResult_lyricInfo = lyricInfo;
+            OnLyricInfoResult_reason = reason;
+
+        }
+
+        public bool OnLyricInfoResultPassed(string requestId, long songCode, ILyricInfo lyricInfo, MusicContentCenterStateReason reason)
+        {
+
+            if (OnLyricInfoResult_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<string>(OnLyricInfoResult_requestId, requestId) == false)
+                return false;
+            if (ParamsHelper.Compare<long>(OnLyricInfoResult_songCode, songCode) == false)
+                return false;
+            if (ParamsHelper.Compare<ILyricInfo>(OnLyricInfoResult_lyricInfo, lyricInfo) == false)
+                return false;
+            if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnLyricInfoResult_reason, reason) == false)
                 return false;
 
             return true;
@@ -144,25 +180,25 @@ namespace Agora.Rtc.Ut
 
         public bool OnPreLoadEvent_be_trigger = false;
         public string OnPreLoadEvent_requestId;
-        public long OnPreLoadEvent_songCode;
+        public long OnPreLoadEvent_internalSongCode;
         public int OnPreLoadEvent_percent;
-        public string OnPreLoadEvent_lyricUrl;
-        public PreloadState OnPreLoadEvent_state;
+        public string OnPreLoadEvent_payload;
+        public MusicContentCenterState OnPreLoadEvent_status;
         public MusicContentCenterStateReason OnPreLoadEvent_reason;
 
-        public override void OnPreLoadEvent(string requestId, long songCode, int percent, string lyricUrl, PreloadState state, MusicContentCenterStateReason reason)
+        public override void OnPreLoadEvent(string requestId, long internalSongCode, int percent, string payload, MusicContentCenterState status, MusicContentCenterStateReason reason)
         {
             OnPreLoadEvent_be_trigger = true;
             OnPreLoadEvent_requestId = requestId;
-            OnPreLoadEvent_songCode = songCode;
+            OnPreLoadEvent_internalSongCode = internalSongCode;
             OnPreLoadEvent_percent = percent;
-            OnPreLoadEvent_lyricUrl = lyricUrl;
-            OnPreLoadEvent_state = state;
+            OnPreLoadEvent_payload = payload;
+            OnPreLoadEvent_status = status;
             OnPreLoadEvent_reason = reason;
 
         }
 
-        public bool OnPreLoadEventPassed(string requestId, long songCode, int percent, string lyricUrl, PreloadState state, MusicContentCenterStateReason reason)
+        public bool OnPreLoadEventPassed(string requestId, long internalSongCode, int percent, string payload, MusicContentCenterState status, MusicContentCenterStateReason reason)
         {
 
             if (OnPreLoadEvent_be_trigger == false)
@@ -170,15 +206,47 @@ namespace Agora.Rtc.Ut
 
             if (ParamsHelper.Compare<string>(OnPreLoadEvent_requestId, requestId) == false)
                 return false;
-            if (ParamsHelper.Compare<long>(OnPreLoadEvent_songCode, songCode) == false)
+            if (ParamsHelper.Compare<long>(OnPreLoadEvent_internalSongCode, internalSongCode) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnPreLoadEvent_percent, percent) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnPreLoadEvent_lyricUrl, lyricUrl) == false)
+            if (ParamsHelper.Compare<string>(OnPreLoadEvent_payload, payload) == false)
                 return false;
-            if (ParamsHelper.Compare<PreloadState>(OnPreLoadEvent_state, state) == false)
+            if (ParamsHelper.Compare<MusicContentCenterState>(OnPreLoadEvent_status, status) == false)
                 return false;
             if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnPreLoadEvent_reason, reason) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnStartScoreResult_be_trigger = false;
+        public long OnStartScoreResult_internalSongCode;
+        public MusicContentCenterState OnStartScoreResult_status;
+        public MusicContentCenterStateReason OnStartScoreResult_reason;
+
+        public override void OnStartScoreResult(long internalSongCode, MusicContentCenterState status, MusicContentCenterStateReason reason)
+        {
+            OnStartScoreResult_be_trigger = true;
+            OnStartScoreResult_internalSongCode = internalSongCode;
+            OnStartScoreResult_status = status;
+            OnStartScoreResult_reason = reason;
+
+        }
+
+        public bool OnStartScoreResultPassed(long internalSongCode, MusicContentCenterState status, MusicContentCenterStateReason reason)
+        {
+
+            if (OnStartScoreResult_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<long>(OnStartScoreResult_internalSongCode, internalSongCode) == false)
+                return false;
+            if (ParamsHelper.Compare<MusicContentCenterState>(OnStartScoreResult_status, status) == false)
+                return false;
+            if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnStartScoreResult_reason, reason) == false)
                 return false;
 
             return true;

@@ -27,11 +27,31 @@ namespace Agora.Rtc.Ut
 
         #region terra IMusicContentCenter
         [Test]
+        public void Test_AddVendor()
+        {
+            MusicContentCenterVendorID vendorId = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
+            string jsonVendorConfig = ParamsHelper.CreateParam<string>();
+
+            var nRet = MusicContentCenter.AddVendor(vendorId, jsonVendorConfig);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_RemoveVendor()
+        {
+            MusicContentCenterVendorID vendorId = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
+
+            var nRet = MusicContentCenter.RemoveVendor(vendorId);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_RenewToken()
         {
+            MusicContentCenterVendorID vendorID = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
             string token = ParamsHelper.CreateParam<string>();
 
-            var nRet = MusicContentCenter.RenewToken(token);
+            var nRet = MusicContentCenter.RenewToken(vendorID, token);
             Assert.AreEqual(0, nRet);
         }
 
@@ -82,29 +102,82 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_Preload()
         {
-            long songCode = ParamsHelper.CreateParam<long>();
-            string jsonOption = ParamsHelper.CreateParam<string>();
+            string requestId = ParamsHelper.CreateParam<string>();
+            long internalSongCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = MusicContentCenter.Preload(songCode, jsonOption);
+            var nRet = MusicContentCenter.Preload(ref requestId, internalSongCode);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_Preload2()
+        public void Test_UnregisterScoreEventHandler()
         {
-            string requestId = ParamsHelper.CreateParam<string>();
-            long songCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = MusicContentCenter.Preload(ref requestId, songCode);
+
+            var nRet = MusicContentCenter.UnregisterScoreEventHandler();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetScoreLevel()
+        {
+            ScoreLevel level = ParamsHelper.CreateParam<ScoreLevel>();
+
+            var nRet = MusicContentCenter.SetScoreLevel(level);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_StartScore()
+        {
+            long internalSongCode = ParamsHelper.CreateParam<long>();
+
+            var nRet = MusicContentCenter.StartScore(internalSongCode);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_StopScore()
+        {
+
+
+            var nRet = MusicContentCenter.StopScore();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_PauseScore()
+        {
+
+
+            var nRet = MusicContentCenter.PauseScore();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_ResumeScore()
+        {
+
+
+            var nRet = MusicContentCenter.ResumeScore();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetCumulativeScoreData()
+        {
+            CumulativeScoreData cumulativeScoreData = ParamsHelper.CreateParam<CumulativeScoreData>();
+
+            var nRet = MusicContentCenter.GetCumulativeScoreData(ref cumulativeScoreData);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_RemoveCache()
         {
-            long songCode = ParamsHelper.CreateParam<long>();
+            long internalSongCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = MusicContentCenter.RemoveCache(songCode);
+            var nRet = MusicContentCenter.RemoveCache(internalSongCode);
             Assert.AreEqual(0, nRet);
         }
 
@@ -121,9 +194,9 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_IsPreloaded()
         {
-            long songCode = ParamsHelper.CreateParam<long>();
+            long internalSongCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = MusicContentCenter.IsPreloaded(songCode);
+            var nRet = MusicContentCenter.IsPreloaded(internalSongCode);
             Assert.AreEqual(0, nRet);
         }
 
@@ -131,10 +204,20 @@ namespace Agora.Rtc.Ut
         public void Test_GetLyric()
         {
             string requestId = ParamsHelper.CreateParam<string>();
-            long songCode = ParamsHelper.CreateParam<long>();
+            long internalSongCode = ParamsHelper.CreateParam<long>();
             int lyricType = ParamsHelper.CreateParam<int>();
 
-            var nRet = MusicContentCenter.GetLyric(ref requestId, songCode, lyricType);
+            var nRet = MusicContentCenter.GetLyric(ref requestId, internalSongCode, lyricType);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetLyricInfo()
+        {
+            string requestId = ParamsHelper.CreateParam<string>();
+            long internalSongCode = ParamsHelper.CreateParam<long>();
+
+            var nRet = MusicContentCenter.GetLyricInfo(ref requestId, internalSongCode);
             Assert.AreEqual(0, nRet);
         }
 
@@ -142,20 +225,21 @@ namespace Agora.Rtc.Ut
         public void Test_GetSongSimpleInfo()
         {
             string requestId = ParamsHelper.CreateParam<string>();
-            long songCode = ParamsHelper.CreateParam<long>();
+            long internalSongCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = MusicContentCenter.GetSongSimpleInfo(ref requestId, songCode);
+            var nRet = MusicContentCenter.GetSongSimpleInfo(ref requestId, internalSongCode);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_GetInternalSongCode()
         {
-            long songCode = ParamsHelper.CreateParam<long>();
+            MusicContentCenterVendorID vendorId = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
+            string songCode = ParamsHelper.CreateParam<string>();
             string jsonOption = ParamsHelper.CreateParam<string>();
             long internalSongCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = MusicContentCenter.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
+            var nRet = MusicContentCenter.GetInternalSongCode(vendorId, songCode, jsonOption, ref internalSongCode);
             Assert.AreEqual(0, nRet);
         }
         #endregion terra IMusicContentCenter

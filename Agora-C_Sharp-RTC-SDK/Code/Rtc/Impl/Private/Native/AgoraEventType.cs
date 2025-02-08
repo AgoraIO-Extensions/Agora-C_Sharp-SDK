@@ -74,9 +74,16 @@ namespace Agora.Rtc
         public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT = "MusicContentCenterEventHandler_onMusicChartsResult_fb18135";
         public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT = "MusicContentCenterEventHandler_onMusicCollectionResult_c30c2e6";
         public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT = "MusicContentCenterEventHandler_onLyricResult_9ad9c90";
+        public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICINFORESULT = "MusicContentCenterEventHandler_onLyricInfoResult_4725ebf";
         public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT = "MusicContentCenterEventHandler_onSongSimpleInfoResult_9ad9c90";
-        public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT = "MusicContentCenterEventHandler_onPreLoadEvent_20170bc";
+        public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT = "MusicContentCenterEventHandler_onPreLoadEvent_d238b4d";
+        public const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSTARTSCORERESULT = "MusicContentCenterEventHandler_onStartScoreResult_c579a23";
         #endregion terra IMusicContentCenterEventHandler
+
+        #region terra IScoreEventHandler
+        public const string EVENT_SCOREEVENTHANDLER_ONPITCH = "ScoreEventHandler_onPitch_5b7d529";
+        public const string EVENT_SCOREEVENTHANDLER_ONLINESCORE = "ScoreEventHandler_onLineScore_e4987ce";
+        #endregion terra IScoreEventHandler
 
         #region terra IRtcEngineEventHandler
         public const string EVENT_RTCENGINEEVENTHANDLER_EVENTHANDLERTYPE = "RtcEngineEventHandler_eventHandlerType";

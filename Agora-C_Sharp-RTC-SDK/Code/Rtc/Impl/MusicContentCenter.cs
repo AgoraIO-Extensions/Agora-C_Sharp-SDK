@@ -30,6 +30,24 @@ namespace Agora.Rtc
             instance = null;
         }
 
+        public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.RegisterAudioFrameObserver(audioFrameObserver, position, mode);
+        }
+
+        public override int UnregisterAudioFrameObserver()
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.UnregisterAudioFrameObserver();
+        }
+
         #region terra IMusicContentCenter
         public override int Initialize(MusicContentCenterConfiguration configuration)
         {
@@ -40,13 +58,31 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.Initialize(configuration);
         }
 
-        public override int RenewToken(string token)
+        public override int AddVendor(MusicContentCenterVendorID vendorId, string jsonVendorConfig)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.RenewToken(token);
+            return _musicContentCenterImpl.AddVendor(vendorId, jsonVendorConfig);
+        }
+
+        public override int RemoveVendor(MusicContentCenterVendorID vendorId)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.RemoveVendor(vendorId);
+        }
+
+        public override int RenewToken(MusicContentCenterVendorID vendorID, string token)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.RenewToken(vendorID, token);
         }
 
         public override int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler)
@@ -112,32 +148,94 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.SearchMusic(ref requestId, keyWord, page, pageSize, jsonOption);
         }
 
-        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
-        public override int Preload(long songCode, string jsonOption)
+        public override int Preload(ref string requestId, long internalSongCode)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.Preload(songCode, jsonOption);
+            return _musicContentCenterImpl.Preload(ref requestId, internalSongCode);
         }
 
-        public override int Preload(ref string requestId, long songCode)
+        public override int RegisterScoreEventHandler(IScoreEventHandler scoreEventHandler)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.Preload(ref requestId, songCode);
+            return _musicContentCenterImpl.RegisterScoreEventHandler(scoreEventHandler);
         }
 
-        public override int RemoveCache(long songCode)
+        public override int UnregisterScoreEventHandler()
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.RemoveCache(songCode);
+            return _musicContentCenterImpl.UnregisterScoreEventHandler();
+        }
+
+        public override int SetScoreLevel(ScoreLevel level)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.SetScoreLevel(level);
+        }
+
+        public override int StartScore(long internalSongCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.StartScore(internalSongCode);
+        }
+
+        public override int StopScore()
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.StopScore();
+        }
+
+        public override int PauseScore()
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.PauseScore();
+        }
+
+        public override int ResumeScore()
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.ResumeScore();
+        }
+
+        public override int GetCumulativeScoreData(ref CumulativeScoreData cumulativeScoreData)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.GetCumulativeScoreData(ref cumulativeScoreData);
+        }
+
+        public override int RemoveCache(long internalSongCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.RemoveCache(internalSongCode);
         }
 
         public override int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
@@ -149,40 +247,49 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.GetCaches(ref cacheInfo, ref cacheInfoSize);
         }
 
-        public override int IsPreloaded(long songCode)
+        public override int IsPreloaded(long internalSongCode)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.IsPreloaded(songCode);
+            return _musicContentCenterImpl.IsPreloaded(internalSongCode);
         }
 
-        public override int GetLyric(ref string requestId, long songCode, int lyricType = 0)
+        public override int GetLyric(ref string requestId, long internalSongCode, int lyricType = 0)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetLyric(ref requestId, songCode, lyricType);
+            return _musicContentCenterImpl.GetLyric(ref requestId, internalSongCode, lyricType);
         }
 
-        public override int GetSongSimpleInfo(ref string requestId, long songCode)
+        public override int GetLyricInfo(ref string requestId, long internalSongCode)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetSongSimpleInfo(ref requestId, songCode);
+            return _musicContentCenterImpl.GetLyricInfo(ref requestId, internalSongCode);
         }
 
-        public override int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode)
+        public override int GetSongSimpleInfo(ref string requestId, long internalSongCode)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
+            return _musicContentCenterImpl.GetSongSimpleInfo(ref requestId, internalSongCode);
+        }
+
+        public override int GetInternalSongCode(MusicContentCenterVendorID vendorId, string songCode, string jsonOption, ref long internalSongCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.GetInternalSongCode(vendorId, songCode, jsonOption, ref internalSongCode);
         }
         #endregion terra IMusicContentCenter
     }
