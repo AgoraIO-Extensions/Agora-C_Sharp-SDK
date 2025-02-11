@@ -126,7 +126,7 @@ namespace Agora.Rtc
                 return;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            if (_callbackObject == null)
+            if (_scoreCallbackObject == null)
             {
                 _scoreCallbackObject = new AgoraCallbackObject("AgoraScore" + GetHashCode());
                 ScoreEventHandlerNative.CallbackObject = _scoreCallbackObject;

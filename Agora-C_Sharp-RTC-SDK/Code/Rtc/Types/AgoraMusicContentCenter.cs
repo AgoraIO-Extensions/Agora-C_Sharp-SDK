@@ -27,6 +27,126 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
+    public class MusicContentCenterVendorDefaultConfiguration
+    {
+        ///
+        /// @ignore
+        ///
+        public string appId;
+
+        ///
+        /// @ignore
+        ///
+        public string token;
+
+        ///
+        /// @ignore
+        ///
+        public string userId;
+
+        ///
+        /// @ignore
+        ///
+        public string mccDomain;
+
+        ///
+        /// @ignore
+        ///
+        public string channelId;
+
+        ///
+        /// @ignore
+        ///
+        public string channelUserId;
+
+        public MusicContentCenterVendorDefaultConfiguration(string appId, string token, string userId,
+            string mccDomain, string channelId, string channelUserId)
+        {
+            this.appId = appId;
+            this.token = token;
+            this.userId = userId;
+            this.mccDomain = mccDomain;
+            this.channelId = channelId;
+            this.channelUserId = channelUserId;
+        }
+        public MusicContentCenterVendorDefaultConfiguration()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class MusicContentCenterVendor2Configuration
+    {
+        ///
+        /// @ignore
+        ///
+        public string appId;
+
+        ///
+        /// @ignore
+        ///
+        public string appKey;
+
+        ///
+        /// @ignore
+        ///
+        public string token;
+
+        ///
+        /// @ignore
+        ///
+        public string userId;
+
+        ///
+        /// @ignore
+        ///
+        public string deviceId;
+
+        ///
+        /// @ignore
+        ///
+        public int urlTokenExpireTime;
+
+        ///
+        /// @ignore
+        ///
+        public int chargeMode;
+
+        ///
+        /// @ignore
+        ///
+        public string channelId;
+
+        ///
+        /// @ignore
+        ///
+        public string channelUserId;
+
+        public MusicContentCenterVendor2Configuration(string appId, string appKey, string token,
+            string userId, string deviceId, int urlTokenExpireTime, int chargeMode, string channelId, string channelUserId)
+        {
+            this.appId = appId;
+            this.appKey = appKey;
+            this.token = token;
+            this.userId = userId;
+            this.deviceId = deviceId;
+            this.urlTokenExpireTime = urlTokenExpireTime;
+            this.chargeMode = chargeMode;
+            this.channelId = channelId;
+            this.channelUserId = channelUserId;
+        }
+        public MusicContentCenterVendor2Configuration()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
     public class MusicCollection
     {
         ///
@@ -709,100 +829,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         kChargeModeOnce = 2,
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class MusicContentCenterVendorDefaultConfiguration
-    {
-        ///
-        /// @ignore
-        ///
-        public string appId;
-
-        ///
-        /// @ignore
-        ///
-        public string token;
-
-        ///
-        /// @ignore
-        ///
-        public string userId;
-
-        ///
-        /// @ignore
-        ///
-        public string mccDomain;
-
-        public MusicContentCenterVendorDefaultConfiguration(string appId, string token, string userId, string mccDomain)
-        {
-            this.appId = appId;
-            this.token = token;
-            this.userId = userId;
-            this.mccDomain = mccDomain;
-        }
-        public MusicContentCenterVendorDefaultConfiguration()
-        {
-        }
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class MusicContentCenterVendor2Configuration
-    {
-        ///
-        /// @ignore
-        ///
-        public string appId;
-
-        ///
-        /// @ignore
-        ///
-        public string appKey;
-
-        ///
-        /// @ignore
-        ///
-        public string token;
-
-        ///
-        /// @ignore
-        ///
-        public string userId;
-
-        ///
-        /// @ignore
-        ///
-        public string deviceId;
-
-        ///
-        /// @ignore
-        ///
-        public int urlTokenExpireTime;
-
-        ///
-        /// @ignore
-        ///
-        public int chargeMode;
-
-        public MusicContentCenterVendor2Configuration(string appId, string appKey, string token, string userId, string deviceId, int urlTokenExpireTime, int chargeMode)
-        {
-            this.appId = appId;
-            this.appKey = appKey;
-            this.token = token;
-            this.userId = userId;
-            this.deviceId = deviceId;
-            this.urlTokenExpireTime = urlTokenExpireTime;
-            this.chargeMode = chargeMode;
-        }
-        public MusicContentCenterVendor2Configuration()
-        {
-        }
-
     }
 
     #endregion terra IAgoraMusicContentCenter.h

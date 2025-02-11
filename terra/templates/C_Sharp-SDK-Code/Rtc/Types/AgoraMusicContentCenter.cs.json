@@ -14,7 +14,9 @@
             "ISentence",
             "ILyricInfo",
             "IScoreEventHandler",
-            "MusicContentCenterConfiguration"
+            "MusicContentCenterConfiguration",
+            "MusicContentCenterVendorDefaultConfiguration",
+            "MusicContentCenterVendor2Configuration"
         ],
         "commmonEnumTemplate": "commmon_enum_template",
         "specialEnumTemplate": {
