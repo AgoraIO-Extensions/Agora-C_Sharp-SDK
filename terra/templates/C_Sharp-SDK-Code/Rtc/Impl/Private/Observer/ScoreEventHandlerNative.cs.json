@@ -1,0 +1,10 @@
+{
+    "IScoreEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IScoreEventHandler",
+        "commonMethodTemplate": "method_callback_common",
+        "methodSplitSymbol": "\n\n",
+        "excludeMethods": []
+    },
+    "method_callback_common": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateMusicContentCenterEventHandlerNative}"
+}

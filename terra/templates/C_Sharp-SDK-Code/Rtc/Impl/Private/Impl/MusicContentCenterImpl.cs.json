@@ -10,7 +10,9 @@
             "createMusicPlayer",
             "registerEventHandler",
             "unregisterEventHandler",
-            "destroyMusicPlayer"
+            "destroyMusicPlayer",
+            "registerScoreEventHandler",
+            "unregisterScoreEventHandler"
         ],
         "specialMethodsTemplate": {
             "getCaches": "method_interface_impl_getCaches"

@@ -4,11 +4,11 @@ parsers:
     package: '@agoraio-extensions/cxx-parser'
     args:
       includeHeaderDirs:
-        - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.6/include'
+        - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include'
       parseFiles:
         include:
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.6/include/*.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include/*.h'
         exclude:
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.6/include/rte_*.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include/rte_*.h'
       customHeaders:
         - ''

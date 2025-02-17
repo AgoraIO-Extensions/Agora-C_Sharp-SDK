@@ -6,6 +6,147 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
+    public class MusicContentCenterConfiguration
+    {
+        ///
+        /// @ignore
+        ///
+        public int maxCacheSize;
+
+        public MusicContentCenterConfiguration()
+        {
+            maxCacheSize = 20;
+        }
+
+        public MusicContentCenterConfiguration(int maxCacheSize)
+        {
+            this.maxCacheSize = maxCacheSize;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class MusicContentCenterVendorDefaultConfiguration
+    {
+        ///
+        /// @ignore
+        ///
+        public string appId;
+
+        ///
+        /// @ignore
+        ///
+        public string token;
+
+        ///
+        /// @ignore
+        ///
+        public string userId;
+
+        ///
+        /// @ignore
+        ///
+        public string mccDomain;
+
+        ///
+        /// @ignore
+        ///
+        public string channelId;
+
+        ///
+        /// @ignore
+        ///
+        public string channelUserId;
+
+        public MusicContentCenterVendorDefaultConfiguration(string appId, string token, string userId,
+            string mccDomain, string channelId, string channelUserId)
+        {
+            this.appId = appId;
+            this.token = token;
+            this.userId = userId;
+            this.mccDomain = mccDomain;
+            this.channelId = channelId;
+            this.channelUserId = channelUserId;
+        }
+        public MusicContentCenterVendorDefaultConfiguration()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class MusicContentCenterVendor2Configuration
+    {
+        ///
+        /// @ignore
+        ///
+        public string appId;
+
+        ///
+        /// @ignore
+        ///
+        public string appKey;
+
+        ///
+        /// @ignore
+        ///
+        public string token;
+
+        ///
+        /// @ignore
+        ///
+        public string userId;
+
+        ///
+        /// @ignore
+        ///
+        public string deviceId;
+
+        ///
+        /// @ignore
+        ///
+        public int urlTokenExpireTime;
+
+        ///
+        /// @ignore
+        ///
+        public int chargeMode;
+
+        ///
+        /// @ignore
+        ///
+        public string channelId;
+
+        ///
+        /// @ignore
+        ///
+        public string channelUserId;
+
+        public MusicContentCenterVendor2Configuration(string appId, string appKey, string token,
+            string userId, string deviceId, int urlTokenExpireTime, int chargeMode, string channelId, string channelUserId)
+        {
+            this.appId = appId;
+            this.appKey = appKey;
+            this.token = token;
+            this.userId = userId;
+            this.deviceId = deviceId;
+            this.urlTokenExpireTime = urlTokenExpireTime;
+            this.chargeMode = chargeMode;
+            this.channelId = channelId;
+            this.channelUserId = channelUserId;
+        }
+        public MusicContentCenterVendor2Configuration()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
     public class MusicCollection
     {
         ///
@@ -28,9 +169,138 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public Music[] music;
-    };
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class IWord
+    {
+        ///
+        /// @ignore
+        ///
+        public int begin;
+
+        ///
+        /// @ignore
+        ///
+        public int duration;
+
+        ///
+        /// @ignore
+        ///
+        public double refPitch;
+
+        ///
+        /// @ignore
+        ///
+        public string word;
+
+        ///
+        /// @ignore
+        ///
+        public int score;
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class ISentence
+    {
+        ///
+        /// @ignore
+        ///
+        public string content;
+
+        ///
+        /// @ignore
+        ///
+        public int begin;
+
+        ///
+        /// @ignore
+        ///
+        public int duration;
+
+        ///
+        /// @ignore
+        ///
+        public IWord[] word;
+
+        ///
+        /// @ignore
+        ///
+        public int wordCount;
+
+        ///
+        /// @ignore
+        ///
+        public int score;
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class ILyricInfo
+    {
+        ///
+        /// @ignore
+        ///
+        public string name;
+
+        ///
+        /// @ignore
+        ///
+        public string singer;
+
+        ///
+        /// @ignore
+        ///
+        public int preludeEndPosition;
+
+        ///
+        /// @ignore
+        ///
+        public int duration;
+
+        ///
+        /// @ignore
+        ///
+        public bool hasPitch;
+
+        ///
+        /// @ignore
+        ///
+        public LyricSourceType sourceType;
+
+        ///
+        /// @ignore
+        ///
+        public ISentence[] sentence;
+
+        ///
+        /// @ignore
+        ///
+        public int sentenceCount;
+    }
 
     #region terra IAgoraMusicContentCenter.h
+    ///
+    /// @ignore
+    ///
+    public enum MusicContentCenterVendorID
+    {
+        ///
+        /// @ignore
+        ///
+        kMusicContentCenterVendorDefault = 1,
+
+        ///
+        /// @ignore
+        ///
+        kMusicContentCenterVendor2 = 2,
+    }
+
     ///
     /// @ignore
     ///
@@ -55,27 +325,37 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum PreloadState
+    public enum MusicContentCenterState
     {
         ///
         /// @ignore
         ///
-        kPreloadStateCompleted = 0,
+        kMusicContentCenterStatePreloadOk = 0,
 
         ///
         /// @ignore
         ///
-        kPreloadStateFailed = 1,
+        kMusicContentCenterStatePreloadFailed = 1,
 
         ///
         /// @ignore
         ///
-        kPreloadStatePreloading = 2,
+        kMusicContentCenterStatePreloading = 2,
 
         ///
         /// @ignore
         ///
-        kPreloadStateRemoved = 3,
+        kMusicContentCenterStatePreloadRemoved = 3,
+
+        ///
+        /// @ignore
+        ///
+        kMusicContentCenterStateStartScoreCompleted = 4,
+
+        ///
+        /// @ignore
+        ///
+        kMusicContentCenterStateStartScoreFailed = 5,
     }
 
     ///
@@ -164,6 +444,16 @@ namespace Agora.Rtc
         /// @ignore
         ///
         MUSIC_CACHE_STATUS_TYPE_CACHING = 1,
+
+        ///
+        /// @ignore
+        ///
+        MUSIC_CACHE_STATUS_TYPE_NO_CACHED = 2,
+
+        ///
+        /// @ignore
+        ///
+        MUSIC_CACHE_STATUS_TYPE_NO_RESOURCE = 3,
     }
 
     ///
@@ -179,19 +469,23 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public MUSIC_CACHE_STATUS_TYPE status;
+        public MUSIC_CACHE_STATUS_TYPE musicStatus;
 
-        public MusicCacheInfo()
-        {
-            this.songCode = 0;
-            this.status = MUSIC_CACHE_STATUS_TYPE.MUSIC_CACHE_STATUS_TYPE_CACHED;
-        }
+        ///
+        /// @ignore
+        ///
+        public MUSIC_CACHE_STATUS_TYPE lyricStatus;
 
-        public MusicCacheInfo(long songCode, MUSIC_CACHE_STATUS_TYPE status)
+        public MusicCacheInfo(long songCode, MUSIC_CACHE_STATUS_TYPE musicStatus, MUSIC_CACHE_STATUS_TYPE lyricStatus)
         {
             this.songCode = songCode;
-            this.status = status;
+            this.musicStatus = musicStatus;
+            this.lyricStatus = lyricStatus;
         }
+        public MusicCacheInfo()
+        {
+        }
+
     }
 
     ///
@@ -353,51 +647,188 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public class MusicContentCenterConfiguration
+    public enum LyricSourceType
     {
         ///
         /// @ignore
         ///
-        public string appId;
+        kLyricSourceXml = 0,
 
         ///
         /// @ignore
         ///
-        public string token;
+        kLyricSourceLrc = 1,
 
         ///
         /// @ignore
         ///
-        public long mccUid;
+        kLyricSourceLrcWithPitches = 2,
 
         ///
         /// @ignore
         ///
-        public int maxCacheSize;
+        kLyricSourceKrc = 3,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum ScoreLevel
+    {
+        ///
+        /// @ignore
+        ///
+        kScoreLevel1 = 1,
 
         ///
         /// @ignore
         ///
-        public string mccDomain;
+        kScoreLevel2 = 2,
 
-        public MusicContentCenterConfiguration()
+        ///
+        /// @ignore
+        ///
+        kScoreLevel3 = 3,
+
+        ///
+        /// @ignore
+        ///
+        kScoreLevel4 = 4,
+
+        ///
+        /// @ignore
+        ///
+        kScoreLevel5 = 5,
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class RawScoreData
+    {
+        ///
+        /// @ignore
+        ///
+        public int progressInMs;
+
+        ///
+        /// @ignore
+        ///
+        public float speakerPitch;
+
+        ///
+        /// @ignore
+        ///
+        public float pitchScore;
+
+        public RawScoreData(int progressInMs, float speakerPitch, float pitchScore)
         {
-            this.appId = "";
-            this.token = "";
-            this.mccUid = 0;
-            this.maxCacheSize = 10;
-            this.mccDomain = "";
+            this.progressInMs = progressInMs;
+            this.speakerPitch = speakerPitch;
+            this.pitchScore = pitchScore;
+        }
+        public RawScoreData()
+        {
         }
 
-        public MusicContentCenterConfiguration(string appid, string token, long id, int maxSize = 10, string apiurl = "")
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class LineScoreData
+    {
+        ///
+        /// @ignore
+        ///
+        public int progressInMs;
+
+        ///
+        /// @ignore
+        ///
+        public int index;
+
+        ///
+        /// @ignore
+        ///
+        public int totalLines;
+
+        ///
+        /// @ignore
+        ///
+        public float pitchScore;
+
+        ///
+        /// @ignore
+        ///
+        public float cumulativePitchScore;
+
+        ///
+        /// @ignore
+        ///
+        public float energyScore;
+
+        public LineScoreData(int progressInMs, int index, int totalLines, float pitchScore, float cumulativePitchScore, float energyScore)
         {
-            this.appId = appid;
-            this.token = token;
-            this.mccUid = id;
-            this.maxCacheSize = maxSize;
-            this.mccDomain = apiurl;
+            this.progressInMs = progressInMs;
+            this.index = index;
+            this.totalLines = totalLines;
+            this.pitchScore = pitchScore;
+            this.cumulativePitchScore = cumulativePitchScore;
+            this.energyScore = energyScore;
+        }
+        public LineScoreData()
+        {
         }
 
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class CumulativeScoreData
+    {
+        ///
+        /// @ignore
+        ///
+        public int progressInMs;
+
+        ///
+        /// @ignore
+        ///
+        public float cumulativePitchScore;
+
+        ///
+        /// @ignore
+        ///
+        public float energyScore;
+
+        public CumulativeScoreData(int progressInMs, float cumulativePitchScore, float energyScore)
+        {
+            this.progressInMs = progressInMs;
+            this.cumulativePitchScore = cumulativePitchScore;
+            this.energyScore = energyScore;
+        }
+        public CumulativeScoreData()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum ChargeMode
+    {
+        ///
+        /// @ignore
+        ///
+        kChargeModeMonthly = 1,
+
+        ///
+        /// @ignore
+        ///
+        kChargeModeOnce = 2,
     }
 
     #endregion terra IAgoraMusicContentCenter.h

@@ -542,25 +542,37 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIARECORDER_STOPRECORDING = "MediaRecorder_stopRecording";
         #endregion terra IMediaRecorder
 
+        internal const string IMUSICCONTENTCENTER_REGISTERAUDIOFRAMEOBSERVER = "MusicContentCenter_registerAudioFrameObserver";
+        internal const string IMUSICCONTENTCENTER_UNREGISTERAUDIOFRAMEOBSERVER = "MusicContentCenter_unregisterAudioFrameObserver";
         #region terra IMusicContentCenter
         internal const string FUNC_MUSICCONTENTCENTER_INITIALIZE = "MusicContentCenter_initialize_df70304";
-        internal const string FUNC_MUSICCONTENTCENTER_RENEWTOKEN = "MusicContentCenter_renewToken_3a2037f";
+        internal const string FUNC_MUSICCONTENTCENTER_ADDVENDOR = "MusicContentCenter_addVendor_db3598d";
+        internal const string FUNC_MUSICCONTENTCENTER_REMOVEVENDOR = "MusicContentCenter_removeVendor_387dbf0";
+        internal const string FUNC_MUSICCONTENTCENTER_RENEWTOKEN = "MusicContentCenter_renewToken_db3598d";
         internal const string FUNC_MUSICCONTENTCENTER_RELEASE = "MusicContentCenter_release";
         internal const string FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER = "MusicContentCenter_registerEventHandler_ae49451";
-        internal const string FUNC_MUSICCONTENTCENTER_UNREGISTEREVENTHANDLER = "MusicContentCenter_unregisterEventHandler";
+        internal const string FUNC_MUSICCONTENTCENTER_UNREGISTEREVENTHANDLER = "MusicContentCenter_unregisterEventHandler_ae49451";
         internal const string FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER = "MusicContentCenter_createMusicPlayer";
         internal const string FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER = "MusicContentCenter_destroyMusicPlayer_876d086";
         internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS = "MusicContentCenter_getMusicCharts_66d4ecd";
         internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCOLLECTIONBYMUSICCHARTID = "MusicContentCenter_getMusicCollectionByMusicChartId_8cd0b4d";
         internal const string FUNC_MUSICCONTENTCENTER_SEARCHMUSIC = "MusicContentCenter_searchMusic_3f8cf09";
-        internal const string FUNC_MUSICCONTENTCENTER_PRELOAD = "MusicContentCenter_preload_bd5a5a3";
-        internal const string FUNC_MUSICCONTENTCENTER_PRELOAD2 = "MusicContentCenter_preload_d3baeab";
+        internal const string FUNC_MUSICCONTENTCENTER_PRELOAD = "MusicContentCenter_preload_d3baeab";
+        internal const string FUNC_MUSICCONTENTCENTER_REGISTERSCOREEVENTHANDLER = "MusicContentCenter_registerScoreEventHandler_0932be1";
+        internal const string FUNC_MUSICCONTENTCENTER_UNREGISTERSCOREEVENTHANDLER = "MusicContentCenter_unregisterScoreEventHandler_0932be1";
+        internal const string FUNC_MUSICCONTENTCENTER_SETSCORELEVEL = "MusicContentCenter_setScoreLevel_fef2f2f";
+        internal const string FUNC_MUSICCONTENTCENTER_STARTSCORE = "MusicContentCenter_startScore_f631116";
+        internal const string FUNC_MUSICCONTENTCENTER_STOPSCORE = "MusicContentCenter_stopScore";
+        internal const string FUNC_MUSICCONTENTCENTER_PAUSESCORE = "MusicContentCenter_pauseScore";
+        internal const string FUNC_MUSICCONTENTCENTER_RESUMESCORE = "MusicContentCenter_resumeScore";
+        internal const string FUNC_MUSICCONTENTCENTER_GETCUMULATIVESCOREDATA = "MusicContentCenter_getCumulativeScoreData_c8fad3d";
         internal const string FUNC_MUSICCONTENTCENTER_REMOVECACHE = "MusicContentCenter_removeCache_f631116";
         internal const string FUNC_MUSICCONTENTCENTER_GETCACHES = "MusicContentCenter_getCaches_c4f9978";
         internal const string FUNC_MUSICCONTENTCENTER_ISPRELOADED = "MusicContentCenter_isPreloaded_f631116";
         internal const string FUNC_MUSICCONTENTCENTER_GETLYRIC = "MusicContentCenter_getLyric_5ab5efd";
+        internal const string FUNC_MUSICCONTENTCENTER_GETLYRICINFO = "MusicContentCenter_getLyricInfo_d3baeab";
         internal const string FUNC_MUSICCONTENTCENTER_GETSONGSIMPLEINFO = "MusicContentCenter_getSongSimpleInfo_d3baeab";
-        internal const string FUNC_MUSICCONTENTCENTER_GETINTERNALSONGCODE = "MusicContentCenter_getInternalSongCode_3a3d1e7";
+        internal const string FUNC_MUSICCONTENTCENTER_GETINTERNALSONGCODE = "MusicContentCenter_getInternalSongCode_d71d94d";
         #endregion terra IMusicContentCenter
 
         #region terra IMusicPlayer
