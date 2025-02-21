@@ -39,7 +39,7 @@ namespace Agora.Rtc
 #endif
 
 #if UNITY_OPENHARMONY
-        private AgoraOhosCallback _ohosCallback;
+        public AgoraOhosCallback _ohosCallback;
         Dictionary<string, TaskCompletionSource<int>> _ohosTasks = new Dictionary<string, TaskCompletionSource<int>>();
 #endif
 
@@ -226,10 +226,6 @@ namespace Agora.Rtc
 #endif
             _disposed = true;
 
-#if UNITY_OPENHARMONY
-            GameObject.DestroyImmediate(_ohosCallback.gameObject);
-            _ohosCallback = null;
-#endif
             return result;
         }
 

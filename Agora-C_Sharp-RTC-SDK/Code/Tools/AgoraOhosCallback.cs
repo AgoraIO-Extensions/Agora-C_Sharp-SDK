@@ -37,6 +37,14 @@ namespace Agora.Rtm
                         break;
                     }
             }
+
+            if(type == "destroyOhosRtcEngine")
+            {
+                  GameObject.DestroyImmediate(impl._ohosCallback.gameObject);
+                  impl._ohosCallback = null;
+
+            }
+
         }
     }
 }
