@@ -40,9 +40,7 @@ namespace Agora.Rtm
 
             if(type == "destroyOhosRtcEngine")
             {
-                  GameObject.DestroyImmediate(impl._ohosCallback.gameObject);
-                  impl._ohosCallback = null;
-
+                impl.OnDisposeFinish();
             }
 
         }

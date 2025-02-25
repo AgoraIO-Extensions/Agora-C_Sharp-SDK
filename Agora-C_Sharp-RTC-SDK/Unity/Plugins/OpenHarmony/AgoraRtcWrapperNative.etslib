@@ -74,11 +74,12 @@ export class AgoraRtcWrapperNative {
     return false;
   }
 
-  public static createOhosRtcEngine(params: string) {
+  public static createOhosRtcEngine(params: string, eventHandler:string) {
     let worker: ThreadWorkerGlobalScope = globalThis.workerPort;
     worker.postMessage({
       type: "createOhosRtcEngine",
-      params
+      params,
+      eventHandler:eventHandler
     });
     // hilog.info(0x0000, "AgoraRtcWrapperNative", "createOhosRtcEngine");
     // if (AgoraRtcWrapperNative.rtcEngine != null) {
@@ -205,8 +206,8 @@ class UnityRtcEngineContext {
 export class AgoraRtcWrapperNativeRunInMainThread {
   public static _rtcEngine: RtcEngineEx | null = null;
 
-  public static createOhosRtcEngine(params: string): string {
-    hilog.info(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "createOhosRtcEngine");
+  public static createOhosRtcEngine(params: string, eventHandler:string): string {
+    hilog.info(0x0000, "AgoraRtcWrapperNativeRunInMainThread", `createOhosRtcEngine ${params} ${eventHandler}`);
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
       hilog.error(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "rtcEngine already created");
       return "";
@@ -229,7 +230,7 @@ export class AgoraRtcWrapperNativeRunInMainThread {
       rtcEngineConfig.mLogConfig.level = unityContext.logConfig.level;
     }
     rtcEngineConfig.areaCode = unityContext.areaCode;
-    AgoraRtcWrapperNativeRunInMainThread._rtcEngine = RtcEngine.create(rtcEngineConfig) as RtcEngineEx;
+    AgoraRtcWrapperNativeRunInMainThread._rtcEngine = RtcEngine.createWithNativeEventHandler(rtcEngineConfig, eventHandler) as RtcEngineEx;
     let nativeHandler: bigint = AgoraRtcWrapperNativeRunInMainThread._rtcEngine.getNativeHandle();
     TuanjieMainWorker.getInstance().postMessage({
       type: 'createOhosRtcEngine',
@@ -280,7 +281,7 @@ export class AgoraRtcWrapperNativeRunInMainThread {
     const type: string = msg.data.type;
     switch (type) {
       case 'createOhosRtcEngine': {
-        AgoraRtcWrapperNativeRunInMainThread.createOhosRtcEngine(msg.data.params);
+        AgoraRtcWrapperNativeRunInMainThread.createOhosRtcEngine(msg.data.params, msg.data.eventHandler);
         return true;
         break;
       }

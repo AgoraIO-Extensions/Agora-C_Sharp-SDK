@@ -20,6 +20,7 @@ namespace Agora.Rtc
     using IrisApiEnginePtr = IntPtr;
     using RtcEngineHandler = IntPtr;
     using IrisRtcRenderingHandle = IntPtr;
+    using IrisRtcEngineEventHandler = IntPtr;
     using view_t = System.UInt64;
 
     internal class RtcEngineImpl
@@ -41,6 +42,7 @@ namespace Agora.Rtc
 #if UNITY_OPENHARMONY
         public AgoraOhosCallback _ohosCallback;
         Dictionary<string, TaskCompletionSource<int>> _ohosTasks = new Dictionary<string, TaskCompletionSource<int>>();
+        IrisRtcEngineEventHandler _rtcEngineEventHandler = IntPtr.Zero;
 #endif
 
         // DirectCdnStreamingEventHandler
@@ -83,7 +85,7 @@ namespace Agora.Rtc
 #if UNITY_OPENHARMONY
             _irisRtcEngine = IntPtr.Zero;
 #else
-            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(nativePtr);
+            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(nativePtr, IntPtr.Zero);
 
             var ret = this.GetNativeHandler(ref _rtcEngine);
             if (ret != 0)
@@ -229,6 +231,15 @@ namespace Agora.Rtc
             return result;
         }
 
+#if UNITY_OPENHARMONY
+        public void OnDisposeFinish()
+        {
+            GameObject.DestroyImmediate(_ohosCallback.gameObject);
+            _ohosCallback = null;
+            AgoraRtcNative.DestroyRtcEventHandler(_rtcEngineEventHandler);
+        }
+#endif
+
 
 #if UNITY_OPENHARMONY
         internal Task<int> DestroyOhosRtcEngine()
@@ -352,7 +363,7 @@ namespace Agora.Rtc
                 byte[] byteArray = BitConverter.GetBytes(uint64Value);
                 Int64 int64Value = BitConverter.ToInt64(byteArray);
                 IntPtr ptr = new IntPtr(int64Value);
-                IntPtr irisApiEngine = AgoraRtcNative.CreateIrisApiEngine(ptr);
+                IntPtr irisApiEngine = AgoraRtcNative.CreateIrisApiEngine(ptr, _rtcEngineEventHandler);
                 SetIrisApiEngine(irisApiEngine);
 
                 _param.Clear();
@@ -399,7 +410,7 @@ namespace Agora.Rtc
         {
 #if UNITY_OPENHARMONY
             this._context = context;
-            AgoraRtcNative.CreateOhosRtcEngine(context);
+            _rtcEngineEventHandler = AgoraRtcNative.CreateOhosRtcEngine(context);
             var _ohosTask = new TaskCompletionSource<int>();
             _ohosTasks.Add("createOhosRtcEngine", _ohosTask);
             return _ohosTask.Task;
