@@ -409,7 +409,7 @@ if [ "$OHOS_URL" != "" ]; then
     OHOS_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/OpenHarmony
     cp $OHOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.har "$OHOS_DST_PATH"
     # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
-    cp $OHOS_SRC_PATH/DCG/Agora_*.har "$OHOS_DST_PATH"
+    cp $OHOS_SRC_PATH/DCG/Agora*.har "$OHOS_DST_PATH"
 fi
 
 echo "[Unity CI] finish copying files"
