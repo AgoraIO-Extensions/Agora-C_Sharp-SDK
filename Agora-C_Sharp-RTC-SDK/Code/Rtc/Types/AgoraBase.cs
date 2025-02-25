@@ -472,6 +472,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        WARN_ADM_POP_STATE = 1055,
+
+        ///
+        /// @ignore
+        ///
         WARN_ADM_WIN_CORE_NO_RECORDING_DEVICE = 1322,
 
         ///
@@ -3794,11 +3799,21 @@ namespace Agora.Rtc
         AUDIO_SCENARIO_MEETING = 8,
 
         ///
+        /// @ignore
+        ///
+        AUDIO_SCENARIO_AI_SERVER = 9,
+
+        ///
+        /// @ignore
+        ///
+        AUDIO_SCENARIO_AI_CLIENT = 10,
+
+        ///
         /// <summary>
         /// The number of enumerations.
         /// </summary>
         ///
-        AUDIO_SCENARIO_NUM = 9,
+        AUDIO_SCENARIO_NUM = 11,
     }
 
     ///
