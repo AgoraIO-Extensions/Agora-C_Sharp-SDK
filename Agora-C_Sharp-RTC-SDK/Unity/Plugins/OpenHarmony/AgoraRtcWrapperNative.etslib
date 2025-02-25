@@ -207,7 +207,7 @@ export class AgoraRtcWrapperNativeRunInMainThread {
   public static _rtcEngine: RtcEngineEx | null = null;
 
   public static createOhosRtcEngine(params: string, eventHandler:string): string {
-    hilog.info(0x0000, "AgoraRtcWrapperNativeRunInMainThread", `createOhosRtcEngine ${params} ${eventHandler}`);
+    hilog.info(0x0000, "AgoraRtcWrapperNativeRunInMainThread", `createOhosRtcEngine ${eventHandler}`);
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
       hilog.error(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "rtcEngine already created");
       return "";
