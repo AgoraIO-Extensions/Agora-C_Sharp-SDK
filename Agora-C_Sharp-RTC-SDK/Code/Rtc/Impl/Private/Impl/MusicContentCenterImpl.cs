@@ -34,6 +34,7 @@ namespace Agora.Rtc
         public void SetIrisApiEngine(IrisApiEnginePtr irisApiEngine)
         {
             _irisApiEngine = irisApiEngine;
+            _musicPlayerImpl.SetIrisApiEngine(irisApiEngine);
         }
 
         ~MusicContentCenterImpl()
