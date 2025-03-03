@@ -407,6 +407,7 @@ namespace Agora.Rtc
         public IntPtr eglContext;
         public int eglType;
         public int textureId;
+        public long fence_object;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public float[] matrix;
         public IntPtr metadata_buffer;
@@ -432,6 +433,7 @@ namespace Agora.Rtc
             this.eglContext = frame.eglContext;
             this.eglType = (int)frame.eglType;
             this.textureId = frame.textureId;
+            this.fence_object = frame.fence_object;
             if (frame.matrix != null && frame.matrix.Length == 16)
             {
                 this.matrix = frame.matrix;

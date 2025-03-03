@@ -180,6 +180,7 @@ namespace Agora.Rtc
 
             this.eglType = frame.eglType;
             this.textureId = frame.textureId;
+            this.fence_object = frame.fence_object;
             this.matrix = frame.matrix;
 
             this.metadata_size = frame.metadata_size;
@@ -205,6 +206,7 @@ namespace Agora.Rtc
 
         public EGL_CONTEXT_TYPE eglType;
         public int textureId;
+        public long fence_object;
         public float[] matrix;
 
         public int metadata_size;
