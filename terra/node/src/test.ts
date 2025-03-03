@@ -14,7 +14,7 @@ import { AddNodeParser } from "@agoraio-extensions/terra_shared_configs";
 let jsonPath = getTerraJsonPath();
 console.log(jsonPath);
 let cxxiles = JSON.parse(fs.readFileSync(jsonPath, { encoding: 'utf-8' }));
-let headersPath = path.join(__dirname, "../node_modules/@agoraio-extensions/terra_shared_configs/headers/rtc_4.3.2.11/include");
+let headersPath = path.join(__dirname, "../node_modules/@agoraio-extensions/terra_shared_configs/headers/rtc_4.3.2.14/include");
 new ParseEngine(
     path.join(__dirname, "../../../Agora-C_Sharp-RTC-SDK/Code"),
     path.join(__dirname, "../../../terra/templates/C_Sharp-SDK-Code"),

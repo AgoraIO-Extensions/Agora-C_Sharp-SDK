@@ -1160,6 +1160,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        public long fence_object;
+
+        ///
+        /// @ignore
+        ///
         public float[] matrix;
 
         ///
@@ -1216,6 +1221,7 @@ namespace Agora.Rtc
             this.eglContext = IntPtr.Zero;
             this.eglType = EGL_CONTEXT_TYPE.EGL_CONTEXT10;
             this.textureId = 0;
+            this.fence_object = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.alphaBuffer = null;
@@ -1224,7 +1230,7 @@ namespace Agora.Rtc
             this.texture_slice_index = 0;
         }
 
-        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, IntPtr d3d11_texture_2d, int texture_slice_index)
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fence_object, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, IntPtr d3d11_texture_2d, int texture_slice_index)
         {
             this.type = type;
             this.format = format;
@@ -1240,6 +1246,7 @@ namespace Agora.Rtc
             this.eglContext = eglContext;
             this.eglType = eglType;
             this.textureId = textureId;
+            this.fence_object = fence_object;
             this.matrix = matrix;
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
