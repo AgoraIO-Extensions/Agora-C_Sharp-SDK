@@ -3422,6 +3422,11 @@ namespace Agora.Rtc
         ///
         public int rxPacketLossRate;
 
+        ///
+        /// @ignore
+        ///
+        public int lanAccelerateState;
+
         public RtcStats()
         {
             this.duration = 0;
@@ -3457,9 +3462,10 @@ namespace Agora.Rtc
             this.firstVideoKeyFrameRenderedDurationAfterUnmute = 0;
             this.txPacketLossRate = 0;
             this.rxPacketLossRate = 0;
+            this.lanAccelerateState = 0;
         }
 
-        public RtcStats(uint duration, uint txBytes, uint rxBytes, uint txAudioBytes, uint txVideoBytes, uint rxAudioBytes, uint rxVideoBytes, ushort txKBitRate, ushort rxKBitRate, ushort rxAudioKBitRate, ushort txAudioKBitRate, ushort rxVideoKBitRate, ushort txVideoKBitRate, ushort lastmileDelay, uint userCount, double cpuAppUsage, double cpuTotalUsage, int gatewayRtt, double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes, int connectTimeMs, int firstAudioPacketDuration, int firstVideoPacketDuration, int firstVideoKeyFramePacketDuration, int packetsBeforeFirstKeyFramePacket, int firstAudioPacketDurationAfterUnmute, int firstVideoPacketDurationAfterUnmute, int firstVideoKeyFramePacketDurationAfterUnmute, int firstVideoKeyFrameDecodedDurationAfterUnmute, int firstVideoKeyFrameRenderedDurationAfterUnmute, int txPacketLossRate, int rxPacketLossRate)
+        public RtcStats(uint duration, uint txBytes, uint rxBytes, uint txAudioBytes, uint txVideoBytes, uint rxAudioBytes, uint rxVideoBytes, ushort txKBitRate, ushort rxKBitRate, ushort rxAudioKBitRate, ushort txAudioKBitRate, ushort rxVideoKBitRate, ushort txVideoKBitRate, ushort lastmileDelay, uint userCount, double cpuAppUsage, double cpuTotalUsage, int gatewayRtt, double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes, int connectTimeMs, int firstAudioPacketDuration, int firstVideoPacketDuration, int firstVideoKeyFramePacketDuration, int packetsBeforeFirstKeyFramePacket, int firstAudioPacketDurationAfterUnmute, int firstVideoPacketDurationAfterUnmute, int firstVideoKeyFramePacketDurationAfterUnmute, int firstVideoKeyFrameDecodedDurationAfterUnmute, int firstVideoKeyFrameRenderedDurationAfterUnmute, int txPacketLossRate, int rxPacketLossRate, int lanAccelerateState)
         {
             this.duration = duration;
             this.txBytes = txBytes;
@@ -3494,6 +3500,7 @@ namespace Agora.Rtc
             this.firstVideoKeyFrameRenderedDurationAfterUnmute = firstVideoKeyFrameRenderedDurationAfterUnmute;
             this.txPacketLossRate = txPacketLossRate;
             this.rxPacketLossRate = rxPacketLossRate;
+            this.lanAccelerateState = lanAccelerateState;
         }
     }
 
