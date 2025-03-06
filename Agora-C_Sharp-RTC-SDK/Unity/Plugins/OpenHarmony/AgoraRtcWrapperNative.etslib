@@ -74,11 +74,12 @@ export class AgoraRtcWrapperNative {
     return false;
   }
 
-  public static createOhosRtcEngine(params: string) {
+  public static createOhosRtcEngine(params: string, eventHandler:string) {
     let worker: ThreadWorkerGlobalScope = globalThis.workerPort;
     worker.postMessage({
       type: "createOhosRtcEngine",
-      params
+      params,
+      eventHandler:eventHandler
     });
     // hilog.info(0x0000, "AgoraRtcWrapperNative", "createOhosRtcEngine");
     // if (AgoraRtcWrapperNative.rtcEngine != null) {
@@ -126,35 +127,6 @@ export class AgoraRtcWrapperNative {
     //   return AgoraRtcWrapperNative.rtcEngine.disableVideo();
     // }
     // return -7;
-  }
-
-  public static copyFileToSandBox(streamingAssetsPath: string): string {
-
-    let extractFileName: (filePath: string) => string = (filePath: string): string => {
-      // 使用 split 方法根据 '/' 分割路径字符串
-      const parts = filePath.split('/');
-      // 文件名是分割后数组的最后一个元素
-      return parts[parts.length - 1];
-    };
-
-    streamingAssetsPath = streamingAssetsPath.replace('jar:file://', '');
-    let fileName = extractFileName(streamingAssetsPath);
-    hilog.info(0x0000, "AgoraRtcWrapperNative", `streamingAssetsPath: ${streamingAssetsPath} fileName: ${fileName}`)
-    let context: Context = globalThis.context;
-    if (context == null) {
-      hilog.error(0x0000, "AgoraRtcWrapperNative", "context is null");
-    }
-    let boxPath = context.getApplicationContext().filesDir;
-    let filePath = boxPath + '/' + fileName;
-    hilog.info(0x0000, "AgoraRtcWrapperNative", `filePath: ${filePath}`)
-    let uint8Array: Uint8Array = context.resourceManager.getRawFileContentSync(streamingAssetsPath);
-    let bf = buffer.from(uint8Array).buffer;
-    const fsOpen =
-      fs.openSync(filePath, fs.OpenMode.READ_WRITE | fs.OpenMode.READ_ONLY | fs.OpenMode.CREATE | fs.OpenMode.TRUNC)
-    let destFile = fs.writeSync(fsOpen.fd, bf);
-    fs.close(destFile)
-
-    return filePath;
   }
 
   public static destroyOhosRtcEngine() {
@@ -234,8 +206,8 @@ class UnityRtcEngineContext {
 export class AgoraRtcWrapperNativeRunInMainThread {
   public static _rtcEngine: RtcEngineEx | null = null;
 
-  public static createOhosRtcEngine(params: string): string {
-    hilog.info(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "createOhosRtcEngine");
+  public static createOhosRtcEngine(params: string, eventHandler:string): string {
+    hilog.info(0x0000, "AgoraRtcWrapperNativeRunInMainThread", `createOhosRtcEngine ${eventHandler}`);
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
       hilog.error(0x0000, "AgoraRtcWrapperNativeRunInMainThread", "rtcEngine already created");
       return "";
@@ -258,7 +230,7 @@ export class AgoraRtcWrapperNativeRunInMainThread {
       rtcEngineConfig.mLogConfig.level = unityContext.logConfig.level;
     }
     rtcEngineConfig.areaCode = unityContext.areaCode;
-    AgoraRtcWrapperNativeRunInMainThread._rtcEngine = RtcEngine.create(rtcEngineConfig) as RtcEngineEx;
+    AgoraRtcWrapperNativeRunInMainThread._rtcEngine = RtcEngine.createWithNativeEventHandler(rtcEngineConfig, eventHandler) as RtcEngineEx;
     let nativeHandler: bigint = AgoraRtcWrapperNativeRunInMainThread._rtcEngine.getNativeHandle();
     TuanjieMainWorker.getInstance().postMessage({
       type: 'createOhosRtcEngine',
@@ -309,7 +281,7 @@ export class AgoraRtcWrapperNativeRunInMainThread {
     const type: string = msg.data.type;
     switch (type) {
       case 'createOhosRtcEngine': {
-        AgoraRtcWrapperNativeRunInMainThread.createOhosRtcEngine(msg.data.params);
+        AgoraRtcWrapperNativeRunInMainThread.createOhosRtcEngine(msg.data.params, msg.data.eventHandler);
         return true;
         break;
       }

@@ -37,6 +37,12 @@ namespace Agora.Rtm
                         break;
                     }
             }
+
+            if(type == "destroyOhosRtcEngine")
+            {
+                impl.OnDisposeFinish();
+            }
+
         }
     }
 }

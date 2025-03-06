@@ -11,6 +11,7 @@ namespace Agora.Rtc
     using RtcEngineHandle = IntPtr;
     using IrisEventHandlerMarshal = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
+    using IrisRtcEngineEventHandler = IntPtr;
     //using IrisRtcAudioFrameObserverHandle = IntPtr;
     //using IrisAudioEncodedFrameObserverHandle = IntPtr;
     //using IrisRtcVideoFrameObserverHandle = IntPtr;
@@ -51,7 +52,7 @@ namespace Agora.Rtc
 
         // IrisRtcEngine
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcEnginePtr CreateIrisApiEngine(IntPtr engine);
+        internal static extern IrisRtcEnginePtr CreateIrisApiEngine(IntPtr engine, IrisRtcEngineEventHandler handler);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisApiEngine(IrisRtcEnginePtr engine_ptr);
@@ -61,6 +62,12 @@ namespace Agora.Rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisEventHandler(IrisEventHandlerHandle handle);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisRtcEngineEventHandler CreateRtcEventHandler();
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void DestroyRtcEventHandler(IrisRtcEngineEventHandler handle);
 
         internal static int CallIrisApiWithArgs(IrisRtcEnginePtr engine_ptr, string func_name,
             string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtcCApiParam apiParam,
@@ -247,11 +254,15 @@ namespace Agora.Rtc
 
 #if UNITY_OPENHARMONY
         #region ohos
-        internal static void CreateOhosRtcEngine(RtcEngineContext context)
+
+        internal static IrisRtcEngineEventHandler CreateOhosRtcEngine(RtcEngineContext context)
         {
+            var irisRtcEngineEventHandler = CreateRtcEventHandler();
+            string handlerString = ((UInt64)irisRtcEngineEventHandler).ToString();
             OpenHarmonyJSClass AgoraRtcWrapperNative = new OpenHarmonyJSClass("AgoraRtcWrapperNative");
             string json = AgoraJson.ToJson<RtcEngineContext>(context);
-            AgoraRtcWrapperNative.CallStatic("createOhosRtcEngine", json);
+            AgoraRtcWrapperNative.CallStatic("createOhosRtcEngine", json, handlerString);
+            return irisRtcEngineEventHandler;
         }
 
         internal static void DestroyOhosRtcEngine()
