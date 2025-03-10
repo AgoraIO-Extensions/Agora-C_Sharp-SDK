@@ -831,7 +831,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the remote video stream state changes.
         /// 
-        /// This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 17.
+        /// This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 32.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -874,14 +874,14 @@ namespace Agora.Rtc
         /// Occurs when a remote user (in the communication profile)/ host (in the live streaming profile) joins the channel.
         /// 
         /// In a communication channel, this callback indicates that a remote user joins the channel. The SDK also triggers this callback to report the existing users in the channel when a user joins the channel.
-        /// In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of hosts to 17.
+        /// In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of co-hosts to 32, with a maximum of 17 video hosts.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
         ///
         /// <param name="remoteUid"> The ID of the user or host who joins the channel. </param>
         ///
-        /// <param name="elapsed"> Time delay (ms) from the local user calling JoinChannel [2/2] until this callback is triggered. </param>
+        /// <param name="elapsed"> Time delay (ms) from the local user calling JoinChannel [1/2] or JoinChannel [2/2] until this callback is triggered. </param>
         ///
         public virtual void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
@@ -910,7 +910,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when a remote user (in the communication profile) or a host (in the live streaming profile) stops/resumes sending the audio stream.
         /// 
-        /// The SDK triggers this callback when the remote user stops or resumes sending the audio stream by calling the MuteLocalAudioStream method. This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 17.
+        /// The SDK triggers this callback when the remote user stops or resumes sending the audio stream by calling the MuteLocalAudioStream method. This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 32.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -927,7 +927,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when a remote user stops or resumes publishing the video stream.
         /// 
-        /// When a remote user calls MuteLocalVideoStream to stop or resume publishing the video stream, the SDK triggers this callback to report to the local user the state of the streams published by the remote user. This callback can be inaccurate when the number of users (in the communication profile) or hosts (in the live streaming profile) in a channel exceeds 17.
+        /// When a remote user calls MuteLocalVideoStream to stop or resume publishing the video stream, the SDK triggers this callback to report to the local user the state of the streams published by the remote user. This callback can be inaccurate when the number of users (in the communication profile) or hosts (in the live streaming profile) in a channel exceeds 32.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -1086,7 +1086,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the local user receives the data stream from the remote user.
         /// 
-        /// The SDK triggers this callback when the local user receives the stream message that the remote user sends by calling the SendStreamMessage method.
+        /// If you need a more comprehensive solution for low-latency, high-concurrency, and scalable real-time messaging and status synchronization, it is recommended to use. The SDK triggers this callback when the local user receives the stream message that the remote user sends by calling the SendStreamMessage method.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -1109,7 +1109,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the local user does not receive the data stream from the remote user.
         /// 
-        /// The SDK triggers this callback when the local user fails to receive the stream message that the remote user sends by calling the SendStreamMessage method.
+        /// If you need a more comprehensive solution for low-latency, high-concurrency, and scalable real-time messaging and status synchronization, it is recommended to use. The SDK triggers this callback when the local user fails to receive the stream message that the remote user sends by calling the SendStreamMessage method.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>
@@ -1251,7 +1251,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Occurs when the remote audio state changes.
         /// 
-        /// When the audio state of a remote user (in a voice/video call channel) or host (in a live streaming channel) changes, the SDK triggers this callback to report the current state of the remote audio stream. This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 17.
+        /// When the audio state of a remote user (in a voice/video call channel) or host (in a live streaming channel) changes, the SDK triggers this callback to report the current state of the remote audio stream. This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 32.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection. </param>

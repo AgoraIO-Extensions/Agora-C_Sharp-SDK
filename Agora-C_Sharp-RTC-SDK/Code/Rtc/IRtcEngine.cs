@@ -3088,7 +3088,6 @@ namespace Agora.Rtc
         /// 
         /// If you enable loopback audio capturing, the output of the sound card is mixed into the audio stream sent to the other end.
         /// This method applies to the macOS and Windows only.
-        /// The macOS system's default sound card does not support recording functionality. As of v4.5.0, when you call this method for the first time, the SDK will automatically install the built-in AgoraALD virtual sound card developed by Agora. After successful installation, the audio routing will automatically switch to the virtual sound card and use it for audio capturing.
         /// You can call this method either before or after joining a channel.
         /// If you call the DisableAudio method to disable the audio module, audio capturing will be disabled as well. If you need to enable audio capturing, call the EnableAudio method to enable the audio module and then call the EnableLoopbackRecording method.
         /// </summary>
@@ -4414,7 +4413,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Creates a data stream.
         /// 
-        /// You can call this method to create a data stream and improve the reliability and ordering of data transmission.
+        /// If you need a more comprehensive solution for low-latency, high-concurrency, and scalable real-time messaging and status synchronization, it is recommended to use. You can call this method to create a data stream and improve the reliability and ordering of data transmission.
         /// </summary>
         ///
         /// <param name="streamId"> An output parameter; the ID of the data stream created. </param>
@@ -4434,7 +4433,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Creates a data stream.
         /// 
-        /// Compared to CreateDataStream [1/2], this method does not guarantee the reliability of data transmission. If a data packet is not received five seconds after it was sent, the SDK directly discards the data.
+        /// Compared to CreateDataStream [1/2], this method does not guarantee the reliability of data transmission. If a data packet is not received five seconds after it was sent, the SDK directly discards the data. If you need a more comprehensive solution for low-latency, high-concurrency, and scalable real-time messaging and status synchronization, it is recommended to use.
         /// </summary>
         ///
         /// <param name="streamId"> An output parameter; the ID of the data stream created. </param>
@@ -4452,7 +4451,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Sends data stream messages.
         /// 
-        /// After calling CreateDataStream [2/2], you can call this method to send data stream messages to all users in the channel. The SDK has the following restrictions on this method:
+        /// If you need a more comprehensive solution for low-latency, high-concurrency, and scalable real-time messaging and status synchronization, it is recommended to use. After calling CreateDataStream [2/2], you can call this method to send data stream messages to all users in the channel. The SDK has the following restrictions on this method:
         /// Each client within the channel can have up to 5 data channels simultaneously, with a total shared packet bitrate limit of 30 KB/s for all data channels.
         /// Each data channel can send up to 60 packets per second, with each packet being a maximum of 1 KB. A successful method call triggers the OnStreamMessage callback on the remote client, from which the remote user gets the stream message. A failed method call triggers the OnStreamMessageError callback on the remote client.
         /// This method needs to be called after CreateDataStream [2/2] and joining the channel.
@@ -5209,7 +5208,7 @@ namespace Agora.Rtc
         /// Enables tracing the video frame rendering process.
         /// 
         /// The SDK starts tracing the rendering status of the video frames in the channel from the moment this method is successfully called and reports information about the event through the OnVideoRenderingTracingResult callback.
-        /// By default, the SDK starts tracing the video rendering event automatically when the local user successfully joins the channel. You can call this method at an appropriate time according to the actual application scenario to customize the tracing process.
+        /// The SDK automatically starts tracking the rendering events of the video from the moment that you call JoinChannel [2/2] to join the channel. You can call this method at an appropriate time according to the actual application scenario to customize the tracing process.
         /// After the local user leaves the current channel, the SDK automatically resets the time point to the next time when the user successfully joins the channel.
         /// </summary>
         ///
