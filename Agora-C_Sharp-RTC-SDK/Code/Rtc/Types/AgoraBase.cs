@@ -3743,7 +3743,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: A sample rate of 16 kHz, audio encoding, mono, and Acoustic Echo Cancellation (AES) enabled.
+        /// 6: A sample rate of 16 kHz, audio encoding, mono, and Acoustic Echo Cancellation (AEC) enabled.
         /// </summary>
         ///
         AUDIO_PROFILE_IOT = 6,
@@ -3804,7 +3804,9 @@ namespace Agora.Rtc
         AUDIO_SCENARIO_AI_SERVER = 9,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 10: AI conversation scenario, which is only applicable to scenarios where the user interacts with the conversational AI agent created by.
+        /// </summary>
         ///
         AUDIO_SCENARIO_AI_CLIENT = 10,
 
@@ -4437,7 +4439,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 30: (Windows and macOS only) The displayer used for screen capture is disconnected.
+        /// 30: (Windows and macOS only) The displayer used for screen capture is disconnected. The current screen sharing has been paused. Prompt the user to restart the screen sharing.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
@@ -5816,7 +5818,11 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The URL of the image. Use this parameter only when the source type is the image for local video mixing.
+        /// The file path of local images. Use this parameter only when the source type is the image for local video mixing. Examples:
+        ///  Android: /storage/emulated/0/Pictures/image.png
+        ///  iOS: /var/mobile/Containers/Data/Application/<APP-UUID>/Documents/image.png
+        ///  macOS: ~/Pictures/image.png
+        ///  Windows: C:\\Users\\{username}\\Pictures\\image.png
         /// </summary>
         ///
         public string imageUrl;
