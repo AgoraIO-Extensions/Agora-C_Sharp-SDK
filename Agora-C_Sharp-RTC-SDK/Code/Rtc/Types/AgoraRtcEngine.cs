@@ -840,6 +840,11 @@ namespace Agora.Rtc
         public int e2eDelay;
 
         ///
+        /// @ignore
+        ///
+        public int deviceProcessingDelay;
+
+        ///
         /// <summary>
         /// The width (pixels) of the video.
         /// </summary>
@@ -945,11 +950,12 @@ namespace Agora.Rtc
         ///
         public uint rxVideoBytes;
 
-        public RemoteVideoStats(uint uid, int delay, int e2eDelay, int width, int height, int receivedBitrate, int decoderInputFrameRate, int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate, VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime, int publishDuration, int mosValue, uint rxVideoBytes)
+        public RemoteVideoStats(uint uid, int delay, int e2eDelay, int deviceProcessingDelay, int width, int height, int receivedBitrate, int decoderInputFrameRate, int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate, VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime, int publishDuration, int mosValue, uint rxVideoBytes)
         {
             this.uid = uid;
             this.delay = delay;
             this.e2eDelay = e2eDelay;
+            this.deviceProcessingDelay = deviceProcessingDelay;
             this.width = width;
             this.height = height;
             this.receivedBitrate = receivedBitrate;
