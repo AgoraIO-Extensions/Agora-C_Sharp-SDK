@@ -1,0 +1,26 @@
+parsers:
+  # CXXParser should always put first
+  - name: CXXParser
+    package: '@agoraio-extensions/cxx-parser'
+    args:
+      includeHeaderDirs:
+        - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include'
+      parseFiles:
+        include:
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/*.h'
+        exclude:
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/time_utils.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/IAgoraMediaComponentFactory.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/AgoraOptional.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/rte_*.h'
+
+  - name: IrisApiIdParser
+    package: '@agoraio-extensions/terra_shared_configs'
+      
+renderers:
+  - path: src/rtc/interface/renderers.ts
+    args:
+      product_type: rtc
+
+globalArgs:
+  product_type: rtc

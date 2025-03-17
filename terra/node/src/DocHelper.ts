@@ -1,9 +1,28 @@
-import { execSync } from "child_process";
-import { publicDecrypt } from "crypto";
-import * as fs from "fs";
-import { ParamNameTrans } from "./ParamNameTrans";
-import path from "path";
-import { Tool } from "./Tool";
+const { execSync } = require("child_process");
+const fs = require("fs");
+const path = require("path");
+
+
+function readFile(fullPath: string): string {
+    return fs.readFileSync(fullPath, 'utf-8');
+}
+
+function writeFile(fullPath: string, lines: string[], removeMultipleBlankLines: boolean = true) {
+    if (removeMultipleBlankLines) {
+        let newLines = [];
+        newLines.push(lines[0]);
+        for (let i = 1; i < lines.length; i++) {
+            if (lines[i - 1].trim() == "" && lines[i].trim() == "")
+                continue;
+            newLines.push(lines[i]);
+
+        }
+        fs.writeFileSync(fullPath, newLines.join("\n"), 'utf-8');
+    }
+    else {
+        fs.writeFileSync(fullPath, lines.join("\n"), 'utf-8');
+    }
+}
 
 let InterfaceDirPath = [
     "../../Agora-C_Sharp-RTC-SDK/Code/Rtc",
@@ -35,7 +54,7 @@ function DeleteOldDocWithFile(filePath: string) {
         }
         writeLines.push(line);
     }
-    Tool.writeFile(filePath, writeLines);
+    writeFile(filePath, writeLines);
 }
 
 function DeleteAllOldDoc() {
@@ -245,7 +264,7 @@ function AddDocTagWithFile(filePath: string) {
         i++;
     }
 
-    Tool.writeFile(filePath, lines);
+    writeFile(filePath, lines);
 }
 
 
@@ -476,7 +495,7 @@ function AddDocContentWithFile(filePath: string, docs: DocData[]) {
         }
     }
 
-    Tool.writeFile(filePath, lines);
+    writeFile(filePath, lines);
 }
 
 function AddAllDocContetnt() {
@@ -520,7 +539,7 @@ function removeAllFileKeyWord(from: string, to: string) {
 }
 
 function replaceKeyWord(fullPath: string, from: string, to: string) {
-    let str = Tool.readFile(fullPath);
+    let str = readFile(fullPath);
     str = str.replaceAll(from, to);
     fs.writeFileSync(fullPath, str);
 }
@@ -528,7 +547,7 @@ function replaceKeyWord(fullPath: string, from: string, to: string) {
 
 let unityDefine = "#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS";
 
-export function AndDocAndFormat() {
+function AndDocAndFormat() {
     DeleteAllOldDoc();
     AddAllDocTag();
     AddAllDocContetnt();
@@ -536,6 +555,9 @@ export function AndDocAndFormat() {
     execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
     removeAllFileKeyWord("#if true", unityDefine);
 }
+
+
+AndDocAndFormat();
 
 
 

@@ -7,7 +7,7 @@ import { execSync } from 'child_process';
 import { ParamDefaultTrans } from "./ParamDefaultTrans";
 import { ParseEngine } from "./PraseEngine";
 import { Tool } from "./Tool";
-import { AndDocAndFormat } from "./DocHelper";
+const DocHelper = require("./DocHelper");
 import path from "path";
 import { AddNodeParser } from "@agoraio-extensions/terra_shared_configs";
 
@@ -35,9 +35,9 @@ new ParseEngine(
     headersPath
 );
 
-execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
+execSync("dotnet format ../../Agora_C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
 
-AndDocAndFormat();
+DocHelper.AndDocAndFormat();
 
 function getTerraJsonPath(): string {
     let jsonDir = path.join(__dirname, "../.terra/cxx_parser");
