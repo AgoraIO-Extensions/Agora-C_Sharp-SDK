@@ -1,33 +1,34 @@
-import {
-    Clazz,
-    CXXFile,
-    CXXTYPE,
-    MemberFunction,
-} from "@agoraio-extensions/cxx-parser";
-import {
-    ParseResult,
-    RenderResult,
-    TerraContext,
-} from "@agoraio-extensions/terra-core";
-
+import { Clazz } from "@agoraio-extensions/cxx-parser";
+import { ParseResult, RenderResult, TerraContext } from "@agoraio-extensions/terra-core";
 import { renderWithConfiguration } from "@agoraio-extensions/terra_shared_configs";
 
 import path from "path";
 import _ from "lodash";
-import { interfaceGen } from "./interfaceGen";
-
+import { interfaceGen } from "./interface_gen";
 export default function (
     terraContext: TerraContext,
     args: any,
     originalParseResult: ParseResult
 ): RenderResult[] {
-    global.originalParseResult = originalParseResult;
-    const { interfaces, callbacks } = interfaceGen(originalParseResult);
+    const clonedParseResult = _.cloneDeep(originalParseResult);
+    global.clonedParseResult = clonedParseResult;
+    const { interfaces, callbacks } = interfaceGen(clonedParseResult);
+
     const interfaceResult: RenderResult[] = renderWithConfiguration({
         fileNameTemplatePath: path.join(__dirname, "interface_file_name.mustache"),
         fileContentTemplatePath: path.join(__dirname, "interface_file_content.mustache"),
         view: interfaces
     });
 
-    return interfaceResult;
+    const callbackResult: RenderResult[] = renderWithConfiguration({
+        fileNameTemplatePath: path.join(__dirname, "callback_file_name.mustache"),
+        fileContentTemplatePath: path.join(__dirname, "callback_file_content.mustache"),
+        view: callbacks
+    });
+
+
+    return [
+        ...interfaceResult,
+        ...callbackResult
+    ];
 }

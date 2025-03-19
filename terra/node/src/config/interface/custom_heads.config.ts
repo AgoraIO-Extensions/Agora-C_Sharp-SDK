@@ -10,10 +10,6 @@ export const customHeads: CustomHead[] = [
         isHide: true,
     },
     {
-        name: "IAudioFrameObserverBase",
-        isHide: true,
-    },
-    {
         name: "IContainer",
         isHide: true,
     },
@@ -67,7 +63,7 @@ export const customHeads: CustomHead[] = [
             "public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName);",
             "public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName);"
         ],
-        exclude_methods: [
+        hide_methods: [
             "enumeratePlaybackDevices",
             "enumerateRecordingDevices",
             "release"
@@ -77,6 +73,9 @@ export const customHeads: CustomHead[] = [
         name: "ILocalSpatialAudioEngine",
         custom_methods: [
             "public abstract void Dispose();"
+        ],
+        hide_methods: [
+            "release"
         ]
     },
     {
@@ -86,7 +85,7 @@ export const customHeads: CustomHead[] = [
             "public abstract int GetId();",
             "public abstract int InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);"
         ],
-        exclude_methods: [
+        hide_methods: [
             "release",
             "initialize",
             "getMediaPlayerId",
@@ -133,7 +132,7 @@ export const customHeads: CustomHead[] = [
             "#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS \n public abstract int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type); \n #endif",
             "#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS \n public abstract int SetLocalVideoDataSourcePosition(VIDEO_MODULE_POSITION position); \n #endif"
         ],
-        exclude_methods: [
+        hide_methods: [
             "release",
             "queryInterface",
             "registerPacketObserver",
@@ -153,7 +152,7 @@ export const customHeads: CustomHead[] = [
             "public abstract int UnRegisterAudioFrameObserver();",
             "public abstract int UnRegisterFaceInfoObserver();"
         ],
-        exclude_methods: [
+        hide_methods: [
             "release",
             "enableCustomAudioLocalPlayback",
             "registerAudioFrameObserver",
@@ -174,10 +173,17 @@ export const customHeads: CustomHead[] = [
         name: "IVideoDeviceManager",
         custom_methods: [
             "public abstract DeviceInfo[] EnumerateVideoDevices();",
+        ],
+        hide_methods: [
+            "enumerateVideoDevices",
+            "release"
         ]
     },
     {
         name: "IRtcEngineEventHandler",
+        hide_methods: [
+            "eventHandlerType"
+        ],
         merge_nodes: [{
             name: "IDirectCdnStreamingEventHandler",
             isHide: true
@@ -185,22 +191,62 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "IMusicContentCenter",
-        exclude_methods: [
+        hide_methods: [
             "release"
         ]
     },
     {
         name: "IMusicPlayer",
-        parent: "IMediaPlayer",
-        merge_nodes: [
-            { name: "IMediaPlayer", isHide: false }
+        parent: "IMediaPlayer"
+    },
+    {
+        name: "IH265TranscoderObserver",
+        isAbstract: true
+    },
+    {
+        name: "IMusicContentCenterEventHandler",
+        isAbstract: true
+    },
+    {
+        name: "IAudioFrameObserverBase",
+        hide_methods: [
+            "getObservedAudioFramePosition",
+            "getPlaybackAudioParams",
+            "getRecordAudioParams",
+            "getMixedAudioParams",
+            "getEarMonitoringAudioParams"
         ]
     },
     {
-        name: "IVideoDeviceManager",
-        exclude_methods: [
-            "enumerateVideoDevices",
-            "release"
+        name: "IAudioFrameObserver",
+        name_space: [
+            "agora",
+            "media"
+        ],
+        merge_nodes: [
+            {
+                name: "IAudioFrameObserverBase",
+                isHide: true
+            }
+        ]
+    },
+    {
+        name: "IMediaStreamingSourceObserver",
+        isHide: true
+    },
+    {
+        name: "IPacketObserver",
+        isHide: true
+    },
+    {
+        name: "IVideoFrameObserver",
+        hide_methods: [
+            "getVideoFrameProcessMode",
+            "getVideoFormatPreference",
+            "getRotationApplied",
+            "getObservedFramePosition",
+            "isExternal",
+            "getMirrorApplied"
         ]
     }
 ];

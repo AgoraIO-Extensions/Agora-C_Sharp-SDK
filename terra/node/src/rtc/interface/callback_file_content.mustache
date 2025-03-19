@@ -21,7 +21,14 @@ namespace Agora.Rtc {
         {{#user_data.obsolete}}
         [Obsolete("{{{user_data.obsolete}}}")]
         {{/user_data.obsolete}}
-        public abstract {{user_data.returnTypeString}} {{user_data.nameString}} ({{{user_data.formalParameterString}}});
+        public {{#user_data.isAbstract}}abstract{{/user_data.isAbstract}}{{^user_data.isAbstract}}virtual{{/user_data.isAbstract}} {{user_data.returnTypeString}} {{user_data.nameString}} ({{{user_data.formalParameterString}}}){{#user_data.isAbstract}};{{/user_data.isAbstract}}
+        {{^user_data.isAbstract}}
+        {
+            {{#user_data.returnValueString.callback}}
+            return {{{user_data.returnValueString.callback}}};
+            {{/user_data.returnValueString.callback}}
+        }
+        {{/user_data.isAbstract}}
         {{#user_data.macro}} 
         #endif
         {{/user_data.macro}}

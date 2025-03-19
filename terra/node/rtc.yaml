@@ -19,8 +19,8 @@ parsers:
       
 renderers:
   - path: src/rtc/interface/renderers.ts
-    args:
-      product_type: rtc
+  - path: src/rtc/middle/renderers.ts
 
 globalArgs:
   product_type: rtc
+  headers_version: rtc_4.5.1
