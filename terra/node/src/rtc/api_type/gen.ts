@@ -2,12 +2,12 @@ import { Clazz, CXXFile, CXXTYPE, MemberFunction, CXXTerraNode } from "@agoraio-
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
 import { findCustomHead, isCallback, isInterface, processIRtcEngineEventHandler } from "../../capability/common";
 import { CustomHead } from "../../config/common/types";
-import { customHeads } from "../../config/interface/custom_heads.config";
+import { customHeads } from "../../config/api_type/custom_heads.config";
 import { processClassCommonAttributes, processClassWithCustomHeadPost, processClassWithCustomHeadPre } from "../../capability/class_process";
 
 
-export function interfaceGen(clonedParseResult: ParseResult): { interfaces: Clazz[], callbacks: Clazz[] } {
-    //合并 IRtcEngineEventHandlerEx, IDirectCdnStreamingEventHandler 到 IRtcEngineEventHandler
+export function gen(clonedParseResult: ParseResult): MemberFunction[] {
+
     processIRtcEngineEventHandler();
 
     let interfaces: Clazz[] = [];
@@ -61,7 +61,17 @@ export function interfaceGen(clonedParseResult: ParseResult): { interfaces: Claz
         return !e.user_data?.isHide;
     });
 
-    return { interfaces, callbacks };
+    let interfaceMethods: MemberFunction[] = interfaces.map((e) => {
+        return e.methods;
+    }).flat();
+
+    let callbackMethods: MemberFunction[] = callbacks.map((e) => {
+        return e.methods;
+    }).flat();
+
+    let methods: MemberFunction[] = [...interfaceMethods, ...callbackMethods];
+
+    return methods;
 }
 
 

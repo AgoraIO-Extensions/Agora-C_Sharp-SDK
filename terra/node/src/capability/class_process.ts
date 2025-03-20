@@ -3,7 +3,7 @@ import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/te
 import { CustomHead, ProcessRawData } from "../config/common/types";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
 import { StringProcess } from "./string_process";
-import { processMethodName, processMethodObsolete, processMethodParameters, processMethodReturn } from "./method_process";
+import { processMethods } from "./method_process";
 
 export function processClassWithCustomHeadPre(clazz: Clazz, customHead: CustomHead, processRawData: ProcessRawData) {
     let clonedParseResult: ParseResult = global.clonedParseResult;
@@ -45,16 +45,9 @@ export function processClassWithCustomHeadPost(clazz: Clazz, customHead: CustomH
     });
 }
 
-
 export function processClassCommonAttributes(clazz: Clazz, processRawData: ProcessRawData) {
-    clazz.methods.forEach(method => {
-        processRawData.method = method;
-        processClassName(clazz, processRawData);
-        processMethodObsolete(method, processRawData);
-        processMethodName(method, processRawData);
-        processMethodReturn(method, processRawData);
-        processMethodParameters(method, processRawData);
-    });
+    processClassName(clazz, processRawData);
+    processMethods(clazz.methods, processRawData);
 }
 
 //处理类名在不同的文件中的显示

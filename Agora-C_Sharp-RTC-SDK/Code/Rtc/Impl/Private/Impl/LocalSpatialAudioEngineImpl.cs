@@ -11,7 +11,7 @@ namespace Agora.Rtc
     using RtcEngineHandler = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
 
-    public class LocalSpatialAudioEngineImpl
+    public partial class LocalSpatialAudioEngineImpl
     {
         private IrisApiEnginePtr _irisApiEngine;
         //IRtcEngine *
@@ -101,19 +101,6 @@ namespace Agora.Rtc
             return AgoraRtcNative.ILocalSpatialAudioEngine_UpdatePlayerPositionInfo(_rtcEngine, playerId,
                 positionInfo.position[0], positionInfo.position[1], positionInfo.position[2],
                 positionInfo.forward[0], positionInfo.forward[1], positionInfo.forward[2]);
-        }
-
-        public int SetParameters(string @params)
-        {
-            if (!_initialized) return UNINITIALIZED;
-            _param.Clear();
-            _param.Add("params", @params);
-
-            string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETPARAMETERS,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int MuteLocalAudioStream(bool mute)
@@ -216,7 +203,7 @@ namespace Agora.Rtc
         public int Initialize()
         {
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE,
+                AgoraApiType.ILOCALSPATIALAUDIOENGINE_INITIALIZE_cf94fbf,
                 "", 0, IntPtr.Zero, 0, ref _apiParam);
 
             if (ret != 0)

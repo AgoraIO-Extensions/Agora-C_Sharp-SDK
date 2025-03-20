@@ -4,7 +4,7 @@ import { renderWithConfiguration } from "@agoraio-extensions/terra_shared_config
 
 import path from "path";
 import _ from "lodash";
-import { interfaceGen } from "./interface_gen";
+import { gen } from "./gen";
 export default function (
     terraContext: TerraContext,
     args: any,
@@ -12,7 +12,7 @@ export default function (
 ): RenderResult[] {
     const clonedParseResult = _.cloneDeep(originalParseResult);
     global.clonedParseResult = clonedParseResult;
-    const { interfaces, callbacks } = interfaceGen(clonedParseResult);
+    const { interfaces, callbacks } = gen(clonedParseResult);
 
     const interfaceResult: RenderResult[] = renderWithConfiguration({
         fileNameTemplatePath: path.join(__dirname, "interface_file_name.mustache"),

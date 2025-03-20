@@ -2,9 +2,24 @@ import { Clazz, SimpleType, CXXTYPE, MemberFunction, CXXTerraNode, Variable } fr
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
 import { CustomHead, ProcessRawData } from "../config/common/types";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
-import { processMethodParameterActualString, processMethodParameterFormalString } from "./method_parameter_process";
-import { matchReg } from "./common";
+import {
+    processMethodParameterActualString,
+    processMethodParameterAddToJson,
+    processMethodParameterFormalString,
+    processMethodRefParameterGetFromJson
+} from "./method_parameter_process";
+import { matchReg, processVariableGetFromJson } from "./common";
 import { methodReturnDefaultValueTable } from "../config/common/method_return_default_value_table.config";
+
+export function processMethods(methods: MemberFunction[], processRawData: ProcessRawData) {
+    methods.forEach(method => {
+        processRawData.method = method;
+        processMethodObsolete(method, processRawData);
+        processMethodName(method, processRawData);
+        processMethodReturn(method, processRawData);
+        processMethodParameters(method, processRawData);
+    });
+}
 
 //处理函数的名字
 export function processMethodName(method: MemberFunction, processRawData: ProcessRawData) {
@@ -19,10 +34,14 @@ export function processMethodReturn(method: MemberFunction, processRawData: Proc
     const returnType = method.return_type;
     const returnTypeString = processMethodReturnTypeString(returnType, processRawData);
     const returnValueString = processMethodReturnValueString(returnType, processRawData);
+    const returnValueGetFromJsonString = processMethodReturnValueGetFromJson(method, processRawData);
     method.user_data = method.user_data || {};
     method.user_data.returnTypeString = returnTypeString;
     method.user_data.returnValueString = returnValueString;
+    method.user_data.returnValueGetFromJsonString = returnValueGetFromJsonString;
 }
+
+
 
 //处理函数的Obsolete
 export function processMethodObsolete(method: MemberFunction, processRawData: ProcessRawData) {
@@ -69,15 +88,17 @@ export function processMethodObsolete(method: MemberFunction, processRawData: Pr
 //处理函数的参数列表
 export function processMethodParameters(method: MemberFunction, processRawData: ProcessRawData) {
     const parameters = method.parameters;
-    parameters.forEach((param, index) => {
-        processRawData.parameter = param;
+    parameters.forEach((parameter, index) => {
+        processRawData.parameter = parameter;
         processRawData.index = index;
-        param.user_data = param.user_data || {};
-        param.user_data.formalParameterString = processMethodParameterFormalString(param, processRawData);
-        param.user_data.actualParameterString = processMethodParameterActualString(param, processRawData);
-        param.user_data.paramAddString = "hello";
-        param.user_data.jsonGetString = "hello";
+        parameter.user_data = parameter.user_data || {};
+        parameter.user_data.formalParameterString = processMethodParameterFormalString(parameter, processRawData);
+        parameter.user_data.actualParameterString = processMethodParameterActualString(parameter, processRawData);
+        parameter.user_data.parameterAddToJsonString = processMethodParameterAddToJson(parameter, processRawData);
+        parameter.user_data.parameterGetFromJsonGetString = processMethodRefParameterGetFromJson(parameter, processRawData);
     });
+
+    method.user_data = method.user_data || {};
 
     //interface.ts 文件中的形参
     let formalParameterStringArray = [];
@@ -98,22 +119,22 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     method.user_data.actualParameterString = actualParameterStringArray.join(", ");
 
     //impl.ts 文件中的_params.add()
-    let paramAddStringArray = [];
+    let parameterAddToJsonStringArray = [];
     method.parameters.forEach(param => {
-        if (param.user_data.paramAddString) {
-            paramAddStringArray.push(param.user_data.paramAddString);
+        if (param.user_data.parameterAddToJsonString) {
+            parameterAddToJsonStringArray.push(param.user_data.parameterAddToJsonString);
         }
     });
-    method.user_data.paramAddString = paramAddStringArray.join("\n");
+    method.user_data.parameterAddToJsonString = parameterAddToJsonStringArray.join("\n");
 
-    //impl.ts 文件中的get
-    let jsonGetStringArray = [];
+    //impl.ts 文件中的getFromJson
+    let parameterGetFromJsonGetStringArray = [];
     method.parameters.forEach(param => {
-        if (param.user_data.jsonGetString) {
-            jsonGetStringArray.push(param.user_data.jsonGetString);
+        if (param.user_data.parameterGetFromJsonGetString) {
+            parameterGetFromJsonGetStringArray.push(param.user_data.parameterGetFromJsonGetString);
         }
     });
-    method.user_data.jsonGetString = jsonGetStringArray.join("\n");
+    method.user_data.parameterGetFromJsonGetString = parameterGetFromJsonGetStringArray.join("\n");
 
 }
 
@@ -140,12 +161,23 @@ export function processMethodReturnTypeString(type: SimpleType, processRawData: 
 }
 
 //处理回调函数的函数体内的默认返回值。返回值用在两个地方：1. 回调函数体内 2. API接口体内   
-export function processMethodReturnValueString(type: SimpleType, processRawData: ProcessRawData): { callback: string, interface: string } {
+export function processMethodReturnValueString(type: SimpleType, processRawData: ProcessRawData): { callback: string, interface: string, impl: string } {
     const typeString = processMethodReturnTypeString(type, processRawData);
     let defaultResult = {
         callback: "config this to method_return_default_value_table.config.ts",
-        interface: "config this to method_return_default_value_table.config.ts"
+        interface: "config this to method_return_default_value_table.config.ts",
+        impl: "config this to method_return_default_value_table.config.ts"
     };
 
     return methodReturnDefaultValueTable[typeString] || defaultResult;
+}
+
+// 得到类似
+// var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+// var result = nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+export function processMethodReturnValueGetFromJson(method: MemberFunction, processRawData: ProcessRawData) {
+    const defaultValue = processMethodReturnValueString(method.return_type, processRawData).impl;
+    const returnValueGetFromString = `var result = nRet != 0 ? ${defaultValue} :${processVariableGetFromJson(method.return_type, "_apiParam.Result", "result", processRawData)}`;
+    method.user_data = method.user_data || {};
+    method.user_data.returnValueGetFromString = returnValueGetFromString;
 }

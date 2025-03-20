@@ -20,7 +20,9 @@ parsers:
 renderers:
   - path: src/rtc/interface/renderers.ts
   - path: src/rtc/middle/renderers.ts
-
+  - path: src/rtc/impl/renderers.ts
+  - path: src/rtc/api_type/renderers.ts
+  
 globalArgs:
   product_type: rtc
   headers_version: rtc_4.5.1

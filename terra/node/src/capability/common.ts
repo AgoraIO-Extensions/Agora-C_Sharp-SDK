@@ -3,6 +3,8 @@ import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/te
 import { CustomHead, ProcessRawData } from "../config/common/types";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
 import { StringProcess } from "./string_process";
+import { processMethodReturnTypeString } from "./method_process";
+import { processMethodParameterFormalVariableDefaultValue, processMethodParameterFormalVariableType } from "./method_parameter_process";
 
 export function isInterface(node: CXXTerraNode): boolean {
     if (node.__TYPE != CXXTYPE.Clazz)
@@ -38,6 +40,13 @@ export function isCallback(node: CXXTerraNode): boolean {
     return false;
 }
 
+function isEnumz(type: SimpleType | Variable): boolean {
+    let realType = type instanceof Variable ? type.type : type;
+    const clonedParseResult: ParseResult = global.clonedParseResult;
+    const node = clonedParseResult.resolveNodeByType(realType);
+    return node.__TYPE == CXXTYPE.Enumz;
+}
+
 export function findCustomHead(node: Clazz, customHeads: CustomHead[]): CustomHead {
     const nodeName = node.name;
     const nodeFullName = node.fullName;
@@ -52,12 +61,6 @@ export function findCustomHead(node: Clazz, customHeads: CustomHead[]): CustomHe
     });
 
 }
-
-
-
-
-
-
 
 export function matchReg(inputTemplate: string, cxxTypeSource: string, outputTemplate: string): string {
     let starPos = inputTemplate.indexOf("*");
@@ -108,6 +111,7 @@ export function matchReg(inputTemplate: string, cxxTypeSource: string, outputTem
 }
 
 //合并 IRtcEngineEventHandlerEx, IDirectCdnStreamingEventHandler 到 IRtcEngineEventHandler
+//将IRtcEngineEventHandlerEx的函数签名里的Ex都删除掉。
 export function processIRtcEngineEventHandler() {
     let clonedParseResult: ParseResult = global.clonedParseResult;
     const event = clonedParseResult.resolveNodeByName("IRtcEngineEventHandler") as Clazz;
@@ -119,8 +123,59 @@ export function processIRtcEngineEventHandler() {
             method.user_data = method.user_data || {};
             method.user_data.isHide = true;
         }
+
+        let keyEx = methodEx.user_data?.IrisApiIdParser?.key;
+        let valueEx = methodEx.user_data?.IrisApiIdParser?.value;
+        keyEx = keyEx.replace("EX_", "_");
+        valueEx = valueEx.replace("Ex_", "_");
+
+        methodEx.user_data.IrisApiIdParser = {
+            key: keyEx,
+            value: valueEx
+        };
     });
 
     event.methods.push(...eventEx.methods);
 }
+
+
+// 有点丑陋
+//返回类似于 
+// (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId")
+// (string)AgoraJson.JsonToStructArray<string>(_apiParam.Result, "result")
+// (int)AgoraJson.GetData<int>(_apiParam.Result, "result")
+// (int)AgoraJson.JsonToStruct<int>(_apiParam.Result, "result")
+export function processVariableGetFromJson(type: SimpleType | Variable, jsonMapVariableName: string, jsonKeyVariableName: string, processRawData: ProcessRawData): string {
+    let typeString = "";
+    if (type instanceof Variable) {
+        typeString = processMethodParameterFormalVariableType(type, processRawData);
+        if (typeString.includes('ref ') || typeString.includes('out ')) {
+            typeString = typeString.substring(4);
+        }
+    }
+    else {
+        typeString = processMethodReturnTypeString(type, processRawData);
+    }
+
+    var simpleType = ["int", "ulong", "uint", "long", "string", "bool", "track_id_t", "float"];
+
+    if (simpleType.includes(typeString)) {
+        //基本数据类型
+        return `(${typeString})AgoraJson.GetData<${typeString}>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
+    }
+    else if (typeString.includes('[]')) {
+        //是数组
+        return `(${typeString})AgoraJson.JsonToStructArray<${typeString.substring(0, typeString.length - 2)}>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
+    }
+    else {
+        //是结构体
+        if (isEnumz(type)) {
+            return `(${typeString})AgoraJson.GetData<int>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
+        }
+        else {
+            return `(${typeString})AgoraJson.JsonToStruct<${typeString}>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
+        }
+    }
+}
+
 

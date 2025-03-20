@@ -2,7 +2,7 @@ import { Clazz, SimpleType, CXXTYPE, MemberFunction, CXXTerraNode, Variable } fr
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
 import { CustomHead, ProcessRawData } from "../config/common/types";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
-import { matchReg } from "./common";
+import { matchReg, processVariableGetFromJson } from "./common";
 import { variableNameConversionTable } from "../config/common/variable_name_conversion_table.config";
 import { variableDefaultValueConversionTable } from "../config/common/variable_default_value_conversion_table.config";
 
@@ -10,7 +10,7 @@ import { variableDefaultValueConversionTable } from "../config/common/variable_d
 //(char * channelName, char * deviceId) => (string channelName, ref string deviceId)
 export function processMethodParameterFormalString(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
-    let nameString = processMethodParameterFormalName(variable, processRawData);
+    let nameString = processMethodParameterFormalVariableName(variable, processRawData);
     let defaultValueString = processMethodParameterFormalVariableDefaultValue(variable, processRawData);
 
     //typeString为空，说明这个参数被手动的标记为@remove,从参数列表中直接删除了。
@@ -35,7 +35,7 @@ export function processMethodParameterActualString(variable: Variable, processRa
         return "";
     }
 
-    let nameString = processMethodParameterFormalName(variable, processRawData);
+    let nameString = processMethodParameterFormalVariableName(variable, processRawData);
     if (variable.user_data.isRef) {
         nameString = "ref " + nameString;
     }
@@ -82,7 +82,7 @@ export function processMethodParameterFormalVariableType(variable: Variable, pro
 }
 
 //用来处理函数的单个形式参数的变量名转换到Unity应该是什么
-export function processMethodParameterFormalName(variable: Variable, processRawData: ProcessRawData): string {
+export function processMethodParameterFormalVariableName(variable: Variable, processRawData: ProcessRawData): string {
     let nameSource = variable.name;
     let nameString = nameSource;
 
@@ -132,4 +132,40 @@ export function processMethodParameterFormalVariableDefaultValue(variable: Varia
         }
     }
     return defaultValue;
+}
+
+//用来处理函数的单个参数被add进去json字符串
+export function processMethodParameterAddToJson(variable: Variable, processRawData: ProcessRawData): string {
+    let typeString = processMethodParameterFormalVariableType(variable, processRawData);
+
+    //该参数已经被标记为@remove，从参数列表中直接删除了。
+    if (typeString == "") {
+        return "";
+    }
+
+    if (variable.user_data.isRef) {
+        return "";
+    }
+
+    const key = variable.name;
+    const value = processMethodParameterFormalVariableName(variable, processRawData);
+
+    return `_param.Add("${key}", ${value});`;
+}
+
+export function processMethodRefParameterGetFromJson(variable: Variable, processRawData: ProcessRawData): string {
+    let typeString = processMethodParameterFormalVariableType(variable, processRawData);
+
+    //该参数已经被标记为@remove或者不是ref，从参数列表中直接删除了。
+    if (typeString == "") {
+        return "";
+    }
+
+    if (!variable.user_data.isRef) {
+        return "";
+    }
+
+    const name = processMethodParameterFormalVariableName(variable, processRawData);
+    const value = processVariableGetFromJson(variable, "_apiParam.Result", "result", processRawData);
+    return `${name} = ${value};`;
 }
