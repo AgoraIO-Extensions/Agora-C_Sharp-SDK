@@ -102,15 +102,15 @@ export const customHeads: CustomHead[] = [
             "release",
             "initialize",
             "getMediaPlayerId",
+            "registerAudioFrameObserver",
+            "unregisterAudioFrameObserver",
             "registerVideoFrameObserver",
             "unregisterVideoFrameObserver",
             "registerPlayerSourceObserver",
             "unregisterPlayerSourceObserver",
-            "openWithMediaSource",
-            "registerAudioFrameObserver",
-            "unregisterAudioFrameObserver",
             "registerMediaPlayerAudioSpectrumObserver",
-            "unregisterMediaPlayerAudioSpectrumObserver"
+            "unregisterMediaPlayerAudioSpectrumObserver",
+            "openWithMediaSource",
         ]
     },
     {
@@ -189,10 +189,19 @@ export const customHeads: CustomHead[] = [
     {
         name: "IMusicPlayer",
         isHide: false,
+        hide_methods: [
+            "initialize",
+            "getMediaPlayerId",
+            "registerPlayerSourceObserver",
+            "unregisterPlayerSourceObserver",
+            "registerVideoFrameObserver",
+            "unregisterVideoFrameObserver"
+        ],
         merge_nodes: [
             {
                 name: "IMediaPlayer",
-                isHide: false
+                isHide: false,
+                override_method_hide: true
             }
         ]
     },

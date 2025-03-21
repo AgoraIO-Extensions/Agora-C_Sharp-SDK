@@ -80,6 +80,10 @@ namespace Agora.Rtc
         internal const string IMEDIAPLAYER_SETVIEW_cb1a81f = "MediaPlayer_setView_cb1a81f";
         //IMediaPlayer::setRenderMode(media::base::RENDER_MODE_TYPE, );
         internal const string IMEDIAPLAYER_SETRENDERMODE_bedb5ae = "MediaPlayer_setRenderMode_bedb5ae";
+        //IMediaPlayer::registerPlayerSourceObserver(agora::rtc::IMediaPlayerSourceObserver*, );
+        internal const string IMEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER_15621d7 = "MediaPlayer_registerPlayerSourceObserver_15621d7";
+        //IMediaPlayer::unregisterPlayerSourceObserver(agora::rtc::IMediaPlayerSourceObserver*, );
+        internal const string IMEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER_15621d7 = "MediaPlayer_unregisterPlayerSourceObserver_15621d7";
         //IMediaPlayer::registerAudioFrameObserver(media::IAudioPcmFrameSink*, );
         internal const string IMEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER_89ab9b5 = "MediaPlayer_registerAudioFrameObserver_89ab9b5";
         //IMediaPlayer::registerAudioFrameObserver(media::IAudioPcmFrameSink*, agora::rtc::RAW_AUDIO_FRAME_OP_MODE_TYPE, );

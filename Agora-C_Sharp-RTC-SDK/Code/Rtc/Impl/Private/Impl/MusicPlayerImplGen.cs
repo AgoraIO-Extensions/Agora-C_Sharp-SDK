@@ -53,6 +53,11 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.Open(playerId, url, startPos);
         }
 
+        public int OpenWithMediaSource(int playerId, MediaSource source)
+        {
+            return _mediaPlayerImpl.OpenWithMediaSource(playerId, source);
+        }
+
         public int Play(int playerId)
         {
             return _mediaPlayerImpl.Play(playerId);
@@ -191,6 +196,31 @@ namespace Agora.Rtc
         public int SetRenderMode(int playerId, RENDER_MODE_TYPE renderMode)
         {
             return _mediaPlayerImpl.SetRenderMode(playerId, renderMode);
+        }
+
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
+        {
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
+        }
+
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        {
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
+        }
+
+        public int UnregisterAudioFrameObserver(int playerId)
+        {
+            return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
+        }
+
+        public int RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
+        {
+            return _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
+        }
+
+        public int UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
+        {
+            return _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
         }
 
         public int SetAudioDualMonoMode(int playerId, AUDIO_DUAL_MONO_MODE mode)

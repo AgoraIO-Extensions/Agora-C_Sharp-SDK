@@ -13,8 +13,14 @@ export interface CustomHead {
     }[];
     // will extend the parent class
     parent?: string;
-    // will merge the nodes methods, and the node will be hidden is isHide is true
-    merge_nodes?: { name: string, isHide: boolean }[];
+    // will merge the nodes methods, 
+    merge_nodes?: {
+        name: string,
+        //and the node will be hidden is isHide is true
+        isHide: boolean,
+        //if override_method_hide is true, the method will be deepClone to node and method's isHide will be reset to self hide_methods
+        override_method_hide?: boolean
+    }[];
     // will hide the interface
     isHide?: boolean;
     //all method will be abstract

@@ -4,6 +4,7 @@ import { CustomHead, ProcessRawData } from "../config/common/types";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
 import { StringProcess } from "./string_process";
 import { processMethods } from "./method_process";
+import _ from "lodash";
 
 export function processClassWithCustomHeadPre(clazz: Clazz, customHead: CustomHead, processRawData: ProcessRawData) {
     let clonedParseResult: ParseResult = global.clonedParseResult;
@@ -36,8 +37,22 @@ export function processClassWithCustomHeadPost(clazz: Clazz, customHead: CustomH
                 clazz.user_data.customMethods = clazz.user_data.customMethods || [];
                 clazz.user_data.customMethods.push(...mergeNodeClazz.user_data.customMethods);
             }
-            clazz.methods.push(...mergeNodeClazz.methods);
             mergeNodeClazz.user_data.isHide = nodeInfo.isHide;
+
+            let clonedMergeNoodeMehtods = _.cloneDeep(mergeNodeClazz.methods);
+            if (nodeInfo.override_method_hide) {
+                clonedMergeNoodeMehtods.forEach(method => {
+                    method.user_data.isHide = false;
+                });
+                clonedMergeNoodeMehtods.forEach(method => {
+                    method.user_data = method.user_data || {};
+                    if (customHead.hide_methods?.includes(method.name)) {
+                        method.user_data.isHide = true;
+                    }
+                });
+            }
+            clazz.methods.push(...clonedMergeNoodeMehtods);
+
         }
         else {
             console.error(`mergeNodeClazz ${nodeInfo.name} not found in processClassWithCustomHeadPost`);

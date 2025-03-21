@@ -80,14 +80,14 @@ namespace Agora.Rtc
             AgoraRtcNative.AllocEventHandlerHandle(ref _h265TranscoderObserverHandle, H265TranscoderObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IH265TRANSCODER_REGISTERTRANSCODEROBSERVER_e1ee996,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
+                AgoraLog.LogError("IH265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
             arrayPtrHandle.Free();
             return nRet;
@@ -100,14 +100,14 @@ namespace Agora.Rtc
 
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IH265TRANSCODER_UNREGISTERTRANSCODEROBSERVER_e1ee996,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER failed: " + nRet);
+                AgoraLog.LogError("IH265TRANSCODER_UNREGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
 
             AgoraRtcNative.FreeEventHandlerHandle(ref _h265TranscoderObserverHandle);

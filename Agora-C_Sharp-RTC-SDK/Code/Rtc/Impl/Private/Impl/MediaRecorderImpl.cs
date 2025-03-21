@@ -146,7 +146,7 @@ namespace Agora.Rtc
                 IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
                 GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
                 var json = AgoraJson.ToJson(_param);
-                int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
+                int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIARECORDER_SETMEDIARECORDEROBSERVER_e1f7340,
                                                               json, (UInt32)json.Length,
                                                               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                               ref _apiParam);

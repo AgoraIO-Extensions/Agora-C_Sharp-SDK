@@ -73,8 +73,6 @@ export const customHeads: CustomHead[] = [
             "getMediaPlayerId",
             "registerVideoFrameObserver",
             "unregisterVideoFrameObserver",
-            "registerPlayerSourceObserver",
-            "unregisterPlayerSourceObserver"
         ]
     },
     {
