@@ -17,19 +17,20 @@ export function gen(clonedParseResult: ParseResult): Clazz[] {
         });
     });
 
+    // 不要合并这个三个forEach，因为需要每个流程都对所有元素走一遍，再走下一个流程
     interfaces.forEach((e) => {
-        processClassCommonAttributes(e, { clazz: e });
         const customHead = findCustomHead(e, customHeads);
-        if (customHead) {
-            processClassWithCustomHeadPre(e, customHead, { clazz: e });
-        }
+        customHead && processClassWithCustomHeadPre(e, { customHead: customHead, clazz: e });
     });
 
     interfaces.forEach((e) => {
         const customHead = findCustomHead(e, customHeads);
-        if (customHead) {
-            processClassWithCustomHeadPost(e, customHead, { clazz: e });
-        }
+        processClassCommonAttributes(e, { customHead: customHead, clazz: e });
+    });
+
+    interfaces.forEach((e) => {
+        const customHead = findCustomHead(e, customHeads);
+        customHead && processClassWithCustomHeadPost(e, { customHead: customHead, clazz: e });
     });
 
     interfaces = interfaces.filter((e) => {

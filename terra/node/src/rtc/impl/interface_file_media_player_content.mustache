@@ -32,12 +32,12 @@ namespace Agora.Rtc
 
             {{{user_data.returnValueGetFromString}}};
 
-            {{#user_data.parameterGetFromJsonGetString}}
+            {{#user_data.refParameterGetFromJsonGetString}}
             if (nRet == 0)
             {
                 {{{.}}}
             }
-            {{/user_data.parameterGetFromJsonGetString}}
+            {{/user_data.refParameterGetFromJsonGetString}}
 
             return result;
         }

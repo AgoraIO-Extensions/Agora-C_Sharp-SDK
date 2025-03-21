@@ -66,19 +66,18 @@ export default function (
     });
     //interfaces process end
 
-
-    // const callbackResult: RenderResult[] = renderWithConfiguration({
-    //     fileNameTemplatePath: path.join(__dirname, "callback_file_name.mustache"),
-    //     fileContentTemplatePath: path.join(__dirname, "callback_file_content.mustache"),
-    //     view: callbacks
-    // });
+    const callbackResult: RenderResult[] = renderWithConfiguration({
+        fileNameTemplatePath: path.join(__dirname, "callback_file_name.mustache"),
+        fileContentTemplatePath: path.join(__dirname, "callback_file_content.mustache"),
+        view: callbacks
+    });
 
 
     return [
         ...interfaceResult,
         ...mediaRecorderInterfaceResult,
         ...musicPlayerInterfaceResult,
-        ...mediaPlayerInterfaceResult
-        // ...callbackResult
+        ...mediaPlayerInterfaceResult,
+        ...callbackResult
     ];
 }

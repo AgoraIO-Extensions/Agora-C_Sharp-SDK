@@ -228,7 +228,7 @@ namespace Agora.Rtc
         {
             if (_rtcDirectCdnStreamingEventHandle.handle == IntPtr.Zero)
             {
-                AgoraRtcNative.AllocEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle, RtcEngineEventHandlerNative.OnEventForDirectCdnStreaming);
+                AgoraRtcNative.AllocEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle, RtcEngineEventHandlerNative.OnEvent);
             }
         }
 

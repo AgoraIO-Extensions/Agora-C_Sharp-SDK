@@ -6,29 +6,24 @@ import { StringProcess } from "./string_process";
 import { processMethods } from "./method_process";
 import _ from "lodash";
 
-export function processClassWithCustomHeadPre(clazz: Clazz, customHead: CustomHead, processRawData: ProcessRawData) {
-    let clonedParseResult: ParseResult = global.clonedParseResult;
+export function processClassWithCustomHeadPre(clazz: Clazz, processRawData: ProcessRawData) {
+    const customHead = processRawData.customHead;
     clazz.user_data = clazz.user_data || {};
     clazz.user_data.isHide = customHead.isHide;
     clazz.user_data.customMethods = customHead.custom_methods;
     clazz.user_data.parent = customHead.parent;
     clazz.user_data.isAbstract = customHead.isAbstract;
-    clazz.methods.forEach(method => {
-        method.user_data = method.user_data || {};
-        if (customHead.hide_methods?.includes(method.name)) {
-            method.user_data.isHide = true;
-        }
-        customHead.methods_with_macros?.forEach(methodWithMacro => {
-            if (method.name === methodWithMacro.name) {
-                method.user_data.macro = methodWithMacro.macro;
-            }
-        });
-    });
+    clazz.user_data.isCallbackCrossThread = customHead.isCallbackCrossThread;
+    clazz.user_data.listenersMapName = customHead.listenersMapName;
+    clazz.user_data.listenersMapKey = customHead.listenersMapKey;
+    clazz.user_data.listenersMapKeyType = customHead.listenersMapKeyType;
+    clazz.user_data.listenerName = customHead.listenerName;
 }
 
-export function processClassWithCustomHeadPost(clazz: Clazz, customHead: CustomHead, processRawData: ProcessRawData) {
+export function processClassWithCustomHeadPost(clazz: Clazz, processRawData: ProcessRawData) {
     let clonedParseResult: ParseResult = global.clonedParseResult;
-    customHead.merge_nodes?.forEach(nodeInfo => {
+    const customHead = processRawData.customHead;
+    customHead?.merge_nodes?.forEach(nodeInfo => {
         const mergeNodeClazz = clonedParseResult.resolveNodeByName(nodeInfo.name) as Clazz;
         if (mergeNodeClazz) {
             mergeNodeClazz.user_data = mergeNodeClazz.user_data || {};
@@ -52,7 +47,6 @@ export function processClassWithCustomHeadPost(clazz: Clazz, customHead: CustomH
                 });
             }
             clazz.methods.push(...clonedMergeNoodeMehtods);
-
         }
         else {
             console.error(`mergeNodeClazz ${nodeInfo.name} not found in processClassWithCustomHeadPost`);
@@ -72,7 +66,9 @@ export function processClassName(clazz: Clazz, processRawData: ProcessRawData) {
     const interfaceName = name;
     const middleName = StringProcess.processString("-r", name);
     const implName = StringProcess.processString("-r", name) + "Impl";
+    const observerName = StringProcess.processString("-r", name) + "Native";
     clazz.user_data.interfaceNameString = interfaceName;
     clazz.user_data.middleNameString = middleName;
     clazz.user_data.implNameString = implName;
+    clazz.user_data.observerNameString = observerName;
 }

@@ -110,7 +110,7 @@ export function matchReg(inputTemplate: string, cxxTypeSource: string, outputTem
     return null;
 }
 
-//合并 IRtcEngineEventHandlerEx, IDirectCdnStreamingEventHandler 到 IRtcEngineEventHandler
+//合并 IRtcEngineEventHandlerEx 到 IRtcEngineEventHandler并将IRtcEngineEventHandler并将里不带Connecton的删除
 //将IRtcEngineEventHandlerEx的函数签名里的Ex都删除掉。
 export function processIRtcEngineEventHandler() {
     let clonedParseResult: ParseResult = global.clonedParseResult;
@@ -136,6 +136,25 @@ export function processIRtcEngineEventHandler() {
     });
 
     event.methods.push(...eventEx.methods);
+
+}
+
+// 处理IAudioFrameObserverBase的apiKey
+export function processIAudioFrameObserverBase() {
+    let clonedParseResult: ParseResult = global.clonedParseResult;
+    const event = clonedParseResult.resolveNodeByName("IAudioFrameObserverBase") as Clazz;
+
+    event.methods.forEach(method => {
+        let keyEx = method.user_data?.IrisApiIdParser?.key;
+        let valueEx = method.user_data?.IrisApiIdParser?.value;
+        keyEx = keyEx.replace("BASE_", "_");
+        valueEx = valueEx.replace("Base_", "_");
+
+        method.user_data.IrisApiIdParser = {
+            key: keyEx,
+            value: valueEx
+        };
+    });
 }
 
 

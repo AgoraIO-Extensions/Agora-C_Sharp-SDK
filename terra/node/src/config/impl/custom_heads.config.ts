@@ -217,5 +217,91 @@ export const customHeads: CustomHead[] = [
         hide_methods: [
             "setMediaRecorderObserver",
         ]
+    },
+    {
+        name: "IAudioEncodedFrameObserver",
+        isHide: true
+    },
+    {
+        name: "IAudioFrameObserver",
+        isHide: true
+    },
+    {
+        name: "IAudioPcmFrameSink",
+        isHide: true
+    },
+    {
+        name: "IAudioSpectrumObserver",
+        isHide: true
+    },
+    {
+        name: "IFaceInfoObserver",
+        isHide: true
+    },
+    {
+        name: "IMediaPlayerAudioSpectrumObserver",
+        isHide: true
+    },
+    {
+        name: "IMediaPlayerCustomDataProvider",
+        isHide: true
+    },
+    {
+        name: "IMediaRecorderObserver",
+        isHide: true
+    },
+    {
+        name: "IMetadataObserver",
+        isHide: true
+    },
+    {
+        name: "IVideoEncodedFrameObserver",
+        isHide: true
+    },
+    {
+        name: "IVideoFrameObserver",
+        isHide: true
+    },
+    {
+        name: "IH265TranscoderObserver",
+        isCallbackCrossThread: true,
+        listenerName: "EventHandler"
+    },
+    {
+        name: "IMediaPlayerSourceObserver",
+        hide_methods: [
+            "onMetaData"
+        ],
+        isCallbackCrossThread: true,
+        listenersMapName: "mediaPlayerSourceObserverDic",
+        listenersMapKey: "playerId",
+        listenersMapKeyType: "int"
+    },
+    {
+        name: "IMusicContentCenterEventHandler",
+        isCallbackCrossThread: true,
+        listenerName: "EventHandler"
+    },
+    {
+        name: "IRtcEngineEventHandler",
+        hide_methods: [
+            "eventHandlerType",
+            "onStreamMessage",
+            "onAudioMetadataReceived"
+        ],
+        merge_nodes: [{
+            name: "IDirectCdnStreamingEventHandler",
+            isHide: true
+        }],
+        isCallbackCrossThread: true,
+        listenerName: "rtcEngineEventHandler"
+    },
+    {
+        name: "IMediaStreamingSourceObserver",
+        isHide: true
+    },
+    {
+        name: "IPacketObserver",
+        isHide: true
     }
 ];

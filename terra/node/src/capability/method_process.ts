@@ -6,6 +6,7 @@ import {
     processMethodParameterActualString,
     processMethodParameterAddToJson,
     processMethodParameterFormalString,
+    processMethodParameterGetFromJsonUsedInCallback,
     processMethodRefParameterGetFromJson
 } from "./method_parameter_process";
 import { matchReg, processVariableGetFromJson } from "./common";
@@ -14,11 +15,43 @@ import { methodReturnDefaultValueTable } from "../config/common/method_return_de
 export function processMethods(methods: MemberFunction[], processRawData: ProcessRawData) {
     methods.forEach(method => {
         processRawData.method = method;
+        method.user_data = method.user_data || {};
+        processMethodCommonAttributes(method, processRawData);
+        processMethodHide(method, processRawData);
+        processMethodMacro(method, processRawData);
         processMethodObsolete(method, processRawData);
         processMethodName(method, processRawData);
         processMethodReturn(method, processRawData);
         processMethodParameters(method, processRawData);
     });
+}
+
+
+export function processMethodHide(method: MemberFunction, processRawData: ProcessRawData) {
+    const customHead = processRawData.customHead;
+    if (customHead?.hide_methods?.includes(method.name)) {
+        method.user_data.isHide = true;
+    }
+}
+
+export function processMethodMacro(method: MemberFunction, processRawData: ProcessRawData) {
+    const customHead = processRawData.customHead;
+    customHead?.methods_with_macros?.forEach(methodWithMacro => {
+        if (method.name === methodWithMacro.name) {
+            method.user_data.macro = methodWithMacro.macro;
+        }
+    });
+}
+
+export function processMethodCommonAttributes(method: MemberFunction, processRawData: ProcessRawData) {
+    const customHead = processRawData.customHead;
+    if (customHead) {
+        method.user_data.isCallbackCrossThread = customHead.isCallbackCrossThread;
+        method.user_data.listenersMapName = customHead.listenersMapName;
+        method.user_data.listenersMapKey = customHead.listenersMapKey;
+        method.user_data.listenersMapKeyType = customHead.listenersMapKeyType;
+        method.user_data.listenerName = customHead.listenerName;
+    }
 }
 
 //处理函数的名字
@@ -95,7 +128,8 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
         parameter.user_data.formalParameterString = processMethodParameterFormalString(parameter, processRawData);
         parameter.user_data.actualParameterString = processMethodParameterActualString(parameter, processRawData);
         parameter.user_data.parameterAddToJsonString = processMethodParameterAddToJson(parameter, processRawData);
-        parameter.user_data.parameterGetFromJsonGetString = processMethodRefParameterGetFromJson(parameter, processRawData);
+        parameter.user_data.refParameterGetFromJsonGetString = processMethodRefParameterGetFromJson(parameter, processRawData);
+        parameter.user_data.parameterGetFromJsonUsedInCallback = processMethodParameterGetFromJsonUsedInCallback(parameter, processRawData);
     });
 
     method.user_data = method.user_data || {};
@@ -130,12 +164,20 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     //impl.ts 文件中的getFromJson
     let parameterGetFromJsonGetStringArray = [];
     method.parameters.forEach(param => {
-        if (param.user_data.parameterGetFromJsonGetString) {
-            parameterGetFromJsonGetStringArray.push(param.user_data.parameterGetFromJsonGetString);
+        if (param.user_data.refParameterGetFromJsonGetString) {
+            parameterGetFromJsonGetStringArray.push(param.user_data.refParameterGetFromJsonGetString);
         }
     });
-    method.user_data.parameterGetFromJsonGetString = parameterGetFromJsonGetStringArray.join("\n");
+    method.user_data.refParameterGetFromJsonGetString = parameterGetFromJsonGetStringArray.join("\n");
 
+    //observerNative.ts 文件中的getFromJson
+    let parameterGetFromJsonUsedInCallbackArray = [];
+    method.parameters.forEach(param => {
+        if (param.user_data.parameterGetFromJsonUsedInCallback) {
+            parameterGetFromJsonUsedInCallbackArray.push(param.user_data.parameterGetFromJsonUsedInCallback);
+        }
+    });
+    method.user_data.parameterGetFromJsonUsedInCallback = parameterGetFromJsonUsedInCallbackArray.join(",\n\t\t\t\t\t\t\t");
 }
 
 //用来转换函数的返回值

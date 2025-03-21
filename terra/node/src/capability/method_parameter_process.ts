@@ -169,3 +169,16 @@ export function processMethodRefParameterGetFromJson(variable: Variable, process
     const value = processVariableGetFromJson(variable, "_apiParam.Result", "result", processRawData);
     return `${name} = ${value};`;
 }
+
+export function processMethodParameterGetFromJsonUsedInCallback(variable: Variable, processRawData: ProcessRawData): string {
+    let typeString = processMethodParameterFormalVariableType(variable, processRawData);
+
+    //该参数已经被标记为@remove或者不是ref，从参数列表中直接删除了。
+    if (typeString == "") {
+        return "";
+    }
+
+    const name = variable.name;
+    const value = processVariableGetFromJson(variable, "jsonData", name, processRawData);
+    return value;
+}

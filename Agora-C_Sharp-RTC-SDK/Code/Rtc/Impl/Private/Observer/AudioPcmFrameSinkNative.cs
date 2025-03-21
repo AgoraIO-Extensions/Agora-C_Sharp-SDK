@@ -69,7 +69,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case AgoraEventType.EVENT_AUDIOPCMFRAMESINK_ONFRAME:
+                    case AgoraApiType.IAUDIOPCMFRAMESINK_ONFRAME_95f515a:
                         {
                             AudioPcmFrame frame = AgoraJson.JsonToStruct<AudioPcmFrame>(jsonData, "frame");
                             IntPtr data_ = bufferArray[0];
@@ -92,7 +92,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case AgoraEventType.EVENT_AUDIOPCMFRAMESINK_ONFRAME:
+                case AgoraApiType.IAUDIOPCMFRAMESINK_ONFRAME_95f515a:
                     break;
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);
