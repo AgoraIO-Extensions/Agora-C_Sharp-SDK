@@ -1,10 +1,13 @@
 import { Clazz, SimpleType, CXXTYPE, MemberFunction, CXXTerraNode, Variable } from "@agoraio-extensions/cxx-parser";
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
-import { CustomHead, ProcessRawData } from "../config/common/types";
+import { CustomHead, ProcessRawData } from "../rtc/type_definition";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
 import { matchReg, processVariableGetFromJson } from "./common";
 import { variableNameConversionTable } from "../config/common/variable_name_conversion_table.config";
 import { variableDefaultValueConversionTable } from "../config/common/variable_default_value_conversion_table.config";
+
+
+//todo need 重构
 
 //用来处理函数参数的单个形式参数类型 
 //(char * channelName, char * deviceId) => (string channelName, ref string deviceId)
@@ -82,7 +85,7 @@ export function processMethodParameterFormalVariableType(variable: Variable, pro
 }
 
 //用来处理函数的单个形式参数的变量名转换到Unity应该是什么
-export function processMethodParameterFormalVariableName(variable: Variable, processRawData: ProcessRawData): string {
+export function processMethodParameterFormalVariableName(variable: { name: string }, processRawData: ProcessRawData): string {
     let nameSource = variable.name;
     let nameString = nameSource;
 
@@ -93,7 +96,7 @@ export function processMethodParameterFormalVariableName(variable: Variable, pro
 }
 
 //用来处理函数的单个形式参数的默认值 
-export function processMethodParameterFormalVariableDefaultValue(variable: Variable, processRawData: ProcessRawData): string {
+export function processMethodParameterFormalVariableDefaultValue(variable: { default_value: string }, processRawData: ProcessRawData): string {
     let defaultValue = variable.default_value;
     if (defaultValue == "") {
         return "";

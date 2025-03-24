@@ -1,7 +1,7 @@
 import { Clazz, CXXFile, CXXTYPE, MemberFunction, CXXTerraNode } from "@agoraio-extensions/cxx-parser";
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
 import { findCustomHead, isCallback, isInterface, processIRtcEngineEventHandler } from "../../capability/common";
-import { CustomHead } from "../../config/common/types";
+import { CustomHead } from "../type_definition";
 import { customHeads } from "../../config/impl/custom_heads.config";
 import { processClassCommonAttributes, processClassWithCustomHeadPost, processClassWithCustomHeadPre } from "../../capability/class_process";
 

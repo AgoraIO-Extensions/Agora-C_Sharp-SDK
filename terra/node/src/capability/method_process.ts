@@ -1,6 +1,6 @@
 import { Clazz, SimpleType, CXXTYPE, MemberFunction, CXXTerraNode, Variable } from "@agoraio-extensions/cxx-parser";
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
-import { CustomHead, ProcessRawData } from "../config/common/types";
+import { CustomHead, ProcessRawData } from "../rtc/type_definition";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
 import {
     processMethodParameterActualString,
@@ -9,7 +9,7 @@ import {
     processMethodParameterGetFromJsonUsedInCallback,
     processMethodRefParameterGetFromJson
 } from "./method_parameter_process";
-import { matchReg, processVariableGetFromJson } from "./common";
+import { matchReg, processNodeObsolete, processVariableGetFromJson } from "./common";
 import { methodReturnDefaultValueTable } from "../config/common/method_return_default_value_table.config";
 
 export function processMethods(methods: MemberFunction[], processRawData: ProcessRawData) {
@@ -19,7 +19,7 @@ export function processMethods(methods: MemberFunction[], processRawData: Proces
         processMethodCommonAttributes(method, processRawData);
         processMethodHide(method, processRawData);
         processMethodMacro(method, processRawData);
-        processMethodObsolete(method, processRawData);
+        processNodeObsolete(method, processRawData);
         processMethodName(method, processRawData);
         processMethodReturn(method, processRawData);
         processMethodParameters(method, processRawData);
@@ -76,47 +76,7 @@ export function processMethodReturn(method: MemberFunction, processRawData: Proc
 
 
 
-//处理函数的Obsolete
-export function processMethodObsolete(method: MemberFunction, processRawData: ProcessRawData) {
-    var lines = method.comment.split("\n");
-    let startIndex = -1;
-    let endIndex = -1;
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        line = line.trim();
-        if (line.includes("@deprecated")) {
-            startIndex = i;
-            endIndex = i;
-            break;
-        }
-    }
 
-    if (startIndex != -1) {
-        for (let i = startIndex; i < lines.length; i++) {
-            let line = lines[i].trim();
-            if (i > startIndex && line.startsWith("@")) {
-                endIndex = i - 1;
-                break;
-            }
-            if (line.endsWith(".")) {
-                endIndex = i;
-                break;
-            }
-            if (line == "") {
-                endIndex = i - 1;
-                break;
-            }
-        }
-        let deprecatedArray = lines.slice(startIndex, endIndex + 1);
-        let obsolete = deprecatedArray.join(" ");
-        obsolete = obsolete.replaceAll("@deprecated", "");
-        obsolete = obsolete.replaceAll("  ", " ");
-        obsolete = obsolete.replaceAll('"', '\\"')
-        obsolete = obsolete.trim();
-        method.user_data = method.user_data || {};
-        method.user_data.obsolete = obsolete;
-    }
-}
 
 //处理函数的参数列表
 export function processMethodParameters(method: MemberFunction, processRawData: ProcessRawData) {

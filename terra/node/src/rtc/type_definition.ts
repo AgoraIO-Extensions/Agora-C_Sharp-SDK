@@ -1,4 +1,4 @@
-import { Clazz, CXXFile, CXXTYPE, MemberFunction, CXXTerraNode, Variable } from "@agoraio-extensions/cxx-parser";
+import { Clazz, Enumz, Struct, MemberFunction, CXXFile, Variable, MemberVariable } from "@agoraio-extensions/cxx-parser";
 export interface CustomHead {
     name: string;
     name_space?: string[];
@@ -38,17 +38,25 @@ export interface CustomHead {
     //如果只是单个监听者，则这个监听者的名字叫什么
     listenerName?: string
     /*callback config end*/
+    attributes?: string[]
 };
 
 export interface ProcessRawData {
+    cxxFile?: CXXFile;
     //the class 
     clazz?: Clazz;
+    //the enum
+    enumz?: Enumz;
+    //the struct
+    struct?: Struct;
     //the method
     method?: MemberFunction;
     //the parameter
     parameter?: Variable;
     //the parameter index
     index?: number;
+    //the member
+    member?: MemberVariable;
     //the custom head
     customHead?: CustomHead;
 };

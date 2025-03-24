@@ -1,6 +1,6 @@
 import { Clazz, SimpleType, CXXTYPE, MemberFunction, CXXTerraNode, Variable } from "@agoraio-extensions/cxx-parser";
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
-import { CustomHead, ProcessRawData } from "../config/common/types";
+import { CustomHead, ProcessRawData } from "../rtc/type_definition";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
 import { StringProcess } from "./string_process";
 import { processMethods } from "./method_process";

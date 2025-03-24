@@ -1,4 +1,4 @@
-import { CustomHead } from "../common/types";
+import { CustomHead } from "../../rtc/type_definition";
 
 export const customHeads: CustomHead[] = [
     {

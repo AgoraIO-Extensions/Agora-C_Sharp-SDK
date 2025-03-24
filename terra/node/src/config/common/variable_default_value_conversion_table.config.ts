@@ -2,7 +2,7 @@
  * 参数名称默认值转换配置
  */
 
-import { ConversionTable } from "./types";
+import { ConversionTable } from "../../rtc/type_definition";
 
 //函数的每个形数默认值的转换表
 export const variableDefaultValueConversionTable: ConversionTable = {

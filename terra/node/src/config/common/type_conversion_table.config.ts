@@ -2,7 +2,7 @@
  * 参数类型转换配置
  */
 
-import { ConversionTable } from "./types";
+import { ConversionTable } from "../../rtc/type_definition";
 
 //C++类型 => C#类型 转换表
 export const typeConversionTable: ConversionTable = {
