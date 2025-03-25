@@ -29,16 +29,24 @@ export interface CustomHead {
     isAbstract?: boolean;
     //if true, the callback from this class will be cross thread
     isCallbackCrossThread?: boolean;
-    //如果具有多个监听者，则这个监听者字典的名字叫什么
+    //Name of the dictionary that holds multiple listeners, if any
     listenersMapName?: string
-    //如果具有多个监听者，则从这个监听者字典里取出去关键字的名字叫什么 
+    //Name of the key used to retrieve from the listeners dictionary, if there are multiple listeners
     listenersMapKey?: string
-    //如果具有多个监听者，则从这个监听者字典里取出去关键字的的数据类型叫什么
+    //Data type of the key used to retrieve from the listeners dictionary, if there are multiple listeners
     listenersMapKeyType?: string
-    //如果只是单个监听者，则这个监听者的名字叫什么
+    //Name of the single listener, if there's only one listener
     listenerName?: string
     /*callback config end*/
-    attributes?: string[]
+
+    /*struct config begin*/
+    //the struct attributes
+    attributes?: string[],
+    //the struct members will be hidden
+    hide_members?: string[],
+    //the struct members will not be serialized to json
+    hide_to_json?: string[],
+    /*struct config end*/
 };
 
 export interface ProcessRawData {

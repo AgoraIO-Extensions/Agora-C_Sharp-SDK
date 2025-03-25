@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import { Tool } from "./Tool";
 
-//读取type_trans.json并且用来做类型装换的
+//Read type_trans.json and use it for type conversion
 export class ParamTypeTrans {
 
     private _normalMap: any;
@@ -24,14 +24,14 @@ export class ParamTypeTrans {
         // // }
 
         if (funName == null || funName == "") {
-            //是否匹配 类的成员属性
+            //Match class member attributes
             let clazzParamType = clazzName + "." + cxxParamName;
             if (this._specialClzzParamMap[clazzParamType]) {
                 return this._specialClzzParamMap[clazzParamType];
             }
         }
         else {
-            //是否匹配了 方法名字属性
+            //Match method name attributes
             let methodParamType = clazzName + "." + funName + "." + cxxParamName;
             // console.log("class.method.name:" + methodParamType)
             if (this._specialMethodParamMap[methodParamType]) {
@@ -39,7 +39,7 @@ export class ParamTypeTrans {
             }
         }
 
-        //是否匹配了普通
+        //Match normal types
         if (this._normalMap[cxxTypeSource])
             return this._normalMap[cxxTypeSource];
 
@@ -73,15 +73,15 @@ export class ParamTypeTrans {
         let findStr: string = null;
 
         if (splitArray[0] == "" && inputTemplate.endsWith(splitArray[1]) && cxxTypeSource.endsWith(splitArray[1])) {
-            //类型于 *xxxxyy
+            //Pattern like *xxxxyy
             let suffixPos = cxxTypeSource.indexOf(splitArray[1]);
             findStr = cxxTypeSource.substring(0, suffixPos);
         }
         else if (splitArray[1] == "" && inputTemplate.startsWith(splitArray[0]) && cxxTypeSource.startsWith(splitArray[0])) {
-            //类似于 xxyyy*
+            //Pattern like xxyyy*
             findStr = cxxTypeSource.substring(splitArray[0].length, cxxTypeSource.length);
         }
-        //类型于 xxx*yyy
+            //Pattern like xxx*yyy
         else if (cxxTypeSource.startsWith(splitArray[0]) && cxxTypeSource.endsWith(splitArray[1])) {
             let suffixPos = cxxTypeSource.indexOf(splitArray[1]);
             findStr = cxxTypeSource.substring(splitArray[0].length, suffixPos);

@@ -12,8 +12,17 @@ export default function (
 ): RenderResult[] {
     const clonedParseResult = _.cloneDeep(originalParseResult);
     global.clonedParseResult = clonedParseResult;
+    global.args = args;
 
     let cxxFiles = gen(clonedParseResult);
+
+    //删除不含有任何需要render节点的cxxFile,避免生成空白的文件
+    cxxFiles = cxxFiles.filter((e) => {
+        return e.nodes.some((node) => {
+            return !node.user_data?.isHide;
+        })
+    });
+
 
     const result = renderWithConfiguration({
         fileNameTemplatePath: path.join(__dirname, "file_name.mustache"),

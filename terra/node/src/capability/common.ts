@@ -5,6 +5,7 @@ import { typeConversionTable } from "../config/common/type_conversion_table.conf
 import { StringProcess } from "./string_process";
 import { processMethodReturnTypeString } from "./method_process";
 import { processMethodParameterFormalVariableDefaultValue, processMethodParameterFormalVariableType } from "./method_parameter_process";
+import * as fs from "fs";
 
 export function isInterface(node: CXXTerraNode): boolean {
     if (node.__TYPE != CXXTYPE.Clazz)
@@ -44,6 +45,9 @@ export function isEnumz(type: SimpleType | Variable | CXXTerraNode | string): bo
     if (typeof type === 'string') {
         let clonedParseResult: ParseResult = global.clonedParseResult;
         let node = clonedParseResult.resolveNodeByName(type);
+        if (!node) {
+            return false;
+        }
         return node.__TYPE == CXXTYPE.Enumz;
     }
     else if (type instanceof SimpleType || type instanceof Variable) {
@@ -61,6 +65,9 @@ export function isStructOrClazz(type: SimpleType | Variable | CXXTerraNode | str
     if (typeof type === 'string') {
         let clonedParseResult: ParseResult = global.clonedParseResult;
         let node = clonedParseResult.resolveNodeByName(type);
+        if (!node) {
+            return false;
+        }
         return node.__TYPE == CXXTYPE.Struct || node.__TYPE == CXXTYPE.Clazz;
     }
     else if (type instanceof SimpleType || type instanceof Variable) {
@@ -79,6 +86,9 @@ export function isStruct(type: SimpleType | Variable | CXXTerraNode | string): b
     if (typeof type === 'string') {
         let clonedParseResult: ParseResult = global.clonedParseResult;
         let node = clonedParseResult.resolveNodeByName(type);
+        if (!node) {
+            return false;
+        }
         return node.__TYPE == CXXTYPE.Struct;
     }
     else if (type instanceof SimpleType || type instanceof Variable) {
@@ -123,15 +133,15 @@ export function matchReg(inputTemplate: string, cxxTypeSource: string, outputTem
     let findStr: string = null;
 
     if (splitArray[0] == "" && inputTemplate.endsWith(splitArray[1]) && cxxTypeSource.endsWith(splitArray[1])) {
-        //类型于 *xxxxyy
+        //Pattern like *xxxxyy
         let suffixPos = cxxTypeSource.indexOf(splitArray[1]);
         findStr = cxxTypeSource.substring(0, suffixPos);
     }
     else if (splitArray[1] == "" && inputTemplate.startsWith(splitArray[0]) && cxxTypeSource.startsWith(splitArray[0])) {
-        //类似于 xxyyy*
+        //Pattern like xxyyy*
         findStr = cxxTypeSource.substring(splitArray[0].length, cxxTypeSource.length);
     }
-    //类型于 xxx*yyy
+        //Pattern like xxx*yyy
     else if (cxxTypeSource.startsWith(splitArray[0]) && cxxTypeSource.endsWith(splitArray[1])) {
         let suffixPos = cxxTypeSource.indexOf(splitArray[1]);
         findStr = cxxTypeSource.substring(splitArray[0].length, suffixPos);
@@ -155,8 +165,8 @@ export function matchReg(inputTemplate: string, cxxTypeSource: string, outputTem
     return null;
 }
 
-//合并 IRtcEngineEventHandlerEx 到 IRtcEngineEventHandler并将IRtcEngineEventHandler并将里不带Connecton的删除
-//将IRtcEngineEventHandlerEx的函数签名里的Ex都删除掉。
+//Merge IRtcEngineEventHandlerEx into IRtcEngineEventHandler and hide methods in IRtcEngineEventHandler that don't have Connection parameter
+//Remove "Ex" from IRtcEngineEventHandlerEx method signatures
 export function processIRtcEngineEventHandler() {
     let clonedParseResult: ParseResult = global.clonedParseResult;
     const event = clonedParseResult.resolveNodeByName("IRtcEngineEventHandler") as Clazz;
@@ -184,7 +194,7 @@ export function processIRtcEngineEventHandler() {
 
 }
 
-// 处理IAudioFrameObserverBase的apiKey
+// Process IAudioFrameObserverBase's apiKey
 export function processIAudioFrameObserverBase() {
     let clonedParseResult: ParseResult = global.clonedParseResult;
     const event = clonedParseResult.resolveNodeByName("IAudioFrameObserverBase") as Clazz;
@@ -203,8 +213,8 @@ export function processIAudioFrameObserverBase() {
 }
 
 
-// 有点丑陋
-//返回类似于 
+// A bit ugly
+//Returns something like: 
 // (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId")
 // (string)AgoraJson.JsonToStructArray<string>(_apiParam.Result, "result")
 // (int)AgoraJson.GetData<int>(_apiParam.Result, "result")
@@ -224,15 +234,15 @@ export function processVariableGetFromJson(type: SimpleType | Variable, jsonMapV
     var simpleType = ["int", "ulong", "uint", "long", "string", "bool", "track_id_t", "float"];
 
     if (simpleType.includes(typeString)) {
-        //基本数据类型
+        //Basic data type
         return `(${typeString})AgoraJson.GetData<${typeString}>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
     }
     else if (typeString.includes('[]')) {
-        //是数组
+        //Array type
         return `(${typeString})AgoraJson.JsonToStructArray<${typeString.substring(0, typeString.length - 2)}>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
     }
     else {
-        //是结构体
+        //Struct type
         if (isEnumz(type)) {
             return `(${typeString})AgoraJson.GetData<int>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
         }
@@ -242,7 +252,7 @@ export function processVariableGetFromJson(type: SimpleType | Variable, jsonMapV
     }
 }
 
-//处理node的commen中的obsolete
+//Process obsolete tags in node comments
 export function processNodeObsolete(node: { comment: string, user_data?: any }, processRawData: ProcessRawData) {
     var lines = node.comment.split("\n");
     let startIndex = -1;
@@ -285,11 +295,11 @@ export function processNodeObsolete(node: { comment: string, user_data?: any }, 
 }
 
 export interface CppConstructor {
-    //参数列表
+    //Parameter list
     parameters: { type: string, name: string, value: string }[];
-    //初始化列表
+    //Initialization list
     initializes: { name: string, value: string }[];
-    //body内部复制
+    //Body internal copy
     bodys: { name: string, value: string }[];
 };
 
@@ -299,10 +309,11 @@ export function processCppConstructor(clazzName: string, fullFilePath: string): 
     let context = fs.readFileSync(fullFilePath, 'utf-8');
     let reg = new RegExp(`^[ ]*${clazzName}\\([\\s\\S]*?\\)[\\s\\S]*?\\{[\\s\\S]*?\\}`, "gm");
     let array = context.match(reg);
+
     if (array) {
         for (let e of array) {
             let cppConstructor: CppConstructor = { parameters: [], initializes: [], bodys: [] };
-            //解析参数列表
+            //Parse parameter list
             let firstPos = e.indexOf("(");
             let endPos = e.indexOf(")");
             let parametersStr = e.substring(firstPos + 1, endPos);
@@ -344,7 +355,7 @@ export function processCppConstructor(clazzName: string, fullFilePath: string): 
                 }
             }
 
-            //解析初始化列表
+            //Parse initialization list
             let initializePos = e.indexOf(":", e.indexOf(")"));
             if (initializePos != -1) {
                 let initializeStr = e.substring(initializePos + 1, e.indexOf("{"));
@@ -364,10 +375,16 @@ export function processCppConstructor(clazzName: string, fullFilePath: string): 
                     cppConstructor.initializes.push({ name, value });
                 }
             }
-            //todo body有点沙雕。暂时不处理了
+            //todo body is a bit complex. Skip for now
             cppConstructors.push(cppConstructor);
         }
     }
+
+    //too ugly
+    if (clazzName == "ScreenCaptureSourceInfo") {
+        cppConstructors.pop();
+    }
+
     return cppConstructors;
 }
 

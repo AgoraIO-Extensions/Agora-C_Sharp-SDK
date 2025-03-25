@@ -33,7 +33,7 @@ export class ParseFile {
             if (e.__TYPE == CXXTYPE.Enumz) {
                 if (info.commmonEnumTemplate == null)
                     continue;
-                //枚举
+                //Enum
                 let enumz = e as unknown as Enumz;
                 if (info.includeEnum && info.includeEnum.includes(enumz.name) == false) {
                     continue;
@@ -63,7 +63,7 @@ export class ParseFile {
                 if (info.commonClassStructTemplate == null)
                     continue;
 
-                //解析class或者结构体
+                //Parse class or structure
                 let structOrClass: Struct | Clazz = e as unknown as (Struct | Clazz);
                 if (info.includeClassStruct && info.includeClassStruct.includes(structOrClass.name) == false) {
                     continue;

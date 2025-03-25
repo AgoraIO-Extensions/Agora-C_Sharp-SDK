@@ -25,42 +25,42 @@ export class StringProcess {
     }
 
     /*
-       -o: 原始样子不做处理
+       -o: Original form without any processing
    */
     private static _processStringWithO(input: string): string {
         return input;
     }
 
-    //-l 首字母小写
+    //-l: Lowercase the first letter
     private static _processStringWithL(input: string): string {
         let first = input.charAt(0);
         first = first.toLowerCase();
         return first + input.substring(1, input.length);
     }
 
-    //-m 全部字母大写
+    //-m: Convert all letters to uppercase
     private static _processStringWithM(input: string): string {
         return input.toUpperCase();
     }
 
-    //-u 首字母大写
+    //-u: Uppercase the first letter
     private static _processStringWithU(input: string): string {
         let first = input.charAt(0);
         first = first.toUpperCase();
         return first + input.substring(1, input.length);
     }
 
-    //-v 全部字母大写
+    //-v: Convert all letters to uppercase
     private static _processStringWithV(input: string): string {
         return input.toUpperCase();
     }
 
-    //-r :首字母移除
+    //-r: Remove the first letter
     private static _processStringWithR(input: string): string {
         return input.substring(1, input.length);
     }
 
-    //-t: 删除所有的下划线并且将下划线后的第一个字母给大写.比如 error_code => errorCode
+    //-t: Remove all underscores and capitalize the first letter after each underscore. e.g., error_code => errorCode
     private static _processStringWithT(input: string): string {
         let array = input.split("_");
         for (let i = 1; i < array.length; i++) {
@@ -70,7 +70,7 @@ export class StringProcess {
         return array.join("");
     }
 
-    //-n: 追加后缀，例如joinChannel2
+    //-n: Append a suffix, e.g., joinChannel2
     private static _processStringWithN(input: string, repeat: number = 1): string {
         if (repeat < 2) {
             return input;
@@ -80,7 +80,7 @@ export class StringProcess {
         }
     }
 
-    //-s: 删除名字中的命名空间
+    //-s: Remove namespace from the name
     private static _processStringWithS(input: string, repeat: number = 1): string {
         let array = input.split("::");
         if (array && array.length > 1) {
@@ -89,7 +89,7 @@ export class StringProcess {
         return input;
     }
 
-    //-c: 去除字符串里的&, *, 空格等等 等等 并将字母大写
+    //-c: Remove &, *, spaces, etc. from the string and capitalize letters
     private static _processStringWithC(input: string, repeat: number = 1): string {
         let length = input.length;
         let up: boolean = false;
@@ -110,7 +110,7 @@ export class StringProcess {
         return r.join('');
     }
 
-    //-y: 删除所有空格，并将空格后的第一个字母大写比如 err code => errCode
+    //-y: Remove all spaces and capitalize the first letter after each space. e.g., err code => errCode
     private static _processStringWithY(input: string, repeat: number = 1): string {
 
         let array = input.split(" ");
@@ -122,12 +122,12 @@ export class StringProcess {
 
     }
 
-    //-p: 删除文字后边最后一个字符
+    //-p: Remove the last character of the text
     private static _processStringWithP(input: string, repeat: number = 1): string {
         return input.substring(0, input.length - 1);
     }
 
-    //-e: 在字符串前加上=号，如果不为''的话
+    //-e: Add an equals sign at the beginning of the string if it's not empty
     private static _processStringWithE(input: string, repeat: number = 1): string {
         if (input != null && input != "") {
             return "=" + input;
@@ -135,7 +135,7 @@ export class StringProcess {
         return input;
     }
 
-    //-f: 删除最前边的ref
+    //-f: Remove 'ref ' from the beginning
     private static _processStringWithF(input: string, repeat: number = 1): string {
         if (input.startsWith("ref ")) {
             return input.substring(4, input.length);
@@ -145,7 +145,7 @@ export class StringProcess {
         }
     }
 
-    //-a: 删除最前边的@
+    //-a: Remove '@' from the beginning
     private static _processStringWithA(input: string, repeat: number = 1): string {
         if (input.startsWith("@")) {
             return input.substring(1, input.length);

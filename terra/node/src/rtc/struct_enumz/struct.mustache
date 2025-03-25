@@ -1,0 +1,20 @@
+{{#user_data.attributes}}
+[{{{.}}}]
+{{/user_data.attributes}}
+public class {{name}}{{#user_data.parent}}: {{user_data.parent}}{{/user_data.parent}}
+{
+    {{#member_variables}}
+    {{^user_data.isHide}}
+    {{#user_data.obsolete}}
+    [Obsolete("{{user_data.obsolete}}")]
+    {{/user_data.obsolete}}
+    public {{{user_data.typeString}}} {{{user_data.nameString}}}{{#user_data.valueString}} = {{{user_data.valueString}}}{{/user_data.valueString}};
+
+    {{/user_data.isHide}}
+    {{/member_variables}}
+    {{{user_data.unityConstructorString}}}
+    {{#user_data.toJsonString}}
+    
+    {{{user_data.toJsonString}}}
+    {{/user_data.toJsonString}}
+}

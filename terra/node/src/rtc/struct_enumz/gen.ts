@@ -1,7 +1,7 @@
 import { Clazz, CXXFile, Enumz, CXXTerraNode } from "@agoraio-extensions/cxx-parser";
 import { ParseResult, RenderResult, TerraContext, } from "@agoraio-extensions/terra-core";
 import { customHeads } from "../../config/struct_enum/custom_heads.config";
-import { findCustomHead, isCallback, isInterface, isEnumz } from "../../capability/common";
+import { findCustomHead, isCallback, isInterface, isEnumz, isStruct } from "../../capability/common";
 import { processClassCommonAttributes, processClassWithCustomHeadPost, processClassWithCustomHeadPre } from "../../capability/class_process";
 import { processEnumCommonAttributes, processEnumWithCustomHead } from "../../capability/enum_process";
 import { processCXXFile } from "../../capability/file_process";
@@ -24,13 +24,16 @@ export function gen(clonedParseResult: ParseResult): CXXFile[] {
                     processEnumWithCustomHead(enumz, { cxxFile, enumz, customHead });
                 processEnumCommonAttributes(enumz, { cxxFile, enumz });
             }
-            else {
-                //must be struct
+            else if (isStruct(node)) {
                 const struct = node as Clazz;
                 let customHead = findCustomHead(struct, customHeads);
                 if (customHead)
-                    processStructWithCustomHead(struct, { cxxFile, struct, customHead });
-                processStructCommonAttributes(struct, { cxxFile, struct });
+                    processStructWithCustomHead(struct, { cxxFile, struct, clazz: struct, customHead });
+                processStructCommonAttributes(struct, { cxxFile, struct, clazz: struct });
+            }
+            else {
+                node.user_data = node.user_data || {};
+                node.user_data.isHide = true;
             }
         });
     });

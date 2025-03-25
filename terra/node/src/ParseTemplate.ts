@@ -18,7 +18,7 @@ export class ParseTemplate {
 
         while (i < distLines.length) {
             let line = distLines[i];
-            //未读取到node
+            //Node not found yet
             if (nodeName == null) {
                 if (line.includes(configTool.distMarkStart)) {
                     line = line.trim();
@@ -28,8 +28,8 @@ export class ParseTemplate {
             }
             else if (nodeName != null) {
                 if (line.includes(configTool.distMarkEnd + " " + nodeName)) {
-                    //读取到了结束字符
-                    //todo 这里开始往里写值
+                    //End marker found
+                    //todo Start writing values here
                     let template = templateJson[nodeName];
                     if (template == null) {
                         distLines.splice(i, 0, `Not find node name: ${nodeName}`);

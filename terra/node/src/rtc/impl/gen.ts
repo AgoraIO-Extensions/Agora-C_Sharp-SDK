@@ -22,7 +22,7 @@ export function gen(clonedParseResult: ParseResult): { interfaces: Clazz[], call
         });
     });
 
-    // 不要合并这个三个forEach，因为需要每个流程都对所有元素走一遍，再走下一个流程
+    // Don't merge these three forEach loops, as each process needs to run on all elements before moving to the next process
     interfaces.forEach((e) => {
         const customHead = findCustomHead(e, customHeads);
         customHead && processClassWithCustomHeadPre(e, { customHead: customHead, clazz: e });
@@ -38,7 +38,7 @@ export function gen(clonedParseResult: ParseResult): { interfaces: Clazz[], call
         customHead && processClassWithCustomHeadPost(e, { customHead: customHead, clazz: e });
     });
 
-    // 不要合并这个三个forEach，因为需要每个流程都对所有元素走一遍，再走下一个流程
+    // Don't merge these three forEach loops, as each process needs to run on all elements before moving to the next process
     callbacks.forEach((e) => {
         const customHead = findCustomHead(e, customHeads);
         customHead && processClassWithCustomHeadPre(e, { customHead: customHead, clazz: e });

@@ -4,9 +4,22 @@ import { typeConversionTable } from "../config/common/type_conversion_table.conf
 import { matchReg } from "./common";
 import { processMethodParameterFormalVariableName } from "./method_parameter_process";
 
+export function processMemberWithCustomHead(member: MemberVariable, processRawData: ProcessRawData) {
+    member.user_data = member.user_data || {};
+
+    if (processRawData.customHead.hide_members?.includes(member.name)) {
+        member.user_data.isHide = true;
+    }
+
+    if (processRawData.customHead.hide_to_json?.includes(member.name)) {
+        member.user_data.isHideToJson = true;
+    }
+}
+
 export function processMember(member: MemberVariable, processRawData: ProcessRawData) {
     processMemberType(member, processRawData);
 }
+
 
 
 function processMemberType(member: MemberVariable, processRawData: ProcessRawData) {
