@@ -19,40 +19,40 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "UserInfo",
-        isHide: true
+        is_hide: true
     },
     {
         //there will some enumz or struct name is empty, so we need to hide them, wtf
         name: "",
-        isHide: true
+        is_hide: true
     },
     {
         name: "DeviceInfo",
-        isHide: true
+        is_hide: true
     },
     {
         name: "Packet",
-        isHide: true
+        is_hide: true
     },
     {
         name: "DownlinkNetworkInfo",
-        isHide: true
+        is_hide: true
     },
     {
         name: "EncryptionConfig",
-        isHide: true
+        is_hide: true
     },
     {
         name: "VideoFrame",
-        isHide: true
+        is_hide: true
     },
     {
         name: "AudioFrame",
-        isHide: true
+        is_hide: true
     },
     {
         name: "AudioFrame",
-        isHide: true
+        is_hide: true
     },
     {
         name: "MediaSource",
@@ -68,19 +68,19 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "RefCountReleaseStatus",
-        isHide: true
+        is_hide: true
     },
     {
         name: "STREAMING_SRC_STATE",
-        isHide: true
+        is_hide: true
     },
     {
         name: "STREAMING_SRC_ERR",
-        isHide: true
+        is_hide: true
     },
     {
         name: "InputSeiData",
-        isHide: true
+        is_hide: true
     },
     {
         name: "RtcEngineContext",
@@ -90,6 +90,6 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "MAX_DEVICE_ID_LENGTH_TYPE",
-        isHide: true
+        is_hide: true
     }
 ];

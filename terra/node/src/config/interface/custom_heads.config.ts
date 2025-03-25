@@ -3,55 +3,55 @@ import { CustomHead } from "../../rtc/type_definition";
 export const customHeads: CustomHead[] = [
     {
         name: "IAgoraParameter",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IAudioDeviceCollection",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IContainer",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IEngineBase",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "ILogWriter",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IMediaPlayerSource",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IMediaStreamingSource",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IRtcEngineEventHandlerEx",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IScreenCaptureSourceList",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IString",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IVideoDeviceCollection",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IIterator",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IRhythmPlayer",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IAudioDeviceManager",
@@ -113,7 +113,7 @@ export const customHeads: CustomHead[] = [
         merge_nodes: [
             {
                 name: "IMediaEngine",
-                isHide: true
+                is_hide: true
             }
         ],
         custom_methods: [
@@ -186,7 +186,7 @@ export const customHeads: CustomHead[] = [
         ],
         merge_nodes: [{
             name: "IDirectCdnStreamingEventHandler",
-            isHide: true
+            is_hide: true
         }]
     },
     {
@@ -201,11 +201,11 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "IH265TranscoderObserver",
-        isAbstract: true
+        is_abstract: true
     },
     {
         name: "IMusicContentCenterEventHandler",
-        isAbstract: true
+        is_abstract: true
     },
     {
         name: "IAudioFrameObserverBase",
@@ -226,17 +226,17 @@ export const customHeads: CustomHead[] = [
         merge_nodes: [
             {
                 name: "IAudioFrameObserverBase",
-                isHide: true
+                is_hide: true
             }
         ]
     },
     {
         name: "IMediaStreamingSourceObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IPacketObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IVideoFrameObserver",

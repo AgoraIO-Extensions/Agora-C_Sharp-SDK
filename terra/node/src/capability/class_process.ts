@@ -9,15 +9,15 @@ import _ from "lodash";
 export function processClassWithCustomHeadPre(clazz: Clazz, processRawData: ProcessRawData) {
     const customHead = processRawData.customHead;
     clazz.user_data = clazz.user_data || {};
-    clazz.user_data.isHide = customHead.isHide;
+    clazz.user_data.isHide = customHead.is_hide;
     clazz.user_data.customMethods = customHead.custom_methods;
     clazz.user_data.parent = customHead.parent;
-    clazz.user_data.isAbstract = customHead.isAbstract;
-    clazz.user_data.isCallbackCrossThread = customHead.isCallbackCrossThread;
-    clazz.user_data.listenersMapName = customHead.listenersMapName;
-    clazz.user_data.listenersMapKey = customHead.listenersMapKey;
-    clazz.user_data.listenersMapKeyType = customHead.listenersMapKeyType;
-    clazz.user_data.listenerName = customHead.listenerName;
+    clazz.user_data.isAbstract = customHead.is_abstract;
+    clazz.user_data.isCallbackCrossThread = customHead.is_callback_cross_thread;
+    clazz.user_data.listenersMapName = customHead.listeners_map_name;
+    clazz.user_data.listenersMapKey = customHead.listeners_map_key;
+    clazz.user_data.listenersMapKeyType = customHead.listeners_map_key_type;
+    clazz.user_data.listenerName = customHead.listener_name;
 }
 
 export function processClassWithCustomHeadPost(clazz: Clazz, processRawData: ProcessRawData) {
@@ -32,7 +32,7 @@ export function processClassWithCustomHeadPost(clazz: Clazz, processRawData: Pro
                 clazz.user_data.customMethods = clazz.user_data.customMethods || [];
                 clazz.user_data.customMethods.push(...mergeNodeClazz.user_data.customMethods);
             }
-            mergeNodeClazz.user_data.isHide = nodeInfo.isHide;
+            mergeNodeClazz.user_data.isHide = nodeInfo.is_hide;
 
             let clonedMergeNoodeMehtods = _.cloneDeep(mergeNodeClazz.methods);
             if (nodeInfo.override_method_hide) {

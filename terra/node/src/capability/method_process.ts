@@ -46,11 +46,11 @@ export function processMethodMacro(method: MemberFunction, processRawData: Proce
 export function processMethodCommonAttributes(method: MemberFunction, processRawData: ProcessRawData) {
     const customHead = processRawData.customHead;
     if (customHead) {
-        method.user_data.isCallbackCrossThread = customHead.isCallbackCrossThread;
-        method.user_data.listenersMapName = customHead.listenersMapName;
-        method.user_data.listenersMapKey = customHead.listenersMapKey;
-        method.user_data.listenersMapKeyType = customHead.listenersMapKeyType;
-        method.user_data.listenerName = customHead.listenerName;
+        method.user_data.isCallbackCrossThread = customHead.is_callback_cross_thread;
+        method.user_data.listenersMapName = customHead.listeners_map_name;
+        method.user_data.listenersMapKey = customHead.listeners_map_key;
+        method.user_data.listenersMapKeyType = customHead.listeners_map_key_type;
+        method.user_data.listenerName = customHead.listener_name;
     }
 }
 

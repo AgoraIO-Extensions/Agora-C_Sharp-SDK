@@ -9,7 +9,7 @@ import { processUnityConstructor } from "./struct_ctor_process";
 
 export function processStructWithCustomHead(struct: Clazz, processRawData: ProcessRawData) {
     struct.user_data = struct.user_data || {};
-    struct.user_data.isHide = processRawData.customHead.isHide;
+    struct.user_data.isHide = processRawData.customHead.is_hide;
     struct.member_variables.forEach(member => {
         processRawData.member = member;
         processMemberWithCustomHead(member, processRawData);

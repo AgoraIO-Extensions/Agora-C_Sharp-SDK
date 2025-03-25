@@ -7,7 +7,7 @@ export function processEnumWithCustomHead(enumz: Enumz, processRawData: ProcessR
     enumz.user_data = enumz.user_data || {};
     enumz.user_data.parent = processRawData.customHead.parent;
     enumz.user_data.attributes = processRawData.customHead.attributes;
-    enumz.user_data.isHide = processRawData.customHead.isHide;
+    enumz.user_data.isHide = processRawData.customHead.is_hide;
 }
 
 export function processEnumCommonAttributes(enumz: Enumz, processRawData: ProcessRawData) {

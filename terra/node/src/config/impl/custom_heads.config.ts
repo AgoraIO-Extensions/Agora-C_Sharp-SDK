@@ -3,55 +3,55 @@ import { CustomHead } from "../../rtc/type_definition";
 export const customHeads: CustomHead[] = [
     {
         name: "IAgoraParameter",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IVideoFrameMetaInfo",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IAudioDeviceCollection",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IContainer",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IEngineBase",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "ILogWriter",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IMediaPlayerSource",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IMediaStreamingSource",
-        isHide: true,
+        is_hide: true,
     },
     {
         name: "IScreenCaptureSourceList",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IString",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IVideoDeviceCollection",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IIterator",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IRhythmPlayer",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IAudioDeviceManager",
@@ -63,11 +63,11 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "IAudioFrameObserverBase",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IRtcEngineEventHandlerEx",
-        isHide: true
+        is_hide: true
     },
     {
         name: "ILocalSpatialAudioEngine",
@@ -97,7 +97,7 @@ export const customHeads: CustomHead[] = [
     {
         //todo IMediaPlayer 的实现非常特殊需要额外写
         name: "IMediaPlayer",
-        isHide: false,
+        is_hide: false,
         hide_methods: [
             "release",
             "initialize",
@@ -119,11 +119,11 @@ export const customHeads: CustomHead[] = [
         merge_nodes: [
             {
                 name: "IRtcEngineEx",
-                isHide: true
+                is_hide: true
             },
             {
                 name: "IMediaEngine",
-                isHide: true
+                is_hide: true
             }
         ],
         hide_methods: [
@@ -188,7 +188,7 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "IMusicPlayer",
-        isHide: false,
+        is_hide: false,
         hide_methods: [
             "initialize",
             "getMediaPlayerId",
@@ -200,7 +200,7 @@ export const customHeads: CustomHead[] = [
         merge_nodes: [
             {
                 name: "IMediaPlayer",
-                isHide: false,
+                is_hide: false,
                 override_method_hide: true
             }
         ]
@@ -220,67 +220,67 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "IAudioEncodedFrameObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IAudioFrameObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IAudioPcmFrameSink",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IAudioSpectrumObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IFaceInfoObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IMediaPlayerAudioSpectrumObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IMediaPlayerCustomDataProvider",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IMediaRecorderObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IMetadataObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IVideoEncodedFrameObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IVideoFrameObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IH265TranscoderObserver",
-        isCallbackCrossThread: true,
-        listenerName: "EventHandler"
+        is_callback_cross_thread: true,
+        listener_name: "EventHandler"
     },
     {
         name: "IMediaPlayerSourceObserver",
         hide_methods: [
             "onMetaData"
         ],
-        isCallbackCrossThread: true,
-        listenersMapName: "mediaPlayerSourceObserverDic",
-        listenersMapKey: "playerId",
-        listenersMapKeyType: "int"
+        is_callback_cross_thread: true,
+        listeners_map_name: "mediaPlayerSourceObserverDic",
+        listeners_map_key: "playerId",
+        listeners_map_key_type: "int"
     },
     {
         name: "IMusicContentCenterEventHandler",
-        isCallbackCrossThread: true,
-        listenerName: "EventHandler"
+        is_callback_cross_thread: true,
+        listener_name: "EventHandler"
     },
     {
         name: "IRtcEngineEventHandler",
@@ -291,17 +291,17 @@ export const customHeads: CustomHead[] = [
         ],
         merge_nodes: [{
             name: "IDirectCdnStreamingEventHandler",
-            isHide: true
+            is_hide: true
         }],
-        isCallbackCrossThread: true,
-        listenerName: "rtcEngineEventHandler"
+        is_callback_cross_thread: true,
+        listener_name: "rtcEngineEventHandler"
     },
     {
         name: "IMediaStreamingSourceObserver",
-        isHide: true
+        is_hide: true
     },
     {
         name: "IPacketObserver",
-        isHide: true
+        is_hide: true
     }
 ];

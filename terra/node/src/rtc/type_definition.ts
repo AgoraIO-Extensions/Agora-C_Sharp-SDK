@@ -17,26 +17,26 @@ export interface CustomHead {
     merge_nodes?: {
         name: string,
         //and the node will be hidden is isHide is true
-        isHide: boolean,
+        is_hide: boolean,
         //if override_method_hide is true, the method will be deepClone to node and method's isHide will be reset to self hide_methods
         override_method_hide?: boolean
     }[];
     // will hide the interface
-    isHide?: boolean;
+    is_hide?: boolean;
 
     /*callback config bengin*/
     //all method will be abstract
-    isAbstract?: boolean;
+    is_abstract?: boolean;
     //if true, the callback from this class will be cross thread
-    isCallbackCrossThread?: boolean;
+    is_callback_cross_thread?: boolean;
     //Name of the dictionary that holds multiple listeners, if any
-    listenersMapName?: string
+    listeners_map_name?: string
     //Name of the key used to retrieve from the listeners dictionary, if there are multiple listeners
-    listenersMapKey?: string
+    listeners_map_key?: string
     //Data type of the key used to retrieve from the listeners dictionary, if there are multiple listeners
-    listenersMapKeyType?: string
+    listeners_map_key_type?: string
     //Name of the single listener, if there's only one listener
-    listenerName?: string
+    listener_name?: string
     /*callback config end*/
 
     /*struct config begin*/
