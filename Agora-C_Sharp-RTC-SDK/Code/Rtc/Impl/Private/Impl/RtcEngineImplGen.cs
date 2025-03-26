@@ -693,40 +693,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SetupRemoteVideo(VideoCanvas canvas)
-        {
-            _param.Clear();
-            _param.Add("canvas", canvas);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SETUPREMOTEVIDEO_acc9c38,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int SetupLocalVideo(VideoCanvas canvas)
-        {
-            _param.Clear();
-            _param.Add("canvas", canvas);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SETUPLOCALVIDEO_acc9c38,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
         public int SetVideoScenario(VIDEO_APPLICATION_SCENARIO_TYPE scenarioType)
         {
             _param.Clear();
@@ -4153,25 +4119,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SendStreamMessage(int streamId, byte[] data, uint length)
-        {
-            _param.Clear();
-            _param.Add("streamId", streamId);
-            _param.Add("data", data);
-            _param.Add("length", length);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SENDSTREAMMESSAGE_8715a45,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
         public int AddVideoWatermark(RtcImage watermark)
         {
             _param.Clear();
@@ -4945,24 +4892,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SendAudioMetadata(byte[] metadata, ulong length)
-        {
-            _param.Clear();
-            _param.Add("metadata", metadata);
-            _param.Add("length", length);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SENDAUDIOMETADATA_878f309,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
         public int QueryHDRCapability(VIDEO_MODULE_TYPE videoModule, ref HDR_CAPABILITY capability)
         {
             _param.Clear();
@@ -5101,24 +5030,6 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_SETVIDEOENCODERCONFIGURATIONEX_4670c1e,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
-        {
-            _param.Clear();
-            _param.Add("canvas", canvas);
-            _param.Add("connection", connection);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_SETUPREMOTEVIDEOEX_522a409,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -5563,26 +5474,6 @@ namespace Agora.Rtc
             {
                 streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "streamId");
             }
-
-            return result;
-        }
-
-        public int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
-        {
-            _param.Clear();
-            _param.Add("streamId", streamId);
-            _param.Add("data", data);
-            _param.Add("length", length);
-            _param.Add("connection", connection);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_SENDSTREAMMESSAGEEX_0c34857,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
 
             return result;
         }
@@ -6036,25 +5927,6 @@ namespace Agora.Rtc
             {
                 callId = (string)AgoraJson.GetData<string>(_apiParam.Result, "callId");
             }
-
-            return result;
-        }
-
-        public int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length)
-        {
-            _param.Clear();
-            _param.Add("connection", connection);
-            _param.Add("metadata", metadata);
-            _param.Add("length", length);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_SENDAUDIOMETADATAEX_e2bf1c4,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
 
             return result;
         }

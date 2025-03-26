@@ -150,6 +150,19 @@ export const customHeads: CustomHead[] = [
             "unregisterAudioSpectrumObserver",
             "registerMediaMetadataObserver",
             "unregisterMediaMetadataObserver",
+            "setupRemoteVideo",
+            "setupLocalVideo",
+            "sendStreamMessage",
+            "sendAudioMetadata",
+        ]
+    },
+    {
+        name: "IRtcEngineEx",
+        hide_methods: [
+            "setupRemoteVideoEx",
+            "setupLocalVideoEx",
+            "sendStreamMessageEx",
+            "sendAudioMetadataEx",
         ]
     },
     {
