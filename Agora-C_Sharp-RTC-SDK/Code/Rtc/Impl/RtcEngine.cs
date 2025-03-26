@@ -258,20 +258,20 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public override int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
-            if (_rtcEngineImpl == null)
+            if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SendMetadata(metadata, source_type);
+            return _impl.SendMetadata(metadata, source_type);
         }
 
         public override int SetMaxMetadataSize(int size)
         {
-            if (_rtcEngineImpl == null)
+            if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetMaxMetadataSize(size);
+            return _impl.SetMaxMetadataSize(size);
         }
 #endif
 
