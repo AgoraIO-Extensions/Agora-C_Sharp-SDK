@@ -149,7 +149,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                duration = (long)AgoraJson.GetData<long>(_apiParam.Result, "result");
+                duration = (long)AgoraJson.GetData<long>(_apiParam.Result, "duration");
             }
 
             return result;
@@ -170,7 +170,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                pos = (long)AgoraJson.GetData<long>(_apiParam.Result, "result");
+                pos = (long)AgoraJson.GetData<long>(_apiParam.Result, "pos");
             }
 
             return result;
@@ -191,7 +191,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                count = (long)AgoraJson.GetData<long>(_apiParam.Result, "result");
+                count = (long)AgoraJson.GetData<long>(_apiParam.Result, "count");
             }
 
             return result;
@@ -213,7 +213,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                info = (PlayerStreamInfo)AgoraJson.JsonToStruct<PlayerStreamInfo>(_apiParam.Result, "result");
+                info = (PlayerStreamInfo)AgoraJson.JsonToStruct<PlayerStreamInfo>(_apiParam.Result, "info");
             }
 
             return result;
@@ -434,7 +434,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                muted = (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+                muted = (bool)AgoraJson.GetData<bool>(_apiParam.Result, "muted");
             }
 
             return result;
@@ -473,7 +473,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
             }
 
             return result;
@@ -512,7 +512,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
             }
 
             return result;

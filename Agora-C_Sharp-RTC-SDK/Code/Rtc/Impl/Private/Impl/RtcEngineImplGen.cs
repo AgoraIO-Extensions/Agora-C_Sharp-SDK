@@ -25,7 +25,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                build = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                build = (int)AgoraJson.GetData<int>(_apiParam.Result, "build");
             }
 
             return result;
@@ -62,8 +62,8 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                codecInfo = (CodecCapInfo[])AgoraJson.JsonToStructArray<CodecCapInfo>(_apiParam.Result, "result");
-                size = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                codecInfo = (CodecCapInfo[])AgoraJson.JsonToStructArray<CodecCapInfo>(_apiParam.Result, "codecInfo");
+                size = (int)AgoraJson.GetData<int>(_apiParam.Result, "size");
             }
 
             return result;
@@ -569,7 +569,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                options = (FaceShapeBeautyOptions)AgoraJson.JsonToStruct<FaceShapeBeautyOptions>(_apiParam.Result, "result");
+                options = (FaceShapeBeautyOptions)AgoraJson.JsonToStruct<FaceShapeBeautyOptions>(_apiParam.Result, "options");
             }
 
             return result;
@@ -591,7 +591,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                options = (FaceShapeAreaOptions)AgoraJson.JsonToStruct<FaceShapeAreaOptions>(_apiParam.Result, "result");
+                options = (FaceShapeAreaOptions)AgoraJson.JsonToStruct<FaceShapeAreaOptions>(_apiParam.Result, "options");
             }
 
             return result;
@@ -2200,7 +2200,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
             }
 
             return result;
@@ -2747,7 +2747,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                value = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                value = (string)AgoraJson.GetData<string>(_apiParam.Result, "value");
             }
 
             return result;
@@ -2955,7 +2955,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                value = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                value = (string)AgoraJson.GetData<string>(_apiParam.Result, "value");
             }
 
             return result;
@@ -3529,7 +3529,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceInfo = (DeviceInfoMobile)AgoraJson.JsonToStruct<DeviceInfoMobile>(_apiParam.Result, "result");
+                deviceInfo = (DeviceInfoMobile)AgoraJson.JsonToStruct<DeviceInfoMobile>(_apiParam.Result, "deviceInfo");
             }
 
             return result;
@@ -3669,8 +3669,8 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                focalLengthInfos = (FocalLengthInfo[])AgoraJson.JsonToStructArray<FocalLengthInfo>(_apiParam.Result, "result");
-                size = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                focalLengthInfos = (FocalLengthInfo[])AgoraJson.JsonToStructArray<FocalLengthInfo>(_apiParam.Result, "focalLengthInfos");
+                size = (int)AgoraJson.GetData<int>(_apiParam.Result, "size");
             }
 
             return result;
@@ -3740,7 +3740,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                callId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                callId = (string)AgoraJson.GetData<string>(_apiParam.Result, "callId");
             }
 
             return result;
@@ -4126,7 +4126,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "streamId");
             }
 
             return result;
@@ -4147,7 +4147,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "streamId");
             }
 
             return result;
@@ -4425,7 +4425,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "result");
+                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "userInfo");
             }
 
             return result;
@@ -4446,7 +4446,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "result");
+                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "userInfo");
             }
 
             return result;
@@ -4978,7 +4978,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                capability = (HDR_CAPABILITY)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                capability = (HDR_CAPABILITY)AgoraJson.GetData<int>(_apiParam.Result, "capability");
             }
 
             return result;
@@ -5539,7 +5539,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "streamId");
             }
 
             return result;
@@ -5561,7 +5561,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                streamId = (int)AgoraJson.GetData<int>(_apiParam.Result, "streamId");
             }
 
             return result;
@@ -5823,7 +5823,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "result");
+                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "userInfo");
             }
 
             return result;
@@ -5845,7 +5845,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "result");
+                userInfo = (UserInfo)AgoraJson.JsonToStruct<UserInfo>(_apiParam.Result, "userInfo");
             }
 
             return result;
@@ -6034,7 +6034,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                callId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                callId = (string)AgoraJson.GetData<string>(_apiParam.Result, "callId");
             }
 
             return result;

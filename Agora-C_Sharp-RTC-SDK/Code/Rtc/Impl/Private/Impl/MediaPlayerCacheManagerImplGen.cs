@@ -143,7 +143,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                path = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                path = (string)AgoraJson.GetData<string>(_apiParam.Result, "path");
             }
 
             return result;

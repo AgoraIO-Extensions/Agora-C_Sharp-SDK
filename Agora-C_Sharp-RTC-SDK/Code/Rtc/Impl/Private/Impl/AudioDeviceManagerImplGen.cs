@@ -42,7 +42,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
             }
 
             return result;
@@ -62,8 +62,8 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
+                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceName");
             }
 
             return result;
@@ -83,9 +83,9 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-                deviceTypeName = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
+                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceName");
+                deviceTypeName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceTypeName");
             }
 
             return result;
@@ -122,7 +122,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
             }
 
             return result;
@@ -159,7 +159,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
             }
 
             return result;
@@ -179,8 +179,8 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
+                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceName");
             }
 
             return result;
@@ -200,9 +200,9 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-                deviceTypeName = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
+                deviceName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceName");
+                deviceTypeName = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceTypeName");
             }
 
             return result;
@@ -239,7 +239,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
             }
 
             return result;
@@ -276,7 +276,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceId = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId");
             }
 
             return result;
@@ -313,7 +313,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                mute = (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+                mute = (bool)AgoraJson.GetData<bool>(_apiParam.Result, "mute");
             }
 
             return result;
@@ -350,7 +350,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                mute = (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+                mute = (bool)AgoraJson.GetData<bool>(_apiParam.Result, "mute");
             }
 
             return result;

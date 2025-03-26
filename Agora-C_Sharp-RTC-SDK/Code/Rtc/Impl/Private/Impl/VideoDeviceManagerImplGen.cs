@@ -42,7 +42,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceIdUTF8 = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                deviceIdUTF8 = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceIdUTF8");
             }
 
             return result;
@@ -81,7 +81,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                capability = (VideoFormat)AgoraJson.JsonToStruct<VideoFormat>(_apiParam.Result, "result");
+                capability = (VideoFormat)AgoraJson.JsonToStruct<VideoFormat>(_apiParam.Result, "capability");
             }
 
             return result;

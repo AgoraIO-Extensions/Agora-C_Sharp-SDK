@@ -59,7 +59,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
             }
 
             return result;
@@ -83,7 +83,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
             }
 
             return result;
@@ -107,7 +107,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
             }
 
             return result;
@@ -146,7 +146,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
             }
 
             return result;
@@ -183,8 +183,8 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                cacheInfo = (MusicCacheInfo[])AgoraJson.JsonToStructArray<MusicCacheInfo>(_apiParam.Result, "result");
-                cacheInfoSize = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                cacheInfo = (MusicCacheInfo[])AgoraJson.JsonToStructArray<MusicCacheInfo>(_apiParam.Result, "cacheInfo");
+                cacheInfoSize = (int)AgoraJson.GetData<int>(_apiParam.Result, "cacheInfoSize");
             }
 
             return result;
@@ -223,7 +223,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
             }
 
             return result;
@@ -244,7 +244,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
             }
 
             return result;
@@ -266,7 +266,7 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                internalSongCode = (long)AgoraJson.GetData<long>(_apiParam.Result, "result");
+                internalSongCode = (long)AgoraJson.GetData<long>(_apiParam.Result, "internalSongCode");
             }
 
             return result;
