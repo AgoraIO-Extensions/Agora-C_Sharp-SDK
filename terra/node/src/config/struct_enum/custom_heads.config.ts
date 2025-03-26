@@ -44,11 +44,18 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "VideoFrame",
-        is_hide: true
+        custom_members: [
+            "public IntPtr yBufferPtr;",
+            "public IntPtr uBufferPtr;",
+            "public IntPtr vBufferPtr;",
+            "public IntPtr alphaBufferPtr;"
+        ]
     },
     {
         name: "AudioFrame",
-        is_hide: true
+        custom_members: [
+            "public byte[] RawBuffer = new byte[0];"
+        ]
     },
     {
         name: "AudioFrame",

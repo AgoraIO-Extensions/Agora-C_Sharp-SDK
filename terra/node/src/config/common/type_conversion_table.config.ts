@@ -13,6 +13,7 @@ export const typeConversionTable: ConversionTable = {
         "ExternalVideoFrame.eglContext": "IntPtr",
         "ExternalVideoFrame.metadataBuffer": "byte[]",
         "ExternalVideoFrame.alphaBuffer": "byte[]",
+        "VideoFrame.metadata_buffer": "IntPtr",
         "AudioSpectrumData.audioSpectrumData": "float[]",
         "ThumbImageBuffer.buffer": "byte[]",
         "RtcEngineContext.context": "ulong",
@@ -247,7 +248,8 @@ export const typeConversionTable: ConversionTable = {
         "agora::rtc::IMetadataObserverS::MetadataS const&": "MetadataS",
         "agora::media::base::IVideoFrameMetaInfo*": "IVideoFrameMetaInfo",
         "agora::VideoLayout const*": "VideoLayout[]",
-        "agora::rtc::IH265TranscoderObserver*": "IH265TranscoderObserver"
+        "agora::rtc::IH265TranscoderObserver*": "IH265TranscoderObserver",
+        "uint8_t*": "byte[]"
     },
     reg: {
         //将满足正则表达式的类型转换为指定的类型
