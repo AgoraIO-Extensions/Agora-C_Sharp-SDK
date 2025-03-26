@@ -169,27 +169,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_GETCACHES_c4f9978,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            if (nRet == 0)
-            {
-                cacheInfo = (MusicCacheInfo[])AgoraJson.JsonToStructArray<MusicCacheInfo>(_apiParam.Result, "cacheInfo");
-                cacheInfoSize = (int)AgoraJson.GetData<int>(_apiParam.Result, "cacheInfoSize");
-            }
-
-            return result;
-        }
-
         public int IsPreloaded(long songCode)
         {
             _param.Clear();

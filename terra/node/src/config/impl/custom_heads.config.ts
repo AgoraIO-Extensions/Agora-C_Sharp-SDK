@@ -196,7 +196,8 @@ export const customHeads: CustomHead[] = [
             "registerEventHandler",
             "unregisterEventHandler",
             "createMusicPlayer",
-            "destroyMusicPlayer"
+            "destroyMusicPlayer",
+            "getCaches"
         ]
     },
     {
