@@ -688,8 +688,8 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
                         (int)AgoraJson.GetData<int>(jsonData, "quality"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "delay"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "lost")
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "delay"),
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "lost")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
@@ -1277,9 +1277,9 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         rtcEngineEventHandler.OnRemoteAudioTransportStats(
                         (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "delay"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "lost"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "rxKBitRate")
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "delay"),
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "lost"),
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "rxKBitRate")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
@@ -1295,9 +1295,9 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         rtcEngineEventHandler.OnRemoteVideoTransportStats(
                         (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "delay"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "lost"),
-                        (ushort)AgoraJson.JsonToStruct<ushort>(jsonData, "rxKBitRate")
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "delay"),
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "lost"),
+                        (ushort)AgoraJson.GetData<ushort>(jsonData, "rxKBitRate")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });

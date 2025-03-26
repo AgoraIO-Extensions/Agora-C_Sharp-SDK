@@ -231,7 +231,7 @@ export function processVariableGetFromJson(type: SimpleType | Variable, jsonMapV
         typeString = processMethodReturnTypeString(type, processRawData);
     }
 
-    var simpleType = ["int", "ulong", "uint", "long", "string", "bool", "track_id_t", "float"];
+    var simpleType = ["int", "ulong", "uint", "long", "string", "bool", "track_id_t", "float", "short", "ushort", "byte", "double"];
 
     if (simpleType.includes(typeString)) {
         //Basic data type
