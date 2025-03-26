@@ -43,7 +43,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioEncodedFrameObserver_OnRecordAudioEncodedFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME_d930ddc;
 
             jsonObj.Clear();
 
@@ -68,7 +68,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME_d930ddc;
 
             jsonObj.Clear();
 
@@ -93,7 +93,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioEncodedFrameObserver_OnMixedAudioEncodedFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME_d930ddc;
 
             jsonObj.Clear();
 

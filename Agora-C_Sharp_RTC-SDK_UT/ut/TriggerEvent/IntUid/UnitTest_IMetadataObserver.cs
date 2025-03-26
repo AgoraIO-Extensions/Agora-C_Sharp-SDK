@@ -44,7 +44,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMetadataObserver_GetMaxMetadataSize()
         {
-            ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_GETMAXMETADATASIZE;
+            ApiParam.@event = AgoraApiType.IMETADATAOBSERVER_GETMAXMETADATASIZE;
 
             jsonObj.Clear();
 
@@ -60,7 +60,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMetadataObserver_OnReadyToSendMetadata()
         {
-            ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA;
+            ApiParam.@event = AgoraApiType.IMETADATAOBSERVER_ONREADYTOSENDMETADATA_cbf4b59;
 
             jsonObj.Clear();
 
@@ -82,7 +82,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMetadataObserver_OnMetadataReceived()
         {
-            ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_ONMETADATARECEIVED;
+            ApiParam.@event = AgoraApiType.IMETADATAOBSERVER_ONMETADATARECEIVED_cb7661d;
 
             jsonObj.Clear();
 

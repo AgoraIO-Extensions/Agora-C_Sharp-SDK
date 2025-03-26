@@ -48,7 +48,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMusicContentCenterEventHandler_OnMusicChartsResult()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT;
+            ApiParam.@event = AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT_fb18135;
 
             jsonObj.Clear();
 
@@ -73,7 +73,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMusicContentCenterEventHandler_OnMusicCollectionResult()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT;
+            ApiParam.@event = AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT_c30c2e6;
 
             jsonObj.Clear();
 
@@ -98,7 +98,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMusicContentCenterEventHandler_OnLyricResult()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT;
+            ApiParam.@event = AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT_9ad9c90;
 
             jsonObj.Clear();
 
@@ -126,7 +126,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMusicContentCenterEventHandler_OnSongSimpleInfoResult()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT;
+            ApiParam.@event = AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT_9ad9c90;
 
             jsonObj.Clear();
 
@@ -154,7 +154,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMusicContentCenterEventHandler_OnPreLoadEvent()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT;
+            ApiParam.@event = AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT_20170bc;
 
             jsonObj.Clear();
 

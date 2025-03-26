@@ -44,7 +44,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IH265TranscoderObserver_OnEnableTranscode()
         {
-            ApiParam.@event = AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONENABLETRANSCODE;
+            ApiParam.@event = AgoraApiType.IH265TRANSCODEROBSERVER_ONENABLETRANSCODE_6ba6646;
 
             jsonObj.Clear();
 
@@ -63,7 +63,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IH265TranscoderObserver_OnQueryChannel()
         {
-            ApiParam.@event = AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONQUERYCHANNEL;
+            ApiParam.@event = AgoraApiType.IH265TRANSCODEROBSERVER_ONQUERYCHANNEL_31ba3df;
 
             jsonObj.Clear();
 
@@ -88,7 +88,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IH265TranscoderObserver_OnTriggerTranscode()
         {
-            ApiParam.@event = AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONTRIGGERTRANSCODE;
+            ApiParam.@event = AgoraApiType.IH265TRANSCODEROBSERVER_ONTRIGGERTRANSCODE_6ba6646;
 
             jsonObj.Clear();
 

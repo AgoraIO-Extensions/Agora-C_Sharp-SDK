@@ -48,7 +48,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioFrameObserver_OnRecordAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONRECORDAUDIOFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOFRAMEOBSERVER_ONRECORDAUDIOFRAME_4c8de15;
 
             jsonObj.Clear();
 
@@ -70,7 +70,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioFrameObserver_OnPlaybackAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAME_4c8de15;
 
             jsonObj.Clear();
 
@@ -92,7 +92,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioFrameObserver_OnMixedAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONMIXEDAUDIOFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOFRAMEOBSERVER_ONMIXEDAUDIOFRAME_4c8de15;
 
             jsonObj.Clear();
 
@@ -114,7 +114,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioFrameObserver_OnEarMonitoringAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONEARMONITORINGAUDIOFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOFRAMEOBSERVER_ONEARMONITORINGAUDIOFRAME_5405a47;
 
             jsonObj.Clear();
 
@@ -133,7 +133,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioFrameObserver_OnPlaybackAudioFrameBeforeMixing()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING;
+            ApiParam.@event = AgoraApiType.IAUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING_9215cc7;
 
             jsonObj.Clear();
 
@@ -159,7 +159,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioFrameObserver_OnPlaybackAudioFrameBeforeMixing2()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING2;
+            ApiParam.@event = AgoraApiType.IAUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING_85ec0fc;
 
             jsonObj.Clear();
 

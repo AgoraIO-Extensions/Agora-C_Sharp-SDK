@@ -45,7 +45,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioPcmFrameSink_OnFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOPCMFRAMESINK_ONFRAME;
+            ApiParam.@event = AgoraApiType.IAUDIOPCMFRAMESINK_ONFRAME_95f515a;
 
             jsonObj.Clear();
 

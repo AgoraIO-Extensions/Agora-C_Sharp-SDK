@@ -45,7 +45,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaRecorderObserver_OnRecorderStateChanged()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED;
+            ApiParam.@event = AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED_c38849f;
 
             jsonObj.Clear();
 
@@ -73,7 +73,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaRecorderObserver_OnRecorderInfoUpdated()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED;
+            ApiParam.@event = AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED_64fa74a;
 
             jsonObj.Clear();
 

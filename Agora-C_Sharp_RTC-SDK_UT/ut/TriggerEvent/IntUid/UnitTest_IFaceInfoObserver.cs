@@ -45,7 +45,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_OnFaceInfo()
         {
-            ApiParam.@event = AgoraEventType.EVENT_FACEINFOOBSERVER_ONFACEINFO;
+            ApiParam.@event = AgoraApiType.IFACEINFOOBSERVER_ONFACEINFO_3a2037f;
 
             string outFaceInfo = ParamsHelper.CreateParam<string>();
 

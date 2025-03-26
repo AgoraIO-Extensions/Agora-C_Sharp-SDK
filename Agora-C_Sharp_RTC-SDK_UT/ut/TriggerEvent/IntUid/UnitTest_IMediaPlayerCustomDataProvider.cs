@@ -48,7 +48,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerCustomDataProvider_OnReadData()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA_6e75338;
 
             jsonObj.Clear();
 
@@ -70,7 +70,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerCustomDataProvider_OnSeek()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK_624d569;
 
             jsonObj.Clear();
 

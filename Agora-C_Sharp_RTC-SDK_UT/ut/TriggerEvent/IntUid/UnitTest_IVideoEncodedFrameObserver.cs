@@ -42,7 +42,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IVideoEncodedFrameObserver_OnEncodedVideoFrameReceived()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED;
+            ApiParam.@event = AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697;
 
             jsonObj.Clear();
 

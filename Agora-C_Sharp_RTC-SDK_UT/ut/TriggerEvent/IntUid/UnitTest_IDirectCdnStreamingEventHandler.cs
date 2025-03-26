@@ -44,7 +44,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IDirectCdnStreamingEventHandler_OnDirectCdnStreamingStateChanged()
         {
-            ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED;
+            ApiParam.@event = AgoraApiType.IDIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED_40f1fa3;
 
             jsonObj.Clear();
 
@@ -69,7 +69,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IDirectCdnStreamingEventHandler_OnDirectCdnStreamingStats()
         {
-            ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS;
+            ApiParam.@event = AgoraApiType.IDIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS_d50595f;
 
             jsonObj.Clear();
 

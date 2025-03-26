@@ -46,7 +46,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnMetaData()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONMETADATA;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONMETADATA_469a01b;
 
             jsonObj.Clear();
 
@@ -69,7 +69,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPlayerSourceStateChanged()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSOURCESTATECHANGED;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPLAYERSOURCESTATECHANGED_7fb38f1;
 
             jsonObj.Clear();
 
@@ -91,7 +91,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPositionChanged()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED_303b92e;
 
             jsonObj.Clear();
 
@@ -113,7 +113,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPlayerEvent()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYEREVENT;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPLAYEREVENT_50f16fa;
 
             jsonObj.Clear();
 
@@ -138,7 +138,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPlayBufferUpdated()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYBUFFERUPDATED;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPLAYBUFFERUPDATED_f631116;
 
             jsonObj.Clear();
 
@@ -157,7 +157,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPreloadEvent()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPRELOADEVENT;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPRELOADEVENT_a1e3596;
 
             jsonObj.Clear();
 
@@ -179,7 +179,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnCompleted()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONCOMPLETED;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONCOMPLETED;
 
             jsonObj.Clear();
 
@@ -195,7 +195,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnAgoraCDNTokenWillExpire()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAGORACDNTOKENWILLEXPIRE;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONAGORACDNTOKENWILLEXPIRE;
 
             jsonObj.Clear();
 
@@ -211,7 +211,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPlayerSrcInfoChanged()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSRCINFOCHANGED;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPLAYERSRCINFOCHANGED_54f3e5a;
 
             jsonObj.Clear();
 
@@ -233,7 +233,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPlayerInfoUpdated()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERINFOUPDATED;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPLAYERINFOUPDATED_0e902a8;
 
             jsonObj.Clear();
 
@@ -252,7 +252,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPlayerCacheStats()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERCACHESTATS;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPLAYERCACHESTATS_0145940;
 
             jsonObj.Clear();
 
@@ -271,7 +271,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnPlayerPlaybackStats()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERPLAYBACKSTATS;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONPLAYERPLAYBACKSTATS_ffa466f;
 
             jsonObj.Clear();
 
@@ -290,7 +290,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IMediaPlayerSourceObserver_OnAudioVolumeIndication()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAUDIOVOLUMEINDICATION;
+            ApiParam.@event = AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONAUDIOVOLUMEINDICATION_46f8ab7;
 
             jsonObj.Clear();
 
