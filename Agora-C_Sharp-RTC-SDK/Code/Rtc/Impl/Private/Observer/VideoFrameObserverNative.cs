@@ -292,11 +292,6 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-
-                    #region terra IVideoFrameObserver
-
-                    #endregion terra IVideoFrameObserver
-
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
                         break;
@@ -325,11 +320,6 @@ namespace Agora.Rtc
 
                         break;
                     }
-
-                #region terra IVideoFrameObserver_CreateDefaultReturn
-
-                #endregion terra IVideoFrameObserver_CreateDefaultReturn
-
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);
                     break;

@@ -44,6 +44,8 @@ export interface CustomHead {
     attributes?: string[],
     //the struct members will be hidden
     hide_members?: string[],
+    //the struct members will be customed
+    custom_members?: string[],  
     //the struct members will not be serialized to json
     hide_to_json?: string[],
     /*struct config end*/

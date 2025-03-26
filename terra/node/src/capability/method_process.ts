@@ -7,6 +7,7 @@ import {
     processMethodParameterAddToJson,
     processMethodParameterFormalString,
     processMethodParameterGetFromJsonUsedInCallback,
+    processMethodParameterSignatureString,
     processMethodRefParameterGetFromJson
 } from "./method_parameter_process";
 import { matchReg, processNodeObsolete, processVariableGetFromJson } from "./common";
@@ -86,6 +87,7 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
         processRawData.index = index;
         parameter.user_data = parameter.user_data || {};
         parameter.user_data.formalParameterString = processMethodParameterFormalString(parameter, processRawData);
+        parameter.user_data.signatureParameterString = processMethodParameterSignatureString(parameter, processRawData);
         parameter.user_data.actualParameterString = processMethodParameterActualString(parameter, processRawData);
         parameter.user_data.parameterAddToJsonString = processMethodParameterAddToJson(parameter, processRawData);
         parameter.user_data.refParameterGetFromJsonGetString = processMethodRefParameterGetFromJson(parameter, processRawData);
@@ -138,6 +140,14 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
         }
     });
     method.user_data.parameterGetFromJsonUsedInCallback = parameterGetFromJsonUsedInCallbackArray.join(",\n\t\t\t\t\t\t\t");
+
+    let signatureParameterStringArray = [];
+    method.parameters.forEach(param => {
+        if (param.user_data.signatureParameterString) {
+            signatureParameterStringArray.push(param.user_data.signatureParameterString);
+        }
+    });
+    method.user_data.signatureParameterString = signatureParameterStringArray.join(", ");
 }
 
 //用来转换函数的返回值

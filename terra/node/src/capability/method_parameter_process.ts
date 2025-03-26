@@ -28,6 +28,24 @@ export function processMethodParameterFormalString(variable: Variable, processRa
     return typeString + " " + nameString + (defaultValueString ? " = " + defaultValueString : "");
 }
 
+//用来处理函数参数的单个形式参数类型 
+//(char * channelName, char * deviceId) => (string , ref string)
+export function processMethodParameterSignatureString(variable: Variable, processRawData: ProcessRawData): string {
+    let typeString = processMethodParameterFormalVariableType(variable, processRawData);
+
+    //typeString为空，说明这个参数被手动的标记为@remove,从参数列表中直接删除了。
+    if (typeString == "") {
+        return "";
+    }
+
+    if (typeString.includes("ref ")) {
+        variable.user_data = variable.user_data || {};
+        variable.user_data.isRef = true;
+    }
+    return typeString;
+}
+
+
 //用来处理函数参数的单个形式实参类型
 //(channelName,deviceId) => (channelName, ref deviceId)
 export function processMethodParameterActualString(variable: Variable, processRawData: ProcessRawData): string {

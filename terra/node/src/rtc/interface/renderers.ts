@@ -26,9 +26,21 @@ export default function (
         view: callbacks
     });
 
+    const events = callbacks.filter(e => {
+        return e.name == "IMediaPlayerSourceObserver" ||
+            e.name == "IMediaRecorderObserver" ||
+            e.name == "IRtcEngineEventHandler";
+    });
+
+    const eventsResult: RenderResult[] = renderWithConfiguration({
+        fileNameTemplatePath: path.join(__dirname, "callback_event_name.mustache"),
+        fileContentTemplatePath: path.join(__dirname, "callback_event_content.mustache"),
+        view: events
+    });
 
     return [
         ...interfaceResult,
-        ...callbackResult
+        ...callbackResult,
+        ...eventsResult
     ];
 }
