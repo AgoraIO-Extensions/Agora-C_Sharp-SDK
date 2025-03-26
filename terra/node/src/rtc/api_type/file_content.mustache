@@ -5,12 +5,12 @@
 #define AGORA_RTM
 
 namespace Agora.Rtc {
-    internal partial class AgoraApiType
+    public partial class AgoraApiType
     {
         {{#methods}}
         {{^user_data.isHide}}
         //{{{parent.name}}}::{{{name}}}({{#parameters}}{{{type.source}}}, {{/parameters}});
-        internal const string {{{user_data.IrisApiIdParser.key}}} = "{{{user_data.IrisApiIdParser.value}}}";
+        public const string {{{user_data.IrisApiIdParser.key}}} = "{{{user_data.IrisApiIdParser.value}}}";
         {{/user_data.isHide}}
         {{/methods}}
     }
