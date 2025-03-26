@@ -187,7 +187,7 @@ export function processMethodRefParameterGetFromJson(variable: Variable, process
     }
 
     const name = processMethodParameterFormalVariableName(variable, processRawData);
-    const value = processVariableGetFromJson(variable, "_apiParam.Result", "result", processRawData);
+    const value = processVariableGetFromJson(variable, "_apiParam.Result", variable.name, processRawData);
     return `${name} = ${value};`;
 }
 
