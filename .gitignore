@@ -10,11 +10,10 @@ Agora-C_Sharp-RTC-SDK/Code/**/*.meta
 Agora-C_Sharp-RTC-SDK/Resources/**/*.meta
 .DS_Store
 .publish
-terra/node/node/dist
-terra/node/node/node_modules
+.yarn
+.terra
+node_modules
 CSharp-API_Example/binx86
-terra/node/dist
-terra/node/node_modules
 process_json
-terra/node/.terra
 install-state.gz
+yarn.lock
