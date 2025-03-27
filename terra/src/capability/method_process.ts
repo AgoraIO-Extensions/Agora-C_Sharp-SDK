@@ -6,8 +6,10 @@ import {
     processMethodParameterActualString,
     processMethodParameterAddToJson,
     processMethodParameterFormalString,
+    processMethodParameterFormalVariableName,
     processMethodParameterGetFromJsonUsedInCallback,
     processMethodParameterSignatureString,
+    processMethodParameterSignatureWithoutDecorateString,
     processMethodRefParameterGetFromJson
 } from "./method_parameter_process";
 import { matchReg, processNodeObsolete, processVariableGetFromJson } from "./common";
@@ -24,9 +26,9 @@ export function processMethods(methods: MemberFunction[], processRawData: Proces
         processMethodName(method, processRawData);
         processMethodReturn(method, processRawData);
         processMethodParameters(method, processRawData);
+        processMethodHash(method, processRawData);
     });
 }
-
 
 export function processMethodHide(method: MemberFunction, processRawData: ProcessRawData) {
     const customHead = processRawData.customHead;
@@ -88,10 +90,13 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
         parameter.user_data = parameter.user_data || {};
         parameter.user_data.formalParameterString = processMethodParameterFormalString(parameter, processRawData);
         parameter.user_data.signatureParameterString = processMethodParameterSignatureString(parameter, processRawData);
+        parameter.user_data.signatureWithoutDecorateParameterString = processMethodParameterSignatureWithoutDecorateString(parameter, processRawData);
         parameter.user_data.actualParameterString = processMethodParameterActualString(parameter, processRawData);
         parameter.user_data.parameterAddToJsonString = processMethodParameterAddToJson(parameter, processRawData);
         parameter.user_data.refParameterGetFromJsonGetString = processMethodRefParameterGetFromJson(parameter, processRawData);
         parameter.user_data.parameterGetFromJsonUsedInCallback = processMethodParameterGetFromJsonUsedInCallback(parameter, processRawData);
+        parameter.user_data.nameString = processMethodParameterFormalVariableName(parameter, processRawData);
+        parameter.user_data.isHide = parameter.user_data.formalParameterString == "";
     });
 
     method.user_data = method.user_data || {};
@@ -150,6 +155,13 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     method.user_data.signatureParameterString = signatureParameterStringArray.join(", ");
 }
 
+export function processMethodHash(method: MemberFunction, processRawData: ProcessRawData) {
+    let value: string = method.user_data.IrisApiIdParser.value;
+    if (value.split("_").length == 3) {
+        method.user_data.hash = value.split("_").pop();
+    }
+}
+
 //用来转换函数的返回值
 export function processMethodReturnTypeString(type: SimpleType, processRawData: ProcessRawData): string {
     //是否匹配了普通
@@ -173,12 +185,13 @@ export function processMethodReturnTypeString(type: SimpleType, processRawData: 
 }
 
 //处理回调函数的函数体内的默认返回值。返回值用在两个地方：1. 回调函数体内 2. API接口体内   
-export function processMethodReturnValueString(type: SimpleType, processRawData: ProcessRawData): { callback: string, interface: string, impl: string } {
+export function processMethodReturnValueString(type: SimpleType, processRawData: ProcessRawData): { callback: string, interface: string, impl: string, ut: string } {
     const typeString = processMethodReturnTypeString(type, processRawData);
     let defaultResult = {
         callback: "config this to method_return_default_value_table.config.ts",
         interface: "config this to method_return_default_value_table.config.ts",
-        impl: "config this to method_return_default_value_table.config.ts"
+        impl: "config this to method_return_default_value_table.config.ts",
+        ut: "config this to method_return_default_value_table.config.ts"
     };
 
     return methodReturnDefaultValueTable[typeString] || defaultResult;

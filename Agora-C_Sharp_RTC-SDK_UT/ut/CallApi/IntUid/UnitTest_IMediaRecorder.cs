@@ -3,10 +3,10 @@ using Agora.Rtc;
 using NUnit.Framework;
 namespace Agora.Rtc.Ut
 {
-    public class UnitTest_IMediaRecorder
+    public partial class UnitTest_IMediaRecorder
     {
         public IRtcEngine Engine;
-        public IMediaRecorder MediaRecorder;
+        public IMediaRecorder @interface;
 
         [SetUp]
         public void Setup()
@@ -16,34 +16,15 @@ namespace Agora.Rtc.Ut
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
-            MediaRecorder = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
+            @interface = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
         }
 
         [TearDown]
         public void TearDown()
         {
-            Engine.DestroyMediaRecorder(MediaRecorder);
+            Engine.DestroyMediaRecorder(@interface);
             Engine.Dispose();
         }
 
-        #region terra IMediaRecorder
-        [Test]
-        public void Test_StartRecording()
-        {
-            MediaRecorderConfiguration config = ParamsHelper.CreateParam<MediaRecorderConfiguration>();
-
-            var nRet = MediaRecorder.StartRecording(config);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopRecording()
-        {
-
-
-            var nRet = MediaRecorder.StopRecording();
-            Assert.AreEqual(0, nRet);
-        }
-        #endregion terra IMediaRecorder
     }
 }

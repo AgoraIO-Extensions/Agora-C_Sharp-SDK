@@ -24,6 +24,7 @@ export interface CustomHead {
     // will hide the interface
     is_hide?: boolean;
 
+    ut_compare?: Record<string, string>;
     /*callback config bengin*/
     //all method will be abstract
     is_abstract?: boolean;

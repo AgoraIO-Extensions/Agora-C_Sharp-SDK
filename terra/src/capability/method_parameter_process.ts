@@ -7,7 +7,9 @@ import { variableNameConversionTable } from "../config/common/variable_name_conv
 import { variableDefaultValueConversionTable } from "../config/common/variable_default_value_conversion_table.config";
 
 
-//todo need 重构
+
+
+
 
 //用来处理函数参数的单个形式参数类型 
 //(char * channelName, char * deviceId) => (string channelName, ref string deviceId)
@@ -41,6 +43,22 @@ export function processMethodParameterSignatureString(variable: Variable, proces
     if (typeString.includes("ref ")) {
         variable.user_data = variable.user_data || {};
         variable.user_data.isRef = true;
+    }
+    return typeString;
+}
+
+//用来处理函数参数的单个形式参数类型 
+//(char * channelName, char * deviceId) => (string , ref string)
+export function processMethodParameterSignatureWithoutDecorateString(variable: Variable, processRawData: ProcessRawData): string {
+    let typeString = processMethodParameterFormalVariableType(variable, processRawData);
+
+    //typeString为空，说明这个参数被手动的标记为@remove,从参数列表中直接删除了。
+    if (typeString == "") {
+        return "";
+    }
+
+    if (typeString.includes("ref ")) {
+        typeString = typeString.replace("ref ", "");
     }
     return typeString;
 }

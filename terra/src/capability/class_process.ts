@@ -18,6 +18,10 @@ export function processClassWithCustomHeadPre(clazz: Clazz, processRawData: Proc
     clazz.user_data.listenersMapKey = customHead.listeners_map_key;
     clazz.user_data.listenersMapKeyType = customHead.listeners_map_key_type;
     clazz.user_data.listenerName = customHead.listener_name;
+    clazz.methods.forEach(method => {
+        method.user_data = method.user_data || {};
+        customHead.ut_compare && (method.user_data.utCompare = customHead.ut_compare[method.name]);
+    })
 }
 
 export function processClassWithCustomHeadPost(clazz: Clazz, processRawData: ProcessRawData) {
