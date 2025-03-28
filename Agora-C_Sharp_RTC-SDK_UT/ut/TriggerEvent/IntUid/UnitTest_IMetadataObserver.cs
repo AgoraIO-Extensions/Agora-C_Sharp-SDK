@@ -4,13 +4,12 @@ using uid_t = System.UInt32;
 using System.Collections.Generic;
 namespace Agora.Rtc.Ut.Event
 {
-    [TestFixture]
-    public class UnitTest_IMetadataObserver
+    public partial class UnitTest_IMetadataObserver
     {
 
         public IRtcEngineEx Engine;
         public IMediaRecorder MediaRecorder;
-        public UTMetadataObserver EventHandler;
+        public UTMetadataObserver callback;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -26,8 +25,8 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-            EventHandler = new UTMetadataObserver();
-            int ret = Engine.RegisterMediaMetadataObserver(EventHandler, METADATA_TYPE.VIDEO_METADATA);
+            callback = new UTMetadataObserver();
+            int ret = Engine.RegisterMediaMetadataObserver(callback, METADATA_TYPE.VIDEO_METADATA);
             Assert.AreEqual(0, ret);
         }
 
@@ -39,64 +38,5 @@ namespace Agora.Rtc.Ut.Event
             Engine.Dispose();
             ApiParam.FreeResult();
         }
-
-        #region terra IMetadataObserver
-        [Test]
-        public void Test_IMetadataObserver_GetMaxMetadataSize()
-        {
-            ApiParam.@event = AgoraApiType.IMETADATAOBSERVER_GETMAXMETADATASIZE;
-
-            jsonObj.Clear();
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetMaxMetadataSizePassed());
-        }
-
-        [Test]
-        public void Test_IMetadataObserver_OnReadyToSendMetadata()
-        {
-            ApiParam.@event = AgoraApiType.IMETADATAOBSERVER_ONREADYTOSENDMETADATA_cbf4b59;
-
-            jsonObj.Clear();
-
-            Metadata metadata = ParamsHelper.CreateParam<Metadata>();
-            jsonObj.Add("metadata", metadata);
-
-            VIDEO_SOURCE_TYPE source_type = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
-            jsonObj.Add("source_type", source_type);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnReadyToSendMetadataPassed(ref metadata, source_type));
-        }
-
-        [Test]
-        public void Test_IMetadataObserver_OnMetadataReceived()
-        {
-            ApiParam.@event = AgoraApiType.IMETADATAOBSERVER_ONMETADATARECEIVED_cb7661d;
-
-            jsonObj.Clear();
-
-            Metadata metadata = ParamsHelper.CreateParam<Metadata>();
-            jsonObj.Add("metadata", metadata);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnMetadataReceivedPassed(metadata));
-        }
-        #endregion terra IMetadataObserver
     }
 }

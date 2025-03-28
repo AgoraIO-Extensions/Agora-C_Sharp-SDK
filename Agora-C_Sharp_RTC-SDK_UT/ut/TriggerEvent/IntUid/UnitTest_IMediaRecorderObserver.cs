@@ -4,13 +4,12 @@ using uid_t = System.UInt32;
 using System.Collections.Generic;
 namespace Agora.Rtc.Ut.Event
 {
-    [TestFixture]
-    public class UnitTest_IMediaRecorderObserver
+    public partial class UnitTest_IMediaRecorderObserver
     {
 
         public IRtcEngineEx Engine;
         public IMediaRecorder MediaRecorder;
-        public UTMediaRecorderObserver EventHandler;
+        public UTMediaRecorderObserver callback;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -26,9 +25,9 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-            EventHandler = new UTMediaRecorderObserver();
+            callback = new UTMediaRecorderObserver();
             MediaRecorder = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
-            int ret = MediaRecorder.SetMediaRecorderObserver(EventHandler);
+            int ret = MediaRecorder.SetMediaRecorderObserver(callback);
             Assert.AreEqual(0, ret);
         }
 
@@ -40,60 +39,5 @@ namespace Agora.Rtc.Ut.Event
             Engine.Dispose();
             ApiParam.FreeResult();
         }
-
-        #region terra IMediaRecorderObserver
-        [Test]
-        public void Test_IMediaRecorderObserver_OnRecorderStateChanged()
-        {
-            ApiParam.@event = AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED_c38849f;
-
-            jsonObj.Clear();
-
-            string channelId = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("channelId", channelId);
-
-            uint uid = ParamsHelper.CreateParam<uint>();
-            jsonObj.Add("uid", uid);
-
-            RecorderState state = ParamsHelper.CreateParam<RecorderState>();
-            jsonObj.Add("state", state);
-
-            RecorderReasonCode reason = ParamsHelper.CreateParam<RecorderReasonCode>();
-            jsonObj.Add("reason", reason);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnRecorderStateChangedPassed(channelId, uid, state, reason));
-        }
-
-        [Test]
-        public void Test_IMediaRecorderObserver_OnRecorderInfoUpdated()
-        {
-            ApiParam.@event = AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED_64fa74a;
-
-            jsonObj.Clear();
-
-            string channelId = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("channelId", channelId);
-
-            uint uid = ParamsHelper.CreateParam<uint>();
-            jsonObj.Add("uid", uid);
-
-            RecorderInfo info = ParamsHelper.CreateParam<RecorderInfo>();
-            jsonObj.Add("info", info);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnRecorderInfoUpdatedPassed(channelId, uid, info));
-        }
-        #endregion terra IMediaRecorderObserver
     }
 }

@@ -39,6 +39,9 @@ export function processClassWithCustomHeadPost(clazz: Clazz, processRawData: Pro
             mergeNodeClazz.user_data.isHide = nodeInfo.is_hide;
 
             let clonedMergeNoodeMehtods = _.cloneDeep(mergeNodeClazz.methods);
+            clonedMergeNoodeMehtods.forEach(method => {
+                method.user_data.stepParent = clazz;
+            });
             if (nodeInfo.override_method_hide) {
                 clonedMergeNoodeMehtods.forEach(method => {
                     method.user_data.isHide = false;

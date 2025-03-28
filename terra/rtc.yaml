@@ -23,7 +23,8 @@ renderers:
   - path: src/rtc/impl/renderers.ts
   - path: src/rtc/api_type/renderers.ts
   - path: src/rtc/struct_enumz/renderers.ts
-  - path: src/rtc/ut/renderers.ts
+  - path: src/rtc/ut_interface/renderers.ts
+  - path: src/rtc/ut_event/renderers.ts
   
 globalArgs:
   product_type: rtc

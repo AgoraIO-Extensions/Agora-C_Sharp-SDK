@@ -33,6 +33,7 @@ export function isCallback(node: CXXTerraNode): boolean {
         return false;
 
     if (name.endsWith("Observer") ||
+        name.endsWith("ObserverBase") ||
         name.endsWith("Sink") ||
         name.endsWith("EventHandler") ||
         name.endsWith("Provider"))
@@ -188,6 +189,7 @@ export function processIRtcEngineEventHandler() {
             key: keyEx,
             value: valueEx
         };
+        methodEx.user_data.stepParent = event;
     });
 
     event.methods.push(...eventEx.methods);
@@ -239,8 +241,14 @@ export function processVariableGetFromJson(type: SimpleType | Variable, jsonMapV
     }
     else if (typeString.includes('[]')) {
         //Array type
-        return `(${typeString})AgoraJson.JsonToStructArray<${typeString.substring(0, typeString.length - 2)}>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
-    }
+        let elementType = typeString.substring(0, typeString.length - 2);
+        if (simpleType.includes(elementType)) {
+            return `AgoraJson.GetDataArray${StringProcess.processString("-u", elementType)}(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
+        }
+        else {
+            return `(${typeString})AgoraJson.JsonToStructArray<${typeString.substring(0, typeString.length - 2)}>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
+        }
+    } 
     else {
         //Struct type
         if (isEnumz(type)) {
