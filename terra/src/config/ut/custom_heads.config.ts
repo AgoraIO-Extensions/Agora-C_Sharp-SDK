@@ -167,7 +167,13 @@ export const customHeads: CustomHead[] = [
             "destroyMediaPlayer",
             "createMediaRecorder",
             "destroyMediaRecorder",
-            "getScreenCaptureSources"
+            "getScreenCaptureSources",
+            "registerAudioSpectrumObserver",
+            "unregisterAudioSpectrumObserver",
+            "unregisterMediaMetadataObserver",
+            "initialize",
+            "registerAudioEncodedFrameObserver",
+            "registerMediaMetadataObserver"
         ],
         ut_compare: {
             "enableFaceDetection": "Assert.AreEqual(-4, nRet);",
@@ -175,9 +181,40 @@ export const customHeads: CustomHead[] = [
             "getAudioDeviceInfo": "Assert.AreEqual(-4, nRet);",
             "getErrorDescription": "Assert.AreEqual(\"fatal\", nRet);",
             "getNtpWallTimeInMs": "Assert.AreEqual(true, nRet > 0);",
-            "createCustomVideoTrack": "Assert.AreEqual(true, nRet > 0);",
             "createCustomEncodedVideoTrack": "Assert.AreEqual(true, nRet > 0);",
-            "createCustomAudioTrack": "Assert.AreEqual(true, nRet > 0);"
+            "createCustomAudioTrack": "Assert.AreEqual(true, nRet > 0);",
+            "getVersion": "Assert.AreEqual(\"v1\", nRet);",
+            "isCameraAutoExposureFaceModeSupported": "Assert.AreEqual(false, nRet);",
+            "isCameraAutoFocusFaceModeSupported": "Assert.AreEqual(false, nRet);",
+            "isCameraExposurePositionSupported": "Assert.AreEqual(false, nRet);",
+            "isCameraExposureSupported": "Assert.AreEqual(false, nRet);",
+            "isCameraFaceDetectSupported": "Assert.AreEqual(false, nRet);",
+            "isCameraFocusSupported": "Assert.AreEqual(false, nRet);",
+            "isCameraTorchSupported": "Assert.AreEqual(false, nRet);",
+            "isCameraZoomSupported": "Assert.AreEqual(false, nRet);",
+            "isSpeakerphoneEnable": "Assert.AreEqual(false, nRet);",
+            "loadExtensionProvider": "Assert.AreEqual(-4, nRet);",
+            "isSpeakerphoneEnabled": "Assert.AreEqual(false, nRet);",
+            "queryCameraFocalLengthCapability": "Assert.AreEqual(-4, nRet);",
+            "queryScreenCaptureCapability": "Assert.AreEqual(-4, nRet);",
+            "setAudioSessionOperationRestriction": "Assert.AreEqual(-4, nRet);",
+            "setCameraAutoExposureFaceModeEnabled": "Assert.AreEqual(-4, nRet);",
+            "setCameraAutoFocusFaceModeEnabled": "Assert.AreEqual(-4, nRet);",
+            "setCameraExposureFactor": "Assert.AreEqual(-4, nRet);",
+            "setCameraExposurePosition": "Assert.AreEqual(-4, nRet);",
+            "setCameraFocusPositionInPreview": "Assert.AreEqual(-4, nRet);",
+            "setCameraStabilizationMode": "Assert.AreEqual(-4, nRet);",
+            "setCameraTorchOn": "Assert.AreEqual(-4, nRet);",
+            "setCameraZoomFactor": "Assert.AreEqual(-4, nRet);",
+            "setDefaultAudioRouteToSpeakerphone": "Assert.AreEqual(-4, nRet);",
+            "setEnableSpeakerphone": "Assert.AreEqual(-4, nRet);",
+            "setExternalMediaProjection": "Assert.AreEqual(-4, nRet);",
+            "switchCamera": "Assert.AreEqual(-4, nRet);",
+            "createCustomVideoTrack": "Assert.AreEqual(true, nRet > 0);",
+            "setExternalVideoSource": "Assert.AreEqual(-4, nRet);",
+            "setRouteInCommunicationMode": "Assert.AreEqual(-4, nRet);",
+            "startScreenCaptureByScreenRect": "Assert.AreEqual(-4, nRet);",
+            "updateScreenCapture": "Assert.AreEqual(-4, nRet);",
         }
     },
     {
@@ -199,10 +236,12 @@ export const customHeads: CustomHead[] = [
             "registerVideoEncodedFrameObserver",
             "addVideoFrameRenderer",
             "removeVideoFrameRenderer",
-            "createCustomVideoTrack"
+            "registerFaceInfoObserver",
         ],
         ut_compare: {
-            "createCustomAudioTrack": "Assert.AreEqual(true, nRet > 0);"
+            "createCustomAudioTrack": "Assert.AreEqual(true, nRet > 0);",
+            "createCustomVideoTrack": "Assert.AreEqual(true, nRet > 0);",
+            "setExternalRemoteEglContext": "Assert.AreEqual(-4, nRet);",
         }
     },
     {

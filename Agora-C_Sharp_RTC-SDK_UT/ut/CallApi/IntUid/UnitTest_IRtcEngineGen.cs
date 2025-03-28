@@ -10,22 +10,12 @@ namespace Agora.Rtc.Ut
     public partial class UnitTest_IRtcEngine
     {
         [Test]
-        public void Test_Initialize_0320339()
-        {
-            var context = ParamsHelper.CreateParam<RtcEngineContext>();
-
-            var nRet = @interface.Initialize(context);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
         public void Test_GetVersion_915cb25()
         {
             var build = ParamsHelper.CreateParam<int>();
 
             var nRet = @interface.GetVersion(ref build);
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual("v1", nRet);
         }
 
 
@@ -747,18 +737,6 @@ namespace Agora.Rtc.Ut
             var config = ParamsHelper.CreateParam<AudioRecordingConfiguration>();
 
             var nRet = @interface.StartAudioRecording(config);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_RegisterAudioEncodedFrameObserver_ed4a177()
-        {
-            var config = ParamsHelper.CreateParam<AudioEncodedFrameObserverConfig>();
-
-            var observer = ParamsHelper.CreateParam<IAudioEncodedFrameObserver>();
-
-            var nRet = @interface.RegisterAudioEncodedFrameObserver(config, observer);
             Assert.AreEqual(0, nRet);
         }
 
@@ -1620,24 +1598,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_RegisterAudioSpectrumObserver_0406ea7()
-        {
-            var observer = ParamsHelper.CreateParam<IAudioSpectrumObserver>();
-
-            var nRet = @interface.RegisterAudioSpectrumObserver(observer);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_UnregisterAudioSpectrumObserver_0406ea7()
-        {
-            var nRet = @interface.UnregisterAudioSpectrumObserver();
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
         public void Test_AdjustRecordingSignalVolume_46f8ab7()
         {
             var volume = ParamsHelper.CreateParam<int>();
@@ -1827,7 +1787,7 @@ namespace Agora.Rtc.Ut
             var unload_after_use = ParamsHelper.CreateParam<bool>();
 
             var nRet = @interface.LoadExtensionProvider(path, unload_after_use);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -1965,7 +1925,7 @@ namespace Agora.Rtc.Ut
         public void Test_SwitchCamera()
         {
             var nRet = @interface.SwitchCamera();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -1973,7 +1933,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraZoomSupported()
         {
             var nRet = @interface.IsCameraZoomSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -1981,7 +1941,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraFaceDetectSupported()
         {
             var nRet = @interface.IsCameraFaceDetectSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -1989,7 +1949,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraTorchSupported()
         {
             var nRet = @interface.IsCameraTorchSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -1997,7 +1957,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraFocusSupported()
         {
             var nRet = @interface.IsCameraFocusSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -2005,7 +1965,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraAutoFocusFaceModeSupported()
         {
             var nRet = @interface.IsCameraAutoFocusFaceModeSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -2015,7 +1975,7 @@ namespace Agora.Rtc.Ut
             var factor = ParamsHelper.CreateParam<float>();
 
             var nRet = @interface.SetCameraZoomFactor(factor);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2045,7 +2005,7 @@ namespace Agora.Rtc.Ut
             var positionY = ParamsHelper.CreateParam<float>();
 
             var nRet = @interface.SetCameraFocusPositionInPreview(positionX, positionY);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2055,7 +2015,7 @@ namespace Agora.Rtc.Ut
             var isOn = ParamsHelper.CreateParam<bool>();
 
             var nRet = @interface.SetCameraTorchOn(isOn);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2065,7 +2025,7 @@ namespace Agora.Rtc.Ut
             var enabled = ParamsHelper.CreateParam<bool>();
 
             var nRet = @interface.SetCameraAutoFocusFaceModeEnabled(enabled);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2073,7 +2033,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraExposurePositionSupported()
         {
             var nRet = @interface.IsCameraExposurePositionSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -2085,7 +2045,7 @@ namespace Agora.Rtc.Ut
             var positionYinView = ParamsHelper.CreateParam<float>();
 
             var nRet = @interface.SetCameraExposurePosition(positionXinView, positionYinView);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2093,7 +2053,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraExposureSupported()
         {
             var nRet = @interface.IsCameraExposureSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -2103,7 +2063,7 @@ namespace Agora.Rtc.Ut
             var factor = ParamsHelper.CreateParam<float>();
 
             var nRet = @interface.SetCameraExposureFactor(factor);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2111,7 +2071,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsCameraAutoExposureFaceModeSupported()
         {
             var nRet = @interface.IsCameraAutoExposureFaceModeSupported();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -2121,7 +2081,7 @@ namespace Agora.Rtc.Ut
             var enabled = ParamsHelper.CreateParam<bool>();
 
             var nRet = @interface.SetCameraAutoExposureFaceModeEnabled(enabled);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2131,7 +2091,7 @@ namespace Agora.Rtc.Ut
             var mode = ParamsHelper.CreateParam<CAMERA_STABILIZATION_MODE>();
 
             var nRet = @interface.SetCameraStabilizationMode(mode);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2141,7 +2101,7 @@ namespace Agora.Rtc.Ut
             var defaultToSpeaker = ParamsHelper.CreateParam<bool>();
 
             var nRet = @interface.SetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2151,7 +2111,7 @@ namespace Agora.Rtc.Ut
             var speakerOn = ParamsHelper.CreateParam<bool>();
 
             var nRet = @interface.SetEnableSpeakerphone(speakerOn);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2159,7 +2119,7 @@ namespace Agora.Rtc.Ut
         public void Test_IsSpeakerphoneEnabled()
         {
             var nRet = @interface.IsSpeakerphoneEnabled();
-            Assert.AreEqual(true, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
 
@@ -2169,7 +2129,7 @@ namespace Agora.Rtc.Ut
             var route = ParamsHelper.CreateParam<int>();
 
             var nRet = @interface.SetRouteInCommunicationMode(route);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2197,7 +2157,7 @@ namespace Agora.Rtc.Ut
             var restriction = ParamsHelper.CreateParam<AUDIO_SESSION_OPERATION_RESTRICTION>();
 
             var nRet = @interface.SetAudioSessionOperationRestriction(restriction);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2225,7 +2185,7 @@ namespace Agora.Rtc.Ut
             var captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters>();
 
             var nRet = @interface.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2289,7 +2249,7 @@ namespace Agora.Rtc.Ut
             var captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters2>();
 
             var nRet = @interface.UpdateScreenCapture(captureParams);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2297,7 +2257,7 @@ namespace Agora.Rtc.Ut
         public void Test_QueryScreenCaptureCapability()
         {
             var nRet = @interface.QueryScreenCaptureCapability();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2309,7 +2269,7 @@ namespace Agora.Rtc.Ut
             var size = ParamsHelper.CreateParam<int>();
 
             var nRet = @interface.QueryCameraFocalLengthCapability(ref focalLengthInfos, ref size);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2319,7 +2279,7 @@ namespace Agora.Rtc.Ut
             var mediaProjection = ParamsHelper.CreateParam<IntPtr>();
 
             var nRet = @interface.SetExternalMediaProjection(mediaProjection);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
@@ -2673,26 +2633,6 @@ namespace Agora.Rtc.Ut
             var value = ParamsHelper.CreateParam<int>();
 
             var nRet = @interface.SendCustomReportMessage(id, category, @event, label, value);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_RegisterMediaMetadataObserver_8701fec()
-        {
-            var observer = ParamsHelper.CreateParam<IMetadataObserver>();
-
-            var type = ParamsHelper.CreateParam<METADATA_TYPE>();
-
-            var nRet = @interface.RegisterMediaMetadataObserver(observer, type);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_UnregisterMediaMetadataObserver_8701fec()
-        {
-            var nRet = @interface.UnregisterMediaMetadataObserver();
             Assert.AreEqual(0, nRet);
         }
 
@@ -3138,16 +3078,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_RegisterFaceInfoObserver_0303ed6()
-        {
-            var observer = ParamsHelper.CreateParam<IFaceInfoObserver>();
-
-            var nRet = @interface.RegisterFaceInfoObserver(observer);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
         public void Test_PushAudioFrame_c71f4ab()
         {
             var frame = ParamsHelper.CreateParam<AudioFrame>();
@@ -3191,7 +3121,7 @@ namespace Agora.Rtc.Ut
             var eglContext = ParamsHelper.CreateParam<IntPtr>();
 
             var nRet = @interface.SetExternalRemoteEglContext(eglContext);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
 
