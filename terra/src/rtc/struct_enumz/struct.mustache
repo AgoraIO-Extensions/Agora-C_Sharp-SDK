@@ -17,8 +17,37 @@ public class {{name}}{{#user_data.parent}}: {{user_data.parent}}{{/user_data.par
     {{/user_data.isHide}}
     {{/member_variables}}
     {{{user_data.unityConstructorString}}}
-    {{#user_data.toJsonString}}
-    
-    {{{user_data.toJsonString}}}
-    {{/user_data.toJsonString}}
+    {{#user_data.optional}}
+
+    public virtual void ToJson(JsonWriter writer)
+    {
+        writer.WriteObjectStart();
+
+        {{#member_variables}}
+        {{^user_data.isHide}}
+        {{^user_data.isHideToJson}}
+        {{#user_data.optional}}
+        if (this.{{user_data.nameString}}.HasValue())
+        {
+        {{/user_data.optional}}
+        writer.WritePropertyName("{{user_data.nameString}}");
+        {{#user_data.isStructOrClazz}}
+            JsonMapper.WriteValue(this.{{user_data.nameString}}{{#user_data.optional}}.GetValue(){{/user_data.optional}}, writer, false, 0);
+        {{/user_data.isStructOrClazz}}
+        {{#user_data.isEnumz}}
+            AgoraJson.WriteEnum(writer, this.{{user_data.nameString}}{{#user_data.optional}}.GetValue(){{/user_data.optional}});
+        {{/user_data.isEnumz}}
+        {{#user_data.isOther}}
+            writer.Write(this.{{user_data.nameString}}{{#user_data.optional}}.GetValue(){{/user_data.optional}});
+        {{/user_data.isOther}}
+        {{#user_data.optional}}
+        }
+        {{/user_data.optional}}
+
+        {{/user_data.isHideToJson}}
+        {{/user_data.isHide}}
+        {{/member_variables}}
+        writer.WriteObjectEnd();
+    }
+    {{/user_data.optional}}
 }

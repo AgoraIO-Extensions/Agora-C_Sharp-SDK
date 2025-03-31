@@ -30,54 +30,80 @@ export function processStructCommonAttributes(struct: Clazz, processRawData: Pro
 
     //生成ToJson
     const hasOptional = struct.member_variables.some(member => {
-        return member.user_data?.isOptional;
+        return member.user_data?.optional;
     });
     if (hasOptional) {
         struct.user_data.parent = "IOptionalJsonParse"
-        struct.user_data.toJsonString = processToJson(struct, processRawData);
+        struct.user_data.optional = true;
+        processStructToJson(struct, processRawData);
+    }
+    else {
+        struct.user_data.optional = false;
     }
 }
 
 //生成ToJson
-function processToJson(struct: Clazz, processRawData: ProcessRawData): string {
-
-    let lines: string[] = [];
-
-    lines.push(`\npublic virtual void ToJson(JsonWriter writer){`);
-    lines.push(`writer.WriteObjectStart();\n`);
-    let writeJson = (clazz: Clazz | Struct, lines: string[]) => {
-        for (let memebr of clazz.member_variables) {
-            if (memebr.user_data.isHide || memebr.user_data.isHideToJson)
-                continue;
-
-            let typeWithoutOptionalString = memebr.user_data.typeWithoutOptionalString;
-            let typeString = memebr.user_data.typeString;
-            let nameString = memebr.user_data.nameString;
-
-            if (memebr.user_data.isOptional) {
-                lines.push(`if (this.${nameString}.HasValue()){`);
-            }
-
-            lines.push(`writer.WritePropertyName("${nameString}");`)
-            if (isStructOrClazz(typeWithoutOptionalString)) {
-                lines.push(`JsonMapper.WriteValue(this.${nameString}${memebr.user_data.isOptional ? ".GetValue()" : ""}, writer, false, 0);`)
-            }
-            else if (isEnumz(typeWithoutOptionalString)) {
-                lines.push(`AgoraJson.WriteEnum(writer, this.${nameString}${memebr.user_data.isOptional ? ".GetValue()" : ""});`)
-            }
-            else {
-                lines.push(`writer.Write(this.${nameString}${memebr.user_data.isOptional ? ".GetValue()" : ""});`)
-            }
-
-            if (memebr.user_data.isOptional) {
-                lines.push(`}`)
-            }
-            lines.push(`\n`);
-
+function processStructToJson(struct: Clazz, processRawData: ProcessRawData) {
+    if (struct.name == "CameraCapturerConfiguration") {
+        console.log("fuck me");
+    }
+    for (let memebr of struct.member_variables) {
+        if (memebr.user_data.isHide || memebr.user_data.isHideToJson)
+            continue;
+        let typeWithoutOptionalString = memebr.user_data.typeWithoutOptionalString;
+        if (isStructOrClazz(typeWithoutOptionalString)) {
+            memebr.user_data.isStructOrClazz = true;
+        }
+        else if (isEnumz(typeWithoutOptionalString)) {
+            memebr.user_data.isEnumz = true;
+        }
+        else {
+            memebr.user_data.isOther = true;
         }
     }
-    writeJson(struct, lines);
-    lines.push(`writer.WriteObjectEnd();`);
-    lines.push(`}`)
-    return lines.join('\n');
 }
+
+
+//生成ToJson
+// function processToJson(struct: Clazz, processRawData: ProcessRawData): string {
+
+//     let lines: string[] = [];
+
+//     lines.push(`\npublic virtual void ToJson(JsonWriter writer){`);
+//     lines.push(`writer.WriteObjectStart();\n`);
+//     let writeJson = (clazz: Clazz | Struct, lines: string[]) => {
+//         for (let memebr of clazz.member_variables) {
+//             if (memebr.user_data.isHide || memebr.user_data.isHideToJson)
+//                 continue;
+
+//             let typeWithoutOptionalString = memebr.user_data.typeWithoutOptionalString;
+//             let typeString = memebr.user_data.typeString;
+//             let nameString = memebr.user_data.nameString;
+
+//             if (memebr.user_data.isOptional) {
+//                 lines.push(`if (this.${nameString}.HasValue()){`);
+//             }
+
+//             lines.push(`writer.WritePropertyName("${nameString}");`)
+//             if (isStructOrClazz(typeWithoutOptionalString)) {
+//                 lines.push(`JsonMapper.WriteValue(this.${nameString}${memebr.user_data.isOptional ? ".GetValue()" : ""}, writer, false, 0);`)
+//             }
+//             else if (isEnumz(typeWithoutOptionalString)) {
+//                 lines.push(`AgoraJson.WriteEnum(writer, this.${nameString}${memebr.user_data.isOptional ? ".GetValue()" : ""});`)
+//             }
+//             else {
+//                 lines.push(`writer.Write(this.${nameString}${memebr.user_data.isOptional ? ".GetValue()" : ""});`)
+//             }
+
+//             if (memebr.user_data.isOptional) {
+//                 lines.push(`}`)
+//             }
+//             lines.push(`\n`);
+
+//         }
+//     }
+//     writeJson(struct, lines);
+//     lines.push(`writer.WriteObjectEnd();`);
+//     lines.push(`}`)
+//     return lines.join('\n');
+// }

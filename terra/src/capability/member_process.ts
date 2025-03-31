@@ -10,9 +10,15 @@ export function processMemberWithCustomHead(member: MemberVariable, processRawDa
     if (processRawData.customHead.hide_members?.includes(member.name)) {
         member.user_data.isHide = true;
     }
+    else {
+        member.user_data.isHide = false;
+    }
 
     if (processRawData.customHead.hide_to_json?.includes(member.name)) {
         member.user_data.isHideToJson = true;
+    }
+    else {
+        member.user_data.isHideToJson = false;
     }
 }
 
@@ -24,33 +30,32 @@ export function processMember(member: MemberVariable, processRawData: ProcessRaw
 
 function processMemberType(member: MemberVariable, processRawData: ProcessRawData) {
     member.user_data = member.user_data || {};
-    let { source, isOptional } = processMemberTypeWithOptional(member, processRawData);
+    let { source, optional } = processMemberTypeWithOptional(member, processRawData);
     let typeString = processMemberTypeSource(source, processRawData);
     if (typeString == "") {
         member.user_data.isHide = true;
         return;
     }
     member.user_data.typeWithoutOptionalString = typeString;
-    if (isOptional) {
-        processRawData.struct.user_data = processRawData.struct.user_data || {};
-        processRawData.struct.user_data.isOptional = true;
-        member.user_data.isOptional = true;
+    if (optional) {
+        member.user_data.optional = true;
         member.user_data.typeString = `Optional<${typeString}>`;
         member.user_data.valueString = `new Optional<${typeString}>()`;
     }
     else {
+        member.user_data.optional = false;
         member.user_data.typeString = typeString;
     }
     member.user_data.nameString = processMethodParameterFormalVariableName({ name: member.name }, processRawData);
 }
 
-function processMemberTypeWithOptional(member: MemberVariable, processRawData: ProcessRawData): { source: string, isOptional: boolean } {
+function processMemberTypeWithOptional(member: MemberVariable, processRawData: ProcessRawData): { source: string, optional: boolean } {
     let source = member.type.source;
     if (source.includes('Optional<')) {
         source = source.substring(source.indexOf('<') + 1, source.length - 1);
-        return { source, isOptional: true };
+        return { source, optional: true };
     }
-    return { source, isOptional: false };
+    return { source, optional: false };
 }
 
 //用来处理函数的单个形式参数的类型转换到Unity应该是什么
