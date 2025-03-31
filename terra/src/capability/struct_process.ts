@@ -25,10 +25,10 @@ export function processStructCommonAttributes(struct: Clazz, processRawData: Pro
         processMember(member, processRawData);
     }
 
-    //生成构造函数
+    //Generate constructor
     struct.user_data.unityConstructorString = processUnityConstructor(struct, processRawData);
 
-    //生成ToJson
+    //Generate ToJson
     const hasOptional = struct.member_variables.some(member => {
         return member.user_data?.optional;
     });
@@ -42,11 +42,8 @@ export function processStructCommonAttributes(struct: Clazz, processRawData: Pro
     }
 }
 
-//生成ToJson
+//Generate ToJson
 function processStructToJson(struct: Clazz, processRawData: ProcessRawData) {
-    if (struct.name == "CameraCapturerConfiguration") {
-        console.log("fuck me");
-    }
     for (let memebr of struct.member_variables) {
         if (memebr.user_data.isHide || memebr.user_data.isHideToJson)
             continue;

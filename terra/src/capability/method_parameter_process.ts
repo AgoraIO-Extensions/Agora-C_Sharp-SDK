@@ -11,14 +11,14 @@ import { variableDefaultValueConversionTable } from "../config/common/variable_d
 
 
 
-//用来处理函数参数的单个形式参数类型 
 //(char * channelName, char * deviceId) => (string channelName, ref string deviceId)
+//Process single formal parameter type of function parameters
 export function processMethodParameterFormalString(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
     let nameString = processMethodParameterFormalVariableName(variable, processRawData);
     let defaultValueString = processMethodParameterFormalVariableDefaultValue(variable, processRawData);
 
-    //typeString为空，说明这个参数被手动的标记为@remove,从参数列表中直接删除了。
+    //If typeString is empty, it means this parameter is manually marked as @remove and should be deleted from parameter list
     if (typeString == "") {
         return "";
     }
@@ -30,12 +30,12 @@ export function processMethodParameterFormalString(variable: Variable, processRa
     return typeString + " " + nameString + (defaultValueString ? " = " + defaultValueString : "");
 }
 
-//用来处理函数参数的单个形式参数类型 
 //(char * channelName, char * deviceId) => (string , ref string)
+//Process single formal parameter type of function parameters
 export function processMethodParameterSignatureString(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
 
-    //typeString为空，说明这个参数被手动的标记为@remove,从参数列表中直接删除了。
+    //If typeString is empty, it means this parameter is manually marked as @remove and should be deleted from parameter list
     if (typeString == "") {
         return "";
     }
@@ -47,12 +47,12 @@ export function processMethodParameterSignatureString(variable: Variable, proces
     return typeString;
 }
 
-//用来处理函数参数的单个形式参数类型 
 //(char * channelName, char * deviceId) => (string , ref string)
+//Process single formal parameter type of function parameters
 export function processMethodParameterSignatureWithoutDecorateString(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
 
-    //typeString为空，说明这个参数被手动的标记为@remove,从参数列表中直接删除了。
+    //If typeString is empty, it means this parameter is manually marked as @remove and should be deleted from parameter list
     if (typeString == "") {
         return "";
     }
@@ -64,12 +64,12 @@ export function processMethodParameterSignatureWithoutDecorateString(variable: V
 }
 
 
-//用来处理函数参数的单个形式实参类型
 //(channelName,deviceId) => (channelName, ref deviceId)
+//Process single actual parameter type of function parameters
 export function processMethodParameterActualString(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
 
-    //typeString为空，说明这个参数被手动的标记为@remove,从参数列表中直接删除了。
+    //If typeString is empty, it means this parameter is manually marked as @remove and should be deleted from parameter list
     if (typeString == "") {
         return "";
     }
@@ -81,7 +81,7 @@ export function processMethodParameterActualString(variable: Variable, processRa
     return nameString;
 }
 
-//用来处理函数的单个形式参数的类型转换到Unity应该是什么
+//Convert single formal parameter type to Unity type
 export function processMethodParameterFormalVariableType(variable: Variable, processRawData: ProcessRawData): string {
     let typeSource = variable.type.source;
     let typeString = typeSource;
@@ -91,7 +91,7 @@ export function processMethodParameterFormalVariableType(variable: Variable, pro
         processRawData.parameter.name;
 
     const table = typeConversionTable;
-    //匹配到了
+    //Matched special method parameter
     if (table.special_method_param[specialMethodParamKey]) {
         typeString = table.special_method_param[specialMethodParamKey];
         if (typeString == "@remove") {
@@ -103,7 +103,7 @@ export function processMethodParameterFormalVariableType(variable: Variable, pro
         }
     }
 
-    //是否匹配了普通
+    //Check if matched normal type
     if (table.normal[typeSource])
         return table.normal[typeSource];
 
@@ -120,7 +120,7 @@ export function processMethodParameterFormalVariableType(variable: Variable, pro
     return typeString;
 }
 
-//用来处理函数的单个形式参数的变量名转换到Unity应该是什么
+//Convert single formal parameter variable name to Unity name
 export function processMethodParameterFormalVariableName(variable: { name: string }, processRawData: ProcessRawData): string {
     let nameSource = variable.name;
     let nameString = nameSource;
@@ -131,7 +131,7 @@ export function processMethodParameterFormalVariableName(variable: { name: strin
     return nameString;
 }
 
-//用来处理函数的单个形式参数的默认值 
+//Process default value of single formal parameter
 export function processMethodParameterFormalVariableDefaultValue(variable: { default_value: string }, processRawData: ProcessRawData): string {
     let defaultValue = variable.default_value;
     if (defaultValue == "") {
@@ -144,7 +144,7 @@ export function processMethodParameterFormalVariableDefaultValue(variable: { def
         processRawData.parameter.name + ":" +
         defaultValue;
 
-    //尝试匹配special_method_param
+    //Try to match special method parameter
     if (table.special_method_param[specialMethodParamKey]) {
         defaultValue = table.special_method_param[specialMethodParamKey];
         if (defaultValue == "@remove") {
@@ -155,11 +155,11 @@ export function processMethodParameterFormalVariableDefaultValue(variable: { def
         }
     }
 
-    //尝试匹配了普通
+    //Try to match normal type
     if (table.normal[defaultValue])
         return table.normal[defaultValue];
 
-    //尝试匹配正则
+    //Try to match regex pattern
     const reg = table.reg;
     for (let key in reg) {
         let inputTemplate: string = key as string;
@@ -173,11 +173,11 @@ export function processMethodParameterFormalVariableDefaultValue(variable: { def
     return defaultValue;
 }
 
-//用来处理函数的单个参数被add进去json字符串
+//Process single parameter to be added to json string
 export function processMethodParameterAddToJson(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
 
-    //该参数已经被标记为@remove，从参数列表中直接删除了。
+    //This parameter has been marked as @remove and should be deleted from parameter list
     if (typeString == "") {
         return "";
     }
@@ -195,7 +195,7 @@ export function processMethodParameterAddToJson(variable: Variable, processRawDa
 export function processMethodRefParameterGetFromJson(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
 
-    //该参数已经被标记为@remove或者不是ref，从参数列表中直接删除了。
+    //This parameter has been marked as @remove or is not ref, should be deleted from parameter list
     if (typeString == "") {
         return "";
     }
@@ -212,7 +212,7 @@ export function processMethodRefParameterGetFromJson(variable: Variable, process
 export function processMethodParameterGetFromJsonUsedInCallback(variable: Variable, processRawData: ProcessRawData): string {
     let typeString = processMethodParameterFormalVariableType(variable, processRawData);
 
-    //该参数已经被标记为@remove或者不是ref，从参数列表中直接删除了。
+    //This parameter has been marked as @remove or is not ref, should be deleted from parameter list
     if (typeString == "") {
         return "";
     }

@@ -57,7 +57,7 @@ export function processMethodCommonAttributes(method: MemberFunction, processRaw
     }
 }
 
-//处理函数的名字
+//Process function name
 export function processMethodName(method: MemberFunction, processRawData: ProcessRawData) {
     const name = method.name;
     const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
@@ -65,7 +65,7 @@ export function processMethodName(method: MemberFunction, processRawData: Proces
     method.user_data.nameString = capitalizedName;
 }
 
-//处理函数的返回值
+//Process function return value
 export function processMethodReturn(method: MemberFunction, processRawData: ProcessRawData) {
     const returnType = method.return_type;
     const returnTypeString = processMethodReturnTypeString(returnType, processRawData);
@@ -77,11 +77,7 @@ export function processMethodReturn(method: MemberFunction, processRawData: Proc
     method.user_data.returnValueGetFromJsonString = returnValueGetFromJsonString;
 }
 
-
-
-
-
-//处理函数的参数列表
+//Process function parameter list
 export function processMethodParameters(method: MemberFunction, processRawData: ProcessRawData) {
     const parameters = method.parameters;
     parameters.forEach((parameter, index) => {
@@ -101,7 +97,7 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
 
     method.user_data = method.user_data || {};
 
-    //interface.ts 文件中的形参
+    //Formal parameters in interface.ts file
     let formalParameterStringArray = [];
     method.parameters.forEach(param => {
         if (param.user_data.formalParameterString) {
@@ -110,7 +106,7 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     });
     method.user_data.formalParameterString = formalParameterStringArray.join(", ");
 
-    //mid.ts 文件中的实参
+    //Actual parameters in mid.ts file
     let actualParameterStringArray = [];
     method.parameters.forEach(param => {
         if (param.user_data.actualParameterString) {
@@ -119,7 +115,7 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     });
     method.user_data.actualParameterString = actualParameterStringArray.join(", ");
 
-    //impl.ts 文件中的_params.add()
+    //_params.add() in impl.ts file
     let parameterAddToJsonStringArray = [];
     method.parameters.forEach(param => {
         if (param.user_data.parameterAddToJsonString) {
@@ -128,7 +124,7 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     });
     method.user_data.parameterAddToJsonString = parameterAddToJsonStringArray.join("\n");
 
-    //impl.ts 文件中的getFromJson
+    //getFromJson in impl.ts file
     let parameterGetFromJsonGetStringArray = [];
     method.parameters.forEach(param => {
         if (param.user_data.refParameterGetFromJsonGetString) {
@@ -137,7 +133,7 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     });
     method.user_data.refParameterGetFromJsonGetString = parameterGetFromJsonGetStringArray.join("\n");
 
-    //observerNative.ts 文件中的getFromJson
+    //getFromJson in observerNative.ts file
     let parameterGetFromJsonUsedInCallbackArray = [];
     method.parameters.forEach(param => {
         if (param.user_data.parameterGetFromJsonUsedInCallback) {
@@ -162,15 +158,15 @@ export function processMethodHash(method: MemberFunction, processRawData: Proces
     }
 }
 
-//用来转换函数的返回值
+//Convert function return value
 export function processMethodReturnTypeString(type: SimpleType, processRawData: ProcessRawData): string {
-    //是否匹配了普通
+    //Check if matched normal type
     const typeSource = type.source;
     if (typeConversionTable.normal[typeSource]) {
         return typeConversionTable.normal[typeSource];
     }
 
-    //是否匹配了正则
+    //Check if matched regex pattern
     const reg = typeConversionTable.reg;
     for (let key in reg) {
         let inputTemplate: string = key as string;
@@ -184,7 +180,7 @@ export function processMethodReturnTypeString(type: SimpleType, processRawData: 
     return typeSource;
 }
 
-//处理回调函数的函数体内的默认返回值。返回值用在两个地方：1. 回调函数体内 2. API接口体内   
+//Process default return value in callback function body. Return value is used in two places: 1. Inside callback function body 2. Inside API interface body
 export function processMethodReturnValueString(type: SimpleType, processRawData: ProcessRawData): { callback: string, interface: string, impl: string, ut: string } {
     const typeString = processMethodReturnTypeString(type, processRawData);
     let defaultResult = {
@@ -197,7 +193,7 @@ export function processMethodReturnValueString(type: SimpleType, processRawData:
     return methodReturnDefaultValueTable[typeString] || defaultResult;
 }
 
-// 得到类似
+// Get similar to:
 // var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 // var result = nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
 export function processMethodReturnValueGetFromJson(method: MemberFunction, processRawData: ProcessRawData) {

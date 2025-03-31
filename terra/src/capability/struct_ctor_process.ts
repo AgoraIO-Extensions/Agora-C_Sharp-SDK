@@ -2,7 +2,7 @@ import { Clazz, CXXFile, CXXTYPE, Enumz, Struct } from "@agoraio-extensions/cxx-
 import { ProcessRawData } from "../type_definition";
 import { variableDefaultValueConversionTable } from "../config/common/variable_default_value_conversion_table.config";
 import { ParseResult } from "@agoraio-extensions/terra-core";
-import { matchReg, processCppConstructor } from "./common";
+import { CppConstructor, matchReg, processCppConstructor } from "./common";
 import { typeConversionTable } from "../config/common/type_conversion_table.config";
 import { processMethodParameterFormalVariableName } from "./method_parameter_process";
 import * as path from 'path';
@@ -17,7 +17,7 @@ function processStructCtorVariableDefaultValue(type: { default_value: string, na
         type.name + ":" +
         defaultValue;
 
-    //尝试匹配special_method_param
+    //Try to match special method parameter
     if (table.special_method_param[specialMethodParamKey]) {
         defaultValue = table.special_method_param[specialMethodParamKey];
         if (defaultValue == "@remove") {
@@ -28,12 +28,11 @@ function processStructCtorVariableDefaultValue(type: { default_value: string, na
         }
     }
 
-    //尝试匹配了普通
+    //Try to match normal type
     if (table.normal[defaultValue])
         return table.normal[defaultValue];
 
-    //尝试匹配正则
-
+    //Try to match regex pattern
     if (defaultValue) {
         const reg = table.reg;
         for (let key in reg) {
@@ -60,7 +59,7 @@ function processStructCtorVariableType(type: { name: string, source: string }, p
 
     const table = typeConversionTable;
 
-    //匹配到了special_class_param
+    //Matched special class parameter
     if (table.special_method_param[specialMethodParamKey]) {
         typeString = table.special_method_param[specialMethodParamKey];
         if (typeString == "@remove") {
@@ -72,7 +71,7 @@ function processStructCtorVariableType(type: { name: string, source: string }, p
         }
     }
 
-    //是否匹配了普通
+    //Check if matched normal type
     if (table.normal[type.source])
         return table.normal[type.source];
 
@@ -133,7 +132,7 @@ function isMemberHide(name: string, processRawData: ProcessRawData) {
 }
 
 
-//这段代码谁能看的懂哦.
+//Who can understand this code?
 export function processUnityConstructor(struct: Clazz, processRawData: ProcessRawData): string {
 
     const clonedParseResult: ParseResult = global.clonedParseResult;
@@ -145,7 +144,7 @@ export function processUnityConstructor(struct: Clazz, processRawData: ProcessRa
         "include",
         processRawData.cxxFile.fileName
     );
-    let cppConstructors = processCppConstructor(struct.name, file_path);
+    let cppConstructors: CppConstructor[] = processCppConstructor(struct.name, file_path);
 
     let lines: string[] = [];
     let baseClazz: Clazz | Struct = null;
@@ -156,7 +155,7 @@ export function processUnityConstructor(struct: Clazz, processRawData: ProcessRa
 
         let constructorLines = [];
 
-        //参数列表
+        //Parameter list
         if (constructor.parameters.length > 0) {
             let parametersLines = [];
             for (let p of constructor.parameters) {
@@ -183,7 +182,7 @@ export function processUnityConstructor(struct: Clazz, processRawData: ProcessRa
             constructorLines.push(`public ${struct.name}()`);
         }
 
-        //初始化构造列表里调用了父类构造
+        //Parent class constructor is called in initialization list
         let baseClazzName = struct.base_clazzs.length > 0 ? struct.base_clazzs[0] : "";
         if (constructor.initializes.length > 0) {
             for (let e of constructor.initializes) {
@@ -195,7 +194,7 @@ export function processUnityConstructor(struct: Clazz, processRawData: ProcessRa
         }
         constructorLines.push(`{`);
 
-        //初始化构造列表
+        //Initialization list
         if (constructor.initializes.length > 0) {
             for (let p of constructor.initializes) {
                 if (p.name == baseClazzName)
@@ -213,7 +212,7 @@ export function processUnityConstructor(struct: Clazz, processRawData: ProcessRa
                 }
                 else {
                     if (transValue.startsWith(transType)) {
-                        //解析类似这种  CameraCapturerConfiguration() : format(VideoFormat(0, 0, 0)) {}
+                        //Parse similar to: CameraCapturerConfiguration() : format(VideoFormat(0, 0, 0)) {}
                         constructorLines.push(`this.${transName} = new ${transValue};`)
                     }
                     else {
@@ -231,7 +230,7 @@ export function processUnityConstructor(struct: Clazz, processRawData: ProcessRa
         lines.push(constructorLines.join('\n'));
     }
 
-    //生成全量参数构造
+    //Generate full parameter constructor
     let needFullParamCtor = true;
     let needEmptyParamCtor = true;
     let baseAndThisMemberLength = struct.member_variables.length + (baseClazz ? baseClazz.member_variables.length : 0);

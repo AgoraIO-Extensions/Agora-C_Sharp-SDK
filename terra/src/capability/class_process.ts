@@ -66,7 +66,7 @@ export function processClassCommonAttributes(clazz: Clazz, processRawData: Proce
     processMethods(clazz.methods, processRawData);
 }
 
-//处理类名在不同的文件中的显示
+//Process class name display in different files
 export function processClassName(clazz: Clazz, processRawData: ProcessRawData) {
     clazz.user_data = clazz.user_data || {};
     const name = clazz.name;

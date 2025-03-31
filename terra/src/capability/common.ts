@@ -356,8 +356,7 @@ export function processCppConstructor(clazzName: string, fullFilePath: string): 
                     }
                     else {
                         type = eachTrim;
-
-                        name = StringProcess.processString("-l", type) // Tool._processStringWithL(type);
+                        name = StringProcess.processString("-l", type);
                     }
                     cppConstructor.parameters.push({ type, name, value });
                 }
