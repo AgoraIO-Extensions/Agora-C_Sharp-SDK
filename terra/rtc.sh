@@ -10,7 +10,6 @@ echo "PROJECT_ROOT: ${PROJECT_ROOT}"
 
 pushd ${MY_PATH}
 
-
 # rtc
 npm exec terra -- run \
     --config ${MY_PATH}/rtc.yaml \

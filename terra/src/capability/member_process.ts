@@ -58,7 +58,7 @@ function processMemberTypeWithOptional(member: MemberVariable, processRawData: P
     return { source, optional: false };
 }
 
-//用来处理函数的单个形式参数的类型转换到Unity应该是什么
+//Used to process the type conversion of a single formal parameter of a function to what it should be in Unity
 export function processMemberTypeSource(typeSource: string, processRawData: ProcessRawData): string {
 
     let typeString = typeSource;
@@ -79,7 +79,7 @@ export function processMemberTypeSource(typeSource: string, processRawData: Proc
         }
     }
 
-    //是否匹配了普通
+    //Check if matched with normal type
     if (table.normal[typeSource])
         return table.normal[typeSource];
 

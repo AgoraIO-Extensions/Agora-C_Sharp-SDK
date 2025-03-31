@@ -6,11 +6,6 @@ import { matchReg, processVariableGetFromJson } from "./common";
 import { variableNameConversionTable } from "../config/common/variable_name_conversion_table.config";
 import { variableDefaultValueConversionTable } from "../config/common/variable_default_value_conversion_table.config";
 
-
-
-
-
-
 //(char * channelName, char * deviceId) => (string channelName, ref string deviceId)
 //Process single formal parameter type of function parameters
 export function processMethodParameterFormalString(variable: Variable, processRawData: ProcessRawData): string {
