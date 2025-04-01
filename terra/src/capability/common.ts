@@ -251,7 +251,10 @@ export function processVariableGetFromJson(type: SimpleType | Variable, jsonMapV
     } 
     else {
         //Struct type
-        if (isEnumz(type)) {
+        //onAudioDeviceStateChanged(const char *deviceId, int deviceType, int deviceState)
+        //translate to unity is OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
+        //So need isEnumz(typeString)
+        if (isEnumz(type) || isEnumz(typeString)) {
             return `(${typeString})AgoraJson.GetData<int>(${jsonMapVariableName}, "${jsonKeyVariableName}")`;
         }
         else {

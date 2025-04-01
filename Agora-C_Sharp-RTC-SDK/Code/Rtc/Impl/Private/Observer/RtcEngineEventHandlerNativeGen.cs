@@ -74,8 +74,8 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         if (rtcEngineEventHandler == null) return;
                         rtcEngineEventHandler.OnAudioDeviceStateChanged(
                         (string)AgoraJson.GetData<string>(jsonData, "deviceId"),
-                        (MEDIA_DEVICE_TYPE)AgoraJson.JsonToStruct<MEDIA_DEVICE_TYPE>(jsonData, "deviceType"),
-                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.JsonToStruct<MEDIA_DEVICE_STATE_TYPE>(jsonData, "deviceState")
+                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceType"),
+                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceState")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
@@ -132,8 +132,8 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         if (rtcEngineEventHandler == null) return;
                         rtcEngineEventHandler.OnVideoDeviceStateChanged(
                         (string)AgoraJson.GetData<string>(jsonData, "deviceId"),
-                        (MEDIA_DEVICE_TYPE)AgoraJson.JsonToStruct<MEDIA_DEVICE_TYPE>(jsonData, "deviceType"),
-                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.JsonToStruct<MEDIA_DEVICE_STATE_TYPE>(jsonData, "deviceState")
+                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceType"),
+                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceState")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
