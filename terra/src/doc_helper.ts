@@ -338,7 +338,9 @@ function GetDocs(): DocData[] {
     str = str.replaceAll("api_imediaengine_registerfaceinfoobserver", "api_irtcengine_registerfaceinfoobserver");
     str = str.replaceAll("api_imediaengine_unregisterfaceinfoobserver", "api_irtcengine_unregisterfaceinfoobserver");
     str = str.replaceAll("api_irtcengine_startechotest3", "api_irtcengine_startechotest");
-
+    str = str.replaceAll("callback_iaudioencodedframeobserver_onrecordaudioencodedframe", "callback_iaudioencodedframeobserver_onrecordaudioencodedframe@Remove");
+    str = str.replaceAll("callback_iaudioencodedframeobserver_onplaybackaudioencodedframe", "callback_iaudioencodedframeobserver_onplaybackaudioencodedframe@Remove");
+    str = str.replaceAll("callback_iaudioencodedframeobserver_onmixedaudioencodedframe", "callback_iaudioencodedframeobserver_onmixedaudioencodedframe@Remove");
 
     fs.writeFileSync(path.join(process.cwd(), "process_json"), str);
 
