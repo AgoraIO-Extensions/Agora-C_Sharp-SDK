@@ -96,59 +96,27 @@ export function processMethodParameters(method: MemberFunction, processRawData: 
     });
 
     method.user_data = method.user_data || {};
-
+    let _method_attributes = (method: MemberFunction, key: string, seq: string) => {
+        let attributesArray = [];
+        method.parameters.forEach(param => {
+            if (param.user_data[key]) {
+                attributesArray.push(param.user_data[key]);
+            }
+        });
+        method.user_data[key] = attributesArray.join(seq);
+    }
     //Formal parameters in interface.ts file
-    let formalParameterStringArray = [];
-    method.parameters.forEach(param => {
-        if (param.user_data.formalParameterString) {
-            formalParameterStringArray.push(param.user_data.formalParameterString);
-        }
-    });
-    method.user_data.formalParameterString = formalParameterStringArray.join(", ");
-
+    _method_attributes(method, "formalParameterString", ", ");
     //Actual parameters in mid.ts file
-    let actualParameterStringArray = [];
-    method.parameters.forEach(param => {
-        if (param.user_data.actualParameterString) {
-            actualParameterStringArray.push(param.user_data.actualParameterString);
-        }
-    });
-    method.user_data.actualParameterString = actualParameterStringArray.join(", ");
-
+    _method_attributes(method, "actualParameterString", ", ");
     //_params.add() in impl.ts file
-    let parameterAddToJsonStringArray = [];
-    method.parameters.forEach(param => {
-        if (param.user_data.parameterAddToJsonString) {
-            parameterAddToJsonStringArray.push(param.user_data.parameterAddToJsonString);
-        }
-    });
-    method.user_data.parameterAddToJsonString = parameterAddToJsonStringArray.join("\n");
-
+    _method_attributes(method, "parameterAddToJsonString", "\n");
     //getFromJson in impl.ts file
-    let parameterGetFromJsonGetStringArray = [];
-    method.parameters.forEach(param => {
-        if (param.user_data.refParameterGetFromJsonGetString) {
-            parameterGetFromJsonGetStringArray.push(param.user_data.refParameterGetFromJsonGetString);
-        }
-    });
-    method.user_data.refParameterGetFromJsonGetString = parameterGetFromJsonGetStringArray.join("\n");
-
+    _method_attributes(method, "refParameterGetFromJsonGetString", "\n");
     //getFromJson in observerNative.ts file
-    let parameterGetFromJsonUsedInCallbackArray = [];
-    method.parameters.forEach(param => {
-        if (param.user_data.parameterGetFromJsonUsedInCallback) {
-            parameterGetFromJsonUsedInCallbackArray.push(param.user_data.parameterGetFromJsonUsedInCallback);
-        }
-    });
-    method.user_data.parameterGetFromJsonUsedInCallback = parameterGetFromJsonUsedInCallbackArray.join(",\n\t\t\t\t\t\t\t");
-
-    let signatureParameterStringArray = [];
-    method.parameters.forEach(param => {
-        if (param.user_data.signatureParameterString) {
-            signatureParameterStringArray.push(param.user_data.signatureParameterString);
-        }
-    });
-    method.user_data.signatureParameterString = signatureParameterStringArray.join(", ");
+    _method_attributes(method, "parameterGetFromJsonUsedInCallback", ",\n\t\t\t\t\t\t\t");
+    //Parameter signature
+    _method_attributes(method, "signatureParameterString", ", ");
 }
 
 export function processMethodHash(method: MemberFunction, processRawData: ProcessRawData) {
