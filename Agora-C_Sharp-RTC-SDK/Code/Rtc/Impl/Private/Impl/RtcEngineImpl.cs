@@ -752,7 +752,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SETMAXMETADATASIZE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -771,7 +771,7 @@ namespace Agora.Rtc
 
             IntPtr[] arrayPtr = new IntPtr[] { metadata.buffer };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SENDMETADATA,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SENDMETADATA,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
