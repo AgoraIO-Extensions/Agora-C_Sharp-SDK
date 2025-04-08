@@ -41,7 +41,7 @@ namespace Agora.Rtc
                 switch (@event)
                 {
 
-                    case AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED:
+                    case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697:
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
@@ -57,10 +57,6 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-                    #region terra IVideoEncodedFrameObserver
-
-                    #endregion terra IVideoEncodedFrameObserver
-
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
                         break;
@@ -73,7 +69,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED:
+                case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697:
                     {
                         bool result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -84,10 +80,6 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         break;
                     }
-
-                #region terra IVideoEncodedFrameObserver_CreateDefaultReturn
-
-                #endregion terra IVideoEncodedFrameObserver_CreateDefaultReturn
 
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);

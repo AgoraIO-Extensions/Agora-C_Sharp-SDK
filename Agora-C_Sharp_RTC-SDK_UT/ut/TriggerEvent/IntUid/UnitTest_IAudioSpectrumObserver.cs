@@ -32,7 +32,7 @@ namespace Agora.Rtc.Ut.Event
     }
 
     [TestFixture]
-    public class UnitTest_IAudioSpectrumObserver
+    public partial class UnitTest_IAudioSpectrumObserver
     {
         public IRtcEngineEx Engine;
         public UTAudioSpectrumObserver EventHandler;
@@ -82,7 +82,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioSpectrumObserver_OnLocalAudioSpectrum()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM;
+            ApiParam.@event = AgoraApiType.IAUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM_5822fed;
 
             jsonObj.Clear();
 
@@ -103,7 +103,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioSpectrumObserver_OnRemoteAudioSpectrum()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM;
+            ApiParam.@event = AgoraApiType.IAUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM_8ea2cde;
 
             jsonObj.Clear();
 
@@ -127,9 +127,5 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(true, EventHandler.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
             Assert.AreEqual(true, EventHandlerForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
         }
-
-        #region terra IAudioSpectrumObserver
-
-        #endregion terra IAudioSpectrumObserver
     }
 }
