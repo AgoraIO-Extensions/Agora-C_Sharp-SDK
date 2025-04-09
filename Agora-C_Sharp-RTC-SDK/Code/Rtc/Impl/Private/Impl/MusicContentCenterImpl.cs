@@ -7,7 +7,7 @@ namespace Agora.Rtc
     using IrisMusicCenterEventHandlerHandle = IntPtr;
     using IrisMusicCenterEventHandlerMarsh = IntPtr;
 
-    public class MusicContentCenterImpl
+    public partial class MusicContentCenterImpl
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
@@ -78,7 +78,7 @@ namespace Agora.Rtc
             AgoraRtcNative.AllocEventHandlerHandle(ref _musicContentCenterHandlerHandle, MusicContentCenterEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _musicContentCenterHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_REGISTEREVENTHANDLER_ae49451,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -98,7 +98,7 @@ namespace Agora.Rtc
 
             IntPtr[] arrayPtr = new IntPtr[] { _musicContentCenterHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_UNREGISTEREVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_UNREGISTEREVENTHANDLER_ae49451,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -136,7 +136,7 @@ namespace Agora.Rtc
             AgoraRtcNative.AllocEventHandlerHandle(ref _scoreEventHandlerHandle, ScoreEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _scoreEventHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REGISTERSCOREEVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_REGISTERSCOREEVENTHANDLER_0932be1,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -155,7 +155,7 @@ namespace Agora.Rtc
 
             IntPtr[] arrayPtr = new IntPtr[] { _scoreEventHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_UNREGISTERSCOREEVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_UNREGISTERSCOREEVENTHANDLER_0932be1,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -287,7 +287,7 @@ namespace Agora.Rtc
         public IMusicPlayer CreateMusicPlayer()
         {
             var ret = AgoraRtcNative.CallIrisApiWithArgs(
-                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER,
+                _irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_CREATEMUSICPLAYER,
                 "", 0,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -315,254 +315,10 @@ namespace Agora.Rtc
 
             string jsonParam = AgoraJson.ToJson(_param);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(
-                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER,
+                _irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_DESTROYMUSICPLAYER_876d086,
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, ref _apiParam);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
-        #region terra IMusicContentCenter
-        public int Initialize(MusicContentCenterConfiguration configuration)
-        {
-            _param.Clear();
-            _param.Add("configuration", configuration);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_INITIALIZE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int AddVendor(MusicContentCenterVendorID vendorId, string jsonVendorConfig)
-        {
-            _param.Clear();
-            _param.Add("vendorId", vendorId);
-            _param.Add("jsonVendorConfig", jsonVendorConfig);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_ADDVENDOR,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int RemoveVendor(MusicContentCenterVendorID vendorId)
-        {
-            _param.Clear();
-            _param.Add("vendorId", vendorId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REMOVEVENDOR,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int RenewToken(MusicContentCenterVendorID vendorID, string token)
-        {
-            _param.Clear();
-            _param.Add("vendorID", vendorID);
-            _param.Add("token", token);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_RENEWTOKEN,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetMusicCharts(ref string requestId)
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-            return result;
-        }
-
-        public int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartId, int page, int pageSize, string jsonOption = "")
-        {
-            _param.Clear();
-            _param.Add("musicChartId", musicChartId);
-            _param.Add("page", page);
-            _param.Add("pageSize", pageSize);
-            _param.Add("jsonOption", jsonOption);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCOLLECTIONBYMUSICCHARTID,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-            return result;
-        }
-
-        public int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
-        {
-            _param.Clear();
-            _param.Add("keyWord", keyWord);
-            _param.Add("page", page);
-            _param.Add("pageSize", pageSize);
-            _param.Add("jsonOption", jsonOption);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_SEARCHMUSIC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-            return result;
-        }
-
-        public int Preload(ref string requestId, long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_PRELOAD,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-            return result;
-        }
-
-        public int SetScoreLevel(ScoreLevel level)
-        {
-            _param.Clear();
-            _param.Add("level", level);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_SETSCORELEVEL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int StartScore(long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_STARTSCORE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int StopScore()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_STOPSCORE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int PauseScore()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_PAUSESCORE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int ResumeScore()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_RESUMESCORE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetCumulativeScoreData(ref CumulativeScoreData cumulativeScoreData)
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETCUMULATIVESCOREDATA,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                cumulativeScoreData = AgoraJson.JsonToStruct<CumulativeScoreData>(_apiParam.Result, "cumulativeScoreData");
-            }
-            return result;
-        }
-
-        public int RemoveCache(long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REMOVECACHE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
         }
 
         public int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
@@ -571,108 +327,20 @@ namespace Agora.Rtc
             _param.Add("cacheInfoSize", cacheInfoSize);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETCACHES,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_GETCACHES_c4f9978,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
+
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
             if (nRet == 0)
             {
-                cacheInfo = AgoraJson.JsonToStructArray<MusicCacheInfo>(_apiParam.Result, "cacheInfo");
+                cacheInfo = (MusicCacheInfo[])AgoraJson.JsonToStructArray<MusicCacheInfo>(_apiParam.Result, "cacheInfo");
                 cacheInfoSize = (int)AgoraJson.GetData<int>(_apiParam.Result, "cacheInfoSize");
             }
-            return result;
-        }
-
-        public int IsPreloaded(long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_ISPRELOADED,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
         }
-
-        public int GetLyric(ref string requestId, long internalSongCode, int lyricType = 0)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-            _param.Add("lyricType", lyricType);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETLYRIC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-            return result;
-        }
-
-        public int GetLyricInfo(ref string requestId, long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETLYRICINFO,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-            return result;
-        }
-
-        public int GetSongSimpleInfo(ref string requestId, long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETSONGSIMPLEINFO,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-            return result;
-        }
-
-        public int GetInternalSongCode(MusicContentCenterVendorID vendorId, string songCode, string jsonOption, ref long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("vendorId", vendorId);
-            _param.Add("songCode", songCode);
-            _param.Add("jsonOption", jsonOption);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETINTERNALSONGCODE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                internalSongCode = (long)AgoraJson.GetData<long>(_apiParam.Result, "internalSongCode");
-            }
-            return result;
-        }
-        #endregion terra IMusicContentCenter
     }
 }

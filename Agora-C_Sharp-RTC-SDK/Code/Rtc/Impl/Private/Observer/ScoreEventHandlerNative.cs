@@ -6,7 +6,7 @@ using AOT;
 
 namespace Agora.Rtc
 {
-    public class ScoreEventHandlerNative
+    internal static partial class ScoreEventHandlerNative
     {
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
         private static Object observerLock = new Object();
@@ -58,39 +58,11 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    #region terra IScoreEventHandler
-                    case AgoraEventType.EVENT_SCOREEVENTHANDLER_ONPITCH:
+                    default:
                         {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                            if (EventHandler == null) return;
-                            EventHandler.OnPitch(
-                                (long)AgoraJson.GetData<long>(jsonData, "songCode"),
-                                AgoraJson.JsonToStruct<RawScoreData>(jsonData, "rawScoreData")
-                            );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
- }); 
-#endif
+                            OnEventGen(ref eventParam, jsonData, @event);
                             break;
                         }
-
-                    case AgoraEventType.EVENT_SCOREEVENTHANDLER_ONLINESCORE:
-                        {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                            if (EventHandler == null) return;
-                            EventHandler.OnLineScore(
-                                (long)AgoraJson.GetData<long>(jsonData, "songCode"),
-                                AgoraJson.JsonToStruct<LineScoreData>(jsonData, "lineScoreData")
-                            );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
- }); 
-#endif
-                            break;
-                        }
-                        #endregion terra IScoreEventHandler
                 }
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             }

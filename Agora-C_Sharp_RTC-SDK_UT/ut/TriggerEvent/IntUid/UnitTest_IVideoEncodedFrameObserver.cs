@@ -5,10 +5,10 @@ using System.Collections.Generic;
 namespace Agora.Rtc.Ut.Event
 {
     [TestFixture]
-    public class UnitTest_IVideoEncodedFrameObserver
+    public partial class UnitTest_IVideoEncodedFrameObserver
     {
         public IRtcEngineEx Engine;
-        public UTVideoEncodedFrameObserver EventHandler;
+        public UTVideoEncodedFrameObserver callback;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -24,8 +24,8 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-            EventHandler = new UTVideoEncodedFrameObserver();
-            int ret = Engine.RegisterVideoEncodedFrameObserver(EventHandler, OBSERVER_MODE.INTPTR);
+            callback = new UTVideoEncodedFrameObserver();
+            int ret = Engine.RegisterVideoEncodedFrameObserver(callback, OBSERVER_MODE.INTPTR);
             Assert.AreEqual(0, ret);
         }
 
@@ -38,34 +38,5 @@ namespace Agora.Rtc.Ut.Event
             ApiParam.FreeResult();
         }
 
-        #region terra IVideoEncodedFrameObserver
-        [Test]
-        public void Test_IVideoEncodedFrameObserver_OnEncodedVideoFrameReceived()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED;
-
-            jsonObj.Clear();
-
-            uint uid = ParamsHelper.CreateParam<uint>();
-            jsonObj.Add("uid", uid);
-
-            IntPtr imageBuffer = ParamsHelper.CreateParam<IntPtr>();
-            jsonObj.Add("imageBuffer", imageBuffer);
-
-            ulong length = ParamsHelper.CreateParam<ulong>();
-            jsonObj.Add("length", length);
-
-            EncodedVideoFrameInfo videoEncodedFrameInfo = ParamsHelper.CreateParam<EncodedVideoFrameInfo>();
-            jsonObj.Add("videoEncodedFrameInfo", videoEncodedFrameInfo);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnEncodedVideoFrameReceivedPassed(uid, imageBuffer, length, videoEncodedFrameInfo));
-        }
-        #endregion terra IVideoEncodedFrameObserver
     }
 }

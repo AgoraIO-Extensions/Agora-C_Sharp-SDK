@@ -6,7 +6,7 @@ using AOT;
 
 namespace Agora.Rtc
 {
-    internal static class AudioEncodedFrameObserverNative
+    internal static partial class AudioEncodedFrameObserverNative
     {
         private static Object observerLock = new Object();
         private static IAudioEncodedFrameObserver audioEncodedFrameObserver = null;
@@ -39,13 +39,13 @@ namespace Agora.Rtc
                 int frameLength = (int)AgoraJson.GetData<int>(data, "length");
                 switch (@event)
                 {
-                    case AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME:
+                    case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME_d930ddc:
                         audioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
-                    case AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME:
+                    case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME_d930ddc:
                         audioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
-                    case AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME:
+                    case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME_d930ddc:
                         audioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
                     default:

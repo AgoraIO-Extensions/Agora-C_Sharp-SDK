@@ -7,7 +7,7 @@ using AOT;
 
 namespace Agora.Rtc
 {
-    internal static class FaceInfoObserverNative
+    internal static partial class FaceInfoObserverNative
     {
         private static Object observerLock = new Object();
         private static IFaceInfoObserver faceInfoObserver = null;
@@ -42,7 +42,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case AgoraEventType.EVENT_FACEINFOOBSERVER_ONFACEINFO:
+                    case AgoraApiType.IFACEINFOOBSERVER_ONFACEINFO_3a2037f:
                         {
                             if (faceInfoObserver == null) return;
                             string outFaceInfo = (string)AgoraJson.GetData<string>(jsonData, "outFaceInfo");

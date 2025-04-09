@@ -7,7 +7,7 @@ using AOT;
 
 namespace Agora.Rtc
 {
-    internal static class MediaRecorderObserverNative
+    internal static partial class MediaRecorderObserverNative
     {
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
         private static Object observerLock = new Object();
@@ -97,7 +97,7 @@ namespace Agora.Rtc
                 string nativeHandle = (string)AgoraJson.GetData<string>(jsonData, "nativeHandle");
                 switch (@event)
                 {
-                    case AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED:
+                    case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED_c38849f:
                         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() =>{
@@ -115,7 +115,7 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                             break;
                         }
 
-                    case AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED:
+                    case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED_64fa74a:
                         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() =>{

@@ -15,7 +15,7 @@ namespace Agora.Rtc
     using IrisApiEnginePtr = IntPtr;
     using view_t = UInt64;
 
-    internal class MediaPlayerImpl
+    public partial class MediaPlayerImpl
     {
         private bool _disposed = false;
 
@@ -132,14 +132,14 @@ namespace Agora.Rtc
             AgoraRtcNative.AllocEventHandlerHandle(ref _mediaPlayerEventHandlerHandle, MediaPlayerSourceObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER_15621d7,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER failed: " + nRet);
+                AgoraLog.LogError("IMEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER_15621d7 failed: " + nRet);
             }
             _mediaPlayerEventHandlerHandles.Add(playerId, _mediaPlayerEventHandlerHandle);
             arrayPtrHandle.Free();
@@ -158,7 +158,7 @@ namespace Agora.Rtc
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER_15621d7,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -192,7 +192,7 @@ namespace Agora.Rtc
             _param.Add("playerId", playerId);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER_89ab9b5,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -223,7 +223,7 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioFrameObserverHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER_a5b510b,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -249,7 +249,7 @@ namespace Agora.Rtc
             _param.Add("playerId", playerId);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERAUDIOFRAMEOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_UNREGISTERAUDIOFRAMEOBSERVER_89ab9b5,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -281,7 +281,7 @@ namespace Agora.Rtc
             _param.Add("source", source);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHMEDIASOURCE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_OPENWITHMEDIASOURCE_3c11499,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -306,7 +306,7 @@ namespace Agora.Rtc
             _param.Add("playerId", playerId);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNOPENWITHMEDIASOURCE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_UNOPENWITHMEDIASOURCE,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -336,7 +336,7 @@ namespace Agora.Rtc
             _param.Add("intervalInMS", intervalInMS);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER_226bb48,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -362,7 +362,7 @@ namespace Agora.Rtc
             _param.Add("playerId", playerId);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_UNREGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER_09064ce,
                                                           json, (uint)json.Length,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
@@ -464,7 +464,7 @@ namespace Agora.Rtc
         public int CreateMediaPlayer()
         {
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                                                         AgoraApiType.FUNC_RTCENGINE_CREATEMEDIAPLAYER,
+                                                         AgoraApiType.IRTCENGINE_CREATEMEDIAPLAYER,
                                                          "", 0, IntPtr.Zero, 0, ref _apiParam);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
@@ -476,7 +476,7 @@ namespace Agora.Rtc
 
             string jsonParam = AgoraJson.ToJson(_param);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                                                         AgoraApiType.FUNC_RTCENGINE_DESTROYMEDIAPLAYER,
+                                                         AgoraApiType.IRTCENGINE_DESTROYMEDIAPLAYER_328a49b,
                                                          jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
@@ -499,743 +499,5 @@ namespace Agora.Rtc
 
             return 0;
         }
-
-        #region terra IMediaPlayer
-        public int Open(int playerId, string url, long startPos)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("url", url);
-            _param.Add("startPos", startPos);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPEN,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int Play(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_PLAY,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int Pause(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_PAUSE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int Stop(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_STOP,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int Resume(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_RESUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int Seek(int playerId, long newPos)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("newPos", newPos);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SEEK,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetAudioPitch(int playerId, int pitch)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("pitch", pitch);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETAUDIOPITCH,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetDuration(int playerId, ref long duration)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETDURATION,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                duration = (long)AgoraJson.GetData<long>(_apiParam.Result, "duration");
-            }
-            return result;
-        }
-
-        public int GetPlayPosition(int playerId, ref long pos)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYPOSITION,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                pos = (long)AgoraJson.GetData<long>(_apiParam.Result, "pos");
-            }
-            return result;
-        }
-
-        public int GetStreamCount(int playerId, ref long count)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETSTREAMCOUNT,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                count = (long)AgoraJson.GetData<long>(_apiParam.Result, "count");
-            }
-            return result;
-        }
-
-        public int GetStreamInfo(int playerId, long index, ref PlayerStreamInfo info)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("index", index);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETSTREAMINFO,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                info = AgoraJson.JsonToStruct<PlayerStreamInfo>(_apiParam.Result, "info");
-            }
-            return result;
-        }
-
-        public int SetLoopCount(int playerId, int loopCount)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("loopCount", loopCount);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETLOOPCOUNT,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetPlaybackSpeed(int playerId, int speed)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("speed", speed);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYBACKSPEED,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SelectAudioTrack(int playerId, int index)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("index", index);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SELECTAUDIOTRACK,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SelectMultiAudioTrack(int playerId, int playoutTrackIndex, int publishTrackIndex)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("playoutTrackIndex", playoutTrackIndex);
-            _param.Add("publishTrackIndex", publishTrackIndex);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SELECTMULTIAUDIOTRACK,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetPlayerOption(int playerId, string key, int value)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("key", key);
-            _param.Add("value", value);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYEROPTION,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetPlayerOption(int playerId, string key, string value)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("key", key);
-            _param.Add("value", value);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYEROPTION2,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int TakeScreenshot(int playerId, string filename)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("filename", filename);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_TAKESCREENSHOT,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SelectInternalSubtitle(int playerId, int index)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("index", index);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SELECTINTERNALSUBTITLE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetExternalSubtitle(int playerId, string url)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("url", url);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETEXTERNALSUBTITLE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public MEDIA_PLAYER_STATE GetState(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETSTATE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? MEDIA_PLAYER_STATE.PLAYER_STATE_FAILED : (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int Mute(int playerId, bool muted)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("muted", muted);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_MUTE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetMute(int playerId, ref bool muted)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETMUTE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                muted = (bool)AgoraJson.GetData<bool>(_apiParam.Result, "muted");
-            }
-            return result;
-        }
-
-        public int AdjustPlayoutVolume(int playerId, int volume)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("volume", volume);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_ADJUSTPLAYOUTVOLUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetPlayoutVolume(int playerId, ref int volume)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYOUTVOLUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
-            }
-            return result;
-        }
-
-        public int AdjustPublishSignalVolume(int playerId, int volume)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("volume", volume);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_ADJUSTPUBLISHSIGNALVOLUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetPublishSignalVolume(int playerId, ref int volume)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETPUBLISHSIGNALVOLUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (nRet == 0)
-            {
-                volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
-            }
-            return result;
-        }
-
-        public int SetView(int playerId, view_t view)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("view", view);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETVIEW,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetRenderMode(int playerId, RENDER_MODE_TYPE renderMode)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("renderMode", renderMode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETRENDERMODE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetAudioDualMonoMode(int playerId, AUDIO_DUAL_MONO_MODE mode)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("mode", mode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETAUDIODUALMONOMODE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public string GetPlayerSdkVersion(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYERSDKVERSION,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public string GetPlaySrc(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYSRC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int OpenWithAgoraCDNSrc(int playerId, string src, long startPos)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("src", src);
-            _param.Add("startPos", startPos);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHAGORACDNSRC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetAgoraCDNLineCount(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETAGORACDNLINECOUNT,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SwitchAgoraCDNLineByIndex(int playerId, int index)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("index", index);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SWITCHAGORACDNLINEBYINDEX,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int GetCurrentAgoraCDNIndex(int playerId)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_GETCURRENTAGORACDNINDEX,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int EnableAutoSwitchAgoraCDN(int playerId, bool enable)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("enable", enable);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_ENABLEAUTOSWITCHAGORACDN,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int RenewAgoraCDNSrcToken(int playerId, string token, long ts)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("token", token);
-            _param.Add("ts", ts);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_RENEWAGORACDNSRCTOKEN,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SwitchAgoraCDNSrc(int playerId, string src, bool syncPts = false)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("src", src);
-            _param.Add("syncPts", syncPts);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SWITCHAGORACDNSRC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SwitchSrc(int playerId, string src, bool syncPts = true)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("src", src);
-            _param.Add("syncPts", syncPts);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SWITCHSRC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int PreloadSrc(int playerId, string src, long startPos)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("src", src);
-            _param.Add("startPos", startPos);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_PRELOADSRC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int PlayPreloadedSrc(int playerId, string src)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("src", src);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_PLAYPRELOADEDSRC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int UnloadSrc(int playerId, string src)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("src", src);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNLOADSRC,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetSpatialAudioParams(int playerId, SpatialAudioParams @params)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("params", @params);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETSPATIALAUDIOPARAMS,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int SetSoundPositionParams(int playerId, float pan, float gain)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("pan", pan);
-            _param.Add("gain", gain);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETSOUNDPOSITIONPARAMS,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-        #endregion terra IMediaPlayer
     }
 }
