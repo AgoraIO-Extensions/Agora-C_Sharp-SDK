@@ -4,12 +4,11 @@ using uid_t = System.UInt32;
 using System.Collections.Generic;
 namespace Agora.Rtc.Ut.Event
 {
-    [TestFixture]
-    public class UnitTest_IFaceInfoObserver
+    public partial class UnitTest_IFaceInfoObserver
     {
 
         public IRtcEngineEx Engine;
-        public UTFaceInfoObserver EventHandler;
+        public UTFaceInfoObserver callback;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -26,8 +25,8 @@ namespace Agora.Rtc.Ut.Event
             ApiParam.AllocResult();
 
 
-            EventHandler = new UTFaceInfoObserver();
-            int ret = Engine.RegisterFaceInfoObserver(EventHandler);
+            callback = new UTFaceInfoObserver();
+            int ret = Engine.RegisterFaceInfoObserver(callback);
             Assert.AreEqual(0, ret);
         }
 
@@ -39,30 +38,6 @@ namespace Agora.Rtc.Ut.Event
             Engine.Dispose();
             ApiParam.FreeResult();
         }
-
-        #region
-
-        [Test]
-        public void Test_OnFaceInfo()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_FACEINFOOBSERVER_ONFACEINFO;
-
-            string outFaceInfo = ParamsHelper.CreateParam<string>();
-
-            jsonObj.Clear();
-            jsonObj.Add("outFaceInfo", outFaceInfo);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnFaceInfoPassed(outFaceInfo));
-        }
-
-        #endregion
     }
 }
 

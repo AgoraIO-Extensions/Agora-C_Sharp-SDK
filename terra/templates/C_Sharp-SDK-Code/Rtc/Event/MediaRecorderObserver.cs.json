@@ -1,9 +1,0 @@
-{
-    "IMediaRecorderObserver": {
-        "type": "ClazzStruct",
-        "name": "IMediaRecorderObserver",
-        "commonMethodTemplate": "Common_EventHandlerImpl",
-        "methodSplitSymbol": "\n"
-    },
-    "Common_EventHandlerImpl": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateEventHandlerImpl}"
-}

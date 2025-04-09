@@ -6,7 +6,7 @@ using AOT;
 
 namespace Agora.Rtc
 {
-    public class H265TranscoderObserverNative
+    internal static partial class H265TranscoderObserverNative
     {
 
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
@@ -59,54 +59,11 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    #region terra IH265TranscoderObserver
-                    case AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONENABLETRANSCODE:
+                    default:
                         {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                            if (EventHandler == null) return;
-                            EventHandler.OnEnableTranscode(
-                                (H265_TRANSCODE_RESULT)AgoraJson.GetData<int>(jsonData, "result")
-                            );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
- }); 
-#endif
+                            OnEventGen(ref eventParam, jsonData, @event);
                             break;
                         }
-
-                    case AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONQUERYCHANNEL:
-                        {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                            if (EventHandler == null) return;
-                            EventHandler.OnQueryChannel(
-                                (H265_TRANSCODE_RESULT)AgoraJson.GetData<int>(jsonData, "result"),
-                                (string)AgoraJson.GetData<string>(jsonData, "originChannel"),
-                                (string)AgoraJson.GetData<string>(jsonData, "transcodeChannel")
-                            );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
- }); 
-#endif
-                            break;
-                        }
-
-                    case AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONTRIGGERTRANSCODE:
-                        {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                            if (EventHandler == null) return;
-                            EventHandler.OnTriggerTranscode(
-                                (H265_TRANSCODE_RESULT)AgoraJson.GetData<int>(jsonData, "result")
-                            );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
- }); 
-#endif
-                            break;
-                        }
-                        #endregion terra IH265TranscoderObserver
                 }
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             }

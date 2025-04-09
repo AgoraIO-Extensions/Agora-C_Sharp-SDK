@@ -30,40 +30,6 @@ namespace Agora.Rtc
         public string key;
     }
 
-    internal class AudioFrameInternal
-    {
-        internal AudioFrameInternal(AudioFrame audioFrame)
-        {
-            #region terra AudioFrameInternal_Assignment
-            this.type = audioFrame.type;
-            this.samplesPerChannel = audioFrame.samplesPerChannel;
-            this.bytesPerSample = audioFrame.bytesPerSample;
-            this.channels = audioFrame.channels;
-            this.samplesPerSec = audioFrame.samplesPerSec;
-            this.buffer = audioFrame.buffer;
-            this.renderTimeMs = audioFrame.renderTimeMs;
-            this.avsync_type = audioFrame.avsync_type;
-            this.presentationMs = audioFrame.presentationMs;
-            this.audioTrackNumber = audioFrame.audioTrackNumber;
-            this.rtpTimestamp = audioFrame.rtpTimestamp;
-            #endregion terra AudioFrameInternal_Assignment
-        }
-
-        #region terra AudioFrameInternal_Member_List
-        public AUDIO_FRAME_TYPE type;
-        public int samplesPerChannel;
-        public BYTES_PER_SAMPLE bytesPerSample;
-        public int channels;
-        public int samplesPerSec;
-        public IntPtr buffer;
-        public long renderTimeMs;
-        public int avsync_type;
-        public long presentationMs;
-        public int audioTrackNumber;
-        public uint rtpTimestamp;
-        #endregion terra AudioFrameInternal_Member_List
-    }
-
     ///
     /// @ignore
     ///
@@ -174,69 +140,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public ColorSpace colorSpace;
-    }
-
-    internal class ExternalVideoFrameInternal
-    {
-
-        internal ExternalVideoFrameInternal(ExternalVideoFrame frame)
-        {
-            #region terra ExternalVideoFrameInternal_Assignment
-            this.type = frame.type;
-            this.format = frame.format;
-
-            this.stride = frame.stride;
-            this.height = frame.height;
-            this.cropLeft = frame.cropLeft;
-            this.cropTop = frame.cropTop;
-            this.cropRight = frame.cropRight;
-            this.cropBottom = frame.cropBottom;
-            this.rotation = frame.rotation;
-            this.timestamp = frame.timestamp;
-
-            this.eglType = frame.eglType;
-            this.textureId = frame.textureId;
-            this.fenceObject = frame.fenceObject;
-            this.matrix = frame.matrix;
-
-            this.metadataSize = frame.metadataSize;
-
-            this.fillAlphaBuffer = frame.fillAlphaBuffer;
-            this.alphaStitchMode = frame.alphaStitchMode;
-
-            this.textureSliceIndex = frame.textureSliceIndex;
-            this.hdr10MetadataInfo = frame.hdr10MetadataInfo;
-            this.colorSpace = frame.colorSpace;
-            #endregion terra ExternalVideoFrameInternal_Assignment
-        }
-
-        #region terra ExternalVideoFrameInternal_Member_List
-        public VIDEO_BUFFER_TYPE type;
-        public VIDEO_PIXEL_FORMAT format;
-
-        public int stride;
-        public int height;
-        public int cropLeft;
-        public int cropTop;
-        public int cropRight;
-        public int cropBottom;
-        public int rotation;
-        public long timestamp;
-
-        public EGL_CONTEXT_TYPE eglType;
-        public int textureId;
-        public long fenceObject;
-        public float[] matrix;
-
-        public int metadataSize;
-
-        public bool fillAlphaBuffer;
-        public ALPHA_STITCH_MODE alphaStitchMode;
-
-        public int textureSliceIndex;
-        public Hdr10MetadataInfo hdr10MetadataInfo;
-        public ColorSpace colorSpace;
-        #endregion terra ExternalVideoFrameInternal_Member_List
     }
 
     ///

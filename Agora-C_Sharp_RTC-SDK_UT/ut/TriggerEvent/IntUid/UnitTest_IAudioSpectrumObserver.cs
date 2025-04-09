@@ -31,13 +31,12 @@ namespace Agora.Rtc.Ut.Event
         }
     }
 
-    [TestFixture]
-    public class UnitTest_IAudioSpectrumObserver
+    public partial class UnitTest_IAudioSpectrumObserver
     {
         public IRtcEngineEx Engine;
-        public UTAudioSpectrumObserver EventHandler;
+        public UTAudioSpectrumObserver callback;
         public IMediaPlayer MediaPlayer;
-        public UTAudioSpectrumObserver EventHandlerForMediaPlayer;
+        public UTAudioSpectrumObserver callbackForMediaPlayer;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -53,15 +52,15 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-            EventHandler = new UTAudioSpectrumObserver();
-            EventHandler.TAG = "FOR_RTCENGINE";
-            int ret = Engine.RegisterAudioSpectrumObserver(EventHandler);
+            callback = new UTAudioSpectrumObserver();
+            callback.TAG = "FOR_RTCENGINE";
+            int ret = Engine.RegisterAudioSpectrumObserver(callback);
             Assert.AreEqual(0, ret);
 
-            EventHandlerForMediaPlayer = new UTAudioSpectrumObserver();
-            EventHandlerForMediaPlayer.TAG = "FOR_MEDIAPLAYER";
+            callbackForMediaPlayer = new UTAudioSpectrumObserver();
+            callbackForMediaPlayer.TAG = "FOR_MEDIAPLAYER";
             MediaPlayer = Engine.CreateMediaPlayer();
-            ret = MediaPlayer.RegisterMediaPlayerAudioSpectrumObserver(EventHandlerForMediaPlayer, 10);
+            ret = MediaPlayer.RegisterMediaPlayerAudioSpectrumObserver(callbackForMediaPlayer, 10);
 
             Assert.AreEqual(0, ret);
         }
@@ -82,7 +81,7 @@ namespace Agora.Rtc.Ut.Event
         [Test]
         public void Test_IAudioSpectrumObserver_OnLocalAudioSpectrum()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM;
+            ApiParam.@event = AgoraApiType.IAUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM_5822fed;
 
             jsonObj.Clear();
 
@@ -96,14 +95,14 @@ namespace Agora.Rtc.Ut.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnLocalAudioSpectrumPassed(data));
-            Assert.AreEqual(true, EventHandlerForMediaPlayer.OnLocalAudioSpectrumPassed(data));
+            Assert.AreEqual(true, callback.OnLocalAudioSpectrumPassed(data));
+            Assert.AreEqual(true, callbackForMediaPlayer.OnLocalAudioSpectrumPassed(data));
         }
 
         [Test]
         public void Test_IAudioSpectrumObserver_OnRemoteAudioSpectrum()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM;
+            ApiParam.@event = AgoraApiType.IAUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM_8ea2cde;
 
             jsonObj.Clear();
 
@@ -124,12 +123,8 @@ namespace Agora.Rtc.Ut.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
-            Assert.AreEqual(true, EventHandlerForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
+            Assert.AreEqual(true, callback.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
+            Assert.AreEqual(true, callbackForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
         }
-
-        #region terra IAudioSpectrumObserver
-
-        #endregion terra IAudioSpectrumObserver
     }
 }

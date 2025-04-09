@@ -55,7 +55,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA:
+                    case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA_6e75338:
                         {
                             IntPtr buffer0 = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "buffer");
                             int bufferSize = (int)AgoraJson.GetData<int>(jsonData, "bufferSize");
@@ -69,7 +69,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-                    case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK:
+                    case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK_624d569:
                         {
                             Int64 offset = (Int64)AgoraJson.GetData<Int64>(jsonData, "offset");
                             int whence = (int)AgoraJson.GetData<int>(jsonData, "whence");
@@ -95,7 +95,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA:
+                case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA_6e75338:
                     {
                         int result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -106,7 +106,7 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
-                case AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK:
+                case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK_624d569:
                     {
                         Int64 result = 0;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();

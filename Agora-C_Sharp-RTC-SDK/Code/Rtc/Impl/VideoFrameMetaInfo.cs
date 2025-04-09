@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace Agora.Rtc
 {
-    public sealed class VideoFrameMetaInfo : IVideoFrameMetaInfo
+    public partial class VideoFrameMetaInfo : IVideoFrameMetaInfo
     {
         private Dictionary<string, string> _data;
 

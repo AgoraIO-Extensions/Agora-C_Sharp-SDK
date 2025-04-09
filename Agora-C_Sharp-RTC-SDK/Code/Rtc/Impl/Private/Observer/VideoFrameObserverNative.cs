@@ -209,7 +209,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME:
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME_1673590:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -226,7 +226,7 @@ namespace Agora.Rtc
                             break;
                         }
 
-                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME:
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME_1673590:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -243,7 +243,7 @@ namespace Agora.Rtc
                             break;
                         }
 
-                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME:
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME_e648e2c:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -259,7 +259,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME:
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME_27754d8:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -275,7 +275,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-                    case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME:
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME_43dcf82:
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
@@ -292,11 +292,6 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-
-                    #region terra IVideoFrameObserver
-
-                    #endregion terra IVideoFrameObserver
-
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
                         break;
@@ -309,11 +304,11 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME:
-                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME:
-                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME:
-                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME:
-                case AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME:
+                case AgoraApiType.IVIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME_1673590:
+                case AgoraApiType.IVIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME_1673590:
+                case AgoraApiType.IVIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME_e648e2c:
+                case AgoraApiType.IVIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME_27754d8:
+                case AgoraApiType.IVIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME_43dcf82:
                     {
                         bool result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -325,11 +320,6 @@ namespace Agora.Rtc
 
                         break;
                     }
-
-                #region terra IVideoFrameObserver_CreateDefaultReturn
-
-                #endregion terra IVideoFrameObserver_CreateDefaultReturn
-
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);
                     break;

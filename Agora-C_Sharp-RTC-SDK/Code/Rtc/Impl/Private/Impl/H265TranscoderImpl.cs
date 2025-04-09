@@ -14,7 +14,7 @@ namespace Agora.Rtc
 
     using IrisApiEnginePtr = IntPtr;
 
-    internal class H265TranscoderImpl
+    public partial class H265TranscoderImpl
     {
         private bool _disposed = false;
 
@@ -80,14 +80,14 @@ namespace Agora.Rtc
             AgoraRtcNative.AllocEventHandlerHandle(ref _h265TranscoderObserverHandle, H265TranscoderObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IH265TRANSCODER_REGISTERTRANSCODEROBSERVER_e1ee996,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
+                AgoraLog.LogError("IH265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
             arrayPtrHandle.Free();
             return nRet;
@@ -100,14 +100,14 @@ namespace Agora.Rtc
 
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
             GCHandle arrayPtrHandle = GCHandle.Alloc(arrayPtr, GCHandleType.Pinned);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IH265TRANSCODER_UNREGISTERTRANSCODEROBSERVER_e1ee996,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER failed: " + nRet);
+                AgoraLog.LogError("IH265TRANSCODER_UNREGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
 
             AgoraRtcNative.FreeEventHandlerHandle(ref _h265TranscoderObserverHandle);
@@ -139,61 +139,5 @@ namespace Agora.Rtc
             H265TranscoderObserverNative.SetH265TranscoderObserver(null);
             return nRet;
         }
-
-        #region terra IH265Transcoder
-        public int EnableTranscode(string token, string channel, uint uid)
-        {
-            _param.Clear();
-            _param.Add("token", token);
-            _param.Add("channel", channel);
-            _param.Add("uid", uid);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_ENABLETRANSCODE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int QueryChannel(string token, string channel, uint uid)
-        {
-            _param.Clear();
-            _param.Add("token", token);
-            _param.Add("channel", channel);
-            _param.Add("uid", uid);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_QUERYCHANNEL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int TriggerTranscode(string token, string channel, uint uid)
-        {
-            _param.Clear();
-            _param.Add("token", token);
-            _param.Add("channel", channel);
-            _param.Add("uid", uid);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODER_TRIGGERTRANSCODE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-
-        #endregion terra IH265Transcoder
-
     }
 }
