@@ -1,0 +1,13 @@
+{{#user_data.attributes}}
+[{{{.}}}]
+{{/user_data.attributes}}
+public enum {{name}}{{#user_data.parent}}: {{user_data.parent}}{{/user_data.parent}}
+{
+    {{#enum_constants}}
+    {{#user_data.obsolete}}
+    [Obsolete("{{user_data.obsolete}}")]
+    {{/user_data.obsolete}}
+    {{name}}{{#value}} = {{{value}}}{{/value}},
+
+    {{/enum_constants}}
+}

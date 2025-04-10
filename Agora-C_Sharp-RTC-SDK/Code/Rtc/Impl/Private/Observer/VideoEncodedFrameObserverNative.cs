@@ -41,7 +41,7 @@ namespace Agora.Rtc
                 switch (@event)
                 {
 
-                    case AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED:
+                    case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697:
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
@@ -57,9 +57,6 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
-                    #region terra IVideoEncodedFrameObserver
-
-                    #endregion terra IVideoEncodedFrameObserver
 
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
@@ -73,7 +70,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED:
+                case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697:
                     {
                         bool result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -84,50 +81,10 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         break;
                     }
-
-                #region terra IVideoEncodedFrameObserver_CreateDefaultReturn
-
-                #endregion terra IVideoEncodedFrameObserver_CreateDefaultReturn
-
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);
                     break;
             }
         }
-
-        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-        //        [MonoPInvokeCallback(typeof(Func_EncodedVideoFrameObserver_Native))]
-        //#endif
-        //        internal static bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
-        //        {
-        //            if (videoEncodedFrameObserver == null)
-        //                return true;
-
-        //            var videoEncodedFrameInfo = (IrisEncodedVideoFrameInfo)(Marshal.PtrToStructure(videoEncodedFrameInfoPtr, typeof(IrisEncodedVideoFrameInfo)) ??
-        //                new IrisEncodedVideoFrameInfo());
-
-        //            var localVideoEncodedFrameInfo = LocalVideoEncodedVideoFrameInfo.info;
-
-        //            localVideoEncodedFrameInfo.codecType = (VIDEO_CODEC_TYPE)videoEncodedFrameInfo.codecType;
-        //            localVideoEncodedFrameInfo.width = videoEncodedFrameInfo.width;
-        //            localVideoEncodedFrameInfo.height = videoEncodedFrameInfo.height;
-        //            localVideoEncodedFrameInfo.framesPerSecond = videoEncodedFrameInfo.framesPerSecond;
-        //            localVideoEncodedFrameInfo.frameType = (VIDEO_FRAME_TYPE_NATIVE)videoEncodedFrameInfo.frameType;
-        //            localVideoEncodedFrameInfo.rotation = (VIDEO_ORIENTATION)videoEncodedFrameInfo.rotation;
-        //            localVideoEncodedFrameInfo.trackId = videoEncodedFrameInfo.trackId;
-        //            localVideoEncodedFrameInfo.captureTimeMs = videoEncodedFrameInfo.captureTimeMs;
-        //            localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
-        //            localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE)videoEncodedFrameInfo.streamType;
-
-        //            try
-        //            {
-        //                return videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, length, localVideoEncodedFrameInfo);
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                AgoraLog.LogError("[Exception] IVideoEncodedFrameObserver.OnEncodedVideoFrameReceived: " + e);
-        //                return false;
-        //            }
-        //        }
     }
 }

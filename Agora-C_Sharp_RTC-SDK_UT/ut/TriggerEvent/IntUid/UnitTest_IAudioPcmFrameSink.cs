@@ -5,12 +5,12 @@ using System.Collections.Generic;
 namespace Agora.Rtc.Ut.Event
 {
     [TestFixture]
-    public class UnitTest_IAudioPcmFrameSink
+    public partial class UnitTest_IAudioPcmFrameSink
     {
 
         public IRtcEngineEx Engine;
         public IMediaPlayer MediaPlayer;
-        public UTIAudioPcmFrameSink EventHandler;
+        public UTAudioPcmFrameSink callback;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -27,8 +27,8 @@ namespace Agora.Rtc.Ut.Event
             ApiParam.AllocResult();
 
             MediaPlayer = Engine.CreateMediaPlayer();
-            EventHandler = new UTIAudioPcmFrameSink();
-            nRet = MediaPlayer.RegisterAudioFrameObserver(EventHandler);
+            callback = new UTAudioPcmFrameSink();
+            nRet = MediaPlayer.RegisterAudioFrameObserver(callback);
             Assert.AreEqual(0, nRet);
         }
 
@@ -41,25 +41,5 @@ namespace Agora.Rtc.Ut.Event
             ApiParam.FreeResult();
         }
 
-        #region terra IAudioPcmFrameSink
-        [Test]
-        public void Test_IAudioPcmFrameSink_OnFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOPCMFRAMESINK_ONFRAME;
-
-            jsonObj.Clear();
-
-            AudioPcmFrame frame = ParamsHelper.CreateParam<AudioPcmFrame>();
-            jsonObj.Add("frame", frame);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnFramePassed(frame));
-        }
-        #endregion terra IAudioPcmFrameSink
     }
 }
