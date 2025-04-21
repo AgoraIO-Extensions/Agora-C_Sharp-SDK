@@ -1,4 +1,3 @@
-#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using System;
 using System.Runtime.InteropServices;
@@ -9,11 +8,26 @@ using Unity.Collections.LowLevel.Unsafe;
 #endif
 
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Agora.Rtc
 {
     public class TextureManager : MonoBehaviour
     {
+        protected class TextureVideoFrame
+        {
+            public int type;
+            public int width;
+            public int height;
+            public int yStride;
+            public int uStride;
+            public int vStride;
+            public byte[] yBuffer;
+            public byte[] uBuffer;
+            public byte[] vBuffer;
+            public byte[] alphaBuffer;
+        }
+
         // texture identity
         protected int _videoPixelWidth = 2;
         protected int _videoPixelHeight = 2;
@@ -40,10 +54,12 @@ namespace Agora.Rtc
 
         protected bool _needResize = false;
         protected bool _needUpdateInfo = true;
-        protected bool isFresh = false;
+        protected bool _isFresh = false;
 
         protected IVideoStreamManager _videoStreamManager;
-        protected IrisCVideoFrame _cachedVideoFrame;
+        protected TextureVideoFrame _cachedVideoFrame;
+        internal IrisRtcVideoFrameConfig _videoFrameConfig;
+        protected System.Object _videoFrameLock = new System.Object();
 
         // reference count
         protected int _refCount = 0;
@@ -58,10 +74,6 @@ namespace Agora.Rtc
                 return _texture;
             }
         }
-
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-        protected NativeArray<byte> _textureNative;
-#endif
 
         protected virtual void Awake()
         {
@@ -82,11 +94,10 @@ namespace Agora.Rtc
 
             if (_videoStreamManager != null)
             {
-                _videoStreamManager.DisableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
+                _videoStreamManager.RemoveVideoFrameObserverDelegate();
                 _videoStreamManager.Dispose();
                 _videoStreamManager = null;
             }
-
             FreeMemory();
             DestroyTexture();
         }
@@ -106,7 +117,7 @@ namespace Agora.Rtc
 
         internal virtual void InitIrisVideoFrame()
         {
-            _cachedVideoFrame = new IrisCVideoFrame
+            _cachedVideoFrame = new TextureVideoFrame
             {
                 type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
                 yStride = _videoPixelWidth * 4,
@@ -115,18 +126,6 @@ namespace Agora.Rtc
                 height = _videoPixelHeight,
                 width = _videoPixelWidth
             };
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-
-            _textureNative = _texture.GetRawTextureData<byte>();
-            unsafe
-            {
-                _cachedVideoFrame.yBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_textureNative);
-            }
-#else
-
-            _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
-           
-#endif
         }
 
         internal int GetRefCount()
@@ -146,12 +145,21 @@ namespace Agora.Rtc
             {
                 if (_videoStreamManager == null)
                 {
-                    _videoStreamManager = ((RtcEngineImpl)engine).GetVideoStreamManager();
+                    _videoStreamManager = ((RtcEngineImpl)engine).GetVideoStreamManager(this);
                 }
 
                 if (_videoStreamManager != null)
                 {
-                    _videoStreamManager.EnableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
+                    _videoFrameConfig = new IrisRtcVideoFrameConfig()
+                    {
+                        video_view_setup_mode = 0,
+                        observed_frame_position = (uint)(VideoStreamManager.position | VIDEO_MODULE_POSITION.POSITION_PRE_RENDERER),
+                        video_source_type = (int)_sourceType,
+                        video_frame_format = (int)_frameType,
+                        uid = _uid,
+                        channelId = _channelId,
+                    };
+                    _videoStreamManager.AddVideoFrameObserverDelegate(ref _videoFrameConfig);
                     _needUpdateInfo = false;
                 }
             }
@@ -159,80 +167,34 @@ namespace Agora.Rtc
 
         internal virtual void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
+            TextureVideoFrame tempVideoFrame = null;
 
-            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
+            lock (_videoFrameLock)
             {
-                _canAttach = false;
-                return;
+                if (_isFresh)
+                {
+                    tempVideoFrame = _cachedVideoFrame;
+                    _isFresh = false;
+                }
+                else
+                {
+                    return;
+                }
             }
 
-            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_RESIZED)
+            _canAttach = true;
+            if (tempVideoFrame.width != _videoPixelWidth || tempVideoFrame.height != _videoPixelHeight)
             {
-                _videoPixelWidth = _cachedVideoFrame.width;
-                _videoPixelHeight = _cachedVideoFrame.height;
-
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
+                _videoPixelWidth = tempVideoFrame.width;
+                _videoPixelHeight = tempVideoFrame.height;
 #if UNITY_2021_2_OR_NEWER
                 _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #else
                 _texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #endif
-                _texture.Apply();
-                _textureNative = _texture.GetRawTextureData<byte>();
-                unsafe
-                {
-                    _cachedVideoFrame.yBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_textureNative);
-                }
-#else
-
-                _needResize = true;
-                FreeMemory();
-                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
-                return;
-#endif
             }
-            else
-            {
-                _canAttach = true;
-            }
-
-
-            if (isFresh == false)
-            {
-                return;
-            }
-
-            try
-            {
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-                _texture.Apply();
-#else
-                if (_needResize)
-                {
-#if UNITY_2021_2_OR_NEWER
-                    _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
-#else
-                    _texture.Resize(_videoPixelWidth, _videoPixelHeight);
-#endif
-                    _texture.Apply();
-                    _needResize = false;
-                }
-
-                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-                    (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
-                _texture.Apply();
-#endif
-
-
-            }
-            catch (Exception e)
-            {
-                AgoraLog.Log("Exception e = " + e);
-            }
-
+            _texture.LoadRawTextureData(tempVideoFrame.yBuffer);
+            _texture.Apply();
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
@@ -273,15 +235,38 @@ namespace Agora.Rtc
 
         private void FreeMemory()
         {
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-            _cachedVideoFrame.yBuffer = IntPtr.Zero;
-#else
-            if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
+
+        }
+
+        internal virtual void OnVideoFameEvent(ref IrisCVideoFrame videoFrame, ref IrisRtcVideoFrameConfig config, bool resize)
+        {
+            if (_videoFrameConfig.video_source_type != config.video_source_type)
+                return;
+            if (_videoFrameConfig.video_frame_format != config.video_frame_format)
+                return;
+            if (_videoFrameConfig.uid != config.uid)
+                return;
+            if (_videoFrameConfig.channelId != config.channelId)
+                return;
+
+
+            TextureVideoFrame tempVideoFrame = new TextureVideoFrame()
             {
-                Marshal.FreeHGlobal(_cachedVideoFrame.yBuffer);
-                _cachedVideoFrame.yBuffer = IntPtr.Zero;
+                type = (int)videoFrame.type,
+                width = videoFrame.width,
+                height = videoFrame.height,
+                yStride = videoFrame.yStride,
+                uStride = videoFrame.uStride,
+                vStride = videoFrame.vStride
+            };
+            int length = videoFrame.width * videoFrame.height * 4;
+            tempVideoFrame.yBuffer = new byte[length];
+            Marshal.Copy(videoFrame.yBuffer, tempVideoFrame.yBuffer, 0, length);
+            lock (_videoFrameLock)
+            {
+                _cachedVideoFrame = tempVideoFrame;
+                _isFresh = true;
             }
-#endif
         }
 
     }

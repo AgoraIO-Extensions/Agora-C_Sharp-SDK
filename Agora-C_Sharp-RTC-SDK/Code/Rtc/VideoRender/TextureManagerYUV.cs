@@ -1,4 +1,3 @@
-#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using System;
 using System.Runtime.InteropServices;
@@ -49,10 +48,6 @@ namespace Agora.Rtc
                 return _vTexture;
             }
         }
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-        protected NativeArray<byte> _uTextureNative;
-        protected NativeArray<byte> _vTextureNative;
-#endif
 
         public float YStrideScale = 1.0f;
 
@@ -81,7 +76,7 @@ namespace Agora.Rtc
         internal override void InitIrisVideoFrame()
         {
 
-            _cachedVideoFrame = new IrisCVideoFrame
+            _cachedVideoFrame = new TextureVideoFrame
             {
                 type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420,
                 yStride = _videoPixelWidth,
@@ -89,151 +84,59 @@ namespace Agora.Rtc
                 width = _videoPixelWidth,
                 uStride = _videoPixelWidth / 2,
                 vStride = _videoPixelWidth / 2,
-                alphaBuffer = IntPtr.Zero,
             };
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-            _textureNative = _texture.GetRawTextureData<byte>();
-            _uTextureNative = _uTexture.GetRawTextureData<byte>();
-            _vTextureNative = _vTexture.GetRawTextureData<byte>();
-            unsafe
-            {
-                _cachedVideoFrame.yBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_textureNative);
-                _cachedVideoFrame.uBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_uTextureNative);
-                _cachedVideoFrame.vBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_vTextureNative);
-            }
-#else
-            _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight);
-            _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_videoPixelWidth / 2 * _videoPixelHeight / 2);
-            _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_videoPixelWidth / 2 * _videoPixelHeight / 2);
-#endif
         }
 
 
 
         internal override void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
+            TextureVideoFrame tempVideoFrame = null;
 
-
-
-            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
+            lock (_videoFrameLock)
             {
-                _canAttach = false;
-                return;
-            }
-            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_RESIZED)
-            {
-                _videoPixelWidth = _cachedVideoFrame.width;
-                _videoPixelHeight = _cachedVideoFrame.height;
-
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-#if UNITY_2021_2_OR_NEWER
-                _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
-#else
-                _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
-#endif
-                _texture.Apply();
-#if UNITY_2021_2_OR_NEWER
-                _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
-#else
-                _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
-#endif
-                _uTexture.Apply();
-#if UNITY_2021_2_OR_NEWER
-                _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
-#else
-                _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
-#endif
-                _vTexture.Apply();
-                _textureNative = _texture.GetRawTextureData<byte>();
-                _uTextureNative = _uTexture.GetRawTextureData<byte>();
-                _vTextureNative = _vTexture.GetRawTextureData<byte>();
-                unsafe
+                if (_isFresh)
                 {
-                    _cachedVideoFrame.yBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_textureNative);
-                    _cachedVideoFrame.uBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_uTextureNative);
-                    _cachedVideoFrame.vBuffer = (IntPtr)NativeArrayUnsafeUtility.GetUnsafeBufferPointerWithoutChecks(_vTextureNative);
-                }
-#else
-
-                _needResize = true;
-                FreeMemory();
-                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
-                _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
-                _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
-#endif
-                if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
-                {
-                    YStrideScale = 1.0f;
+                    tempVideoFrame = _cachedVideoFrame;
+                    _isFresh = false;
                 }
                 else
                 {
-                    YStrideScale = ((float)_cachedVideoFrame.width / (float)_cachedVideoFrame.yStride) - 0.02f;
+                    return;
                 }
+            }
 
-                return;
+            _canAttach = true;
+            if (tempVideoFrame.width != _videoPixelWidth || tempVideoFrame.height != _videoPixelHeight)
+            {
+                _videoPixelWidth = tempVideoFrame.width;
+                _videoPixelHeight = tempVideoFrame.height;
+#if UNITY_2021_2_OR_NEWER
+                _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+                _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+#else
+                _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+                _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+#endif
+            }
+            _texture.LoadRawTextureData(tempVideoFrame.yBuffer);
+            _uTexture.LoadRawTextureData(tempVideoFrame.uBuffer);
+            _vTexture.LoadRawTextureData(tempVideoFrame.vBuffer);
+            _texture.Apply();
+            _uTexture.Apply();
+            _vTexture.Apply();
+
+            if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
+            {
+                YStrideScale = 1.0f;
             }
             else
             {
-                _canAttach = true;
+                YStrideScale = ((float)_cachedVideoFrame.width / (float)_cachedVideoFrame.yStride) - 0.02f;
             }
-
-            if (isFresh == false)
-            {
-                return;
-            }
-
-            try
-            {
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-                _texture.Apply();
-                _uTexture.Apply();
-                _vTexture.Apply();
-#else
-                if (_needResize)
-                {
-#if UNITY_2021_2_OR_NEWER
-                    _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
-#else
-                    _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
-#endif
-                    _texture.Apply();
-#if UNITY_2021_2_OR_NEWER
-                    _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
-#else
-                    _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
-#endif
-                    _uTexture.Apply();
-#if UNITY_2021_2_OR_NEWER
-                    _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
-#else
-                    _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
-#endif
-                    _vTexture.Apply();
-
-                   
-                    _needResize = false;
-                }
-
-                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-                    (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
-                _texture.Apply();
-                _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
-                    (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
-                _uTexture.Apply();
-                _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
-                    (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
-                _vTexture.Apply();
-#endif
-
-            }
-            catch (Exception e)
-            {
-                AgoraLog.Log("Exception e = " + e);
-            }
-
         }
 
         protected override void DestroyTexture()
@@ -257,30 +160,7 @@ namespace Agora.Rtc
 
         private void FreeMemory()
         {
-#if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
-            _cachedVideoFrame.yBuffer = IntPtr.Zero;
-            _cachedVideoFrame.uBuffer = IntPtr.Zero;
-            _cachedVideoFrame.vBuffer = IntPtr.Zero;
-#else
 
-            if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(_cachedVideoFrame.yBuffer);
-                _cachedVideoFrame.yBuffer = IntPtr.Zero;
-            }
-
-            if (_cachedVideoFrame.uBuffer != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(_cachedVideoFrame.uBuffer);
-                _cachedVideoFrame.uBuffer = IntPtr.Zero;
-            }
-
-            if (_cachedVideoFrame.vBuffer != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(_cachedVideoFrame.vBuffer);
-                _cachedVideoFrame.vBuffer = IntPtr.Zero;
-            }
-#endif
         }
 
         override internal void Attach()
@@ -297,6 +177,46 @@ namespace Agora.Rtc
                 AgoraLog.Log("TextureManager YUV refCount Minus, Now is: " + _refCount);
             }
             return;
+        }
+
+        internal override void OnVideoFameEvent(ref IrisCVideoFrame videoFrame, ref IrisRtcVideoFrameConfig config, bool resize)
+        {
+            if (_videoFrameConfig.video_source_type != config.video_source_type)
+                return;
+            if (_videoFrameConfig.video_frame_format != config.video_frame_format)
+                return;
+            if (_videoFrameConfig.uid != config.uid)
+                return;
+            if (_videoFrameConfig.channelId != config.channelId)
+                return;
+
+
+            TextureVideoFrame tempVideoFrame = new TextureVideoFrame()
+            {
+                type = (int)videoFrame.type,
+                width = videoFrame.width,
+                height = videoFrame.height,
+                yStride = videoFrame.yStride,
+                uStride = videoFrame.uStride,
+                vStride = videoFrame.vStride
+            };
+
+            int yBufferLength = videoFrame.yStride * videoFrame.height;
+            int uBufferLength = videoFrame.uStride * videoFrame.height / 2;
+            int vBufferLength = videoFrame.vStride * videoFrame.height / 2;
+
+            tempVideoFrame.yBuffer = new byte[yBufferLength];
+            Marshal.Copy(videoFrame.yBuffer, tempVideoFrame.yBuffer, 0, yBufferLength);
+            tempVideoFrame.uBuffer = new byte[uBufferLength];
+            Marshal.Copy(videoFrame.uBuffer, tempVideoFrame.uBuffer, 0, uBufferLength);
+            tempVideoFrame.vBuffer = new byte[vBufferLength];
+            Marshal.Copy(videoFrame.vBuffer, tempVideoFrame.vBuffer, 0, vBufferLength);
+
+            lock (_videoFrameLock)
+            {
+                _cachedVideoFrame = tempVideoFrame;
+                _isFresh = true;
+            }
         }
 
     }

@@ -111,6 +111,20 @@ namespace Agora.Rtc
                                     ref IrisRtcVideoFrameConfig config,
                                     ref IrisCVideoFrame video_frame, out bool is_new_frame
                                  );
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr CreateVideoFrameEventHandler(IntPtr c_event_handler);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void DestroyVideoFrameEventHandler(IntPtr c_event_handler);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int AddVideoFrameObserverDelegate(IrisRtcRenderingHandle handle,
+            ref IrisRtcVideoFrameConfig config, IntPtr video_frame_handler);
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int RemoveVideoFrameObserverDelegate(IrisRtcRenderingHandle handle,
+            int delegate_id);
+
+
 
         internal static void AllocEventHandlerHandle(ref RtcEventHandlerHandle eventHandlerHandle, Rtc_Func_Event_Native onEvent)
         {
@@ -138,6 +152,34 @@ namespace Agora.Rtc
             eventHandlerHandle.marshal = IntPtr.Zero;
 
             eventHandlerHandle.cEvent = new IrisRtcCEventHandler();
+        }
+
+        internal static void AllocVideoFrameHandlerHandle(ref VideoFrameEventHandlerHandler eventHandlerHandle, Video_Frame_Event_Native onEvent)
+        {
+            eventHandlerHandle.cEvent = new IrisVideoCEventHandler
+            {
+                OnEvent = onEvent,
+            };
+
+            var cEventHandlerNativeLocal = new IrisRtcCEventHandlerNative
+            {
+                onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
+            };
+
+            eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+            Marshal.StructureToPtr(cEventHandlerNativeLocal, eventHandlerHandle.marshal, true);
+            eventHandlerHandle.handle = AgoraRtcNative.CreateVideoFrameEventHandler(eventHandlerHandle.marshal);
+        }
+
+        internal static void FreeVideoFrameHandlerHandle(ref VideoFrameEventHandlerHandler eventHandlerHandle)
+        {
+            AgoraRtcNative.DestroyVideoFrameEventHandler(eventHandlerHandle.handle);
+            eventHandlerHandle.handle = IntPtr.Zero;
+
+            Marshal.FreeHGlobal(eventHandlerHandle.marshal);
+            eventHandlerHandle.marshal = IntPtr.Zero;
+
+            eventHandlerHandle.cEvent = new IrisVideoCEventHandler();
         }
 
         #endregion
@@ -240,6 +282,9 @@ namespace Agora.Rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate void Rtc_Func_Event_Native(IntPtr param);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Video_Frame_Event_Native(ref IrisCVideoFrame videoFrame, ref IrisRtcVideoFrameConfig config, bool resize);
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcCEventParam
     {
@@ -326,8 +371,19 @@ namespace Agora.Rtc
         internal IrisEventHandlerHandle handle;
     }
 
-    #region callback native
+    internal struct IrisVideoCEventHandler
+    {
+        internal Video_Frame_Event_Native OnEvent;
+    }
 
+    internal struct VideoFrameEventHandlerHandler
+    {
+        internal IrisVideoCEventHandler cEvent;
+        internal IrisEventHandlerMarshal marshal;
+        internal IrisEventHandlerHandle handle;
+    }
+
+    #region callback native
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisSpatialAudioZone
     {

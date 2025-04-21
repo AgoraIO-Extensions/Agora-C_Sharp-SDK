@@ -837,9 +837,9 @@ namespace Agora.Rtc
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-        internal IVideoStreamManager GetVideoStreamManager()
+        internal IVideoStreamManager GetVideoStreamManager(TextureManager textureManager)
         {
-            return new VideoStreamManager(this);
+            return new VideoStreamManager(this, textureManager);
         }
 #endif
 
