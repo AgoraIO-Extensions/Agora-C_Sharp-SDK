@@ -92,7 +92,7 @@ namespace Agora.Rtc
         internal override void ReFreshTexture()
         {
             TimeConsuming.End(1, "TextureYUV:onVideoFrame -> refresh start");
-            TimeConsuming.Start(1);
+            TimeConsuming.Start(2);
             TextureVideoFrame tempVideoFrame = null;
 
             lock (_videoFrameLock)
