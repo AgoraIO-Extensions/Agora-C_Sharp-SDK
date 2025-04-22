@@ -159,6 +159,8 @@ namespace Agora.Rtc
 
         internal virtual void ReFreshTexture()
         {
+            TimeConsuming.Start();
+
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
@@ -233,6 +235,7 @@ namespace Agora.Rtc
                 AgoraLog.Log("Exception e = " + e);
             }
 
+            TimeConsuming.End("TextureRGBA:getVideoFrame start -> texture.apply");
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",

@@ -112,6 +112,8 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
+            TimeConsuming.Start();
+
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
 
@@ -233,6 +235,8 @@ namespace Agora.Rtc
             {
                 AgoraLog.Log("Exception e = " + e);
             }
+
+            TimeConsuming.End("TextureYUV:getVideoFrame start -> texture.apply");
 
         }
 
