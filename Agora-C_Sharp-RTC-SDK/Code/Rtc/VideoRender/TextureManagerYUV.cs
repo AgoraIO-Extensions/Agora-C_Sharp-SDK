@@ -112,10 +112,12 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-            TimeConsuming.Start();
 
+            TimeConsuming.Start(3);
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
-
+            TimeConsuming.End(3, "YUV: getVideoFrame Copy cost");
+            TimeConsuming.End(1,_cachedVideoFrame.renderTimeMs, "YUV: onRenderFrame finish -> getVideoFrame(copy finish)");
+            TimeConsuming.Start(2);
 
 
 
@@ -236,8 +238,7 @@ namespace Agora.Rtc
                 AgoraLog.Log("Exception e = " + e);
             }
 
-            TimeConsuming.End("TextureYUV:getVideoFrame start -> texture.apply");
-
+            TimeConsuming.End(2, "YUV:getVideoFrame (finsih copy) -> getVideoFrame finsih");
         }
 
         protected override void DestroyTexture()
