@@ -86,6 +86,7 @@ namespace Agora.Rtc
         {
             if (_needUpdateInfo) return;
             ReFreshTexture();
+          
         }
 
         protected virtual void OnDestroy()
@@ -195,6 +196,7 @@ namespace Agora.Rtc
             }
             _texture.LoadRawTextureData(tempVideoFrame.yBuffer);
             _texture.Apply();
+            TimeConsuming.End("TextureRGBA:onVideoFrame -> texture.apply");
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
@@ -267,6 +269,8 @@ namespace Agora.Rtc
                 _cachedVideoFrame = tempVideoFrame;
                 _isFresh = true;
             }
+
+            TimeConsuming.Start();
         }
 
     }

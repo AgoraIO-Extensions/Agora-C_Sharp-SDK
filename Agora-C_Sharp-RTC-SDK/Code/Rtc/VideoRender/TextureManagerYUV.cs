@@ -137,6 +137,7 @@ namespace Agora.Rtc
             {
                 YStrideScale = ((float)_cachedVideoFrame.width / (float)_cachedVideoFrame.yStride) - 0.02f;
             }
+            TimeConsuming.End("TextureYUV:onVideoFrame -> texture.apply");
         }
 
         protected override void DestroyTexture()
@@ -217,6 +218,7 @@ namespace Agora.Rtc
                 _cachedVideoFrame = tempVideoFrame;
                 _isFresh = true;
             }
+            TimeConsuming.Start();
         }
 
     }
