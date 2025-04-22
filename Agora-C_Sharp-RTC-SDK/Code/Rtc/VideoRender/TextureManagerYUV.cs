@@ -91,7 +91,8 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-
+            TimeConsuming.End(1, "TextureYUV:onVideoFrame -> refresh start");
+            TimeConsuming.Start(1);
             TextureVideoFrame tempVideoFrame = null;
 
             lock (_videoFrameLock)
@@ -137,7 +138,7 @@ namespace Agora.Rtc
             {
                 YStrideScale = ((float)_cachedVideoFrame.width / (float)_cachedVideoFrame.yStride) - 0.02f;
             }
-            TimeConsuming.End("TextureYUV:onVideoFrame -> texture.apply");
+            TimeConsuming.End(2, "TextureYUV:refresh start -> refresh end");
         }
 
         protected override void DestroyTexture()
@@ -218,7 +219,7 @@ namespace Agora.Rtc
                 _cachedVideoFrame = tempVideoFrame;
                 _isFresh = true;
             }
-            TimeConsuming.Start();
+            TimeConsuming.Start(1);
         }
 
     }
