@@ -70,7 +70,7 @@ namespace Agora.Rtc
             InitIrisVideoFrame();
         }
 
-        protected virtual void Update()
+        protected virtual void LateUpdate()
         {
             if (_needUpdateInfo) return;
             ReFreshTexture();
