@@ -116,7 +116,7 @@ namespace Agora.Rtc
             TimeConsuming.Start(3);
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
             TimeConsuming.End(3, "YUV: getVideoFrame Copy cost");
-            TimeConsuming.End(1,_cachedVideoFrame.renderTimeMs, "YUV: onRenderFrame finish -> getVideoFrame(copy finish)");
+            TimeConsuming.End(1,_cachedVideoFrame.renderTimeMs, "LateUpdate YUV: onRenderFrame finish -> getVideoFrame(copy finish)");
             TimeConsuming.Start(2);
 
 
