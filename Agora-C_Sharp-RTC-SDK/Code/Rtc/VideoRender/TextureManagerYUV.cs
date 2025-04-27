@@ -112,13 +112,11 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-
+            TimeConsuming.Start(2);
             TimeConsuming.Start(3);
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
             TimeConsuming.End(3, "YUV: getVideoFrame Copy cost");
-            TimeConsuming.End(1,_cachedVideoFrame.renderTimeMs, "YUV: onRenderFrame finish -> getVideoFrame(copy finish)");
-            TimeConsuming.Start(2);
-
+           
 
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
