@@ -40,7 +40,7 @@ namespace Agora.Rtc
                 }
 
                 var duration = curTime - externalStartTime;
-                IrisLog($"[TimeConsuming] C# {message}: {duration} ms");
+                IrisLog($"[TimeConsuming] C# {message}:externalStartTime:{externalStartTime}, durtation:{duration} ms");
                 logTime = curTime;
             }
 
