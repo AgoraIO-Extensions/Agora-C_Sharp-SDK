@@ -1,4 +1,4 @@
-name: Generate codes
+name: Generate codes and create pull request
 
 on:
   workflow_dispatch:
