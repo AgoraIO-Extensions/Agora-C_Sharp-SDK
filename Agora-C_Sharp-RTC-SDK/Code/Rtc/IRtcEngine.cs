@@ -863,26 +863,6 @@ namespace Agora.Rtc
         public abstract int StopPreview(VIDEO_SOURCE_TYPE sourceType);
 
         ///
-        /// @ignore
-        ///
-        public abstract bool IsPipSupported();
-
-        ///
-        /// @ignore
-        ///
-        public abstract int SetupPip(PipOptions options);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StartPip();
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StopPip();
-
-        ///
         /// <summary>
         /// Starts the last mile network probe test.
         /// 
@@ -2837,11 +2817,6 @@ namespace Agora.Rtc
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
 
         ///
-        /// @ignore
-        ///
-        public abstract int SetSimulcastConfig(SimulcastConfig simulcastConfig);
-
-        ///
         /// <summary>
         /// Sets dual-stream mode configuration on the sender side.
         /// 
@@ -4114,11 +4089,6 @@ namespace Agora.Rtc
         public abstract int QueryCameraFocalLengthCapability(ref FocalLengthInfo[] focalLengthInfos, ref int size);
 
         ///
-        /// @ignore
-        ///
-        public abstract int SetExternalMediaProjection(IntPtr mediaProjection);
-
-        ///
         /// <summary>
         /// Sets the screen sharing scenario.
         /// 
@@ -4578,6 +4548,16 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SendStreamMessage(int streamId, byte[] data, uint length);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SendRdtMessage(uint uid, RdtStreamType type, string data, ulong length);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SendMediaControlMessage(uint uid, string data, ulong length);
 
         ///
         /// <summary>
@@ -5117,11 +5097,6 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int TakeSnapshot(uint uid, string filePath);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int TakeSnapshot(uint uid, SnapshotConfig config);
 
         ///
         /// <summary>

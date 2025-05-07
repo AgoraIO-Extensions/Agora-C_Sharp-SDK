@@ -146,13 +146,6 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
-        ///
-        public virtual void OnPipStateChanged(PIP_STATE state)
-        {
-        }
-
-        ///
         /// <summary>
         /// Occurs when the uplink network information changes.
         /// 
@@ -1159,6 +1152,27 @@ namespace Agora.Rtc
         /// <param name="cached"> Number of incoming cached messages when the data stream is interrupted. </param>
         ///
         public virtual void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnRdtMessage(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnRdtStateChanged(RtcConnection connection, uint userId, RdtState state)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnMediaControlMessage(RtcConnection connection, uint userId, string data, ulong length)
         {
         }
 

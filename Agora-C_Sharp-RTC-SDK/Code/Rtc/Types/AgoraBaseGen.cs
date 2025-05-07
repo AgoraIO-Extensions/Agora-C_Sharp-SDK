@@ -595,6 +595,36 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        ERR_RDT_USER_NOT_EXIST = 250,
+
+        ///
+        /// @ignore
+        ///
+        ERR_RDT_USER_NOT_READY = 251,
+
+        ///
+        /// @ignore
+        ///
+        ERR_RDT_DATA_BLOCKED = 252,
+
+        ///
+        /// @ignore
+        ///
+        ERR_RDT_CMD_EXCEED_LIMIT = 253,
+
+        ///
+        /// @ignore
+        ///
+        ERR_RDT_DATA_EXCEED_LIMIT = 254,
+
+        ///
+        /// @ignore
+        ///
+        ERR_RDT_ENCRYPTION = 255,
+
+        ///
+        /// @ignore
+        ///
         ERR_LOGIN_ALREADY_LOGIN = 428,
 
         ///
@@ -1832,36 +1862,6 @@ namespace Agora.Rtc
         ///
         VIDEO_STREAM_LOW = 1,
 
-        ///
-        /// @ignore
-        ///
-        VIDEO_STREAM_LAYER_1 = 4,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_STREAM_LAYER_2 = 5,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_STREAM_LAYER_3 = 6,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_STREAM_LAYER_4 = 7,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_STREAM_LAYER_5 = 8,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_STREAM_LAYER_6 = 9,
-
     }
 
     ///
@@ -2187,23 +2187,6 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_MIRROR_MODE_DISABLED = 2,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum CAMERA_FORMAT_TYPE
-    {
-        ///
-        /// @ignore
-        ///
-        CAMERA_FORMAT_NV12,
-
-        ///
-        /// @ignore
-        ///
-        CAMERA_FORMAT_BGRA,
 
     }
 
@@ -2594,120 +2577,11 @@ namespace Agora.Rtc
             this.framerate = 5;
         }
 
-        public SimulcastStreamConfig(SimulcastStreamConfig other)
-        {
-            this.dimensions = other.dimensions;
-            this.kBitrate = other.kBitrate;
-            this.framerate = other.framerate;
-        }
-
         public SimulcastStreamConfig(VideoDimensions dimensions, int kBitrate, int framerate)
         {
             this.dimensions = dimensions;
             this.kBitrate = kBitrate;
             this.framerate = framerate;
-        }
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class SimulcastConfig
-    {
-        ///
-        /// @ignore
-        ///
-        public StreamLayerConfig[] configs;
-
-        public SimulcastConfig(StreamLayerConfig[] configs)
-        {
-            this.configs = configs;
-        }
-        public SimulcastConfig()
-        {
-        }
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum StreamLayerIndex
-    {
-        ///
-        /// @ignore
-        ///
-        STREAM_LAYER_1 = 0,
-
-        ///
-        /// @ignore
-        ///
-        STREAM_LAYER_2 = 1,
-
-        ///
-        /// @ignore
-        ///
-        STREAM_LAYER_3 = 2,
-
-        ///
-        /// @ignore
-        ///
-        STREAM_LAYER_4 = 3,
-
-        ///
-        /// @ignore
-        ///
-        STREAM_LAYER_5 = 4,
-
-        ///
-        /// @ignore
-        ///
-        STREAM_LAYER_6 = 5,
-
-        ///
-        /// @ignore
-        ///
-        STREAM_LOW = 6,
-
-        ///
-        /// @ignore
-        ///
-        STREAM_LAYER_COUNT_MAX = 7,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class StreamLayerConfig
-    {
-        ///
-        /// @ignore
-        ///
-        public VideoDimensions dimensions;
-
-        ///
-        /// @ignore
-        ///
-        public int framerate;
-
-        ///
-        /// @ignore
-        ///
-        public bool enable;
-
-        public StreamLayerConfig()
-        {
-            this.dimensions = new VideoDimensions(0, 0);
-            this.framerate = 0;
-            this.enable = false;
-        }
-
-        public StreamLayerConfig(VideoDimensions dimensions, int framerate, bool enable)
-        {
-            this.dimensions = dimensions;
-            this.framerate = framerate;
-            this.enable = enable;
         }
     }
 
@@ -4099,11 +3973,6 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_RESUMED = 29,
-
-        ///
-        /// @ignore
-        ///
-        LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
 
     }
 
@@ -6433,75 +6302,6 @@ namespace Agora.Rtc
     }
 
     ///
-    /// @ignore
-    ///
-    public enum PIP_STATE
-    {
-        ///
-        /// @ignore
-        ///
-        PIP_STATE_STARTED = 0,
-
-        ///
-        /// @ignore
-        ///
-        PIP_STATE_STOPPED = 1,
-
-        ///
-        /// @ignore
-        ///
-        PIP_STATE_FAILED = 2,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class PipOptions
-    {
-        ///
-        /// @ignore
-        ///
-        public IntPtr contentSource;
-
-        ///
-        /// @ignore
-        ///
-        public int contentWidth;
-
-        ///
-        /// @ignore
-        ///
-        public int contentHeight;
-
-        ///
-        /// @ignore
-        ///
-        public bool autoEnterPip;
-
-        ///
-        /// @ignore
-        ///
-        public VideoCanvas canvas;
-
-        public PipOptions()
-        {
-            this.contentSource = IntPtr.Zero;
-            this.contentWidth = 0;
-            this.contentHeight = 0;
-        }
-
-        public PipOptions(IntPtr contentSource, int contentWidth, int contentHeight, bool autoEnterPip, VideoCanvas canvas)
-        {
-            this.contentSource = contentSource;
-            this.contentWidth = contentWidth;
-            this.contentHeight = contentHeight;
-            this.autoEnterPip = autoEnterPip;
-            this.canvas = canvas;
-        }
-    }
-
-    ///
     /// <summary>
     /// Image enhancement options.
     /// </summary>
@@ -7008,11 +6808,6 @@ namespace Agora.Rtc
         ///
         AUDIO_TRACK_DIRECT = 1,
 
-        ///
-        /// @ignore
-        ///
-        AUDIO_TRACK_EXTERNAL_AEC_REFERENCE = 3,
-
     }
 
     ///
@@ -7029,28 +6824,14 @@ namespace Agora.Rtc
         ///
         public bool enableLocalPlayback;
 
-        ///
-        /// @ignore
-        ///
-        public bool enableAudioProcessing;
-
-        ///
-        /// @ignore
-        ///
-        public bool enableDirectPublish;
-
         public AudioTrackConfig()
         {
             this.enableLocalPlayback = true;
-            this.enableAudioProcessing = false;
-            this.enableDirectPublish = false;
         }
 
-        public AudioTrackConfig(bool enableLocalPlayback, bool enableAudioProcessing, bool enableDirectPublish)
+        public AudioTrackConfig(bool enableLocalPlayback)
         {
             this.enableLocalPlayback = enableLocalPlayback;
-            this.enableAudioProcessing = enableAudioProcessing;
-            this.enableDirectPublish = enableDirectPublish;
         }
     }
 
@@ -7958,11 +7739,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AREA_CODE_US = 0x00000800,
-
-        ///
-        /// @ignore
-        ///
-        AREA_CODE_RU = 0x00001000,
 
         ///
         /// @ignore
@@ -9115,6 +8891,60 @@ namespace Agora.Rtc
             this.channelId = channelId;
             this.uid = uid;
         }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum RdtStreamType
+    {
+        ///
+        /// @ignore
+        ///
+        RDT_STREAM_CMD,
+
+        ///
+        /// @ignore
+        ///
+        RDT_STREAM_DATA,
+
+        ///
+        /// @ignore
+        ///
+        RDT_STREAM_COUNT,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum RdtState
+    {
+        ///
+        /// @ignore
+        ///
+        RDT_STATE_CLOSED,
+
+        ///
+        /// @ignore
+        ///
+        RDT_STATE_OPENED,
+
+        ///
+        /// @ignore
+        ///
+        RDT_STATE_BLOCKED,
+
+        ///
+        /// @ignore
+        ///
+        RDT_STATE_PENDING,
+
+        ///
+        /// @ignore
+        ///
+        RDT_STATE_BROKEN,
 
     }
 

@@ -411,6 +411,147 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
+    public enum CONTENT_INSPECT_RESULT
+    {
+        ///
+        /// @ignore
+        ///
+        CONTENT_INSPECT_NEUTRAL = 1,
+
+        ///
+        /// @ignore
+        ///
+        CONTENT_INSPECT_SEXY = 2,
+
+        ///
+        /// @ignore
+        ///
+        CONTENT_INSPECT_PORN = 3,
+
+    }
+
+    ///
+    /// <summary>
+    /// The type of video content moderation module.
+    /// </summary>
+    ///
+    public enum CONTENT_INSPECT_TYPE
+    {
+        ///
+        /// <summary>
+        /// 0: (Default) This module has no actual function. Do not set type to this value.
+        /// </summary>
+        ///
+        CONTENT_INSPECT_INVALID = 0,
+
+        ///
+        /// @ignore
+        ///
+        [Obsolete("Content inspect type moderation")]
+        CONTENT_INSPECT_MODERATION = 1,
+
+        ///
+        /// <summary>
+        /// 2: Video screenshot and upload via Agora self-developed extension. SDK takes screenshots of the video stream in the channel and uploads them.
+        /// </summary>
+        ///
+        CONTENT_INSPECT_SUPERVISION = 2,
+
+        ///
+        /// <summary>
+        /// 3: Video screenshot and upload via extensions from Agora Extensions Marketplace. SDK uses video moderation extensions from Agora Extensions Marketplace to take screenshots of the video stream in the channel and uploads them.
+        /// </summary>
+        ///
+        CONTENT_INSPECT_IMAGE_MODERATION = 3,
+
+    }
+
+    ///
+    /// <summary>
+    /// A ContentInspectModule structure used to configure the frequency of video screenshot and upload.
+    /// </summary>
+    ///
+    public class ContentInspectModule
+    {
+        ///
+        /// <summary>
+        /// Types of functional module. See CONTENT_INSPECT_TYPE.
+        /// </summary>
+        ///
+        public CONTENT_INSPECT_TYPE type;
+
+        ///
+        /// <summary>
+        /// The frequency (s) of video screenshot and upload. The value should be set as larger than 0. The default value is 0, the SDK does not take screenshots. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
+        /// </summary>
+        ///
+        public uint interval;
+
+        public ContentInspectModule()
+        {
+        }
+
+        public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval)
+        {
+            this.type = type;
+            this.interval = interval;
+        }
+    }
+
+    ///
+    /// <summary>
+    /// Configuration of video screenshot and upload.
+    /// </summary>
+    ///
+    public class ContentInspectConfig
+    {
+        ///
+        /// <summary>
+        /// Additional information on the video content (maximum length: 1024 Bytes). The SDK sends the screenshots and additional information on the video content to the Agora server. Once the video screenshot and upload process is completed, the Agora server sends the additional information and the callback notification to your server.
+        /// </summary>
+        ///
+        public string extraInfo;
+
+        ///
+        /// <summary>
+        /// (Optional) Server configuration related to uploading video screenshots via extensions from Agora Extensions Marketplace. This parameter only takes effect when type in ContentInspectModule is set to CONTENT_INSPECT_IMAGE_MODERATION. If you want to use it, contact.
+        /// </summary>
+        ///
+        public string serverConfig;
+
+        ///
+        /// <summary>
+        /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
+        /// </summary>
+        ///
+        public ContentInspectModule[] modules;
+
+        ///
+        /// <summary>
+        /// The number of functional modules, that is,the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
+        /// </summary>
+        ///
+        public int moduleCount;
+
+        public ContentInspectConfig()
+        {
+            this.extraInfo = "";
+            this.serverConfig = "";
+            this.moduleCount = 0;
+        }
+
+        public ContentInspectConfig(string extraInfo, string serverConfig, ContentInspectModule[] modules, int moduleCount)
+        {
+            this.extraInfo = extraInfo;
+            this.serverConfig = serverConfig;
+            this.modules = modules;
+            this.moduleCount = moduleCount;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
     public class PacketOptions
     {
         ///
@@ -500,11 +641,6 @@ namespace Agora.Rtc
         public ulong num_channels_;
 
         ///
-        /// @ignore
-        ///
-        public int audio_track_number_;
-
-        ///
         /// <summary>
         /// The number of bytes per sample.
         /// </summary>
@@ -524,7 +660,6 @@ namespace Agora.Rtc
             this.samples_per_channel_ = 0;
             this.sample_rate_hz_ = 0;
             this.num_channels_ = 0;
-            this.audio_track_number_ = 0;
             this.bytes_per_sample = BYTES_PER_SAMPLE.TWO_BYTES_PER_SAMPLE;
         }
 
@@ -534,17 +669,15 @@ namespace Agora.Rtc
             this.samples_per_channel_ = src.samples_per_channel_;
             this.sample_rate_hz_ = src.sample_rate_hz_;
             this.num_channels_ = src.num_channels_;
-            this.audio_track_number_ = src.audio_track_number_;
             this.bytes_per_sample = src.bytes_per_sample;
         }
 
-        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, int audio_track_number_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_)
+        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_)
         {
             this.capture_timestamp = capture_timestamp;
             this.samples_per_channel_ = samples_per_channel_;
             this.sample_rate_hz_ = sample_rate_hz_;
             this.num_channels_ = num_channels_;
-            this.audio_track_number_ = audio_track_number_;
             this.bytes_per_sample = bytes_per_sample;
             this.data_ = data_;
         }
@@ -851,11 +984,6 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public long fence_object;
-
-        ///
-        /// @ignore
-        ///
         public float[] matrix;
 
         ///
@@ -912,7 +1040,6 @@ namespace Agora.Rtc
             this.eglContext = IntPtr.Zero;
             this.eglType = EGL_CONTEXT_TYPE.EGL_CONTEXT10;
             this.textureId = 0;
-            this.fence_object = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.alphaBuffer = null;
@@ -921,7 +1048,7 @@ namespace Agora.Rtc
             this.texture_slice_index = 0;
         }
 
-        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fence_object, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, IntPtr d3d11_texture_2d, int texture_slice_index)
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer, bool fillAlphaBuffer, IntPtr d3d11_texture_2d, int texture_slice_index)
         {
             this.type = type;
             this.format = format;
@@ -937,7 +1064,6 @@ namespace Agora.Rtc
             this.eglContext = eglContext;
             this.eglType = eglType;
             this.textureId = textureId;
-            this.fence_object = fence_object;
             this.matrix = matrix;
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
@@ -1275,181 +1401,6 @@ namespace Agora.Rtc
         ///
         POSITION_POST_CAPTURER_ORIGIN = 1 << 3,
 
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum CONTENT_INSPECT_RESULT
-    {
-        ///
-        /// @ignore
-        ///
-        CONTENT_INSPECT_NEUTRAL = 1,
-
-        ///
-        /// @ignore
-        ///
-        CONTENT_INSPECT_SEXY = 2,
-
-        ///
-        /// @ignore
-        ///
-        CONTENT_INSPECT_PORN = 3,
-
-    }
-
-    ///
-    /// <summary>
-    /// The type of video content moderation module.
-    /// </summary>
-    ///
-    public enum CONTENT_INSPECT_TYPE
-    {
-        ///
-        /// <summary>
-        /// 0: (Default) This module has no actual function. Do not set type to this value.
-        /// </summary>
-        ///
-        CONTENT_INSPECT_INVALID = 0,
-
-        ///
-        /// @ignore
-        ///
-        [Obsolete("Content inspect type moderation")]
-        CONTENT_INSPECT_MODERATION = 1,
-
-        ///
-        /// <summary>
-        /// 2: Video screenshot and upload via Agora self-developed extension. SDK takes screenshots of the video stream in the channel and uploads them.
-        /// </summary>
-        ///
-        CONTENT_INSPECT_SUPERVISION = 2,
-
-        ///
-        /// <summary>
-        /// 3: Video screenshot and upload via extensions from Agora Extensions Marketplace. SDK uses video moderation extensions from Agora Extensions Marketplace to take screenshots of the video stream in the channel and uploads them.
-        /// </summary>
-        ///
-        CONTENT_INSPECT_IMAGE_MODERATION = 3,
-
-    }
-
-    ///
-    /// <summary>
-    /// A ContentInspectModule structure used to configure the frequency of video screenshot and upload.
-    /// </summary>
-    ///
-    public class ContentInspectModule
-    {
-        ///
-        /// <summary>
-        /// Types of functional module. See CONTENT_INSPECT_TYPE.
-        /// </summary>
-        ///
-        public CONTENT_INSPECT_TYPE type;
-
-        ///
-        /// <summary>
-        /// The frequency (s) of video screenshot and upload. The value should be set as larger than 0. The default value is 0, the SDK does not take screenshots. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
-        /// </summary>
-        ///
-        public uint interval;
-
-        ///
-        /// @ignore
-        ///
-        public VIDEO_MODULE_POSITION position;
-
-        public ContentInspectModule()
-        {
-        }
-
-        public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval, VIDEO_MODULE_POSITION position)
-        {
-            this.type = type;
-            this.interval = interval;
-            this.position = position;
-        }
-    }
-
-    ///
-    /// <summary>
-    /// Configuration of video screenshot and upload.
-    /// </summary>
-    ///
-    public class ContentInspectConfig
-    {
-        ///
-        /// <summary>
-        /// Additional information on the video content (maximum length: 1024 Bytes). The SDK sends the screenshots and additional information on the video content to the Agora server. Once the video screenshot and upload process is completed, the Agora server sends the additional information and the callback notification to your server.
-        /// </summary>
-        ///
-        public string extraInfo;
-
-        ///
-        /// <summary>
-        /// (Optional) Server configuration related to uploading video screenshots via extensions from Agora Extensions Marketplace. This parameter only takes effect when type in ContentInspectModule is set to CONTENT_INSPECT_IMAGE_MODERATION. If you want to use it, contact.
-        /// </summary>
-        ///
-        public string serverConfig;
-
-        ///
-        /// <summary>
-        /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
-        /// </summary>
-        ///
-        public ContentInspectModule[] modules;
-
-        ///
-        /// <summary>
-        /// The number of functional modules, that is,the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
-        /// </summary>
-        ///
-        public int moduleCount;
-
-        public ContentInspectConfig()
-        {
-            this.extraInfo = "";
-            this.serverConfig = "";
-            this.moduleCount = 0;
-        }
-
-        public ContentInspectConfig(string extraInfo, string serverConfig, ContentInspectModule[] modules, int moduleCount)
-        {
-            this.extraInfo = extraInfo;
-            this.serverConfig = serverConfig;
-            this.modules = modules;
-            this.moduleCount = moduleCount;
-        }
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class SnapshotConfig
-    {
-        ///
-        /// @ignore
-        ///
-        public string filePath;
-
-        ///
-        /// @ignore
-        ///
-        public VIDEO_MODULE_POSITION position;
-
-        public SnapshotConfig()
-        {
-            this.filePath = "";
-            this.position = VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER;
-        }
-
-        public SnapshotConfig(string filePath, VIDEO_MODULE_POSITION position)
-        {
-            this.filePath = filePath;
-            this.position = position;
-        }
     }
 
     ///

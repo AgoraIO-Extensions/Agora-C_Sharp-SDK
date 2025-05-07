@@ -140,20 +140,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONPIPSTATECHANGED_941b366:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnPipStateChanged(
-                        (PIP_STATE)AgoraJson.GetData<int>(jsonData, "state")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONUPLINKNETWORKINFOUPDATED_cbb1856:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -1123,6 +1109,57 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         (int)AgoraJson.GetData<int>(jsonData, "code"),
                         (int)AgoraJson.GetData<int>(jsonData, "missed"),
                         (int)AgoraJson.GetData<int>(jsonData, "cached")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONRDTMESSAGE_1f6f532:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnRdtMessage(
+                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
+                        (RdtStreamType)AgoraJson.GetData<int>(jsonData, "type"),
+                        (string)AgoraJson.GetData<string>(jsonData, "data"),
+                        (ulong)AgoraJson.GetData<ulong>(jsonData, "length")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONRDTSTATECHANGED_bf4ade0:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnRdtStateChanged(
+                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
+                        (RdtState)AgoraJson.GetData<int>(jsonData, "state")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONMEDIACONTROLMESSAGE_0d4eb96:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnMediaControlMessage(
+                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
+                        (string)AgoraJson.GetData<string>(jsonData, "data"),
+                        (ulong)AgoraJson.GetData<ulong>(jsonData, "length")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });

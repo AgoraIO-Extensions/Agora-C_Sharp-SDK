@@ -74,14 +74,6 @@ namespace Agora.Rtc
             EventOnVideoDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
         }
 
-        public event Action<PIP_STATE> EventOnPipStateChanged;
-
-        public override void OnPipStateChanged(PIP_STATE state)
-        {
-            if (EventOnPipStateChanged == null) return;
-            EventOnPipStateChanged.Invoke(state);
-        }
-
         public event Action<UplinkNetworkInfo> EventOnUplinkNetworkInfoUpdated;
 
         public override void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info)
@@ -584,6 +576,30 @@ namespace Agora.Rtc
         {
             if (EventOnStreamMessageError == null) return;
             EventOnStreamMessageError.Invoke(connection, remoteUid, streamId, code, missed, cached);
+        }
+
+        public event Action<RtcConnection, uint, RdtStreamType, string, ulong> EventOnRdtMessage;
+
+        public override void OnRdtMessage(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
+        {
+            if (EventOnRdtMessage == null) return;
+            EventOnRdtMessage.Invoke(connection, userId, type, data, length);
+        }
+
+        public event Action<RtcConnection, uint, RdtState> EventOnRdtStateChanged;
+
+        public override void OnRdtStateChanged(RtcConnection connection, uint userId, RdtState state)
+        {
+            if (EventOnRdtStateChanged == null) return;
+            EventOnRdtStateChanged.Invoke(connection, userId, state);
+        }
+
+        public event Action<RtcConnection, uint, string, ulong> EventOnMediaControlMessage;
+
+        public override void OnMediaControlMessage(RtcConnection connection, uint userId, string data, ulong length)
+        {
+            if (EventOnMediaControlMessage == null) return;
+            EventOnMediaControlMessage.Invoke(connection, userId, data, length);
         }
 
         public event Action<RtcConnection> EventOnRequestToken;

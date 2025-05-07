@@ -290,40 +290,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_IsPipSupported()
-        {
-            var nRet = @interface.IsPipSupported();
-            Assert.AreEqual(false, nRet);
-        }
-
-
-        [Test]
-        public void Test_SetupPip_b0b4d39()
-        {
-            var options = ParamsHelper.CreateParam<PipOptions>();
-
-            var nRet = @interface.SetupPip(options);
-            Assert.AreEqual(-4, nRet);
-        }
-
-
-        [Test]
-        public void Test_StartPip()
-        {
-            var nRet = @interface.StartPip();
-            Assert.AreEqual(-4, nRet);
-        }
-
-
-        [Test]
-        public void Test_StopPip()
-        {
-            var nRet = @interface.StopPip();
-            Assert.AreEqual(-4, nRet);
-        }
-
-
-        [Test]
         public void Test_StartLastmileProbeTest_c4de423()
         {
             var config = ParamsHelper.CreateParam<LastmileProbeConfig>();
@@ -1444,16 +1410,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_SetSimulcastConfig_3dcdfd7()
-        {
-            var simulcastConfig = ParamsHelper.CreateParam<SimulcastConfig>();
-
-            var nRet = @interface.SetSimulcastConfig(simulcastConfig);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
         public void Test_SetDualStreamMode_b3a4f6c()
         {
             var mode = ParamsHelper.CreateParam<SIMULCAST_STREAM_MODE>();
@@ -2246,16 +2202,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_SetExternalMediaProjection_f337cbf()
-        {
-            var mediaProjection = ParamsHelper.CreateParam<IntPtr>();
-
-            var nRet = @interface.SetExternalMediaProjection(mediaProjection);
-            Assert.AreEqual(-4, nRet);
-        }
-
-
-        [Test]
         public void Test_SetScreenCaptureScenario_13de7b4()
         {
             var screenScenario = ParamsHelper.CreateParam<SCREEN_SCENARIO_TYPE>();
@@ -2523,6 +2469,36 @@ namespace Agora.Rtc.Ut
             var length = ParamsHelper.CreateParam<uint>();
 
             var nRet = @interface.SendStreamMessage(streamId, data, length);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_SendRdtMessage_ea5e5d7()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var type = ParamsHelper.CreateParam<RdtStreamType>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var nRet = @interface.SendRdtMessage(uid, type, data, length);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_SendMediaControlMessage_77edd82()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var nRet = @interface.SendMediaControlMessage(uid, data, length);
             Assert.AreEqual(0, nRet);
         }
 
@@ -2839,18 +2815,6 @@ namespace Agora.Rtc.Ut
             var filePath = ParamsHelper.CreateParam<string>();
 
             var nRet = @interface.TakeSnapshot(uid, filePath);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_TakeSnapshot_5669ea6()
-        {
-            var uid = ParamsHelper.CreateParam<uint>();
-
-            var config = ParamsHelper.CreateParam<SnapshotConfig>();
-
-            var nRet = @interface.TakeSnapshot(uid, config);
             Assert.AreEqual(0, nRet);
         }
 

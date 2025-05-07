@@ -263,42 +263,6 @@ namespace Agora.Rtc
             return _impl.StopPreview(sourceType);
         }
 
-        public override bool IsPipSupported()
-        {
-            if (_impl == null)
-            {
-                return false;
-            }
-            return _impl.IsPipSupported();
-        }
-
-        public override int SetupPip(PipOptions options)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.SetupPip(options);
-        }
-
-        public override int StartPip()
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.StartPip();
-        }
-
-        public override int StopPip()
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.StopPip();
-        }
-
         public override int StartLastmileProbeTest(LastmileProbeConfig config)
         {
             if (_impl == null)
@@ -1244,15 +1208,6 @@ namespace Agora.Rtc
             return _impl.SetDualStreamMode(mode);
         }
 
-        public override int SetSimulcastConfig(SimulcastConfig simulcastConfig)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.SetSimulcastConfig(simulcastConfig);
-        }
-
         public override int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
         {
             if (_impl == null)
@@ -1928,15 +1883,6 @@ namespace Agora.Rtc
             return _impl.QueryCameraFocalLengthCapability(ref focalLengthInfos, ref size);
         }
 
-        public override int SetExternalMediaProjection(IntPtr mediaProjection)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.SetExternalMediaProjection(mediaProjection);
-        }
-
         public override int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
         {
             if (_impl == null)
@@ -2169,6 +2115,24 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.SendStreamMessage(streamId, data, length);
+        }
+
+        public override int SendRdtMessage(uint uid, RdtStreamType type, string data, ulong length)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendRdtMessage(uid, type, data, length);
+        }
+
+        public override int SendMediaControlMessage(uint uid, string data, ulong length)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendMediaControlMessage(uid, data, length);
         }
 
         public override int AddVideoWatermark(RtcImage watermark)
@@ -2441,15 +2405,6 @@ namespace Agora.Rtc
             return _impl.TakeSnapshot(uid, filePath);
         }
 
-        public override int TakeSnapshot(uint uid, SnapshotConfig config)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.TakeSnapshot(uid, config);
-        }
-
         public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
         {
             if (_impl == null)
@@ -2628,24 +2583,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.LeaveChannelEx(connection, options);
-        }
-
-        public override int LeaveChannelWithUserAccountEx(string channelId, string userAccount)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.LeaveChannelWithUserAccountEx(channelId, userAccount);
-        }
-
-        public override int LeaveChannelWithUserAccountEx(string channelId, string userAccount, LeaveChannelOptions options)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.LeaveChannelWithUserAccountEx(channelId, userAccount, options);
         }
 
         public override int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection)
@@ -2891,6 +2828,24 @@ namespace Agora.Rtc
             return _impl.SendStreamMessageEx(streamId, data, length, connection);
         }
 
+        public override int SendRdtMessageEx(uint uid, RdtStreamType type, string data, ulong length, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendRdtMessageEx(uid, type, data, length, connection);
+        }
+
+        public override int SendMediaControlMessageEx(uint uid, string data, ulong length, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendMediaControlMessageEx(uid, data, length, connection);
+        }
+
         public override int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
         {
             if (_impl == null)
@@ -3035,15 +2990,6 @@ namespace Agora.Rtc
             return _impl.SetDualStreamModeEx(mode, streamConfig, connection);
         }
 
-        public override int SetSimulcastConfigEx(SimulcastConfig simulcastConfig, RtcConnection connection)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.SetSimulcastConfigEx(simulcastConfig, connection);
-        }
-
         public override int SetHighPriorityUserListEx(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnection connection)
         {
             if (_impl == null)
@@ -3060,15 +3006,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.TakeSnapshotEx(connection, uid, filePath);
-        }
-
-        public override int TakeSnapshotEx(RtcConnection connection, uint uid, SnapshotConfig config)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.TakeSnapshotEx(connection, uid, config);
         }
 
         public override int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection)
@@ -3114,24 +3051,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.SendAudioMetadataEx(connection, metadata, length);
-        }
-
-        public override int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.PreloadEffectEx(connection, soundId, filePath, startPos);
-        }
-
-        public override int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
         }
 
         public override int RegisterFaceInfoObserver(IFaceInfoObserver observer)

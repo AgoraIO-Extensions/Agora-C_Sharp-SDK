@@ -186,25 +186,6 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
-        public void Test_IRtcEngineEventHandler_OnPipStateChanged_941b366()
-        {
-            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONPIPSTATECHANGED_941b366;
-
-            jsonObj.Clear();
-
-            PIP_STATE state = ParamsHelper.CreateParam<PIP_STATE>();
-            jsonObj.Add("state", state);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(false, callback.OnPipStateChangedPassed(state));
-        }
-
-        [Test]
         public void Test_IRtcEngineEventHandler_OnUplinkNetworkInfoUpdated_cbb1856()
         {
             ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONUPLINKNETWORKINFOUPDATED_cbb1856;
@@ -1692,6 +1673,90 @@ namespace Agora.Rtc.Ut.Event
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, callback.OnStreamMessageErrorPassed(connection, remoteUid, streamId, code, missed, cached));
+        }
+
+        [Test]
+        public void Test_IRtcEngineEventHandler_OnRdtMessage_1f6f532()
+        {
+            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONRDTMESSAGE_1f6f532;
+
+            jsonObj.Clear();
+
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            jsonObj.Add("connection", connection);
+
+            uint userId = ParamsHelper.CreateParam<uint>();
+            jsonObj.Add("userId", userId);
+
+            RdtStreamType type = ParamsHelper.CreateParam<RdtStreamType>();
+            jsonObj.Add("type", type);
+
+            string data = ParamsHelper.CreateParam<string>();
+            jsonObj.Add("data", data);
+
+            ulong length = ParamsHelper.CreateParam<ulong>();
+            jsonObj.Add("length", length);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnRdtMessagePassed(connection, userId, type, data, length));
+        }
+
+        [Test]
+        public void Test_IRtcEngineEventHandler_OnRdtStateChanged_bf4ade0()
+        {
+            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONRDTSTATECHANGED_bf4ade0;
+
+            jsonObj.Clear();
+
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            jsonObj.Add("connection", connection);
+
+            uint userId = ParamsHelper.CreateParam<uint>();
+            jsonObj.Add("userId", userId);
+
+            RdtState state = ParamsHelper.CreateParam<RdtState>();
+            jsonObj.Add("state", state);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnRdtStateChangedPassed(connection, userId, state));
+        }
+
+        [Test]
+        public void Test_IRtcEngineEventHandler_OnMediaControlMessage_0d4eb96()
+        {
+            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONMEDIACONTROLMESSAGE_0d4eb96;
+
+            jsonObj.Clear();
+
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            jsonObj.Add("connection", connection);
+
+            uint userId = ParamsHelper.CreateParam<uint>();
+            jsonObj.Add("userId", userId);
+
+            string data = ParamsHelper.CreateParam<string>();
+            jsonObj.Add("data", data);
+
+            ulong length = ParamsHelper.CreateParam<ulong>();
+            jsonObj.Add("length", length);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnMediaControlMessagePassed(connection, userId, data, length));
         }
 
         [Test]

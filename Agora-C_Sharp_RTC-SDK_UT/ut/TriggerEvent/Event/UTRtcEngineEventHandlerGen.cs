@@ -215,28 +215,6 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
-        public bool OnPipStateChanged_941b366_be_trigger = false;
-        public PIP_STATE OnPipStateChanged_941b366_state;
-
-        public override void OnPipStateChanged(PIP_STATE state)
-        {
-            OnPipStateChanged_941b366_be_trigger = true;
-            OnPipStateChanged_941b366_state = state;
-        }
-
-        public bool OnPipStateChangedPassed(PIP_STATE state)
-        {
-            if (OnPipStateChanged_941b366_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<PIP_STATE>(OnPipStateChanged_941b366_state, state) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
         public bool OnUplinkNetworkInfoUpdated_cbb1856_be_trigger = false;
         public UplinkNetworkInfo OnUplinkNetworkInfoUpdated_cbb1856_info;
 
@@ -2052,6 +2030,108 @@ namespace Agora.Rtc.Ut
             if (ParamsHelper.Compare<int>(OnStreamMessageError_fe302fc_missed, missed) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnStreamMessageError_fe302fc_cached, cached) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnRdtMessage_1f6f532_be_trigger = false;
+        public RtcConnection OnRdtMessage_1f6f532_connection;
+        public uint OnRdtMessage_1f6f532_userId;
+        public RdtStreamType OnRdtMessage_1f6f532_type;
+        public string OnRdtMessage_1f6f532_data;
+        public ulong OnRdtMessage_1f6f532_length;
+
+        public override void OnRdtMessage(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
+        {
+            OnRdtMessage_1f6f532_be_trigger = true;
+            OnRdtMessage_1f6f532_connection = connection;
+            OnRdtMessage_1f6f532_userId = userId;
+            OnRdtMessage_1f6f532_type = type;
+            OnRdtMessage_1f6f532_data = data;
+            OnRdtMessage_1f6f532_length = length;
+        }
+
+        public bool OnRdtMessagePassed(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
+        {
+            if (OnRdtMessage_1f6f532_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnRdtMessage_1f6f532_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRdtMessage_1f6f532_userId, userId) == false)
+                return false;
+            if (ParamsHelper.Compare<RdtStreamType>(OnRdtMessage_1f6f532_type, type) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnRdtMessage_1f6f532_data, data) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnRdtMessage_1f6f532_length, length) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnRdtStateChanged_bf4ade0_be_trigger = false;
+        public RtcConnection OnRdtStateChanged_bf4ade0_connection;
+        public uint OnRdtStateChanged_bf4ade0_userId;
+        public RdtState OnRdtStateChanged_bf4ade0_state;
+
+        public override void OnRdtStateChanged(RtcConnection connection, uint userId, RdtState state)
+        {
+            OnRdtStateChanged_bf4ade0_be_trigger = true;
+            OnRdtStateChanged_bf4ade0_connection = connection;
+            OnRdtStateChanged_bf4ade0_userId = userId;
+            OnRdtStateChanged_bf4ade0_state = state;
+        }
+
+        public bool OnRdtStateChangedPassed(RtcConnection connection, uint userId, RdtState state)
+        {
+            if (OnRdtStateChanged_bf4ade0_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnRdtStateChanged_bf4ade0_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRdtStateChanged_bf4ade0_userId, userId) == false)
+                return false;
+            if (ParamsHelper.Compare<RdtState>(OnRdtStateChanged_bf4ade0_state, state) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnMediaControlMessage_0d4eb96_be_trigger = false;
+        public RtcConnection OnMediaControlMessage_0d4eb96_connection;
+        public uint OnMediaControlMessage_0d4eb96_userId;
+        public string OnMediaControlMessage_0d4eb96_data;
+        public ulong OnMediaControlMessage_0d4eb96_length;
+
+        public override void OnMediaControlMessage(RtcConnection connection, uint userId, string data, ulong length)
+        {
+            OnMediaControlMessage_0d4eb96_be_trigger = true;
+            OnMediaControlMessage_0d4eb96_connection = connection;
+            OnMediaControlMessage_0d4eb96_userId = userId;
+            OnMediaControlMessage_0d4eb96_data = data;
+            OnMediaControlMessage_0d4eb96_length = length;
+        }
+
+        public bool OnMediaControlMessagePassed(RtcConnection connection, uint userId, string data, ulong length)
+        {
+            if (OnMediaControlMessage_0d4eb96_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnMediaControlMessage_0d4eb96_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnMediaControlMessage_0d4eb96_userId, userId) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnMediaControlMessage_0d4eb96_data, data) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnMediaControlMessage_0d4eb96_length, length) == false)
                 return false;
 
             return true;

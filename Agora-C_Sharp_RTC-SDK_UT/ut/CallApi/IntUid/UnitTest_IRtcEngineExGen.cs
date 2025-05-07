@@ -46,32 +46,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_LeaveChannelWithUserAccountEx_ccad422()
-        {
-            var channelId = ParamsHelper.CreateParam<string>();
-
-            var userAccount = ParamsHelper.CreateParam<string>();
-
-            var nRet = @interface.LeaveChannelWithUserAccountEx(channelId, userAccount);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_LeaveChannelWithUserAccountEx_8bbe372()
-        {
-            var channelId = ParamsHelper.CreateParam<string>();
-
-            var userAccount = ParamsHelper.CreateParam<string>();
-
-            var options = ParamsHelper.CreateParam<LeaveChannelOptions>();
-
-            var nRet = @interface.LeaveChannelWithUserAccountEx(channelId, userAccount, options);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
         public void Test_UpdateChannelMediaOptionsEx_457bb35()
         {
             var options = ParamsHelper.CreateParam<ChannelMediaOptions>();
@@ -436,6 +410,40 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SendRdtMessageEx_3a2998e()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var type = ParamsHelper.CreateParam<RdtStreamType>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = @interface.SendRdtMessageEx(uid, type, data, length, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_SendMediaControlMessageEx_907822a()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = @interface.SendMediaControlMessageEx(uid, data, length, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_AddVideoWatermarkEx_ad7daa3()
         {
             var watermarkUrl = ParamsHelper.CreateParam<string>();
@@ -644,18 +652,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_SetSimulcastConfigEx_bd8d7d0()
-        {
-            var simulcastConfig = ParamsHelper.CreateParam<SimulcastConfig>();
-
-            var connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = @interface.SetSimulcastConfigEx(simulcastConfig, connection);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
         public void Test_SetHighPriorityUserListEx_8736b5c()
         {
             var uidList = ParamsHelper.CreateParam<uint[]>();
@@ -681,20 +677,6 @@ namespace Agora.Rtc.Ut
             var filePath = ParamsHelper.CreateParam<string>();
 
             var nRet = @interface.TakeSnapshotEx(connection, uid, filePath);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_TakeSnapshotEx_b856417()
-        {
-            var connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var uid = ParamsHelper.CreateParam<uint>();
-
-            var config = ParamsHelper.CreateParam<SnapshotConfig>();
-
-            var nRet = @interface.TakeSnapshotEx(connection, uid, config);
             Assert.AreEqual(0, nRet);
         }
 
@@ -757,48 +739,6 @@ namespace Agora.Rtc.Ut
             var length = ParamsHelper.CreateParam<ulong>();
 
             var nRet = @interface.SendAudioMetadataEx(connection, metadata, length);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_PreloadEffectEx_c9fae88()
-        {
-            var connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var soundId = ParamsHelper.CreateParam<int>();
-
-            var filePath = ParamsHelper.CreateParam<string>();
-
-            var startPos = ParamsHelper.CreateParam<int>();
-
-            var nRet = @interface.PreloadEffectEx(connection, soundId, filePath, startPos);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_PlayEffectEx_ae5345c()
-        {
-            var connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var soundId = ParamsHelper.CreateParam<int>();
-
-            var filePath = ParamsHelper.CreateParam<string>();
-
-            var loopCount = ParamsHelper.CreateParam<int>();
-
-            var pitch = ParamsHelper.CreateParam<double>();
-
-            var pan = ParamsHelper.CreateParam<double>();
-
-            var gain = ParamsHelper.CreateParam<int>();
-
-            var publish = ParamsHelper.CreateParam<bool>();
-
-            var startPos = ParamsHelper.CreateParam<int>();
-
-            var nRet = @interface.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
             Assert.AreEqual(0, nRet);
         }
 

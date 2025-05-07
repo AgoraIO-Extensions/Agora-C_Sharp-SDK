@@ -92,16 +92,6 @@ namespace Agora.Rtc
         public abstract int LeaveChannelEx(RtcConnection connection, LeaveChannelOptions options);
 
         ///
-        /// @ignore
-        ///
-        public abstract int LeaveChannelWithUserAccountEx(string channelId, string userAccount);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int LeaveChannelWithUserAccountEx(string channelId, string userAccount, LeaveChannelOptions options);
-
-        ///
         /// <summary>
         /// Updates the channel media options after joining the channel.
         /// </summary>
@@ -635,6 +625,16 @@ namespace Agora.Rtc
         public abstract int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SendRdtMessageEx(uint uid, RdtStreamType type, string data, ulong length, RtcConnection connection);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SendMediaControlMessageEx(uint uid, string data, ulong length, RtcConnection connection);
+
+        ///
         /// <summary>
         /// Adds a watermark image to the local video.
         /// 
@@ -932,11 +932,6 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int SetSimulcastConfigEx(SimulcastConfig simulcastConfig, RtcConnection connection);
-
-        ///
-        /// @ignore
-        ///
         public abstract int SetHighPriorityUserListEx(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnection connection);
 
         ///
@@ -967,11 +962,6 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, SnapshotConfig config);
 
         ///
         /// <summary>
@@ -1037,16 +1027,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
 
     }
 }
