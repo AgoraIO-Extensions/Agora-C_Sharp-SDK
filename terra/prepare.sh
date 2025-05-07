@@ -5,7 +5,7 @@ set -x
 MY_PATH=$(realpath $(dirname "$0"))
 PROJECT_ROOT=$(realpath ${MY_PATH}/..)
 
-pushd ${MY_PATH}
+cd ${MY_PATH}
 
 rm -rf .terra
 rm -rf node_modules
