@@ -26,12 +26,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract void OnLyricResult(string requestId, long internalSongCode, string payload, MusicContentCenterStateReason reason);
-
-        ///
-        /// @ignore
-        ///
-        public abstract void OnLyricInfoResult(string requestId, long songCode, ILyricInfo lyricInfo, MusicContentCenterStateReason reason);
+        public abstract void OnLyricResult(string requestId, long songCode, string lyricUrl, MusicContentCenterStateReason reason);
 
         ///
         /// @ignore
@@ -41,12 +36,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract void OnPreLoadEvent(string requestId, long internalSongCode, int percent, string payload, MusicContentCenterState status, MusicContentCenterStateReason reason);
-
-        ///
-        /// @ignore
-        ///
-        public abstract void OnStartScoreResult(long internalSongCode, MusicContentCenterState status, MusicContentCenterStateReason reason);
+        public abstract void OnPreLoadEvent(string requestId, long songCode, int percent, string lyricUrl, PreloadState state, MusicContentCenterStateReason reason);
 
     }
 }

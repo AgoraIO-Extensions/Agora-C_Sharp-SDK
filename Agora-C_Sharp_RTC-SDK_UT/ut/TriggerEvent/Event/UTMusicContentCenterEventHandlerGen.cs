@@ -69,65 +69,31 @@ namespace Agora.Rtc.Ut
 
         public bool OnLyricResult_9ad9c90_be_trigger = false;
         public string OnLyricResult_9ad9c90_requestId;
-        public long OnLyricResult_9ad9c90_internalSongCode;
-        public string OnLyricResult_9ad9c90_payload;
+        public long OnLyricResult_9ad9c90_songCode;
+        public string OnLyricResult_9ad9c90_lyricUrl;
         public MusicContentCenterStateReason OnLyricResult_9ad9c90_reason;
 
-        public override void OnLyricResult(string requestId, long internalSongCode, string payload, MusicContentCenterStateReason reason)
+        public override void OnLyricResult(string requestId, long songCode, string lyricUrl, MusicContentCenterStateReason reason)
         {
             OnLyricResult_9ad9c90_be_trigger = true;
             OnLyricResult_9ad9c90_requestId = requestId;
-            OnLyricResult_9ad9c90_internalSongCode = internalSongCode;
-            OnLyricResult_9ad9c90_payload = payload;
+            OnLyricResult_9ad9c90_songCode = songCode;
+            OnLyricResult_9ad9c90_lyricUrl = lyricUrl;
             OnLyricResult_9ad9c90_reason = reason;
         }
 
-        public bool OnLyricResultPassed(string requestId, long internalSongCode, string payload, MusicContentCenterStateReason reason)
+        public bool OnLyricResultPassed(string requestId, long songCode, string lyricUrl, MusicContentCenterStateReason reason)
         {
             if (OnLyricResult_9ad9c90_be_trigger == false)
                 return false;
 
             if (ParamsHelper.Compare<string>(OnLyricResult_9ad9c90_requestId, requestId) == false)
                 return false;
-            if (ParamsHelper.Compare<long>(OnLyricResult_9ad9c90_internalSongCode, internalSongCode) == false)
+            if (ParamsHelper.Compare<long>(OnLyricResult_9ad9c90_songCode, songCode) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnLyricResult_9ad9c90_payload, payload) == false)
+            if (ParamsHelper.Compare<string>(OnLyricResult_9ad9c90_lyricUrl, lyricUrl) == false)
                 return false;
             if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnLyricResult_9ad9c90_reason, reason) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
-        public bool OnLyricInfoResult_4725ebf_be_trigger = false;
-        public string OnLyricInfoResult_4725ebf_requestId;
-        public long OnLyricInfoResult_4725ebf_songCode;
-        public ILyricInfo OnLyricInfoResult_4725ebf_lyricInfo;
-        public MusicContentCenterStateReason OnLyricInfoResult_4725ebf_reason;
-
-        public override void OnLyricInfoResult(string requestId, long songCode, ILyricInfo lyricInfo, MusicContentCenterStateReason reason)
-        {
-            OnLyricInfoResult_4725ebf_be_trigger = true;
-            OnLyricInfoResult_4725ebf_requestId = requestId;
-            OnLyricInfoResult_4725ebf_songCode = songCode;
-            OnLyricInfoResult_4725ebf_lyricInfo = lyricInfo;
-            OnLyricInfoResult_4725ebf_reason = reason;
-        }
-
-        public bool OnLyricInfoResultPassed(string requestId, long songCode, ILyricInfo lyricInfo, MusicContentCenterStateReason reason)
-        {
-            if (OnLyricInfoResult_4725ebf_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<string>(OnLyricInfoResult_4725ebf_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<long>(OnLyricInfoResult_4725ebf_songCode, songCode) == false)
-                return false;
-            if (ParamsHelper.Compare<ILyricInfo>(OnLyricInfoResult_4725ebf_lyricInfo, lyricInfo) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnLyricInfoResult_4725ebf_reason, reason) == false)
                 return false;
 
             return true;
@@ -169,71 +135,41 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
-        public bool OnPreLoadEvent_d238b4d_be_trigger = false;
-        public string OnPreLoadEvent_d238b4d_requestId;
-        public long OnPreLoadEvent_d238b4d_internalSongCode;
-        public int OnPreLoadEvent_d238b4d_percent;
-        public string OnPreLoadEvent_d238b4d_payload;
-        public MusicContentCenterState OnPreLoadEvent_d238b4d_status;
-        public MusicContentCenterStateReason OnPreLoadEvent_d238b4d_reason;
+        public bool OnPreLoadEvent_20170bc_be_trigger = false;
+        public string OnPreLoadEvent_20170bc_requestId;
+        public long OnPreLoadEvent_20170bc_songCode;
+        public int OnPreLoadEvent_20170bc_percent;
+        public string OnPreLoadEvent_20170bc_lyricUrl;
+        public PreloadState OnPreLoadEvent_20170bc_state;
+        public MusicContentCenterStateReason OnPreLoadEvent_20170bc_reason;
 
-        public override void OnPreLoadEvent(string requestId, long internalSongCode, int percent, string payload, MusicContentCenterState status, MusicContentCenterStateReason reason)
+        public override void OnPreLoadEvent(string requestId, long songCode, int percent, string lyricUrl, PreloadState state, MusicContentCenterStateReason reason)
         {
-            OnPreLoadEvent_d238b4d_be_trigger = true;
-            OnPreLoadEvent_d238b4d_requestId = requestId;
-            OnPreLoadEvent_d238b4d_internalSongCode = internalSongCode;
-            OnPreLoadEvent_d238b4d_percent = percent;
-            OnPreLoadEvent_d238b4d_payload = payload;
-            OnPreLoadEvent_d238b4d_status = status;
-            OnPreLoadEvent_d238b4d_reason = reason;
+            OnPreLoadEvent_20170bc_be_trigger = true;
+            OnPreLoadEvent_20170bc_requestId = requestId;
+            OnPreLoadEvent_20170bc_songCode = songCode;
+            OnPreLoadEvent_20170bc_percent = percent;
+            OnPreLoadEvent_20170bc_lyricUrl = lyricUrl;
+            OnPreLoadEvent_20170bc_state = state;
+            OnPreLoadEvent_20170bc_reason = reason;
         }
 
-        public bool OnPreLoadEventPassed(string requestId, long internalSongCode, int percent, string payload, MusicContentCenterState status, MusicContentCenterStateReason reason)
+        public bool OnPreLoadEventPassed(string requestId, long songCode, int percent, string lyricUrl, PreloadState state, MusicContentCenterStateReason reason)
         {
-            if (OnPreLoadEvent_d238b4d_be_trigger == false)
+            if (OnPreLoadEvent_20170bc_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnPreLoadEvent_d238b4d_requestId, requestId) == false)
+            if (ParamsHelper.Compare<string>(OnPreLoadEvent_20170bc_requestId, requestId) == false)
                 return false;
-            if (ParamsHelper.Compare<long>(OnPreLoadEvent_d238b4d_internalSongCode, internalSongCode) == false)
+            if (ParamsHelper.Compare<long>(OnPreLoadEvent_20170bc_songCode, songCode) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnPreLoadEvent_d238b4d_percent, percent) == false)
+            if (ParamsHelper.Compare<int>(OnPreLoadEvent_20170bc_percent, percent) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnPreLoadEvent_d238b4d_payload, payload) == false)
+            if (ParamsHelper.Compare<string>(OnPreLoadEvent_20170bc_lyricUrl, lyricUrl) == false)
                 return false;
-            if (ParamsHelper.Compare<MusicContentCenterState>(OnPreLoadEvent_d238b4d_status, status) == false)
+            if (ParamsHelper.Compare<PreloadState>(OnPreLoadEvent_20170bc_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnPreLoadEvent_d238b4d_reason, reason) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
-        public bool OnStartScoreResult_c579a23_be_trigger = false;
-        public long OnStartScoreResult_c579a23_internalSongCode;
-        public MusicContentCenterState OnStartScoreResult_c579a23_status;
-        public MusicContentCenterStateReason OnStartScoreResult_c579a23_reason;
-
-        public override void OnStartScoreResult(long internalSongCode, MusicContentCenterState status, MusicContentCenterStateReason reason)
-        {
-            OnStartScoreResult_c579a23_be_trigger = true;
-            OnStartScoreResult_c579a23_internalSongCode = internalSongCode;
-            OnStartScoreResult_c579a23_status = status;
-            OnStartScoreResult_c579a23_reason = reason;
-        }
-
-        public bool OnStartScoreResultPassed(long internalSongCode, MusicContentCenterState status, MusicContentCenterStateReason reason)
-        {
-            if (OnStartScoreResult_c579a23_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<long>(OnStartScoreResult_c579a23_internalSongCode, internalSongCode) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterState>(OnStartScoreResult_c579a23_status, status) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnStartScoreResult_c579a23_reason, reason) == false)
+            if (ParamsHelper.Compare<MusicContentCenterStateReason>(OnPreLoadEvent_20170bc_reason, reason) == false)
                 return false;
 
             return true;

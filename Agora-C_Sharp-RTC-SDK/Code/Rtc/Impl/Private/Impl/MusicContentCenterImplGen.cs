@@ -28,49 +28,13 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int AddVendor(MusicContentCenterVendorID vendorId, string jsonVendorConfig)
+        public int RenewToken(string token)
         {
             _param.Clear();
-            _param.Add("vendorId", vendorId);
-            _param.Add("jsonVendorConfig", jsonVendorConfig);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_ADDVENDOR_db3598d,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int RemoveVendor(MusicContentCenterVendorID vendorId)
-        {
-            _param.Clear();
-            _param.Add("vendorId", vendorId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_REMOVEVENDOR_387dbf0,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int RenewToken(MusicContentCenterVendorID vendorID, string token)
-        {
-            _param.Clear();
-            _param.Add("vendorID", vendorID);
             _param.Add("token", token);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_RENEWTOKEN_db3598d,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_RENEWTOKEN_3a2037f,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -149,10 +113,28 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int Preload(ref string requestId, long internalSongCode)
+        public int Preload(long songCode, string jsonOption)
         {
             _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
+            _param.Add("songCode", songCode);
+            _param.Add("jsonOption", jsonOption);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_PRELOAD_bd5a5a3,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int Preload(ref string requestId, long songCode)
+        {
+            _param.Clear();
+            _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_PRELOAD_d3baeab,
@@ -170,112 +152,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SetScoreLevel(ScoreLevel level)
+        public int RemoveCache(long songCode)
         {
             _param.Clear();
-            _param.Add("level", level);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_SETSCORELEVEL_fef2f2f,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int StartScore(long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_STARTSCORE_f631116,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int StopScore()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_STOPSCORE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int PauseScore()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_PAUSESCORE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int ResumeScore()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_RESUMESCORE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int GetCumulativeScoreData(ref CumulativeScoreData cumulativeScoreData)
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_GETCUMULATIVESCOREDATA_c8fad3d,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            if (nRet == 0)
-            {
-                cumulativeScoreData = (CumulativeScoreData)AgoraJson.JsonToStruct<CumulativeScoreData>(_apiParam.Result, "cumulativeScoreData");
-            }
-
-            return result;
-        }
-
-        public int RemoveCache(long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
+            _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_REMOVECACHE_f631116,
@@ -289,10 +169,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int IsPreloaded(long internalSongCode)
+        public int IsPreloaded(long songCode)
         {
             _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
+            _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_ISPRELOADED_f631116,
@@ -306,10 +186,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetLyric(ref string requestId, long internalSongCode, int lyricType = 0)
+        public int GetLyric(ref string requestId, long songCode, int lyricType = 0)
         {
             _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
+            _param.Add("songCode", songCode);
             _param.Add("lyricType", lyricType);
 
             var json = AgoraJson.ToJson(_param);
@@ -328,31 +208,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetLyricInfo(ref string requestId, long internalSongCode)
+        public int GetSongSimpleInfo(ref string requestId, long songCode)
         {
             _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_GETLYRICINFO_d3baeab,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
-            }
-
-            return result;
-        }
-
-        public int GetSongSimpleInfo(ref string requestId, long internalSongCode)
-        {
-            _param.Clear();
-            _param.Add("internalSongCode", internalSongCode);
+            _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_GETSONGSIMPLEINFO_d3baeab,
@@ -370,15 +229,14 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetInternalSongCode(MusicContentCenterVendorID vendorId, string songCode, string jsonOption, ref long internalSongCode)
+        public int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode)
         {
             _param.Clear();
-            _param.Add("vendorId", vendorId);
             _param.Add("songCode", songCode);
             _param.Add("jsonOption", jsonOption);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_GETINTERNALSONGCODE_d71d94d,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_GETINTERNALSONGCODE_3a3d1e7,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

@@ -31,17 +31,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int AddVendor(MusicContentCenterVendorID vendorId, string jsonVendorConfig);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int RemoveVendor(MusicContentCenterVendorID vendorId);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int RenewToken(MusicContentCenterVendorID vendorID, string token);
+        public abstract int RenewToken(string token);
 
         ///
         /// @ignore
@@ -81,52 +71,18 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int Preload(ref string requestId, long internalSongCode);
+        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
+        public abstract int Preload(long songCode, string jsonOption);
 
         ///
         /// @ignore
         ///
-        public abstract int RegisterScoreEventHandler(IScoreEventHandler scoreEventHandler);
+        public abstract int Preload(ref string requestId, long songCode);
 
         ///
         /// @ignore
         ///
-        public abstract int UnregisterScoreEventHandler();
-
-        ///
-        /// @ignore
-        ///
-        public abstract int SetScoreLevel(ScoreLevel level);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StartScore(long internalSongCode);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StopScore();
-
-        ///
-        /// @ignore
-        ///
-        public abstract int PauseScore();
-
-        ///
-        /// @ignore
-        ///
-        public abstract int ResumeScore();
-
-        ///
-        /// @ignore
-        ///
-        public abstract int GetCumulativeScoreData(ref CumulativeScoreData cumulativeScoreData);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int RemoveCache(long internalSongCode);
+        public abstract int RemoveCache(long songCode);
 
         ///
         /// @ignore
@@ -136,27 +92,22 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int IsPreloaded(long internalSongCode);
+        public abstract int IsPreloaded(long songCode);
 
         ///
         /// @ignore
         ///
-        public abstract int GetLyric(ref string requestId, long internalSongCode, int lyricType = 0);
+        public abstract int GetLyric(ref string requestId, long songCode, int lyricType = 0);
 
         ///
         /// @ignore
         ///
-        public abstract int GetLyricInfo(ref string requestId, long internalSongCode);
+        public abstract int GetSongSimpleInfo(ref string requestId, long songCode);
 
         ///
         /// @ignore
         ///
-        public abstract int GetSongSimpleInfo(ref string requestId, long internalSongCode);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int GetInternalSongCode(MusicContentCenterVendorID vendorId, string songCode, string jsonOption, ref long internalSongCode);
+        public abstract int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode);
 
     }
 }

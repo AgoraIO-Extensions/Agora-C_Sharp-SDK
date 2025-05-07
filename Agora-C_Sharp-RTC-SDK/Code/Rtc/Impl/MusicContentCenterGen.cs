@@ -20,31 +20,13 @@ namespace Agora.Rtc
             return _impl.Initialize(configuration);
         }
 
-        public override int AddVendor(MusicContentCenterVendorID vendorId, string jsonVendorConfig)
+        public override int RenewToken(string token)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.AddVendor(vendorId, jsonVendorConfig);
-        }
-
-        public override int RemoveVendor(MusicContentCenterVendorID vendorId)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.RemoveVendor(vendorId);
-        }
-
-        public override int RenewToken(MusicContentCenterVendorID vendorID, string token)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.RenewToken(vendorID, token);
+            return _impl.RenewToken(token);
         }
 
         public override int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler)
@@ -110,94 +92,31 @@ namespace Agora.Rtc
             return _impl.SearchMusic(ref requestId, keyWord, page, pageSize, jsonOption);
         }
 
-        public override int Preload(ref string requestId, long internalSongCode)
+        public override int Preload(long songCode, string jsonOption)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.Preload(ref requestId, internalSongCode);
+            return _impl.Preload(songCode, jsonOption);
         }
 
-        public override int RegisterScoreEventHandler(IScoreEventHandler scoreEventHandler)
+        public override int Preload(ref string requestId, long songCode)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.RegisterScoreEventHandler(scoreEventHandler);
+            return _impl.Preload(ref requestId, songCode);
         }
 
-        public override int UnregisterScoreEventHandler()
+        public override int RemoveCache(long songCode)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.UnregisterScoreEventHandler();
-        }
-
-        public override int SetScoreLevel(ScoreLevel level)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.SetScoreLevel(level);
-        }
-
-        public override int StartScore(long internalSongCode)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.StartScore(internalSongCode);
-        }
-
-        public override int StopScore()
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.StopScore();
-        }
-
-        public override int PauseScore()
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.PauseScore();
-        }
-
-        public override int ResumeScore()
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.ResumeScore();
-        }
-
-        public override int GetCumulativeScoreData(ref CumulativeScoreData cumulativeScoreData)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.GetCumulativeScoreData(ref cumulativeScoreData);
-        }
-
-        public override int RemoveCache(long internalSongCode)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.RemoveCache(internalSongCode);
+            return _impl.RemoveCache(songCode);
         }
 
         public override int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
@@ -209,49 +128,40 @@ namespace Agora.Rtc
             return _impl.GetCaches(ref cacheInfo, ref cacheInfoSize);
         }
 
-        public override int IsPreloaded(long internalSongCode)
+        public override int IsPreloaded(long songCode)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.IsPreloaded(internalSongCode);
+            return _impl.IsPreloaded(songCode);
         }
 
-        public override int GetLyric(ref string requestId, long internalSongCode, int lyricType = 0)
+        public override int GetLyric(ref string requestId, long songCode, int lyricType = 0)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.GetLyric(ref requestId, internalSongCode, lyricType);
+            return _impl.GetLyric(ref requestId, songCode, lyricType);
         }
 
-        public override int GetLyricInfo(ref string requestId, long internalSongCode)
+        public override int GetSongSimpleInfo(ref string requestId, long songCode)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.GetLyricInfo(ref requestId, internalSongCode);
+            return _impl.GetSongSimpleInfo(ref requestId, songCode);
         }
 
-        public override int GetSongSimpleInfo(ref string requestId, long internalSongCode)
+        public override int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.GetSongSimpleInfo(ref requestId, internalSongCode);
-        }
-
-        public override int GetInternalSongCode(MusicContentCenterVendorID vendorId, string songCode, string jsonOption, ref long internalSongCode)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.GetInternalSongCode(vendorId, songCode, jsonOption, ref internalSongCode);
+            return _impl.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
         }
 
     }

@@ -20,41 +20,17 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_AddVendor_db3598d()
+        public void Test_RenewToken_3a2037f()
         {
-            var vendorId = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
-
-            var jsonVendorConfig = ParamsHelper.CreateParam<string>();
-
-            var nRet = @interface.AddVendor(vendorId, jsonVendorConfig);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_RemoveVendor_387dbf0()
-        {
-            var vendorId = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
-
-            var nRet = @interface.RemoveVendor(vendorId);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_RenewToken_db3598d()
-        {
-            var vendorID = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
-
             var token = ParamsHelper.CreateParam<string>();
 
-            var nRet = @interface.RenewToken(vendorID, token);
+            var nRet = @interface.RenewToken(token);
             Assert.AreEqual(0, nRet);
         }
 
 
         [Test]
-        public void Test_UnregisterEventHandler_ae49451()
+        public void Test_UnregisterEventHandler()
         {
             var nRet = @interface.UnregisterEventHandler();
             Assert.AreEqual(0, nRet);
@@ -108,75 +84,25 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_Preload_bd5a5a3()
+        {
+            var songCode = ParamsHelper.CreateParam<long>();
+
+            var jsonOption = ParamsHelper.CreateParam<string>();
+
+            var nRet = @interface.Preload(songCode, jsonOption);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_Preload_d3baeab()
         {
             var requestId = ParamsHelper.CreateParam<string>();
 
-            var internalSongCode = ParamsHelper.CreateParam<long>();
+            var songCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = @interface.Preload(ref requestId, internalSongCode);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_UnregisterScoreEventHandler_0932be1()
-        {
-            var nRet = @interface.UnregisterScoreEventHandler();
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_SetScoreLevel_fef2f2f()
-        {
-            var level = ParamsHelper.CreateParam<ScoreLevel>();
-
-            var nRet = @interface.SetScoreLevel(level);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_StartScore_f631116()
-        {
-            var internalSongCode = ParamsHelper.CreateParam<long>();
-
-            var nRet = @interface.StartScore(internalSongCode);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_StopScore()
-        {
-            var nRet = @interface.StopScore();
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_PauseScore()
-        {
-            var nRet = @interface.PauseScore();
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_ResumeScore()
-        {
-            var nRet = @interface.ResumeScore();
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_GetCumulativeScoreData_c8fad3d()
-        {
-            var cumulativeScoreData = ParamsHelper.CreateParam<CumulativeScoreData>();
-
-            var nRet = @interface.GetCumulativeScoreData(ref cumulativeScoreData);
+            var nRet = @interface.Preload(ref requestId, songCode);
             Assert.AreEqual(0, nRet);
         }
 
@@ -184,9 +110,9 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_RemoveCache_f631116()
         {
-            var internalSongCode = ParamsHelper.CreateParam<long>();
+            var songCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = @interface.RemoveCache(internalSongCode);
+            var nRet = @interface.RemoveCache(songCode);
             Assert.AreEqual(0, nRet);
         }
 
@@ -206,9 +132,9 @@ namespace Agora.Rtc.Ut
         [Test]
         public void Test_IsPreloaded_f631116()
         {
-            var internalSongCode = ParamsHelper.CreateParam<long>();
+            var songCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = @interface.IsPreloaded(internalSongCode);
+            var nRet = @interface.IsPreloaded(songCode);
             Assert.AreEqual(0, nRet);
         }
 
@@ -218,23 +144,11 @@ namespace Agora.Rtc.Ut
         {
             var requestId = ParamsHelper.CreateParam<string>();
 
-            var internalSongCode = ParamsHelper.CreateParam<long>();
+            var songCode = ParamsHelper.CreateParam<long>();
 
             var lyricType = ParamsHelper.CreateParam<int>();
 
-            var nRet = @interface.GetLyric(ref requestId, internalSongCode, lyricType);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_GetLyricInfo_d3baeab()
-        {
-            var requestId = ParamsHelper.CreateParam<string>();
-
-            var internalSongCode = ParamsHelper.CreateParam<long>();
-
-            var nRet = @interface.GetLyricInfo(ref requestId, internalSongCode);
+            var nRet = @interface.GetLyric(ref requestId, songCode, lyricType);
             Assert.AreEqual(0, nRet);
         }
 
@@ -244,25 +158,23 @@ namespace Agora.Rtc.Ut
         {
             var requestId = ParamsHelper.CreateParam<string>();
 
-            var internalSongCode = ParamsHelper.CreateParam<long>();
+            var songCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = @interface.GetSongSimpleInfo(ref requestId, internalSongCode);
+            var nRet = @interface.GetSongSimpleInfo(ref requestId, songCode);
             Assert.AreEqual(0, nRet);
         }
 
 
         [Test]
-        public void Test_GetInternalSongCode_d71d94d()
+        public void Test_GetInternalSongCode_3a3d1e7()
         {
-            var vendorId = ParamsHelper.CreateParam<MusicContentCenterVendorID>();
-
-            var songCode = ParamsHelper.CreateParam<string>();
+            var songCode = ParamsHelper.CreateParam<long>();
 
             var jsonOption = ParamsHelper.CreateParam<string>();
 
             var internalSongCode = ParamsHelper.CreateParam<long>();
 
-            var nRet = @interface.GetInternalSongCode(vendorId, songCode, jsonOption, ref internalSongCode);
+            var nRet = @interface.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
             Assert.AreEqual(0, nRet);
         }
 

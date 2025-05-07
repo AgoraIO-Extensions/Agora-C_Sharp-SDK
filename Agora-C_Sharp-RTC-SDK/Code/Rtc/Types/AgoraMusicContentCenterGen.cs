@@ -12,23 +12,6 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum MusicContentCenterVendorID
-    {
-        ///
-        /// @ignore
-        ///
-        kMusicContentCenterVendorDefault = 1,
-
-        ///
-        /// @ignore
-        ///
-        kMusicContentCenterVendor2 = 2,
-
-    }
-
-    ///
-    /// @ignore
-    ///
     public enum MusicPlayMode
     {
         ///
@@ -51,37 +34,27 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum MusicContentCenterState
+    public enum PreloadState
     {
         ///
         /// @ignore
         ///
-        kMusicContentCenterStatePreloadOk = 0,
+        kPreloadStateCompleted = 0,
 
         ///
         /// @ignore
         ///
-        kMusicContentCenterStatePreloadFailed = 1,
+        kPreloadStateFailed = 1,
 
         ///
         /// @ignore
         ///
-        kMusicContentCenterStatePreloading = 2,
+        kPreloadStatePreloading = 2,
 
         ///
         /// @ignore
         ///
-        kMusicContentCenterStatePreloadRemoved = 3,
-
-        ///
-        /// @ignore
-        ///
-        kMusicContentCenterStateStartScoreCompleted = 4,
-
-        ///
-        /// @ignore
-        ///
-        kMusicContentCenterStateStartScoreFailed = 5,
+        kPreloadStateRemoved = 3,
 
     }
 
@@ -173,16 +146,6 @@ namespace Agora.Rtc
         ///
         MUSIC_CACHE_STATUS_TYPE_CACHING = 1,
 
-        ///
-        /// @ignore
-        ///
-        MUSIC_CACHE_STATUS_TYPE_NO_CACHED = 2,
-
-        ///
-        /// @ignore
-        ///
-        MUSIC_CACHE_STATUS_TYPE_NO_RESOURCE = 3,
-
     }
 
     ///
@@ -198,23 +161,19 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public MUSIC_CACHE_STATUS_TYPE musicStatus;
+        public MUSIC_CACHE_STATUS_TYPE status;
 
-        ///
-        /// @ignore
-        ///
-        public MUSIC_CACHE_STATUS_TYPE lyricStatus;
-
-        public MusicCacheInfo(long songCode, MUSIC_CACHE_STATUS_TYPE musicStatus, MUSIC_CACHE_STATUS_TYPE lyricStatus)
-        {
-            this.songCode = songCode;
-            this.musicStatus = musicStatus;
-            this.lyricStatus = lyricStatus;
-        }
         public MusicCacheInfo()
         {
+            this.songCode = 0;
+            this.status = MUSIC_CACHE_STATUS_TYPE.MUSIC_CACHE_STATUS_TYPE_CACHED;
         }
 
+        public MusicCacheInfo(long songCode, MUSIC_CACHE_STATUS_TYPE status)
+        {
+            this.songCode = songCode;
+            this.status = status;
+        }
     }
 
     ///
@@ -376,230 +335,8 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum LyricSourceType
-    {
-        ///
-        /// @ignore
-        ///
-        kLyricSourceXml = 0,
-
-        ///
-        /// @ignore
-        ///
-        kLyricSourceLrc = 1,
-
-        ///
-        /// @ignore
-        ///
-        kLyricSourceLrcWithPitches = 2,
-
-        ///
-        /// @ignore
-        ///
-        kLyricSourceKrc = 3,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum ScoreLevel
-    {
-        ///
-        /// @ignore
-        ///
-        kScoreLevel1 = 1,
-
-        ///
-        /// @ignore
-        ///
-        kScoreLevel2 = 2,
-
-        ///
-        /// @ignore
-        ///
-        kScoreLevel3 = 3,
-
-        ///
-        /// @ignore
-        ///
-        kScoreLevel4 = 4,
-
-        ///
-        /// @ignore
-        ///
-        kScoreLevel5 = 5,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class RawScoreData
-    {
-        ///
-        /// @ignore
-        ///
-        public int progressInMs;
-
-        ///
-        /// @ignore
-        ///
-        public float speakerPitch;
-
-        ///
-        /// @ignore
-        ///
-        public float pitchScore;
-
-        public RawScoreData(int progressInMs, float speakerPitch, float pitchScore)
-        {
-            this.progressInMs = progressInMs;
-            this.speakerPitch = speakerPitch;
-            this.pitchScore = pitchScore;
-        }
-        public RawScoreData()
-        {
-        }
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class LineScoreData
-    {
-        ///
-        /// @ignore
-        ///
-        public int progressInMs;
-
-        ///
-        /// @ignore
-        ///
-        public int index;
-
-        ///
-        /// @ignore
-        ///
-        public int totalLines;
-
-        ///
-        /// @ignore
-        ///
-        public float pitchScore;
-
-        ///
-        /// @ignore
-        ///
-        public float cumulativePitchScore;
-
-        ///
-        /// @ignore
-        ///
-        public float energyScore;
-
-        public LineScoreData(int progressInMs, int index, int totalLines, float pitchScore, float cumulativePitchScore, float energyScore)
-        {
-            this.progressInMs = progressInMs;
-            this.index = index;
-            this.totalLines = totalLines;
-            this.pitchScore = pitchScore;
-            this.cumulativePitchScore = cumulativePitchScore;
-            this.energyScore = energyScore;
-        }
-        public LineScoreData()
-        {
-        }
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class CumulativeScoreData
-    {
-        ///
-        /// @ignore
-        ///
-        public int progressInMs;
-
-        ///
-        /// @ignore
-        ///
-        public float cumulativePitchScore;
-
-        ///
-        /// @ignore
-        ///
-        public float energyScore;
-
-        public CumulativeScoreData(int progressInMs, float cumulativePitchScore, float energyScore)
-        {
-            this.progressInMs = progressInMs;
-            this.cumulativePitchScore = cumulativePitchScore;
-            this.energyScore = energyScore;
-        }
-        public CumulativeScoreData()
-        {
-        }
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum ChargeMode
-    {
-        ///
-        /// @ignore
-        ///
-        kChargeModeMonthly = 1,
-
-        ///
-        /// @ignore
-        ///
-        kChargeModeOnce = 2,
-
-    }
-
-    ///
-    /// @ignore
-    ///
     public class MusicContentCenterConfiguration
     {
-        ///
-        /// @ignore
-        ///
-        public int maxCacheSize;
-
-        public MusicContentCenterConfiguration()
-        {
-            this.maxCacheSize = 20;
-        }
-
-        public MusicContentCenterConfiguration(int maxCacheSize)
-        {
-            this.maxCacheSize = maxCacheSize;
-        }
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class MusicContentCenterVendorDefaultConfiguration
-    {
-        ///
-        /// @ignore
-        ///
-        public string channelId;
-
-        ///
-        /// @ignore
-        ///
-        public string channelUserId;
-
         ///
         /// @ignore
         ///
@@ -613,88 +350,34 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public string userId;
+        public long mccUid;
+
+        ///
+        /// @ignore
+        ///
+        public int maxCacheSize;
 
         ///
         /// @ignore
         ///
         public string mccDomain;
 
-        public MusicContentCenterVendorDefaultConfiguration(string appId, string token, string userId, string mccDomain)
+        public MusicContentCenterConfiguration()
         {
-            this.appId = appId;
+            this.appId = "";
+            this.token = "";
+            this.mccUid = 0;
+            this.maxCacheSize = 10;
+            this.mccDomain = "";
+        }
+
+        public MusicContentCenterConfiguration(string appid, string token, long id, int maxSize = 10, string apiurl = "")
+        {
+            this.appId = appid;
             this.token = token;
-            this.userId = userId;
-            this.mccDomain = mccDomain;
-        }
-        public MusicContentCenterVendorDefaultConfiguration()
-        {
-        }
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class MusicContentCenterVendor2Configuration
-    {
-        ///
-        /// @ignore
-        ///
-        public string channelId;
-
-        ///
-        /// @ignore
-        ///
-        public string channelUserId;
-
-        ///
-        /// @ignore
-        ///
-        public string appId;
-
-        ///
-        /// @ignore
-        ///
-        public string appKey;
-
-        ///
-        /// @ignore
-        ///
-        public string token;
-
-        ///
-        /// @ignore
-        ///
-        public string userId;
-
-        ///
-        /// @ignore
-        ///
-        public string deviceId;
-
-        ///
-        /// @ignore
-        ///
-        public int urlTokenExpireTime;
-
-        ///
-        /// @ignore
-        ///
-        public int chargeMode;
-
-        public MusicContentCenterVendor2Configuration(string appId, string appKey, string token, string userId, string deviceId, int urlTokenExpireTime, int chargeMode)
-        {
-            this.appId = appId;
-            this.appKey = appKey;
-            this.token = token;
-            this.userId = userId;
-            this.deviceId = deviceId;
-            this.urlTokenExpireTime = urlTokenExpireTime;
-            this.chargeMode = chargeMode;
-        }
-        public MusicContentCenterVendor2Configuration()
-        {
+            this.mccUid = id;
+            this.maxCacheSize = maxSize;
+            this.mccDomain = apiurl;
         }
 
     }

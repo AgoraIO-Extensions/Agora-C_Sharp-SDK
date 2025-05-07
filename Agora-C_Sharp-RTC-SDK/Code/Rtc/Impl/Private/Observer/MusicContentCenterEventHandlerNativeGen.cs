@@ -59,25 +59,8 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         if (EventHandler == null) return;
                         EventHandler.OnLyricResult(
                         (string)AgoraJson.GetData<string>(jsonData, "requestId"),
-                        (long)AgoraJson.GetData<long>(jsonData, "internalSongCode"),
-                        (string)AgoraJson.GetData<string>(jsonData, "payload"),
-                        (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
-                case AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONLYRICINFORESULT_4725ebf:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (EventHandler == null) return;
-                        EventHandler.OnLyricInfoResult(
-                        (string)AgoraJson.GetData<string>(jsonData, "requestId"),
                         (long)AgoraJson.GetData<long>(jsonData, "songCode"),
-                        (ILyricInfo)AgoraJson.JsonToStruct<ILyricInfo>(jsonData, "lyricInfo"),
+                        (string)AgoraJson.GetData<string>(jsonData, "lyricUrl"),
                         (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -102,7 +85,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
-                case AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT_d238b4d:
+                case AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT_20170bc:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
@@ -110,26 +93,10 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         if (EventHandler == null) return;
                         EventHandler.OnPreLoadEvent(
                         (string)AgoraJson.GetData<string>(jsonData, "requestId"),
-                        (long)AgoraJson.GetData<long>(jsonData, "internalSongCode"),
+                        (long)AgoraJson.GetData<long>(jsonData, "songCode"),
                         (int)AgoraJson.GetData<int>(jsonData, "percent"),
-                        (string)AgoraJson.GetData<string>(jsonData, "payload"),
-                        (MusicContentCenterState)AgoraJson.GetData<int>(jsonData, "status"),
-                        (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
-                case AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONSTARTSCORERESULT_c579a23:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (EventHandler == null) return;
-                        EventHandler.OnStartScoreResult(
-                        (long)AgoraJson.GetData<long>(jsonData, "internalSongCode"),
-                        (MusicContentCenterState)AgoraJson.GetData<int>(jsonData, "status"),
+                        (string)AgoraJson.GetData<string>(jsonData, "lyricUrl"),
+                        (PreloadState)AgoraJson.GetData<int>(jsonData, "state"),
                         (MusicContentCenterStateReason)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
