@@ -1,0 +1,59 @@
+name: Generate codes and create pull request
+
+on:
+  workflow_dispatch:
+    inputs:
+      rtc_version:
+        description: 'verison (rtc_4.3.2, rtm_2.2.4 like)'
+        required: true
+        type: string
+
+jobs:
+  generate-codes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup
+        uses: ./.github/setup
+
+      - name: Replace rtc version
+        run: sh terra/replace_rtc_version.sh ${{ inputs.rtc_version }}
+
+      - name: Generate code and comment by terra
+        uses: AgoraIO-Extensions/actions/.github/actions/generate@main
+        with:
+          working-directory: "terra"
+          github-token: ${{ secrets.GH_TOKEN }}
+          generate-code: true
+          generate-comment: false
+          generate-code-command: |
+            sh prepare.sh
+            sh rtc.sh
+
+      - name: Create pull request
+        uses: AgoraIO-Extensions/actions/.github/actions/pr@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          target-repo: ${{ github.workspace }}
+          target-branch: ${{ github.ref_name }}
+          target-branch-name-surffix: terra-update/${{ inputs.rtc_version }}
+          pull-request-title: |
+            [AUTO] Generate codes by terra(${{ inputs.rtc_version }})
+          add-paths: .
+
+      - name: Check csharp codes compile
+        run: |
+          cd Agora-C_Sharp_RTC-SDK_UT
+          dotnet restore Agora_C_Sharp_SDK_UT.sln
+          dotnet build Agora_C_Sharp_SDK_UT.sln --configuration Release
+          if [ $? -ne 0 ]; then
+            echo "csharp codes compile error"
+            exit 1
+          else
+            echo "csharp codes compile success"
+          fi
