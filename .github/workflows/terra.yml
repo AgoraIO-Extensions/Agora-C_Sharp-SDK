@@ -19,7 +19,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup
-        uses: ./.github/actions/setup
+        uses: ./.github/setup
 
       - name: Replace rtc version
         run: sh terra/replace_rtc_version.sh ${{ inputs.rtc_version }}
