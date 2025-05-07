@@ -756,11 +756,6 @@ namespace Agora.Rtc
         public ulong num_channels_;
 
         ///
-        /// @ignore
-        ///
-        public int audio_track_number_;
-
-        ///
         /// <summary>
         /// The number of bytes per sample.
         /// </summary>
@@ -785,7 +780,6 @@ namespace Agora.Rtc
             this.samples_per_channel_ = 0;
             this.sample_rate_hz_ = 0;
             this.num_channels_ = 0;
-            this.audio_track_number_ = 0;
             this.bytes_per_sample = BYTES_PER_SAMPLE.TWO_BYTES_PER_SAMPLE;
             this.is_stereo_ = false;
         }
@@ -796,18 +790,16 @@ namespace Agora.Rtc
             this.samples_per_channel_ = src.samples_per_channel_;
             this.sample_rate_hz_ = src.sample_rate_hz_;
             this.num_channels_ = src.num_channels_;
-            this.audio_track_number_ = src.audio_track_number_;
             this.bytes_per_sample = src.bytes_per_sample;
             this.is_stereo_ = src.is_stereo_;
         }
 
-        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, int audio_track_number_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_, bool is_stereo_)
+        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_, bool is_stereo_)
         {
             this.capture_timestamp = capture_timestamp;
             this.samples_per_channel_ = samples_per_channel_;
             this.sample_rate_hz_ = sample_rate_hz_;
             this.num_channels_ = num_channels_;
-            this.audio_track_number_ = audio_track_number_;
             this.bytes_per_sample = bytes_per_sample;
             this.data_ = data_;
             this.is_stereo_ = is_stereo_;
