@@ -11,6 +11,5 @@ rm -rf .terra
 rm -rf node_modules
 rm -rf package-lock.json
 rm -rf yarn.lock
-yarn
-
-popd
+export YARN_ENABLE_IMMUTABLE_INSTALLS=false
+yarn install
