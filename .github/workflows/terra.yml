@@ -18,22 +18,24 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.203'
+
       - name: Replace rtc version
         run: sh terra/replace_rtc_version.sh ${{ inputs.rtc_version }}
 
-      # - name: Generate code and comment by terra
-      #   uses: AgoraIO-Extensions/actions/.github/actions/generate@main
-      #   with:
-      #     working-directory: "terra"
-      #     github-token: ${{ secrets.GH_TOKEN }}
-      #     generate-code: true
-      #     generate-comment: true
-      #     generate-code-command: |
-      #       sh generate-prepare.sh
-      #       sh generate-code.sh
-      #     generate-comment-command: |
-      #       sh generate-comment.sh
-
+      - name: Generate code and comment by terra
+        uses: AgoraIO-Extensions/actions/.github/actions/generate@main
+        with:
+          working-directory: "terra"
+          github-token: ${{ secrets.GH_TOKEN }}
+          generate-code: true
+          generate-comment: false
+          generate-code-command: |
+            sh prepare.sh
+            sh rtc.sh
 
       - name: Create pull request
         uses: AgoraIO-Extensions/actions/.github/actions/pr@main

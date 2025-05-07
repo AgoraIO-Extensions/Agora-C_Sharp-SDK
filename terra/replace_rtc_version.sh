@@ -1,6 +1,5 @@
 #!/bin/sh
 
-set -x
 # Check if parameter is provided
 if [ $# -eq 0 ]; then
     echo "Error: Please provide version number parameter"
