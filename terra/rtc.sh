@@ -8,7 +8,7 @@ PROJECT_ROOT=$(realpath ${MY_PATH}/..)
 echo "MY_PATH: ${MY_PATH}"
 echo "PROJECT_ROOT: ${PROJECT_ROOT}"
 
-pushd ${MY_PATH}
+cd ${MY_PATH}
 
 # rtc
 npm exec terra -- run \
@@ -17,5 +17,3 @@ npm exec terra -- run \
 
 dotnet format ${PROJECT_ROOT}/Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln
 yarn doc
-
-popd
