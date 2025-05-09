@@ -12,6 +12,7 @@ parsers:
           - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include/time_utils.h'
           - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include/IAgoraMediaComponentFactory.h'
           - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include/AgoraOptional.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include/AgoraRefPtr.h'
           - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.4.1.8/include/rte_*.h'
 
   - name: IrisApiIdParser
