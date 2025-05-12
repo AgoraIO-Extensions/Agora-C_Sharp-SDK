@@ -14,7 +14,7 @@ on:
         type: string
 
 jobs:
-  generate-codes:
+  NUnit-Test:
     runs-on: macos-latest
     steps:
       - name: Checkout
