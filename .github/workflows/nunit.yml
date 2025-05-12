@@ -1,0 +1,46 @@
+name: Run NUnit tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      iris_mac_unity_url:
+        description: iris url'
+        required: true
+        type: string
+
+      fully_qualified_name:
+        description: fully qualified name (Agora.Rtc, Agora.Rtm)'
+        required: true
+        type: string
+
+jobs:
+  generate-codes:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup
+        uses: ./.github/setup
+
+      - name: Download and extract Iris Mac Unity package
+        run: |
+          # Create temporary directory for download
+          mkdir -p temp_download
+          cd temp_download
+          
+          # Download zip file
+          curl -L "${{ inputs.iris_mac_unity_url }}" -o iris_mac_unity.zip
+          
+          # Extract to project root directory
+          unzip -o iris_mac_unity.zip -d $GITHUB_WORKSPACE
+          ls $GITHUB_WORKSPACE
+          
+          # Clean up temporary directory
+          cd $GITHUB_WORKSPACE
+          rm -rf temp_download
+          
+          echo "Successfully downloaded and extracted Iris Mac Unity package to project root directory"
