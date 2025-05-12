@@ -63,7 +63,7 @@ jobs:
           echo "IRIS_DIR: $IRIS_DIR"
          
 
-          ls $GITHUB_WORKSPACE/$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A
+          ls $GITHUB_WORKSPACE/$IRIS_DIR
 
           # Check if IRIS_DIR name contains DCG
           if [[ "$IRIS_DIR" == *"DCG"* ]]; then
