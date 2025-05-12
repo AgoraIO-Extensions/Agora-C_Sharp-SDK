@@ -50,4 +50,3 @@ fi
 echo "All files have been updated successfully"
 
 dotnet test ${UT_CSPROJ_PATH} --filter FullyQualifiedName~${FULLY_QUALIFIED_NAME} --logger "trx;LogFileName=${PROJECT_ROOT}/testResults.xml"
-ls ${PROJECT_ROOT}

@@ -46,7 +46,6 @@ jobs:
       
       - name: Run NUnit tests
         run: |
-          ls $GITHUB_WORKSPACE
           # Find directory starting with iris and store in variable
           IRIS_DIR=$(find $GITHUB_WORKSPACE -type d -name "iris*" | head -n 1)
           
@@ -65,6 +64,9 @@ jobs:
             sh terra/nunit_run.sh $AGORA_LIB_NAME $DEBUG_LIB_NAME ${{ inputs.fully_qualified_name }}
           else
             echo "IRIS Type is RTM"
+            AGORA_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            DEBUG_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            sh terra/nunit_run.sh $AGORA_LIB_NAME $DEBUG_LIB_NAME ${{ inputs.fully_qualified_name }}
           fi
 
           echo "NUnit tests completed"
