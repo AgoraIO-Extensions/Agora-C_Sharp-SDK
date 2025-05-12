@@ -57,19 +57,11 @@ jobs:
             echo "Found Iris directory: $IRIS_DIR"
           fi
 
-          # export DYLD_PRINT_LIBRARIES=1
-
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          echo "IRIS_DIR: $IRIS_DIR"
-         
-
-          ls $GITHUB_WORKSPACE/$IRIS_DIR
-
           # Check if IRIS_DIR name contains DCG
           if [[ "$IRIS_DIR" == *"DCG"* ]]; then
             echo "IRIS Type is DCG"
-            AGORA_LIB_NAME=$GITHUB_WORKSPACE/$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
-            DEBUG_LIB_NAME=$GITHUB_WORKSPACE/$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            AGORA_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            DEBUG_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
             sh terra/nunit_run.sh $AGORA_LIB_NAME $DEBUG_LIB_NAME ${{ inputs.fully_qualified_name }}
           else
             echo "IRIS Type is RTM"
