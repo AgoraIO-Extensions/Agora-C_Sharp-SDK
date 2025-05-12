@@ -70,10 +70,9 @@ jobs:
           echo "NUnit tests completed"
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nunit-test-results
           path: ${{ github.workspace }}/testResults.xml
           if-no-files-found: error
           retention-days: 7
-
