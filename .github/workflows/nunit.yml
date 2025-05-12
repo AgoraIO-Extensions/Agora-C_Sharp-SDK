@@ -57,7 +57,14 @@ jobs:
             echo "Found Iris directory: $IRIS_DIR"
           fi
 
-          export DYLD_PRINT_LIBRARIES=1
+          # export DYLD_PRINT_LIBRARIES=1
+
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "IRIS_DIR: $IRIS_DIR"
+         
+
+          ls $GITHUB_WORKSPACE/$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A
+
           # Check if IRIS_DIR name contains DCG
           if [[ "$IRIS_DIR" == *"DCG"* ]]; then
             echo "IRIS Type is DCG"
