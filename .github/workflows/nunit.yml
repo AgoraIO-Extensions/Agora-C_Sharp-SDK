@@ -57,6 +57,7 @@ jobs:
             echo "Found Iris directory: $IRIS_DIR"
           fi
 
+          export DYLD_PRINT_LIBRARIES=1
           # Check if IRIS_DIR name contains DCG
           if [[ "$IRIS_DIR" == *"DCG"* ]]; then
             echo "IRIS Type is DCG"
