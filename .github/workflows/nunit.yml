@@ -14,7 +14,7 @@ on:
         type: string
 
 jobs:
-  generate-codes:
+  NUnit-Test:
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -37,10 +37,44 @@ jobs:
           
           # Extract to project root directory
           unzip -o iris_mac_unity.zip -d $GITHUB_WORKSPACE
-          ls $GITHUB_WORKSPACE
           
           # Clean up temporary directory
           cd $GITHUB_WORKSPACE
           rm -rf temp_download
           
           echo "Successfully downloaded and extracted Iris Mac Unity package to project root directory"
+      
+      - name: Run NUnit tests
+        run: |
+          # Find directory starting with iris and store in variable
+          IRIS_DIR=$(find $GITHUB_WORKSPACE -type d -name "iris*" | head -n 1)
+          
+          if [ -z "$IRIS_DIR" ]; then
+            echo "Error: No directory starting with iris found"
+            exit 1
+          else
+            echo "Found Iris directory: $IRIS_DIR"
+          fi
+
+          # Check if IRIS_DIR name contains DCG
+          if [[ "$IRIS_DIR" == *"DCG"* ]]; then
+            echo "IRIS Type is DCG"
+            AGORA_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            DEBUG_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            sh terra/nunit_run.sh $AGORA_LIB_NAME $DEBUG_LIB_NAME ${{ inputs.fully_qualified_name }}
+          else
+            echo "IRIS Type is RTM"
+            AGORA_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            DEBUG_LIB_NAME=$IRIS_DIR/Debugger/MAC/IrisDebugger.framework/Versions/A/IrisDebugger
+            sh terra/nunit_run.sh $AGORA_LIB_NAME $DEBUG_LIB_NAME ${{ inputs.fully_qualified_name }}
+          fi
+
+          echo "NUnit tests completed"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: nunit-test-results
+          path: ${{ github.workspace }}/testResults.xml
+          if-no-files-found: error
+          retention-days: 7
