@@ -98,6 +98,11 @@ namespace Agora.Rtm.Internal
 
         public ulong itemCount;
 
+        public Metadata()
+        {
+
+        }
+
         public Metadata(Agora.Rtm.Metadata metadata)
         {
             this.majorRevision = metadata.majorRevision;
