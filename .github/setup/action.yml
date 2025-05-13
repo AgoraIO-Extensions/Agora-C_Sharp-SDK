@@ -18,7 +18,12 @@ runs:
       with:
         python-version: 3.11.5
 
-    - name: Setup .NET
+    - name: Setup .NET 8.0.203
       uses: actions/setup-dotnet@v4
       with:
           dotnet-version: 8.0.203
+
+    - name: Setup .NET 7.0.306
+      uses: actions/setup-dotnet@v4
+      with:
+          dotnet-version: 7.0.306
