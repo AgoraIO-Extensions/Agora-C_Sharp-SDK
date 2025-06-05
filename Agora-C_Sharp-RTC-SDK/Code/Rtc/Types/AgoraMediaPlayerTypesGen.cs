@@ -370,6 +370,11 @@ namespace Agora.Rtc
         ///
         PLAYER_EVENT_TRY_OPEN_FAILED = 18,
 
+        ///
+        /// @ignore
+        ///
+        PLAYER_EVENT_HTTP_REDIRECT = 19,
+
     }
 
     ///
