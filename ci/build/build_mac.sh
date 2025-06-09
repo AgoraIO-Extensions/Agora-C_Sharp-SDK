@@ -227,7 +227,7 @@ rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/*.csproj
 # Android
 if [ "$IRIS_ANDROID_URL" != "" ]; then
     if [ "$NATIVE_ANDROID_URL" == "" ]; then
-        ehco "NATIVE_ANDROID_URL is null"
+        echo "NATIVE_ANDROID_URL is null"
         exit 1
     fi
 
@@ -308,7 +308,7 @@ fi
 if [ "$IRIS_IOS_URL" != "" ]; then
 
     if [ "$NATIVE_IOS_URL" == "" ]; then
-        ehco "NATIVE_IOS_URL is null"
+        echo "NATIVE_IOS_URL is null"
         exit 1
     fi
 
