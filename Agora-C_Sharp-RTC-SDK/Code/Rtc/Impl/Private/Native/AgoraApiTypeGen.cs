@@ -1188,6 +1188,8 @@ namespace Agora.Rtc
         public const string IRTCENGINEEVENTHANDLER_ONREMOTESUBSCRIBEFALLBACKTOAUDIOONLY_dbdc15a = "RtcEngineEventHandler_onRemoteSubscribeFallbackToAudioOnly_dbdc15a";
         //IRtcEngineEventHandler::onPermissionError(agora::rtc::PERMISSION_TYPE permissionType, );
         public const string IRTCENGINEEVENTHANDLER_ONPERMISSIONERROR_f37c62b = "RtcEngineEventHandler_onPermissionError_f37c62b";
+        //IRtcEngineEventHandler::onPermissionGranted(agora::rtc::PERMISSION_TYPE permissionType, );
+        public const string IRTCENGINEEVENTHANDLER_ONPERMISSIONGRANTED_f37c62b = "RtcEngineEventHandler_onPermissionGranted_f37c62b";
         //IRtcEngineEventHandler::onLocalUserRegistered(agora::rtc::uid_t uid, char const* userAccount, );
         public const string IRTCENGINEEVENTHANDLER_ONLOCALUSERREGISTERED_1922dd1 = "RtcEngineEventHandler_onLocalUserRegistered_1922dd1";
         //IRtcEngineEventHandler::onUserInfoUpdated(agora::rtc::uid_t uid, agora::rtc::UserInfo const& info, );

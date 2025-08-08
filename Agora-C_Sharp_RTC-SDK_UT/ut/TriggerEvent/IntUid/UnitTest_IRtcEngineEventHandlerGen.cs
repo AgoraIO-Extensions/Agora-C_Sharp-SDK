@@ -686,6 +686,25 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
+        public void Test_IRtcEngineEventHandler_OnPermissionGranted_f37c62b()
+        {
+            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONPERMISSIONGRANTED_f37c62b;
+
+            jsonObj.Clear();
+
+            PERMISSION_TYPE permissionType = ParamsHelper.CreateParam<PERMISSION_TYPE>();
+            jsonObj.Add("permissionType", permissionType);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnPermissionGrantedPassed(permissionType));
+        }
+
+        [Test]
         public void Test_IRtcEngineEventHandler_OnLocalUserRegistered_1922dd1()
         {
             ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALUSERREGISTERED_1922dd1;

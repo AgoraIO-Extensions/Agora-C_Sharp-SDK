@@ -805,6 +805,28 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
+        public bool OnPermissionGranted_f37c62b_be_trigger = false;
+        public PERMISSION_TYPE OnPermissionGranted_f37c62b_permissionType;
+
+        public override void OnPermissionGranted(PERMISSION_TYPE permissionType)
+        {
+            OnPermissionGranted_f37c62b_be_trigger = true;
+            OnPermissionGranted_f37c62b_permissionType = permissionType;
+        }
+
+        public bool OnPermissionGrantedPassed(PERMISSION_TYPE permissionType)
+        {
+            if (OnPermissionGranted_f37c62b_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<PERMISSION_TYPE>(OnPermissionGranted_f37c62b_permissionType, permissionType) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
         public bool OnLocalUserRegistered_1922dd1_be_trigger = false;
         public uint OnLocalUserRegistered_1922dd1_uid;
         public string OnLocalUserRegistered_1922dd1_userAccount;

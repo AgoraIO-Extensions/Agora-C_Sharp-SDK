@@ -4741,7 +4741,17 @@ namespace Agora.Rtc
         ///
         public int aecEstimatedDelay;
 
-        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec, ushort txPacketLossRate, int audioDeviceDelay, int audioPlayoutDelay, int earMonitorDelay, int aecEstimatedDelay)
+        ///
+        /// @ignore
+        ///
+        public int aedVoiceRes;
+
+        ///
+        /// @ignore
+        ///
+        public int aedMusicRes;
+
+        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec, ushort txPacketLossRate, int audioDeviceDelay, int audioPlayoutDelay, int earMonitorDelay, int aecEstimatedDelay, int aedVoiceRes, int aedMusicRes)
         {
             this.numChannels = numChannels;
             this.sentSampleRate = sentSampleRate;
@@ -4752,6 +4762,8 @@ namespace Agora.Rtc
             this.audioPlayoutDelay = audioPlayoutDelay;
             this.earMonitorDelay = earMonitorDelay;
             this.aecEstimatedDelay = aecEstimatedDelay;
+            this.aedVoiceRes = aedVoiceRes;
+            this.aedMusicRes = aedMusicRes;
         }
         public LocalAudioStats()
         {
