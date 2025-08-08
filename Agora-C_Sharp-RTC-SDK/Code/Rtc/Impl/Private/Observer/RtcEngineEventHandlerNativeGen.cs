@@ -486,6 +486,20 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONPERMISSIONGRANTED_f37c62b:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnPermissionGranted(
+                        (PERMISSION_TYPE)AgoraJson.GetData<int>(jsonData, "permissionType")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALUSERREGISTERED_1922dd1:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS

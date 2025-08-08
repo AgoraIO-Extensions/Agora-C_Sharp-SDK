@@ -258,6 +258,14 @@ namespace Agora.Rtc
             EventOnPermissionError.Invoke(permissionType);
         }
 
+        public event Action<PERMISSION_TYPE> EventOnPermissionGranted;
+
+        public override void OnPermissionGranted(PERMISSION_TYPE permissionType)
+        {
+            if (EventOnPermissionGranted == null) return;
+            EventOnPermissionGranted.Invoke(permissionType);
+        }
+
         public event Action<uint, string> EventOnLocalUserRegistered;
 
         public override void OnLocalUserRegistered(uint uid, string userAccount)
