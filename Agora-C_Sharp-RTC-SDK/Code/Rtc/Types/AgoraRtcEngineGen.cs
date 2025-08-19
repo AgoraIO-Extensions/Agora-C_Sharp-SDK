@@ -2509,6 +2509,11 @@ namespace Agora.Rtc
         public bool stopAllEffect;
 
         ///
+        /// @ignore
+        ///
+        public bool unloadAllEffect;
+
+        ///
         /// <summary>
         /// Whether to stop microphone recording when a user leaves the channel. true : (Default) Stop microphone recording. false : Do not stop microphone recording.
         /// </summary>
@@ -2519,13 +2524,15 @@ namespace Agora.Rtc
         {
             this.stopAudioMixing = true;
             this.stopAllEffect = true;
+            this.unloadAllEffect = false;
             this.stopMicrophoneRecording = true;
         }
 
-        public LeaveChannelOptions(bool stopAudioMixing, bool stopAllEffect, bool stopMicrophoneRecording)
+        public LeaveChannelOptions(bool stopAudioMixing, bool stopAllEffect, bool unloadAllEffect, bool stopMicrophoneRecording)
         {
             this.stopAudioMixing = stopAudioMixing;
             this.stopAllEffect = stopAllEffect;
+            this.unloadAllEffect = unloadAllEffect;
             this.stopMicrophoneRecording = stopMicrophoneRecording;
         }
     }

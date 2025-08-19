@@ -4,16 +4,16 @@ parsers:
     package: '@agoraio-extensions/cxx-parser'
     args:
       includeHeaderDirs:
-        - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include'
+        - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1.160/include'
       parseFiles:
         include:
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/*.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1.160/include/*.h'
         exclude:
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/time_utils.h'
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/IAgoraMediaComponentFactory.h'
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/AgoraOptional.h'
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/AgoraRefPtr.h'
-          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1/include/rte_*.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1.160/include/time_utils.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1.160/include/IAgoraMediaComponentFactory.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1.160/include/AgoraOptional.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1.160/include/AgoraRefPtr.h'
+          - '@agoraio-extensions/terra_shared_configs:headers/rtc_4.5.1.160/include/rte_*.h'
 
   - name: IrisApiIdParser
     package: '@agoraio-extensions/terra_shared_configs'
@@ -29,4 +29,4 @@ renderers:
   
 globalArgs:
   product_type: rtc
-  headers_version: rtc_4.5.1
+  headers_version: rtc_4.5.1.160
