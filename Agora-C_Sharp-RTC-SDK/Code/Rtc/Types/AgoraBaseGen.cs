@@ -182,6 +182,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        WARN_ADM_RECORD_IS_OCCUPIED = 1033,
+
+        ///
+        /// @ignore
+        ///
         WARN_ADM_WINDOWS_NO_DATA_READY_EVENT = 1040,
 
         ///
