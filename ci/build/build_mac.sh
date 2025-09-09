@@ -435,7 +435,7 @@ if [ "$IRIS_MAC_URL" != "" ]; then
 
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
 
-    bundle_name=$(ls $IRIS_MAC_SRC_PATH/MAC/Release/*.bundle | head -n 1)
+    bundle_name=$(find $IRIS_MAC_SRC_PATH/MAC/Release -maxdepth 1 -type d -name "*.bundle" | head -n 1 | xargs -n 1 basename)
 
     #copy iris
     cp -PRf $IRIS_MAC_SRC_PATH/MAC/Release/$bundle_name "$MAC_DST_PATH"
