@@ -112,6 +112,14 @@ namespace Agora.Rtc
                                     ref IrisCVideoFrame video_frame, out bool is_new_frame
                                  );
 
+#if !UNITY_EDITOR && UNITY_ANDROID
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr GetRenderEventFunc();
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr GetRenderEventContext();
+#endif
+
         internal static void AllocEventHandlerHandle(ref RtcEventHandlerHandle eventHandlerHandle, Rtc_Func_Event_Native onEvent)
         {
             eventHandlerHandle.cEvent = new IrisRtcCEventHandler

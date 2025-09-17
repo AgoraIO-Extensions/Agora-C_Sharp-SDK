@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using AOT;
+using UnityEngine;
 #endif
 
 namespace Agora.Rtc
@@ -277,6 +278,9 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             if (ret == 0)
             {
+#if !UNITY_EDITOR && UNITY_ANDROID
+                GL.IssuePluginEvent(AgoraRtcNative.GetRenderEventFunc(), 0);
+#endif
                 SetAppType(AppType.APP_TYPE_UNITY);
                 Dictionary<string, object> dic = new Dictionary<string, object>
                 {
@@ -1219,6 +1223,14 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+#if !UNITY_EDITOR && UNITY_ANDROID
+            var context = AgoraRtcNative.GetRenderEventContext();
+            if (context != IntPtr.Zero)
+            {
+                SetExternalRemoteEglContext(AgoraRtcNative.GetRenderEventContext());
+            }
+#endif
 
             return result;
         }
