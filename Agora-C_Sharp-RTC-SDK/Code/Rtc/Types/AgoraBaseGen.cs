@@ -8008,13 +8008,6 @@ namespace Agora.Rtc
             this.captureSignalVolume = 100;
         }
 
-        public ScreenAudioParameters()
-        {
-            this.sampleRate = 16000;
-            this.channels = 2;
-            this.captureSignalVolume = 100;
-        }
-
         public ScreenAudioParameters(int sampleRate, int channels, int captureSignalVolume, bool excludeCurrentProcessAudio)
         {
             this.sampleRate = sampleRate;

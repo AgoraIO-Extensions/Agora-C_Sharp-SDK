@@ -29,7 +29,7 @@ namespace Agora.Rtc
             return _impl.RemoveVideoEffect(nodeId);
         }
 
-        public override int PerformVideoEffectAction(uint nodeId, IVideoEffectObject::VIDEO_EFFECT_ACTION actionId)
+        public override int PerformVideoEffectAction(uint nodeId, VIDEO_EFFECT_ACTION actionId)
         {
             if (_impl == null)
             {
