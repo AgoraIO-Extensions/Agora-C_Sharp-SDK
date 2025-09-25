@@ -10,6 +10,21 @@ namespace Agora.Rtc
 {
     public partial class VideoEffectObjectImpl
     {
+        private Iris.IrisApiEngine _irisApiEngine;
+        private Iris.ApiParam _apiParam;
+        private readonly System.Collections.Generic.Dictionary<string, object> _param = new System.Collections.Generic.Dictionary<string, object>();
+
+        internal VideoEffectObjectImpl(Iris.IrisApiEngine irisApiEngine)
+        {
+            _irisApiEngine = irisApiEngine;
+            _apiParam = new Iris.ApiParam();
+            _apiParam.AllocResult();
+        }
+
+        ~VideoEffectObjectImpl()
+        {
+            _apiParam.FreeResult();
+        }
 
         public int AddOrUpdateVideoEffect(uint nodeId, string templateName)
         {

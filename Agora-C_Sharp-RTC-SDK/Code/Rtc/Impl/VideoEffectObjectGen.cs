@@ -10,6 +10,13 @@ namespace Agora.Rtc
 {
     public partial class VideoEffectObject : IVideoEffectObject
     {
+        private VideoEffectObjectImpl _impl = null;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
+
+        internal VideoEffectObject(VideoEffectObjectImpl impl)
+        {
+            _impl = impl;
+        }
 
         public override int AddOrUpdateVideoEffect(uint nodeId, string templateName)
         {
