@@ -618,6 +618,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, int> EventOnFirstRemoteAudioDecoded;
 
+        [Obsolete]
         public override void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed)
         {
             if (EventOnFirstRemoteAudioDecoded == null) return;
@@ -666,6 +667,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, ushort, ushort, ushort> EventOnRemoteAudioTransportStats;
 
+        [Obsolete]
         public override void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
         {
             if (EventOnRemoteAudioTransportStats == null) return;

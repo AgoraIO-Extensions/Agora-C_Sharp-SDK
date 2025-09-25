@@ -434,6 +434,7 @@ namespace Agora.Rtc
             return _impl.DisableAudio();
         }
 
+        [Obsolete]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
             if (_impl == null)
@@ -443,7 +444,6 @@ namespace Agora.Rtc
             return _impl.SetAudioProfile(profile, scenario);
         }
 
-        [Obsolete]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile)
         {
             if (_impl == null)
@@ -2236,6 +2236,7 @@ namespace Agora.Rtc
             return _impl.PauseAudio();
         }
 
+        [Obsolete]
         public override int ResumeAudio()
         {
             if (_impl == null)
@@ -3056,6 +3057,7 @@ namespace Agora.Rtc
             return _impl.GetUserInfoByUidEx(uid, ref userInfo, connection);
         }
 
+        [Obsolete]
         public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             if (_impl == null)
