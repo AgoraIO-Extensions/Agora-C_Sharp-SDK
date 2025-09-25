@@ -2538,22 +2538,22 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        BEAUTY = 1U << 0,
+        BEAUTY = 1 << 0,
 
         ///
         /// @ignore
         ///
-        STYLE_MAKEUP = 1U << 1,
+        STYLE_MAKEUP = 1 << 1,
 
         ///
         /// @ignore
         ///
-        FILTER = 1U << 2,
+        FILTER = 1 << 2,
 
         ///
         /// @ignore
         ///
-        STICKER = 1U << 3,
+        STICKER = 1 << 3,
 
     }
 

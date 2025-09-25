@@ -46,7 +46,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int PerformVideoEffectAction(uint nodeId, IVideoEffectObject::VIDEO_EFFECT_ACTION actionId)
+        public int PerformVideoEffectAction(uint nodeId, VIDEO_EFFECT_ACTION actionId)
         {
             _param.Clear();
             _param.Add("nodeId", nodeId);
