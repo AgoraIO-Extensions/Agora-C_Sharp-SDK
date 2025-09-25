@@ -628,7 +628,7 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            var result = nRet != 0 ? config this to method_return_default_value_table.config.ts :(IVideoEffectObject)AgoraJson.JsonToStruct<IVideoEffectObject>(_apiParam.Result, "result");
+            var result = nRet != 0 ? null :(IVideoEffectObject)AgoraJson.JsonToStruct<IVideoEffectObject>(_apiParam.Result, "result");
 
 
             return result;
