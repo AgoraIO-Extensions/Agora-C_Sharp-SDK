@@ -443,6 +443,7 @@ namespace Agora.Rtc
             return _impl.SetAudioProfile(profile, scenario);
         }
 
+        [Obsolete]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile)
         {
             if (_impl == null)
@@ -2225,6 +2226,7 @@ namespace Agora.Rtc
             return _impl.ClearVideoWatermarks();
         }
 
+        [Obsolete]
         public override int PauseAudio()
         {
             if (_impl == null)
@@ -2243,6 +2245,7 @@ namespace Agora.Rtc
             return _impl.ResumeAudio();
         }
 
+        [Obsolete]
         public override int EnableWebSdkInteroperability(bool enabled)
         {
             if (_impl == null)
@@ -3224,6 +3227,7 @@ namespace Agora.Rtc
             return _impl.SetExternalRemoteEglContext(eglContext);
         }
 
+        [Obsolete]
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
             if (_impl == null)
