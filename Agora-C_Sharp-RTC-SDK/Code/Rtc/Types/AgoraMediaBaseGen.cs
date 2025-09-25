@@ -526,147 +526,6 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum CONTENT_INSPECT_RESULT
-    {
-        ///
-        /// @ignore
-        ///
-        CONTENT_INSPECT_NEUTRAL = 1,
-
-        ///
-        /// @ignore
-        ///
-        CONTENT_INSPECT_SEXY = 2,
-
-        ///
-        /// @ignore
-        ///
-        CONTENT_INSPECT_PORN = 3,
-
-    }
-
-    ///
-    /// <summary>
-    /// The type of video content moderation module.
-    /// </summary>
-    ///
-    public enum CONTENT_INSPECT_TYPE
-    {
-        ///
-        /// <summary>
-        /// 0: (Default) This module has no actual function. Do not set type to this value.
-        /// </summary>
-        ///
-        CONTENT_INSPECT_INVALID = 0,
-
-        ///
-        /// @ignore
-        ///
-        [Obsolete("Content inspect type moderation")]
-        CONTENT_INSPECT_MODERATION = 1,
-
-        ///
-        /// <summary>
-        /// 2: Video screenshot and upload via Agora self-developed extension. SDK takes screenshots of the video stream in the channel and uploads them.
-        /// </summary>
-        ///
-        CONTENT_INSPECT_SUPERVISION = 2,
-
-        ///
-        /// <summary>
-        /// 3: Video screenshot and upload via extensions from Agora Extensions Marketplace. SDK uses video moderation extensions from Agora Extensions Marketplace to take screenshots of the video stream in the channel and uploads them.
-        /// </summary>
-        ///
-        CONTENT_INSPECT_IMAGE_MODERATION = 3,
-
-    }
-
-    ///
-    /// <summary>
-    /// ContentInspectModule A structure used to configure the frequency of video screenshot and upload.
-    /// </summary>
-    ///
-    public class ContentInspectModule
-    {
-        ///
-        /// <summary>
-        /// Types of functional module. See CONTENT_INSPECT_TYPE.
-        /// </summary>
-        ///
-        public CONTENT_INSPECT_TYPE type;
-
-        ///
-        /// <summary>
-        /// The frequency (s) of video screenshot and upload. The value should be set as larger than 0. The default value is 0, the SDK does not take screenshots. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
-        /// </summary>
-        ///
-        public uint interval;
-
-        public ContentInspectModule()
-        {
-        }
-
-        public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval)
-        {
-            this.type = type;
-            this.interval = interval;
-        }
-    }
-
-    ///
-    /// <summary>
-    /// Screenshot and upload configuration.
-    /// </summary>
-    ///
-    public class ContentInspectConfig
-    {
-        ///
-        /// <summary>
-        /// Additional information on the video content (maximum length: 1024 Bytes). The SDK sends the screenshots and additional information on the video content to the Agora server. Once the video screenshot and upload process is completed, the Agora server sends the additional information and the callback notification to your server.
-        /// </summary>
-        ///
-        public string extraInfo;
-
-        ///
-        /// <summary>
-        /// (Optional) Server configuration related to uploading video screenshots via extensions from Agora Extensions Marketplace. This parameter only takes effect when type in ContentInspectModule is set to CONTENT_INSPECT_IMAGE_MODERATION. If you want to use it, contact.
-        /// </summary>
-        ///
-        public string serverConfig;
-
-        ///
-        /// <summary>
-        /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
-        /// </summary>
-        ///
-        public ContentInspectModule[] modules;
-
-        ///
-        /// <summary>
-        /// The number of functional modules, that is,the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
-        /// </summary>
-        ///
-        public int moduleCount;
-
-        public ContentInspectConfig()
-        {
-            this.extraInfo = "";
-            this.serverConfig = "";
-            this.moduleCount = 0;
-        }
-
-        public ContentInspectConfig(string extraInfo, string serverConfig, ContentInspectModule[] modules, int moduleCount)
-        {
-            this.extraInfo = extraInfo;
-            this.serverConfig = serverConfig;
-            this.modules = modules;
-            this.moduleCount = moduleCount;
-        }
-    }
-
-    ///
-    /// @ignore
-    ///
     public class PacketOptions
     {
         ///
@@ -2052,27 +1911,147 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum CONTENT_INSPECT_RESULT
+    {
+        ///
+        /// @ignore
+        ///
+        CONTENT_INSPECT_NEUTRAL = 1,
+
+        ///
+        /// @ignore
+        ///
+        CONTENT_INSPECT_SEXY = 2,
+
+        ///
+        /// @ignore
+        ///
+        CONTENT_INSPECT_PORN = 3,
+
+    }
+
+    ///
     /// <summary>
-    /// The snapshot configuration.
+    /// The type of video content moderation module.
     /// </summary>
     ///
-    public class SnapshotConfig
+    public enum CONTENT_INSPECT_TYPE
     {
         ///
         /// <summary>
-        /// The local path (including filename extensions) of the snapshot. For example:
-        ///  Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.jpg
-        ///  iOS: /App Sandbox/Library/Caches/example.jpg
-        ///  macOS: ～/Library/Logs/example.jpg
-        ///  Android: /storage/emulated/0/Android/data/<package name>/files/example.jpg Ensure that the path you specify exists and is writable.
+        /// 0: (Default) This module has no actual function. Do not set type to this value.
         /// </summary>
+        ///
+        CONTENT_INSPECT_INVALID = 0,
+
+        ///
+        /// @ignore
+        ///
+        [Obsolete("Content inspect type moderation")]
+        CONTENT_INSPECT_MODERATION = 1,
+
+        ///
+        /// <summary>
+        /// 2: Video screenshot and upload via Agora self-developed extension. SDK takes screenshots of the video stream in the channel and uploads them.
+        /// </summary>
+        ///
+        CONTENT_INSPECT_SUPERVISION = 2,
+
+        ///
+        /// <summary>
+        /// 3: Video screenshot and upload via extensions from Agora Extensions Marketplace. SDK uses video moderation extensions from Agora Extensions Marketplace to take screenshots of the video stream in the channel and uploads them.
+        /// </summary>
+        ///
+        CONTENT_INSPECT_IMAGE_MODERATION = 3,
+
+    }
+
+    ///
+    /// <summary>
+    /// ContentInspectModule A structure used to configure the frequency of video screenshot and upload.
+    /// </summary>
+    ///
+    public class ContentInspectModule
+    {
+        ///
+        /// <summary>
+        /// Types of functional module. See CONTENT_INSPECT_TYPE.
+        /// </summary>
+        ///
+        public CONTENT_INSPECT_TYPE type;
+
+        ///
+        /// <summary>
+        /// The frequency (s) of video screenshot and upload. The value should be set as larger than 0. The default value is 0, the SDK does not take screenshots. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
+        /// </summary>
+        ///
+        public uint interval;
+
+        public base::VIDEO_MODULE_POSITION position;
+
+        public ContentInspectModule()
+: base({
+            type = CONTENT_INSPECT_INVALID; interval = 0; position = base)
+{
+            }
+
+public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval,base::VIDEO_MODULE_POSITION position)
+        {
+            this.type = type;
+            this.interval = interval;
+            this.position = position;
+        }
+    }
+
+    public class ContentInspectConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public string extraInfo;
+
+        ///
+        /// @ignore
+        ///
+        public string serverConfig;
+
+        ///
+        /// @ignore
+        ///
+        public ContentInspectModule[] modules;
+
+        ///
+        /// @ignore
+        ///
+        public int moduleCount;
+
+        public ContentInspectConfig()
+        {
+            this.extraInfo = "";
+            this.serverConfig = "";
+            this.moduleCount = 0;
+        }
+
+        public ContentInspectConfig(string extraInfo, string serverConfig, ContentInspectModule[] modules, int moduleCount)
+        {
+            this.extraInfo = extraInfo;
+            this.serverConfig = serverConfig;
+            this.modules = modules;
+            this.moduleCount = moduleCount;
+        }
+    }
+
+    public class SnapshotConfig
+    {
+        ///
+        /// @ignore
         ///
         public string filePath;
 
         ///
-        /// <summary>
-        /// The position of the snapshot video frame in the video pipeline. See VIDEO_MODULE_POSITION.
-        /// </summary>
+        /// @ignore
         ///
         public VIDEO_MODULE_POSITION position;
 
@@ -2089,70 +2068,43 @@ namespace Agora.Rtc
         }
     }
 
-    ///
-    /// <summary>
-    /// Audio frame type.
-    /// </summary>
-    ///
     public enum AUDIO_FRAME_TYPE
     {
-        ///
-        /// <summary>
-        /// 0: PCM 16
-        /// </summary>
-        ///
         FRAME_TYPE_PCM16 = 0,
 
     }
 
-    ///
-    /// <summary>
-    /// Raw audio data.
-    /// </summary>
-    ///
     public class AudioFrame
     {
         ///
-        /// <summary>
-        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved. The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample.
-        /// </summary>
+        /// @ignore
         ///
         public byte[] RawBuffer = new byte[0];
 
         ///
         /// <summary>
-        /// The type of the audio frame. See AUDIO_FRAME_TYPE.
+        /// Types of functional module. See CONTENT_INSPECT_TYPE.
         /// </summary>
         ///
         public AUDIO_FRAME_TYPE type;
 
         ///
-        /// <summary>
-        /// The number of samples per channel in the audio frame.
-        /// </summary>
+        /// @ignore
         ///
         public int samplesPerChannel;
 
         ///
-        /// <summary>
-        /// The number of bytes per sample. For PCM, this parameter is generally set to 16 bits (2 bytes).
-        /// </summary>
+        /// @ignore
         ///
         public BYTES_PER_SAMPLE bytesPerSample;
 
         ///
-        /// <summary>
-        /// The number of audio channels (the data are interleaved if it is stereo).
-        ///  1: Mono.
-        ///  2: Stereo.
-        /// </summary>
+        /// @ignore
         ///
         public int channels;
 
         ///
-        /// <summary>
-        /// The number of samples per channel in the audio frame.
-        /// </summary>
+        /// @ignore
         ///
         public int samplesPerSec;
 
@@ -2162,16 +2114,12 @@ namespace Agora.Rtc
         public IntPtr buffer;
 
         ///
-        /// <summary>
-        /// The timestamp (ms) of the external audio frame. You can use this timestamp to restore the order of the captured audio frame, and synchronize audio and video frames in video scenarios, including scenarios where external video sources are used.
-        /// </summary>
+        /// @ignore
         ///
         public long renderTimeMs;
 
         ///
-        /// <summary>
-        /// Reserved for future use.
-        /// </summary>
+        /// @ignore
         ///
         public int avsync_type;
 
@@ -2221,87 +2169,42 @@ namespace Agora.Rtc
         }
     }
 
-    ///
-    /// @ignore
-    ///
     [Flags]
     public enum AUDIO_FRAME_POSITION
     {
-        ///
-        /// @ignore
-        ///
         AUDIO_FRAME_POSITION_NONE = 0x0000,
 
-        ///
-        /// @ignore
-        ///
         AUDIO_FRAME_POSITION_PLAYBACK = 0x0001,
 
-        ///
-        /// @ignore
-        ///
         AUDIO_FRAME_POSITION_RECORD = 0x0002,
 
-        ///
-        /// @ignore
-        ///
         AUDIO_FRAME_POSITION_MIXED = 0x0004,
 
-        ///
-        /// @ignore
-        ///
         AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
 
-        ///
-        /// @ignore
-        ///
         AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010,
 
     }
 
-    ///
-    /// <summary>
-    /// Audio data format.
-    /// 
-    /// You can pass the AudioParams object in the following APIs to set the audio data format for the corresponding callback: SetRecordingAudioFrameParameters : Sets the audio data format for the OnRecordAudioFrame callback. SetPlaybackAudioFrameParameters : Sets the audio data format for the OnPlaybackAudioFrame callback. SetMixedAudioFrameParameters : Sets the audio data format for the OnMixedAudioFrame callback. SetEarMonitoringAudioFrameParameters : Sets the audio data format for the OnEarMonitoringAudioFrame callback.
-    ///  The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks according to the sampling interval. Sample interval (sec) = samplePerCall /(sampleRate × channel).
-    ///  Ensure that the sample interval ≥ 0.01 (s).
-    /// </summary>
-    ///
     public class AudioParams
     {
         ///
-        /// <summary>
-        /// The audio sample rate (Hz), which can be set as one of the following values:
-        ///  8000.
-        ///  (Default) 16000.
-        ///  32000.
-        ///  44100
-        ///  48000
-        /// </summary>
+        /// @ignore
         ///
         public int sample_rate;
 
         ///
-        /// <summary>
-        /// The number of audio channels, which can be set as either of the following values:
-        ///  1: (Default) Mono.
-        ///  2: Stereo.
-        /// </summary>
+        /// @ignore
         ///
         public int channels;
 
         ///
-        /// <summary>
-        /// The use mode of the audio data. See RAW_AUDIO_FRAME_OP_MODE_TYPE.
-        /// </summary>
+        /// @ignore
         ///
         public RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
 
         ///
-        /// <summary>
-        /// The number of samples, such as 1024 for the media push.
-        /// </summary>
+        /// @ignore
         ///
         public int samples_per_call;
 
@@ -2323,24 +2226,15 @@ namespace Agora.Rtc
 
     }
 
-    ///
-    /// <summary>
-    /// The audio spectrum data.
-    /// </summary>
-    ///
     public class AudioSpectrumData
     {
         ///
-        /// <summary>
-        /// The audio spectrum data. Agora divides the audio frequency into 256 frequency domains, and reports the energy value of each frequency domain through this parameter. The value range of each energy type is [-300, 1] and the unit is dBFS.
-        /// </summary>
+        /// @ignore
         ///
         public float[] audioSpectrumData;
 
         ///
-        /// <summary>
-        /// The audio spectrum data length is 256.
-        /// </summary>
+        /// @ignore
         ///
         public int dataLength;
 
@@ -2358,24 +2252,15 @@ namespace Agora.Rtc
 
     }
 
-    ///
-    /// <summary>
-    /// Audio spectrum information of the remote user.
-    /// </summary>
-    ///
     public class UserAudioSpectrumInfo
     {
         ///
-        /// <summary>
-        /// The user ID of the remote user.
-        /// </summary>
+        /// @ignore
         ///
         public uint uid;
 
         ///
-        /// <summary>
-        /// Audio spectrum information of the remote user. See AudioSpectrumData.
-        /// </summary>
+        /// @ignore
         ///
         public AudioSpectrumData spectrumData;
 
@@ -2397,157 +2282,62 @@ namespace Agora.Rtc
         }
     }
 
-    ///
-    /// @ignore
-    ///
     public enum VIDEO_FRAME_PROCESS_MODE
     {
-        ///
-        /// @ignore
-        ///
         PROCESS_MODE_READ_ONLY,
 
-        ///
-        /// @ignore
-        ///
         PROCESS_MODE_READ_WRITE,
 
     }
 
-    ///
-    /// <summary>
-    /// The external video frame encoding type.
-    /// </summary>
-    ///
     public enum EXTERNAL_VIDEO_SOURCE_TYPE
     {
-        ///
-        /// <summary>
-        /// 0: The video frame is not encoded.
-        /// </summary>
-        ///
         VIDEO_FRAME = 0,
 
-        ///
-        /// <summary>
-        /// 1: The video frame is encoded.
-        /// </summary>
-        ///
         ENCODED_VIDEO_FRAME,
 
     }
 
-    ///
-    /// @ignore
-    ///
     public enum MediaRecorderContainerFormat
     {
-        ///
-        /// @ignore
-        ///
         FORMAT_MP4 = 1,
 
     }
 
-    ///
-    /// <summary>
-    /// The recording content.
-    /// </summary>
-    ///
     public enum MediaRecorderStreamType
     {
-        ///
-        /// <summary>
-        /// Only audio.
-        /// </summary>
-        ///
         STREAM_TYPE_AUDIO = 0x01,
 
-        ///
-        /// <summary>
-        /// Only video.
-        /// </summary>
-        ///
         STREAM_TYPE_VIDEO = 0x02,
 
-        ///
-        /// <summary>
-        /// (Default) Audio and video.
-        /// </summary>
-        ///
         STREAM_TYPE_BOTH = STREAM_TYPE_AUDIO | STREAM_TYPE_VIDEO,
 
     }
 
-    ///
-    /// <summary>
-    /// The current recording state.
-    /// </summary>
-    ///
     public enum RecorderState
     {
-        ///
-        /// <summary>
-        /// -1: An error occurs during the recording. See RecorderReasonCode for the reason.
-        /// </summary>
-        ///
         RECORDER_STATE_ERROR = -1,
 
-        ///
-        /// <summary>
-        /// 2: The audio and video recording starts.
-        /// </summary>
-        ///
         RECORDER_STATE_START = 2,
 
-        ///
-        /// <summary>
-        /// 3: The audio and video recording stops.
-        /// </summary>
-        ///
         RECORDER_STATE_STOP = 3,
 
     }
 
-    ///
-    /// <summary>
-    /// The reason for the state change.
-    /// </summary>
-    ///
     public enum RecorderReasonCode
     {
-        ///
-        /// <summary>
-        /// 0: No error.
-        /// </summary>
-        ///
         RECORDER_REASON_NONE = 0,
 
-        ///
-        /// @ignore
-        ///
         RECORDER_REASON_WRITE_FAILED = 1,
 
-        ///
-        /// @ignore
-        ///
         RECORDER_REASON_NO_STREAM = 2,
 
-        ///
-        /// @ignore
-        ///
         RECORDER_REASON_OVER_MAX_DURATION = 3,
 
-        ///
-        /// @ignore
-        ///
         RECORDER_REASON_CONFIG_CHANGED = 4,
 
     }
 
-    ///
-    /// @ignore
-    ///
     public class MediaRecorderConfiguration
     {
         ///
@@ -2651,9 +2441,6 @@ namespace Agora.Rtc
         }
     }
 
-    ///
-    /// @ignore
-    ///
     public class RecorderInfo
     {
         ///
