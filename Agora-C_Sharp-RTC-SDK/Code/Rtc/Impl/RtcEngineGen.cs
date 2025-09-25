@@ -330,7 +330,7 @@ namespace Agora.Rtc
         {
             if (_impl == null)
             {
-                return config this to method_return_default_value_table.config.ts;
+                return ErrorCode;
             }
             return _impl.CreateVideoEffectObject(bundlePath, type);
         }
