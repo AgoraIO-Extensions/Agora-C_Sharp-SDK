@@ -628,7 +628,7 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            var result = nRet != 0 ? null : (IVideoEffectObject)new VideoEffectObject(this.CreateVideoEffectObject(bundlePath, type));
+            var result = nRet != 0 ? null : VideoEffectObject.GetInstance(RtcEngine.Get(), new VideoEffectObjectImpl(_irisApiEngine));
 
 
             return result;
