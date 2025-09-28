@@ -13,6 +13,8 @@ namespace Agora.Rtc
     ///
     public abstract class IVideoEffectObject
     {
+        public abstract int GetObjectId();
+
         ///
         /// @ignore
         ///
