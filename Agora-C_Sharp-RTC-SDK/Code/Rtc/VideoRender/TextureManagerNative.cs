@@ -28,6 +28,9 @@ namespace Agora.Rtc
                 _nativeTexture.wrapMode = TextureWrapMode.Clamp;
                 _nativeTexture.filterMode = FilterMode.Point;
                 
+                // **关键修复**: 初始化为透明纹理，避免显示灰色
+                InitializeTransparentTexture(_nativeTexture);
+                
                 // **关键修复1**: 确保纹理在GPU上创建
                 _nativeTexture.Apply(); // updateMipmaps=true, makeNoLongerReadable=false
                 
@@ -205,10 +208,44 @@ namespace Agora.Rtc
 #else
                 _nativeTexture.Resize(_videoPixelWidth, _videoPixelHeight);
 #endif
+                
+                // 重新初始化时也设置为透明
+                InitializeTransparentTexture(_nativeTexture);
+                
                 _nativeTexture.Apply();
                 _nativeTexturePtr = _nativeTexture.GetNativeTexturePtr();
                 
                 AgoraLog.Log($"Texture reinitialized: {_videoPixelWidth}x{_videoPixelHeight}, new ptr: {_nativeTexturePtr}");
+            }
+        }
+
+        /// <summary>
+        /// 初始化纹理为透明状态，避免显示灰色
+        /// </summary>
+        /// <param name="texture">要初始化的纹理</param>
+        private void InitializeTransparentTexture(Texture2D texture)
+        {
+            if (texture == null) return;
+            
+            try
+            {
+                // 使用透明色填充整个纹理
+                Color32 transparentColor = new Color32(0, 0, 0, 0);
+                Color32[] transparentPixels = new Color32[texture.width * texture.height];
+                
+                // 批量填充，比逐个赋值更高效
+                for (int i = 0; i < transparentPixels.Length; i++)
+                {
+                    transparentPixels[i] = transparentColor;
+                }
+                
+                texture.SetPixels32(transparentPixels);
+                
+                AgoraLog.Log($"InitializeTransparentTexture: 纹理已初始化为透明 {texture.width}x{texture.height}");
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError($"InitializeTransparentTexture: 初始化透明纹理失败: {e}");
             }
         }
 
