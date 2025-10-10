@@ -14,7 +14,6 @@ namespace Agora.Rtc
     ///
     public class VideoSurfaceNative : VideoSurface
     {
-        public TextureManagerNative _textureManagerNative;
         public Material _material = null;
 
         void Start()
@@ -29,7 +28,7 @@ namespace Agora.Rtc
 
             if (Enable)
             {
-                if (_textureManagerNative == null)
+                if (_textureManager == null)
                 {
                     string textureManagerName = this.GenerateTextureManagerUniqueName();
                     _TextureManagerGameObject = GameObject.Find(textureManagerName);
@@ -39,34 +38,38 @@ namespace Agora.Rtc
                         _TextureManagerGameObject = new GameObject(textureManagerName);
                         _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
-                        _textureManagerNative = _TextureManagerGameObject.AddComponent<TextureManagerNative>();
-                        _textureManagerNative.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
-                        _textureManagerNative.EnableVideoFrameWithIdentity();
+                        _textureManager = _TextureManagerGameObject.AddComponent<TextureManagerNative>();
+                        _textureManager.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
+                        _textureManager.EnableVideoFrameWithIdentity();
                     }
                     else
                     {
-                        _textureManagerNative = _TextureManagerGameObject.GetComponent<TextureManagerNative>();
+                        _textureManager = _TextureManagerGameObject.GetComponent<TextureManagerNative>();
                     }
                 }
-                else if (_textureManagerNative && !_hasAttach && _textureManagerNative.CanTextureAttach())
+                else
                 {
-                    ApplyTexture(_textureManagerNative.Texture);
-                    _textureManagerNative.Attach();
-                    _hasAttach = true;
-                }
-
-                if (_textureManagerNative)
-                {
-                    if (this._textureWidth != _textureManagerNative.Width || this._textureHeight != _textureManagerNative.Height)
+                    if (this._textureWidth != _textureManager.Width || this._textureHeight != _textureManager.Height)
                     {
-                        this._textureWidth = _textureManagerNative.Width*2;
-                        this._textureHeight = _textureManagerNative.Height*2;
+                        this._textureWidth = _textureManager.Width;
+                        this._textureHeight = _textureManager.Height;
 
                         if (this._textureWidth != 0 && this._textureHeight != 0)
                         {
-                            AgoraLog.Log($"原生纹理尺寸已更新: {_textureWidth}x{_textureHeight}");
                             this.InvokeOnTextureSizeModify();
                         }
+                    }
+
+                    if (!_hasAttach && _textureManager.CanTextureAttach())
+                    {
+                        // Only update shader if not using external materials
+                        if (!_useExternalTargets || _externalMaterial == null)
+                        {
+                            UpdateShader();
+                        }
+                        ApplyTexture(_textureManager.Texture);
+                        _textureManager.Attach();
+                        _hasAttach = true;
                     }
                 }
             }
@@ -106,10 +109,6 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("Unable to find surface render in VideoSurfaceNative component.");
             }
-            else
-            {
-                UpdateShader();
-            }
         }
 
         protected override bool IsBlankTexture()
@@ -130,8 +129,17 @@ namespace Agora.Rtc
             }
         }
 
-        protected virtual void ApplyTexture(Texture2D texture)
+        protected override void ApplyTexture(Texture2D texture)
         {
+            // Handle external rendering targets
+            if (_useExternalTargets)
+            {
+                HandleExternalRendering(texture);
+                // When using external targets, skip default rendering to avoid unnecessary overhead
+                return;
+            }
+
+            // Default rendering behavior only when not using external targets
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
@@ -146,19 +154,19 @@ namespace Agora.Rtc
 
         protected override void DestroyTextureManager()
         {
-            if (_textureManagerNative == null) return;
+            if (_textureManager == null) return;
 
             if (_hasAttach == true)
             {
-                _textureManagerNative.Detach();
+                _textureManager.Detach();
                 _hasAttach = false;
             }
 
-            if (_textureManagerNative.GetRefCount() <= 0)
+            if (_textureManager.GetRefCount() <= 0)
             {
                 Destroy(_TextureManagerGameObject);
             }
-            _textureManagerNative = null;
+            _textureManager = null;
         }
 
         protected override void UpdateShader()
@@ -175,11 +183,6 @@ namespace Agora.Rtc
                 // RawImage通常不需要特殊的shader
                 _material = rd.material;
             }
-        }
-
-        protected override string GenerateTextureManagerUniqueName()
-        {
-            return "TextureManagerNative" + "_" + Uid.ToString() + "_" + ChannelId + "_" + SourceType.ToString() + "_" + FrameType.ToString();
         }
     }
 }

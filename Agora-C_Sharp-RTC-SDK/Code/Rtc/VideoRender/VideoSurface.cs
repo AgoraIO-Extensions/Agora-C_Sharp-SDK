@@ -29,6 +29,14 @@ namespace Agora.Rtc
         protected int _textureWidth = 2;
         protected int _textureHeight = 2;
 
+        // External targets for custom rendering
+        protected RenderTexture _externalRenderTexture = null;
+        protected Material _externalMaterial = null;
+        protected bool _useExternalTargets = false;
+        
+        // Persistent RenderTexture for material blit operations
+        protected RenderTexture _persistentBlitRT = null;
+
         ///
         /// <summary>
         /// This callback is triggered when the width and height of Texture are changed.
@@ -92,6 +100,14 @@ namespace Agora.Rtc
                 {
                     DestroyTextureManager();
                     ApplyTexture(null);
+                    
+                    // Clear external targets when disabling
+                    if (_useExternalTargets && _externalRenderTexture != null)
+                    {
+                        Graphics.Blit(Texture2D.blackTexture, _externalRenderTexture);
+                    }
+                    // Clear persistent blit RT when disabling
+                    ReleasePersistentBlitRT();
                 }
             }
         }
@@ -108,6 +124,8 @@ namespace Agora.Rtc
         {
             AgoraLog.Log(string.Format("VideoSurface RGBA channel: ${0}, user:{1} destroy", ChannelId, Uid));
             DestroyTextureManager();
+            ClearExternalTargets();
+            ReleasePersistentBlitRT();
         }
 
         protected virtual void CheckVideoSurfaceType()
@@ -133,7 +151,11 @@ namespace Agora.Rtc
             else
             {
 #if UNITY_EDITOR
-                UpdateShader();
+                // Only update shader if not using external materials
+                if (!_useExternalTargets || _externalMaterial == null)
+                {
+                    UpdateShader();
+                }
 #endif
             }
         }
@@ -175,6 +197,15 @@ namespace Agora.Rtc
 
         protected virtual void ApplyTexture(Texture2D texture)
         {
+            // Handle external rendering targets
+            if (_useExternalTargets)
+            {
+                HandleExternalRendering(texture);
+                // When using external targets, skip default rendering to avoid unnecessary overhead
+                return;
+            }
+
+            // Default rendering behavior only when not using external targets
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
@@ -184,6 +215,129 @@ namespace Agora.Rtc
             {
                 var rd = _renderer as RawImage;
                 rd.texture = texture;
+            }
+        }
+
+        ///
+        /// <summary>
+        /// Handles rendering to external targets (RenderTexture and/or Material).
+        /// Base implementation for single texture (RGBA). Derived classes should override for multi-texture support.
+        /// </summary>
+        ///
+        /// <param name="sourceTexture"> The source texture to render from. </param>
+        ///
+        protected virtual void HandleExternalRendering(Texture2D sourceTexture)
+        {
+            HandleExternalRenderingInternal(sourceTexture, null);
+        }
+
+        ///
+        /// <summary>
+        /// Internal method to handle external rendering with optional material setup callback.
+        /// This allows derived classes to configure additional textures before rendering.
+        /// </summary>
+        ///
+        /// <param name="sourceTexture"> The main source texture. </param>
+        /// <param name="materialSetupCallback"> Optional callback to configure additional material properties. </param>
+        ///
+        protected void HandleExternalRenderingInternal(Texture2D sourceTexture, System.Action<Material> materialSetupCallback)
+        {
+            // If external RenderTexture is set, render to it
+            if (_externalRenderTexture != null)
+            {
+                if (sourceTexture != null)
+                {
+                    // Use external material if available, otherwise use default blit
+                    if (_externalMaterial != null)
+                    {
+                        // Allow derived classes to set up additional textures
+                        materialSetupCallback?.Invoke(_externalMaterial);
+                        Graphics.Blit(sourceTexture, _externalRenderTexture, _externalMaterial);
+                    }
+                    else
+                    {
+                        Graphics.Blit(sourceTexture, _externalRenderTexture);
+                    }
+                }
+                else
+                {
+                    // Clear external render texture when source is null
+                    Graphics.Blit(Texture2D.blackTexture, _externalRenderTexture);
+                }
+            }
+            // If only external material is set (without RenderTexture), apply it to the current renderer
+            else if (_externalMaterial != null && sourceTexture != null)
+            {
+                _externalMaterial.mainTexture = sourceTexture;
+                // Allow derived classes to set up additional textures
+                materialSetupCallback?.Invoke(_externalMaterial);
+
+                if (VideoSurfaceType == VideoSurfaceType.Renderer)
+                {
+                    var rd = _renderer as Renderer;
+                    if (_persistentBlitRT != null)
+                    {
+                        rd.material.mainTexture = _persistentBlitRT;
+                    }
+                    else
+                    {
+                        rd.material.mainTexture = _externalMaterial.mainTexture;
+                    }
+                }
+                else if (VideoSurfaceType == VideoSurfaceType.RawImage)
+                {
+                    var rd = _renderer as RawImage;
+                    if (_persistentBlitRT != null)
+                    {
+                        rd.texture = _persistentBlitRT;
+                    }
+                    else {
+                        rd.texture = _externalMaterial.mainTexture;
+                    }
+                }
+            }
+        }
+
+        ///
+        /// <summary>
+        /// 确保持久的RenderTexture存在且尺寸正确，用于材质效果渲染
+        /// </summary>
+        ///
+        /// <param name="width"> 目标宽度 </param>
+        /// <param name="height"> 目标高度 </param>
+        ///
+        protected virtual void EnsurePersistentBlitRT(int width, int height)
+        {
+            // 检查是否需要创建或重新创建RenderTexture
+            if (_persistentBlitRT == null || 
+                _persistentBlitRT.width != width || 
+                _persistentBlitRT.height != height ||
+                !_persistentBlitRT.IsCreated())
+            {
+                // 清理旧的RenderTexture
+                ReleasePersistentBlitRT();
+                
+                // 创建新的RenderTexture
+                _persistentBlitRT = new RenderTexture(width, height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+                _persistentBlitRT.Create();
+            }
+        }
+
+        ///
+        /// <summary>
+        /// 释放持久的RenderTexture
+        /// </summary>
+        ///
+        protected virtual void ReleasePersistentBlitRT()
+        {
+            if (_persistentBlitRT != null)
+            {
+                if (_persistentBlitRT.IsCreated())
+                {
+                    _persistentBlitRT.Release();
+                }
+                DestroyImmediate(_persistentBlitRT);
+                _persistentBlitRT = null;
             }
         }
 
@@ -229,6 +383,98 @@ namespace Agora.Rtc
         public virtual void SetEnable(bool enable)
         {
             Enable = enable;
+        }
+
+        ///
+        /// <summary>
+        /// Sets an external RenderTexture as the render target for video content.
+        /// When set, video content will be drawn to this RenderTexture instead of the default renderer.
+        /// </summary>
+        ///
+        /// <param name="renderTexture"> The external RenderTexture to draw video content to. Set to null to disable external rendering. </param>
+        ///
+        public virtual void SetExternalRenderTexture(RenderTexture renderTexture)
+        {
+            _externalRenderTexture = renderTexture;
+            _useExternalTargets = (_externalRenderTexture != null || _externalMaterial != null);
+        }
+
+        ///
+        /// <summary>
+        /// Sets an external Material for custom video rendering.
+        /// When set, video content will be processed with this Material before rendering.
+        /// </summary>
+        ///
+        /// <param name="material"> The external Material to use for video rendering. Set to null to disable external material. </param>
+        ///
+        public virtual void SetExternalMaterial(Material material)
+        {
+            _externalMaterial = material;
+            _useExternalTargets = (_externalRenderTexture != null || _externalMaterial != null);
+        }
+
+        ///
+        /// <summary>
+        /// Sets both external RenderTexture and Material for custom video rendering.
+        /// </summary>
+        ///
+        /// <param name="renderTexture"> The external RenderTexture to draw video content to. </param>
+        /// <param name="material"> The external Material to use for video rendering. </param>
+        ///
+        public virtual void SetExternalTargets(RenderTexture renderTexture, Material material)
+        {
+            _externalRenderTexture = renderTexture;
+            _externalMaterial = material;
+            _useExternalTargets = (_externalRenderTexture != null || _externalMaterial != null);
+        }
+
+        ///
+        /// <summary>
+        /// Clears all external rendering targets and returns to default rendering behavior.
+        /// </summary>
+        ///
+        public virtual void ClearExternalTargets()
+        {
+            _externalRenderTexture = null;
+            _externalMaterial = null;
+            _useExternalTargets = false;
+            ReleasePersistentBlitRT();
+        }
+
+        ///
+        /// <summary>
+        /// Gets the current external RenderTexture.
+        /// </summary>
+        ///
+        /// <returns> The current external RenderTexture, or null if not set. </returns>
+        ///
+        public virtual RenderTexture GetExternalRenderTexture()
+        {
+            return _externalRenderTexture;
+        }
+
+        ///
+        /// <summary>
+        /// Gets the current external Material.
+        /// </summary>
+        ///
+        /// <returns> The current external Material, or null if not set. </returns>
+        ///
+        public virtual Material GetExternalMaterial()
+        {
+            return _externalMaterial;
+        }
+
+        ///
+        /// <summary>
+        /// Checks if external targets are currently being used for rendering.
+        /// </summary>
+        ///
+        /// <returns> True if external targets are active, false otherwise. </returns>
+        ///
+        public virtual bool IsUsingExternalTargets()
+        {
+            return _useExternalTargets;
         }
 
         virtual protected string GenerateTextureManagerUniqueName()

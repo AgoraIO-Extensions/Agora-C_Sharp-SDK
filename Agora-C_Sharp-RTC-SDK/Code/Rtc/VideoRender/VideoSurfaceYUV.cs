@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace Agora.Rtc
 {
-
     ///
     /// <summary>
     /// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. As of v4.2.0, Agora Unity SDK does not support rendering different video sources with both VideoSurface and VideoSurfaceYUV at the same time. Specifically, after successfully creating IRtcEngine, if the first view is rendered with VideoSurfaceYUV, then only VideoSurfaceYUV can be used for rendering throughout the entire lifecycle of IRtcEngine.
@@ -13,7 +12,6 @@ namespace Agora.Rtc
     ///
     public class VideoSurfaceYUV : VideoSurface
     {
-        private TextureManagerYUV _textureManagerYUV;
         protected Material _material = null;
         protected float YStrideScale = 1.0f;
 
@@ -29,7 +27,7 @@ namespace Agora.Rtc
 
             if (Enable)
             {
-                if (_textureManagerYUV == null)
+                if (_textureManager == null)
                 {
                     string textureManagerName = this.GenerateTextureManagerUniqueName();
                     _TextureManagerGameObject = GameObject.Find(textureManagerName);
@@ -39,29 +37,21 @@ namespace Agora.Rtc
                         _TextureManagerGameObject = new GameObject(textureManagerName);
                         _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
-                        _textureManagerYUV = _TextureManagerGameObject.AddComponent<TextureManagerYUV>();
-                        _textureManagerYUV.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
-                        _textureManagerYUV.EnableVideoFrameWithIdentity();
+                        _textureManager = _TextureManagerGameObject.AddComponent<TextureManagerYUV>();
+                        _textureManager.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
+                        _textureManager.EnableVideoFrameWithIdentity();
                     }
                     else
                     {
-                        _textureManagerYUV = _TextureManagerGameObject.GetComponent<TextureManagerYUV>();
+                        _textureManager = _TextureManagerGameObject.GetComponent<TextureManagerYUV>();
                     }
                 }
-                else if (_textureManagerYUV && !_hasAttach && _textureManagerYUV.CanTextureAttach())
+                else
                 {
-                    UpdateShader();
-                    ApplyTexture(_textureManagerYUV.YTexture, _textureManagerYUV.UTexture, _textureManagerYUV.VTexture);
-                    _textureManagerYUV.Attach();
-                    _hasAttach = true;
-                }
-
-                if (_textureManagerYUV)
-                {
-                    if (this._textureWidth != _textureManagerYUV.Width || this._textureHeight != _textureManagerYUV.Height)
+                    if (this._textureWidth != _textureManager.Width || this._textureHeight != _textureManager.Height)
                     {
-                        this._textureWidth = _textureManagerYUV.Width;
-                        this._textureHeight = _textureManagerYUV.Height;
+                        this._textureWidth = _textureManager.Width;
+                        this._textureHeight = _textureManager.Height;
 
                         if (this._textureWidth != 0 && this._textureHeight != 0)
                         {
@@ -69,15 +59,32 @@ namespace Agora.Rtc
                         }
                     }
 
-                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != this._textureManagerYUV.YStrideScale)
+                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != ((TextureManagerYUV)_textureManager).YStrideScale)
                     {
                         if (_material != null)
                         {
-                            _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+                            _material.SetFloat("_yStrideScale", ((TextureManagerYUV)_textureManager).YStrideScale);
                         }
-                        this.YStrideScale = this._textureManagerYUV.YStrideScale;
+                        this.YStrideScale = ((TextureManagerYUV)_textureManager).YStrideScale;
                     }
 
+                    if (!_hasAttach && _textureManager.CanTextureAttach())
+                    {
+                        // Only update shader if not using external materials
+                        if (!_useExternalTargets || _externalMaterial == null)
+                        {
+                            UpdateShader();
+                        }
+                        ApplyTexture(((TextureManagerYUV)_textureManager).YTexture, ((TextureManagerYUV)_textureManager).UTexture, ((TextureManagerYUV)_textureManager).VTexture);
+                        _textureManager.Attach();
+                        _hasAttach = true;
+                    }
+                }
+
+                if (_persistentBlitRT != null && _externalMaterial != null)
+                {
+                    // 每帧都使用Graphics.Blit应用材质效果到持久的RenderTexture
+                    Graphics.Blit(_textureManager.Texture, _persistentBlitRT, _externalMaterial);
                 }
             }
             else
@@ -138,6 +145,15 @@ namespace Agora.Rtc
 
         protected void ApplyTexture(Texture2D texture, Texture2D uTexture, Texture2D vTexture)
         {
+            // Handle external rendering targets
+            if (_useExternalTargets)
+            {
+                HandleExternalRendering(texture, uTexture, vTexture);
+                // When using external targets, skip default rendering to avoid unnecessary overhead
+                return;
+            }
+
+            // Default rendering behavior only when not using external targets
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
@@ -154,26 +170,45 @@ namespace Agora.Rtc
             }
         }
 
+        ///
+        /// <summary>
+        /// Handles rendering to external targets for YUV format (Y, U, V textures).
+        /// </summary>
+        ///
+        /// <param name="yTexture"> The Y (luminance) texture. </param>
+        /// <param name="uTexture"> The U (chrominance) texture. </param>
+        /// <param name="vTexture"> The V (chrominance) texture. </param>
+        ///
+        protected virtual void HandleExternalRendering(Texture2D yTexture, Texture2D uTexture, Texture2D vTexture)
+        {
+            HandleExternalRenderingInternal(yTexture, (material) =>
+            {
+                // Set up U and V textures for YUV rendering
+                if (uTexture != null) material.SetTexture("_UTex", uTexture);
+                if (vTexture != null) material.SetTexture("_VTex", vTexture);
+                if (_textureManager != null) material.SetFloat("_yStrideScale", ((TextureManagerYUV)_textureManager).YStrideScale);
+            });
+        }
+
         protected override void DestroyTextureManager()
         {
-            if (_textureManagerYUV == null) return;
+            if (_textureManager == null) return;
 
             if (_hasAttach == true)
             {
-                _textureManagerYUV.Detach();
+                _textureManager.Detach();
                 _hasAttach = false;
             }
 
-            if (_textureManagerYUV.GetRefCount() <= 0)
+            if (_textureManager.GetRefCount() <= 0)
             {
                 Destroy(_TextureManagerGameObject);
             }
-            _textureManagerYUV = null;
+            _textureManager = null;
         }
 
         protected override void UpdateShader()
         {
-
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
@@ -187,9 +222,16 @@ namespace Agora.Rtc
                 _material = rd.material;
             }
 
-            _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+            _material.SetFloat("_yStrideScale", ((TextureManagerYUV)_textureManager).YStrideScale);
         }
 
+        protected override void InvokeOnTextureSizeModify()
+        {
+            base.InvokeOnTextureSizeModify();
+
+            // 创建或更新持久的RenderTexture
+            EnsurePersistentBlitRT(_textureWidth, _textureHeight);
+        }
     }
 }
 

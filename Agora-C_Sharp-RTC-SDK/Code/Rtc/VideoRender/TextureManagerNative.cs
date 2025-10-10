@@ -11,31 +11,25 @@ namespace Agora.Rtc
     /// </summary>
     public class TextureManagerNative : TextureManager
     {
-        private Texture2D _nativeTexture;
         private IntPtr _nativeTexturePtr;
-
-        public Texture2D Texture
-        {
-            get { return _nativeTexture; }
-        }
 
         internal override void InitTexture()
         {
             try
             {
                 // 创建Unity纹理，这将作为渲染目标
-                _nativeTexture = new Texture2D(_videoPixelWidth, _videoPixelHeight, TextureFormat.RGBA32, false);
-                _nativeTexture.wrapMode = TextureWrapMode.Clamp;
-                _nativeTexture.filterMode = FilterMode.Point;
+                _texture = new Texture2D(_videoPixelWidth, _videoPixelHeight, TextureFormat.RGBA32, false);
+                _texture.wrapMode = TextureWrapMode.Clamp;
+                _texture.filterMode = FilterMode.Point;
                 
                 // **关键修复**: 初始化为透明纹理，避免显示灰色
-                InitializeTransparentTexture(_nativeTexture);
-                
+                InitializeTransparentTexture(_texture);
+
                 // **关键修复1**: 确保纹理在GPU上创建
-                _nativeTexture.Apply(); // updateMipmaps=true, makeNoLongerReadable=false
+                _texture.Apply(); // updateMipmaps=true, makeNoLongerReadable=false
                 
                 // 获取Unity纹理的原生指针
-                _nativeTexturePtr = _nativeTexture.GetNativeTexturePtr();
+                _nativeTexturePtr = _texture.GetNativeTexturePtr();
 
                 AgoraLog.Log($"InitTexture: Created Unity texture {_videoPixelWidth}x{_videoPixelHeight}");
                 AgoraLog.Log($"InitTexture: Unity texture ptr: {_nativeTexturePtr}");
@@ -51,7 +45,7 @@ namespace Agora.Rtc
         {
             // **关键修复2**: 正确获取OpenGL纹理ID
             int unityTextureId = 0;
-            if (_nativeTexture != null && _nativeTexturePtr != IntPtr.Zero)
+            if (_texture != null && _nativeTexturePtr != IntPtr.Zero)
             {
                 try
                 {
@@ -111,10 +105,10 @@ namespace Agora.Rtc
         internal override void ReFreshTexture()
         {
             // **关键修复3**: 在每次调用前确保纹理ID正确
-            if (_nativeTexture != null && _nativeTexturePtr != IntPtr.Zero)
+            if (_texture != null && _nativeTexturePtr != IntPtr.Zero)
             {
                 // 重新获取纹理指针（可能已变化）
-                _nativeTexturePtr = _nativeTexture.GetNativeTexturePtr();
+                _nativeTexturePtr = _texture.GetNativeTexturePtr();
                 
                 // 安全地转换纹理指针为纹理ID
                 try
@@ -139,7 +133,7 @@ namespace Agora.Rtc
 
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
             //IRIS_VIDEO_PROCESS_ERR ret = 0;
-            //_nativeTexture.Apply();
+            //_texture.Apply();
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
@@ -182,12 +176,12 @@ namespace Agora.Rtc
         {
             try
             {
-                if (_nativeTexture != null)
+                if (_texture != null)
                 {
                     // 多种方式确保Unity识别纹理更新
                     //GL.InvalidateState();                         // 强制OpenGL状态同步
-                    _nativeTexture.Apply();          // 纹理内容同步（不生成mipmap）
-                    //Graphics.SetRenderTarget(_nativeTexture);    // 设置为渲染目标
+                    _texture.Apply();          // 纹理内容同步（不生成mipmap）
+                    //Graphics.SetRenderTarget(_texture);    // 设置为渲染目标
                     //Graphics.SetRenderTarget(null);              // 清除渲染目标
                     
                     AgoraLog.Log("ForceTextureSync: Unity纹理同步完成");
@@ -201,19 +195,19 @@ namespace Agora.Rtc
     
         private void ReinitializeTexture()
         {
-            if (_nativeTexture != null)
+            if (_texture != null)
             {
 #if UNITY_2021_2_OR_NEWER
-                _nativeTexture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
+                _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #else
-                _nativeTexture.Resize(_videoPixelWidth, _videoPixelHeight);
+                _texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #endif
                 
                 // 重新初始化时也设置为透明
-                InitializeTransparentTexture(_nativeTexture);
+                InitializeTransparentTexture(_texture);
                 
-                _nativeTexture.Apply();
-                _nativeTexturePtr = _nativeTexture.GetNativeTexturePtr();
+                _texture.Apply();
+                _nativeTexturePtr = _texture.GetNativeTexturePtr();
                 
                 AgoraLog.Log($"Texture reinitialized: {_videoPixelWidth}x{_videoPixelHeight}, new ptr: {_nativeTexturePtr}");
             }
@@ -251,10 +245,10 @@ namespace Agora.Rtc
 
         protected override void DestroyTexture()
         {
-            if (_nativeTexture != null)
+            if (_texture != null)
             {
-                GameObject.Destroy(_nativeTexture);
-                _nativeTexture = null;
+                GameObject.Destroy(_texture);
+                _texture = null;
             }
             _nativeTexturePtr = IntPtr.Zero;
             
