@@ -77,6 +77,16 @@ set -ex
 # If external inputs (env vars) are provided, use them.
 # Otherwise, read from ./ci/build/url_config.txt similar to CI/download_plugin.sh.
 
+# Normalize a URL value: trim spaces/CR and map domain
+normalize_url() {
+    local v="$1"
+    # strip Windows CR and surrounding whitespace
+    v=$(echo "$v" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+    # map artifactory domain
+    v=$(echo "$v" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+    echo "$v"
+}
+
 # Map TYPE to SDK_TYPE used in url_config.txt sections
 if [ "$TYPE" == "VOICE" ]; then
     SDK_TYPE="audio"
@@ -102,78 +112,50 @@ if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" 
                 case $line in
                     *"IRIS_IOS"*)
                         if [ -z "$IRIS_IOS_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_IOS[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_IOS_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/IRIS_IOS[[:space:]]*=//')
+                            IRIS_IOS_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                     *"IRIS_ANDROID"*)
                         if [ -z "$IRIS_ANDROID_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_ANDROID[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_ANDROID_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/IRIS_ANDROID[[:space:]]*=//')
+                            IRIS_ANDROID_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                     *"IRIS_MAC"*)
                         if [ -z "$IRIS_MAC_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_MAC[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_MAC_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/IRIS_MAC[[:space:]]*=//')
+                            IRIS_MAC_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                     *"IRIS_WIN"*)
                         if [ -z "$IRIS_WIN_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_WIN[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_WIN_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/IRIS_WIN[[:space:]]*=//')
+                            IRIS_WIN_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                     *"NATIVE_IOS"*)
                         if [ -z "$NATIVE_IOS_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_IOS[[:space:]]*=//;s/^[[:space:]]*//')
-                            NATIVE_IOS_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/NATIVE_IOS[[:space:]]*=//')
+                            NATIVE_IOS_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                     *"NATIVE_ANDROID"*)
                         if [ -z "$NATIVE_ANDROID_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_ANDROID[[:space:]]*=//;s/^[[:space:]]*//')
-                            NATIVE_ANDROID_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/NATIVE_ANDROID[[:space:]]*=//')
+                            NATIVE_ANDROID_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                     *"NATIVE_MAC"*)
                         if [ -z "$NATIVE_MAC_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_MAC[[:space:]]*=//;s/^[[:space:]]*//')
-                            NATIVE_MAC_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/NATIVE_MAC[[:space:]]*=//')
+                            NATIVE_MAC_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                     *"NATIVE_WIN"*)
                         if [ -z "$NATIVE_WIN_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_WIN[[:space:]]*=//;s/^[[:space:]]*//')
-                            NATIVE_WIN_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
-                        fi
-                        ;;
-                    *"IOS"*)
-                        # legacy key mapping for IRIS
-                        if [ -z "$IRIS_IOS_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IOS[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_IOS_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
-                        fi
-                        ;;
-                    *"ANDROID"*)
-                        # legacy key mapping for IRIS
-                        if [ -z "$IRIS_ANDROID_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/ANDROID[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_ANDROID_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
-                        fi
-                        ;;
-                    *"MAC"*)
-                        # legacy key mapping for IRIS
-                        if [ -z "$IRIS_MAC_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/MAC[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_MAC_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
-                        fi
-                        ;;
-                    *"WIN"*)
-                        # legacy key mapping for IRIS
-                        if [ -z "$IRIS_WIN_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/WIN[[:space:]]*=//;s/^[[:space:]]*//')
-                            IRIS_WIN_URL=$(echo "$tmp" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+                            tmp=$(echo "$line" | sed 's/NATIVE_WIN[[:space:]]*=//')
+                            NATIVE_WIN_URL=$(normalize_url "$tmp")
                         fi
                         ;;
                 esac
