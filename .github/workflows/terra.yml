@@ -8,6 +8,11 @@ on:
         required: true
         type: string
 
+      dependencies-content:
+        description: The content of dependencies
+        required: true
+        type: string
+
 jobs:
   generate-codes:
     runs-on: ubuntu-latest
