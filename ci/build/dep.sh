@@ -25,7 +25,7 @@ IRIS_WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Wi
 
 DEP_VERSION=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .version')
 
-# Helper: choose appropriate IRIS link
+# Helper: choose appropriate IRIS link (POSIX sh compatible)
 # macOS 优先包含 "Unity"；其他平台优先包含 "Standalone"；否则取第一个
 choose_iris_dep() {
   local list="$1"
@@ -33,17 +33,17 @@ choose_iris_dep() {
   local chosen=""
   if [ "$platform" = "macOS" ]; then
     for DEP in $list; do
-      if [[ "$DEP" == *Unity* ]]; then
-        echo "$DEP"; return
-      fi
+      case "$DEP" in
+        *Unity*) echo "$DEP"; return ;;
+      esac
       if [ -z "$chosen" ]; then chosen="$DEP"; fi
     done
     echo "$chosen"; return
   else
     for DEP in $list; do
-      if [[ "$DEP" == *Standalone* ]]; then
-        echo "$DEP"; return
-      fi
+      case "$DEP" in
+        *Standalone*) echo "$DEP"; return ;;
+      esac
       if [ -z "$chosen" ]; then chosen="$DEP"; fi
     done
     echo "$chosen"; return
@@ -69,12 +69,12 @@ update_url_config_key() {
     echo "url_config.txt not found at $URL_CONFIG_PATH"
     return 1
   fi
-  awk -v sec="${section}" -v key="${key}" -v val="${value}" '
-    $0 ~ ">>>"sec {in=1; print; next}
-    in==1 && $0 ~ /^<<<end/ {in=0; print; next}
-    in==1 && $0 ~ ("^"key"=") { print key"="val; next }
-    { print }
-  ' "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp" && mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
+  # escape replacement for sed (&, \\ and delimiter #)
+  local esc
+  esc=$(printf '%s' "$value" | sed -e 's/[&#\\]/\\&/g')
+  sed \
+    -e "/^>>>$section/,/^<<<end/ s#^$key=.*#$key=$esc#" \
+    "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp" && mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
 }
 
 if [ -z "$MAC_DEPENDENCIES" ]; then
