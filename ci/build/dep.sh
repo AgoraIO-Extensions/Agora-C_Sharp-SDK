@@ -13,30 +13,50 @@ if [ "$#" -lt 1 ]; then
 fi
 INPUT=$1
 
+IOS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "iOS") | .cdn[]')
 MAC_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "macOS") | .cdn[]')
-IRIS_MAC_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "macOS") | .iris_cdn[]')
+ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Android") | .cdn[]')
 WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .cdn[]')
+
+IRIS_IOS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "iOS") | .iris_cdn[]')
+IRIS_MAC_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "macOS") | .iris_cdn[]')
+IRIS_ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Android") | .iris_cdn[]')
 IRIS_WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .iris_cdn[]')
+
 DEP_VERSION=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .version')
 
-# Optional: gather IRIS dependencies for iOS/Android as well
-IRIS_IOS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "iOS") | .iris_cdn[]')
-IRIS_ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Android") | .iris_cdn[]')
-
-# Helper: choose first Standalone link if present; otherwise first item
+# Helper: choose appropriate IRIS link
+# macOS 优先包含 "Unity"；其他平台优先包含 "Standalone"；否则取第一个
 choose_iris_dep() {
   local list="$1"
+  local platform="$2"
   local chosen=""
+  if [ "$platform" = "macOS" ]; then
+    for DEP in $list; do
+      if [[ "$DEP" == *Unity* ]]; then
+        echo "$DEP"; return
+      fi
+      if [ -z "$chosen" ]; then chosen="$DEP"; fi
+    done
+    echo "$chosen"; return
+  else
+    for DEP in $list; do
+      if [[ "$DEP" == *Standalone* ]]; then
+        echo "$DEP"; return
+      fi
+      if [ -z "$chosen" ]; then chosen="$DEP"; fi
+    done
+    echo "$chosen"; return
+  fi
+}
+
+# Helper: choose first native link from cdn list
+choose_native_dep() {
+  local list="$1"
   for DEP in $list; do
-    if [[ "$DEP" == *Standalone* ]]; then
-      chosen="$DEP"
-      break
-    fi
-    if [ -z "$chosen" ]; then
-      chosen="$DEP"
-    fi
+    echo "$DEP"; return
   done
-  echo "$chosen"
+  echo ""
 }
 
 # Helper: update a key within a named section (>>>section ... <<<end)
@@ -70,7 +90,7 @@ fi
 if [ -z "$IRIS_MAC_DEPENDENCIES" ]; then
   echo "No iris mac native dependencies need to change."
 else
-  CHOSEN=$(choose_iris_dep "$IRIS_MAC_DEPENDENCIES")
+  CHOSEN=$(choose_iris_dep "$IRIS_MAC_DEPENDENCIES" "macOS")
   if [ -n "$CHOSEN" ]; then
     sed 's|"iris_sdk_mac": "\(.*\)"|"iris_sdk_mac": '"$CHOSEN"'|g' $PACKAGE_JSON_PATH > tmp
     mv tmp package.json
@@ -90,7 +110,7 @@ fi
 if [ -z "$IRIS_WINDOWS_DEPENDENCIES" ]; then
   echo "No iris windows native dependencies need to change."
 else
-  CHOSEN=$(choose_iris_dep "$IRIS_WINDOWS_DEPENDENCIES")
+  CHOSEN=$(choose_iris_dep "$IRIS_WINDOWS_DEPENDENCIES" "Windows")
   if [ -n "$CHOSEN" ]; then
     sed 's|"iris_sdk_win": "\(.*\)"|"iris_sdk_win": '"$CHOSEN"'|g' $PACKAGE_JSON_PATH > tmp
     mv tmp package.json
@@ -111,13 +131,38 @@ fi
 # fi
 
 # Optionally update iOS/Android IRIS URLs in url_config.txt when present in the input
-CHOSEN_IOS=$(choose_iris_dep "$IRIS_IOS_DEPENDENCIES")
+CHOSEN_IOS=$(choose_iris_dep "$IRIS_IOS_DEPENDENCIES" "iOS")
 if [ -n "$CHOSEN_IOS" ]; then
   update_url_config_key video IRIS_IOS "$CHOSEN_IOS"
   update_url_config_key audio IRIS_IOS "$CHOSEN_IOS"
 fi
 
-CHOSEN_ANDROID=$(choose_iris_dep "$IRIS_ANDROID_DEPENDENCIES")
+CHOSEN_ANDROID=$(choose_iris_dep "$IRIS_ANDROID_DEPENDENCIES" "Android")
+
+# Update NATIVE_* in url_config.txt from cdn lists (first item if exists)
+NATIVE_IOS=$(choose_native_dep "$IOS_DEPENDENCIES")
+if [ -n "$NATIVE_IOS" ]; then
+  update_url_config_key video NATIVE_IOS "$NATIVE_IOS"
+  update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
+fi
+
+NATIVE_ANDROID=$(choose_native_dep "$ANDROID_DEPENDENCIES")
+if [ -n "$NATIVE_ANDROID" ]; then
+  update_url_config_key video NATIVE_ANDROID "$NATIVE_ANDROID"
+  update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
+fi
+
+NATIVE_MAC=$(choose_native_dep "$MAC_DEPENDENCIES")
+if [ -n "$NATIVE_MAC" ]; then
+  update_url_config_key video NATIVE_MAC "$NATIVE_MAC"
+  update_url_config_key audio NATIVE_MAC "$NATIVE_MAC"
+fi
+
+NATIVE_WIN=$(choose_native_dep "$WINDOWS_DEPENDENCIES")
+if [ -n "$NATIVE_WIN" ]; then
+  update_url_config_key video NATIVE_WIN "$NATIVE_WIN"
+  update_url_config_key audio NATIVE_WIN "$NATIVE_WIN"
+fi
 if [ -n "$CHOSEN_ANDROID" ]; then
   update_url_config_key video IRIS_ANDROID "$CHOSEN_ANDROID"
   update_url_config_key audio IRIS_ANDROID "$CHOSEN_ANDROID"
