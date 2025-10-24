@@ -25,6 +25,23 @@ IRIS_WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Wi
 
 DEP_VERSION=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .version')
 
+# Detect release type from IRIS urls: prefer Video if present; otherwise Audio; default Video
+HAS_VIDEO=0
+HAS_AUDIO=0
+for DEP in $IRIS_IOS_DEPENDENCIES $IRIS_ANDROID_DEPENDENCIES $IRIS_MAC_DEPENDENCIES $IRIS_WINDOWS_DEPENDENCIES; do
+  case "$DEP" in
+    *Video*) HAS_VIDEO=1 ;;
+    *Audio*|*Voice*) HAS_AUDIO=1 ;;
+  esac
+done
+if [ "$HAS_VIDEO" = "1" ] && [ "$HAS_AUDIO" != "1" ]; then
+  RELEASE_TYPE=video
+elif [ "$HAS_AUDIO" = "1" ] && [ "$HAS_VIDEO" != "1" ]; then
+  RELEASE_TYPE=audio
+else
+  RELEASE_TYPE=video
+fi
+
 # Helper: choose appropriate IRIS link (POSIX sh compatible)
 # macOS 优先包含 "Unity"；其他平台优先包含 "Standalone"；否则取第一个
 choose_iris_dep() {
@@ -94,6 +111,7 @@ if [ -z "$IRIS_MAC_DEPENDENCIES" ]; then
   echo "No iris mac native dependencies need to change."
 else
   CHOSEN=$(choose_iris_dep "$IRIS_MAC_DEPENDENCIES" "macOS")
+  IRIS_MAC_CHOSEN="$CHOSEN"
   if [ -n "$CHOSEN" ]; then
     if [ -f "$PACKAGE_JSON_PATH" ]; then
       sed 's|"iris_sdk_mac": "\(.*\)"|"iris_sdk_mac": '"$CHOSEN"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
@@ -120,6 +138,7 @@ if [ -z "$IRIS_WINDOWS_DEPENDENCIES" ]; then
   echo "No iris windows native dependencies need to change."
 else
   CHOSEN=$(choose_iris_dep "$IRIS_WINDOWS_DEPENDENCIES" "Windows")
+  IRIS_WIN_CHOSEN="$CHOSEN"
   if [ -n "$CHOSEN" ]; then
     if [ -f "$PACKAGE_JSON_PATH" ]; then
       sed 's|"iris_sdk_win": "\(.*\)"|"iris_sdk_win": '"$CHOSEN"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
@@ -144,24 +163,44 @@ fi
 
 # Optionally update iOS/Android IRIS URLs in url_config.txt when present in the input
 CHOSEN_IOS=$(choose_iris_dep "$IRIS_IOS_DEPENDENCIES" "iOS")
-if [ -n "$CHOSEN_IOS" ]; then
-  update_url_config_key video IRIS_IOS "$CHOSEN_IOS"
-  update_url_config_key audio IRIS_IOS "$CHOSEN_IOS"
-fi
-
 CHOSEN_ANDROID=$(choose_iris_dep "$IRIS_ANDROID_DEPENDENCIES" "Android")
+
+# Apply section-specific update rules based on RELEASE_TYPE
+if [ "$RELEASE_TYPE" = "video" ]; then
+  # For Video release: mobile goes to video only; PC goes to both (already handled above)
+  if [ -n "$CHOSEN_IOS" ]; then
+    update_url_config_key video IRIS_IOS "$CHOSEN_IOS"
+  fi
+  if [ -n "$CHOSEN_ANDROID" ]; then
+    update_url_config_key video IRIS_ANDROID "$CHOSEN_ANDROID"
+  fi
+else
+  # For Audio release: mobile goes to audio only; PC goes to both (already handled above)
+  if [ -n "$CHOSEN_IOS" ]; then
+    update_url_config_key audio IRIS_IOS "$CHOSEN_IOS"
+  fi
+  if [ -n "$CHOSEN_ANDROID" ]; then
+    update_url_config_key audio IRIS_ANDROID "$CHOSEN_ANDROID"
+  fi
+fi
 
 # Update NATIVE_* in url_config.txt from cdn lists (first item if exists)
 NATIVE_IOS=$(choose_native_dep "$IOS_DEPENDENCIES")
 if [ -n "$NATIVE_IOS" ]; then
-  update_url_config_key video NATIVE_IOS "$NATIVE_IOS"
-  update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
+  if [ "$RELEASE_TYPE" = "video" ]; then
+    update_url_config_key video NATIVE_IOS "$NATIVE_IOS"
+  else
+    update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
+  fi
 fi
 
 NATIVE_ANDROID=$(choose_native_dep "$ANDROID_DEPENDENCIES")
 if [ -n "$NATIVE_ANDROID" ]; then
-  update_url_config_key video NATIVE_ANDROID "$NATIVE_ANDROID"
-  update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
+  if [ "$RELEASE_TYPE" = "video" ]; then
+    update_url_config_key video NATIVE_ANDROID "$NATIVE_ANDROID"
+  else
+    update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
+  fi
 fi
 
 NATIVE_MAC=$(choose_native_dep "$MAC_DEPENDENCIES")
@@ -174,8 +213,4 @@ NATIVE_WIN=$(choose_native_dep "$WINDOWS_DEPENDENCIES")
 if [ -n "$NATIVE_WIN" ]; then
   update_url_config_key video NATIVE_WIN "$NATIVE_WIN"
   update_url_config_key audio NATIVE_WIN "$NATIVE_WIN"
-fi
-if [ -n "$CHOSEN_ANDROID" ]; then
-  update_url_config_key video IRIS_ANDROID "$CHOSEN_ANDROID"
-  update_url_config_key audio IRIS_ANDROID "$CHOSEN_ANDROID"
 fi
