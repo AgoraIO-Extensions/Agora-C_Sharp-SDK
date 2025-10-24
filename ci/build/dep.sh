@@ -81,8 +81,11 @@ if [ -z "$MAC_DEPENDENCIES" ]; then
   echo "No mac native dependencies need to change."
 else
   for DEP in $MAC_DEPENDENCIES; do
-    sed 's|"native_sdk_mac": "\(.*\)"|"native_sdk_mac": "'"$DEP"'"|g' $PACKAGE_JSON_PATH > tmp
-    mv tmp package.json
+    if [ -f "$PACKAGE_JSON_PATH" ]; then
+      sed 's|"native_sdk_mac": "\(.*\)"|"native_sdk_mac": '"$DEP"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
+    else
+      echo "package.json not found at $PACKAGE_JSON_PATH, skip updating native_sdk_mac"
+    fi
     break
   done
 fi
@@ -92,8 +95,11 @@ if [ -z "$IRIS_MAC_DEPENDENCIES" ]; then
 else
   CHOSEN=$(choose_iris_dep "$IRIS_MAC_DEPENDENCIES" "macOS")
   if [ -n "$CHOSEN" ]; then
-    sed 's|"iris_sdk_mac": "\(.*\)"|"iris_sdk_mac": '"$CHOSEN"'|g' $PACKAGE_JSON_PATH > tmp
-    mv tmp package.json
+    if [ -f "$PACKAGE_JSON_PATH" ]; then
+      sed 's|"iris_sdk_mac": "\(.*\)"|"iris_sdk_mac": '"$CHOSEN"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
+    else
+      echo "package.json not found at $PACKAGE_JSON_PATH, skip updating iris_sdk_mac"
+    fi
     # Update url_config.txt IRIS_MAC in both sections
     update_url_config_key video IRIS_MAC "$CHOSEN"
     update_url_config_key audio IRIS_MAC "$CHOSEN"
@@ -103,8 +109,11 @@ fi
 if [ -z "$WINDOWS_DEPENDENCIES" ]; then
   echo "No windows native dependencies need to change."
 else
-  sed 's|"native_sdk_win": "\(.*\)"|"native_sdk_win": "'"$WINDOWS_DEPENDENCIES"'"|g' $PACKAGE_JSON_PATH > tmp
-  mv tmp package.json
+  if [ -f "$PACKAGE_JSON_PATH" ]; then
+    sed 's|"native_sdk_win": "\(.*\)"|"native_sdk_win": '"$WINDOWS_DEPENDENCIES"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
+  else
+    echo "package.json not found at $PACKAGE_JSON_PATH, skip updating native_sdk_win"
+  fi
 fi
 
 if [ -z "$IRIS_WINDOWS_DEPENDENCIES" ]; then
@@ -112,8 +121,11 @@ if [ -z "$IRIS_WINDOWS_DEPENDENCIES" ]; then
 else
   CHOSEN=$(choose_iris_dep "$IRIS_WINDOWS_DEPENDENCIES" "Windows")
   if [ -n "$CHOSEN" ]; then
-    sed 's|"iris_sdk_win": "\(.*\)"|"iris_sdk_win": '"$CHOSEN"'|g' $PACKAGE_JSON_PATH > tmp
-    mv tmp package.json
+    if [ -f "$PACKAGE_JSON_PATH" ]; then
+      sed 's|"iris_sdk_win": "\(.*\)"|"iris_sdk_win": '"$CHOSEN"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
+    else
+      echo "package.json not found at $PACKAGE_JSON_PATH, skip updating iris_sdk_win"
+    fi
     # Update url_config.txt IRIS_WIN in both sections
     update_url_config_key video IRIS_WIN "$CHOSEN"
     update_url_config_key audio IRIS_WIN "$CHOSEN"
