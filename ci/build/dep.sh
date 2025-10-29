@@ -168,41 +168,13 @@ update_url_config_key() {
   
   echo "Updating $key in section '$section' with value: $value"
   
-  # Use awk for safer URL replacement
-  awk -v section="$section" -v key="$key" -v value="$value" '
-    /^>>>/ {
-      section_name = substr($0, 4)
-      if (section_name == section) {
-        in_section = 1
-        # DEBUG: uncomment to see section detection
-        # print "# DEBUG: Entering section: " section_name > "/dev/stderr"
-      } else {
-        in_section = 0
-      }
-      print
-      next
-    }
-    /^<<<end/ {
-      in_section = 0
-      print
-      next
-    }
-    {
-      if (in_section) {
-        # Check if this line starts with the key
-        if (index($0, key "=") == 1) {
-          # DEBUG: uncomment to see replacements
-          # print "# DEBUG: Replacing line: " $0 > "/dev/stderr"
-          # print "# DEBUG: With: " key "=" value > "/dev/stderr"
-          print key "=" value
-        } else {
-          print
-        }
-      } else {
-        print
-      }
-    }
-  ' "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp"
+  # escape replacement for sed (&, \\ and delimiter #)
+  local esc
+  esc=$(printf '%s' "$value" | sed -e 's/[&#\\]/\\&/g')
+  
+  sed \
+    -e "/^>>>$section/,/^<<<end/ s#^$key=.*#$key=$esc#" \
+    "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp"
   
   if [ $? -eq 0 ]; then
     mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
