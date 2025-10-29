@@ -165,12 +165,28 @@ update_url_config_key() {
     echo "url_config.txt not found at $URL_CONFIG_PATH"
     return 1
   fi
-  # escape replacement for sed (&, \\ and delimiter #)
-  local esc
-  esc=$(printf '%s' "$value" | sed -e 's/[&#\\]/\\&/g')
-  sed \
-    -e "/^>>>$section/,/^<<<end/ s#^$key=.*#$key=$esc#" \
-    "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp" && mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
+  
+  # Use a more robust approach with awk instead of sed for complex URLs
+  awk -v section="$section" -v key="$key" -v value="$value" '
+    BEGIN { in_section = 0 }
+    /^>>>/ {
+      if ($0 == ">>>" section) {
+        in_section = 1
+      } else {
+        in_section = 0
+      }
+    }
+    /^<<<end/ {
+      in_section = 0
+    }
+    {
+      if (in_section && $0 ~ "^" key "=") {
+        print key "=" value
+      } else {
+        print $0
+      }
+    }
+  ' "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp" && mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
 }
 
 if [ -z "$MAC_DEPENDENCIES" ]; then
