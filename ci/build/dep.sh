@@ -166,24 +166,33 @@ update_url_config_key() {
     return 1
   fi
   
-  # Use a more robust approach with awk instead of sed for complex URLs
+  # Use awk for safer URL replacement
   awk -v section="$section" -v key="$key" -v value="$value" '
-    BEGIN { in_section = 0 }
     /^>>>/ {
-      if ($0 == ">>>" section) {
+      section_name = substr($0, 4)
+      if (section_name == section) {
         in_section = 1
       } else {
         in_section = 0
       }
+      print
+      next
     }
     /^<<<end/ {
       in_section = 0
+      print
+      next
     }
     {
-      if (in_section && $0 ~ "^" key "=") {
-        print key "=" value
+      if (in_section) {
+        # Check if this line starts with the key
+        if (index($0, key "=") == 1) {
+          print key "=" value
+        } else {
+          print
+        }
       } else {
-        print $0
+        print
       }
     }
   ' "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp" && mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
