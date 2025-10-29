@@ -35,8 +35,9 @@ jobs:
         id: version
         run: |
           # Extract product_type and version from JSON
-          # Remove outer quotes if present
-          JSON_OUTPUT=$(echo '${{ steps.dep.outputs.matches }}' | sed 's/^"//;s/"$//')
+          # Remove outer quotes and unescape JSON
+          JSON_RAW='${{ steps.dep.outputs.matches }}'
+          JSON_OUTPUT=$(printf '%s' "$JSON_RAW" | sed 's/^"//;s/"$//' | sed 's/\\"/"/g')
           PRODUCT_TYPE=$(echo "$JSON_OUTPUT" | jq -r '.[] | select(.version != "" and .version != null) | .product_type' | head -n 1)
           VERSION=$(echo "$JSON_OUTPUT" | jq -r '.[] | select(.version != "" and .version != null) | .version' | head -n 1)
           FULL_VERSION="${PRODUCT_TYPE}_${VERSION}"
@@ -47,8 +48,9 @@ jobs:
 
       - name: Replace rtc version
         run: |
-          # Remove outer quotes if present
-          JSON_OUTPUT=$(echo '${{ steps.dep.outputs.matches }}' | sed 's/^"//;s/"$//')
+          # Remove outer quotes and unescape JSON
+          JSON_RAW='${{ steps.dep.outputs.matches }}'
+          JSON_OUTPUT=$(printf '%s' "$JSON_RAW" | sed 's/^"//;s/"$//' | sed 's/\\"/"/g')
           sh terra/replace_rtc_version.sh "$JSON_OUTPUT"
 
       - name: Generate code and comment by terra
