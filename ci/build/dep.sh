@@ -3,9 +3,6 @@ set -e
 set +x
 MY_PATH=$(realpath $(dirname "$0"))
 PROJECT_ROOT=$(realpath ${MY_PATH}/../..)
-PACKAGE_JSON_PATH="${PROJECT_ROOT}/package.json"
-# TERRA_CONFIG_PATH1="${PROJECT_ROOT}/scripts/terra/config/types_config.yaml"
-# TERRA_CONFIG_PATH2="${PROJECT_ROOT}/scripts/terra/config/impl_config.yaml"
 URL_CONFIG_PATH="${PROJECT_ROOT}/ci/build/url_config.txt"
 
 if [ "$#" -lt 1 ]; then
@@ -23,7 +20,9 @@ IRIS_MAC_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "macOS"
 IRIS_ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Android") | .iris_cdn[]')
 IRIS_WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .iris_cdn[]')
 
-DEP_VERSION=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .version')
+# Extract version from first platform that has a non-empty version
+DEP_VERSION=$(echo "$INPUT" | jq -r '.[] | select(.version != "" and .version != null) | .version' | head -n 1)
+echo "Detected version: $DEP_VERSION"
 
 # Helper: detect release type from IRIS urls for a platform (video|audio), default video
 detect_release_type() {
@@ -48,27 +47,101 @@ detect_release_type() {
 # Determine global RELEASE_TYPE from all IRIS links (iOS/Android/macOS/Windows)
 RELEASE_TYPE=$(detect_release_type "$IRIS_IOS_DEPENDENCIES $IRIS_ANDROID_DEPENDENCIES $IRIS_MAC_DEPENDENCIES $IRIS_WINDOWS_DEPENDENCIES")
 
+# Helper: compare version numbers (returns 0 if v1 >= v2, 1 otherwise)
+version_compare() {
+  local v1="$1"
+  local v2="$2"
+  
+  # Extract major.minor from version string (e.g., "4.5.2.2" -> "4.5")
+  local v1_major_minor=$(echo "$v1" | cut -d. -f1,2)
+  local v2_major_minor=$(echo "$v2" | cut -d. -f1,2)
+  
+  # Convert to comparable format by removing dots
+  local v1_num=$(echo "$v1_major_minor" | tr -d '.')
+  local v2_num=$(echo "$v2_major_minor" | tr -d '.')
+  
+  if [ "$v1_num" -ge "$v2_num" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 # Helper: choose appropriate IRIS link (POSIX sh compatible)
-# macOS 优先包含 "Unity"；其他平台优先包含 "Standalone"；否则取第一个
+# Rules:
+# 1. macOS: always prefer "Unity"
+# 2. Other platforms:
+#    - If version < 4.5: prefer link WITHOUT "Standalone"
+#    - If version >= 4.5: prefer link WITH "Standalone"
+# 3. If no match, take the first available link
 choose_iris_dep() {
   local list="$1"
   local platform="$2"
+  local version="$3"  # New parameter for version
   local chosen=""
+  
+  echo "Selecting IRIS dependency for platform: $platform, version: $version"
+  
   if [ "$platform" = "macOS" ]; then
+    # macOS: always prefer Unity
     for DEP in $list; do
       case "$DEP" in
-        *Unity*) echo "$DEP"; return ;;
+        *Unity*) 
+          echo "  -> Selected Unity link: $DEP"
+          echo "$DEP"
+          return ;;
       esac
       if [ -z "$chosen" ]; then chosen="$DEP"; fi
     done
+    echo "  -> No Unity link found, using: $chosen"
     echo "$chosen"; return
   else
-    for DEP in $list; do
-      case "$DEP" in
-        *Standalone*) echo "$DEP"; return ;;
-      esac
-      if [ -z "$chosen" ]; then chosen="$DEP"; fi
-    done
+    # Other platforms: version-based selection
+    local prefer_standalone=0
+    
+    # Determine if we should prefer Standalone based on version
+    if [ -n "$version" ]; then
+      if version_compare "$version" "4.5"; then
+        prefer_standalone=1
+        echo "  -> Version >= 4.5, preferring Standalone"
+      else
+        echo "  -> Version < 4.5, preferring non-Standalone"
+      fi
+    fi
+    
+    if [ "$prefer_standalone" -eq 1 ]; then
+      # Version >= 4.5: prefer WITH Standalone
+      for DEP in $list; do
+        case "$DEP" in
+          *Standalone*) 
+            echo "  -> Selected Standalone link: $DEP"
+            echo "$DEP"
+            return ;;
+        esac
+        if [ -z "$chosen" ]; then chosen="$DEP"; fi
+      done
+    else
+      # Version < 4.5: prefer WITHOUT Standalone
+      for DEP in $list; do
+        case "$DEP" in
+          *Standalone*) ;;  # Skip Standalone links
+          *) 
+            if [ -z "$chosen" ]; then
+              chosen="$DEP"
+            fi
+            ;;
+        esac
+      done
+      # If all links have Standalone, use the first one anyway
+      if [ -z "$chosen" ]; then
+        for DEP in $list; do
+          chosen="$DEP"
+          break
+        done
+      fi
+    fi
+    
+    echo "  -> Selected link: $chosen"
     echo "$chosen"; return
   fi
 }
@@ -103,27 +176,21 @@ update_url_config_key() {
 if [ -z "$MAC_DEPENDENCIES" ]; then
   echo "No mac native dependencies need to change."
 else
-  for DEP in $MAC_DEPENDENCIES; do
-    if [ -f "$PACKAGE_JSON_PATH" ]; then
-      sed 's|"native_sdk_mac": "\(.*\)"|"native_sdk_mac": '"$DEP"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
-    else
-      echo "package.json not found at $PACKAGE_JSON_PATH, skip updating native_sdk_mac"
-    fi
-    break
-  done
+  NATIVE_MAC=$(choose_native_dep "$MAC_DEPENDENCIES")
+  if [ -n "$NATIVE_MAC" ]; then
+    echo "Mac native dependency: $NATIVE_MAC"
+    update_url_config_key video NATIVE_MAC "$NATIVE_MAC"
+    update_url_config_key audio NATIVE_MAC "$NATIVE_MAC"
+  fi
 fi
 
 if [ -z "$IRIS_MAC_DEPENDENCIES" ]; then
   echo "No iris mac native dependencies need to change."
 else
-  CHOSEN=$(choose_iris_dep "$IRIS_MAC_DEPENDENCIES" "macOS")
+  CHOSEN=$(choose_iris_dep "$IRIS_MAC_DEPENDENCIES" "macOS" "$DEP_VERSION")
   IRIS_MAC_CHOSEN="$CHOSEN"
   if [ -n "$CHOSEN" ]; then
-    if [ -f "$PACKAGE_JSON_PATH" ]; then
-      sed 's|"iris_sdk_mac": "\(.*\)"|"iris_sdk_mac": '"$CHOSEN"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
-    else
-      echo "package.json not found at $PACKAGE_JSON_PATH, skip updating iris_sdk_mac"
-    fi
+    echo "Iris Mac dependency: $CHOSEN"
     # Update url_config.txt IRIS_MAC in both sections
     update_url_config_key video IRIS_MAC "$CHOSEN"
     update_url_config_key audio IRIS_MAC "$CHOSEN"
@@ -133,24 +200,21 @@ fi
 if [ -z "$WINDOWS_DEPENDENCIES" ]; then
   echo "No windows native dependencies need to change."
 else
-  if [ -f "$PACKAGE_JSON_PATH" ]; then
-    sed 's|"native_sdk_win": "\(.*\)"|"native_sdk_win": '"$WINDOWS_DEPENDENCIES"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
-  else
-    echo "package.json not found at $PACKAGE_JSON_PATH, skip updating native_sdk_win"
+  NATIVE_WIN=$(choose_native_dep "$WINDOWS_DEPENDENCIES")
+  if [ -n "$NATIVE_WIN" ]; then
+    echo "Windows native dependency: $NATIVE_WIN"
+    update_url_config_key video NATIVE_WIN "$NATIVE_WIN"
+    update_url_config_key audio NATIVE_WIN "$NATIVE_WIN"
   fi
 fi
 
 if [ -z "$IRIS_WINDOWS_DEPENDENCIES" ]; then
   echo "No iris windows native dependencies need to change."
 else
-  CHOSEN=$(choose_iris_dep "$IRIS_WINDOWS_DEPENDENCIES" "Windows")
+  CHOSEN=$(choose_iris_dep "$IRIS_WINDOWS_DEPENDENCIES" "Windows" "$DEP_VERSION")
   IRIS_WIN_CHOSEN="$CHOSEN"
   if [ -n "$CHOSEN" ]; then
-    if [ -f "$PACKAGE_JSON_PATH" ]; then
-      sed 's|"iris_sdk_win": "\(.*\)"|"iris_sdk_win": '"$CHOSEN"'|g' "$PACKAGE_JSON_PATH" > tmp && mv tmp "$PACKAGE_JSON_PATH"
-    else
-      echo "package.json not found at $PACKAGE_JSON_PATH, skip updating iris_sdk_win"
-    fi
+    echo "Iris Windows dependency: $CHOSEN"
     # Update url_config.txt IRIS_WIN in both sections
     update_url_config_key video IRIS_WIN "$CHOSEN"
     update_url_config_key audio IRIS_WIN "$CHOSEN"
@@ -168,11 +232,12 @@ fi
 # fi
 
 # Optionally update iOS/Android IRIS URLs in url_config.txt when present in the input
-CHOSEN_IOS=$(choose_iris_dep "$IRIS_IOS_DEPENDENCIES" "iOS")
-CHOSEN_ANDROID=$(choose_iris_dep "$IRIS_ANDROID_DEPENDENCIES" "Android")
+CHOSEN_IOS=$(choose_iris_dep "$IRIS_IOS_DEPENDENCIES" "iOS" "$DEP_VERSION")
+CHOSEN_ANDROID=$(choose_iris_dep "$IRIS_ANDROID_DEPENDENCIES" "Android" "$DEP_VERSION")
 
 # Update IRIS_* for mobile based on global RELEASE_TYPE
 if [ -n "$CHOSEN_IOS" ]; then
+  echo "Iris iOS dependency: $CHOSEN_IOS"
   if [ "$RELEASE_TYPE" = "audio" ]; then
     update_url_config_key audio IRIS_IOS "$CHOSEN_IOS"
   else
@@ -181,6 +246,7 @@ if [ -n "$CHOSEN_IOS" ]; then
 fi
 
 if [ -n "$CHOSEN_ANDROID" ]; then
+  echo "Iris Android dependency: $CHOSEN_ANDROID"
   if [ "$RELEASE_TYPE" = "audio" ]; then
     update_url_config_key audio IRIS_ANDROID "$CHOSEN_ANDROID"
   else
@@ -191,6 +257,7 @@ fi
 # Update NATIVE_* in url_config.txt from cdn lists (first item if exists)
 NATIVE_IOS=$(choose_native_dep "$IOS_DEPENDENCIES")
 if [ -n "$NATIVE_IOS" ]; then
+  echo "iOS native dependency: $NATIVE_IOS"
   if [ "$RELEASE_TYPE" = "audio" ]; then
     update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
   else
@@ -200,6 +267,7 @@ fi
 
 NATIVE_ANDROID=$(choose_native_dep "$ANDROID_DEPENDENCIES")
 if [ -n "$NATIVE_ANDROID" ]; then
+  echo "Android native dependency: $NATIVE_ANDROID"
   if [ "$RELEASE_TYPE" = "audio" ]; then
     update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
   else
@@ -207,14 +275,4 @@ if [ -n "$NATIVE_ANDROID" ]; then
   fi
 fi
 
-NATIVE_MAC=$(choose_native_dep "$MAC_DEPENDENCIES")
-if [ -n "$NATIVE_MAC" ]; then
-  update_url_config_key video NATIVE_MAC "$NATIVE_MAC"
-  update_url_config_key audio NATIVE_MAC "$NATIVE_MAC"
-fi
-
-NATIVE_WIN=$(choose_native_dep "$WINDOWS_DEPENDENCIES")
-if [ -n "$NATIVE_WIN" ]; then
-  update_url_config_key video NATIVE_WIN "$NATIVE_WIN"
-  update_url_config_key audio NATIVE_WIN "$NATIVE_WIN"
-fi
+echo "Dependencies update completed successfully!"
