@@ -80,20 +80,20 @@ choose_iris_dep() {
   local version="$3"  # New parameter for version
   local chosen=""
   
-  echo "Selecting IRIS dependency for platform: $platform, version: $version"
+  echo "Selecting IRIS dependency for platform: $platform, version: $version" >&2
   
   if [ "$platform" = "macOS" ]; then
     # macOS: always prefer Unity
     for DEP in $list; do
       case "$DEP" in
         *Unity*) 
-          echo "  -> Selected Unity link: $DEP"
+          echo "  -> Selected Unity link: $DEP" >&2
           echo "$DEP"
           return ;;
       esac
       if [ -z "$chosen" ]; then chosen="$DEP"; fi
     done
-    echo "  -> No Unity link found, using: $chosen"
+    echo "  -> No Unity link found, using: $chosen" >&2
     echo "$chosen"; return
   else
     # Other platforms: version-based selection
@@ -103,9 +103,9 @@ choose_iris_dep() {
     if [ -n "$version" ]; then
       if version_compare "$version" "4.5"; then
         prefer_standalone=1
-        echo "  -> Version >= 4.5, preferring Standalone"
+        echo "  -> Version >= 4.5, preferring Standalone" >&2
       else
-        echo "  -> Version < 4.5, preferring non-Standalone"
+        echo "  -> Version < 4.5, preferring non-Standalone" >&2
       fi
     fi
     
@@ -114,7 +114,7 @@ choose_iris_dep() {
       for DEP in $list; do
         case "$DEP" in
           *Standalone*) 
-            echo "  -> Selected Standalone link: $DEP"
+            echo "  -> Selected Standalone link: $DEP" >&2
             echo "$DEP"
             return ;;
         esac
@@ -141,7 +141,7 @@ choose_iris_dep() {
       fi
     fi
     
-    echo "  -> Selected link: $chosen"
+    echo "  -> Selected link: $chosen" >&2
     echo "$chosen"; return
   fi
 }
@@ -166,12 +166,16 @@ update_url_config_key() {
     return 1
   fi
   
+  echo "Updating $key in section '$section' with value: $value"
+  
   # Use awk for safer URL replacement
   awk -v section="$section" -v key="$key" -v value="$value" '
     /^>>>/ {
       section_name = substr($0, 4)
       if (section_name == section) {
         in_section = 1
+        # DEBUG: uncomment to see section detection
+        # print "# DEBUG: Entering section: " section_name > "/dev/stderr"
       } else {
         in_section = 0
       }
@@ -187,6 +191,9 @@ update_url_config_key() {
       if (in_section) {
         # Check if this line starts with the key
         if (index($0, key "=") == 1) {
+          # DEBUG: uncomment to see replacements
+          # print "# DEBUG: Replacing line: " $0 > "/dev/stderr"
+          # print "# DEBUG: With: " key "=" value > "/dev/stderr"
           print key "=" value
         } else {
           print
@@ -195,7 +202,16 @@ update_url_config_key() {
         print
       }
     }
-  ' "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp" && mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
+  ' "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp"
+  
+  if [ $? -eq 0 ]; then
+    mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
+    echo "Successfully updated $key in section '$section' to: $value"
+  else
+    echo "Failed to update $key in section '$section'"
+    rm -f "$URL_CONFIG_PATH.tmp"
+    return 1
+  fi
 }
 
 if [ -z "$MAC_DEPENDENCIES" ]; then
