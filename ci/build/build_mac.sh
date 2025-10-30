@@ -95,6 +95,36 @@ else
 fi
 
 CONFIG_FILE="./ci/build/url_config.txt"
+
+###############################################
+# Read and increment Build number from config #
+###############################################
+BUILD_VERSION=0
+if [ -f "$CONFIG_FILE" ]; then
+    FLAG=0
+    while IFS= read -r line; do
+        # enter/exit version section
+        if [[ $line == *">>>version"* ]]; then
+            FLAG=1
+        fi
+        if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
+            FLAG=0
+        fi
+        
+        if [[ $FLAG == 1 ]] && [[ $line == *"Build="* ]]; then
+            # Extract build number
+            BUILD_VERSION=$(echo "$line" | sed 's/Build[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            # Increment build number
+            BUILD_VERSION=$((BUILD_VERSION + 1))
+            # Update config file with new build number
+            sed -i '' "s/Build=.*/Build=$BUILD_VERSION/" "$CONFIG_FILE"
+            break
+        fi
+    done < "$CONFIG_FILE"
+fi
+
+echo "Build Version: $BUILD_VERSION"
+
 if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" ] || [ -z "$IRIS_WIN_URL" ] || \
    [ -z "$NATIVE_IOS_URL" ] || [ -z "$NATIVE_ANDROID_URL" ] || [ -z "$NATIVE_MAC_URL" ] || [ -z "$NATIVE_WIN_URL" ]; then
     if [ -f "$CONFIG_FILE" ]; then
@@ -627,9 +657,9 @@ if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
     ZIP_FILE="Unknow"
     if [ "$RTC" == "true" ]; then
-        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
     else
-        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
@@ -652,9 +682,9 @@ fi
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
 else
-    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 

@@ -1,3 +1,8 @@
+
+>>>version
+Build=0
+<<<end
+
 >>>audio
 IRIS_IOS=https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/EP/4.5.2.3/20250908/ios/iris_4.5.2.3-build.2_DCG_iOS_Audio_Standalone_20250908_0507_33755.zip
 IRIS_ANDROID=https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/EP/4.5.2.3/20250908/android/iris_4.5.2.3-build.2_DCG_Android_Audio_Standalone_16K_20250908_0508_34904.zip

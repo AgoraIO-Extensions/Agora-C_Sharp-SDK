@@ -288,4 +288,33 @@ if [ -n "$NATIVE_ANDROID" ]; then
   fi
 fi
 
+# Increment Build number in >>>version section
+if [ -f "$URL_CONFIG_PATH" ]; then
+  echo "Incrementing Build number in url_config.txt..."
+  
+  # Read current build number
+  BUILD_NUM=0
+  FLAG=0
+  while IFS= read -r line; do
+    if [[ $line == *">>>version"* ]]; then
+      FLAG=1
+    fi
+    if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
+      FLAG=0
+    fi
+    
+    if [[ $FLAG == 1 ]] && [[ $line == *"Build="* ]]; then
+      BUILD_NUM=$(echo "$line" | sed 's/Build[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+      break
+    fi
+  done < "$URL_CONFIG_PATH"
+  
+  # Increment and update
+  NEW_BUILD_NUM=$((BUILD_NUM + 1))
+  sed -i.bak "/>>>version/,/<<<end/ s/Build=.*/Build=$NEW_BUILD_NUM/" "$URL_CONFIG_PATH"
+  rm -f "$URL_CONFIG_PATH.bak"
+  
+  echo "Build number updated: $BUILD_NUM -> $NEW_BUILD_NUM"
+fi
+
 echo "Dependencies update completed successfully!"
