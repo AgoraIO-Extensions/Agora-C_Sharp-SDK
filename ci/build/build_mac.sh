@@ -103,8 +103,8 @@ BUILD_VERSION=0
 if [ -f "$CONFIG_FILE" ]; then
     FLAG=0
     while IFS= read -r line; do
-        # enter/exit version section
-        if [[ $line == *">>>version"* ]]; then
+        # enter/exit SDK_TYPE section (audio or video)
+        if [[ $line == *">>>$SDK_TYPE"* ]]; then
             FLAG=1
         fi
         if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
@@ -116,14 +116,14 @@ if [ -f "$CONFIG_FILE" ]; then
             BUILD_VERSION=$(echo "$line" | sed 's/Build[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
             # Increment build number
             BUILD_VERSION=$((BUILD_VERSION + 1))
-            # Update config file with new build number
-            sed -i '' "s/Build=.*/Build=$BUILD_VERSION/" "$CONFIG_FILE"
+            # Update config file with new build number in the specific section
+            sed -i '' "/>>>$SDK_TYPE/,/<<<end/ s/Build=.*/Build=$BUILD_VERSION/" "$CONFIG_FILE"
             break
         fi
     done < "$CONFIG_FILE"
 fi
 
-echo "Build Version: $BUILD_VERSION"
+echo "Build Version for $SDK_TYPE: $BUILD_VERSION"
 
 if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" ] || [ -z "$IRIS_WIN_URL" ] || \
    [ -z "$NATIVE_IOS_URL" ] || [ -z "$NATIVE_ANDROID_URL" ] || [ -z "$NATIVE_MAC_URL" ] || [ -z "$NATIVE_WIN_URL" ]; then

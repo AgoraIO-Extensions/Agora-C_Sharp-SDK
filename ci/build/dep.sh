@@ -192,8 +192,11 @@ else
   NATIVE_MAC=$(choose_native_dep "$MAC_DEPENDENCIES")
   if [ -n "$NATIVE_MAC" ]; then
     echo "Mac native dependency: $NATIVE_MAC"
-    update_url_config_key video NATIVE_MAC "$NATIVE_MAC"
-    update_url_config_key audio NATIVE_MAC "$NATIVE_MAC"
+    if [ "$RELEASE_TYPE" = "audio" ]; then
+      update_url_config_key audio NATIVE_MAC "$NATIVE_MAC"
+    else
+      update_url_config_key video NATIVE_MAC "$NATIVE_MAC"
+    fi
   fi
 fi
 
@@ -204,9 +207,11 @@ else
   IRIS_MAC_CHOSEN="$CHOSEN"
   if [ -n "$CHOSEN" ]; then
     echo "Iris Mac dependency: $CHOSEN"
-    # Update url_config.txt IRIS_MAC in both sections
-    update_url_config_key video IRIS_MAC "$CHOSEN"
-    update_url_config_key audio IRIS_MAC "$CHOSEN"
+    if [ "$RELEASE_TYPE" = "audio" ]; then
+      update_url_config_key audio IRIS_MAC "$CHOSEN"
+    else
+      update_url_config_key video IRIS_MAC "$CHOSEN"
+    fi
   fi
 fi
 
@@ -216,8 +221,11 @@ else
   NATIVE_WIN=$(choose_native_dep "$WINDOWS_DEPENDENCIES")
   if [ -n "$NATIVE_WIN" ]; then
     echo "Windows native dependency: $NATIVE_WIN"
-    update_url_config_key video NATIVE_WIN "$NATIVE_WIN"
-    update_url_config_key audio NATIVE_WIN "$NATIVE_WIN"
+    if [ "$RELEASE_TYPE" = "audio" ]; then
+      update_url_config_key audio NATIVE_WIN "$NATIVE_WIN"
+    else
+      update_url_config_key video NATIVE_WIN "$NATIVE_WIN"
+    fi
   fi
 fi
 
@@ -228,9 +236,11 @@ else
   IRIS_WIN_CHOSEN="$CHOSEN"
   if [ -n "$CHOSEN" ]; then
     echo "Iris Windows dependency: $CHOSEN"
-    # Update url_config.txt IRIS_WIN in both sections
-    update_url_config_key video IRIS_WIN "$CHOSEN"
-    update_url_config_key audio IRIS_WIN "$CHOSEN"
+    if [ "$RELEASE_TYPE" = "audio" ]; then
+      update_url_config_key audio IRIS_WIN "$CHOSEN"
+    else
+      update_url_config_key video IRIS_WIN "$CHOSEN"
+    fi
   fi
 fi
 
@@ -288,15 +298,15 @@ if [ -n "$NATIVE_ANDROID" ]; then
   fi
 fi
 
-# Increment Build number in >>>version section
+# Increment Build number in >>>audio or >>>video section based on RELEASE_TYPE
 if [ -f "$URL_CONFIG_PATH" ]; then
-  echo "Incrementing Build number in url_config.txt..."
+  echo "Incrementing Build number for $RELEASE_TYPE in url_config.txt..."
   
-  # Read current build number
+  # Read current build number from the appropriate section
   BUILD_NUM=0
   FLAG=0
   while IFS= read -r line; do
-    if [[ $line == *">>>version"* ]]; then
+    if [[ $line == *">>>$RELEASE_TYPE"* ]]; then
       FLAG=1
     fi
     if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
@@ -311,10 +321,10 @@ if [ -f "$URL_CONFIG_PATH" ]; then
   
   # Increment and update
   NEW_BUILD_NUM=$((BUILD_NUM + 1))
-  sed -i.bak "/>>>version/,/<<<end/ s/Build=.*/Build=$NEW_BUILD_NUM/" "$URL_CONFIG_PATH"
+  sed -i.bak "/>>>$RELEASE_TYPE/,/<<<end/ s/Build=.*/Build=$NEW_BUILD_NUM/" "$URL_CONFIG_PATH"
   rm -f "$URL_CONFIG_PATH.bak"
   
-  echo "Build number updated: $BUILD_NUM -> $NEW_BUILD_NUM"
+  echo "Build number for $RELEASE_TYPE updated: $BUILD_NUM -> $NEW_BUILD_NUM"
 fi
 
 echo "Dependencies update completed successfully!"
