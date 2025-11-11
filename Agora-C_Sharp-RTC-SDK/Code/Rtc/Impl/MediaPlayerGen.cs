@@ -476,7 +476,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _impl.GetAudioBufferDelay(playerId, delayMs);
+            return _impl.GetAudioBufferDelay(playerId, ref delayMs);
         }
 
     }

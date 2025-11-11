@@ -305,7 +305,7 @@ namespace Agora.Rtc
 
         public int GetAudioBufferDelay(int playerId, ref int delayMs)
         {
-            return _mediaPlayerImpl.GetAudioBufferDelay(playerId, delayMs);
+            return _mediaPlayerImpl.GetAudioBufferDelay(playerId, ref delayMs);
         }
 
     }
