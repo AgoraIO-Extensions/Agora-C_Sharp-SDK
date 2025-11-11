@@ -222,8 +222,10 @@ rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/*.csproj
 if [ "$ANDROID_URL" != "" ]; then
     echo "[Unity CI] copying Android ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
-    7za x ./iris_*_Android_*.zip || exit 1
+    temp_zip_name=$(basename "$ANDROID_URL")
+    7za x ./${temp_zip_name} || exit 1
     ANDROID_SRC_PATH="./iris_*_Android"
+    rm ./${temp_zip_name}
 
     if [ "$RTC" == "true" ]; then
         ANDROID_PATH="AgoraRtcEngineKit.plugin"
@@ -270,14 +272,18 @@ if [ "$ANDROID_URL" != "" ]; then
 
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
+    rm -rf ${ANDROID_SRC_PATH}
 fi
 
 # iOS
 if [ "$IOS_URL" != "" ]; then
     echo "[Unity CI] copying iOS ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
-    7za x ./iris_*_iOS_*.zip || exit 1
+    temp_zip_name=$(basename "$IOS_URL")
+    7za x ./${temp_zip_name} || exit 1
     IOS_SRC_PATH="./iris_*_iOS"
+    rm ./${temp_zip_name}
+    
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
     cp -PRf $IOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
 
@@ -301,6 +307,7 @@ if [ "$IOS_URL" != "" ]; then
     done
 
     rm $IOS_DST_PATH/ios.meta
+    rm -rf ${IOS_SRC_PATH}
 
 fi
 
@@ -342,8 +349,11 @@ fi
 if [ "$MAC_URL" != "" ]; then
     echo "[Unity CI] copying macOS ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
-    7za x ./iris_*_Mac_*.zip || exit 1
+    temp_zip_name=$(basename "$MAC_URL")
+    7za x ./${temp_zip_name} || exit 1
     MAC_SRC_PATH="./iris_*_Mac"
+    rm ./${temp_zip_name}
+    
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
     cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
 
@@ -352,13 +362,17 @@ if [ "$MAC_URL" != "" ]; then
     else
         delete_files "$MAC_DST_PATH"/AgoraRtmWrapperUnity.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
     fi
+    
+    rm -rf ${MAC_SRC_PATH}
 fi
 
 #Windows
 if [ "$WIN_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
-    7za x ./iris_*_Windows_*.zip || exit 1
+    temp_zip_name=$(basename "$WIN_URL")
+    7za x ./${temp_zip_name} || exit 1
     WIN_SRC_PATH="./iris_*_Windows"
+    rm ./${temp_zip_name}
 
     # Windows x86-64
     echo "[Unity CI] copying Windows x86-64 ..."
@@ -399,6 +413,7 @@ if [ "$WIN_URL" != "" ]; then
 
     done
 
+    rm -rf ${WIN_SRC_PATH}
 fi
 
 #OpenHarmony
