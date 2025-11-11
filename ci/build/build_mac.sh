@@ -682,7 +682,7 @@ if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     
     # Output unified notification text
     echo "NOTIFICATION_TEXT START"
-    echo -e "$notification_content"
+    echo "$notification_content"
     echo "NOTIFICATION_TEXT END"
     
     # Send WeChat notification
