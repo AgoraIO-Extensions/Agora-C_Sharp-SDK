@@ -126,6 +126,8 @@ namespace Agora.Rtc
         public const string IMEDIAPLAYER_SETSPATIALAUDIOPARAMS_5035667 = "MediaPlayer_setSpatialAudioParams_5035667";
         //IMediaPlayer::setSoundPositionParams(float pan, float gain, );
         public const string IMEDIAPLAYER_SETSOUNDPOSITIONPARAMS_f282d50 = "MediaPlayer_setSoundPositionParams_f282d50";
+        //IMediaPlayer::getAudioBufferDelay(int32_t& delayMs, );
+        public const string IMEDIAPLAYER_GETAUDIOBUFFERDELAY_c30e349 = "MediaPlayer_getAudioBufferDelay_c30e349";
         //IMediaPlayerCacheManager::removeAllCaches();
         public const string IMEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES = "MediaPlayerCacheManager_removeAllCaches";
         //IMediaPlayerCacheManager::removeOldCache();

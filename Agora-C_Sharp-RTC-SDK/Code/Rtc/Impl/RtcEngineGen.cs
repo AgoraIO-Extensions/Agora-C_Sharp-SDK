@@ -330,7 +330,7 @@ namespace Agora.Rtc
         {
             if (_impl == null)
             {
-                return null;
+                return config this to method_return_default_value_table.config.ts;
             }
             return _impl.CreateVideoEffectObject(bundlePath, type);
         }
@@ -434,7 +434,6 @@ namespace Agora.Rtc
             return _impl.DisableAudio();
         }
 
-        [Obsolete]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
             if (_impl == null)
@@ -2226,7 +2225,6 @@ namespace Agora.Rtc
             return _impl.ClearVideoWatermarks();
         }
 
-        [Obsolete]
         public override int PauseAudio()
         {
             if (_impl == null)
@@ -2236,7 +2234,6 @@ namespace Agora.Rtc
             return _impl.PauseAudio();
         }
 
-        [Obsolete]
         public override int ResumeAudio()
         {
             if (_impl == null)
@@ -2246,7 +2243,6 @@ namespace Agora.Rtc
             return _impl.ResumeAudio();
         }
 
-        [Obsolete]
         public override int EnableWebSdkInteroperability(bool enabled)
         {
             if (_impl == null)
@@ -3057,7 +3053,6 @@ namespace Agora.Rtc
             return _impl.GetUserInfoByUidEx(uid, ref userInfo, connection);
         }
 
-        [Obsolete]
         public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             if (_impl == null)
@@ -3229,7 +3224,6 @@ namespace Agora.Rtc
             return _impl.SetExternalRemoteEglContext(eglContext);
         }
 
-        [Obsolete]
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
             if (_impl == null)
