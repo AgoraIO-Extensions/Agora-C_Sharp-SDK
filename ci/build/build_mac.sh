@@ -222,8 +222,10 @@ rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/*.csproj
 if [ "$ANDROID_URL" != "" ]; then
     echo "[Unity CI] copying Android ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
-    7za x ./iris_*_Android_*.zip || exit 1
+    temp_zip_name=$(basename "$ANDROID_URL")
+    7za x ./${temp_zip_name} || exit 1
     ANDROID_SRC_PATH="./iris_*_Android"
+    rm ./${temp_zip_name}
 
     if [ "$RTC" == "true" ]; then
         ANDROID_PATH="AgoraRtcEngineKit.plugin"
@@ -245,40 +247,49 @@ if [ "$ANDROID_URL" != "" ]; then
     rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-*.xml
 
     mkdir "$ANDROID_DST_PATH"/libs
+    
+    #copy native
     cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
     if [ -f $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.aar ]; then
         cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
     fi
 
-    #copy iris
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+
+    #copy iris
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
     delete_files "$ANDROID_DST_PATH"/libs/arm64-v8a "$EXCLUDE_LIST_IN_MOBILE"
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
     delete_files "$ANDROID_DST_PATH"/libs/armeabi-v7a "$EXCLUDE_LIST_IN_MOBILE"
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86
     delete_files "$ANDROID_DST_PATH"/libs/x86 "$EXCLUDE_LIST_IN_MOBILE"
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86_64
     delete_files "$ANDROID_DST_PATH"/libs/x86_64 "$EXCLUDE_LIST_IN_MOBILE"
 
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
+    rm -rf ${ANDROID_SRC_PATH}
 fi
 
 # iOS
 if [ "$IOS_URL" != "" ]; then
     echo "[Unity CI] copying iOS ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
-    7za x ./iris_*_iOS_*.zip || exit 1
+    temp_zip_name=$(basename "$IOS_URL")
+    7za x ./${temp_zip_name} || exit 1
     IOS_SRC_PATH="./iris_*_iOS"
+    rm ./${temp_zip_name}
+    
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
+    
+    #copy native ios
     cp -PRf $IOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
 
     #remove x86_64 from iris ios framework
@@ -289,9 +300,9 @@ if [ "$IOS_URL" != "" ]; then
         if [ "$extension" == "framework" ]; then
             lipo -remove x86_64 $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
         fi
-
     done
 
+    #copy iris ios
     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
     delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 
@@ -301,6 +312,7 @@ if [ "$IOS_URL" != "" ]; then
     done
 
     rm $IOS_DST_PATH/ios.meta
+    rm -rf ${IOS_SRC_PATH}
 
 fi
 
@@ -342,40 +354,53 @@ fi
 if [ "$MAC_URL" != "" ]; then
     echo "[Unity CI] copying macOS ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
-    7za x ./iris_*_Mac_*.zip || exit 1
+    temp_zip_name=$(basename "$MAC_URL")
+    7za x ./${temp_zip_name} || exit 1
     MAC_SRC_PATH="./iris_*_Mac"
+    rm ./${temp_zip_name}
+    
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
-    cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
+    
+    bundle_name=$(find $MAC_SRC_PATH/MAC/Release -maxdepth 1 -type d -name "*.bundle" | head -n 1 | xargs -n 1 basename)
 
-    if [ "$RTC" == "true" ]; then
-        delete_files "$MAC_DST_PATH"/AgoraRtcWrapperUnity.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
-    else
-        delete_files "$MAC_DST_PATH"/AgoraRtmWrapperUnity.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
-    fi
+    #copy iris bundle
+    cp -PRf $MAC_SRC_PATH/MAC/Release/$bundle_name "$MAC_DST_PATH"
+    rm -rf "$MAC_DST_PATH/$bundle_name/Contents/Frameworks/*.framework"
+
+    #copy native frameworks
+    cp -r $MAC_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/macos-arm64_x86_64/*.framework $MAC_DST_PATH/$bundle_name/Contents/Frameworks
+
+    delete_files "$MAC_DST_PATH"/$bundle_name/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
+
+    rm -rf ${MAC_SRC_PATH}
 fi
 
 #Windows
 if [ "$WIN_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
-    7za x ./iris_*_Windows_*.zip || exit 1
+    temp_zip_name=$(basename "$WIN_URL")
+    7za x ./${temp_zip_name} || exit 1
     WIN_SRC_PATH="./iris_*_Windows"
+    rm ./${temp_zip_name}
 
     # Windows x86-64
     echo "[Unity CI] copying Windows x86-64 ..."
     WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
+    
+    #copy native
     cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-    # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
+    #copy iris
     cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
-    # cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
     delete_files "$WIN64_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
     # Windows x86
     echo "[Unity CI] copying Windows x86 ..."
     WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
+    
+    #copy native
     cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-    # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
+    #copy iris
     cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
-    # cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
     delete_files "$WIN32_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
     #create dll.meta
@@ -386,7 +411,6 @@ if [ "$WIN_URL" != "" ]; then
         if [ "$extension" == "dll" ]; then
             cp "$ROOT_DIR"/Unity/Plugins/x86_64/dll.meta $WIN64_DST_PATH/${filename}.meta
         fi
-
     done
 
     files=$(ls $WIN32_DST_PATH)
@@ -396,9 +420,9 @@ if [ "$WIN_URL" != "" ]; then
         if [ "$extension" == "dll" ]; then
             cp "$ROOT_DIR"/Unity/Plugins/x86/dll.meta $WIN32_DST_PATH/${filename}.meta
         fi
-
     done
 
+    rm -rf ${WIN_SRC_PATH}
 fi
 
 #OpenHarmony
