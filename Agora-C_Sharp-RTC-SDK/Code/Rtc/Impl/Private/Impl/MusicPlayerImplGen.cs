@@ -303,7 +303,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetSoundPositionParams(playerId, pan, gain);
         }
 
-        public int GetAudioBufferDelay(int playerId, int32_t& delayMs)
+        public int GetAudioBufferDelay(int playerId, ref int delayMs)
         {
             return _mediaPlayerImpl.GetAudioBufferDelay(playerId, delayMs);
         }
