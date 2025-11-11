@@ -2,14 +2,6 @@ name: Check C# Codes Compile
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - 'release/**'
-  pull_request:
-    branches:
-      - main
-      - 'release/**'
 
 jobs:
   check-csharp-compile:
