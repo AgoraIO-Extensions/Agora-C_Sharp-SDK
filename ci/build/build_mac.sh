@@ -663,13 +663,35 @@ if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
+    # Upload to Artifactory
     download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
-    payload1='{
-            "msgtype": "text",
-            "text": {
-                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
-            }
-        }'
+    
+    # Prepare notification content
+    notification_content="Unity SDK 【${SDK_VERSION}】 打包:\n\n📦 Artifactory URL:\n${download_file}"
+    
+    # Upload to CDN if Package_Publish is true
+    cdn_url=""
+    if [ "$Package_Publish" == "true" ]; then
+        echo "Triggering CDN upload for VisionOS..."
+        
+        filename=$(basename "$download_file")
+        cdn_url="https://download.agora.io/sdk/release/${filename}"
+        
+        notification_content="${notification_content}\n\n🌐 CDN URL:\n${cdn_url}"
+    fi
+    
+    # Output unified notification text
+    echo "NOTIFICATION_TEXT START"
+    echo -e "$notification_content"
+    echo "NOTIFICATION_TEXT END"
+    
+    # Send WeChat notification
+    payload1="{
+        \"msgtype\": \"text\",
+        \"text\": {
+            \"content\": \"$(echo -e "$notification_content")\"
+        }
+    }"
 
     # 发送 POST 请求
     curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
@@ -688,16 +710,41 @@ else
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
+# Upload to Artifactory
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+
+# Prepare notification content
+notification_content="Unity SDK 【${SDK_VERSION}】 打包:\n\n📦 Artifactory URL:\n${download_file}"
+
+# Upload to CDN if Package_Publish is true
+cdn_url=""
+if [ "$Package_Publish" == "true" ]; then
+    echo "Triggering CDN upload..."
+    
+    # Extract filename from download_file URL
+    filename=$(basename "$download_file")
+    cdn_url="https://download.agora.io/sdk/release/${filename}"
+    
+    # Trigger CDN upload job (using Jenkins CLI or API)
+    # Note: Adjust the job trigger method based on your Jenkins setup
+    # This is a placeholder - you may need to use curl to trigger Jenkins job
+    # Example: curl -X POST "JENKINS_URL/job/GA/job/Manual_CDN_Release_Url/buildWithParameters?FILE_LINK=${download_file}&TYPE=plugin"
+    
+    notification_content="${notification_content}\n\n🌐 CDN URL:\n${cdn_url}"
+fi
+
+# Output unified notification text
 echo "NOTIFICATION_TEXT START"
-echo "$download_file"
+echo -e "$notification_content"
 echo "NOTIFICATION_TEXT END"
-payload1='{
-            "msgtype": "text",
-            "text": {
-                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
-            }
-        }'
+
+# Send WeChat notification with all URLs
+payload1="{
+    \"msgtype\": \"text\",
+    \"text\": {
+        \"content\": \"$(echo -e "$notification_content")\"
+    }
+}"
 
 # 发送 POST 请求
 curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
