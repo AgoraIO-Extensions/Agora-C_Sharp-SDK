@@ -652,14 +652,21 @@ if [ "$RTC" == "false" ]; then
     rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
 fi
 
+# Add SUFFIX with underscore only if it's not empty
+SUFFIX_PART=""
+if [ -n "$SUFFIX" ]; then
+    SUFFIX_PART="_${SUFFIX}"
+fi
+
 # split vision os package as sub package
 if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
     ZIP_FILE="Unknow"
+    
     if [ "$RTC" == "true" ]; then
-        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
     else
-        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
@@ -703,10 +710,11 @@ fi
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
+
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
 else
-    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
