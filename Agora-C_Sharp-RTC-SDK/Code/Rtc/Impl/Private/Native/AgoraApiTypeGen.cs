@@ -212,7 +212,7 @@ namespace Agora.Rtc
         public const string IVIDEOEFFECTOBJECT_ADDORUPDATEVIDEOEFFECT_303a98c = "VideoEffectObject_addOrUpdateVideoEffect_303a98c";
         //IVideoEffectObject::removeVideoEffect(uint32_t nodeId, );
         public const string IVIDEOEFFECTOBJECT_REMOVEVIDEOEFFECT_b48de50 = "VideoEffectObject_removeVideoEffect_b48de50";
-        //IVideoEffectObject::performVideoEffectAction(uint32_t nodeId, agora::rtc::IVideoEffectObject::VIDEO_EFFECT_ACTION actionId, );
+        //IVideoEffectObject::performVideoEffectAction(uint32_t nodeId, agora::rtc::VIDEO_EFFECT_ACTION actionId, );
         public const string IVIDEOEFFECTOBJECT_PERFORMVIDEOEFFECTACTION_eddb1a6 = "VideoEffectObject_performVideoEffectAction_eddb1a6";
         //IVideoEffectObject::setVideoEffectFloatParam(char const* option, char const* key, float param, );
         public const string IVIDEOEFFECTOBJECT_SETVIDEOEFFECTFLOATPARAM_e8dfcf8 = "VideoEffectObject_setVideoEffectFloatParam_e8dfcf8";
