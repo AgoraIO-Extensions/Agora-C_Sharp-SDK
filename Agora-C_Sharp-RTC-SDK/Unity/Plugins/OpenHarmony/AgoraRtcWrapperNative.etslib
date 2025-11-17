@@ -265,14 +265,31 @@ export class AgoraRtcWrapperNativeRunInMainThread {
     hilog.info(0x0000, "AgoraRtcWrapperNative", "destroyOhosRtcEngine");
     let ret = -7;
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
-      RtcEngine.destroySync();
-      AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
-      ret =  0;
+      RtcEngine.destroy().then(() => {
+        hilog.info(0x0000, "AgoraRtcWrapperNative", "RtcEngine.destroy() completed successfully");
+        AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
+        ret = 0;
+        TuanjieMainWorker.getInstance().postMessage({
+          type: 'destroyOhosRtcEngine',
+          result: ret
+        })
+      }).catch((error) => {
+        hilog.error(0x0000, "AgoraRtcWrapperNative", `RtcEngine.destroy() failed: ${error}`);
+        AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
+        ret = -1;
+        TuanjieMainWorker.getInstance().postMessage({
+          type: 'destroyOhosRtcEngine',
+          result: ret
+        })
+      });
+    } else {
+      // 如果 rtcEngine 已经是 null，直接返回成功
+      hilog.info(0x0000, "AgoraRtcWrapperNative", "rtcEngine is already null");
+      TuanjieMainWorker.getInstance().postMessage({
+        type: 'destroyOhosRtcEngine',
+        result: 0
+      })
     }
-    TuanjieMainWorker.getInstance().postMessage({
-      type: 'destroyOhosRtcEngine',
-      result: ret
-    })
   }
 
 
