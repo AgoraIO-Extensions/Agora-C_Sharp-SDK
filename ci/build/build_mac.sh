@@ -703,9 +703,11 @@ fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
-echo "NOTIFICATION_TEXT START"
-echo "$download_file"
-echo "NOTIFICATION_TEXT END"
+{ set +x; } 2>/dev/null
+echo "NOTIFICATION_TEXT START
+${download_file}
+NOTIFICATION_TEXT END"
+set -x
 payload1='{
             "msgtype": "text",
             "text": {
