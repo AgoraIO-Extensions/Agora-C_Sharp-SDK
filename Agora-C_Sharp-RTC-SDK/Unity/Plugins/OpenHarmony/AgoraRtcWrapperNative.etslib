@@ -261,9 +261,9 @@ export class AgoraRtcWrapperNativeRunInMainThread {
     })
   }
 
-  public static destroyOhosRtcEngine() {
+  public static destroyOhosRtcEngine(): void {
     hilog.info(0x0000, "AgoraRtcWrapperNative", "destroyOhosRtcEngine");
-    let ret = -7;
+    let ret: number = -7;
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
       RtcEngine.destroy().then(() => {
         hilog.info(0x0000, "AgoraRtcWrapperNative", "RtcEngine.destroy() completed successfully");
@@ -273,8 +273,8 @@ export class AgoraRtcWrapperNativeRunInMainThread {
           type: 'destroyOhosRtcEngine',
           result: ret
         })
-      }).catch((error) => {
-        hilog.error(0x0000, "AgoraRtcWrapperNative", `RtcEngine.destroy() failed: ${error}`);
+      }).catch((error: BusinessError) => {
+        hilog.error(0x0000, "AgoraRtcWrapperNative", `RtcEngine.destroy() failed: ${error.message}`);
         AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
         ret = -1;
         TuanjieMainWorker.getInstance().postMessage({
