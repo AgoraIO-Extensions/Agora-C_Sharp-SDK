@@ -94,6 +94,53 @@ namespace Agora.Rtm
                 Debug.LogError(agoraError);
             }
 
+            // 修改 entry/build-profile.json5 中的 arkOptions.runtimeOnly.packages
+            string entryBuildProfileJson5Path = Path.Combine(path, "entry/build-profile.json5");
+            if (File.Exists(entryBuildProfileJson5Path))
+            {
+                MotifyJsonFile(entryBuildProfileJson5Path, (jsonData) =>
+                {
+                    // entry 的 build-profile.json5 结构直接就是 products 的内容，没有外层的 app.products
+                    // 注意：entry 的 buildOption 不支持 strictMode，只修改 arkOptions.runtimeOnly.packages
+                    if (jsonData.ContainsKey("buildOption"))
+                    {
+                        var buildOption = jsonData["buildOption"];
+                        
+                        // 修改 arkOptions.runtimeOnly.packages 中的包名
+                        if (buildOption.ContainsKey("arkOptions"))
+                        {
+                            var arkOptions = buildOption["arkOptions"];
+                            if (arkOptions.ContainsKey("runtimeOnly"))
+                            {
+                                var runtimeOnly = arkOptions["runtimeOnly"];
+                                if (runtimeOnly.ContainsKey("packages") && runtimeOnly["packages"].IsArray)
+                                {
+                                    var packages = runtimeOnly["packages"];
+                                    for (int i = 0; i < packages.Count; i++)
+                                    {
+                                        string packageName = (string)packages[i];
+                                        if (packageName == "AgoraRtcWrapper")
+                                        {
+                                            packages[i] = "@shengwang/rtc-wrapper";
+                                        }
+                                        else if (packageName.StartsWith("AgoraRtcSdk") || packageName.StartsWith("Agora"))
+                                        {
+                                            packages[i] = "@shengwang/rtc-full";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    return "update arkOptions packages";
+                });
+            }
+            else
+            {
+                Debug.LogError(agoraError);
+            }
+
 
             string OhPackageJson5Path = FindFileInDevEco(path, "oh-package.json5");
             if (OhPackageJson5Path != null)
