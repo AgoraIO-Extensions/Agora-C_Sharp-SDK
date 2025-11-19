@@ -11,9 +11,10 @@ namespace Agora.Rtc
     public partial class VideoEffectObjectImpl
     {
 
-        public int AddOrUpdateVideoEffect(uint nodeId, string templateName)
+        public int AddOrUpdateVideoEffect(int objectId, uint nodeId, string templateName)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("nodeId", nodeId);
             _param.Add("templateName", templateName);
 
@@ -29,9 +30,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int RemoveVideoEffect(uint nodeId)
+        public int RemoveVideoEffect(int objectId, uint nodeId)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("nodeId", nodeId);
 
             var json = AgoraJson.ToJson(_param);
@@ -46,9 +48,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int PerformVideoEffectAction(uint nodeId, VIDEO_EFFECT_ACTION actionId)
+        public int PerformVideoEffectAction(int objectId, uint nodeId, VIDEO_EFFECT_ACTION actionId)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("nodeId", nodeId);
             _param.Add("actionId", actionId);
 
@@ -64,9 +67,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SetVideoEffectFloatParam(string option, string key, float param)
+        public int SetVideoEffectFloatParam(int objectId, string option, string key, float param)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("option", option);
             _param.Add("key", key);
             _param.Add("param", param);
@@ -83,9 +87,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SetVideoEffectIntParam(string option, string key, int param)
+        public int SetVideoEffectIntParam(int objectId, string option, string key, int param)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("option", option);
             _param.Add("key", key);
             _param.Add("param", param);
@@ -102,9 +107,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SetVideoEffectBoolParam(string option, string key, bool param)
+        public int SetVideoEffectBoolParam(int objectId, string option, string key, bool param)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("option", option);
             _param.Add("key", key);
             _param.Add("param", param);
@@ -121,9 +127,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public float GetVideoEffectFloatParam(string option, string key)
+        public float GetVideoEffectFloatParam(int objectId, string option, string key)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("option", option);
             _param.Add("key", key);
 
@@ -139,9 +146,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetVideoEffectIntParam(string option, string key)
+        public int GetVideoEffectIntParam(int objectId, string option, string key)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("option", option);
             _param.Add("key", key);
 
@@ -157,9 +165,10 @@ namespace Agora.Rtc
             return result;
         }
 
-        public bool GetVideoEffectBoolParam(string option, string key)
+        public bool GetVideoEffectBoolParam(int objectId, string option, string key)
         {
             _param.Clear();
+            _param.Add("objectId", objectId);
             _param.Add("option", option);
             _param.Add("key", key);
 

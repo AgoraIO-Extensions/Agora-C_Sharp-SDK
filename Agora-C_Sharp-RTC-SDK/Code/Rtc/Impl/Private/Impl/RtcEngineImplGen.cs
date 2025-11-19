@@ -644,7 +644,8 @@ namespace Agora.Rtc
         public int DestroyVideoEffectObject(IVideoEffectObject videoEffectObject)
         {
             _param.Clear();
-            _param.Add("videoEffectObject", videoEffectObject);
+            var objectId = videoEffectObject.GetObjectId();
+            _param.Add("objectId", objectId);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_DESTROYVIDEOEFFECTOBJECT_66d092b,
@@ -653,8 +654,10 @@ namespace Agora.Rtc
                 ref _apiParam);
 
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
+            if (result == 0)
+            {
+                VideoEffectObjectManager.Instance.Release(objectId);
+            }
             return result;
         }
 
