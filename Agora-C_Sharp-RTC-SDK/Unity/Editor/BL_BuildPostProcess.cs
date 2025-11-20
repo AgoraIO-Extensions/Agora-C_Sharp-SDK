@@ -209,7 +209,7 @@ namespace Agora.Rtm
             var mainWorkerPath = FindFileInDevEco(path, "TuanjieMainWorker.ets");
             if (mainWorkerPath != null)
             {
-                InsertCodeIntoFile(mainWorkerPath, 0, "import { AgoraRtcWrapperNative, AgoraRtcWrapperNativeRunInMainThread} from '../AgoraRtcWrapperNative';");
+                InsertCodeIntoFile(mainWorkerPath, 0, "import { AgoraRtcWrapperNative } from '../AgoraRtcWrapperNative';");
                 InsertCodeIntoFileAppendSearchCode(mainWorkerPath,
                     "workerPort.onmessage",
                     "  // The worker thread handles Agora response messages from the OpenHarmony Main/UI thread.\n  if (AgoraRtcWrapperNative.onMessage(e) == true) { return; }");
