@@ -92,7 +92,6 @@ namespace Agora.Rtc
             return _impl.SearchMusic(ref requestId, keyWord, page, pageSize, jsonOption);
         }
 
-        [Obsolete]
         public override int Preload(long songCode, string jsonOption)
         {
             if (_impl == null)

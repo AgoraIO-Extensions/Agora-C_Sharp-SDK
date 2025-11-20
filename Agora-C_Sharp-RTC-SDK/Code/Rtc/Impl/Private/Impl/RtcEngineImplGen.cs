@@ -628,10 +628,16 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            if (nRet != 0) return null;
+            if (nRet != 0)
+            {
+                return null;
+            }
+
             var objectId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            var videoEffectObject = new VideoEffectObject(RtcEngine.Get(), new VideoEffectObjectImpl(_irisApiEngine), objectId);
+            var videoEffectObjectImpl = new VideoEffectObjectImpl(_irisApiEngine);
+            var videoEffectObject = new VideoEffectObject(null, videoEffectObjectImpl, objectId);
             VideoEffectObjectManager.Instance.Add(objectId, videoEffectObject);
+
             return videoEffectObject;
         }
 

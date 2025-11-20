@@ -102,6 +102,7 @@ export const typeConversionTable: ConversionTable = {
         "IMediaPlayer.getStreamInfo.info": "ref PlayerStreamInfo",
         "IMediaPlayer.unregisterAudioFrameObserver.observer": "@remove",
         "IMediaPlayer.unregisterMediaPlayerAudioSpectrumObserver.observer": "@remove",
+        "IMediaPlayer.getAudioBufferDelay.delayMs": "ref int",
         "ISpatialAudioEngine.setZones.zones": "SpatialAudioZone[]",
         "ILocalSpatialAudioEngine.setZones.zones": "SpatialAudioZone[]",
         "IMediaEngine.pushEncodedVideoImage.imageBuffer": "byte[]",

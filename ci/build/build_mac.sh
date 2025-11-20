@@ -652,24 +652,53 @@ if [ "$RTC" == "false" ]; then
     rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
 fi
 
+# Add SUFFIX with underscore only if it's not empty
+SUFFIX_PART=""
+if [ -n "$SUFFIX" ]; then
+    SUFFIX_PART="_${SUFFIX}"
+fi
+
 # split vision os package as sub package
 if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
     ZIP_FILE="Unknow"
+    
     if [ "$RTC" == "true" ]; then
-        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
     else
-        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
+    # Upload to Artifactory
     download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
-    payload1='{
-            "msgtype": "text",
-            "text": {
-                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
-            }
-        }'
+    
+    # Prepare notification content
+    notification_content="Unity SDK 【${SDK_VERSION}】 打包:\n\n📦 Artifactory URL:\n${download_file}"
+    
+    # Upload to CDN if Package_Publish is true
+    cdn_url=""
+    if [ "$Package_Publish" == "true" ]; then
+        echo "Triggering CDN upload for VisionOS..."
+        
+        filename=$(basename "$download_file")
+        cdn_url="https://download.agora.io/sdk/release/${filename}"
+        
+        notification_content="${notification_content}\n\n🌐 CDN URL:\n${cdn_url}"
+    fi
+    
+    # Output unified notification text
+    echo "NOTIFICATION_TEXT START"
+    echo "$notification_content"
+    echo "NOTIFICATION_TEXT END"
+    
+    # Send WeChat notification
+    payload1="{
+        \"msgtype\": \"text\",
+        \"text\": {
+            \"content\": \"$(echo -e "$notification_content")\"
+        }
+    }"
 
     # 发送 POST 请求
     curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
@@ -681,23 +710,49 @@ fi
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
+
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
 else
-    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build.${BUILD_VERSION}${SUFFIX_PART}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
+# Upload to Artifactory
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+
+# Prepare notification content
+notification_content="Unity SDK 【${SDK_VERSION}】 打包:\n\n📦 Artifactory URL:\n${download_file}"
+
+# Upload to CDN if Package_Publish is true
+cdn_url=""
+if [ "$Package_Publish" == "true" ]; then
+    echo "Triggering CDN upload..."
+    
+    # Extract filename from download_file URL
+    filename=$(basename "$download_file")
+    cdn_url="https://download.agora.io/sdk/release/${filename}"
+    
+    # Trigger CDN upload job (using Jenkins CLI or API)
+    # Note: Adjust the job trigger method based on your Jenkins setup
+    # This is a placeholder - you may need to use curl to trigger Jenkins job
+    # Example: curl -X POST "JENKINS_URL/job/GA/job/Manual_CDN_Release_Url/buildWithParameters?FILE_LINK=${download_file}&TYPE=plugin"
+    
+    notification_content="${notification_content}\n\n🌐 CDN URL:\n${cdn_url}"
+fi
+
+# Output unified notification text
 echo "NOTIFICATION_TEXT START"
-echo "$download_file"
+echo -e "$notification_content"
 echo "NOTIFICATION_TEXT END"
-payload1='{
-            "msgtype": "text",
-            "text": {
-                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
-            }
-        }'
+
+# Send WeChat notification with all URLs
+payload1="{
+    \"msgtype\": \"text\",
+    \"text\": {
+        \"content\": \"$(echo -e "$notification_content")\"
+    }
+}"
 
 # 发送 POST 请求
 curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \

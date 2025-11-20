@@ -1993,9 +1993,9 @@ namespace Agora.Rtc
 
         public ContentInspectModule()
         {
-            this.type = CONTENT_INSPECT_TYPE.CONTENT_INSPECT_INVALID;
-            this.interval = 0;
-            this.position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
+            type = CONTENT_INSPECT_TYPE.CONTENT_INSPECT_INVALID;
+            interval = 0;
+            position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
         }
 
         public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval, VIDEO_MODULE_POSITION position)
