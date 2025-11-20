@@ -80,7 +80,7 @@ export class AgoraRtcWrapperNative {
       type: "createOhosRtcEngine",
       params,
       eventHandler:eventHandler
-    });
+    }); 
     // hilog.info(0x0000, "AgoraRtcWrapperNative", "createOhosRtcEngine");
     // if (AgoraRtcWrapperNative.rtcEngine != null) {
     //   hilog.error(0x0000, "AgoraRtcWrapperNative", "rtcEngine already created");
@@ -293,34 +293,31 @@ export class AgoraRtcWrapperNativeRunInMainThread {
   }
 
 
-  //true: handle this message
+  // 在主线程中处理消息并执行实际的 RTC 操作
   public static onMessage(msg: MessageEvents):boolean {
+    if(msg == null || msg.data ==null || msg.data.type == null) { return false;}
     const type: string = msg.data.type;
     switch (type) {
       case 'createOhosRtcEngine': {
         AgoraRtcWrapperNativeRunInMainThread.createOhosRtcEngine(msg.data.params, msg.data.eventHandler);
         return true;
-        break;
       }
       case 'enableVideo': {
         AgoraRtcWrapperNativeRunInMainThread.enableVideo();
         return true;
-        break;
       }
       case 'disableVideo': {
         AgoraRtcWrapperNativeRunInMainThread.disableVideo();
         return true;
-        break;
       }
       case 'destroyOhosRtcEngine': {
         AgoraRtcWrapperNativeRunInMainThread.destroyOhosRtcEngine();
         return true;
-        break;
       }
       default:
         break;
     }
-    return false
+    return false;
   }
 }
 

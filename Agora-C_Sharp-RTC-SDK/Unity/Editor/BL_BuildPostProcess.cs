@@ -73,59 +73,44 @@ namespace Agora.Rtm
             Debug.Log("[Agora] project path: " + path);
             string agoraError = "[Agora Error] Motify Open Harmony Project failed. Please contact Agora technical support";
 
-            var buildProfileJson5FilePaths = Directory.GetFiles(path, "build-profile.json5", SearchOption.TopDirectoryOnly);
-            if (buildProfileJson5FilePaths.Length > 0)
+            string buildProfileJson5Path = FindFileInDevEco(path, "build-profile.json5");
+            if (buildProfileJson5Path != null)
             {
-                MotifyJsonFile(buildProfileJson5FilePaths[0], (jsonData) =>
+                MotifyJsonFile(buildProfileJson5Path, (jsonData) =>
                 {
-                    var products = (Agora.Rtc.LitJson.JsonData)jsonData["app"]["products"][0];
-                    Agora.Rtc.LitJson.JsonData buildOption = products.ContainsKey("buildOption") ?
-                        products["buildOption"] :
+                    // 处理 buildOption.strictMode.useNormalizedOHMUrl
+                    Agora.Rtc.LitJson.JsonData buildOption = jsonData.ContainsKey("buildOption") ?
+                        jsonData["buildOption"] :
                         new Agora.Rtc.LitJson.JsonData();
                     Agora.Rtc.LitJson.JsonData strictMode = buildOption.ContainsKey("strictMode") ? buildOption["strictMode"] : new Agora.Rtc.LitJson.JsonData();
                     strictMode["useNormalizedOHMUrl"] = true;
                     buildOption["strictMode"] = strictMode;
-                    products["buildOption"] = buildOption;
-                    return "add useNormalizedOHMUrl = true";
-                });
-            }
-            else
-            {
-                Debug.LogError(agoraError);
-            }
+                    jsonData["buildOption"] = buildOption;
 
-            // 修改 entry/build-profile.json5 中的 arkOptions.runtimeOnly.packages
-            string entryBuildProfileJson5Path = Path.Combine(path, "entry/build-profile.json5");
-            if (File.Exists(entryBuildProfileJson5Path))
-            {
-                MotifyJsonFile(entryBuildProfileJson5Path, (jsonData) =>
-                {
-                    // entry 的 build-profile.json5 结构直接就是 products 的内容，没有外层的 app.products
-                    // 注意：entry 的 buildOption 不支持 strictMode，只修改 arkOptions.runtimeOnly.packages
-                    if (jsonData.ContainsKey("buildOption"))
+                    // 处理 buildOption.arkOptions.runtimeOnly.packages（将旧包名替换为新包名）
+                    if (buildOption.ContainsKey("arkOptions"))
                     {
-                        var buildOption = jsonData["buildOption"];
-                        
-                        // 修改 arkOptions.runtimeOnly.packages 中的包名
-                        if (buildOption.ContainsKey("arkOptions"))
+                        var arkOptions = buildOption["arkOptions"];
+                        if (arkOptions.ContainsKey("runtimeOnly"))
                         {
-                            var arkOptions = buildOption["arkOptions"];
-                            if (arkOptions.ContainsKey("runtimeOnly"))
+                            var runtimeOnly = arkOptions["runtimeOnly"];
+                            if (runtimeOnly.ContainsKey("packages"))
                             {
-                                var runtimeOnly = arkOptions["runtimeOnly"];
-                                if (runtimeOnly.ContainsKey("packages") && runtimeOnly["packages"].IsArray)
+                                var packages = runtimeOnly["packages"];
+                                if (packages.IsArray)
                                 {
-                                    var packages = runtimeOnly["packages"];
                                     for (int i = 0; i < packages.Count; i++)
                                     {
                                         string packageName = (string)packages[i];
                                         if (packageName == "AgoraRtcWrapper")
                                         {
                                             packages[i] = "@shengwang/rtc-wrapper";
+                                            Debug.Log("[Agora] Replace package: AgoraRtcWrapper -> @shengwang/rtc-wrapper");
                                         }
-                                        else if (packageName.StartsWith("AgoraRtcSdk") || packageName.StartsWith("Agora"))
+                                        else if (packageName.StartsWith("AgoraRtcSdk") || packageName.StartsWith("Agora") || packageName.StartsWith("agora"))
                                         {
                                             packages[i] = "@shengwang/rtc-full";
+                                            Debug.Log("[Agora] Replace package: " + packageName + " -> @shengwang/rtc-full");
                                         }
                                     }
                                 }
@@ -133,7 +118,7 @@ namespace Agora.Rtm
                         }
                     }
                     
-                    return "update arkOptions packages";
+                    return "add useNormalizedOHMUrl = true and update packages";
                 });
             }
             else
@@ -207,10 +192,10 @@ namespace Agora.Rtm
             var mainWorkerPath = FindFileInDevEco(path, "TuanjieMainWorker.ets");
             if (mainWorkerPath != null)
             {
-                InsertCodeIntoFile(mainWorkerPath, 0, "import { AgoraRtcWrapperNativeRunInMainThread} from '../AgoraRtcWrapperNative';");
+                InsertCodeIntoFile(mainWorkerPath, 0, "import { AgoraRtcWrapperNative } from '../AgoraRtcWrapperNative';");
                 InsertCodeIntoFileAppendSearchCode(mainWorkerPath,
-                    "this.threadWorker.onmessage",
-                    "if(AgoraRtcWrapperNativeRunInMainThread.onMessage(msg) == true) {return;}");
+                    "workerPort.onmessage",
+                    "  // The worker thread handles Agora response messages from the OpenHarmony Main/UI thread.\n  if (AgoraRtcWrapperNative.onMessage(e) == true) { return; }");
             }
             else
             {
@@ -218,13 +203,13 @@ namespace Agora.Rtm
             }
 
 
-            var mainWorkerHandlerPath = FindFileInDevEco(path, "TuanjieMainWorkerHandler.ets");
-            if (mainWorkerHandlerPath != null)
+            var workerProxyPath = FindFileInDevEco(path, "WorkerProxy.ets");
+            if (workerProxyPath != null)
             {
-                InsertCodeIntoFile(mainWorkerHandlerPath, 0, "import { AgoraRtcWrapperNative } from '../AgoraRtcWrapperNative';");
-                InsertCodeIntoFileAppendSearchCode(mainWorkerHandlerPath,
-                    "workerPort.onmessage",
-                    "if (AgoraRtcWrapperNative.onMessage(e) == true) { return; }");
+                InsertCodeIntoFile(workerProxyPath, 0, "import { AgoraRtcWrapperNativeRunInMainThread } from '../AgoraRtcWrapperNative';");
+                InsertCodeIntoFileAppendSearchCode(workerProxyPath,
+                    "this.threadWorker.onmessage",
+                    "      // The OpenHarmony Main/UI thread handles messages coming from the worker thread.\n      if (AgoraRtcWrapperNativeRunInMainThread.onMessage(msg) == true) { return; }");
             }
             else
             {
@@ -251,10 +236,17 @@ namespace Agora.Rtm
             var filePaths = Directory.GetFiles(rootPath, file, SearchOption.AllDirectories);
             filePaths = filePaths.Where(filePath => !filePath.Contains("oh_modules") && !filePath.Contains("hvigor")).ToArray();
 
-            string filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("tuanjieLib"));
+            // 优先查找 entry 目录（新结构）
+            string filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("entry"));
+            // 如果找不到，尝试查找 tuanjieLib 目录
             if (filePath == null)
             {
-                filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("entry"));
+                filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("tuanjieLib"));
+            }
+            // 如果还是找不到，返回第一个匹配的文件（兼容旧结构）
+            if (filePath == null && filePaths.Length > 0)
+            {
+                filePath = filePaths[0];
             }
             return filePath;
         }
@@ -291,8 +283,14 @@ namespace Agora.Rtm
             // If the searchCode is found, insert the code on the next line
             if (lineIndex != -1)
             {
-                // Insert the code on the next line
-                lines.Insert(lineIndex + 1, code);
+                // Split code by newlines to support multi-line insertion
+                string[] codeLines = code.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                
+                // Insert the code lines on the next line (in reverse order to maintain correct order)
+                for (int i = codeLines.Length - 1; i >= 0; i--)
+                {
+                    lines.Insert(lineIndex + 1, codeLines[i]);
+                }
 
                 // Write the modified lines back to the file
                 File.WriteAllLines(filePath, lines);
