@@ -73,19 +73,36 @@ namespace Agora.Rtm
             Debug.Log("[Agora] project path: " + path);
             string agoraError = "[Agora Error] Motify Open Harmony Project failed. Please contact Agora technical support";
 
-            string buildProfileJson5Path = FindFileInDevEco(path, "build-profile.json5");
-            if (buildProfileJson5Path != null)
+            var buildProfileJson5FilePaths = Directory.GetFiles(path, "build-profile.json5", SearchOption.TopDirectoryOnly);
+            if (buildProfileJson5FilePaths.Length > 0)
             {
-                MotifyJsonFile(buildProfileJson5Path, (jsonData) =>
+                MotifyJsonFile(buildProfileJson5FilePaths[0], (jsonData) =>
                 {
-                    // 处理 buildOption.strictMode.useNormalizedOHMUrl
-                    Agora.Rtc.LitJson.JsonData buildOption = jsonData.ContainsKey("buildOption") ?
-                        jsonData["buildOption"] :
+                    var products = (Agora.Rtc.LitJson.JsonData)jsonData["app"]["products"][0];
+                    Agora.Rtc.LitJson.JsonData buildOption = products.ContainsKey("buildOption") ?
+                        products["buildOption"] :
                         new Agora.Rtc.LitJson.JsonData();
                     Agora.Rtc.LitJson.JsonData strictMode = buildOption.ContainsKey("strictMode") ? buildOption["strictMode"] : new Agora.Rtc.LitJson.JsonData();
                     strictMode["useNormalizedOHMUrl"] = true;
                     buildOption["strictMode"] = strictMode;
-                    jsonData["buildOption"] = buildOption;
+                    products["buildOption"] = buildOption;
+                    return "add useNormalizedOHMUrl = true";
+                });
+            }
+            else
+            {
+                Debug.LogError(agoraError);
+            }
+
+
+            string entryBuildProfileJson5Path = FindFileInDevEco(path, "build-profile.json5");
+            if (entryBuildProfileJson5Path != null)
+            {
+                MotifyJsonFile(entryBuildProfileJson5Path, (jsonData) =>
+                {
+                    Agora.Rtc.LitJson.JsonData buildOption = jsonData.ContainsKey("buildOption") ?
+                        jsonData["buildOption"] :
+                        new Agora.Rtc.LitJson.JsonData();
 
                     // 处理 buildOption.arkOptions.runtimeOnly.packages（将旧包名替换为新包名）
                     if (buildOption.ContainsKey("arkOptions"))
@@ -118,7 +135,7 @@ namespace Agora.Rtm
                         }
                     }
                     
-                    return "add useNormalizedOHMUrl = true and update packages";
+                    return "update packages in entry build-profile.json5";
                 });
             }
             else
@@ -192,7 +209,7 @@ namespace Agora.Rtm
             var mainWorkerPath = FindFileInDevEco(path, "TuanjieMainWorker.ets");
             if (mainWorkerPath != null)
             {
-                InsertCodeIntoFile(mainWorkerPath, 0, "import { AgoraRtcWrapperNative } from '../AgoraRtcWrapperNative';");
+                InsertCodeIntoFile(mainWorkerPath, 0, "import { AgoraRtcWrapperNative, AgoraRtcWrapperNativeRunInMainThread} from '../AgoraRtcWrapperNative';");
                 InsertCodeIntoFileAppendSearchCode(mainWorkerPath,
                     "workerPort.onmessage",
                     "  // The worker thread handles Agora response messages from the OpenHarmony Main/UI thread.\n  if (AgoraRtcWrapperNative.onMessage(e) == true) { return; }");
