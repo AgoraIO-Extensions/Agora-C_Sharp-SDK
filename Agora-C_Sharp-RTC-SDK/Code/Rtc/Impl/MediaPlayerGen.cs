@@ -470,5 +470,14 @@ namespace Agora.Rtc
             return _impl.SetSoundPositionParams(playerId, pan, gain);
         }
 
+        public override int GetAudioBufferDelay(int32_t& delayMs)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.GetAudioBufferDelay(playerId, delayMs);
+        }
+
     }
 }
