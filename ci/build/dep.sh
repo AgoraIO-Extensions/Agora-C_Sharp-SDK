@@ -239,28 +239,58 @@ choose_iris_dep() {
 
 # Helper: choose native link from cdn list with priority
 # Priority: 1. CDN (download.agora.io) 2. Numeric IP 3. Artifactory
+# Parameters: $1=list of links, $2=platform name (iOS, Android, macOS, Windows)
 choose_native_dep() {
   local list="$1"
+  local platform="$2"
   local cdn_links=""
   local ip_links=""
   local artifactory_links=""
   local other_links=""
   
-  # Classify links by priority
+  # Map platform name for matching in URLs
+  local platform_pattern=""
+  case "$platform" in
+    iOS) platform_pattern="iOS" ;;
+    Android) platform_pattern="Android" ;;
+    macOS) platform_pattern="Mac" ;;
+    Windows) platform_pattern="Windows" ;;
+  esac
+  
+  # Classify links by priority, filtering by platform
   for DEP in $list; do
-    if [[ "$DEP" =~ download\.agora\.io ]]; then
-      # Priority 1: CDN links
-      cdn_links="$cdn_links $DEP"
-    elif [[ "$DEP" =~ ^https?://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-      # Priority 2: Numeric IP links
-      ip_links="$ip_links $DEP"
-    elif [[ "$DEP" =~ artifactory ]]; then
-      # Priority 3: Artifactory links
-      artifactory_links="$artifactory_links $DEP"
-    else
-      # Other links
-      other_links="$other_links $DEP"
+    # Skip links that don't match the platform
+    if [ -n "$platform_pattern" ]; then
+      case "$DEP" in
+        *"$platform_pattern"*)
+          # Link matches platform, continue to classify
+          ;;
+        *)
+          # Link doesn't match platform, skip it
+          continue
+          ;;
+      esac
     fi
+    
+    # Classify by priority using POSIX-compatible pattern matching
+    case "$DEP" in
+      *download.agora.io*)
+        # Priority 1: CDN links
+        cdn_links="$cdn_links $DEP"
+        ;;
+      http://[0-9]*|https://[0-9]*)
+        # Priority 2: Numeric IP links (simplified check)
+        ip_links="$ip_links $DEP"
+        ;;
+      *artifactory*)
+        # Priority 3: Artifactory links
+        artifactory_links="$artifactory_links $DEP"
+        ;;
+      *)
+        # Other links
+        other_links="$other_links $DEP"
+        ;;
+    esac
   done
   
   # Return the first link from highest priority category
@@ -330,7 +360,7 @@ else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$MAC_DEPENDENCIES" "audio")
-    NATIVE_MAC_AUDIO=$(choose_native_dep "$AUDIO_LINKS")
+    NATIVE_MAC_AUDIO=$(choose_native_dep "$AUDIO_LINKS" "macOS")
     if [ -n "$NATIVE_MAC_AUDIO" ]; then
       echo "Mac native dependency (audio): $NATIVE_MAC_AUDIO"
       update_url_config_key audio NATIVE_MAC "$NATIVE_MAC_AUDIO"
@@ -340,7 +370,7 @@ else
   # Update video section if needed
   if [ "$UPDATE_VIDEO" -eq 1 ]; then
     VIDEO_LINKS=$(filter_links_by_type "$MAC_DEPENDENCIES" "video")
-    NATIVE_MAC_VIDEO=$(choose_native_dep "$VIDEO_LINKS")
+    NATIVE_MAC_VIDEO=$(choose_native_dep "$VIDEO_LINKS" "macOS")
     if [ -n "$NATIVE_MAC_VIDEO" ]; then
       echo "Mac native dependency (video): $NATIVE_MAC_VIDEO"
       update_url_config_key video NATIVE_MAC "$NATIVE_MAC_VIDEO"
@@ -379,7 +409,7 @@ else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$WINDOWS_DEPENDENCIES" "audio")
-    NATIVE_WIN_AUDIO=$(choose_native_dep "$AUDIO_LINKS")
+    NATIVE_WIN_AUDIO=$(choose_native_dep "$AUDIO_LINKS" "Windows")
     if [ -n "$NATIVE_WIN_AUDIO" ]; then
       echo "Windows native dependency (audio): $NATIVE_WIN_AUDIO"
       update_url_config_key audio NATIVE_WIN "$NATIVE_WIN_AUDIO"
@@ -389,7 +419,7 @@ else
   # Update video section if needed
   if [ "$UPDATE_VIDEO" -eq 1 ]; then
     VIDEO_LINKS=$(filter_links_by_type "$WINDOWS_DEPENDENCIES" "video")
-    NATIVE_WIN_VIDEO=$(choose_native_dep "$VIDEO_LINKS")
+    NATIVE_WIN_VIDEO=$(choose_native_dep "$VIDEO_LINKS" "Windows")
     if [ -n "$NATIVE_WIN_VIDEO" ]; then
       echo "Windows native dependency (video): $NATIVE_WIN_VIDEO"
       update_url_config_key video NATIVE_WIN "$NATIVE_WIN_VIDEO"
@@ -483,7 +513,7 @@ if [ -n "$IOS_DEPENDENCIES" ]; then
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$IOS_DEPENDENCIES" "audio")
-    NATIVE_IOS=$(choose_native_dep "$AUDIO_LINKS")
+    NATIVE_IOS=$(choose_native_dep "$AUDIO_LINKS" "iOS")
     if [ -n "$NATIVE_IOS" ]; then
       echo "iOS native dependency (audio): $NATIVE_IOS"
       update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
@@ -493,7 +523,7 @@ if [ -n "$IOS_DEPENDENCIES" ]; then
   # Update video section if needed
   if [ "$UPDATE_VIDEO" -eq 1 ]; then
     VIDEO_LINKS=$(filter_links_by_type "$IOS_DEPENDENCIES" "video")
-    NATIVE_IOS=$(choose_native_dep "$VIDEO_LINKS")
+    NATIVE_IOS=$(choose_native_dep "$VIDEO_LINKS" "iOS")
     if [ -n "$NATIVE_IOS" ]; then
       echo "iOS native dependency (video): $NATIVE_IOS"
       update_url_config_key video NATIVE_IOS "$NATIVE_IOS"
@@ -505,7 +535,7 @@ if [ -n "$ANDROID_DEPENDENCIES" ]; then
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$ANDROID_DEPENDENCIES" "audio")
-    NATIVE_ANDROID=$(choose_native_dep "$AUDIO_LINKS")
+    NATIVE_ANDROID=$(choose_native_dep "$AUDIO_LINKS" "Android")
     if [ -n "$NATIVE_ANDROID" ]; then
       echo "Android native dependency (audio): $NATIVE_ANDROID"
       update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
@@ -515,7 +545,7 @@ if [ -n "$ANDROID_DEPENDENCIES" ]; then
   # Update video section if needed
   if [ "$UPDATE_VIDEO" -eq 1 ]; then
     VIDEO_LINKS=$(filter_links_by_type "$ANDROID_DEPENDENCIES" "video")
-    NATIVE_ANDROID=$(choose_native_dep "$VIDEO_LINKS")
+    NATIVE_ANDROID=$(choose_native_dep "$VIDEO_LINKS" "Android")
     if [ -n "$NATIVE_ANDROID" ]; then
       echo "Android native dependency (video): $NATIVE_ANDROID"
       update_url_config_key video NATIVE_ANDROID "$NATIVE_ANDROID"
@@ -534,16 +564,26 @@ if [ -f "$URL_CONFIG_PATH" ]; then
     BUILD_NUM=0
     FLAG=0
     while IFS= read -r line; do
-      if [[ $line == *">>>$section"* ]]; then
-        FLAG=1
-      fi
-      if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
-        FLAG=0
+      case "$line" in
+        *">>>$section"*)
+          FLAG=1
+          ;;
+      esac
+      if [ "$FLAG" = "1" ]; then
+        case "$line" in
+          *"<<<end"*)
+            FLAG=0
+            ;;
+        esac
       fi
       
-      if [[ $FLAG == 1 ]] && [[ $line == *"Build="* ]]; then
-        BUILD_NUM=$(echo "$line" | sed 's/Build[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-        break
+      if [ "$FLAG" = "1" ]; then
+        case "$line" in
+          *"Build="*)
+            BUILD_NUM=$(echo "$line" | sed 's/Build[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            break
+            ;;
+        esac
       fi
     done < "$URL_CONFIG_PATH"
     
