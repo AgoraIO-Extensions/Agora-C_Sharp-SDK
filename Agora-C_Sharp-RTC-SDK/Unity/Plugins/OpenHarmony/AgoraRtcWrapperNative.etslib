@@ -6,7 +6,7 @@ import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
 import { BusinessError } from '@ohos.base';
 import fs from '@ohos.file.fs';
 import worker from '@ohos.worker';
-import { TuanjieMainWorker } from './workers/TuanjieMainWorker';
+import { WorkerProxy } from './workers/WorkerProxy';
 import tuanjie from 'libtuanjie.so';
 
 async function checkAccessToken(permission: Permissions): Promise<abilityAccessCtrl.GrantStatus> {
@@ -64,12 +64,12 @@ export class AgoraRtcWrapperNative {
       case 'enableVideo':
       case 'disableVideo':
       case 'destroyOhosRtcEngine':
-      {
-        tuanjie.TuanjieSendMessage(node, fun,
-          JSON.stringify(new AgoraMessage2Unity(type, msg.data.result)));
-        return true;
-        break;
-      }
+        {
+          tuanjie.TuanjieSendMessage(node, fun,
+            JSON.stringify(new AgoraMessage2Unity(type, msg.data.result)));
+          return true;
+          break;
+        }
     }
     return false;
   }
@@ -80,7 +80,7 @@ export class AgoraRtcWrapperNative {
       type: "createOhosRtcEngine",
       params,
       eventHandler:eventHandler
-    });
+    }); 
     // hilog.info(0x0000, "AgoraRtcWrapperNative", "createOhosRtcEngine");
     // if (AgoraRtcWrapperNative.rtcEngine != null) {
     //   hilog.error(0x0000, "AgoraRtcWrapperNative", "rtcEngine already created");
@@ -232,7 +232,7 @@ export class AgoraRtcWrapperNativeRunInMainThread {
     rtcEngineConfig.areaCode = unityContext.areaCode;
     AgoraRtcWrapperNativeRunInMainThread._rtcEngine = RtcEngine.createWithNativeEventHandler(rtcEngineConfig, eventHandler) as RtcEngineEx;
     let nativeHandler: bigint = AgoraRtcWrapperNativeRunInMainThread._rtcEngine.getNativeHandle();
-    TuanjieMainWorker.getInstance().postMessage({
+    WorkerProxy.getInstance().postMessage({
       type: 'createOhosRtcEngine',
       nativeHandler: nativeHandler.toString()
     })
@@ -244,7 +244,7 @@ export class AgoraRtcWrapperNativeRunInMainThread {
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
       ret = AgoraRtcWrapperNativeRunInMainThread._rtcEngine.enableVideo();
     }
-    TuanjieMainWorker.getInstance().postMessage({
+    WorkerProxy.getInstance().postMessage({
       type: 'enableVideo',
       result: ret
     })
@@ -255,55 +255,69 @@ export class AgoraRtcWrapperNativeRunInMainThread {
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
       ret =  AgoraRtcWrapperNativeRunInMainThread._rtcEngine.disableVideo();
     }
-    TuanjieMainWorker.getInstance().postMessage({
+    WorkerProxy.getInstance().postMessage({
       type: 'disableVideo',
       result: ret
     })
   }
 
-  public static destroyOhosRtcEngine() {
+  public static destroyOhosRtcEngine(): void {
     hilog.info(0x0000, "AgoraRtcWrapperNative", "destroyOhosRtcEngine");
-    let ret = -7;
+    let ret: number = -7;
     if (AgoraRtcWrapperNativeRunInMainThread._rtcEngine != null) {
-      RtcEngine.destroySync();
-      AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
-      ret =  0;
+      RtcEngine.destroy().then(() => {
+        hilog.info(0x0000, "AgoraRtcWrapperNative", "RtcEngine.destroy() completed successfully");
+        AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
+        ret = 0;
+        WorkerProxy.getInstance().postMessage({
+          type: 'destroyOhosRtcEngine',
+          result: ret
+        })
+      }).catch((error: BusinessError) => {
+        hilog.error(0x0000, "AgoraRtcWrapperNative", `RtcEngine.destroy() failed: ${error.message}`);
+        AgoraRtcWrapperNativeRunInMainThread._rtcEngine = null;
+        ret = -1;
+        WorkerProxy.getInstance().postMessage({
+          type: 'destroyOhosRtcEngine',
+          result: ret
+        })
+      });
+    } else {
+      // 如果 rtcEngine 已经是 null，直接返回成功
+      hilog.info(0x0000, "AgoraRtcWrapperNative", "rtcEngine is already null");
+      WorkerProxy.getInstance().postMessage({
+        type: 'destroyOhosRtcEngine',
+        result: 0
+      })
     }
-    TuanjieMainWorker.getInstance().postMessage({
-      type: 'destroyOhosRtcEngine',
-      result: ret
-    })
   }
 
 
-  //true: handle this message
+  // 在主线程中处理消息并执行实际的 RTC 操作
   public static onMessage(msg: MessageEvents):boolean {
+    if(msg == null || msg.data ==null || msg.data.type == null) { return false;}
     const type: string = msg.data.type;
     switch (type) {
       case 'createOhosRtcEngine': {
         AgoraRtcWrapperNativeRunInMainThread.createOhosRtcEngine(msg.data.params, msg.data.eventHandler);
         return true;
-        break;
       }
       case 'enableVideo': {
         AgoraRtcWrapperNativeRunInMainThread.enableVideo();
         return true;
-        break;
       }
       case 'disableVideo': {
         AgoraRtcWrapperNativeRunInMainThread.disableVideo();
         return true;
-        break;
       }
       case 'destroyOhosRtcEngine': {
         AgoraRtcWrapperNativeRunInMainThread.destroyOhosRtcEngine();
         return true;
-        break;
       }
       default:
         break;
     }
-    return false
+    return false;
   }
 }
 

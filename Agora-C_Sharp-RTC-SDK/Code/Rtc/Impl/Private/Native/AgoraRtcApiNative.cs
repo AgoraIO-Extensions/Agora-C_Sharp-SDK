@@ -52,7 +52,7 @@ namespace Agora.Rtc
 
         // IrisRtcEngine
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcEnginePtr CreateIrisApiEngine(IntPtr engine, IrisRtcEngineEventHandler handler);
+        internal static extern IrisRtcEnginePtr CreateIrisApiEngineWithEventHandler(IntPtr engine, IrisRtcEngineEventHandler handler);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisApiEngine(IrisRtcEnginePtr engine_ptr);

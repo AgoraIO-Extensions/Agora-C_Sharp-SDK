@@ -85,7 +85,7 @@ namespace Agora.Rtc
 #if UNITY_OPENHARMONY
             _irisRtcEngine = IntPtr.Zero;
 #else
-            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(nativePtr, IntPtr.Zero);
+            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngineWithEventHandler(nativePtr, IntPtr.Zero);
 
             var ret = this.GetNativeHandler(ref _rtcEngine);
             if (ret != 0)
@@ -363,7 +363,7 @@ namespace Agora.Rtc
                 byte[] byteArray = BitConverter.GetBytes(uint64Value);
                 Int64 int64Value = BitConverter.ToInt64(byteArray);
                 IntPtr ptr = new IntPtr(int64Value);
-                IntPtr irisApiEngine = AgoraRtcNative.CreateIrisApiEngine(ptr, _rtcEngineEventHandler);
+                IntPtr irisApiEngine = AgoraRtcNative.CreateIrisApiEngineWithEventHandler(ptr, _rtcEngineEventHandler);
                 SetIrisApiEngine(irisApiEngine);
 
                 _param.Clear();
