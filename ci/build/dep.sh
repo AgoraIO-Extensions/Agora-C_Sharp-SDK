@@ -607,19 +607,16 @@ if [ -f "$URL_CONFIG_PATH" ]; then
     echo "Build number for $section updated: $BUILD_NUM -> $NEW_BUILD_NUM"
   }
   
-  # Update SDKVer if we have a version
+  # Update SDKVer if we have a version (use the version directly from JSON)
   if [ -n "$DEP_VERSION" ]; then
-    # Extract major.minor.patch from version (e.g., "4.5.2.3" -> "4.5.2")
-    SDK_VER=$(echo "$DEP_VERSION" | cut -d. -f1,2,3)
-    
     if [ "$UPDATE_AUDIO" -eq 1 ]; then
-      echo "Updating SDKVer for audio section to: $SDK_VER"
-      update_url_config_key audio SDKVer "$SDK_VER"
+      echo "Updating SDKVer for audio section to: $DEP_VERSION"
+      update_url_config_key audio SDKVer "$DEP_VERSION"
     fi
     
     if [ "$UPDATE_VIDEO" -eq 1 ]; then
-      echo "Updating SDKVer for video section to: $SDK_VER"
-      update_url_config_key video SDKVer "$SDK_VER"
+      echo "Updating SDKVer for video section to: $DEP_VERSION"
+      update_url_config_key video SDKVer "$DEP_VERSION"
     fi
   fi
   
