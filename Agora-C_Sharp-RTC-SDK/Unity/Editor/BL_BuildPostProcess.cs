@@ -254,11 +254,11 @@ namespace Agora.Rtm
             filePaths = filePaths.Where(filePath => !filePath.Contains("oh_modules") && !filePath.Contains("hvigor")).ToArray();
 
             // 优先查找 entry 目录（新结构）
-            string filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("entry"));
+            string filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("tuanjieLib"));
             // 如果找不到，尝试查找 tuanjieLib 目录
             if (filePath == null)
             {
-                filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("tuanjieLib"));
+                filePath = filePaths.FirstOrDefault(filePath => filePath.Contains("entry")); 
             }
             // 如果还是找不到，返回第一个匹配的文件（兼容旧结构）
             if (filePath == null && filePaths.Length > 0)
