@@ -55,6 +55,34 @@ def doPublish(buildVariables) {
         writeFile(file: 'package_urls', text: content, encoding: "utf-8")
     }
     archiveArtifacts(artifacts: "package_urls", allowEmptyArchive:true)
+    
+    // Upload to CDN
+    def cdnUrls = []
+    if (params.Package_Publish && archiveUrls) {
+        echo 'Uploading to CDN...'
+        
+        def cdnJobs = [:]
+        archiveUrls.each { fileUrl ->
+            def fileName = fileUrl.split("/")[-1].split("\\\\")[-1]
+            def cdnUrl = "https://download.agora.io/sdk/release/${fileName}"
+            cdnUrls.add(cdnUrl)
+            
+            cdnJobs << ["CDN_${fileName}": {
+                build job: 'GA/Manual_CDN_Release_Url', propagate: false, parameters: [
+                    string(name: 'FILE_LINK', value: fileUrl),
+                    string(name: 'FILE_NAME', value: ''),
+                    string(name: 'TYPE', value: 'sdk')
+                ]
+            }]
+        }
+        
+        if (cdnJobs) {
+            parallel cdnJobs
+            echo 'CDN URLs:'
+            cdnUrls.each { echo it }
+        }
+    }
+    
     sh "rm -rf *.zip || true"
 }
 
