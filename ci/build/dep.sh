@@ -10,15 +10,32 @@ if [ "$#" -lt 1 ]; then
 fi
 INPUT=$1
 
-IOS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "iOS") | .cdn[]')
-MAC_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "macOS") | .cdn[]')
-ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Android") | .cdn[]')
-WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .cdn[]')
+# Extract and split cdn links (handles both array format and \n-separated strings)
+# The gsub converts literal \n in the string to actual newlines, then we process each line
+IOS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "iOS") | .cdn[] | split("\\n") | .[]')
+MAC_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "macOS") | .cdn[] | split("\\n") | .[]')
+ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Android") | .cdn[] | split("\\n") | .[]')
+WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .cdn[] | split("\\n") | .[]')
 
+# Extract IRIS links
 IRIS_IOS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "iOS") | .iris_cdn[]')
 IRIS_MAC_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "macOS") | .iris_cdn[]')
 IRIS_ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Android") | .iris_cdn[]')
 IRIS_WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .iris_cdn[]')
+
+# Debug: show what we extracted
+echo "=== Debug: Extracted Native SDK Links ==="
+echo "iOS Native: $(echo "$IOS_DEPENDENCIES" | head -c 200)..."
+echo "Mac Native: $(echo "$MAC_DEPENDENCIES" | head -c 200)..."
+echo "Android Native: $(echo "$ANDROID_DEPENDENCIES" | head -c 200)..."
+echo "Windows Native: $(echo "$WINDOWS_DEPENDENCIES" | head -c 200)..."
+echo ""
+echo "=== Debug: Extracted IRIS Links ==="
+echo "iOS IRIS: $(echo "$IRIS_IOS_DEPENDENCIES" | head -c 200)..."
+echo "Mac IRIS: $(echo "$IRIS_MAC_DEPENDENCIES" | head -c 200)..."
+echo "Android IRIS: $(echo "$IRIS_ANDROID_DEPENDENCIES" | head -c 200)..."
+echo "Windows IRIS: $(echo "$IRIS_WINDOWS_DEPENDENCIES" | head -c 200)..."
+echo ""
 
 # Extract version from first platform that has a non-empty version
 DEP_VERSION=$(echo "$INPUT" | jq -r '.[] | select(.version != "" and .version != null) | .version' | head -n 1)
@@ -29,14 +46,28 @@ detect_release_types() {
   local list="$1"
   local has_video=0
   local has_audio=0
+  local audio_count=0
+  local video_count=0
+  
   for DEP in $list; do
     # Convert to lowercase for case-insensitive matching
     local dep_lower=$(echo "$DEP" | tr '[:upper:]' '[:lower:]')
     case "$dep_lower" in
-      *video*|*full*) has_video=1 ;;
-      *audio*|*voice*) has_audio=1 ;;
+      *video*|*full*) 
+        has_video=1
+        video_count=$((video_count + 1))
+        echo "  [DEBUG] Found video/full link: $(basename "$DEP")" >&2
+        ;;
+      *audio*|*voice*) 
+        has_audio=1
+        audio_count=$((audio_count + 1))
+        echo "  [DEBUG] Found audio/voice link: $(basename "$DEP")" >&2
+        ;;
     esac
   done
+  
+  echo "  [DEBUG] Total: $audio_count audio/voice, $video_count video/full" >&2
+  
   if [ "$has_video" = "1" ] && [ "$has_audio" = "1" ]; then
     echo "both"
   elif [ "$has_audio" = "1" ]; then
@@ -48,10 +79,13 @@ detect_release_types() {
   fi
 }
 
-# Determine release types from all IRIS links
+# Determine release types from all IRIS and Native SDK links
 ALL_IRIS_DEPS="$IRIS_IOS_DEPENDENCIES $IRIS_ANDROID_DEPENDENCIES $IRIS_MAC_DEPENDENCIES $IRIS_WINDOWS_DEPENDENCIES"
-RELEASE_TYPES=$(detect_release_types "$ALL_IRIS_DEPS")
-echo "Detected release types: $RELEASE_TYPES"
+ALL_NATIVE_DEPS="$IOS_DEPENDENCIES $MAC_DEPENDENCIES $ANDROID_DEPENDENCIES $WINDOWS_DEPENDENCIES"
+ALL_DEPS="$ALL_IRIS_DEPS $ALL_NATIVE_DEPS"
+
+RELEASE_TYPES=$(detect_release_types "$ALL_DEPS")
+echo "Detected release types from IRIS and Native SDK links: $RELEASE_TYPES"
 
 # Determine which sections to update
 UPDATE_AUDIO=0
@@ -59,10 +93,13 @@ UPDATE_VIDEO=0
 if [ "$RELEASE_TYPES" = "both" ]; then
   UPDATE_AUDIO=1
   UPDATE_VIDEO=1
+  echo "Will update both audio and video sections"
 elif [ "$RELEASE_TYPES" = "audio" ]; then
   UPDATE_AUDIO=1
+  echo "Will update audio section only"
 else
   UPDATE_VIDEO=1
+  echo "Will update video section only"
 fi
 
 # Helper: compare version numbers (returns 0 if v1 >= v2, 1 otherwise)
@@ -200,12 +237,59 @@ choose_iris_dep() {
   fi
 }
 
-# Helper: choose first native link from cdn list
+# Helper: choose native link from cdn list with priority
+# Priority: 1. CDN (download.agora.io) 2. Numeric IP 3. Artifactory
 choose_native_dep() {
   local list="$1"
+  local cdn_links=""
+  local ip_links=""
+  local artifactory_links=""
+  local other_links=""
+  
+  # Classify links by priority
   for DEP in $list; do
-    echo "$DEP"; return
+    if [[ "$DEP" =~ download\.agora\.io ]]; then
+      # Priority 1: CDN links
+      cdn_links="$cdn_links $DEP"
+    elif [[ "$DEP" =~ ^https?://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+      # Priority 2: Numeric IP links
+      ip_links="$ip_links $DEP"
+    elif [[ "$DEP" =~ artifactory ]]; then
+      # Priority 3: Artifactory links
+      artifactory_links="$artifactory_links $DEP"
+    else
+      # Other links
+      other_links="$other_links $DEP"
+    fi
   done
+  
+  # Return the first link from highest priority category
+  if [ -n "$cdn_links" ]; then
+    for DEP in $cdn_links; do
+      echo "  -> Selected CDN link (priority 1)" >&2
+      echo "$DEP"
+      return
+    done
+  elif [ -n "$ip_links" ]; then
+    for DEP in $ip_links; do
+      echo "  -> Selected IP link (priority 2)" >&2
+      echo "$DEP"
+      return
+    done
+  elif [ -n "$artifactory_links" ]; then
+    for DEP in $artifactory_links; do
+      echo "  -> Selected Artifactory link (priority 3)" >&2
+      echo "$DEP"
+      return
+    done
+  elif [ -n "$other_links" ]; then
+    for DEP in $other_links; do
+      echo "  -> Selected other link" >&2
+      echo "$DEP"
+      return
+    done
+  fi
+  
   echo ""
 }
 
