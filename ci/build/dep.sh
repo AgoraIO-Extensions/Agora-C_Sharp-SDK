@@ -24,17 +24,17 @@ IRIS_ANDROID_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "An
 IRIS_WINDOWS_DEPENDENCIES=$(echo "$INPUT" | jq -r '.[] | select(.platform == "Windows") | .iris_cdn[]')
 
 # Debug: show what we extracted
-echo "=== Debug: Extracted Native SDK Links ==="
-echo "iOS Native: $(echo "$IOS_DEPENDENCIES" | head -c 200)..."
-echo "Mac Native: $(echo "$MAC_DEPENDENCIES" | head -c 200)..."
-echo "Android Native: $(echo "$ANDROID_DEPENDENCIES" | head -c 200)..."
-echo "Windows Native: $(echo "$WINDOWS_DEPENDENCIES" | head -c 200)..."
+echo "=== Debug: Extracted IRIS Links (used to determine audio/video sections) ==="
+echo "iOS IRIS: $(echo "$IRIS_IOS_DEPENDENCIES" | head -c 150)..."
+echo "Mac IRIS: $(echo "$IRIS_MAC_DEPENDENCIES" | head -c 150)..."
+echo "Android IRIS: $(echo "$IRIS_ANDROID_DEPENDENCIES" | head -c 150)..."
+echo "Windows IRIS: $(echo "$IRIS_WINDOWS_DEPENDENCIES" | head -c 150)..."
 echo ""
-echo "=== Debug: Extracted IRIS Links ==="
-echo "iOS IRIS: $(echo "$IRIS_IOS_DEPENDENCIES" | head -c 200)..."
-echo "Mac IRIS: $(echo "$IRIS_MAC_DEPENDENCIES" | head -c 200)..."
-echo "Android IRIS: $(echo "$IRIS_ANDROID_DEPENDENCIES" | head -c 200)..."
-echo "Windows IRIS: $(echo "$IRIS_WINDOWS_DEPENDENCIES" | head -c 200)..."
+echo "=== Debug: Extracted Native SDK Links (used for URL updates) ==="
+echo "iOS Native: $(echo "$IOS_DEPENDENCIES" | head -c 150)..."
+echo "Mac Native: $(echo "$MAC_DEPENDENCIES" | head -c 150)..."
+echo "Android Native: $(echo "$ANDROID_DEPENDENCIES" | head -c 150)..."
+echo "Windows Native: $(echo "$WINDOWS_DEPENDENCIES" | head -c 150)..."
 echo ""
 
 # Extract version from first platform that has a non-empty version
@@ -42,12 +42,15 @@ DEP_VERSION=$(echo "$INPUT" | jq -r '.[] | select(.version != "" and .version !=
 echo "Detected version: $DEP_VERSION"
 
 # Helper: detect release types from IRIS urls (returns "audio", "video", or "both")
+# This determines which sections (audio/video) in url_config.txt will be updated
 detect_release_types() {
   local list="$1"
   local has_video=0
   local has_audio=0
   local audio_count=0
   local video_count=0
+  
+  echo "  [DEBUG] Analyzing IRIS links to determine update sections..." >&2
   
   for DEP in $list; do
     # Convert to lowercase for case-insensitive matching
@@ -56,17 +59,17 @@ detect_release_types() {
       *video*|*full*) 
         has_video=1
         video_count=$((video_count + 1))
-        echo "  [DEBUG] Found video/full link: $(basename "$DEP")" >&2
+        echo "  [DEBUG] Found IRIS video/full link: $(basename "$DEP")" >&2
         ;;
       *audio*|*voice*) 
         has_audio=1
         audio_count=$((audio_count + 1))
-        echo "  [DEBUG] Found audio/voice link: $(basename "$DEP")" >&2
+        echo "  [DEBUG] Found IRIS audio/voice link: $(basename "$DEP")" >&2
         ;;
     esac
   done
   
-  echo "  [DEBUG] Total: $audio_count audio/voice, $video_count video/full" >&2
+  echo "  [DEBUG] IRIS links summary: $audio_count audio/voice, $video_count video/full" >&2
   
   if [ "$has_video" = "1" ] && [ "$has_audio" = "1" ]; then
     echo "both"
@@ -75,31 +78,31 @@ detect_release_types() {
   elif [ "$has_video" = "1" ]; then
     echo "video"
   else
-    echo "video"  # default
+    echo "video"  # default to video if no clear type found
   fi
 }
 
-# Determine release types from all IRIS and Native SDK links
+# Determine release types from IRIS links ONLY
+# Native SDK links are used for updating URLs, but not for determining which section to update
 ALL_IRIS_DEPS="$IRIS_IOS_DEPENDENCIES $IRIS_ANDROID_DEPENDENCIES $IRIS_MAC_DEPENDENCIES $IRIS_WINDOWS_DEPENDENCIES"
-ALL_NATIVE_DEPS="$IOS_DEPENDENCIES $MAC_DEPENDENCIES $ANDROID_DEPENDENCIES $WINDOWS_DEPENDENCIES"
-ALL_DEPS="$ALL_IRIS_DEPS $ALL_NATIVE_DEPS"
 
-RELEASE_TYPES=$(detect_release_types "$ALL_DEPS")
-echo "Detected release types from IRIS and Native SDK links: $RELEASE_TYPES"
+RELEASE_TYPES=$(detect_release_types "$ALL_IRIS_DEPS")
+echo "Detected release types from IRIS links: $RELEASE_TYPES"
 
-# Determine which sections to update
+# Determine which sections to update based on IRIS links
 UPDATE_AUDIO=0
 UPDATE_VIDEO=0
 if [ "$RELEASE_TYPES" = "both" ]; then
   UPDATE_AUDIO=1
   UPDATE_VIDEO=1
-  echo "Will update both audio and video sections"
+  echo "Will update both audio and video sections (based on IRIS links)"
 elif [ "$RELEASE_TYPES" = "audio" ]; then
   UPDATE_AUDIO=1
-  echo "Will update audio section only"
+  echo "Will update audio section only (based on IRIS links)"
 else
+  # Default to video if no clear type found
   UPDATE_VIDEO=1
-  echo "Will update video section only"
+  echo "Will update video section only (based on IRIS links or default)"
 fi
 
 # Helper: compare version numbers (returns 0 if v1 >= v2, 1 otherwise)
