@@ -361,6 +361,12 @@ else
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$MAC_DEPENDENCIES" "audio")
     NATIVE_MAC_AUDIO=$(choose_native_dep "$AUDIO_LINKS" "macOS")
+    # Mac only has FULL package, fallback to video links if no audio found
+    if [ -z "$NATIVE_MAC_AUDIO" ]; then
+      echo "  -> Mac has no separate audio package, using FULL package for audio section"
+      VIDEO_LINKS=$(filter_links_by_type "$MAC_DEPENDENCIES" "video")
+      NATIVE_MAC_AUDIO=$(choose_native_dep "$VIDEO_LINKS" "macOS")
+    fi
     if [ -n "$NATIVE_MAC_AUDIO" ]; then
       echo "Mac native dependency (audio): $NATIVE_MAC_AUDIO"
       update_url_config_key audio NATIVE_MAC "$NATIVE_MAC_AUDIO"
@@ -410,6 +416,12 @@ else
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$WINDOWS_DEPENDENCIES" "audio")
     NATIVE_WIN_AUDIO=$(choose_native_dep "$AUDIO_LINKS" "Windows")
+    # Windows only has FULL package, fallback to video links if no audio found
+    if [ -z "$NATIVE_WIN_AUDIO" ]; then
+      echo "  -> Windows has no separate audio package, using FULL package for audio section"
+      VIDEO_LINKS=$(filter_links_by_type "$WINDOWS_DEPENDENCIES" "video")
+      NATIVE_WIN_AUDIO=$(choose_native_dep "$VIDEO_LINKS" "Windows")
+    fi
     if [ -n "$NATIVE_WIN_AUDIO" ]; then
       echo "Windows native dependency (audio): $NATIVE_WIN_AUDIO"
       update_url_config_key audio NATIVE_WIN "$NATIVE_WIN_AUDIO"
