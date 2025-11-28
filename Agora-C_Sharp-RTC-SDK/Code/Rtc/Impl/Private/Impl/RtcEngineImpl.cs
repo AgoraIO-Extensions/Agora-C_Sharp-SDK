@@ -232,11 +232,18 @@ namespace Agora.Rtc
         }
 
 #if UNITY_OPENHARMONY
-        public void OnDisposeFinish()
+        public void OnDisposeFinish(int result)
         {
             GameObject.DestroyImmediate(_ohosCallback.gameObject);
             _ohosCallback = null;
             AgoraRtcNative.DestroyRtcEventHandler(_rtcEngineEventHandler);
+            
+            if (_ohosTasks.ContainsKey("destroyOhosRtcEngine"))
+            {
+                var _ohosTask = _ohosTasks["destroyOhosRtcEngine"];
+                _ohosTask.SetResult(result);
+                _ohosTasks.Remove("destroyOhosRtcEngine");
+            }
         }
 #endif
 
