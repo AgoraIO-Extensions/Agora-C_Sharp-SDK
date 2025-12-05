@@ -10,7 +10,7 @@ on:
 
 jobs:
   generate-codes:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,6 +75,40 @@ jobs:
             [AUTO] Generate codes by terra(${{ steps.version.outputs.full_version }})
           add-paths: .
 
+
+
+      - name: Create branch in Agora-Unity-Quickstart
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "Preparing to create branch ${{ github.ref_name }} in Agora-Unity-Quickstart..."
+          
+          # 1. 配置 git 身份
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          
+          # 2. 克隆目标仓库 (使用 Token 进行认证)
+          # 注意：这里使用 depth=1 浅克隆以加快速度，默认克隆 default 分支 (通常是 main)
+          git clone --depth 1 https://x-access-token:${GH_TOKEN}@github.com/AgoraIO-Extensions/Agora-Unity-Quickstart.git temp_quickstart
+          
+          cd temp_quickstart
+          
+          # 3. 检查分支是否已存在
+          if git ls-remote --heads origin ${{ github.ref_name }} | grep -q "refs/heads/${{ github.ref_name }}"; then
+            echo "Branch '${{ github.ref_name }}' already exists in Agora-Unity-Quickstart. Skipping creation."
+          else
+            echo "Creating branch '${{ github.ref_name }}' from default branch..."
+            
+            # 基于当前 checkout 的分支 (main) 创建新分支
+            git checkout -b ${{ github.ref_name }}
+            
+            # 推送到远程仓库
+            git push origin ${{ github.ref_name }}
+            
+            echo "Successfully created and pushed branch '${{ github.ref_name }}'."
+          fi
+          
       - name: Check csharp codes compile
         run: |
           cd Agora-C_Sharp_RTC-SDK_UT
