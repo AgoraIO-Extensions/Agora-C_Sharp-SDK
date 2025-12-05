@@ -1,15 +1,15 @@
 
 >>>audio
-Build=0
-SDKVer=4.5.2.3
-IRIS_IOS=https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/EP/4.5.2.3/20250908/ios/iris_4.5.2.3-build.2_DCG_iOS_Audio_Standalone_20250908_0507_33755.zip
-IRIS_ANDROID=https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/EP/4.5.2.3/20250908/android/iris_4.5.2.3-build.2_DCG_Android_Audio_Standalone_16K_20250908_0508_34904.zip
-IRIS_MAC=https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/EP/4.5.2.3/20250908/mac/iris_4.5.2.3-build.2_DCG_Mac_Audio_Unity_20250908_0507_32708.zip
-IRIS_WIN=https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/EP/4.5.2.3/20250908/windows/iris_4.5.2.3-build.2_DCG_Windows_Audio_Standalone_20250908_0506_31770.zip
+Build=1
+SDKVer=4.5.2
+IRIS_IOS=https://download.agora.io/sdk/release/iris_4.5.2-build.3_DCG_iOS_Audio_Standalone_20250714_0609_33716.zip
+IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.5.2-build.3_DCG_Android_Audio_Standalone_16K_20250714_0609_34859.zip
+IRIS_MAC=https://download.agora.io/sdk/release/iris_4.5.2-build.3_DCG_Mac_Audio_Unity_20250714_0609_32661.zip
+IRIS_WIN=https://download.agora.io/sdk/release/iris_4.5.2-build.3_DCG_Windows_Audio_Standalone_20250714_0609_31718.zip
 NATIVE_IOS=https://download.agora.io/sdk/release/Agora_Native_SDK_for_iOS_rel.v4.5.2.3_53492_VOICE_20250901_1437_865183.zip 
 NATIVE_ANDROID=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Android_rel.v4.5.2.3_74868_VOICE_20250901_1436_865178.zip 
-NATIVE_MAC=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Mac_rel.v4.5.2.3_25437_FULL_20250901_1437_865181.zip 
-NATIVE_WIN=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_rel.v4.5.2.3_30014_FULL_20250901_1437_865180.zip 
+NATIVE_MAC=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Mac_v4.5.2_FULL.zip
+NATIVE_WIN=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_v4.5.2_FULL.zip
 <<<end
 
 >>>video
