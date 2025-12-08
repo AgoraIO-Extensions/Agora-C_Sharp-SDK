@@ -704,9 +704,9 @@ fi
 
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
 { set +x; } 2>/dev/null
-echo "NOTIFICATION_TEXT START
+echo "[Pipeline Center]J0B RESULT TEXT START
 ${download_file}
-NOTIFICATION_TEXT END"
+[Pipeline Center]J0B RESULT TEXT END"
 set -x
 payload1='{
             "msgtype": "text",
