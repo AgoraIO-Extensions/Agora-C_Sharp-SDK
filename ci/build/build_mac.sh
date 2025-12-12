@@ -97,12 +97,10 @@ fi
 CONFIG_FILE="./ci/build/url_config.txt"
 
 ###############################################
-# Read Build number and SDK_VERSION from config #
+# Read SDK_VERSION from config #
 ###############################################
-BUILD_VERSION=0
 if [ -f "$CONFIG_FILE" ]; then
     FLAG=0
-    BUILD_FOUND=0
     SDK_VER_FOUND=0
     while IFS= read -r line; do
         # enter/exit SDK_TYPE section (audio or video)
@@ -114,29 +112,16 @@ if [ -f "$CONFIG_FILE" ]; then
         fi
         
         if [[ $FLAG == 1 ]]; then
-            # Extract and increment build number
-            if [[ $line == *"Build="* ]]; then
-                BUILD_VERSION=$(echo "$line" | sed 's/Build[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-                BUILD_VERSION=$((BUILD_VERSION + 1))
-                sed -i '' "/>>>$SDK_TYPE/,/<<<end/ s/Build=.*/Build=$BUILD_VERSION/" "$CONFIG_FILE"
-                BUILD_FOUND=1
-            fi
-            
             # Extract SDK version if not already set
             if [[ -z "$SDK_VERSION" ]] && [[ $line == *"SDKVer="* ]]; then
                 SDK_VERSION=$(echo "$line" | sed 's/SDKVer[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
                 SDK_VER_FOUND=1
-            fi
-            
-            # Break if both values are found
-            if [[ $BUILD_FOUND == 1 ]] && ([[ -n "$SDK_VERSION" ]] || [[ $SDK_VER_FOUND == 1 ]]); then
                 break
             fi
         fi
     done < "$CONFIG_FILE"
 fi
 
-echo "Build Version for $SDK_TYPE: $BUILD_VERSION"
 echo "SDK Version for $SDK_TYPE: $SDK_VERSION"
 
 if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" ] || [ -z "$IRIS_WIN_URL" ] || \
@@ -666,14 +651,21 @@ if [ "$RTC" == "false" ]; then
     rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
 fi
 
+# Prepare FINAL_SUFFIX: add underscore prefix only if SUFFIX has value
+if [ -n "$SUFFIX" ]; then
+    FINAL_SUFFIX="_${SUFFIX}"
+else
+    FINAL_SUFFIX=""
+fi
+
 # split vision os package as sub package
 if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
     ZIP_FILE="Unknow"
     if [ "$RTC" == "true" ]; then
-        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${TYPE}_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
     else
-        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
@@ -696,9 +688,9 @@ fi
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${TYPE}_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
 else
-    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_build${BUILD_VERSION}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
