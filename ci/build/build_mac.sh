@@ -124,6 +124,16 @@ fi
 
 echo "SDK Version for $SDK_TYPE: $SDK_VERSION"
 
+# Check if SDK_VERSION >= 4.5 to determine if we should check for "Standalone" in URLs
+major=$(echo $SDK_VERSION | cut -d. -f1)
+minor=$(echo $SDK_VERSION | cut -d. -f2)
+if [ "$major" -gt 4 ] || ([ "$major" -eq 4 ] && [ "$minor" -ge 5 ]); then
+    CHECK_STANDALONE="true"
+else
+    CHECK_STANDALONE="false"
+fi
+echo "CHECK_STANDALONE: $CHECK_STANDALONE"
+
 if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" ] || [ -z "$IRIS_WIN_URL" ] || \
    [ -z "$NATIVE_IOS_URL" ] || [ -z "$NATIVE_ANDROID_URL" ] || [ -z "$NATIVE_MAC_URL" ] || [ -z "$NATIVE_WIN_URL" ]; then
     if [ -f "$CONFIG_FILE" ]; then
@@ -353,7 +363,7 @@ if [ "$IRIS_ANDROID_URL" != "" ]; then
         exit 1
     fi
 
-    if [[ "$IRIS_ANDROID_URL" != *"Standalone"* ]]; then
+    if [ "$CHECK_STANDALONE" == "true" ] && [[ "$IRIS_ANDROID_URL" != *"Standalone"* ]]; then
         echo "IRIS_ANDROID_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -434,7 +444,7 @@ if [ "$IRIS_IOS_URL" != "" ]; then
         exit 1
     fi
 
-    if [[ "$IRIS_IOS_URL" != *"Standalone"* ]]; then
+    if [ "$CHECK_STANDALONE" == "true" ] && [[ "$IRIS_IOS_URL" != *"Standalone"* ]]; then
         echo "IRIS_IOS_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -580,7 +590,7 @@ if [ "$IRIS_WIN_URL" != "" ]; then
         exit 1
     fi
 
-    if [[ "$IRIS_WIN_URL" != *"Standalone"* ]]; then
+    if [ "$CHECK_STANDALONE" == "true" ] && [[ "$IRIS_WIN_URL" != *"Standalone"* ]]; then
         echo "IRIS_WIN_URL does not contain 'Standalone'"
         exit 1
     fi
