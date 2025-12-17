@@ -71,6 +71,128 @@
 
 set -ex
 
+###############################################
+# Resolve IRIS platform URLs from env or file #
+###############################################
+# If external inputs (env vars) are provided, use them.
+# Otherwise, read from ./ci/build/url_config.txt similar to CI/download_plugin.sh.
+
+# Normalize a URL value: trim spaces/CR and map domain
+normalize_url() {
+    local v="$1"
+    # strip Windows CR and surrounding whitespace
+    v=$(echo "$v" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+    # map artifactory domain
+    v=$(echo "$v" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+    echo "$v"
+}
+
+# Map TYPE to SDK_TYPE used in url_config.txt sections
+if [ "$TYPE" == "VOICE" ]; then
+    SDK_TYPE="audio"
+else
+    SDK_TYPE="video"
+fi
+
+CONFIG_FILE="./ci/build/url_config.txt"
+
+###############################################
+# Read SDK_VERSION from config #
+###############################################
+if [ -f "$CONFIG_FILE" ]; then
+    FLAG=0
+    SDK_VER_FOUND=0
+    while IFS= read -r line; do
+        # enter/exit SDK_TYPE section (audio or video)
+        if [[ $line == *">>>$SDK_TYPE"* ]]; then
+            FLAG=1
+        fi
+        if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
+            FLAG=0
+        fi
+        
+        if [[ $FLAG == 1 ]]; then
+            # Extract SDK version if not already set
+            if [[ -z "$SDK_VERSION" ]] && [[ $line == *"SDKVer="* ]]; then
+                SDK_VERSION=$(echo "$line" | sed 's/SDKVer[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+                SDK_VER_FOUND=1
+                break
+            fi
+        fi
+    done < "$CONFIG_FILE"
+fi
+
+echo "SDK Version for $SDK_TYPE: $SDK_VERSION"
+
+if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" ] || [ -z "$IRIS_WIN_URL" ] || \
+   [ -z "$NATIVE_IOS_URL" ] || [ -z "$NATIVE_ANDROID_URL" ] || [ -z "$NATIVE_MAC_URL" ] || [ -z "$NATIVE_WIN_URL" ]; then
+    if [ -f "$CONFIG_FILE" ]; then
+        FLAG=0
+        while IFS= read -r line; do
+            # enter/exit target section
+            if [[ $line == *">>>$SDK_TYPE"* ]]; then
+                FLAG=1
+            fi
+            if [[ $line == *"<<<end"* ]]; then
+                FLAG=0
+            fi
+
+            if [[ $FLAG == 1 ]]; then
+                case $line in
+                    *"IRIS_IOS"*)
+                        if [ -z "$IRIS_IOS_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_IOS[[:space:]]*=//')
+                            IRIS_IOS_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"IRIS_ANDROID"*)
+                        if [ -z "$IRIS_ANDROID_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_ANDROID[[:space:]]*=//')
+                            IRIS_ANDROID_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"IRIS_MAC"*)
+                        if [ -z "$IRIS_MAC_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_MAC[[:space:]]*=//')
+                            IRIS_MAC_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"IRIS_WIN"*)
+                        if [ -z "$IRIS_WIN_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_WIN[[:space:]]*=//')
+                            IRIS_WIN_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_IOS"*)
+                        if [ -z "$NATIVE_IOS_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_IOS[[:space:]]*=//')
+                            NATIVE_IOS_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_ANDROID"*)
+                        if [ -z "$NATIVE_ANDROID_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_ANDROID[[:space:]]*=//')
+                            NATIVE_ANDROID_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_MAC"*)
+                        if [ -z "$NATIVE_MAC_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_MAC[[:space:]]*=//')
+                            NATIVE_MAC_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_WIN"*)
+                        if [ -z "$NATIVE_WIN_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_WIN[[:space:]]*=//')
+                            NATIVE_WIN_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                esac
+            fi
+        done < "$CONFIG_FILE"
+    fi
+fi
+
 echo Package_Publish: $Package_Publish
 echo is_tag_fetch: $is_tag_fetch
 echo arch: $arch
@@ -83,15 +205,15 @@ echo short_version: $short_version
 echo pwd: $(pwd)
 echo UNITY_VERSION: $UNITY_VERSION
 echo SDK_VERSION: $SDK_VERSION
-MAC_URL=$IRIS_MAC_URL
-WIN_URL=$IRIS_WIN_URL
-ANDROID_URL=$IRIS_ANDROID_URL
-IOS_URL=$IRIS_IOS_URL
-echo MAC_URL: $MAC_URL
-echo WIN_URL: $WIN_URL
-echo ANDROID_URL: $ANDROID_URL
-echo IOS_URL: $IOS_URL
+echo IRIS_MAC_URL: $IRIS_MAC_URL
+echo IRIS_WIN_URL: $IRIS_WIN_URL
+echo IRIS_ANDROID_URL: $IRIS_ANDROID_URL
+echo IRIS_IOS_URL: $IRIS_IOS_URL
 echo VISIONOS_URL: $VISIONOS_URL
+echo NATIVE_MAC_URL: $NATIVE_MAC_URL
+echo NATIVE_WIN_URL: $NATIVE_WIN_URL
+echo NATIVE_ANDROID_URL: $NATIVE_ANDROID_URL
+echo NATIVE_IOS_URL: $NATIVE_IOS_URL
 echo TYPE: $TYPE
 echo RTC: $RTC
 echo RTM: $RTM
@@ -102,6 +224,7 @@ echo robot_key: $robot_key
 echo SPLIT_VISIONOS: $SPLIT_VISIONOS
 echo EXCLUDE_LIST_IN_DESKTOP $EXCLUDE_LIST_IN_DESKTOP
 echo EXCLUDE_LIST_IN_MOBILE $EXCLUDE_LIST_IN_MOBILE
+echo BRAND $BRAND
 
 delete_files() {
     local path=$1
@@ -122,12 +245,19 @@ delete_files() {
     done
 }
 
+decode_uri() {
+    local uri="$1"
+    # 使用 sed 命令将 %2B 替换为 +，将 %20 替换为空格
+    local decoded_uri=$(echo "$uri" | sed 's/%2B/+/g' | sed 's/%20/ /g')
+    echo "$decoded_uri"
+}
+
 if [ "$RTC" == "true" ]; then
-    PLUGIN_NAME="Agora-RTC-Plugin"
-    PLUGIN_CODE_NAME="Agora-Unity-RTC-SDK"
+    PLUGIN_NAME="${BRAND}-RTC-Plugin"
+    PLUGIN_CODE_NAME="${BRAND}-Unity-RTC-SDK"
 else
-    PLUGIN_NAME="Agora-RTM-Plugin"
-    PLUGIN_CODE_NAME="Agora-Unity-RTM-SDK"
+    PLUGIN_NAME="${BRAND}-RTM-Plugin"
+    PLUGIN_CODE_NAME="${BRAND}-Unity-RTM-SDK"
 fi
 
 if [ "$RTC" == "true" ] && [ "$RTM" == "true" ]; then
@@ -217,11 +347,32 @@ cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/*.csproj
 
 # Android
-if [ "$ANDROID_URL" != "" ]; then
+if [ "$IRIS_ANDROID_URL" != "" ]; then
+    if [ "$NATIVE_ANDROID_URL" == "" ]; then
+        echo "NATIVE_ANDROID_URL is null"
+        exit 1
+    fi
+
+    if [[ "$IRIS_ANDROID_URL" != *"Standalone"* ]]; then
+        echo "IRIS_ANDROID_URL does not contain 'Standalone'"
+        exit 1
+    fi
+
     echo "[Unity CI] copying Android ..."
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
-    7za x ./iris_*_Android_*.zip || exit 1
-    ANDROID_SRC_PATH="./iris_*_Android"
+
+    #download iris
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IRIS_ANDROID_URL}
+    temp_zip_name=$(basename "$IRIS_ANDROID_URL")
+    7za x ./${temp_zip_name} || exit 1
+    IRIS_ANDROID_SRC_PATH="./iris_*_Android"
+    rm ./${temp_zip_name}
+
+    #download native
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_ANDROID_URL}
+    temp_zip_name=$(basename "$NATIVE_ANDROID_URL")
+    7za x ./${temp_zip_name} || exit 1
+    NATIVE_ANDROID_SRC_PATH="./*_Native_SDK_for_Android_*"
+    rm ./${temp_zip_name}
 
     if [ "$RTC" == "true" ]; then
         ANDROID_PATH="AgoraRtcEngineKit.plugin"
@@ -243,54 +394,89 @@ if [ "$ANDROID_URL" != "" ]; then
     rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-*.xml
 
     mkdir "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-    if [ -f $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.aar ]; then
-        cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
+    #copy native
+    cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.jar "$ANDROID_DST_PATH"/libs
+
+    if [ -f ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.aar ]; then
+        cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
     fi
 
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
+    cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
+
     #copy iris
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
+    cp $IRIS_ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
     delete_files "$ANDROID_DST_PATH"/libs/arm64-v8a "$EXCLUDE_LIST_IN_MOBILE"
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
+    cp $IRIS_ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
     delete_files "$ANDROID_DST_PATH"/libs/armeabi-v7a "$EXCLUDE_LIST_IN_MOBILE"
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86
+    cp $IRIS_ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86
     delete_files "$ANDROID_DST_PATH"/libs/x86 "$EXCLUDE_LIST_IN_MOBILE"
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+    cp $IRIS_ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86_64
     delete_files "$ANDROID_DST_PATH"/libs/x86_64 "$EXCLUDE_LIST_IN_MOBILE"
 
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
+    cp $IRIS_ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
+    rm -rf ${IRIS_ANDROID_SRC_PATH}
+    rm -rf ${NATIVE_ANDROID_SRC_PATH}
 fi
 
 # iOS
-if [ "$IOS_URL" != "" ]; then
+if [ "$IRIS_IOS_URL" != "" ]; then
+
+    if [ "$NATIVE_IOS_URL" == "" ]; then
+        echo "NATIVE_IOS_URL is null"
+        exit 1
+    fi
+
+    if [[ "$IRIS_IOS_URL" != *"Standalone"* ]]; then
+        echo "IRIS_IOS_URL does not contain 'Standalone'"
+        exit 1
+    fi
+
     echo "[Unity CI] copying iOS ..."
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
-    7za x ./iris_*_iOS_*.zip || exit 1
-    IOS_SRC_PATH="./iris_*_iOS"
+
+    #download iris ios
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IRIS_IOS_URL}
+    temp_zip_name=$(basename "$IRIS_IOS_URL")
+    7za x ./${temp_zip_name} || exit 1
+    IRIS_IOS_SRC_PATH="./iris_*_iOS"
+    rm ./${temp_zip_name}
+
+    #download native ios
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_IOS_URL}
+    temp_zip_name=$(basename "$NATIVE_IOS_URL")
+    7za x ./${temp_zip_name} || exit 1
+    rm ./${temp_zip_name}
+
+    if [ -d ./*_Native_SDK_for_iOS_* ]; then
+        NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_iOS_*"
+    elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
+        NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_APPLE_*"
+    fi
+
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
-    cp -PRf $IOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
 
     #remove x86_64 from iris ios framework
-    files=$(ls $IOS_SRC_PATH/ALL_ARCHITECTURE/Release)
+    files=$(ls $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release)
     for filename in $files; do
         extension=${filename##*.}
         basename=${filename%.*}
         if [ "$extension" == "framework" ]; then
-            lipo -remove x86_64 $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
+            lipo -remove x86_64 $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
         fi
-
     done
 
-    cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+    #copy iris ios
+    cp -PRf $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+    #copy native ios
+    cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+    #remove framework
     delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 
     files=$(ls $IOS_DST_PATH)
@@ -299,6 +485,8 @@ if [ "$IOS_URL" != "" ]; then
     done
 
     rm $IOS_DST_PATH/ios.meta
+    rm -rf ${IRIS_IOS_SRC_PATH}
+    rm -rf ${NATIVE_IOS_SRC_PATH}
 
 fi
 
@@ -307,6 +495,7 @@ if [ "$VISIONOS_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${VISIONOS_URL}
     7za x ./iris_*_xrOS_*.zip || exit 1
     VISIONOS_SRC_PATH="./iris_*_xrOS"
+    rm ./iris_*_xrOS_*.zip
     VISIONOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/visionOS"
     cp -PRf $VISIONOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework "$VISIONOS_DST_PATH"
     cp -PRf $VISIONOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.xcframework "$VISIONOS_DST_PATH"
@@ -337,43 +526,91 @@ if [ "$VISIONOS_URL" != "" ]; then
 fi
 
 # macOS
-if [ "$MAC_URL" != "" ]; then
-    echo "[Unity CI] copying macOS ..."
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
-    7za x ./iris_*_Mac_*.zip || exit 1
-    MAC_SRC_PATH="./iris_*_Mac"
-    MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
-    cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
-
-    if [ "$RTC" == "true" ]; then
-        delete_files "$MAC_DST_PATH"/AgoraRtcWrapperUnity.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
-    else
-        delete_files "$MAC_DST_PATH"/AgoraRtmWrapperUnity.bundle/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
+if [ "$IRIS_MAC_URL" != "" ]; then
+    if [ "$NATIVE_MAC_URL" == "" ]; then
+        echo "NATIVE_MAC_URL is null"
+        exit 1
     fi
+
+    if [[ "$IRIS_MAC_URL" != *"_Unity_"* ]]; then
+        echo "IRIS_MAC_URL does not contain 'Unity'"
+        exit 1
+    fi
+
+    echo "[Unity CI] copying macOS ..."
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IRIS_MAC_URL}
+    temp_zip_name=$(basename "$IRIS_MAC_URL")
+    7za x ./${temp_zip_name} || exit 1
+    IRIS_MAC_SRC_PATH="./iris_*_Mac"
+    rm ./${temp_zip_name}
+
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_MAC_URL}
+    temp_zip_name=$(basename "$NATIVE_MAC_URL")
+    7za x ./${temp_zip_name} || exit 1
+    rm ./${temp_zip_name}
+
+    if [ -d ./*_Native_SDK_for_Mac_* ]; then
+        NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_Mac_*"
+    elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
+        NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_APPLE_*"
+    fi
+
+    MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
+
+    bundle_name=$(find $IRIS_MAC_SRC_PATH/MAC/Release -maxdepth 1 -type d -name "*.bundle" | head -n 1 | xargs -n 1 basename)
+
+    #copy iris
+    cp -PRf $IRIS_MAC_SRC_PATH/MAC/Release/$bundle_name "$MAC_DST_PATH"
+    rm -rf "$MAC_DST_PATH/$bundle_name/Contents/Frameworks/*.framework"
+
+    #copy native
+    cp -r $NATIVE_MAC_SRC_PATH/libs/*.xcframework/macos-arm64_x86_64/*.framework $MAC_DST_PATH/$bundle_name/Contents/Frameworks
+
+    delete_files "$MAC_DST_PATH"/$bundle_name/Contents/Frameworks "$EXCLUDE_LIST_IN_DESKTOP"
+
+    rm -rf ${IRIS_MAC_SRC_PATH}
+    rm -rf ${NATIVE_MAC_SRC_PATH}
 fi
 
 #Windows
-if [ "$WIN_URL" != "" ]; then
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
-    7za x ./iris_*_Windows_*.zip || exit 1
-    WIN_SRC_PATH="./iris_*_Windows"
+if [ "$IRIS_WIN_URL" != "" ]; then
 
-    # Windows x86-64
-    echo "[Unity CI] copying Windows x86-64 ..."
+    if [ "$NATIVE_WIN_URL" == "" ]; then
+        echo "NATIVE_WIN_URL is null"
+        exit 1
+    fi
+
+    if [[ "$IRIS_WIN_URL" != *"Standalone"* ]]; then
+        echo "IRIS_WIN_URL does not contain 'Standalone'"
+        exit 1
+    fi
+
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IRIS_WIN_URL}
+    temp_zip_name=$(basename "$IRIS_WIN_URL")
+    7za x ./${temp_zip_name} || exit 1
+    IRIS_WIN_SRC_PATH="./iris_*_Windows"
+    rm ./${temp_zip_name}
+
+    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${NATIVE_WIN_URL}
+    temp_zip_name=$(basename "$NATIVE_WIN_URL")
+    ls ./
+    7za x ./${temp_zip_name} || exit 1
+    NATIVE_WIN_SRC_PATH="./*_Native_SDK_for_Windows_*"
+    rm ./${temp_zip_name}
+
     WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-    # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
-    # cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
-    delete_files "$WIN64_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
-
-    # Windows x86
-    echo "[Unity CI] copying Windows x86 ..."
     WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-    # cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
-    # cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
+
+    #copy iris
+    cp $IRIS_WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
+    cp $IRIS_WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
+
+    #copy native
+    cp $NATIVE_WIN_SRC_PATH/sdk/x86_64/*.dll "$WIN64_DST_PATH"
+    cp $NATIVE_WIN_SRC_PATH/sdk/x86/*.dll "$WIN32_DST_PATH"
+
+    #remove dll
+    delete_files "$WIN64_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
     delete_files "$WIN32_DST_PATH" "$EXCLUDE_LIST_IN_DESKTOP"
 
     #create dll.meta
@@ -397,6 +634,8 @@ if [ "$WIN_URL" != "" ]; then
 
     done
 
+    rm -rf ${IRIS_WIN_SRC_PATH}
+    rm -rf ${NATIVE_WIN_SRC_PATH}
 fi
 
 echo "[Unity CI] finish copying files"
@@ -412,14 +651,21 @@ if [ "$RTC" == "false" ]; then
     rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
 fi
 
+# Prepare FINAL_SUFFIX: add underscore prefix only if SUFFIX has value
+if [ -n "$SUFFIX" ]; then
+    FINAL_SUFFIX="_${SUFFIX}"
+else
+    FINAL_SUFFIX=""
+fi
+
 # split vision os package as sub package
 if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
     ZIP_FILE="Unknow"
     if [ "$RTC" == "true" ]; then
-        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${TYPE}_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
     else
-        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
@@ -442,13 +688,18 @@ fi
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE=Agora_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${TYPE}_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
 else
-    ZIP_FILE=Agora_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+{ set +x; } 2>/dev/null
+echo "NOTIFICATION_TEXT START
+${download_file}
+NOTIFICATION_TEXT END"
+set -x
 payload1='{
             "msgtype": "text",
             "text": {
