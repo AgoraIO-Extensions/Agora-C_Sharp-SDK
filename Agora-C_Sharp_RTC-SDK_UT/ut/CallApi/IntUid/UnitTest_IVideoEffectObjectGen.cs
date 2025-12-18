@@ -36,7 +36,7 @@ namespace Agora.Rtc.Ut
         {
             var nodeId = ParamsHelper.CreateParam<uint>();
 
-            var actionId = ParamsHelper.CreateParam<IVideoEffectObject::VIDEO_EFFECT_ACTION>();
+            var actionId = ParamsHelper.CreateParam<VIDEO_EFFECT_ACTION>();
 
             var nRet = @interface.PerformVideoEffectAction(nodeId, actionId);
             Assert.AreEqual(0, nRet);
