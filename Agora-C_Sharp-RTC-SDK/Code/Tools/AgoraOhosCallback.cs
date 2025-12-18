@@ -30,6 +30,12 @@ namespace Agora.Rtm
                         impl.OnInitializeFinishFromOhos(nativeHandler);
                         break;
                     }
+                case "destroyOhosRtcEngine":
+                    {
+                        int result = (int)jsonData["data"];
+                        impl.OnDisposeFinish(result);
+                        break;
+                    }
                 default:
                     {
                         int result = (int)jsonData["data"];
@@ -37,12 +43,6 @@ namespace Agora.Rtm
                         break;
                     }
             }
-
-            if(type == "destroyOhosRtcEngine")
-            {
-                impl.OnDisposeFinish();
-            }
-
         }
     }
 }

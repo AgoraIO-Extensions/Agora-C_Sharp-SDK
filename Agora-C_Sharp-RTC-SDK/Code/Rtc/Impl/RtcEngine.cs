@@ -53,16 +53,14 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = null;
         }
 
-        public override Task<int> Dispose(bool sync = false)
+        public override async Task<int> Dispose(bool sync = false)
         {
             if (_rtcEngineImpl == null)
             {
-                var task = new TaskCompletionSource<int>();
-                task.SetResult(0);
-                return task.Task;
+                return 0;
             }
 
-            var result =  _rtcEngineImpl.Dispose(sync);
+            var result =  await _rtcEngineImpl.Dispose(sync);
             _rtcEngineImpl = null;
 
             AudioDeviceManager.ReleaseInstance();
