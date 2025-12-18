@@ -326,6 +326,24 @@ namespace Agora.Rtc
             return _impl.SetFilterEffectOptions(enabled, options, type);
         }
 
+        public override IVideoEffectObject CreateVideoEffectObject(string bundlePath, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        {
+            if (_impl == null)
+            {
+                return null;
+            }
+            return _impl.CreateVideoEffectObject(bundlePath, type);
+        }
+
+        public override int DestroyVideoEffectObject(IVideoEffectObject videoEffectObject)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.DestroyVideoEffectObject(videoEffectObject);
+        }
+
         public override int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
             if (_impl == null)
@@ -416,6 +434,7 @@ namespace Agora.Rtc
             return _impl.DisableAudio();
         }
 
+        [Obsolete]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
             if (_impl == null)
@@ -2207,6 +2226,7 @@ namespace Agora.Rtc
             return _impl.ClearVideoWatermarks();
         }
 
+        [Obsolete]
         public override int PauseAudio()
         {
             if (_impl == null)
@@ -2216,6 +2236,7 @@ namespace Agora.Rtc
             return _impl.PauseAudio();
         }
 
+        [Obsolete]
         public override int ResumeAudio()
         {
             if (_impl == null)
@@ -2225,6 +2246,7 @@ namespace Agora.Rtc
             return _impl.ResumeAudio();
         }
 
+        [Obsolete]
         public override int EnableWebSdkInteroperability(bool enabled)
         {
             if (_impl == null)
@@ -3035,6 +3057,7 @@ namespace Agora.Rtc
             return _impl.GetUserInfoByUidEx(uid, ref userInfo, connection);
         }
 
+        [Obsolete]
         public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             if (_impl == null)
@@ -3143,6 +3166,24 @@ namespace Agora.Rtc
             return _impl.EnableVideoImageSourceEx(enable, options, connection);
         }
 
+        public override int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.PreloadEffectEx(connection, soundId, filePath, startPos);
+        }
+
+        public override int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
+        }
+
         public override int RegisterFaceInfoObserver(IFaceInfoObserver observer)
         {
             if (_impl == null)
@@ -3188,6 +3229,7 @@ namespace Agora.Rtc
             return _impl.SetExternalRemoteEglContext(eglContext);
         }
 
+        [Obsolete]
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
             if (_impl == null)

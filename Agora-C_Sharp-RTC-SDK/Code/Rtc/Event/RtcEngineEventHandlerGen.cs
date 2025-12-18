@@ -52,6 +52,7 @@ namespace Agora.Rtc
 
         public event Action EventOnAudioMixingFinished;
 
+        [Obsolete]
         public override void OnAudioMixingFinished()
         {
             if (EventOnAudioMixingFinished == null) return;
@@ -116,6 +117,7 @@ namespace Agora.Rtc
 
         public event Action EventOnCameraReady;
 
+        [Obsolete]
         public override void OnCameraReady()
         {
             if (EventOnCameraReady == null) return;
@@ -148,6 +150,7 @@ namespace Agora.Rtc
 
         public event Action EventOnVideoStopped;
 
+        [Obsolete]
         public override void OnVideoStopped()
         {
             if (EventOnVideoStopped == null) return;
@@ -356,6 +359,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, int, ushort, ushort> EventOnAudioQuality;
 
+        [Obsolete]
         public override void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, ushort delay, ushort lost)
         {
             if (EventOnAudioQuality == null) return;
@@ -540,6 +544,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection> EventOnConnectionInterrupted;
 
+        [Obsolete]
         public override void OnConnectionInterrupted(RtcConnection connection)
         {
             if (EventOnConnectionInterrupted == null) return;
@@ -604,6 +609,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, int> EventOnFirstRemoteAudioFrame;
 
+        [Obsolete]
         public override void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed)
         {
             if (EventOnFirstRemoteAudioFrame == null) return;
@@ -612,6 +618,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, int> EventOnFirstRemoteAudioDecoded;
 
+        [Obsolete]
         public override void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed)
         {
             if (EventOnFirstRemoteAudioDecoded == null) return;
@@ -660,6 +667,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, ushort, ushort, ushort> EventOnRemoteAudioTransportStats;
 
+        [Obsolete]
         public override void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
         {
             if (EventOnRemoteAudioTransportStats == null) return;
@@ -668,6 +676,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, ushort, ushort, ushort> EventOnRemoteVideoTransportStats;
 
+        [Obsolete]
         public override void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
         {
             if (EventOnRemoteVideoTransportStats == null) return;
