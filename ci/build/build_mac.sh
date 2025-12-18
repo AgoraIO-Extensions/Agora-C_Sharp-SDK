@@ -71,6 +71,138 @@
 
 set -ex
 
+###############################################
+# Resolve IRIS platform URLs from env or file #
+###############################################
+# If external inputs (env vars) are provided, use them.
+# Otherwise, read from ./ci/build/url_config.txt similar to CI/download_plugin.sh.
+
+# Normalize a URL value: trim spaces/CR and map domain
+normalize_url() {
+    local v="$1"
+    # strip Windows CR and surrounding whitespace
+    v=$(echo "$v" | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+    # map artifactory domain
+    v=$(echo "$v" | sed 's/https:\/\/artifactory\./https:\/\/artifactory-api.bj2\./')
+    echo "$v"
+}
+
+# Map TYPE to SDK_TYPE used in url_config.txt sections
+if [ "$TYPE" == "VOICE" ]; then
+    SDK_TYPE="audio"
+else
+    SDK_TYPE="video"
+fi
+
+CONFIG_FILE="./ci/build/url_config.txt"
+
+###############################################
+# Read SDK_VERSION from config #
+###############################################
+if [ -f "$CONFIG_FILE" ]; then
+    FLAG=0
+    SDK_VER_FOUND=0
+    while IFS= read -r line; do
+        # enter/exit SDK_TYPE section (audio or video)
+        if [[ $line == *">>>$SDK_TYPE"* ]]; then
+            FLAG=1
+        fi
+        if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
+            FLAG=0
+        fi
+        
+        if [[ $FLAG == 1 ]]; then
+            # Extract SDK version if not already set
+            if [[ -z "$SDK_VERSION" ]] && [[ $line == *"SDKVer="* ]]; then
+                SDK_VERSION=$(echo "$line" | sed 's/SDKVer[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+                SDK_VER_FOUND=1
+                break
+            fi
+        fi
+    done < "$CONFIG_FILE"
+fi
+
+echo "SDK Version for $SDK_TYPE: $SDK_VERSION"
+
+# Check if SDK_VERSION >= 4.5 to determine if we should check for "Standalone" in URLs
+major=$(echo $SDK_VERSION | cut -d. -f1)
+minor=$(echo $SDK_VERSION | cut -d. -f2)
+if [ "$major" -gt 4 ] || ([ "$major" -eq 4 ] && [ "$minor" -ge 5 ]); then
+    CHECK_STANDALONE="true"
+else
+    CHECK_STANDALONE="false"
+fi
+echo "CHECK_STANDALONE: $CHECK_STANDALONE"
+
+if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" ] || [ -z "$IRIS_WIN_URL" ] || \
+   [ -z "$NATIVE_IOS_URL" ] || [ -z "$NATIVE_ANDROID_URL" ] || [ -z "$NATIVE_MAC_URL" ] || [ -z "$NATIVE_WIN_URL" ]; then
+    if [ -f "$CONFIG_FILE" ]; then
+        FLAG=0
+        while IFS= read -r line; do
+            # enter/exit target section
+            if [[ $line == *">>>$SDK_TYPE"* ]]; then
+                FLAG=1
+            fi
+            if [[ $line == *"<<<end"* ]]; then
+                FLAG=0
+            fi
+
+            if [[ $FLAG == 1 ]]; then
+                case $line in
+                    *"IRIS_IOS"*)
+                        if [ -z "$IRIS_IOS_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_IOS[[:space:]]*=//')
+                            IRIS_IOS_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"IRIS_ANDROID"*)
+                        if [ -z "$IRIS_ANDROID_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_ANDROID[[:space:]]*=//')
+                            IRIS_ANDROID_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"IRIS_MAC"*)
+                        if [ -z "$IRIS_MAC_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_MAC[[:space:]]*=//')
+                            IRIS_MAC_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"IRIS_WIN"*)
+                        if [ -z "$IRIS_WIN_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/IRIS_WIN[[:space:]]*=//')
+                            IRIS_WIN_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_IOS"*)
+                        if [ -z "$NATIVE_IOS_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_IOS[[:space:]]*=//')
+                            NATIVE_IOS_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_ANDROID"*)
+                        if [ -z "$NATIVE_ANDROID_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_ANDROID[[:space:]]*=//')
+                            NATIVE_ANDROID_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_MAC"*)
+                        if [ -z "$NATIVE_MAC_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_MAC[[:space:]]*=//')
+                            NATIVE_MAC_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                    *"NATIVE_WIN"*)
+                        if [ -z "$NATIVE_WIN_URL" ]; then
+                            tmp=$(echo "$line" | sed 's/NATIVE_WIN[[:space:]]*=//')
+                            NATIVE_WIN_URL=$(normalize_url "$tmp")
+                        fi
+                        ;;
+                esac
+            fi
+        done < "$CONFIG_FILE"
+    fi
+fi
+
 echo Package_Publish: $Package_Publish
 echo is_tag_fetch: $is_tag_fetch
 echo arch: $arch
@@ -231,7 +363,7 @@ if [ "$IRIS_ANDROID_URL" != "" ]; then
         exit 1
     fi
 
-    if [[ "$IRIS_ANDROID_URL" != *"Standalone"* ]]; then
+    if [ "$CHECK_STANDALONE" == "true" ] && [[ "$IRIS_ANDROID_URL" != *"Standalone"* ]]; then
         echo "IRIS_ANDROID_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -312,7 +444,7 @@ if [ "$IRIS_IOS_URL" != "" ]; then
         exit 1
     fi
 
-    if [[ "$IRIS_IOS_URL" != *"Standalone"* ]]; then
+    if [ "$CHECK_STANDALONE" == "true" ] && [[ "$IRIS_IOS_URL" != *"Standalone"* ]]; then
         echo "IRIS_IOS_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -458,7 +590,7 @@ if [ "$IRIS_WIN_URL" != "" ]; then
         exit 1
     fi
 
-    if [[ "$IRIS_WIN_URL" != *"Standalone"* ]]; then
+    if [ "$CHECK_STANDALONE" == "true" ] && [[ "$IRIS_WIN_URL" != *"Standalone"* ]]; then
         echo "IRIS_WIN_URL does not contain 'Standalone'"
         exit 1
     fi
@@ -529,14 +661,21 @@ if [ "$RTC" == "false" ]; then
     rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
 fi
 
+# Prepare FINAL_SUFFIX: add underscore prefix only if SUFFIX has value
+if [ -n "$SUFFIX" ]; then
+    FINAL_SUFFIX="_${SUFFIX}"
+else
+    FINAL_SUFFIX=""
+fi
+
 # split vision os package as sub package
 if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets/$PLUGIN_NAME/$PLUGIN_CODE_NAME/Plugins/visionOS" "$PLUGIN_NAME-VisionOS.unitypackage" || exit 1
     ZIP_FILE="Unknow"
     if [ "$RTC" == "true" ]; then
-        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTC_VisionOS_SDK_${TYPE}_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
     else
-        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+        ZIP_FILE=Agora_Unity_RTM_VisionOS_SDK_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
@@ -559,13 +698,18 @@ fi
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTC_SDK_${TYPE}_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
 else
-    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_${SUFFIX}.zip
+    ZIP_FILE="$BRAND"_Unity_RTM_SDK_${build_date}_${BUILD_NUMBER}_${SDK_VERSION}${FINAL_SUFFIX}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+{ set +x; } 2>/dev/null
+echo "NOTIFICATION_TEXT START
+${download_file}
+NOTIFICATION_TEXT END"
+set -x
 payload1='{
             "msgtype": "text",
             "text": {
