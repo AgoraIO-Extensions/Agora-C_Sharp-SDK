@@ -775,47 +775,5 @@ namespace Agora.Rtc.Ut
         }
 
 
-        [Test]
-        public void Test_PreloadEffectEx_c9fae88()
-        {
-            var connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var soundId = ParamsHelper.CreateParam<int>();
-
-            var filePath = ParamsHelper.CreateParam<string>();
-
-            var startPos = ParamsHelper.CreateParam<int>();
-
-            var nRet = @interface.PreloadEffectEx(connection, soundId, filePath, startPos);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_PlayEffectEx_ae5345c()
-        {
-            var connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var soundId = ParamsHelper.CreateParam<int>();
-
-            var filePath = ParamsHelper.CreateParam<string>();
-
-            var loopCount = ParamsHelper.CreateParam<int>();
-
-            var pitch = ParamsHelper.CreateParam<double>();
-
-            var pan = ParamsHelper.CreateParam<double>();
-
-            var gain = ParamsHelper.CreateParam<int>();
-
-            var publish = ParamsHelper.CreateParam<bool>();
-
-            var startPos = ParamsHelper.CreateParam<int>();
-
-            var nRet = @interface.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
-            Assert.AreEqual(0, nRet);
-        }
-
-
     }
 }

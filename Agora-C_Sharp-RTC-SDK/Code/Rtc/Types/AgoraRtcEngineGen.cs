@@ -2533,50 +2533,6 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum VIDEO_EFFECT_NODE_ID
-    {
-        ///
-        /// @ignore
-        ///
-        BEAUTY = 1 << 0,
-
-        ///
-        /// @ignore
-        ///
-        STYLE_MAKEUP = 1 << 1,
-
-        ///
-        /// @ignore
-        ///
-        FILTER = 1 << 2,
-
-        ///
-        /// @ignore
-        ///
-        STICKER = 1 << 3,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum VIDEO_EFFECT_ACTION
-    {
-        ///
-        /// @ignore
-        ///
-        SAVE = 1,
-
-        ///
-        /// @ignore
-        ///
-        RESET = 2,
-
-    }
-
-    ///
-    /// @ignore
-    ///
     public class RtcEngineContext : IOptionalJsonParse
     {
         ///

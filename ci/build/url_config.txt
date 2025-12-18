@@ -13,14 +13,14 @@ NATIVE_WIN=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_re
 <<<end
 
 >>>video
-Build=1
-SDKVer=4.2.7.127
-IRIS_IOS=https://download.agora.io/sdk/release/iris_4.2.7.127-build.3_DCG_iOS_Video_20251217_0123.zip
-IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.2.7.127-build.3_DCG_Android_Video_20251217_0123.zip
-IRIS_MAC=https://download.agora.io/sdk/release/iris_4.2.7.127-build.3_DCG_Mac_Video_Unity_20251217_0123.zip
-IRIS_WIN=https://download.agora.io/sdk/release/iris_4.2.7.127-build.3_DCG_Windows_Video_20251217_0123.zip
-NATIVE_IOS=https://download.agora.io/sdk/release/Agora_Native_SDK_for_iOS_rel.v4.2.7.127_54587_FULL_20251105_1933_962933.zip
-NATIVE_ANDROID=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Android_rel.v4.2.7.127_76343_FULL_20251105_1923_962929.zip
-NATIVE_MAC=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Mac_rel.v4.2.7.127_25925_FULL_20251105_1932_962934.zip
-NATIVE_WIN=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_rel.v4.2.7.127_30552_FULL_20251105_1923_962931.zip
+Build=2
+SDKVer=4.5.2.3
+IRIS_IOS=https://download.agora.io/sdk/release/iris_4.6.2-dev.5_DCG_iOS_Video_Standalone_20251218_0222_33837.zip
+IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.6.2-dev.5_DCG_Android_Video_Standalone_16K_20251218_0222_34991.zip
+IRIS_MAC=https://download.agora.io/sdk/release/iris_4.6.2-dev.5_DCG_Mac_Video_Unity_20251218_0222_32801.zip
+IRIS_WIN=https://download.agora.io/sdk/release/iris_4.6.2-dev.5_DCG_Windows_Video_Standalone_20251218_0226_31870.zip
+NATIVE_IOS=https://download.agora.io/sdk/release/Agora_Native_SDK_for_iOS_rel.v4.5.2.3_53491_FULL_20250901_1437_865182.zip
+NATIVE_ANDROID=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Android_rel.v4.5.2.151_75028_FULL_20250909_2317_876770.zip
+NATIVE_MAC=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Mac_rel.v4.5.2.3_25437_FULL_20250901_1437_865181.zip
+NATIVE_WIN=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_rel.v4.5.2.151_30098_FULL_20250912_1913_881127.zip
 <<<end

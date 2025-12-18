@@ -616,45 +616,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public IVideoEffectObject CreateVideoEffectObject(string bundlePath, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
-        {
-            _param.Clear();
-            _param.Add("bundlePath", bundlePath);
-            _param.Add("type", type);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_CREATEVIDEOEFFECTOBJECT_65bd50d,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            if (nRet != 0) return null;
-            var objectId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            var videoEffectObject = new VideoEffectObject(RtcEngine.Get(), new VideoEffectObjectImpl(_irisApiEngine), objectId);
-            VideoEffectObjectManager.Instance.Add(objectId, videoEffectObject);
-            return videoEffectObject;
-        }
-
-        public int DestroyVideoEffectObject(IVideoEffectObject videoEffectObject)
-        {
-            _param.Clear();
-            var objectId = videoEffectObject.GetObjectId();
-            _param.Add("objectId", objectId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_DESTROYVIDEOEFFECTOBJECT_66d092b,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (result == 0)
-            {
-                VideoEffectObjectManager.Instance.Release(objectId);
-            }
-            return result;
-        }
-
         public int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
             _param.Clear();
@@ -5979,51 +5940,6 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_ENABLEVIDEOIMAGESOURCEEX_b63f346,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
-        {
-            _param.Clear();
-            _param.Add("connection", connection);
-            _param.Add("soundId", soundId);
-            _param.Add("filePath", filePath);
-            _param.Add("startPos", startPos);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_PRELOADEFFECTEX_c9fae88,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
-        {
-            _param.Clear();
-            _param.Add("connection", connection);
-            _param.Add("soundId", soundId);
-            _param.Add("filePath", filePath);
-            _param.Add("loopCount", loopCount);
-            _param.Add("pitch", pitch);
-            _param.Add("pan", pan);
-            _param.Add("gain", gain);
-            _param.Add("publish", publish);
-            _param.Add("startPos", startPos);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_PLAYEFFECTEX_ae5345c,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

@@ -6808,147 +6808,62 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_HEADSCALE = 100,
+        FACE_SHAPE_AREA_HEADSCALE = 0,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FOREHEAD = 101,
+        FACE_SHAPE_AREA_FOREHEAD = 1,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FACECONTOUR = 102,
+        FACE_SHAPE_AREA_FACECONTOUR = 2,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FACELENGTH = 103,
+        FACE_SHAPE_AREA_FACELENGTH = 3,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FACEWIDTH = 104,
+        FACE_SHAPE_AREA_FACEWIDTH = 4,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_CHEEKBONE = 105,
+        FACE_SHAPE_AREA_CHEEKBONE = 5,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_CHEEK = 106,
+        FACE_SHAPE_AREA_CHEEK = 6,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_MANDIBLE = 107,
+        FACE_SHAPE_AREA_CHIN = 7,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_CHIN = 108,
+        FACE_SHAPE_AREA_EYESCALE = 8,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_EYESCALE = 200,
+        FACE_SHAPE_AREA_NOSELENGTH = 9,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_EYEDISTANCE = 201,
+        FACE_SHAPE_AREA_NOSEWIDTH = 10,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_EYEPOSITION = 202,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_LOWEREYELID = 203,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_EYEPUPILS = 204,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_EYEINNERCORNER = 205,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_EYEOUTERCORNER = 206,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_NOSELENGTH = 300,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_NOSEWIDTH = 301,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_NOSEWING = 302,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_NOSEROOT = 303,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_NOSEBRIDGE = 304,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_NOSETIP = 305,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_NOSEGENERAL = 306,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_MOUTHSCALE = 400,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_MOUTHPOSITION = 401,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_MOUTHSMILE = 402,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_MOUTHLIP = 403,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_EYEBROWPOSITION = 500,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_AREA_EYEBROWTHICKNESS = 501,
+        FACE_SHAPE_AREA_MOUTHSCALE = 11,
 
     }
 
@@ -6995,11 +6910,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         FACE_SHAPE_BEAUTY_STYLE_MALE = 1,
-
-        ///
-        /// @ignore
-        ///
-        FACE_SHAPE_BEAUTY_STYLE_NATURAL = 2,
 
     }
 
@@ -8004,6 +7914,13 @@ namespace Agora.Rtc
         public ScreenAudioParameters()
         {
             this.sampleRate = 48000;
+            this.channels = 2;
+            this.captureSignalVolume = 100;
+        }
+
+        public ScreenAudioParameters()
+        {
+            this.sampleRate = 16000;
             this.channels = 2;
             this.captureSignalVolume = 100;
         }

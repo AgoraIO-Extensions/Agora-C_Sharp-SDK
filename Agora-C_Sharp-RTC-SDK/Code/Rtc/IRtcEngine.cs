@@ -956,16 +956,6 @@ namespace Agora.Rtc
         public abstract int SetFilterEffectOptions(bool enabled, FilterEffectOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         ///
-        /// @ignore
-        ///
-        public abstract IVideoEffectObject CreateVideoEffectObject(string bundlePath, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int DestroyVideoEffectObject(IVideoEffectObject videoEffectObject);
-
-        ///
         /// <summary>
         /// Sets low-light enhancement.
         /// 

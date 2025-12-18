@@ -380,28 +380,6 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
-        public void Test_CreateVideoEffectObject_65bd50d()
-        {
-            var bundlePath = ParamsHelper.CreateParam<string>();
-
-            var type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
-
-            var nRet = @interface.CreateVideoEffectObject(bundlePath, type);
-            Assert.IsNotNull(nRet);
-        }
-
-
-        [Test]
-        public void Test_DestroyVideoEffectObject_66d092b()
-        {
-            var videoEffectObject = ParamsHelper.CreateParam<IVideoEffectObject>();
-
-            var nRet = @interface.DestroyVideoEffectObject(videoEffectObject);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
         public void Test_SetLowlightEnhanceOptions_4f9f013()
         {
             var enabled = ParamsHelper.CreateParam<bool>();
