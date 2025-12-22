@@ -159,13 +159,6 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
-        ///
-        public virtual void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info)
-        {
-        }
-
-        ///
         /// <summary>
         /// Reports the last-mile network quality of the local user.
         /// 
@@ -194,6 +187,13 @@ namespace Agora.Rtc
         /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [1/2] or JoinChannel [2/2] to join the channel to when the SDK triggers this callback. If StartPreview [1/2] / StartPreview [2/2] is called before joining the channel, this parameter indicates the time elapsed from calling StartPreview [1/2] or StartPreview [2/2] to when this event occurred. </param>
         ///
         public virtual void OnFirstLocalVideoFrame(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
         {
         }
 
@@ -425,13 +425,6 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
-        ///
-        public virtual void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover)
-        {
-        }
-
-        ///
         /// <summary>
         /// Occurs when the remote media stream falls back to the audio-only stream due to poor network conditions or switches back to the video stream after the network conditions improve.
         /// 
@@ -458,6 +451,13 @@ namespace Agora.Rtc
         /// <param name="permissionType"> The type of the device permission. See PERMISSION_TYPE. </param>
         ///
         public virtual void OnPermissionError(PERMISSION_TYPE permissionType)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnPermissionGranted(PERMISSION_TYPE permissionType)
         {
         }
 
@@ -1030,7 +1030,7 @@ namespace Agora.Rtc
         ///
         /// <param name="stats"> The statistics of the local video stream. See LocalVideoStats. </param>
         ///
-        public virtual void OnLocalVideoStats(RtcConnection connection, LocalVideoStats stats)
+        public virtual void OnLocalVideoStats(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, LocalVideoStats stats)
         {
         }
 
@@ -1134,6 +1134,27 @@ namespace Agora.Rtc
         /// <param name="cached"> Number of incoming cached messages when the data stream is interrupted. </param>
         ///
         public virtual void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnRdtMessage(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnRdtStateChanged(RtcConnection connection, uint userId, RdtState state)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnMediaControlMessage(RtcConnection connection, uint userId, string data, ulong length)
         {
         }
 
@@ -1392,20 +1413,6 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
-        ///
-        public virtual void OnWlAccMessage(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
-        {
-        }
-
-        ///
-        /// @ignore
-        ///
-        public virtual void OnWlAccStats(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
-        {
-        }
-
-        ///
         /// <summary>
         /// Occurs when the local network type changes.
         /// 
@@ -1532,6 +1539,20 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, ulong length)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnMultipathStats(RtcConnection connection, MultipathStats stats)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnRenewTokenResult(RtcConnection connection, string token, RENEW_TOKEN_ERROR_CODE code)
         {
         }
 
