@@ -4,7 +4,7 @@ namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
 
-    public class AudioDeviceManagerImpl
+    internal class AudioDeviceManagerImpl
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;

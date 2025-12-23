@@ -15,7 +15,7 @@ namespace Agora.Rtc
     using IrisApiEnginePtr = IntPtr;
 
 
-    public class MediaPlayerImpl
+    internal class MediaPlayerImpl
     {
         private bool _disposed = false;
 
