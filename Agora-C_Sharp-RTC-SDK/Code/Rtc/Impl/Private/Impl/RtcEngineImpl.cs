@@ -6369,6 +6369,15 @@ namespace Agora.Rtc
 
         }
 
+        public int EnableVideoImageSourceEx(bool enable, ImageTrackOptions options, RtcConnection connection)
+        {
+            _param.Clear();
+            _param.Add("enable", enable);
+            _param.Add("options", options);
+            _param.Add("connection", connection);
+            var json = AgoraJson.ToJson(_param);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
 
         public UInt64 GetNtpWallTimeInMs()
         {
