@@ -6376,6 +6376,10 @@ namespace Agora.Rtc
             _param.Add("options", options);
             _param.Add("connection", connection);
             var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEVIDEOIMAGESOURCEEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
