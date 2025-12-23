@@ -6282,5 +6282,8 @@ namespace Agora.Rtc
 
         public abstract int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
 
+        public abstract int EnableVideoImageSourceEx(bool enable, ImageTrackOptions options, RtcConnection connection);
+
+
     }
 }

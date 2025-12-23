@@ -3500,6 +3500,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
         }
 
+        public override int EnableVideoImageSourceEx(bool enable, ImageTrackOptions options, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableVideoImageSourceEx(enable, options, connection);
+        }
+        
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         public override int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {

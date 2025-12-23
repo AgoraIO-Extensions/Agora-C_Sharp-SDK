@@ -364,6 +364,8 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_GETCALLIDEX = "RtcEngineEx_getCallIdEx";
         internal const string FUNC_RTCENGINEEX_PRELOADEFFECTEX = "RtcEngineEx_preloadEffectEx";
         internal const string FUNC_RTCENGINEEX_PLAYEFFECTEX = "RtcEngineEx_playEffectEx";
+        
+        internal const string FUNC_RTCENGINEEX_ENABLEVIDEOIMAGESOURCEEX = "RtcEngineEx_enableVideoImageSourceEx";
         #endregion
 
         #region IMediaPlayer start

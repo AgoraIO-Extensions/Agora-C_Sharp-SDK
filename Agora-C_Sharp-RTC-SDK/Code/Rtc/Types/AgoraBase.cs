@@ -3532,6 +3532,17 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_REASON_SCREEN_CAPTURE_DISPLAY_DISCONNECTED = 30,
+
+
+        ///
+        /// <summary>
+        /// 31: (Windows only) When this error occurs, it means that the local screen capture has encountered 
+        /// an automatic fallback, which may be caused by a failure in filtering windows and the other reasons. 
+        /// However, the screen sharing is still ongoing.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_AUTO_FALLBACK = 31,
+
     };
 
     ///

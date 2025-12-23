@@ -772,6 +772,20 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
+
+        [Test]
+        public void Test_EnableVideoImageSourceEx()
+        {
+            bool enable;
+            ParamsHelper.InitParam(out enable);
+            ImageTrackOptions options;
+            ParamsHelper.InitParam(out options);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.EnableVideoImageSourceEx(enable, options, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
         #endregion
     }
 
