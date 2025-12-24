@@ -13,6 +13,8 @@ namespace Agora.Rtc
     ///
     public abstract class IVideoEffectObject
     {
+        public abstract int GetObjectId();
+        
         ///
         /// @ignore
         ///
@@ -26,7 +28,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int PerformVideoEffectAction(uint nodeId, IVideoEffectObject::VIDEO_EFFECT_ACTION actionId);
+        public abstract int PerformVideoEffectAction(uint nodeId, VIDEO_EFFECT_ACTION actionId);
 
         ///
         /// @ignore

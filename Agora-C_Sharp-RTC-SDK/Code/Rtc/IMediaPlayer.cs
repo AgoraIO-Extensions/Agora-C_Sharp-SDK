@@ -707,7 +707,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int GetAudioBufferDelay(int32_t& delayMs);
+        public abstract int GetAudioBufferDelay(ref int delayMs);
 
     }
 }

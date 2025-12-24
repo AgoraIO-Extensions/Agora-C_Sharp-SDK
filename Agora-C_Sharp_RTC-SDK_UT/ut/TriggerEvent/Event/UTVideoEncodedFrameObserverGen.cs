@@ -7,38 +7,34 @@ namespace Agora.Rtc.Ut
 {
     public partial class UTVideoEncodedFrameObserver : IVideoEncodedFrameObserver
     {
-        public bool OnEncodedVideoFrameReceived_5f183eb_be_trigger = false;
-        public string OnEncodedVideoFrameReceived_5f183eb_channelId;
-        public uint OnEncodedVideoFrameReceived_5f183eb_uid;
-        public IntPtr OnEncodedVideoFrameReceived_5f183eb_imageBuffer;
-        public ulong OnEncodedVideoFrameReceived_5f183eb_length;
-        public EncodedVideoFrameInfo OnEncodedVideoFrameReceived_5f183eb_videoEncodedFrameInfo;
+        public bool OnEncodedVideoFrameReceived_6922697_be_trigger = false;
+        public uint OnEncodedVideoFrameReceived_6922697_uid;
+        public IntPtr OnEncodedVideoFrameReceived_6922697_imageBuffer;
+        public ulong OnEncodedVideoFrameReceived_6922697_length;
+        public EncodedVideoFrameInfo OnEncodedVideoFrameReceived_6922697_videoEncodedFrameInfo;
 
-        public override bool OnEncodedVideoFrameReceived(string channelId, uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
+        public override bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
         {
-            OnEncodedVideoFrameReceived_5f183eb_be_trigger = true;
-            OnEncodedVideoFrameReceived_5f183eb_channelId = channelId;
-            OnEncodedVideoFrameReceived_5f183eb_uid = uid;
-            OnEncodedVideoFrameReceived_5f183eb_imageBuffer = imageBuffer;
-            OnEncodedVideoFrameReceived_5f183eb_length = length;
-            OnEncodedVideoFrameReceived_5f183eb_videoEncodedFrameInfo = videoEncodedFrameInfo;
+            OnEncodedVideoFrameReceived_6922697_be_trigger = true;
+            OnEncodedVideoFrameReceived_6922697_uid = uid;
+            OnEncodedVideoFrameReceived_6922697_imageBuffer = imageBuffer;
+            OnEncodedVideoFrameReceived_6922697_length = length;
+            OnEncodedVideoFrameReceived_6922697_videoEncodedFrameInfo = videoEncodedFrameInfo;
             return true;
         }
 
-        public bool OnEncodedVideoFrameReceivedPassed(string channelId, uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
+        public bool OnEncodedVideoFrameReceivedPassed(uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
         {
-            if (OnEncodedVideoFrameReceived_5f183eb_be_trigger == false)
+            if (OnEncodedVideoFrameReceived_6922697_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnEncodedVideoFrameReceived_5f183eb_channelId, channelId) == false)
+            if (ParamsHelper.Compare<uint>(OnEncodedVideoFrameReceived_6922697_uid, uid) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnEncodedVideoFrameReceived_5f183eb_uid, uid) == false)
+            if (ParamsHelper.Compare<IntPtr>(OnEncodedVideoFrameReceived_6922697_imageBuffer, imageBuffer) == false)
                 return false;
-            if (ParamsHelper.Compare<IntPtr>(OnEncodedVideoFrameReceived_5f183eb_imageBuffer, imageBuffer) == false)
+            if (ParamsHelper.Compare<ulong>(OnEncodedVideoFrameReceived_6922697_length, length) == false)
                 return false;
-            if (ParamsHelper.Compare<ulong>(OnEncodedVideoFrameReceived_5f183eb_length, length) == false)
-                return false;
-            if (ParamsHelper.Compare<EncodedVideoFrameInfo>(OnEncodedVideoFrameReceived_5f183eb_videoEncodedFrameInfo, videoEncodedFrameInfo) == false)
+            if (ParamsHelper.Compare<EncodedVideoFrameInfo>(OnEncodedVideoFrameReceived_6922697_videoEncodedFrameInfo, videoEncodedFrameInfo) == false)
                 return false;
 
             return true;

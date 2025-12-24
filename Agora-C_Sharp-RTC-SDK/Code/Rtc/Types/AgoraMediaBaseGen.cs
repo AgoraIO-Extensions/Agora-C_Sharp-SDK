@@ -1988,15 +1988,16 @@ namespace Agora.Rtc
         ///
         public uint interval;
 
-        public base::VIDEO_MODULE_POSITION position;
+        public VIDEO_MODULE_POSITION position;
 
         public ContentInspectModule()
-: base({
-            type = CONTENT_INSPECT_INVALID; interval = 0; position = base)
-{
-            }
+        {
+            type = CONTENT_INSPECT_TYPE.CONTENT_INSPECT_INVALID;
+            interval = 0;
+            position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
+        }
 
-public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval,base::VIDEO_MODULE_POSITION position)
+public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval, VIDEO_MODULE_POSITION position)
         {
             this.type = type;
             this.interval = interval;
