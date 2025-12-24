@@ -567,36 +567,43 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public abstract int OpenWithAgoraCDNSrc(string src, long startPos);
 
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public abstract int GetAgoraCDNLineCount();
 
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public abstract int SwitchAgoraCDNLineByIndex(int index);
 
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public abstract int GetCurrentAgoraCDNIndex();
 
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public abstract int EnableAutoSwitchAgoraCDN(bool enable);
 
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public abstract int RenewAgoraCDNSrcToken(string token, long ts);
 
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public abstract int SwitchAgoraCDNSrc(string src, bool syncPts = false);
 
         ///
@@ -696,6 +703,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SetSoundPositionParams(float pan, float gain);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int GetAudioBufferDelay(int32_t& delayMs);
 
     }
 }

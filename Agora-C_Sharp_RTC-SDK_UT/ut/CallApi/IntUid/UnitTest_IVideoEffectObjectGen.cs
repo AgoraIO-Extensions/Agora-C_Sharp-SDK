@@ -96,13 +96,6 @@ namespace Agora.Rtc.Ut
             Assert.AreEqual(0, nRet);
         }
 
-        [Test]
-        public void Test_GetObjectId()
-        {
-            var nRet = @interface.GetObjectId();
-            Assert.AreEqual(0, nRet);
-        }
-
 
         [Test]
         public void Test_GetVideoEffectIntParam_ccad422()

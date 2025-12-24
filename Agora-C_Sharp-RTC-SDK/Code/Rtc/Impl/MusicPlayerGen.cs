@@ -353,7 +353,6 @@ namespace Agora.Rtc
             return _impl.SetAudioDualMonoMode(playerId, mode);
         }
 
-        [Obsolete]
         public override string GetPlayerSdkVersion()
         {
             if (_impl == null)
@@ -487,6 +486,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.SetSoundPositionParams(playerId, pan, gain);
+        }
+
+        public override int GetAudioBufferDelay(int32_t& delayMs)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.GetAudioBufferDelay(playerId, delayMs);
         }
 
     }
