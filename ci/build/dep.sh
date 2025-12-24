@@ -342,12 +342,22 @@ update_url_config_key() {
   # escape replacement for sed (&, \\ and delimiter #)
   local esc
   esc=$(printf '%s' "$value" | sed -e 's/[&#\\]/\\&/g')
-  
+
+  # Check if key exists in the section (simple grep check for debugging)
+  # match >>>section, then match key= before <<<end
+  # This is just a heuristic for the log
+  echo "  [DEBUG] Attempting sed replacement for $key..."
+
   sed \
-    -e "/^>>>$section/,/^<<<end/ s#^$key=.*#$key=$esc#" \
+    -e "/^[ 	]*>>>$section/,/^[ 	]*<<<end/ s#^[ 	]*$key[ 	]*=.*#$key=$esc#" \
     "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp"
   
   if [ $? -eq 0 ]; then
+    if cmp -s "$URL_CONFIG_PATH" "$URL_CONFIG_PATH.tmp"; then
+       echo "  [WARNING] sed command finished but file content unchanged. Regex might not have matched '$key' in section '$section'."
+    else
+       echo "  [INFO] File content changed successfully."
+    fi
     mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
     echo "Successfully updated $key in section '$section' to: $value"
   else
@@ -604,8 +614,9 @@ if [ -f "$URL_CONFIG_PATH" ]; then
     
     # Increment and update
     NEW_BUILD_NUM=$((BUILD_NUM + 1))
-    sed -i.bak "/>>>$section/,/<<<end/ s/Build=.*/Build=$NEW_BUILD_NUM/" "$URL_CONFIG_PATH"
-    rm -f "$URL_CONFIG_PATH.bak"
+    sed -e "/^[ 	]*>>>$section/,/^[ 	]*<<<end/ s/^[ 	]*Build[ 	]*=.*/Build=$NEW_BUILD_NUM/" \
+        "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp"
+    mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
     
     echo "Build number for $section updated: $BUILD_NUM -> $NEW_BUILD_NUM"
   }
