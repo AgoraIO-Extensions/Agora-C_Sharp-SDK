@@ -13,14 +13,14 @@ NATIVE_WIN=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_re
 <<<end
 
 >>>video
-Build=2
+Build=3
 SDKVer=4.6.2
-IRIS_IOS=https://download.agora.io/sdk/release/iris_4.6.2-dev.7_DCG_iOS_Video_Standalone_20251222_1105_33843.zip
-IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.6.2-dev.7_DCG_Android_Video_Standalone_16K_20251222_1104_34997.zip
-IRIS_MAC=https://download.agora.io/sdk/release/iris_4.6.2-dev.7_DCG_Mac_Video_Unity_20251222_1101_32807.zip
-IRIS_WIN=https://download.agora.io/sdk/release/iris_4.6.2-dev.7_DCG_Windows_Video_Standalone_20251222_1101_31876.zip
-NATIVE_IOS=https://download.agora.io/sdk/release/AgoraRtcEngine_iOS_Preview_4.6.2-dev.7_20251222_105918.zip
-NATIVE_ANDROID=https://download.agora.io/sdk/release/AgoraRtcEngine_Android_Preview_4.6.2-dev.7_20251222_105918.zip
+IRIS_IOS=https://download.agora.io/sdk/release/iris_4.6.2-dev.8_DCG_iOS_Video_Standalone_20251224_0439_33852.zip
+IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.6.2-dev.8_DCG_Android_Video_Standalone_16K_20251224_0439_341006.zip
+IRIS_MAC=https://download.agora.io/sdk/release/iris_4.6.2-dev.8_DCG_Mac_Video_Unity_20251224_0439_32817.zip
+IRIS_WIN=https://download.agora.io/sdk/release/iris_4.6.2-dev.8_DCG_Windows_Video_Standalone_20251224_0439_31886.zip
+NATIVE_IOS=https://download.agora.io/sdk/release/AgoraRtcEngine_iOS_Preview_4.6.2-dev.8_20251224_163752.zip
+NATIVE_ANDROID=https://download.agora.io/sdk/release/AgoraRtcEngine_Android_Preview_4.6.2-dev.8_20251224_163752.zip
 NATIVE_MAC=https://download.agora.io/sdk/release/AgoraRtcEngine_macOS_Preview_4.6.2-dev.7_20251222_105918.zip
 NATIVE_WIN=https://download.agora.io/sdk/release/AgoraRtcEngine_windows_Preview_4.6.2-dev.7_20251222_105918.zip
 <<<end
