@@ -353,6 +353,7 @@ namespace Agora.Rtc
             return _impl.SetAudioDualMonoMode(playerId, mode);
         }
 
+        [Obsolete]
         public override string GetPlayerSdkVersion()
         {
             if (_impl == null)

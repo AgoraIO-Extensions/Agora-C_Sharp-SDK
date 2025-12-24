@@ -52,6 +52,7 @@ namespace Agora.Rtc
 
         public event Action EventOnAudioMixingFinished;
 
+        [Obsolete]
         public override void OnAudioMixingFinished()
         {
             if (EventOnAudioMixingFinished == null) return;
@@ -82,6 +83,14 @@ namespace Agora.Rtc
             EventOnUplinkNetworkInfoUpdated.Invoke(info);
         }
 
+        public event Action<DownlinkNetworkInfo> EventOnDownlinkNetworkInfoUpdated;
+
+        public override void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info)
+        {
+            if (EventOnDownlinkNetworkInfoUpdated == null) return;
+            EventOnDownlinkNetworkInfoUpdated.Invoke(info);
+        }
+
         public event Action<int> EventOnLastmileQuality;
 
         public override void OnLastmileQuality(int quality)
@@ -98,14 +107,6 @@ namespace Agora.Rtc
             EventOnFirstLocalVideoFrame.Invoke(source, width, height, elapsed);
         }
 
-        public event Action<VIDEO_SOURCE_TYPE, LOCAL_VIDEO_EVENT_TYPE> EventOnLocalVideoEvent;
-
-        public override void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
-        {
-            if (EventOnLocalVideoEvent == null) return;
-            EventOnLocalVideoEvent.Invoke(source, @event);
-        }
-
         public event Action<VIDEO_SOURCE_TYPE, LOCAL_VIDEO_STREAM_STATE, LOCAL_VIDEO_STREAM_REASON> EventOnLocalVideoStateChanged;
 
         public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
@@ -116,6 +117,7 @@ namespace Agora.Rtc
 
         public event Action EventOnCameraReady;
 
+        [Obsolete]
         public override void OnCameraReady()
         {
             if (EventOnCameraReady == null) return;
@@ -148,6 +150,7 @@ namespace Agora.Rtc
 
         public event Action EventOnVideoStopped;
 
+        [Obsolete]
         public override void OnVideoStopped()
         {
             if (EventOnVideoStopped == null) return;
@@ -226,6 +229,14 @@ namespace Agora.Rtc
             EventOnChannelMediaRelayStateChanged.Invoke(state, code);
         }
 
+        public event Action<bool> EventOnLocalPublishFallbackToAudioOnly;
+
+        public override void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover)
+        {
+            if (EventOnLocalPublishFallbackToAudioOnly == null) return;
+            EventOnLocalPublishFallbackToAudioOnly.Invoke(isFallbackOrRecover);
+        }
+
         public event Action<uint, bool> EventOnRemoteSubscribeFallbackToAudioOnly;
 
         public override void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
@@ -240,14 +251,6 @@ namespace Agora.Rtc
         {
             if (EventOnPermissionError == null) return;
             EventOnPermissionError.Invoke(permissionType);
-        }
-
-        public event Action<PERMISSION_TYPE> EventOnPermissionGranted;
-
-        public override void OnPermissionGranted(PERMISSION_TYPE permissionType)
-        {
-            if (EventOnPermissionGranted == null) return;
-            EventOnPermissionGranted.Invoke(permissionType);
         }
 
         public event Action<uint, string> EventOnLocalUserRegistered;
@@ -356,6 +359,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, int, ushort, ushort> EventOnAudioQuality;
 
+        [Obsolete]
         public override void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, ushort delay, ushort lost)
         {
             if (EventOnAudioQuality == null) return;
@@ -514,12 +518,12 @@ namespace Agora.Rtc
             EventOnRemoteAudioStats.Invoke(connection, stats);
         }
 
-        public event Action<RtcConnection, VIDEO_SOURCE_TYPE, LocalVideoStats> EventOnLocalVideoStats;
+        public event Action<RtcConnection, LocalVideoStats> EventOnLocalVideoStats;
 
-        public override void OnLocalVideoStats(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, LocalVideoStats stats)
+        public override void OnLocalVideoStats(RtcConnection connection, LocalVideoStats stats)
         {
             if (EventOnLocalVideoStats == null) return;
-            EventOnLocalVideoStats.Invoke(connection, sourceType, stats);
+            EventOnLocalVideoStats.Invoke(connection, stats);
         }
 
         public event Action<RtcConnection, RemoteVideoStats> EventOnRemoteVideoStats;
@@ -540,6 +544,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection> EventOnConnectionInterrupted;
 
+        [Obsolete]
         public override void OnConnectionInterrupted(RtcConnection connection)
         {
             if (EventOnConnectionInterrupted == null) return;
@@ -568,30 +573,6 @@ namespace Agora.Rtc
         {
             if (EventOnStreamMessageError == null) return;
             EventOnStreamMessageError.Invoke(connection, remoteUid, streamId, code, missed, cached);
-        }
-
-        public event Action<RtcConnection, uint, RdtStreamType, string, ulong> EventOnRdtMessage;
-
-        public override void OnRdtMessage(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
-        {
-            if (EventOnRdtMessage == null) return;
-            EventOnRdtMessage.Invoke(connection, userId, type, data, length);
-        }
-
-        public event Action<RtcConnection, uint, RdtState> EventOnRdtStateChanged;
-
-        public override void OnRdtStateChanged(RtcConnection connection, uint userId, RdtState state)
-        {
-            if (EventOnRdtStateChanged == null) return;
-            EventOnRdtStateChanged.Invoke(connection, userId, state);
-        }
-
-        public event Action<RtcConnection, uint, string, ulong> EventOnMediaControlMessage;
-
-        public override void OnMediaControlMessage(RtcConnection connection, uint userId, string data, ulong length)
-        {
-            if (EventOnMediaControlMessage == null) return;
-            EventOnMediaControlMessage.Invoke(connection, userId, data, length);
         }
 
         public event Action<RtcConnection> EventOnRequestToken;
@@ -628,6 +609,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, int> EventOnFirstRemoteAudioFrame;
 
+        [Obsolete]
         public override void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed)
         {
             if (EventOnFirstRemoteAudioFrame == null) return;
@@ -636,6 +618,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, int> EventOnFirstRemoteAudioDecoded;
 
+        [Obsolete]
         public override void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed)
         {
             if (EventOnFirstRemoteAudioDecoded == null) return;
@@ -684,6 +667,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, ushort, ushort, ushort> EventOnRemoteAudioTransportStats;
 
+        [Obsolete]
         public override void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
         {
             if (EventOnRemoteAudioTransportStats == null) return;
@@ -692,6 +676,7 @@ namespace Agora.Rtc
 
         public event Action<RtcConnection, uint, ushort, ushort, ushort> EventOnRemoteVideoTransportStats;
 
+        [Obsolete]
         public override void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
         {
             if (EventOnRemoteVideoTransportStats == null) return;
@@ -704,6 +689,22 @@ namespace Agora.Rtc
         {
             if (EventOnConnectionStateChanged == null) return;
             EventOnConnectionStateChanged.Invoke(connection, state, reason);
+        }
+
+        public event Action<RtcConnection, WLACC_MESSAGE_REASON, WLACC_SUGGEST_ACTION, string> EventOnWlAccMessage;
+
+        public override void OnWlAccMessage(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        {
+            if (EventOnWlAccMessage == null) return;
+            EventOnWlAccMessage.Invoke(connection, reason, action, wlAccMsg);
+        }
+
+        public event Action<RtcConnection, WlAccStats, WlAccStats> EventOnWlAccStats;
+
+        public override void OnWlAccStats(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
+        {
+            if (EventOnWlAccStats == null) return;
+            EventOnWlAccStats.Invoke(connection, currentStats, averageStats);
         }
 
         public event Action<RtcConnection, NETWORK_TYPE> EventOnNetworkTypeChanged;
@@ -776,22 +777,6 @@ namespace Agora.Rtc
         {
             if (EventOnAudioMetadataReceived == null) return;
             EventOnAudioMetadataReceived.Invoke(connection, uid, metadata, length);
-        }
-
-        public event Action<RtcConnection, MultipathStats> EventOnMultipathStats;
-
-        public override void OnMultipathStats(RtcConnection connection, MultipathStats stats)
-        {
-            if (EventOnMultipathStats == null) return;
-            EventOnMultipathStats.Invoke(connection, stats);
-        }
-
-        public event Action<RtcConnection, string, RENEW_TOKEN_ERROR_CODE> EventOnRenewTokenResult;
-
-        public override void OnRenewTokenResult(RtcConnection connection, string token, RENEW_TOKEN_ERROR_CODE code)
-        {
-            if (EventOnRenewTokenResult == null) return;
-            EventOnRenewTokenResult.Invoke(connection, token, code);
         }
 
         public event Action<DIRECT_CDN_STREAMING_STATE, DIRECT_CDN_STREAMING_REASON, string> EventOnDirectCdnStreamingStateChanged;

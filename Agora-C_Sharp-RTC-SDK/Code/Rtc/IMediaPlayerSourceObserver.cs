@@ -115,7 +115,6 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        [Obsolete("4.6.0")]
         public virtual void OnAgoraCDNTokenWillExpire()
         {
         }

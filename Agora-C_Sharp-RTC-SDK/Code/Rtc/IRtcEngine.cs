@@ -1204,7 +1204,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        [Obsolete("This method is deprecated. You can use the `setAudioProfile(AUDIO_PROFILE_TYPE profile) = 0` method instead. To set the audio scenario, call the `initialize` method and pass value in the `audioScenario` member in the RtcEngineContext struct.")]
+        [Obsolete("This method is deprecated. You can use the \ref IRtcEngine::setAudioProfile(AUDIO_PROFILE_TYPE) \"setAudioProfile\" method instead. To set the audio scenario, call the \ref IRtcEngine::initialize \"initialize\" method and pass value in the `audioScenario` member in the RtcEngineContext struct.")]
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario);
 
         ///
@@ -3020,11 +3020,6 @@ namespace Agora.Rtc
         public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel);
 
         ///
-        /// @ignore
-        ///
-        public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel, int samplesPerCall);
-
-        ///
         /// <summary>
         /// Turns on audio spectrum monitoring.
         /// 
@@ -3167,6 +3162,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int AdjustUserPlaybackSignalVolume(uint uid, int volume);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option);
 
         ///
         /// <summary>
@@ -4594,16 +4594,6 @@ namespace Agora.Rtc
         public abstract int SendStreamMessage(int streamId, byte[] data, uint length);
 
         ///
-        /// @ignore
-        ///
-        public abstract int SendRdtMessage(uint uid, RdtStreamType type, string data, ulong length);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int SendMediaControlMessage(uint uid, string data, ulong length);
-
-        ///
         /// <summary>
         /// Adds a watermark image to the local video.
         /// 
@@ -4646,18 +4636,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        [Obsolete("Use addVideoWatermarkEx(const WatermarkConfig& config, const RtcConnection& connection) instead.")]
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int AddVideoWatermark(WatermarkConfig configs);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int RemoveVideoWatermark(string id);
 
         ///
         /// <summary>
@@ -5021,7 +5000,6 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        [Obsolete("v4.6.0.")]
         public abstract int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile);
 
         ///
@@ -5038,7 +5016,6 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        [Obsolete("v4.6.0.")]
         public abstract int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config);
 
         ///
@@ -5057,7 +5034,6 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        [Obsolete("v4.6.0.")]
         public abstract int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options);
 
         ///
@@ -5070,13 +5046,11 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        [Obsolete("v4.6.0.")]
         public abstract int StopDirectCdnStreaming();
 
         ///
         /// @ignore
         ///
-        [Obsolete("v4.6.0.")]
         public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
 
         ///
@@ -5307,6 +5281,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract long GetCurrentMonotonicTimeInMs();
+
+        ///
+        /// @ignore
+        ///
+        public abstract int EnableWirelessAccelerate(bool enabled);
 
         ///
         /// <summary>

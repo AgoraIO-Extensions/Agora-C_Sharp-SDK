@@ -10,14 +10,11 @@ namespace Agora.Rtc.Ut.Event
     public partial class UnitTest_IVideoEncodedFrameObserver
     {
         [Test]
-        public void Test_IVideoEncodedFrameObserver_OnEncodedVideoFrameReceived_5f183eb()
+        public void Test_IVideoEncodedFrameObserver_OnEncodedVideoFrameReceived_6922697()
         {
-            ApiParam.@event = AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_5f183eb;
+            ApiParam.@event = AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697;
 
             jsonObj.Clear();
-
-            string channelId = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("channelId", channelId);
 
             uint uid = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("uid", uid);
@@ -37,7 +34,7 @@ namespace Agora.Rtc.Ut.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, callback.OnEncodedVideoFrameReceivedPassed(channelId, uid, imageBuffer, length, videoEncodedFrameInfo));
+            Assert.AreEqual(true, callback.OnEncodedVideoFrameReceivedPassed(uid, imageBuffer, length, videoEncodedFrameInfo));
         }
 
     }

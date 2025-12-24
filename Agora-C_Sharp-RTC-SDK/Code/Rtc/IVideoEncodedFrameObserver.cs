@@ -34,7 +34,7 @@ namespace Agora.Rtc
         /// Without practical meaning.
         /// </returns>
         ///
-        public virtual bool OnEncodedVideoFrameReceived(string channelId, uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
+        public virtual bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
         {
             return true;
         }

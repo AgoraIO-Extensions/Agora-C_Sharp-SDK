@@ -830,6 +830,7 @@ namespace Agora.Rtc
         /// 3: Adaptive mode. Deprecated: This enumerator is deprecated and not recommended for use.
         /// </summary>
         ///
+        [Obsolete("3: This mode is deprecated.")]
         RENDER_MODE_ADAPTIVE = 3,
 
     }
@@ -1997,7 +1998,7 @@ namespace Agora.Rtc
             position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
         }
 
-public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval, VIDEO_MODULE_POSITION position)
+        public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval, VIDEO_MODULE_POSITION position)
         {
             this.type = type;
             this.interval = interval;
