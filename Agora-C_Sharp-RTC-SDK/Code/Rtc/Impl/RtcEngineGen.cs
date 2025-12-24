@@ -434,7 +434,6 @@ namespace Agora.Rtc
             return _impl.DisableAudio();
         }
 
-        [Obsolete]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
             if (_impl == null)
@@ -1335,6 +1334,15 @@ namespace Agora.Rtc
             return _impl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel);
         }
 
+        public override int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel, int samplesPerCall)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel, samplesPerCall);
+        }
+
         public override int EnableAudioSpectrumMonitor(int intervalInMS = 100)
         {
             if (_impl == null)
@@ -1405,15 +1413,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.AdjustUserPlaybackSignalVolume(uid, volume);
-        }
-
-        public override int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.SetLocalPublishFallbackOption(option);
         }
 
         public override int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option)
@@ -2199,6 +2198,24 @@ namespace Agora.Rtc
             return _impl.SendStreamMessage(streamId, data, length);
         }
 
+        public override int SendRdtMessage(uint uid, RdtStreamType type, string data, ulong length)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendRdtMessage(uid, type, data, length);
+        }
+
+        public override int SendMediaControlMessage(uint uid, string data, ulong length)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendMediaControlMessage(uid, data, length);
+        }
+
         public override int AddVideoWatermark(RtcImage watermark)
         {
             if (_impl == null)
@@ -2217,6 +2234,24 @@ namespace Agora.Rtc
             return _impl.AddVideoWatermark(watermarkUrl, options);
         }
 
+        public override int AddVideoWatermark(WatermarkConfig configs)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.AddVideoWatermark(configs);
+        }
+
+        public override int RemoveVideoWatermark(string id)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.RemoveVideoWatermark(id);
+        }
+
         public override int ClearVideoWatermarks()
         {
             if (_impl == null)
@@ -2226,7 +2261,6 @@ namespace Agora.Rtc
             return _impl.ClearVideoWatermarks();
         }
 
-        [Obsolete]
         public override int PauseAudio()
         {
             if (_impl == null)
@@ -2236,7 +2270,6 @@ namespace Agora.Rtc
             return _impl.PauseAudio();
         }
 
-        [Obsolete]
         public override int ResumeAudio()
         {
             if (_impl == null)
@@ -2246,7 +2279,6 @@ namespace Agora.Rtc
             return _impl.ResumeAudio();
         }
 
-        [Obsolete]
         public override int EnableWebSdkInteroperability(bool enabled)
         {
             if (_impl == null)
@@ -2560,15 +2592,6 @@ namespace Agora.Rtc
                 return 0;
             }
             return _impl.GetCurrentMonotonicTimeInMs();
-        }
-
-        public override int EnableWirelessAccelerate(bool enabled)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.EnableWirelessAccelerate(enabled);
         }
 
         public override int GetNetworkType()
@@ -2931,6 +2954,24 @@ namespace Agora.Rtc
             return _impl.SendStreamMessageEx(streamId, data, length, connection);
         }
 
+        public override int SendRdtMessageEx(uint uid, RdtStreamType type, string data, ulong length, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendRdtMessageEx(uid, type, data, length, connection);
+        }
+
+        public override int SendMediaControlMessageEx(uint uid, string data, ulong length, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendMediaControlMessageEx(uid, data, length, connection);
+        }
+
         public override int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
         {
             if (_impl == null)
@@ -2938,6 +2979,24 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.AddVideoWatermarkEx(watermarkUrl, options, connection);
+        }
+
+        public override int AddVideoWatermarkEx(WatermarkConfig config, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.AddVideoWatermarkEx(config, connection);
+        }
+
+        public override int RemoveVideoWatermarkEx(string id, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.RemoveVideoWatermarkEx(id, connection);
         }
 
         public override int ClearVideoWatermarkEx(RtcConnection connection)
@@ -3057,7 +3116,6 @@ namespace Agora.Rtc
             return _impl.GetUserInfoByUidEx(uid, ref userInfo, connection);
         }
 
-        [Obsolete]
         public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             if (_impl == null)
@@ -3157,15 +3215,6 @@ namespace Agora.Rtc
             return _impl.SendAudioMetadataEx(connection, metadata, length);
         }
 
-        public override int EnableVideoImageSourceEx(bool enable, ImageTrackOptions options, RtcConnection connection)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.EnableVideoImageSourceEx(enable, options, connection);
-        }
-
         public override int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
         {
             if (_impl == null)
@@ -3229,7 +3278,6 @@ namespace Agora.Rtc
             return _impl.SetExternalRemoteEglContext(eglContext);
         }
 
-        [Obsolete]
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
             if (_impl == null)
