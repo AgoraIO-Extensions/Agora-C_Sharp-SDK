@@ -485,7 +485,7 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     #copy iris ios
     cp -PRf $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
     #copy native ios
-    cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+    cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64/*.framework "$IOS_DST_PATH"
     #remove framework
     delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 
@@ -517,8 +517,8 @@ if [ "$VISIONOS_URL" != "" ]; then
         if [ "$extension" == "xcframework" ]; then
 
             # check if a directory exists
-            if [ -d $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_armv7 ]; then
-                rm -rf $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_armv7
+            if [ -d $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64 ]; then
+                rm -rf $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64
             fi
 
             if [ -d $VISIONOS_DST_PATH/$basename.xcframework/ios-arm64_x86_64-simulator ]; then
