@@ -251,20 +251,23 @@ choose_native_dep() {
   local artifactory_links=""
   local other_links=""
   
-  # Map platform name for matching in URLs
+  # Map platform name for matching in URLs (lowercase for insensitivity)
   local platform_pattern=""
   case "$platform" in
-    iOS) platform_pattern="iOS" ;;
-    Android) platform_pattern="Android" ;;
-    macOS) platform_pattern="Mac" ;;
-    Windows) platform_pattern="Windows" ;;
+    iOS) platform_pattern="ios" ;;
+    Android) platform_pattern="android" ;;
+    macOS) platform_pattern="mac" ;;
+    Windows) platform_pattern="windows" ;;
   esac
   
   # Classify links by priority, filtering by platform
   for DEP in $list; do
+    # Convert to lowercase for case-insensitive matching
+    local dep_lower=$(echo "$DEP" | tr '[:upper:]' '[:lower:]')
+    
     # Skip links that don't match the platform
     if [ -n "$platform_pattern" ]; then
-      case "$DEP" in
+      case "$dep_lower" in
         *"$platform_pattern"*)
           # Link matches platform, continue to classify
           ;;
@@ -276,7 +279,8 @@ choose_native_dep() {
     fi
     
     # Classify by priority using POSIX-compatible pattern matching
-    case "$DEP" in
+    # Use lowercase for domain checks to be safe
+    case "$dep_lower" in
       *download.agora.io*)
         # Priority 1: CDN links
         cdn_links="$cdn_links $DEP"
