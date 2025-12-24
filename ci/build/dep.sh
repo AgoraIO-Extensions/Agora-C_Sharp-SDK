@@ -254,10 +254,10 @@ choose_native_dep() {
   # Map platform name for matching in URLs
   local platform_pattern=""
   case "$platform" in
-    iOS) platform_pattern="iOS" ;;
-    Android) platform_pattern="Android" ;;
-    macOS) platform_pattern="Mac" ;;
-    Windows) platform_pattern="Windows" ;;
+    iOS) platform_pattern="[Ii][Oo][Ss]" ;;
+    Android) platform_pattern="[Aa]ndroid" ;;
+    macOS) platform_pattern="[Mm]ac" ;;
+    Windows) platform_pattern="[Ww]indows" ;;
   esac
   
   # Classify links by priority, filtering by platform
@@ -265,7 +265,7 @@ choose_native_dep() {
     # Skip links that don't match the platform
     if [ -n "$platform_pattern" ]; then
       case "$DEP" in
-        *"$platform_pattern"*)
+        *$platform_pattern*)
           # Link matches platform, continue to classify
           ;;
         *)
