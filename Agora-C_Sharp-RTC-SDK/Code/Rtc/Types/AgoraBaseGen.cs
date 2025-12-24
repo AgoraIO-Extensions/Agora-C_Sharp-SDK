@@ -3145,7 +3145,7 @@ namespace Agora.Rtc
 
         public WatermarkBuffer()
         {
-            this.buffer = IntPtr.Zero;
+            this.buffer = "";
             this.width = 0;
             this.height = 0;
             this.length = 0;
@@ -3186,6 +3186,7 @@ namespace Agora.Rtc
         {
             this.id = "";
             this.type = WATERMARK_SOURCE_TYPE.IMAGE;
+            this.imageUrl = "";
         }
 
         public WatermarkConfig(string id, WATERMARK_SOURCE_TYPE type, WatermarkOptions options)
@@ -3316,7 +3317,7 @@ namespace Agora.Rtc
         ///
         public int activePathNum;
 
-        public PathStats[] pathStats;
+        public PathStats const* pathStats;
 
         public MultipathStats()
         {
@@ -3327,10 +3328,10 @@ namespace Agora.Rtc
             this.mobileTxBytes = 0;
             this.mobileRxBytes = 0;
             this.activePathNum = 0;
-            this.pathStats = null;
+            this.pathStats = nullptr;
         }
 
-        public MultipathStats(uint lanTxBytes, uint lanRxBytes, uint wifiTxBytes, uint wifiRxBytes, uint mobileTxBytes, uint mobileRxBytes, int activePathNum, PathStats[] pathStats)
+        public MultipathStats(uint lanTxBytes, uint lanRxBytes, uint wifiTxBytes, uint wifiRxBytes, uint mobileTxBytes, uint mobileRxBytes, int activePathNum, PathStats const* pathStats)
 {
 this.lanTxBytes = lanTxBytes;
 this.lanRxBytes = lanRxBytes;
@@ -8395,6 +8396,12 @@ public class ScreenAudioParameters
         this.captureSignalVolume = 100;
     }
 
+    public ScreenAudioParameters()
+    {
+        this.sampleRate = 16000;
+        this.channels = 2;
+        this.captureSignalVolume = 100;
+    }
 
     public ScreenAudioParameters(int sampleRate, int channels, int captureSignalVolume, bool excludeCurrentProcessAudio)
     {
