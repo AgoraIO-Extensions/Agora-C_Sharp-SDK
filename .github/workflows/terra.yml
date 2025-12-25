@@ -54,7 +54,9 @@ jobs:
           sh terra/replace_rtc_version.sh "$JSON_OUTPUT"
 
       - name: Generate code and comment by terra
+        id: generate
         uses: AgoraIO-Extensions/actions/.github/actions/generate@main
+        continue-on-error: true
         with:
           working-directory: "terra"
           github-token: ${{ secrets.GH_TOKEN }}
@@ -72,9 +74,59 @@ jobs:
           target-branch: ${{ github.ref_name }}
           target-branch-name-surffix: terra-update/${{ steps.version.outputs.full_version }}
           pull-request-title: |
-            [AUTO] Generate codes by terra(${{ steps.version.outputs.full_version }})
+            [AUTO] Generate codes by terra(${{ steps.version.outputs.full_version }}) ${{ steps.generate.outcome == 'failure' && '(Failed)' || '' }}
           add-paths: .
 
+
+
+      - name: Create branch in Agora-Unity-Quickstart
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "Preparing to create branch ${{ github.ref_name }} in Agora-Unity-Quickstart..."
+          
+          # 1. 配置 git 身份
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          
+          # 2. 克隆目标仓库 (使用 Token 进行认证)
+          # 注意：这里使用 depth=1 浅克隆以加快速度，默认克隆 default 分支 (通常是 main)
+          git clone --depth 1 https://x-access-token:${GH_TOKEN}@github.com/AgoraIO-Extensions/Agora-Unity-Quickstart.git temp_quickstart
+          
+          cd temp_quickstart
+          
+          # 3. 检查分支是否已存在
+          if git ls-remote --heads origin ${{ github.ref_name }} | grep -q "refs/heads/${{ github.ref_name }}"; then
+            echo "Branch '${{ github.ref_name }}' already exists in Agora-Unity-Quickstart. Skipping creation."
+          else
+            echo "Creating branch '${{ github.ref_name }}'..."
+            
+            # 计算父分支名 (简单截取掉最后一个版本号)
+            # 比如 release/4.5.1 -> release/4.5
+            PARENT_BRANCH=$(echo "${{ github.ref_name }}" | sed 's/\.[0-9]\+$//')
+            
+            echo "Checking for parent branch: $PARENT_BRANCH"
+            
+            if [ "$PARENT_BRANCH" != "${{ github.ref_name }}" ] && git ls-remote --heads origin "$PARENT_BRANCH" | grep -q "refs/heads/$PARENT_BRANCH"; then
+                echo "Parent branch $PARENT_BRANCH found. Fetching..."
+                # 必须先 fetch 才能基于远程分支创建
+                git fetch origin "$PARENT_BRANCH"
+                
+                echo "Creating ${{ github.ref_name }} from origin/$PARENT_BRANCH"
+                git checkout -b "${{ github.ref_name }}" "origin/$PARENT_BRANCH"
+            else
+                echo "Parent branch $PARENT_BRANCH not found or is same as target. Creating from default (main)."
+                # 基于当前 checkout 的分支 (main) 创建新分支
+                git checkout -b ${{ github.ref_name }}
+            fi
+            
+            # 推送到远程仓库
+            git push origin ${{ github.ref_name }}
+            
+            echo "Successfully created and pushed branch '${{ github.ref_name }}'."
+          fi
+          
       - name: Check csharp codes compile
         run: |
           cd Agora-C_Sharp_RTC-SDK_UT

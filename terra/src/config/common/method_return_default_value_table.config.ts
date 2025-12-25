@@ -15,5 +15,4 @@ export const methodReturnDefaultValueTable: Record<string, { callback: string, i
     "MEDIA_PLAYER_STATE": { callback: "MEDIA_PLAYER_STATE.PLAYER_STATE_DO_NOTHING_INTERNAL", interface: "MEDIA_PLAYER_STATE.PLAYER_STATE_DO_NOTHING_INTERNAL", impl: "MEDIA_PLAYER_STATE.PLAYER_STATE_FAILED", ut: "MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE" },
     "ScreenCaptureSourceInfo[]": { callback: "null", interface: "null", impl: "null", ut: "0" },
     "CONNECTION_STATE_TYPE": { callback: "CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED", interface: "CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED", impl: "CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED", ut: "CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED" },
-    "IVideoEffectObject": { callback: "null", interface: "null", impl: "null", ut: "null" },
 }
