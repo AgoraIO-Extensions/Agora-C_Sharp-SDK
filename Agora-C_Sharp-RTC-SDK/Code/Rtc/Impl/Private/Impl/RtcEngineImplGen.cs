@@ -628,24 +628,16 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            if (nRet != 0)
-            {
-                return null;
-            }
+            var result = nRet != 0 ? config this to method_return_default_value_table.config.ts :(IVideoEffectObject)AgoraJson.JsonToStruct<IVideoEffectObject>(_apiParam.Result, "result");
 
-            var objectId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            var videoEffectObjectImpl = new VideoEffectObjectImpl(_irisApiEngine);
-            var videoEffectObject = new VideoEffectObject(null, videoEffectObjectImpl, objectId);
-            VideoEffectObjectManager.Instance.Add(objectId, videoEffectObject);
 
-            return videoEffectObject;
+            return result;
         }
 
         public int DestroyVideoEffectObject(IVideoEffectObject videoEffectObject)
         {
             _param.Clear();
-            var objectId = videoEffectObject.GetObjectId();
-            _param.Add("objectId", objectId);
+            _param.Add("videoEffectObject", videoEffectObject);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_DESTROYVIDEOEFFECTOBJECT_66d092b,
@@ -654,10 +646,8 @@ namespace Agora.Rtc
                 ref _apiParam);
 
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if (result == 0)
-            {
-                VideoEffectObjectManager.Instance.Release(objectId);
-            }
+
+
             return result;
         }
 
