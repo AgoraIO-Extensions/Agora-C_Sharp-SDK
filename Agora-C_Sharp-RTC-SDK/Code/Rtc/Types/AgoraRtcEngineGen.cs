@@ -2540,7 +2540,7 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
-    public enum VIDEO_EFFECT_NODE_ID
+    public enum VIDEO_EFFECT_NODE_ID : uint
     {
         ///
         /// @ignore
