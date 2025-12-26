@@ -3352,7 +3352,7 @@ namespace Agora.Rtc
             this.mobileTxBytes = 0;
             this.mobileRxBytes = 0;
             this.activePathNum = 0;
-            this.pathStats = nullptr;
+            this.pathStats = new PathStats[0];
         }
 
         public MultipathStats(uint lanTxBytes, uint lanRxBytes, uint wifiTxBytes, uint wifiRxBytes, uint mobileTxBytes, uint mobileRxBytes, int activePathNum, PathStats[] pathStats)

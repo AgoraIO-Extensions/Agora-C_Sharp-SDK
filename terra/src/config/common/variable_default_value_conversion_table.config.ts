@@ -89,6 +89,7 @@ export const variableDefaultValueConversionTable: ConversionTable = {
         "LocalSpatialAudioConfig.LocalSpatialAudioConfig.rtcEngine:NULL": "null",
         "IMusicContentCenter.getMusicCollectionByMusicChartId.jsonOption:nullptr": "\"\"",
         "IMusicContentCenter.searchMusic.jsonOption:nullptr": "\"\"",
+        "MultipathStats.MultipathStats.pathStats:nullptr": "new PathStats[0]",
         "Metadata.Metadata.buffer:NULL": "IntPtr.Zero",
         "MixedAudioStream.MixedAudioStream.trackId:-1": "0xffffffff"
     },
