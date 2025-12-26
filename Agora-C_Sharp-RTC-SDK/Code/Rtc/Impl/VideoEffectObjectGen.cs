@@ -17,7 +17,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _impl.AddOrUpdateVideoEffect(nodeId, templateName);
+            return _impl.AddOrUpdateVideoEffect(GetObjectId(), nodeId, templateName);
         }
 
         public override int RemoveVideoEffect(uint nodeId)
@@ -26,16 +26,16 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _impl.RemoveVideoEffect(nodeId);
+            return _impl.RemoveVideoEffect(GetObjectId(), nodeId);
         }
 
-        public override int PerformVideoEffectAction(uint nodeId, IVideoEffectObject::VIDEO_EFFECT_ACTION actionId)
+        public override int PerformVideoEffectAction(uint nodeId, VIDEO_EFFECT_ACTION actionId)
         {
             if (_impl == null)
             {
                 return ErrorCode;
             }
-            return _impl.PerformVideoEffectAction(nodeId, actionId);
+            return _impl.PerformVideoEffectAction(GetObjectId(), nodeId, actionId);
         }
 
         public override int SetVideoEffectFloatParam(string option, string key, float param)
@@ -44,7 +44,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _impl.SetVideoEffectFloatParam(option, key, param);
+            return _impl.SetVideoEffectFloatParam(GetObjectId(), option, key, param);
         }
 
         public override int SetVideoEffectIntParam(string option, string key, int param)
@@ -53,7 +53,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _impl.SetVideoEffectIntParam(option, key, param);
+            return _impl.SetVideoEffectIntParam(GetObjectId(), option, key, param);
         }
 
         public override int SetVideoEffectBoolParam(string option, string key, bool param)
@@ -62,7 +62,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _impl.SetVideoEffectBoolParam(option, key, param);
+            return _impl.SetVideoEffectBoolParam(GetObjectId(), option, key, param);
         }
 
         public override float GetVideoEffectFloatParam(string option, string key)
@@ -71,7 +71,7 @@ namespace Agora.Rtc
             {
                 return 0;
             }
-            return _impl.GetVideoEffectFloatParam(option, key);
+            return _impl.GetVideoEffectFloatParam(GetObjectId(), option, key);
         }
 
         public override int GetVideoEffectIntParam(string option, string key)
@@ -80,7 +80,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _impl.GetVideoEffectIntParam(option, key);
+            return _impl.GetVideoEffectIntParam(GetObjectId(), option, key);
         }
 
         public override bool GetVideoEffectBoolParam(string option, string key)
@@ -89,7 +89,12 @@ namespace Agora.Rtc
             {
                 return false;
             }
-            return _impl.GetVideoEffectBoolParam(option, key);
+            return _impl.GetVideoEffectBoolParam(GetObjectId(), option, key);
+        }
+
+        public override int GetObjectId()
+        {
+            return _objectId;
         }
 
     }

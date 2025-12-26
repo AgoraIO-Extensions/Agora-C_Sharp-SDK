@@ -844,7 +844,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetAudioBufferDelay(int playerId, int32_t& delayMs)
+        public int GetAudioBufferDelay(int playerId, ref int delayMs)
         {
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -858,6 +858,10 @@ namespace Agora.Rtc
 
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
+            if (nRet == 0)
+            {
+                delayMs = (int)AgoraJson.GetData<int>(_apiParam.Result, "delayMs");
+            }
 
             return result;
         }
