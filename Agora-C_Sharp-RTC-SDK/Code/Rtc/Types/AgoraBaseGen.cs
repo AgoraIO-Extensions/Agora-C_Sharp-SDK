@@ -3180,18 +3180,43 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        public WatermarkBuffer buffer;
+
+        ///
+        /// @ignore
+        ///
+        public WatermarkTimestamp timestamp;
+
+        ///
+        /// @ignore
+        ///
+        public WatermarkLiteral literal;
+
+        ///
+        /// @ignore
+        ///
+        public string imageUrl;
+
+        ///
+        /// @ignore
+        ///
         public WatermarkOptions options;
 
         public WatermarkConfig()
         {
             this.id = "";
             this.type = WATERMARK_SOURCE_TYPE.IMAGE;
+            this.imageUrl = "";
         }
 
-        public WatermarkConfig(string id, WATERMARK_SOURCE_TYPE type, WatermarkOptions options)
+        public WatermarkConfig(string id, WATERMARK_SOURCE_TYPE type, WatermarkBuffer buffer, WatermarkTimestamp timestamp, WatermarkLiteral literal, string imageUrl, WatermarkOptions options)
         {
             this.id = id;
             this.type = type;
+            this.buffer = buffer;
+            this.timestamp = timestamp;
+            this.literal = literal;
+            this.imageUrl = imageUrl;
             this.options = options;
         }
     }
@@ -3327,7 +3352,7 @@ namespace Agora.Rtc
             this.mobileTxBytes = 0;
             this.mobileRxBytes = 0;
             this.activePathNum = 0;
-            this.pathStats = null;
+            this.pathStats = nullptr;
         }
 
         public MultipathStats(uint lanTxBytes, uint lanRxBytes, uint wifiTxBytes, uint wifiRxBytes, uint mobileTxBytes, uint mobileRxBytes, int activePathNum, PathStats[] pathStats)
