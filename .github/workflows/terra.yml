@@ -54,7 +54,9 @@ jobs:
           sh terra/replace_rtc_version.sh "$JSON_OUTPUT"
 
       - name: Generate code and comment by terra
+        id: generate
         uses: AgoraIO-Extensions/actions/.github/actions/generate@main
+        continue-on-error: true
         with:
           working-directory: "terra"
           github-token: ${{ secrets.GH_TOKEN }}
@@ -72,7 +74,7 @@ jobs:
           target-branch: ${{ github.ref_name }}
           target-branch-name-surffix: terra-update/${{ steps.version.outputs.full_version }}
           pull-request-title: |
-            [AUTO] Generate codes by terra(${{ steps.version.outputs.full_version }})
+            [AUTO] Generate codes by terra(${{ steps.version.outputs.full_version }}) ${{ steps.generate.outcome == 'failure' && '(Failed)' || '' }}
           add-paths: .
 
 
