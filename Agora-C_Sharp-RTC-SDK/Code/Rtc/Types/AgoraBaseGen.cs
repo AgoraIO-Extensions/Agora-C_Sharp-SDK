@@ -6808,62 +6808,147 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_HEADSCALE = 0,
+        FACE_SHAPE_AREA_HEADSCALE = 100,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FOREHEAD = 1,
+        FACE_SHAPE_AREA_FOREHEAD = 101,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FACECONTOUR = 2,
+        FACE_SHAPE_AREA_FACECONTOUR = 102,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FACELENGTH = 3,
+        FACE_SHAPE_AREA_FACELENGTH = 103,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_FACEWIDTH = 4,
+        FACE_SHAPE_AREA_FACEWIDTH = 104,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_CHEEKBONE = 5,
+        FACE_SHAPE_AREA_CHEEKBONE = 105,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_CHEEK = 6,
+        FACE_SHAPE_AREA_CHEEK = 106,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_CHIN = 7,
+        FACE_SHAPE_AREA_MANDIBLE = 107,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_EYESCALE = 8,
+        FACE_SHAPE_AREA_CHIN = 108,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_NOSELENGTH = 9,
+        FACE_SHAPE_AREA_EYESCALE = 200,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_NOSEWIDTH = 10,
+        FACE_SHAPE_AREA_EYEDISTANCE = 201,
 
         ///
         /// @ignore
         ///
-        FACE_SHAPE_AREA_MOUTHSCALE = 11,
+        FACE_SHAPE_AREA_EYEPOSITION = 202,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_LOWEREYELID = 203,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYEPUPILS = 204,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYEINNERCORNER = 205,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYEOUTERCORNER = 206,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSELENGTH = 300,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSEWIDTH = 301,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSEWING = 302,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSEROOT = 303,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSEBRIDGE = 304,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSETIP = 305,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_NOSEGENERAL = 306,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_MOUTHSCALE = 400,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_MOUTHPOSITION = 401,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_MOUTHSMILE = 402,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_MOUTHLIP = 403,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYEBROWPOSITION = 500,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYEBROWTHICKNESS = 501,
 
     }
 
@@ -6910,6 +6995,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         FACE_SHAPE_BEAUTY_STYLE_MALE = 1,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_BEAUTY_STYLE_NATURAL = 2,
 
     }
 
@@ -7878,11 +7968,73 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
+    /// The audio configuration for the shared screen stream.
+    /// 
+    /// Only available where captureAudio is true.
+    /// </summary>
+    ///
+    public class ScreenAudioParameters
+    {
+        ///
+        /// <summary>
+        /// Audio sample rate (Hz). The default value is 16000.
+        /// </summary>
+        ///
+        public int sampleRate;
+
+        ///
+        /// <summary>
+        /// The number of audio channels. The default value is 2, which means stereo.
+        /// </summary>
+        ///
+        public int channels;
+
+        ///
+        /// <summary>
+        /// The volume of the captured system audio. The value range is [0, 100]. The default value is 100.
+        /// </summary>
+        ///
+        public int captureSignalVolume;
+
+        ///
+        /// @ignore
+        ///
+        public bool excludeCurrentProcessAudio;
+
+        public ScreenAudioParameters()
+        {
+            this.sampleRate = 16000;
+            this.channels = 2;
+            this.captureSignalVolume = 100;
+            this.excludeCurrentProcessAudio = false;
+        }
+
+        public ScreenAudioParameters(int sampleRate, int channels, int captureSignalVolume, bool excludeCurrentProcessAudio)
+        {
+            this.sampleRate = sampleRate;
+            this.channels = channels;
+            this.captureSignalVolume = captureSignalVolume;
+            this.excludeCurrentProcessAudio = excludeCurrentProcessAudio;
+        }
+    }
+
+    ///
+    /// <summary>
     /// Screen sharing configurations.
     /// </summary>
     ///
     public class ScreenCaptureParameters
     {
+        ///
+        /// @ignore
+        ///
+        public bool captureAudio;
+
+        ///
+        /// @ignore
+        ///
+        public ScreenAudioParameters audioParams;
+
         ///
         /// <summary>
         /// The video encoding resolution of the screen sharing stream. See VideoDimensions. The default value is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 × 1080:
@@ -7963,6 +8115,7 @@ namespace Agora.Rtc
 
         public ScreenCaptureParameters()
         {
+            this.captureAudio = false;
             this.dimensions = new VideoDimensions(1920, 1080);
             this.frameRate = 5;
             this.bitrate = (int)BITRATE.STANDARD_BITRATE;
@@ -7977,6 +8130,7 @@ namespace Agora.Rtc
 
         public ScreenCaptureParameters(VideoDimensions d, int f, int b)
         {
+            this.captureAudio = false;
             this.dimensions = d;
             this.frameRate = f;
             this.bitrate = b;
@@ -7991,6 +8145,7 @@ namespace Agora.Rtc
 
         public ScreenCaptureParameters(int width, int height, int f, int b)
         {
+            this.captureAudio = false;
             this.dimensions = new VideoDimensions(width, height);
             this.frameRate = f;
             this.bitrate = b;
@@ -8005,6 +8160,7 @@ namespace Agora.Rtc
 
         public ScreenCaptureParameters(int width, int height, int f, int b, bool cur, bool fcs)
         {
+            this.captureAudio = false;
             this.dimensions = new VideoDimensions(width, height);
             this.frameRate = f;
             this.bitrate = b;
@@ -8019,6 +8175,7 @@ namespace Agora.Rtc
 
         public ScreenCaptureParameters(int width, int height, int f, int b, view_t[] ex, int cnt)
         {
+            this.captureAudio = false;
             this.dimensions = new VideoDimensions(width, height);
             this.frameRate = f;
             this.bitrate = b;
@@ -8033,6 +8190,7 @@ namespace Agora.Rtc
 
         public ScreenCaptureParameters(int width, int height, int f, int b, bool cur, bool fcs, view_t[] ex, int cnt)
         {
+            this.captureAudio = false;
             this.dimensions = new VideoDimensions(width, height);
             this.frameRate = f;
             this.bitrate = b;
@@ -8045,8 +8203,10 @@ namespace Agora.Rtc
             this.enableHighLight = false;
         }
 
-        public ScreenCaptureParameters(VideoDimensions dimensions, int frameRate, int bitrate, bool captureMouseCursor, bool windowFocus, view_t[] excludeWindowList, int excludeWindowCount, int highLightWidth, uint highLightColor, bool enableHighLight)
+        public ScreenCaptureParameters(bool captureAudio, ScreenAudioParameters audioParams, VideoDimensions dimensions, int frameRate, int bitrate, bool captureMouseCursor, bool windowFocus, view_t[] excludeWindowList, int excludeWindowCount, int highLightWidth, uint highLightColor, bool enableHighLight)
         {
+            this.captureAudio = captureAudio;
+            this.audioParams = audioParams;
             this.dimensions = dimensions;
             this.frameRate = frameRate;
             this.bitrate = bitrate;
@@ -9140,48 +9300,6 @@ namespace Agora.Rtc
             this.bitrate = bitrate;
             this.contentHint = contentHint;
         }
-    }
-
-    ///
-    /// <summary>
-    /// The audio configuration for the shared screen stream.
-    /// 
-    /// Only available where captureAudio is true.
-    /// </summary>
-    ///
-    public class ScreenAudioParameters
-    {
-        ///
-        /// <summary>
-        /// Audio sample rate (Hz). The default value is 16000.
-        /// </summary>
-        ///
-        public int sampleRate;
-
-        ///
-        /// <summary>
-        /// The number of audio channels. The default value is 2, which means stereo.
-        /// </summary>
-        ///
-        public int channels;
-
-        ///
-        /// <summary>
-        /// The volume of the captured system audio. The value range is [0, 100]. The default value is 100.
-        /// </summary>
-        ///
-        public int captureSignalVolume;
-
-        public ScreenAudioParameters(int sampleRate, int channels, int captureSignalVolume)
-        {
-            this.sampleRate = sampleRate;
-            this.channels = channels;
-            this.captureSignalVolume = captureSignalVolume;
-        }
-        public ScreenAudioParameters()
-        {
-        }
-
     }
 
     ///

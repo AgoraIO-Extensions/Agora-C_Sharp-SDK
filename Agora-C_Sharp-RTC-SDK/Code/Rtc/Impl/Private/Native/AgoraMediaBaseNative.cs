@@ -27,6 +27,8 @@ namespace Agora.Rtc
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public float[] matrix;
         public IntPtr alphaBuffer;
+
+        public IrisColorSpace colorSpace;
     }
 
     //[StructLayout(LayoutKind.Sequential)]

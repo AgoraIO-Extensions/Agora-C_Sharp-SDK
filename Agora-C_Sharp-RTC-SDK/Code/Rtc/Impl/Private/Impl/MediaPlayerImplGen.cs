@@ -844,5 +844,26 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int GetAudioBufferDelay(int playerId, ref int delayMs)
+        {
+            _param.Clear();
+            _param.Add("playerId", playerId);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_GETAUDIOBUFFERDELAY_c30e349,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            if (nRet == 0)
+            {
+                delayMs = (int)AgoraJson.GetData<int>(_apiParam.Result, "delayMs");
+            }
+
+            return result;
+        }
+
     }
 }

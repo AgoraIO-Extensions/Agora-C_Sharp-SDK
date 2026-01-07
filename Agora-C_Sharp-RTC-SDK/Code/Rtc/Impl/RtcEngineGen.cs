@@ -326,6 +326,24 @@ namespace Agora.Rtc
             return _impl.SetFilterEffectOptions(enabled, options, type);
         }
 
+        public override IVideoEffectObject CreateVideoEffectObject(string bundlePath, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        {
+            if (_impl == null)
+            {
+                return null;
+            }
+            return _impl.CreateVideoEffectObject(bundlePath, type);
+        }
+
+        public override int DestroyVideoEffectObject(IVideoEffectObject videoEffectObject)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.DestroyVideoEffectObject(videoEffectObject);
+        }
+
         public override int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
             if (_impl == null)
@@ -3132,6 +3150,33 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.SendAudioMetadataEx(connection, metadata, length);
+        }
+
+        public override int EnableVideoImageSourceEx(bool enable, ImageTrackOptions options, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.EnableVideoImageSourceEx(enable, options, connection);
+        }
+
+        public override int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.PreloadEffectEx(connection, soundId, filePath, startPos);
+        }
+
+        public override int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
         }
 
         public override int RegisterFaceInfoObserver(IFaceInfoObserver observer)
