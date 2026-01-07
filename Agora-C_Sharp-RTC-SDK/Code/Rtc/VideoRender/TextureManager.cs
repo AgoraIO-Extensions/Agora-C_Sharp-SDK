@@ -59,6 +59,22 @@ namespace Agora.Rtc
             }
         }
 
+        public IrisColorSpace ColorSpace
+        {
+            get
+            {
+                return _cachedVideoFrame.colorSpace;
+            }
+        }
+
+        /// <summary>
+        /// Gets the color space information as a C# ColorSpace object
+        /// </summary>
+        public ColorSpace GetColorSpaceInfo()
+        {
+            return _cachedVideoFrame.colorSpace.ToColorSpace();
+        }
+
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
         protected NativeArray<byte> _textureNative;
 #endif
