@@ -345,8 +345,9 @@ update_url_config_key() {
   fi
 }
 
+echo "=========== Mac =========="
 if [ -z "$MAC_DEPENDENCIES" ]; then
-  echo "No mac native dependencies need to change."
+  echo "  [INFO] No Mac Native dependencies found to update."
 else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
@@ -361,6 +362,8 @@ else
     if [ -n "$NATIVE_MAC_AUDIO" ]; then
       echo "Mac native dependency (audio): $NATIVE_MAC_AUDIO"
       update_url_config_key audio NATIVE_MAC "$NATIVE_MAC_AUDIO"
+    else
+      echo "  [INFO] Mac native dependency (audio) not updated (empty)."
     fi
   fi
   
@@ -371,12 +374,14 @@ else
     if [ -n "$NATIVE_MAC_VIDEO" ]; then
       echo "Mac native dependency (video): $NATIVE_MAC_VIDEO"
       update_url_config_key video NATIVE_MAC "$NATIVE_MAC_VIDEO"
+    else
+      echo "  [INFO] Mac native dependency (video) not updated (empty)."
     fi
   fi
 fi
 
 if [ -z "$IRIS_MAC_DEPENDENCIES" ]; then
-  echo "No iris mac native dependencies need to change."
+  echo "  [INFO] No Mac Iris dependencies found to update."
 else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
@@ -385,6 +390,8 @@ else
     if [ -n "$CHOSEN" ]; then
       echo "Iris Mac dependency (audio): $CHOSEN"
       update_url_config_key audio IRIS_MAC "$CHOSEN"
+    else
+      echo "  [INFO] Iris Mac dependency (audio) not updated (empty)."
     fi
   fi
   
@@ -396,12 +403,15 @@ else
     if [ -n "$CHOSEN" ]; then
       echo "Iris Mac dependency (video): $CHOSEN"
       update_url_config_key video IRIS_MAC "$CHOSEN"
+    else
+      echo "  [INFO] Iris Mac dependency (video) not updated (empty)."
     fi
   fi
 fi
 
+echo "=========== Windows =========="
 if [ -z "$WINDOWS_DEPENDENCIES" ]; then
-  echo "No windows native dependencies need to change."
+  echo "  [INFO] No Windows Native dependencies found to update."
 else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
@@ -416,6 +426,8 @@ else
     if [ -n "$NATIVE_WIN_AUDIO" ]; then
       echo "Windows native dependency (audio): $NATIVE_WIN_AUDIO"
       update_url_config_key audio NATIVE_WIN "$NATIVE_WIN_AUDIO"
+    else
+      echo "  [INFO] Windows native dependency (audio) not updated (empty)."
     fi
   fi
   
@@ -426,12 +438,14 @@ else
     if [ -n "$NATIVE_WIN_VIDEO" ]; then
       echo "Windows native dependency (video): $NATIVE_WIN_VIDEO"
       update_url_config_key video NATIVE_WIN "$NATIVE_WIN_VIDEO"
+    else
+      echo "  [INFO] Windows native dependency (video) not updated (empty)."
     fi
   fi
 fi
 
 if [ -z "$IRIS_WINDOWS_DEPENDENCIES" ]; then
-  echo "No iris windows native dependencies need to change."
+  echo "  [INFO] No Windows Iris dependencies found to update."
 else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
@@ -440,6 +454,8 @@ else
     if [ -n "$CHOSEN" ]; then
       echo "Iris Windows dependency (audio): $CHOSEN"
       update_url_config_key audio IRIS_WIN "$CHOSEN"
+    else
+      echo "  [INFO] Iris Windows dependency (audio) not updated (empty)."
     fi
   fi
   
@@ -449,6 +465,8 @@ else
     CHOSEN=$(choose_iris_dep "$VIDEO_LINKS" "Windows" "$DEP_VERSION")
     IRIS_WIN_CHOSEN="$CHOSEN"
     if [ -n "$CHOSEN" ]; then
+    else
+      echo "  [INFO] Iris Windows dependency (video) not updated (empty)."
       echo "Iris Windows dependency (video): $CHOSEN"
       update_url_config_key video IRIS_WIN "$CHOSEN"
     fi
@@ -465,8 +483,11 @@ fi
 #   mv tmp $TERRA_CONFIG_PATH2
 # fi
 
+echo "=========== iOS =========="
 # Optionally update iOS IRIS URLs in url_config.txt when present in the input
-if [ -n "$IRIS_IOS_DEPENDENCIES" ]; then
+if [ -z "$IRIS_IOS_DEPENDENCIES" ]; then
+  echo "  [INFO] No iOS Iris dependencies found to update."
+else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$IRIS_IOS_DEPENDENCIES" "audio")
@@ -474,6 +495,8 @@ if [ -n "$IRIS_IOS_DEPENDENCIES" ]; then
     if [ -n "$CHOSEN_IOS" ]; then
       echo "Iris iOS dependency (audio): $CHOSEN_IOS"
       update_url_config_key audio IRIS_IOS "$CHOSEN_IOS"
+    else
+      echo "  [INFO] Iris iOS dependency (audio) not updated (empty)."
     fi
   fi
   
@@ -484,40 +507,23 @@ if [ -n "$IRIS_IOS_DEPENDENCIES" ]; then
     if [ -n "$CHOSEN_IOS" ]; then
       echo "Iris iOS dependency (video): $CHOSEN_IOS"
       update_url_config_key video IRIS_IOS "$CHOSEN_IOS"
-    fi
-  fi
-fi
-
-# Optionally update Android IRIS URLs in url_config.txt when present in the input
-if [ -n "$IRIS_ANDROID_DEPENDENCIES" ]; then
-  # Update audio section if needed
-  if [ "$UPDATE_AUDIO" -eq 1 ]; then
-    AUDIO_LINKS=$(filter_links_by_type "$IRIS_ANDROID_DEPENDENCIES" "audio")
-    CHOSEN_ANDROID=$(choose_iris_dep "$AUDIO_LINKS" "Android" "$DEP_VERSION")
-    if [ -n "$CHOSEN_ANDROID" ]; then
-      echo "Iris Android dependency (audio): $CHOSEN_ANDROID"
-      update_url_config_key audio IRIS_ANDROID "$CHOSEN_ANDROID"
-    fi
-  fi
-  
-  # Update video section if needed
-  if [ "$UPDATE_VIDEO" -eq 1 ]; then
-    VIDEO_LINKS=$(filter_links_by_type "$IRIS_ANDROID_DEPENDENCIES" "video")
-    CHOSEN_ANDROID=$(choose_iris_dep "$VIDEO_LINKS" "Android" "$DEP_VERSION")
-    if [ -n "$CHOSEN_ANDROID" ]; then
-      echo "Iris Android dependency (video): $CHOSEN_ANDROID"
-      update_url_config_key video IRIS_ANDROID "$CHOSEN_ANDROID"
+    else
+      echo "  [INFO] Iris iOS dependency (video) not updated (empty)."
     fi
   fi
 fi
 
 # Update NATIVE_* in url_config.txt from cdn lists
-if [ -n "$IOS_DEPENDENCIES" ]; then
+if [ -z "$IOS_DEPENDENCIES" ]; then
+  echo "  [INFO] No iOS Native dependencies found to update."
+else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$IOS_DEPENDENCIES" "audio")
     NATIVE_IOS=$(choose_native_dep "$AUDIO_LINKS" "iOS")
     if [ -n "$NATIVE_IOS" ]; then
+    else
+      echo "  [INFO] iOS native dependency (audio) not updated (empty)."
       echo "iOS native dependency (audio): $NATIVE_IOS"
       update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
     fi
@@ -528,18 +534,54 @@ if [ -n "$IOS_DEPENDENCIES" ]; then
     VIDEO_LINKS=$(filter_links_by_type "$IOS_DEPENDENCIES" "video")
     NATIVE_IOS=$(choose_native_dep "$VIDEO_LINKS" "iOS")
     if [ -n "$NATIVE_IOS" ]; then
+    else
+      echo "  [INFO] iOS native dependency (video) not updated (empty)."
       echo "iOS native dependency (video): $NATIVE_IOS"
       update_url_config_key video NATIVE_IOS "$NATIVE_IOS"
     fi
   fi
 fi
 
-if [ -n "$ANDROID_DEPENDENCIES" ]; then
+echo "=========== Android =========="
+# Optionally update Android IRIS URLs in url_config.txt when present in the input
+if [ -z "$IRIS_ANDROID_DEPENDENCIES" ]; then
+  echo "  [INFO] No Android Iris dependencies found to update."
+else
+  # Update audio section if needed
+  if [ "$UPDATE_AUDIO" -eq 1 ]; then
+    AUDIO_LINKS=$(filter_links_by_type "$IRIS_ANDROID_DEPENDENCIES" "audio")
+    CHOSEN_ANDROID=$(choose_iris_dep "$AUDIO_LINKS" "Android" "$DEP_VERSION")
+    if [ -n "$CHOSEN_ANDROID" ]; then
+      echo "Iris Android dependency (audio): $CHOSEN_ANDROID"
+      update_url_config_key audio IRIS_ANDROID "$CHOSEN_ANDROID"
+    else
+      echo "  [INFO] Iris Android dependency (audio) not updated (empty)."
+    fi
+  fi
+  
+  # Update video section if needed
+  if [ "$UPDATE_VIDEO" -eq 1 ]; then
+    VIDEO_LINKS=$(filter_links_by_type "$IRIS_ANDROID_DEPENDENCIES" "video")
+    CHOSEN_ANDROID=$(choose_iris_dep "$VIDEO_LINKS" "Android" "$DEP_VERSION")
+    if [ -n "$CHOSEN_ANDROID" ]; then
+      echo "Iris Android dependency (video): $CHOSEN_ANDROID"
+      update_url_config_key video IRIS_ANDROID "$CHOSEN_ANDROID"
+    else
+      echo "  [INFO] Iris Android dependency (video) not updated (empty)."
+    fi
+  fi
+fi
+
+if [ -z "$ANDROID_DEPENDENCIES" ]; then
+  echo "  [INFO] No Android Native dependencies found to update."
+else
   # Update audio section if needed
   if [ "$UPDATE_AUDIO" -eq 1 ]; then
     AUDIO_LINKS=$(filter_links_by_type "$ANDROID_DEPENDENCIES" "audio")
     NATIVE_ANDROID=$(choose_native_dep "$AUDIO_LINKS" "Android")
     if [ -n "$NATIVE_ANDROID" ]; then
+    else
+      echo "  [INFO] Android native dependency (audio) not updated (empty)."
       echo "Android native dependency (audio): $NATIVE_ANDROID"
       update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
     fi
@@ -550,76 +592,11 @@ if [ -n "$ANDROID_DEPENDENCIES" ]; then
     VIDEO_LINKS=$(filter_links_by_type "$ANDROID_DEPENDENCIES" "video")
     NATIVE_ANDROID=$(choose_native_dep "$VIDEO_LINKS" "Android")
     if [ -n "$NATIVE_ANDROID" ]; then
+    else
+      echo "  [INFO] Android native dependency (video) not updated (empty)."
       echo "Android native dependency (video): $NATIVE_ANDROID"
       update_url_config_key video NATIVE_ANDROID "$NATIVE_ANDROID"
     fi
-  fi
-fi
-
-# Update SDKVer and increment Build number in >>>audio and/or >>>video sections
-if [ -f "$URL_CONFIG_PATH" ]; then
-  # Function to increment build number for a specific section
-  increment_build_for_section() {
-    local section="$1"
-    echo "Incrementing Build number for $section in url_config.txt..."
-    
-    # Read current build number from the section
-    BUILD_NUM=0
-    FLAG=0
-    while IFS= read -r line; do
-      case "$line" in
-        *">>>$section"*)
-          FLAG=1
-          ;;
-      esac
-      if [ "$FLAG" = "1" ]; then
-        case "$line" in
-          *"<<<end"*)
-            FLAG=0
-            ;;
-        esac
-      fi
-      
-      if [ "$FLAG" = "1" ]; then
-        case "$line" in
-          *"Build="*)
-            BUILD_NUM=$(echo "$line" | sed 's/Build[[:space:]]*=//' | tr -d '\r' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-            break
-            ;;
-        esac
-      fi
-    done < "$URL_CONFIG_PATH"
-    
-    # Increment and update
-    NEW_BUILD_NUM=$((BUILD_NUM + 1))
-    sed -e "/^[ 	]*>>>$section/,/^[ 	]*<<<end/ s/^[ 	]*Build[ 	]*=.*/Build=$NEW_BUILD_NUM/" \
-        "$URL_CONFIG_PATH" > "$URL_CONFIG_PATH.tmp"
-    mv "$URL_CONFIG_PATH.tmp" "$URL_CONFIG_PATH"
-    
-    echo "Build number for $section updated: $BUILD_NUM -> $NEW_BUILD_NUM"
-  }
-  
-  # Update SDKVer if we have a version (use the version directly from JSON)
-  if [ -n "$DEP_VERSION" ]; then
-    if [ "$UPDATE_AUDIO" -eq 1 ]; then
-      echo "Updating SDKVer for audio section to: $DEP_VERSION"
-      update_url_config_key audio SDKVer "$DEP_VERSION"
-    fi
-    
-    if [ "$UPDATE_VIDEO" -eq 1 ]; then
-      echo "Updating SDKVer for video section to: $DEP_VERSION"
-      update_url_config_key video SDKVer "$DEP_VERSION"
-    fi
-  fi
-  
-  # Increment audio section if needed
-  if [ "$UPDATE_AUDIO" -eq 1 ]; then
-    increment_build_for_section "audio"
-  fi
-  
-  # Increment video section if needed
-  if [ "$UPDATE_VIDEO" -eq 1 ]; then
-    increment_build_for_section "video"
   fi
 fi
 
