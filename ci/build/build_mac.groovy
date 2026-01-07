@@ -55,7 +55,6 @@ def doPublish(buildVariables) {
         writeFile(file: 'package_urls', text: content, encoding: "utf-8")
     }
     archiveArtifacts(artifacts: "package_urls", allowEmptyArchive:true)
-    
     sh "rm -rf *.zip || true"
 }
 

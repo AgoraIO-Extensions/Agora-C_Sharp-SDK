@@ -1,0 +1,23 @@
+name: Check C# Codes Compile
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-csharp-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check csharp codes compile
+        run: |
+          cd Agora-C_Sharp_RTC-SDK_UT
+          dotnet restore Agora_C_Sharp_SDK_UT.sln
+          dotnet build Agora_C_Sharp_SDK_UT.sln --configuration Release
+          if [ $? -ne 0 ]; then
+            echo "csharp codes compile error"
+            exit 1
+          else
+            echo "csharp codes compile success"
+          fi
