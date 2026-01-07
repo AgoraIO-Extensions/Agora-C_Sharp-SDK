@@ -493,5 +493,15 @@ namespace Agora.Rtc.Ut
         }
 
 
+        [Test]
+        public void Test_GetAudioBufferDelay_c30e349()
+        {
+            var delayMs = ParamsHelper.CreateParam<int>();
+
+            var nRet = @interface.GetAudioBufferDelay(ref delayMs);
+            Assert.AreEqual(0, nRet);
+        }
+
+
     }
 }

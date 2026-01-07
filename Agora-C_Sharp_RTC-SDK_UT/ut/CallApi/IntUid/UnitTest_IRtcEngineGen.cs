@@ -380,6 +380,28 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_CreateVideoEffectObject_65bd50d()
+        {
+            var bundlePath = ParamsHelper.CreateParam<string>();
+
+            var type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
+
+            var nRet = @interface.CreateVideoEffectObject(bundlePath, type);
+            Assert.IsNull(nRet);
+        }
+
+
+        [Test]
+        public void Test_DestroyVideoEffectObject_66d092b()
+        {
+            var videoEffectObject = ParamsHelper.CreateParam<IVideoEffectObject>();
+
+            var nRet = @interface.DestroyVideoEffectObject(videoEffectObject);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_SetLowlightEnhanceOptions_4f9f013()
         {
             var enabled = ParamsHelper.CreateParam<bool>();
@@ -1580,6 +1602,20 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SetPlaybackAudioFrameBeforeMixingParameters_ee7e270()
+        {
+            var sampleRate = ParamsHelper.CreateParam<int>();
+
+            var channel = ParamsHelper.CreateParam<int>();
+
+            var samplesPerCall = ParamsHelper.CreateParam<int>();
+
+            var nRet = @interface.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel, samplesPerCall);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_EnableAudioSpectrumMonitor_46f8ab7()
         {
             var intervalInMS = ParamsHelper.CreateParam<int>();
@@ -1635,16 +1671,6 @@ namespace Agora.Rtc.Ut
             var volume = ParamsHelper.CreateParam<int>();
 
             var nRet = @interface.AdjustUserPlaybackSignalVolume(uid, volume);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_SetLocalPublishFallbackOption_c29b788()
-        {
-            var option = ParamsHelper.CreateParam<STREAM_FALLBACK_OPTIONS>();
-
-            var nRet = @interface.SetLocalPublishFallbackOption(option);
             Assert.AreEqual(0, nRet);
         }
 
@@ -2564,6 +2590,36 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SendRdtMessage_ea5e5d7()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var type = ParamsHelper.CreateParam<RdtStreamType>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var nRet = @interface.SendRdtMessage(uid, type, data, length);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_SendMediaControlMessage_77edd82()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var nRet = @interface.SendMediaControlMessage(uid, data, length);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_AddVideoWatermark_eaef16d()
         {
             var watermark = ParamsHelper.CreateParam<RtcImage>();
@@ -2581,6 +2637,26 @@ namespace Agora.Rtc.Ut
             var options = ParamsHelper.CreateParam<WatermarkOptions>();
 
             var nRet = @interface.AddVideoWatermark(watermarkUrl, options);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_AddVideoWatermark_af84754()
+        {
+            var configs = ParamsHelper.CreateParam<WatermarkConfig>();
+
+            var nRet = @interface.AddVideoWatermark(configs);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_RemoveVideoWatermark_3a2037f()
+        {
+            var id = ParamsHelper.CreateParam<string>();
+
+            var nRet = @interface.RemoveVideoWatermark(id);
             Assert.AreEqual(0, nRet);
         }
 
@@ -2987,16 +3063,6 @@ namespace Agora.Rtc.Ut
         public void Test_GetCurrentMonotonicTimeInMs()
         {
             var nRet = @interface.GetCurrentMonotonicTimeInMs();
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_EnableWirelessAccelerate_5039d15()
-        {
-            var enabled = ParamsHelper.CreateParam<bool>();
-
-            var nRet = @interface.EnableWirelessAccelerate(enabled);
             Assert.AreEqual(0, nRet);
         }
 

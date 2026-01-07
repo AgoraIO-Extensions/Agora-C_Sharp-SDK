@@ -635,6 +635,16 @@ namespace Agora.Rtc
         public abstract int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SendRdtMessageEx(uint uid, RdtStreamType type, string data, ulong length, RtcConnection connection);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SendMediaControlMessageEx(uint uid, string data, ulong length, RtcConnection connection);
+
+        ///
         /// <summary>
         /// Adds a watermark image to the local video.
         /// 
@@ -660,7 +670,18 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete("v4.6.0. This method is deprecated. Use addVideoWatermarkEx(const WatermarkConfig& config, const RtcConnection& connection) instead.")]
         public abstract int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int AddVideoWatermarkEx(WatermarkConfig config, RtcConnection connection);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int RemoveVideoWatermarkEx(string id, RtcConnection connection);
 
         ///
         /// <summary>
@@ -1051,6 +1072,16 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SendAudioMetadataEx(RtcConnection connection, byte[] metadata, ulong length);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int PreloadEffectEx(RtcConnection connection, int soundId, string filePath, int startPos = 0);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int PlayEffectEx(RtcConnection connection, int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
 
     }
 }

@@ -565,7 +565,7 @@ namespace Agora.Rtc
 
         public IrisEncodedVideoFrameInfo(EncodedVideoFrameInfo info)
         {
-            this.uid = info.uid;
+            this.uid = 0;
             this.codecType = (int)info.codecType;
             this.width = info.width;
             this.height = info.height;

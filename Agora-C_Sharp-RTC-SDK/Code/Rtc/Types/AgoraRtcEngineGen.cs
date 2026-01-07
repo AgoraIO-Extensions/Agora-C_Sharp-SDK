@@ -609,7 +609,12 @@ namespace Agora.Rtc
         ///
         public VideoDimensions[] simulcastDimensions;
 
-        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating, VideoDimensions[] simulcastDimensions)
+        ///
+        /// @ignore
+        ///
+        public int encodedFrameDepth;
+
+        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating, VideoDimensions[] simulcastDimensions, int encodedFrameDepth)
         {
             this.uid = uid;
             this.sentBitrate = sentBitrate;
@@ -635,6 +640,7 @@ namespace Agora.Rtc
             this.dualStreamEnabled = dualStreamEnabled;
             this.hwEncoderAccelerating = hwEncoderAccelerating;
             this.simulcastDimensions = simulcastDimensions;
+            this.encodedFrameDepth = encodedFrameDepth;
         }
         public LocalVideoStats()
         {
@@ -737,6 +743,16 @@ namespace Agora.Rtc
         public uint plcCount;
 
         ///
+        /// @ignore
+        ///
+        public uint frozenCntByCustom;
+
+        ///
+        /// @ignore
+        ///
+        public uint frozenTimeByCustom;
+
+        ///
         /// <summary>
         /// The total active time (ms) between the start of the audio call and the callback of the remote user. The active time refers to the total duration of the remote user without the mute state.
         /// </summary>
@@ -791,6 +807,8 @@ namespace Agora.Rtc
             this.mosValue = 0;
             this.frozenRateByCustomPlcCount = 0;
             this.plcCount = 0;
+            this.frozenCntByCustom = 0;
+            this.frozenTimeByCustom = 0;
             this.totalActiveTime = 0;
             this.publishDuration = 0;
             this.qoeQuality = 0;
@@ -799,7 +817,7 @@ namespace Agora.Rtc
             this.e2eDelay = 0;
         }
 
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
+        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, uint frozenCntByCustom, uint frozenTimeByCustom, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
         {
             this.uid = uid;
             this.quality = quality;
@@ -814,6 +832,8 @@ namespace Agora.Rtc
             this.mosValue = mosValue;
             this.frozenRateByCustomPlcCount = frozenRateByCustomPlcCount;
             this.plcCount = plcCount;
+            this.frozenCntByCustom = frozenCntByCustom;
+            this.frozenTimeByCustom = frozenTimeByCustom;
             this.totalActiveTime = totalActiveTime;
             this.publishDuration = publishDuration;
             this.qoeQuality = qoeQuality;
@@ -1914,17 +1934,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
-
-        ///
-        /// <summary>
         /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only.
         /// </summary>
         ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
+
+        ///
+        /// <summary>
+        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
+        /// </summary>
+        ///
+        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
         ///
         /// <summary>
@@ -2132,19 +2152,39 @@ namespace Agora.Rtc
         ///
         public Optional<string> parameters = new Optional<string>();
 
+        ///
+        /// @ignore
+        ///
+        public Optional<bool> enableMultipath = new Optional<bool>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<MultipathMode> uplinkMultipathMode = new Optional<MultipathMode>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<MultipathMode> downlinkMultipathMode = new Optional<MultipathMode>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<MultipathType> preferMultipathType = new Optional<MultipathType>();
+
         public ChannelMediaOptions()
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
             this.publishThirdCameraTrack = publishThirdCameraTrack;
             this.publishFourthCameraTrack = publishFourthCameraTrack;
             this.publishMicrophoneTrack = publishMicrophoneTrack;
-            this.publishScreenCaptureVideo = publishScreenCaptureVideo;
             this.publishScreenCaptureAudio = publishScreenCaptureAudio;
+            this.publishScreenCaptureVideo = publishScreenCaptureVideo;
             this.publishScreenTrack = publishScreenTrack;
             this.publishSecondaryScreenTrack = publishSecondaryScreenTrack;
             this.publishThirdScreenTrack = publishThirdScreenTrack;
@@ -2175,6 +2215,10 @@ namespace Agora.Rtc
             this.customVideoTrackId = customVideoTrackId;
             this.isAudioFilterable = isAudioFilterable;
             this.parameters = parameters;
+            this.enableMultipath = enableMultipath;
+            this.uplinkMultipathMode = uplinkMultipathMode;
+            this.downlinkMultipathMode = downlinkMultipathMode;
+            this.preferMultipathType = preferMultipathType;
         }
 
         ///
@@ -2214,16 +2258,16 @@ namespace Agora.Rtc
                 writer.Write(this.publishMicrophoneTrack.GetValue());
             }
 
-            if (this.publishScreenCaptureVideo.HasValue())
-            {
-                writer.WritePropertyName("publishScreenCaptureVideo");
-                writer.Write(this.publishScreenCaptureVideo.GetValue());
-            }
-
             if (this.publishScreenCaptureAudio.HasValue())
             {
                 writer.WritePropertyName("publishScreenCaptureAudio");
                 writer.Write(this.publishScreenCaptureAudio.GetValue());
+            }
+
+            if (this.publishScreenCaptureVideo.HasValue())
+            {
+                writer.WritePropertyName("publishScreenCaptureVideo");
+                writer.Write(this.publishScreenCaptureVideo.GetValue());
             }
 
             if (this.publishScreenTrack.HasValue())
@@ -2406,6 +2450,30 @@ namespace Agora.Rtc
                 writer.Write(this.parameters.GetValue());
             }
 
+            if (this.enableMultipath.HasValue())
+            {
+                writer.WritePropertyName("enableMultipath");
+                writer.Write(this.enableMultipath.GetValue());
+            }
+
+            if (this.uplinkMultipathMode.HasValue())
+            {
+                writer.WritePropertyName("uplinkMultipathMode");
+                AgoraJson.WriteEnum(writer, this.uplinkMultipathMode.GetValue());
+            }
+
+            if (this.downlinkMultipathMode.HasValue())
+            {
+                writer.WritePropertyName("downlinkMultipathMode");
+                AgoraJson.WriteEnum(writer, this.downlinkMultipathMode.GetValue());
+            }
+
+            if (this.preferMultipathType.HasValue())
+            {
+                writer.WritePropertyName("preferMultipathType");
+                AgoraJson.WriteEnum(writer, this.preferMultipathType.GetValue());
+            }
+
             writer.WriteObjectEnd();
         }
     }
@@ -2528,6 +2596,45 @@ namespace Agora.Rtc
             this.stopAllEffect = stopAllEffect;
             this.stopMicrophoneRecording = stopMicrophoneRecording;
         }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum VIDEO_EFFECT_NODE_ID : uint
+    {
+        ///
+        /// @ignore
+        ///
+        BEAUTY = 1U << 0,
+
+        ///
+        /// @ignore
+        ///
+        STYLE_MAKEUP = 1U << 1,
+
+        ///
+        /// @ignore
+        ///
+        FILTER = 1U << 2,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum VIDEO_EFFECT_ACTION
+    {
+        ///
+        /// @ignore
+        ///
+        SAVE = 1,
+
+        ///
+        /// @ignore
+        ///
+        RESET = 2,
+
     }
 
     ///
