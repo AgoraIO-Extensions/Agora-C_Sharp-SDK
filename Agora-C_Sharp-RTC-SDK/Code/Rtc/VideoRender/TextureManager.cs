@@ -161,6 +161,11 @@ namespace Agora.Rtc
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
+            if (isFresh)
+            {
+                RenderStatHelper.LogInFrame(_sourceType);
+            }
+
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
                 _canAttach = false;
@@ -207,6 +212,7 @@ namespace Agora.Rtc
 
             try
             {
+                var startTime = Time.realtimeSinceStartup;
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
 #else
@@ -225,7 +231,9 @@ namespace Agora.Rtc
                     (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
                 _texture.Apply();
 #endif
-
+                var cost = (Time.realtimeSinceStartup - startTime) * 1000.0f;
+                RenderStatHelper.LogDrawCost(_sourceType, cost);
+                RenderStatHelper.LogOutFrame(_sourceType);
 
             }
             catch (Exception e)
