@@ -697,5 +697,10 @@ namespace Agora.Rtc
         ///
         public abstract int SetSoundPositionParams(float pan, float gain);
 
+        ///
+        /// @ignore
+        ///
+        public abstract int GetAudioBufferDelay(ref int delayMs);
+
     }
 }

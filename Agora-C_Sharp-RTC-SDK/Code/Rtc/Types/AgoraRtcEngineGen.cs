@@ -1914,17 +1914,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
-
-        ///
-        /// <summary>
         /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only.
         /// </summary>
         ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
+
+        ///
+        /// <summary>
+        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
+        /// </summary>
+        ///
+        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
         ///
         /// <summary>
@@ -2136,15 +2136,15 @@ namespace Agora.Rtc
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
             this.publishThirdCameraTrack = publishThirdCameraTrack;
             this.publishFourthCameraTrack = publishFourthCameraTrack;
             this.publishMicrophoneTrack = publishMicrophoneTrack;
-            this.publishScreenCaptureVideo = publishScreenCaptureVideo;
             this.publishScreenCaptureAudio = publishScreenCaptureAudio;
+            this.publishScreenCaptureVideo = publishScreenCaptureVideo;
             this.publishScreenTrack = publishScreenTrack;
             this.publishSecondaryScreenTrack = publishSecondaryScreenTrack;
             this.publishThirdScreenTrack = publishThirdScreenTrack;
@@ -2214,16 +2214,16 @@ namespace Agora.Rtc
                 writer.Write(this.publishMicrophoneTrack.GetValue());
             }
 
-            if (this.publishScreenCaptureVideo.HasValue())
-            {
-                writer.WritePropertyName("publishScreenCaptureVideo");
-                writer.Write(this.publishScreenCaptureVideo.GetValue());
-            }
-
             if (this.publishScreenCaptureAudio.HasValue())
             {
                 writer.WritePropertyName("publishScreenCaptureAudio");
                 writer.Write(this.publishScreenCaptureAudio.GetValue());
+            }
+
+            if (this.publishScreenCaptureVideo.HasValue())
+            {
+                writer.WritePropertyName("publishScreenCaptureVideo");
+                writer.Write(this.publishScreenCaptureVideo.GetValue());
             }
 
             if (this.publishScreenTrack.HasValue())
@@ -2509,6 +2509,11 @@ namespace Agora.Rtc
         public bool stopAllEffect;
 
         ///
+        /// @ignore
+        ///
+        public bool unloadAllEffect;
+
+        ///
         /// <summary>
         /// Whether to stop microphone recording when a user leaves the channel. true : (Default) Stop microphone recording. false : Do not stop microphone recording.
         /// </summary>
@@ -2519,15 +2524,61 @@ namespace Agora.Rtc
         {
             this.stopAudioMixing = true;
             this.stopAllEffect = true;
+            this.unloadAllEffect = false;
             this.stopMicrophoneRecording = true;
         }
 
-        public LeaveChannelOptions(bool stopAudioMixing, bool stopAllEffect, bool stopMicrophoneRecording)
+        public LeaveChannelOptions(bool stopAudioMixing, bool stopAllEffect, bool unloadAllEffect, bool stopMicrophoneRecording)
         {
             this.stopAudioMixing = stopAudioMixing;
             this.stopAllEffect = stopAllEffect;
+            this.unloadAllEffect = unloadAllEffect;
             this.stopMicrophoneRecording = stopMicrophoneRecording;
         }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum VIDEO_EFFECT_NODE_ID : uint
+    {
+        ///
+        /// @ignore
+        ///
+        BEAUTY = 1U << 0,
+
+        ///
+        /// @ignore
+        ///
+        STYLE_MAKEUP = 1U << 1,
+
+        ///
+        /// @ignore
+        ///
+        FILTER = 1U << 2,
+
+        ///
+        /// @ignore
+        ///
+        STICKER = 1U << 3,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum VIDEO_EFFECT_ACTION
+    {
+        ///
+        /// @ignore
+        ///
+        SAVE = 1,
+
+        ///
+        /// @ignore
+        ///
+        RESET = 2,
+
     }
 
     ///
