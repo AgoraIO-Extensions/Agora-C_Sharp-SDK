@@ -465,10 +465,10 @@ else
     CHOSEN=$(choose_iris_dep "$VIDEO_LINKS" "Windows" "$DEP_VERSION")
     IRIS_WIN_CHOSEN="$CHOSEN"
     if [ -n "$CHOSEN" ]; then
-      echo "Iris Windows dependency (video): $CHOSEN"
-      update_url_config_key video IRIS_WIN "$CHOSEN"
     else
       echo "  [INFO] Iris Windows dependency (video) not updated (empty)."
+      echo "Iris Windows dependency (video): $CHOSEN"
+      update_url_config_key video IRIS_WIN "$CHOSEN"
     fi
   fi
 fi
@@ -522,10 +522,10 @@ else
     AUDIO_LINKS=$(filter_links_by_type "$IOS_DEPENDENCIES" "audio")
     NATIVE_IOS=$(choose_native_dep "$AUDIO_LINKS" "iOS")
     if [ -n "$NATIVE_IOS" ]; then
-      echo "iOS native dependency (audio): $NATIVE_IOS"
-      update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
     else
       echo "  [INFO] iOS native dependency (audio) not updated (empty)."
+      echo "iOS native dependency (audio): $NATIVE_IOS"
+      update_url_config_key audio NATIVE_IOS "$NATIVE_IOS"
     fi
   fi
   
@@ -534,10 +534,10 @@ else
     VIDEO_LINKS=$(filter_links_by_type "$IOS_DEPENDENCIES" "video")
     NATIVE_IOS=$(choose_native_dep "$VIDEO_LINKS" "iOS")
     if [ -n "$NATIVE_IOS" ]; then
-      echo "iOS native dependency (video): $NATIVE_IOS"
-      update_url_config_key video NATIVE_IOS "$NATIVE_IOS"
     else
       echo "  [INFO] iOS native dependency (video) not updated (empty)."
+      echo "iOS native dependency (video): $NATIVE_IOS"
+      update_url_config_key video NATIVE_IOS "$NATIVE_IOS"
     fi
   fi
 fi
@@ -580,10 +580,10 @@ else
     AUDIO_LINKS=$(filter_links_by_type "$ANDROID_DEPENDENCIES" "audio")
     NATIVE_ANDROID=$(choose_native_dep "$AUDIO_LINKS" "Android")
     if [ -n "$NATIVE_ANDROID" ]; then
-      echo "Android native dependency (audio): $NATIVE_ANDROID"
-      update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
     else
       echo "  [INFO] Android native dependency (audio) not updated (empty)."
+      echo "Android native dependency (audio): $NATIVE_ANDROID"
+      update_url_config_key audio NATIVE_ANDROID "$NATIVE_ANDROID"
     fi
   fi
   
@@ -592,10 +592,10 @@ else
     VIDEO_LINKS=$(filter_links_by_type "$ANDROID_DEPENDENCIES" "video")
     NATIVE_ANDROID=$(choose_native_dep "$VIDEO_LINKS" "Android")
     if [ -n "$NATIVE_ANDROID" ]; then
-      echo "Android native dependency (video): $NATIVE_ANDROID"
-      update_url_config_key video NATIVE_ANDROID "$NATIVE_ANDROID"
     else
       echo "  [INFO] Android native dependency (video) not updated (empty)."
+      echo "Android native dependency (video): $NATIVE_ANDROID"
+      update_url_config_key video NATIVE_ANDROID "$NATIVE_ANDROID"
     fi
   fi
 fi
