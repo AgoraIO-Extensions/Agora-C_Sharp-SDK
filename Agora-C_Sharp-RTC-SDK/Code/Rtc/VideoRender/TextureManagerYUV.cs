@@ -1,4 +1,4 @@
-#define USE_UNSAFE_CODE
+﻿#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using System;
 using System.Runtime.InteropServices;
@@ -49,6 +49,23 @@ namespace Agora.Rtc
                 return _vTexture;
             }
         }
+
+        public IrisColorSpace ColorSpace
+        {
+            get
+            {
+                return _cachedVideoFrame.colorSpace;
+            }
+        }
+
+        /// <summary>
+        /// Gets the color space information as a C# ColorSpace object
+        /// </summary>
+        public ColorSpace GetColorSpaceInfo()
+        {
+            return _cachedVideoFrame.colorSpace.ToColorSpace();
+        }
+
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
         protected NativeArray<byte> _uTextureNative;
         protected NativeArray<byte> _vTextureNative;
@@ -112,12 +129,8 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
-
-            if (isFresh)
-            {
-                RenderStatHelper.LogInFrame(_sourceType);
-            }
+            float getFrameStartTime;
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType, out getFrameStartTime);
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
@@ -133,19 +146,19 @@ namespace Agora.Rtc
 #if UNITY_2021_2_OR_NEWER
                 _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #else
-                _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+        _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #endif
                 _texture.Apply();
 #if UNITY_2021_2_OR_NEWER
                 _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #else
-                _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+    _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #endif
                 _uTexture.Apply();
 #if UNITY_2021_2_OR_NEWER
                 _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #else
-                _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+   _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #endif
                 _vTexture.Apply();
                 _textureNative = _texture.GetRawTextureData<byte>();
@@ -159,12 +172,13 @@ namespace Agora.Rtc
                 }
 #else
 
-                _needResize = true;
-                FreeMemory();
-                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
-                _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
-                _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
+         _needResize = true;
+        FreeMemory();
+   _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
+  _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
+     _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
+       _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
+          return;
 #endif
                 if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
                 {
@@ -189,50 +203,57 @@ namespace Agora.Rtc
 
             try
             {
-                var startTime = Time.realtimeSinceStartup;
+                // ✅ Use the start time from GetVideoFrame instead of measuring here
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
                 _uTexture.Apply();
                 _vTexture.Apply();
 #else
-                if (_needResize)
+          if (_needResize)
+         {
+#if UNITY_2021_2_OR_NEWER
+                 _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+#else
+ _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+#endif
+       _texture.Apply();
+#if UNITY_2021_2_OR_NEWER
+     _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+#else
+ _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+#endif
+  _uTexture.Apply();
+#if UNITY_2021_2_OR_NEWER
+               _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+#else
+    _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+#endif
+   _vTexture.Apply();
+
+  
+    _needResize = false;
+   }
+
+     _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
+     (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
+    _texture.Apply();
+    _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
+    (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
+        _uTexture.Apply();
+        _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
+       (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
+    _vTexture.Apply();
+#endif
+                // ✅ Calculate draw cost from GetVideoFrame start time to now
+                var endTime = Time.realtimeSinceStartup;
+                var cost = (endTime - getFrameStartTime) * 1000.0f;
+
+                // Log to per-instance tracker only
+                if (_renderStatTracker != null)
                 {
-#if UNITY_2021_2_OR_NEWER
-                    _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
-#else
-                    _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
-#endif
-                    _texture.Apply();
-#if UNITY_2021_2_OR_NEWER
-                    _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
-#else
-                    _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
-#endif
-                    _uTexture.Apply();
-#if UNITY_2021_2_OR_NEWER
-                    _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
-#else
-                    _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
-#endif
-                    _vTexture.Apply();
-
-                   
-                    _needResize = false;
+                    _renderStatTracker.LogDrawCost(cost);
+                    _renderStatTracker.LogOutFrame();
                 }
-
-                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-                    (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
-                _texture.Apply();
-                _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
-                    (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
-                _uTexture.Apply();
-                _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
-                    (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
-                _vTexture.Apply();
-#endif
-                var cost = (Time.realtimeSinceStartup - startTime) * 1000.0f;
-                RenderStatHelper.LogDrawCost(_sourceType, cost);
-                RenderStatHelper.LogOutFrame(_sourceType);
 
             }
             catch (Exception e)

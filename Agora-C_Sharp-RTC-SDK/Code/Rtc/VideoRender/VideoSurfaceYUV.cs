@@ -16,6 +16,7 @@ namespace Agora.Rtc
         private TextureManagerYUV _textureManagerYUV;
         protected Material _material = null;
         protected float YStrideScale = 1.0f;
+        protected int matrixType = 0;
 
         void Start()
         {
@@ -42,6 +43,9 @@ namespace Agora.Rtc
                         _textureManagerYUV = _TextureManagerGameObject.AddComponent<TextureManagerYUV>();
                         _textureManagerYUV.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
                         _textureManagerYUV.EnableVideoFrameWithIdentity();
+                        
+                        // ? Apply metric reporting setting to TextureManagerYUV
+                        _textureManagerYUV.SetEnableMetricReporting(true);
                     }
                     else
                     {
@@ -69,13 +73,15 @@ namespace Agora.Rtc
                         }
                     }
 
-                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != this._textureManagerYUV.YStrideScale)
+                    if (this._textureWidth != 0 && this._textureHeight != 0 && (this.YStrideScale != this._textureManagerYUV.YStrideScale || this.matrixType != this._textureManagerYUV.ColorSpace.matrix))
                     {
                         if (_material != null)
                         {
                             _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+                            SetYUV2RGB(_material, (MatrixID)this._textureManagerYUV.ColorSpace.matrix, (RangeID)this._textureManagerYUV.ColorSpace.range);
                         }
                         this.YStrideScale = this._textureManagerYUV.YStrideScale;
+                        this.matrixType = this._textureManagerYUV.ColorSpace.matrix;
                     }
 
                 }
@@ -188,6 +194,131 @@ namespace Agora.Rtc
             }
 
             _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+            SetYUV2RGB(_material, (MatrixID)this._textureManagerYUV.ColorSpace.matrix, (RangeID)this._textureManagerYUV.ColorSpace.range);
+        }
+
+        private void SetYUV2RGB(Material mat, MatrixID matrixID, RangeID rangeID)
+        {
+            if (matrixID == MatrixID.MATRIXID_BT709)
+            {
+                if (rangeID == RangeID.RANGEID_FULL)
+                {
+                    mat.SetMatrix("_yuv2rgb", new Matrix4x4()
+                    {
+                        m00 = 1f,
+                        m01 = 0f,
+                        m02 = 1.5748f,
+                        m03 = -0.7874f,
+                        m10 = 1f,
+                        m11 = -0.1873f,
+                        m12 = -0.4681f,
+                        m13 = 0.3277f,
+                        m20 = 1f,
+                        m21 = 1.8556f,
+                        m22 = 0f,
+                        m23 = -0.9278f,
+                        m30 = 0f,
+                        m31 = 0f,
+                        m32 = 0f,
+                        m33 = 1f
+                    });
+                }
+                else
+                {
+                    mat.SetMatrix("_yuv2rgb", new Matrix4x4()
+                    {
+                        m00 = 1.1644f,
+                        m01 = 0f,
+                        m02 = 1.7927f,
+                        m03 = -0.9729f,
+                        m10 = 1.1644f,
+                        m11 = -0.2132f,
+                        m12 = -0.5329f,
+                        m13 = 0.3015f,
+                        m20 = 1.1644f,
+                        m21 = 2.1124f,
+                        m22 = 0f,
+                        m23 = -1.1334f,
+                        m30 = 0f,
+                        m31 = 0f,
+                        m32 = 0f,
+                        m33 = 1f
+                    });
+                }
+            }
+            else
+            {
+                if (rangeID == RangeID.RANGEID_FULL)
+                {
+                    mat.SetMatrix("_yuv2rgb", new Matrix4x4()
+                    {
+                        m00 = 1f,
+                        m01 = 0f,
+                        m02 = 1.402f,
+                        m03 = -0.701f,
+                        m10 = 1f,
+                        m11 = -0.3441f,
+                        m12 = -0.7141f,
+                        m13 = 0.5291f,
+                        m20 = 1f,
+                        m21 = 1.772f,
+                        m22 = 0f,
+                        m23 = -0.886f,
+                        m30 = 0f,
+                        m31 = 0f,
+                        m32 = 0f,
+                        m33 = 1f
+                    });
+                }
+                else
+                {
+                    mat.SetMatrix("_yuv2rgb", new Matrix4x4()
+                    {
+                        m00 = 1.1644f,
+                        m01 = 0f,
+                        m02 = 1.596f,
+                        m03 = -0.8742f,
+                        m10 = 1.1644f,
+                        m11 = -0.3918f,
+                        m12 = -0.813f,
+                        m13 = 0.5317f,
+                        m20 = 1.1644f,
+                        m21 = 2.0172f,
+                        m22 = 0f,
+                        m23 = -1.0856f,
+                        m30 = 0f,
+                        m31 = 0f,
+                        m32 = 0f,
+                        m33 = 1f
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enable or disable metric reporting for this VideoSurfaceYUV
+        /// </summary>
+   /// <param name="enable">True to enable reporting, false to disable</param>
+        public override void SetEnableMetricReporting(bool enable)
+        {   
+   // Update the TextureManagerYUV if it already exists
+  if (_textureManagerYUV != null)
+            {
+  _textureManagerYUV.SetEnableMetricReporting(enable);
+  }
+        }
+
+        /// <summary>
+        /// Check if metric reporting is enabled for this VideoSurfaceYUV
+      /// </summary>
+   /// <returns>True if reporting is enabled, false otherwise</returns>
+        public override bool IsMetricReportingEnabled()
+  {
+            if (_textureManagerYUV != null)
+     {
+                return _textureManagerYUV.IsMetricReportingEnabled();
+        }
+        return false;
         }
 
     }
