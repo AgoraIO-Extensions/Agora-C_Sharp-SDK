@@ -1008,16 +1008,24 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_0cebfd7:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
+                        CallbackObject._CallbackQueue.EnQueue(() =>
+                        {
 #endif
                         if (rtcEngineEventHandler == null) return;
+                        // Extract connection info
+                        var connection = (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
+                        var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
+
+                        // Update all TextureManager instances that match this sourceType
+                        UpdateTextureManagersConnectionInfo(connection.localUid, connection.channelId, sourceType);
+
                         rtcEngineEventHandler.OnLocalVideoStats(
-                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType"),
-                        (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
-                        );
+                           connection,
+                        sourceType,
+                     (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
+                           );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
+                        });
 #endif
                         break;
                     }

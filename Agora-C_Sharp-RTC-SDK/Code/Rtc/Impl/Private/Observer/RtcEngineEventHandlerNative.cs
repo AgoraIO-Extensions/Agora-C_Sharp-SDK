@@ -28,6 +28,42 @@ namespace Agora.Rtc
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         internal static AgoraCallbackObject CallbackObject = null;
+
+        /// <summary>
+        /// Update connection info for all TextureManager instances matching the sourceType
+        /// This is called from OnLocalVideoStats callback to ensure correct uid/channelId
+        /// </summary>
+        private static void UpdateTextureManagersConnectionInfo(uint uid, string channelId, VIDEO_SOURCE_TYPE sourceType)
+        {
+            try
+            {
+                // Find all TextureManager game objects
+                var textureManagers = GameObject.FindObjectsOfType<TextureManager>();
+
+                foreach (var tm in textureManagers)
+                {
+                    // Use reflection to check if this TextureManager matches the sourceType
+                    var sourceTypeField = tm.GetType().GetField("_sourceType",
+                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+                    if (sourceTypeField != null)
+                    {
+                        var tmSourceType = (VIDEO_SOURCE_TYPE)sourceTypeField.GetValue(tm);
+
+                        if (tmSourceType == sourceType)
+                        {
+                            // Update connection info
+                            tm.UpdateConnectionInfo(uid, channelId, sourceType);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AgoraLog.LogError($"UpdateTextureManagersConnectionInfo failed: {ex.Message}");
+            }
+        }
+
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS

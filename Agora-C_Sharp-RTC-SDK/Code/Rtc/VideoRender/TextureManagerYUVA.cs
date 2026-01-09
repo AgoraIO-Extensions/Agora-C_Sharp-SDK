@@ -1,4 +1,4 @@
-#define USE_UNSAFE_CODE
+﻿#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using System;
 using System.Runtime.InteropServices;
@@ -87,12 +87,10 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
+            float getFrameStartTime;
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType, out getFrameStartTime);
 
-            if (isFresh)
-            {
-                RenderStatHelper.LogInFrame(_sourceType);
-            }
+
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
@@ -149,6 +147,7 @@ namespace Agora.Rtc
                 _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
                 _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
                 _cachedVideoFrame.alphaBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
+                return;
 #endif
                 if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
                 {
@@ -173,7 +172,7 @@ namespace Agora.Rtc
 
             try
             {
-                var startTime = Time.realtimeSinceStartup;
+                // ✅ Use the start time from GetVideoFrame instead of measuring here
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
                 _uTexture.Apply();
@@ -223,9 +222,16 @@ namespace Agora.Rtc
                     (int)_cachedVideoFrame.width * (int)_videoPixelHeight);
                 _aTexture.Apply();
 #endif
-                var cost = (Time.realtimeSinceStartup - startTime) * 1000.0f;
-                RenderStatHelper.LogDrawCost(_sourceType, cost);
-                RenderStatHelper.LogOutFrame(_sourceType);
+                // ✅ Calculate draw cost from GetVideoFrame start time to now
+                var endTime = Time.realtimeSinceStartup;
+                var cost = (endTime - getFrameStartTime) * 1000.0f;
+
+                // Log to per-instance tracker only
+                if (_renderStatTracker != null)
+                {
+                    _renderStatTracker.LogDrawCost(cost);
+                    _renderStatTracker.LogOutFrame();
+                }
 
             }
             catch (Exception e)
