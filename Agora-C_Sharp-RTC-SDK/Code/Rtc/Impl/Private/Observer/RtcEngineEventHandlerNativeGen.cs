@@ -1017,7 +1017,9 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
 
                         // Update all TextureManager instances that match this sourceType
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                         UpdateTextureManagersConnectionInfo(connection.localUid, connection.channelId, sourceType);
+#endif
 
                         rtcEngineEventHandler.OnLocalVideoStats(
                            connection,

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using UnityEngine;
+#endif
 
 namespace Agora.Rtc
 {
@@ -127,7 +129,11 @@ namespace Agora.Rtc
                     case MetricType.DRAW_COST:
                         return ID_REMOTE_DRAW_COST;
                     default:
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                         Debug.LogWarning($"Unknown metric type: {metricType}");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                        System.Diagnostics.Debug.WriteLine($"[Agora Warning] Unknown metric type: {metricType}");
+#endif
                         return 0;
                 }
             }
@@ -142,7 +148,11 @@ namespace Agora.Rtc
                     case MetricType.DRAW_COST:
                         return ID_LOCAL_DRAW_COST;
                     default:
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                         Debug.LogWarning($"Unknown metric type: {metricType}");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                        System.Diagnostics.Debug.WriteLine($"[Agora Warning] Unknown metric type: {metricType}");
+#endif
                         return 0;
                 }
             }
@@ -181,7 +191,11 @@ namespace Agora.Rtc
             _localUid = uid;  // Initially same as uid, will be updated for local video via OnLocalVideoStats
             _channelId = channelId;
             _sourceType = sourceType;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             _lastTime = Time.realtimeSinceStartup;
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            _lastTime = System.Environment.TickCount / 1000.0f;
+#endif
         }
 
         /// <summary>
@@ -206,7 +220,11 @@ namespace Agora.Rtc
                 // Local video: uid stays 0, localUid gets updated
                 if (_localUid != uid)
                 {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     Debug.Log($"RenderStatTracker: Updating LocalUID from {_localUid} to {uid} (UID remains {_uid})");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                    System.Diagnostics.Debug.WriteLine($"[Agora Log] RenderStatTracker: Updating LocalUID from {_localUid} to {uid} (UID remains {_uid})");
+#endif
                     _localUid = uid;
                     changed = true;
                 }
@@ -216,7 +234,11 @@ namespace Agora.Rtc
                 // Remote video: both uid and localUid should be the same
                 if (_uid != uid)
                 {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     Debug.Log($"RenderStatTracker: Updating UID from {_uid} to {uid}");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                    System.Diagnostics.Debug.WriteLine($"[Agora Log] RenderStatTracker: Updating UID from {_uid} to {uid}");
+#endif
                     _uid = uid;
                     _localUid = uid;
                     changed = true;
@@ -225,21 +247,33 @@ namespace Agora.Rtc
 
             if (_channelId != channelId && !string.IsNullOrEmpty(channelId))
             {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 Debug.Log($"RenderStatTracker: Updating ChannelId from '{_channelId}' to '{channelId}'");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                System.Diagnostics.Debug.WriteLine($"[Agora Log] RenderStatTracker: Updating ChannelId from '{_channelId}' to '{channelId}'");
+#endif
                 _channelId = channelId;
                 changed = true;
             }
 
             if (_sourceType != sourceType)
             {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 Debug.Log($"RenderStatTracker: Updating SourceType from {_sourceType} to {sourceType}");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                System.Diagnostics.Debug.WriteLine($"[Agora Log] RenderStatTracker: Updating SourceType from {_sourceType} to {sourceType}");
+#endif
                 _sourceType = sourceType;
                 changed = true;
             }
 
             if (changed)
             {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 Debug.Log($"RenderStatTracker: Connection info updated - UID: {_uid}, LocalUID: {_localUid}, Channel: {_channelId}, Source: {_sourceType}");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                System.Diagnostics.Debug.WriteLine($"[Agora Log] RenderStatTracker: Connection info updated - UID: {_uid}, LocalUID: {_localUid}, Channel: {_channelId}, Source: {_sourceType}");
+#endif
             }
         }
 
@@ -279,7 +313,11 @@ namespace Agora.Rtc
 
         private void CheckAndReport()
         {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             float currentTime = Time.realtimeSinceStartup;
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            float currentTime = System.Environment.TickCount / 1000.0f;
+#endif
             float actualInterval = currentTime - _lastTime;
 
             if (actualInterval >= _interval)
@@ -322,7 +360,11 @@ namespace Agora.Rtc
                         sb.AppendLine($"VIDEO LOCAL RENDER INTERVAL: {renderIntervalMean:F2} ms (avg interval between frames, {_outCount} frames in {actualInterval:F2}s)");
                     }
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                     Debug.Log(sb.ToString());
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                    System.Diagnostics.Debug.WriteLine($"[Agora Log] {sb.ToString()}");
+#endif
 
                     // Report metrics via SetParameters if enabled
                     if (_enableReporting)
@@ -388,12 +430,20 @@ namespace Agora.Rtc
                 int ret = engine.SetParameters(parameters);
 
                 // Log the JSON for debugging
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 Debug.Log($"[RenderStatTracker]: ret {ret} JSON: {parameters}");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                System.Diagnostics.Debug.WriteLine($"[Agora Log] [RenderStatTracker]: ret {ret} JSON: {parameters}");
+#endif
                
             }
             catch (System.Exception ex)
             {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 Debug.LogError($"RenderStatTracker: Failed to report metrics - {ex.Message}");
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                System.Diagnostics.Debug.WriteLine($"[Agora Error] RenderStatTracker: Failed to report metrics - {ex.Message}");
+#endif
             }
         }
     }
