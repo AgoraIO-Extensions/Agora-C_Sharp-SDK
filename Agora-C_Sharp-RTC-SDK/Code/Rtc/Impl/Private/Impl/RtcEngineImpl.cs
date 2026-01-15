@@ -1090,5 +1090,45 @@ namespace Agora.Rtc
             imageBufferHandle.Free();
             return result;
         }
+
+
+        public IVideoEffectObject CreateVideoEffectObject(string bundlePath, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
+        {
+            _param.Clear();
+            _param.Add("bundlePath", bundlePath);
+            _param.Add("type", type);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_CREATEVIDEOEFFECTOBJECT_65bd50d,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            if (nRet != 0)
+            {
+                return null;
+            }
+
+            var objectId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            var videoEffectObjectImpl = new VideoEffectObjectImpl(_irisApiEngine);
+            var videoEffectObject = new VideoEffectObject(null, videoEffectObjectImpl, objectId);
+            return videoEffectObject;
+        }
+
+        public int DestroyVideoEffectObject(IVideoEffectObject videoEffectObject)
+        {
+            _param.Clear();
+            var objectId = videoEffectObject.GetObjectId();
+            _param.Add("objectId", objectId);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_DESTROYVIDEOEFFECTOBJECT_66d092b,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return result;
+        }
     }
 }

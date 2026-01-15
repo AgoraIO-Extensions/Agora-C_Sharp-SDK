@@ -34,10 +34,15 @@ export default function (
         }
     });
 
+    const videoEffectObjectInterface = interfaces.find((e) => {
+        return e.name == "IVideoEffectObject";
+    });
+
     interfaces = interfaces.filter((e) => {
         return e.name != "IMediaRecorder" &&
             e.name != "IMusicPlayer" &&
-            e.name != "IMediaPlayer";
+            e.name != "IMediaPlayer" &&
+            e.name != "IVideoEffectObject";
     });
 
 
@@ -64,6 +69,13 @@ export default function (
         fileContentTemplatePath: path.join(__dirname, "interface_file_music_player_content.mustache"),
         view: musicPlayerInterface
     });
+
+    const videoEffectObjectInterfaceResult: RenderResult[] = renderWithConfiguration({
+        fileNameTemplatePath: path.join(__dirname, "interface_file_name.mustache"),
+        fileContentTemplatePath: path.join(__dirname, "interface_file_video_effect_object_content.mustache"),
+        view: videoEffectObjectInterface
+    });
+
     //interfaces process end
 
     const callbackResult: RenderResult[] = renderWithConfiguration({
@@ -78,6 +90,7 @@ export default function (
         ...mediaRecorderInterfaceResult,
         ...musicPlayerInterfaceResult,
         ...mediaPlayerInterfaceResult,
+        ...videoEffectObjectInterfaceResult,
         ...callbackResult
     ];
 }

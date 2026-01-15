@@ -6,7 +6,7 @@ namespace Agora.Rtc
 {
     using IrisVideoFrameBufferHandle = IntPtr;
 
-     ///
+    ///
     /// @ignore
     ///
     public enum VideoSurfaceType
@@ -138,7 +138,7 @@ namespace Agora.Rtc
         {
             // ? Record the start time when getting video frame
             startTime = UnityEngine.Time.realtimeSinceStartup;
-        
+
             if (_agoraRtcEngine == null)
             {
                 AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));

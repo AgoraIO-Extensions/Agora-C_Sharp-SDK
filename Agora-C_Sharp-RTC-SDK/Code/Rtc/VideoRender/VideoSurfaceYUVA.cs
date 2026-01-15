@@ -189,23 +189,14 @@ namespace Agora.Rtc
             _material.SetFloat("_yStrideScale", _textureManagerYUVA.YStrideScale);
         }
 
-        /// <summary>
-        /// Enable or disable metric reporting for this VideoSurfaceYUVA
-        /// </summary>
-        /// <param name="enable">True to enable reporting, false to disable</param>
         public override void SetEnableMetricReporting(bool enable)
         {
-            // Update the TextureManagerYUVA if it already exists
             if (_textureManagerYUVA != null)
             {
                 _textureManagerYUVA.SetEnableMetricReporting(enable);
             }
         }
 
-        /// <summary>
-        /// Check if metric reporting is enabled for this VideoSurfaceYUVA
-        /// </summary>
-        /// <returns>True if reporting is enabled, false otherwise</returns>
         public override bool IsMetricReportingEnabled()
         {
             if (_textureManagerYUVA != null)

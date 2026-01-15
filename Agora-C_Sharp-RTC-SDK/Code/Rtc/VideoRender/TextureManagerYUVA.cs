@@ -205,7 +205,7 @@ namespace Agora.Rtc
                     _aTexture.Resize(_cachedVideoFrame.width, _cachedVideoFrame.height);
 #endif
                     _aTexture.Apply();
-                   
+
                     _needResize = false;
                 }
 
@@ -292,7 +292,7 @@ namespace Agora.Rtc
                 _cachedVideoFrame.vBuffer = IntPtr.Zero;
             }
 
-             if (_cachedVideoFrame.alphaBuffer != IntPtr.Zero)
+            if (_cachedVideoFrame.alphaBuffer != IntPtr.Zero)
             {
                 Marshal.FreeHGlobal(_cachedVideoFrame.alphaBuffer);
                 _cachedVideoFrame.yBuffer = IntPtr.Zero;

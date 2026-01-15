@@ -435,7 +435,7 @@ namespace Agora.Rtc
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
                 System.Diagnostics.Debug.WriteLine($"[Agora Log] [RenderStatTracker]: ret {ret} JSON: {parameters}");
 #endif
-               
+
             }
             catch (System.Exception ex)
             {

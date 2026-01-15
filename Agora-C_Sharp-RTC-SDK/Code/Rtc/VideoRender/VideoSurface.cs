@@ -63,8 +63,7 @@ namespace Agora.Rtc
                         _textureManager = _TextureManagerGameObject.AddComponent<TextureManager>();
                         _textureManager.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
                         _textureManager.EnableVideoFrameWithIdentity();
-                        
-                        // Apply metric reporting setting to TextureManager
+
                         _textureManager.SetEnableMetricReporting(true);
                     }
                     else
@@ -216,10 +215,10 @@ namespace Agora.Rtc
         ///
         public virtual void SetForUser(uint uid = 0, string channelId = "", VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
-        Uid = uid;
+            Uid = uid;
             ChannelId = uid == 0 ? "" : channelId;
             SourceType = source_type;
-     _needUpdateInfo = false;
+            _needUpdateInfo = false;
         }
 
         ///
@@ -235,15 +234,10 @@ namespace Agora.Rtc
         }
 
         ///
-        /// <summary>
-        /// Enable or disable metric reporting for this VideoSurface
-        /// </summary>
-        ///
-        /// <param name="enable">True to enable reporting, false to disable</param>
+        /// @ignore
         ///
         public virtual void SetEnableMetricReporting(bool enable)
-        {   
-            // Update the TextureManager if it already exists
+        {
             if (_textureManager != null)
             {
                 _textureManager.SetEnableMetricReporting(enable);
@@ -251,11 +245,7 @@ namespace Agora.Rtc
         }
 
         ///
-        /// <summary>
-        /// Check if metric reporting is enabled for this VideoSurface
-        /// </summary>
-        ///
-        /// <returns>True if reporting is enabled, false otherwise</returns>
+        /// @ignore
         ///
         public virtual bool IsMetricReportingEnabled()
         {

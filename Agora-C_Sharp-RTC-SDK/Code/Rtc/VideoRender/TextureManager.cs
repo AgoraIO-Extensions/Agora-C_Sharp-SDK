@@ -148,8 +148,8 @@ namespace Agora.Rtc
             }
 #else
 
-     _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
-       
+            _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
+
 #endif
         }
 
@@ -218,11 +218,11 @@ _texture.Resize(_videoPixelWidth, _videoPixelHeight);
                 }
 #else
 
-  _needResize = true;
-     FreeMemory();
-   _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-   _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
-    return;
+                _needResize = true;
+                FreeMemory();
+                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
+                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
+                return;
 #endif
             }
             else
@@ -242,20 +242,20 @@ _texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
 #else
-       if (_needResize)
-        {
+                if (_needResize)
+                {
 #if UNITY_2021_2_OR_NEWER
       _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #else
-     _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+                    _texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #endif
-  _texture.Apply();
-  _needResize = false;
-   }
+                    _texture.Apply();
+                    _needResize = false;
+                }
 
-      _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
- (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
-   _texture.Apply();
+                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
+           (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
+                _texture.Apply();
 #endif
                 // ✅ Calculate draw cost from GetVideoFrame start time to now
                 var endTime = Time.realtimeSinceStartup;
@@ -357,11 +357,11 @@ _texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
             _cachedVideoFrame.yBuffer = IntPtr.Zero;
 #else
-     if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
-      {
+            if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
+            {
                 Marshal.FreeHGlobal(_cachedVideoFrame.yBuffer);
-   _cachedVideoFrame.yBuffer = IntPtr.Zero;
-   }
+                _cachedVideoFrame.yBuffer = IntPtr.Zero;
+            }
 #endif
         }
 

@@ -92,10 +92,5 @@ namespace Agora.Rtc
             return _impl.GetVideoEffectBoolParam(GetObjectId(), option, key);
         }
 
-        public override int GetObjectId()
-        {
-            return _objectId;
-        }
-
     }
 }

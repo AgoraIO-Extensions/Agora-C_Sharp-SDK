@@ -172,13 +172,13 @@ namespace Agora.Rtc
                 }
 #else
 
-         _needResize = true;
-        FreeMemory();
-   _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-  _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
-     _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
-       _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
-          return;
+                _needResize = true;
+                FreeMemory();
+                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
+                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
+                _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
+                _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
+                return;
 #endif
                 if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
                 {
@@ -209,40 +209,40 @@ namespace Agora.Rtc
                 _uTexture.Apply();
                 _vTexture.Apply();
 #else
-          if (_needResize)
-         {
+                if (_needResize)
+                {
 #if UNITY_2021_2_OR_NEWER
                  _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #else
- _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                    _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #endif
-       _texture.Apply();
+                    _texture.Apply();
 #if UNITY_2021_2_OR_NEWER
      _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #else
- _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+                    _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #endif
-  _uTexture.Apply();
+                    _uTexture.Apply();
 #if UNITY_2021_2_OR_NEWER
                _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #else
-    _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+                    _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #endif
-   _vTexture.Apply();
+                    _vTexture.Apply();
 
-  
-    _needResize = false;
-   }
 
-     _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-     (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
-    _texture.Apply();
-    _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
-    (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
-        _uTexture.Apply();
-        _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
-       (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
-    _vTexture.Apply();
+                    _needResize = false;
+                }
+
+                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
+                (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
+                _texture.Apply();
+                _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
+                (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
+                _uTexture.Apply();
+                _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
+               (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
+                _vTexture.Apply();
 #endif
                 // ✅ Calculate draw cost from GetVideoFrame start time to now
                 var endTime = Time.realtimeSinceStartup;

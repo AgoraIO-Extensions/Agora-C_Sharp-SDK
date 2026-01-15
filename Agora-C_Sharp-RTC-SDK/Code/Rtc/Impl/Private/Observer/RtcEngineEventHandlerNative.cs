@@ -10,7 +10,7 @@ namespace Agora.Rtc
     internal static partial class RtcEngineEventHandlerNative
     {
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-        private static Object observerLock = new Object();
+        private static System.Object observerLock = new System.Object();
 #endif
         private static IRtcEngineEventHandler rtcEngineEventHandler = null;
 
@@ -78,8 +78,8 @@ namespace Agora.Rtc
                 if (rtcEngineEventHandler == null)
                     return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null)
-                return;
+                if (CallbackObject == null || CallbackObject._CallbackQueue == null)
+                    return;
 #endif
 
                 IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
@@ -106,7 +106,8 @@ namespace Agora.Rtc
                             }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() =>{
+                            CallbackObject._CallbackQueue.EnQueue(() =>
+                            {
 #endif
                             if (rtcEngineEventHandler == null)
                                 return;
@@ -118,7 +119,7 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                                 byteLength,
                                 (UInt64)AgoraJson.GetData<UInt64>(jsonData, "sentTs"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
+                            });
 #endif
                             break;
                         }
@@ -134,7 +135,8 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                             }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
+                            CallbackObject._CallbackQueue.EnQueue(() =>
+                            {
 #endif
                             if (rtcEngineEventHandler == null) return;
                             rtcEngineEventHandler.OnAudioMetadataReceived(
@@ -144,7 +146,34 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                             metadataLength
                             );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-}); 
+                            });
+#endif
+                            break;
+                        }
+
+                    case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_0cebfd7:
+                        {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                        CallbackObject._CallbackQueue.EnQueue(() =>
+                        {
+#endif
+                            if (rtcEngineEventHandler == null) return;
+                            // Extract connection info
+                            var connection = (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
+                            var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
+
+                            // Update all TextureManager instances that match this sourceType
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                        UpdateTextureManagersConnectionInfo(connection.localUid, connection.channelId, sourceType);
+#endif
+
+                            rtcEngineEventHandler.OnLocalVideoStats(
+                                connection,
+                                sourceType,
+                                (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
+                            );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                        });
 #endif
                             break;
                         }
