@@ -129,8 +129,7 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-            float getFrameStartTime;
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType, out getFrameStartTime);
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
@@ -146,7 +145,7 @@ namespace Agora.Rtc
 #if UNITY_2021_2_OR_NEWER
                 _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #else
-        _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #endif
                 _texture.Apply();
 #if UNITY_2021_2_OR_NEWER
@@ -158,7 +157,7 @@ namespace Agora.Rtc
 #if UNITY_2021_2_OR_NEWER
                 _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #else
-   _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+                _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #endif
                 _vTexture.Apply();
                 _textureNative = _texture.GetRawTextureData<byte>();
@@ -178,7 +177,6 @@ namespace Agora.Rtc
                 _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
                 _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
                 _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
-                return;
 #endif
                 if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
                 {
@@ -212,7 +210,7 @@ namespace Agora.Rtc
                 if (_needResize)
                 {
 #if UNITY_2021_2_OR_NEWER
-                 _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
+                    _texture.Reinitialize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #else
                     _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
 #endif
@@ -224,12 +222,11 @@ namespace Agora.Rtc
 #endif
                     _uTexture.Apply();
 #if UNITY_2021_2_OR_NEWER
-               _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
+                    _vTexture.Reinitialize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #else
                     _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
 #endif
                     _vTexture.Apply();
-
 
                     _needResize = false;
                 }
@@ -244,15 +241,11 @@ namespace Agora.Rtc
                (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
                 _vTexture.Apply();
 #endif
-                // ✅ Calculate draw cost from GetVideoFrame start time to now
-                var endTime = Time.realtimeSinceStartup;
-                var cost = (endTime - getFrameStartTime) * 1000.0f;
-
+             
                 // Log to per-instance tracker only
-                if (_renderStatTracker != null)
+                if (_renderTrackClock != null)
                 {
-                    _renderStatTracker.LogDrawCost(cost);
-                    _renderStatTracker.LogOutFrame();
+                    _renderTrackClock.Tick();
                 }
 
             }

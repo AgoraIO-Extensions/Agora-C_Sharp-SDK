@@ -43,8 +43,6 @@ namespace Agora.Rtc
                         _textureManagerYUV = _TextureManagerGameObject.AddComponent<TextureManagerYUV>();
                         _textureManagerYUV.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
                         _textureManagerYUV.EnableVideoFrameWithIdentity();
-
-                        _textureManagerYUV.SetEnableMetricReporting(true);
                     }
                     else
                     {
@@ -293,24 +291,6 @@ namespace Agora.Rtc
                 }
             }
         }
-
-        public override void SetEnableMetricReporting(bool enable)
-        {
-            if (_textureManagerYUV != null)
-            {
-                _textureManagerYUV.SetEnableMetricReporting(enable);
-            }
-        }
-
-        public override bool IsMetricReportingEnabled()
-        {
-            if (_textureManagerYUV != null)
-            {
-                return _textureManagerYUV.IsMetricReportingEnabled();
-            }
-            return false;
-        }
-
     }
 }
 

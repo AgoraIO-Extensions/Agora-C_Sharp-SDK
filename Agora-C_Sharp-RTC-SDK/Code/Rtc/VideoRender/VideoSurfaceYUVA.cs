@@ -38,7 +38,6 @@ namespace Agora.Rtc
                         _textureManagerYUVA = _TextureManagerGameObject.AddComponent<TextureManagerYUVA>();
                         _textureManagerYUVA.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
                         _textureManagerYUVA.EnableVideoFrameWithIdentity();
-                        _textureManagerYUVA.SetEnableMetricReporting(true);
                     }
                     else
                     {
@@ -188,24 +187,6 @@ namespace Agora.Rtc
 
             _material.SetFloat("_yStrideScale", _textureManagerYUVA.YStrideScale);
         }
-
-        public override void SetEnableMetricReporting(bool enable)
-        {
-            if (_textureManagerYUVA != null)
-            {
-                _textureManagerYUVA.SetEnableMetricReporting(enable);
-            }
-        }
-
-        public override bool IsMetricReportingEnabled()
-        {
-            if (_textureManagerYUVA != null)
-            {
-                return _textureManagerYUVA.IsMetricReportingEnabled();
-            }
-            return false;
-        }
-
     }
 }
 

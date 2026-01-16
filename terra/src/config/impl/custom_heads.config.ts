@@ -305,6 +305,8 @@ export const customHeads: CustomHead[] = [
             "onStreamMessage",
             "onAudioMetadataReceived",
             "onLocalVideoStats",
+            "onJoinChannelSuccess",
+            "onLeaveChannel",
         ],
         merge_nodes: [{
             name: "IDirectCdnStreamingEventHandler",

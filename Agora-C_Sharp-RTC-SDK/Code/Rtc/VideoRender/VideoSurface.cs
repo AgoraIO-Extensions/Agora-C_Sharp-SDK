@@ -63,8 +63,6 @@ namespace Agora.Rtc
                         _textureManager = _TextureManagerGameObject.AddComponent<TextureManager>();
                         _textureManager.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
                         _textureManager.EnableVideoFrameWithIdentity();
-
-                        _textureManager.SetEnableMetricReporting(true);
                     }
                     else
                     {
@@ -231,29 +229,6 @@ namespace Agora.Rtc
         public virtual void SetEnable(bool enable)
         {
             Enable = enable;
-        }
-
-        ///
-        /// @ignore
-        ///
-        public virtual void SetEnableMetricReporting(bool enable)
-        {
-            if (_textureManager != null)
-            {
-                _textureManager.SetEnableMetricReporting(enable);
-            }
-        }
-
-        ///
-        /// @ignore
-        ///
-        public virtual bool IsMetricReportingEnabled()
-        {
-            if (_textureManager != null)
-            {
-                return _textureManager.IsMetricReportingEnabled();
-            }
-            return false;
         }
 
         virtual protected string GenerateTextureManagerUniqueName()
