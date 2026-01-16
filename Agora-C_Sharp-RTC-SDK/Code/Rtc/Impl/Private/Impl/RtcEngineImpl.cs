@@ -1121,6 +1121,10 @@ namespace Agora.Rtc
             }
 
             var objectId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            if(objectId <= 0)
+            {
+                return null;
+            }
             var videoEffectObjectImpl = new VideoEffectObjectImpl(_irisApiEngine);
             var videoEffectObject = new VideoEffectObject(null, videoEffectObjectImpl, objectId);
             return videoEffectObject;

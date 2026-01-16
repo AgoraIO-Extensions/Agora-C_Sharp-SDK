@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Agora.Rtm;
 using UnityEngine;
 
 #if AGORA_RTC
