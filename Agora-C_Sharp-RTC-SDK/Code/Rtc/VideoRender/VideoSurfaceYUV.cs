@@ -1,6 +1,4 @@
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-
-using Agora.Rtm;
 using UnityEngine;
 using UnityEngine.UI;
 
