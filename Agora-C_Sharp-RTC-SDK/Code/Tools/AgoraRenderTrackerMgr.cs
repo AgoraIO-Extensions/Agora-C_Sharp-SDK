@@ -21,7 +21,7 @@ namespace Agora.Rtm
 
     public class MetricCounters
     {
-        public List<MetricCounter> counter = new List<MetricCounter>();
+        public List<MetricCounter> counters = new List<MetricCounter>();
         public int uid;
     }
 
@@ -67,10 +67,9 @@ namespace Agora.Rtm
 
     internal sealed class AgoraRenderTrackerMgr : MonoBehaviour
     {
-        public const int ID_LOCAL_IN_FPS = 579;
-        // public const int ID_LOCAL_OUT_FPS = 526;
+        public const int ID_LOCAL_IN_FPS = 526;
         public const int ID_LOCAL_DRAW_COST = 577;
-        //public const int ID_REMOTE_IN_FPS = 578;
+        
         public const int ID_REMOTE_OUT_FPS = 537;
         public const int ID_REMOTE_DRAW_COST = 576;
 
@@ -140,7 +139,8 @@ namespace Agora.Rtm
                     trackData.connection = connection;
                     foreach (var tm in textureManagers)
                     {
-                        if (tm.ChannelId == connection.channelId)
+                        //tm.ChannelId == "" mean local video view
+                        if (tm.ChannelId == connection.channelId || tm.ChannelId == "")
                         {
                             if (tm.RenderTrackClock.Average != 0)
                             {
@@ -151,8 +151,8 @@ namespace Agora.Rtm
                                 if (tm.SourceType == VIDEO_SOURCE_TYPE.VIDEO_SOURCE_REMOTE)
                                 {
                                     //remote video
-                                    mcs.counter.Add(new MetricCounter() { counterId = ID_REMOTE_OUT_FPS, value = fps });
-                                    mcs.counter.Add(new MetricCounter() { counterId = ID_REMOTE_DRAW_COST, value = drawCost });
+                                    mcs.counters.Add(new MetricCounter() { counterId = ID_REMOTE_OUT_FPS, value = fps });
+                                    mcs.counters.Add(new MetricCounter() { counterId = ID_REMOTE_DRAW_COST, value = drawCost });
                                 }
                                 else
                                 {
@@ -162,13 +162,13 @@ namespace Agora.Rtm
                                        localVideoMarks[connection].sourceType == tm.SourceType)
                                     {
 
-                                        mcs.counter.Add(new MetricCounter() { counterId = ID_LOCAL_IN_FPS, value = fps });
-                                        mcs.counter.Add(new MetricCounter() { counterId = ID_LOCAL_DRAW_COST, value = drawCost });
+                                        mcs.counters.Add(new MetricCounter() { counterId = ID_LOCAL_IN_FPS, value = fps });
+                                        mcs.counters.Add(new MetricCounter() { counterId = ID_LOCAL_DRAW_COST, value = drawCost });
                                         //local video use uid 0
                                         mcs.uid = 0;
                                     }
                                 }
-                                if (mcs.counter.Count > 0)
+                                if (mcs.counters.Count > 0)
                                 {
                                     trackData.data.Add(mcs);
                                 }
@@ -181,8 +181,7 @@ namespace Agora.Rtm
                         var engine = RtcEngine.Get();
                         if (engine != null)
                         {
-                            var json = AgoraJson.ToJson<TrackData>(trackData);
-                            int ret = engine.SetParameters("rtc.report.argus_counters", json);
+                            int ret = engine.SetParameters("rtc.report.argus_counters", trackData);
                             if (ret != 0)
                             {
                                 AgoraLog.LogWarning("AgoraRenderTrackerMgr SetParameters rtc.report.argus_counters failed, ret:" + ret);
