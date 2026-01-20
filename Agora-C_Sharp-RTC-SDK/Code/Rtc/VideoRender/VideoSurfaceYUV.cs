@@ -53,15 +53,15 @@ namespace Agora.Rtc
             matrix4x4[0, 0] = matrix3x3_colMajor[0]; // M00
             matrix4x4[1, 0] = matrix3x3_colMajor[1]; // M10
             matrix4x4[2, 0] = matrix3x3_colMajor[2]; // M20
-
+            
             matrix4x4[0, 1] = matrix3x3_colMajor[3]; // M01
             matrix4x4[1, 1] = matrix3x3_colMajor[4]; // M11
             matrix4x4[2, 1] = matrix3x3_colMajor[5]; // M21
-
+            
             matrix4x4[0, 2] = matrix3x3_colMajor[6]; // M02
             matrix4x4[1, 2] = matrix3x3_colMajor[7]; // M12
             matrix4x4[2, 2] = matrix3x3_colMajor[8]; // M22
-
+            
             float yOffset = offsets[0];
             float uOffset = offsets[1];
             float vOffset = offsets[2];
@@ -169,7 +169,10 @@ namespace Agora.Rtc
                         this.YStrideScale = this._textureManagerYUV.YStrideScale;
                     }
 
-                    UpdateYUV2RGBMatrixIfNeed();
+                    if (_material != null)
+                    {
+                        UpdateYUV2RGBMatrixIfNeed();
+                    }
                 }
             }
             else
@@ -280,6 +283,14 @@ namespace Agora.Rtc
             }
 
             _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+            
+            var colorSpace = new IrisColorSpace()
+            {
+                primaries = (int)this._primaries,
+                range = (int)this._rangeID,
+            };
+            var matrix4x4 = GetMatrix4X4ByColorSpace(colorSpace);
+            _material.SetMatrix("_yuv2rgb", matrix4x4);
         }
 
         protected virtual void UpdateYUV2RGBMatrixIfNeed()

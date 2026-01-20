@@ -53,6 +53,9 @@ namespace Agora.Rtm
         {
             get
             {
+                if(_count == 0)
+                    return 0;
+                
                 long sum = 0;
                 for (int i = 0; i < _count; i++)
                 {
