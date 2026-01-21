@@ -117,15 +117,10 @@ namespace Agora.Rtm
         private void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
-            Instance = this;
             gameObject.hideFlags = HideFlags.HideInHierarchy;
         }
 
-        private void OnDestroy()
-        {
-            Instance = null;
-        }
-
+    
         private void Update()
         {
             long currentTimestampMs = RenderTrackClock.curTimestampMs;

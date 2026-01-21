@@ -31,7 +31,6 @@ namespace Agora.Rtc
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
         private AgoraCallbackObject _callbackObject;
-        private AgoraRenderTrackerMgr _renderTrackerMgr;
 #endif
         // DirectCdnStreamingEventHandler
         private RtcEventHandlerHandle _rtcDirectCdnStreamingEventHandle = new RtcEventHandlerHandle();
@@ -158,10 +157,10 @@ namespace Agora.Rtc
                 _callbackObject = null;
                 RtcEngineEventHandlerNative.CallbackObject = null;
             }
-            if(_renderTrackerMgr != null)
+            if(AgoraRenderTrackerMgr.Instance != null)
             {
-                UnityEngine.Object.Destroy(_renderTrackerMgr.gameObject);
-                _renderTrackerMgr = null;
+                UnityEngine.Object.Destroy(AgoraRenderTrackerMgr.Instance.gameObject);
+                AgoraRenderTrackerMgr.Instance = null;
             }
 #endif
             _disposed = true;
@@ -200,10 +199,10 @@ namespace Agora.Rtc
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
                 RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
             }
-            if(_renderTrackerMgr == null)
+            if(AgoraRenderTrackerMgr.Instance == null)
             {
                 UnityEngine.GameObject renderTrackerMgrObj = new UnityEngine.GameObject("AgoraRenderTrackerMgr_" + GetHashCode());
-                _renderTrackerMgr = renderTrackerMgrObj.AddComponent<AgoraRenderTrackerMgr>();
+                AgoraRenderTrackerMgr.Instance = renderTrackerMgrObj.AddComponent<AgoraRenderTrackerMgr>();
             }
 #endif
 
