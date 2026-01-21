@@ -139,12 +139,15 @@ namespace Agora.Rtm
                     trackData.connection = connection;
                     foreach (var tm in textureManagers)
                     {
+                        if(tm.renderTrackClock == null)
+                            continue;
+
                         //tm.ChannelId == "" mean local video view
                         if (tm.ChannelId == connection.channelId || tm.ChannelId == "")
                         {
-                            if (tm.RenderTrackClock.Average != 0)
+                            if (tm.renderTrackClock.Average != 0)
                             {
-                                int drawCost = (int)tm.RenderTrackClock.Average;
+                                int drawCost = (int)tm.renderTrackClock.Average;
                                 int fps = (int)(1000 / drawCost);
                                 var mcs = new MetricCounters();
                                 mcs.uid = (int)tm.Uid;

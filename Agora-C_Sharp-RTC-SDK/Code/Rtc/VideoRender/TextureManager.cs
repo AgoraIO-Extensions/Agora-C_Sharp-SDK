@@ -79,7 +79,7 @@ namespace Agora.Rtc
         // Per-instance render stat tracker
         protected RenderTrackClock _renderTrackClock;
 
-        public RenderTrackClock RenderTrackClock
+        public RenderTrackClock renderTrackClock
         {
             get
             {
@@ -121,6 +121,7 @@ namespace Agora.Rtc
             DontDestroyOnLoad(this.gameObject);
             InitTexture();
             InitIrisVideoFrame();
+             _renderTrackClock = new RenderTrackClock(60);
         }
 
         protected virtual void Update()
@@ -206,12 +207,6 @@ namespace Agora.Rtc
                 {
                     _videoStreamManager.EnableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
                     _needUpdateInfo = false;
-
-                    // Initialize render stat tracker
-                    if (_renderTrackClock == null)
-                    {
-                        _renderTrackClock = new RenderTrackClock(60);
-                    }
                 }
             }
         }
