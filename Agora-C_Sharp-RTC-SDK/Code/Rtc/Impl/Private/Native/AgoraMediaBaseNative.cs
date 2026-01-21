@@ -54,6 +54,8 @@ namespace Agora.Rtc
         internal int video_view_setup_mode;
 
         internal uint observed_frame_position;
+
+        internal bool use_queue;
     }
 
     [StructLayout(LayoutKind.Sequential)]

@@ -367,7 +367,7 @@ export function processCppConstructor(clazzName: string, fullFilePath: string): 
 
             //Parse initialization list
             let initializePos = e.indexOf(":", e.indexOf(")"));
-            if (initializePos != -1) {
+            if (initializePos != -1 && initializePos < e.indexOf("{")) {
                 let initializeStr = e.substring(initializePos + 1, e.indexOf("{"));
                 initializeStr = initializeStr.replace(/\ +/g, "");
                 initializeStr = initializeStr.replace(/[\r\n]/g, "");
@@ -391,7 +391,7 @@ export function processCppConstructor(clazzName: string, fullFilePath: string): 
     }
 
     //too ugly
-    if (clazzName == "ScreenCaptureSourceInfo") {
+    if (clazzName == "ScreenCaptureSourceInfo" || clazzName == "ScreenAudioParameters") {
         cppConstructors.pop();
     }
 

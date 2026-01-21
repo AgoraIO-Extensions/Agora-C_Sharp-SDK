@@ -10,6 +10,10 @@ export const customHeads: CustomHead[] = [
         parent: "uint"
     },
     {
+        name:"VIDEO_EFFECT_NODE_ID",
+        parent: "uint"
+    },
+    {
         name: "VIDEO_MODULE_POSITION",
         attributes: ["Flags"]
     },

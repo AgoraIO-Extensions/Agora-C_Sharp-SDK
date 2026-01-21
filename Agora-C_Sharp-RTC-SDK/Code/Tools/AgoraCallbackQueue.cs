@@ -58,7 +58,7 @@ namespace Agora.Rtm
                     {
                         _queue.Dequeue().Invoke();
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         AgoraLog.LogError("[Exception] AgoraCallbackQueue: " + e);
                     }

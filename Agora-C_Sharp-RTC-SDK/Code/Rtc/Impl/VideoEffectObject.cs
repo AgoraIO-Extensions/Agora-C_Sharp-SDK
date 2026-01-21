@@ -22,5 +22,9 @@ namespace Agora.Rtc
             _impl = null;
         }
 
+        public override int GetObjectId()
+        {
+            return _objectId;
+        }
     }
 }

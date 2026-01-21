@@ -154,6 +154,8 @@ export const customHeads: CustomHead[] = [
             "setupLocalVideo",
             "sendStreamMessage",
             "sendAudioMetadata",
+            "createVideoEffectObject",
+            "destroyVideoEffectObject"
         ]
     },
     {
@@ -301,7 +303,10 @@ export const customHeads: CustomHead[] = [
         hide_methods: [
             "eventHandlerType",
             "onStreamMessage",
-            "onAudioMetadataReceived"
+            "onAudioMetadataReceived",
+            "onLocalVideoStats",
+            "onJoinChannelSuccess",
+            "onLeaveChannel",
         ],
         merge_nodes: [{
             name: "IDirectCdnStreamingEventHandler",

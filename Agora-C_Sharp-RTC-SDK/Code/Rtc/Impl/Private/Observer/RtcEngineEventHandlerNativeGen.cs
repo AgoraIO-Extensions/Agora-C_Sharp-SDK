@@ -649,21 +649,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONJOINCHANNELSUCCESS_263e4cd:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnJoinChannelSuccess(
-                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONREJOINCHANNELSUCCESS_263e4cd:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -708,21 +693,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         (AudioVolumeInfo[])AgoraJson.JsonToStructArray<AudioVolumeInfo>(jsonData, "speakers"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "speakerNumber"),
                         (int)AgoraJson.GetData<int>(jsonData, "totalVolume")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLEAVECHANNEL_c8e730d:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnLeaveChannel(
-                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (RtcStats)AgoraJson.JsonToStruct<RtcStats>(jsonData, "stats")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
@@ -1002,30 +972,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
-#endif
-                        break;
-                    }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_0cebfd7:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                        CallbackObject._CallbackQueue.EnQueue(() =>
-                        {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        // Extract connection info
-                        var connection = (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
-                        var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
-
-                        // Update all TextureManager instances that match this sourceType
-                        UpdateTextureManagersConnectionInfo(connection.localUid, connection.channelId, sourceType);
-
-                        rtcEngineEventHandler.OnLocalVideoStats(
-                           connection,
-                        sourceType,
-                     (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
-                           );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                        });
 #endif
                         break;
                     }

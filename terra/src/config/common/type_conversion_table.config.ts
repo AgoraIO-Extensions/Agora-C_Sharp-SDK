@@ -34,7 +34,8 @@ export const typeConversionTable: ConversionTable = {
         "Music.lyricList": "int[]",
         "Music.climaxSegmentList": "ClimaxSegment[]",
         "Music.mvPropertyList": "MvProperty[]",
-        "LocalAudioMixerConfiguration.audioInputStreams": "MixedAudioStream[]"
+        "LocalAudioMixerConfiguration.audioInputStreams": "MixedAudioStream[]",
+        "MultipathStats.pathStats":"PathStats[]"
     },
     special_method_param: {
         //The member build defined under IRtcEngine.getVersion will be defined as ref int type
@@ -181,6 +182,7 @@ export const typeConversionTable: ConversionTable = {
         "agora::rtc::track_id_t": "uint",
         "uint16_t": "ushort",
         "int32_t": "int",
+        "int32_t&": "ref int",
         "int64_t": "long",
         "long long": "long",
         "size_t": "ulong",
@@ -261,6 +263,7 @@ export const typeConversionTable: ConversionTable = {
         "agora::rtc::VirtualBackgroundSource::*": "${-o*}",
         "agora::rtc::VideoDenoiserOptions::*": "${-o*}",
         "agora::rtc::BeautyOptions::*": "${-o*}",
+        "agora::rtc::IVideoEffectObject::*": "${-o*}",
         "agora::rtc::LowlightEnhanceOptions::*": "${-o*}",
         "agora::rtc::SimulcastConfig::*[7]": "${-o*}[]",
         "agora::media::base::ExternalVideoFrame::*": "${-o*}",
@@ -293,7 +296,8 @@ export const typeConversionTable: ConversionTable = {
         "IMetadataObserverS::*": "${-o*}",
         "* const&": "${-o*}",
         "* const": "${-o*}",
-        "*[3840]": "${-o*}[]"
+        "*[3840]": "${-o*}[]",
+        "base::*": "${-o*}"
     }
 };
 

@@ -40,6 +40,7 @@ Shader "Unlit/RendererShader601"
             sampler2D _VTex;
             float _yStrideScale;
             float4 _MainTex_ST;
+            float4x4 _yuv2rgb;
 
 
             v2f vert (appdata v)
@@ -55,15 +56,7 @@ Shader "Unlit/RendererShader601"
             {
                 float2 uv = i.uv * float2(_yStrideScale, 1.0);
                 fixed4 color = fixed4(tex2D(_MainTex, uv).r, tex2D(_UTex, uv).r,tex2D(_VTex, uv).r,1.0);
-
-                float4x4 yuvToRgb = float4x4(
-                    1.1643835616, 0, 1.7927410714, -0.9729450750,
-                    1.1643835616, -0.2132486143, -0.5329093286, 0.3014826655,
-                    1.1643835616, 2.1124017857, 0, -1.1334022179,
-                    0, 0, 0, 1);
-               
-                color = mul(yuvToRgb,color);
-
+                color = mul(_yuv2rgb,color);
                 return color;
             }
             ENDCG

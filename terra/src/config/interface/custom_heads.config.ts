@@ -248,5 +248,11 @@ export const customHeads: CustomHead[] = [
             "isExternal",
             "getMirrorApplied"
         ]
+    },
+    {
+        name: "IVideoEffectObject",
+        custom_methods: [
+            "public abstract int GetObjectId();"
+        ],
     }
 ];
