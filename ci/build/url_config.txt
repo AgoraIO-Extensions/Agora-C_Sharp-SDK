@@ -1,12 +1,12 @@
 >>>video
-IRIS_IOS=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_iOS_Video_Standalone_20260116_0600_33873.zip
-IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_Android_Video_Standalone_16K_20260116_0600_341027.zip
-IRIS_MAC=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_Mac_Video_Unity_20260116_0600_32839.zip
-IRIS_WIN=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_Windows_Video_Standalone_20260116_0600_31907.zip
-NATIVE_IOS=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_iOS_v4.6.2_FULL.zip
-NATIVE_ANDROID=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_Android_v4.6.2_FULL.zip
-NATIVE_MAC=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_Mac_v4.6.2_FULL.zip
-NATIVE_WIN=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_Windows_v4.6.2_FULL.zip
+IRIS_IOS=https://download.agora.io/sdk/release/iris_4.6.2-dev.17_DCG_iOS_Video_Standalone_20260203_1042_33879.zip
+IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.6.2-dev.17_DCG_Android_Video_Standalone_16K_20260203_1042_341033.zip
+IRIS_MAC=https://download.agora.io/sdk/release/iris_4.6.2-dev.17_DCG_Mac_Video_Unity_20260203_1042_32848.zip
+IRIS_WIN=https://download.agora.io/sdk/release/iris_4.6.2-dev.17_DCG_Windows_Video_Standalone_20260203_1042_31913.zip
+NATIVE_IOS=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/ios/full/Shengwang_Native_SDK_for_iOS_rel.v4.6.2.70_56393_FULL_20260202_1724_1006134.zip
+NATIVE_ANDROID=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/android/full/Shengwang_Native_SDK_for_Android_rel.v4.6.2.70_78802_FULL_20260202_1721_1006126.zip
+NATIVE_MAC=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/mac/full/Shengwang_Native_SDK_for_Mac_rel.v4.6.2.70_26851_FULL_20260202_1900_1006149.zip
+NATIVE_WIN=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/windows/full/Shengwang_Native_SDK_for_Windows_rel.v4.6.2.70_31554_FULL_20260202_1723_1006130.zip
 <<<end
 
 >>>audio
@@ -14,8 +14,8 @@ IRIS_IOS=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_iOS_Audio_S
 IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_Android_Audio_Standalone_16K_20260120_1103_341028.zip
 IRIS_MAC=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_Mac_Audio_Unity_20260120_1103_32840.zip
 IRIS_WIN=https://download.agora.io/sdk/release/iris_4.6.2-dev.16_DCG_Windows_Audio_Standalone_20260120_1100_31908.zip
-NATIVE_IOS=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_iOS_v4.6.2_VOICE.zip
-NATIVE_ANDROID=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_Android_v4.6.2_VOICE.zip
-NATIVE_MAC=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_Mac_v4.6.2_FULL.zip
-NATIVE_WIN=https://download.shengwang.cn/sdk/release/Shengwang_Native_SDK_for_Windows_v4.6.2_FULL.zip
+NATIVE_IOS=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/ios/audio_only/Shengwang_Native_SDK_for_iOS_rel.v4.6.2.70_56395_VOICE_20260202_1725_1006136.zip
+NATIVE_ANDROID=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/android/audio_only/Shengwang_Native_SDK_for_Android_rel.v4.6.2.70_78803_VOICE_20260202_1722_1006127.zip
+NATIVE_MAC=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/mac/full/Shengwang_Native_SDK_for_Mac_rel.v4.6.2.70_26851_FULL_20260202_1900_1006149.zip
+NATIVE_WIN=http://10.80.1.174:8090/agora_sdk/4.6.2.70/official_build/2026-02-02/windows/full/Shengwang_Native_SDK_for_Windows_rel.v4.6.2.70_31554_FULL_20260202_1723_1006130.zip
 <<<end
