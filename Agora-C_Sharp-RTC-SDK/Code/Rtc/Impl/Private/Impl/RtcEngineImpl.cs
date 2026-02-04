@@ -1120,7 +1120,7 @@ namespace Agora.Rtc
             }
 
             var objectId = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            if(objectId <= 0)
+            if (objectId <= 0)
             {
                 return null;
             }

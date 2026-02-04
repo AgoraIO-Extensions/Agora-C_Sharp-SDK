@@ -10,7 +10,7 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// This class provides methods to manage cached media files.
+    /// This class provides methods to manage cached media files in the media player.
     /// </summary>
     ///
     public abstract class IMediaPlayerCacheManager
@@ -19,98 +19,98 @@ namespace Agora.Rtc
         /// <summary>
         /// Deletes all cached media files in the media player.
         /// 
-        /// The cached media file currently being played will not be deleted.
+        /// This method does not delete cached media files that are currently playing.
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// 0: The method call succeeds.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract int RemoveAllCaches();
 
         ///
         /// <summary>
-        /// Deletes a cached media file that is the least recently used.
+        /// Deletes the least recently used cached media file in the media player.
         /// 
-        /// You can call this method to delete a cached media file when the storage space for the cached files is about to reach its limit. After you call this method, the SDK deletes the cached media file that is least used. The cached media file currently being played will not be deleted.
+        /// When cached media files occupy too much space, you can call this method to clean up cache files. After calling this method, the SDK deletes the least recently used cached media file. When you call this method to delete cached media files, the currently playing cached media file will not be deleted.
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// 0: The method call succeeds.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract int RemoveOldCache();
 
         ///
         /// <summary>
-        /// Deletes a cached media file.
+        /// Deletes the specified cached media file.
         /// 
-        /// The cached media file currently being played will not be deleted.
+        /// This method does not delete cached media files that are currently playing.
         /// </summary>
         ///
-        /// <param name="uri"> The URI (Uniform Resource Identifier) of the media file to be deleted. </param>
+        /// <param name="uri"> The URI (Uniform Resource Identifier) of the cache file to be deleted, which can be used to identify the media file. </param>
         ///
         /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// 0: The method call succeeds.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract int RemoveCacheByUri(string uri);
 
         ///
         /// <summary>
-        /// Sets the storage path for the media files that you want to cache.
+        /// Sets the storage path for media files to be cached.
         /// 
-        /// Make sure IRtcEngine is initialized before you call this method.
+        /// This method must be called after initializing IRtcEngine.
         /// </summary>
         ///
-        /// <param name="path"> The absolute path of the media files to be cached. Ensure that the directory for the media files exists and is writable. </param>
+        /// <param name="path"> The absolute path where the cache files are stored. Make sure the specified directory exists and is writable. </param>
         ///
         /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// 0: The method call succeeds.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract int SetCacheDir(string path);
 
         ///
         /// <summary>
-        /// Sets the maximum number of media files that can be cached.
+        /// Sets the maximum number of cached media files.
         /// </summary>
         ///
-        /// <param name="count"> The maximum number of media files that can be cached. The default value is 1,000. </param>
+        /// <param name="count"> The maximum number of media files that can be cached. The default value is 1000. </param>
         ///
         /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// 0: The method call succeeds.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract int SetMaxCacheFileCount(int count);
 
         ///
         /// <summary>
-        /// Sets the maximum size of the aggregate storage space for cached media files.
+        /// Sets the maximum total cache size of cached media files.
         /// </summary>
         ///
-        /// <param name="cacheSize"> The maximum size (bytes) of the aggregate storage space for cached media files. The default value is 1 GB. </param>
+        /// <param name="cacheSize"> The maximum total cache size of cached media files in bytes. The default is 1 GB. </param>
         ///
         /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// 0: The method call succeeds.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract int SetMaxCacheFileSize(long cacheSize);
 
         ///
         /// <summary>
-        /// Sets whether to delete cached media files automatically.
+        /// Enables or disables automatic cache file removal.
         /// 
-        /// If you enable this function to remove cached media files automatically, when the cached media files exceed either the number or size limit you set, the SDK automatically deletes the least recently used cache file.
+        /// When automatic cache file removal is enabled, if the number of cached media files or the total cache size exceeds the limit you set, the SDK automatically deletes the least recently used cache file.
         /// </summary>
         ///
-        /// <param name="enable"> Whether to enable the SDK to delete cached media files automatically: true : Delete cached media files automatically. false : (Default) Do not delete cached media files automatically. </param>
+        /// <param name="enable"> Whether to enable automatic cache file removal: true : Enable automatic cache file removal. false : (default) Disable automatic cache file removal. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -121,14 +121,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the storage path of the cached media files.
+        /// Gets the storage path of cached files.
         /// 
-        /// If you have not called the SetCacheDir method to set the storage path for the media files to be cached before calling this method, you get the default storage path used by the SDK.
+        /// If you have not called SetCacheDir to customize the cache file storage path before calling this method, it returns the default cache file storage path used by the SDK.
         /// </summary>
         ///
-        /// <param name="path"> An output parameter; the storage path for the media file to be cached. </param>
+        /// <param name="path"> Output parameter. Storage path of cached files. </param>
         ///
-        /// <param name="length"> An input parameter; the maximum length of the cache file storage path string. Fill in according to the cache file storage path string you obtained from path. </param>
+        /// <param name="length"> Input parameter. Maximum length of the cache file storage path string. Fill in based on the string obtained in path. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -139,39 +139,39 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the maximum number of media files that can be cached.
+        /// Gets the maximum number of cache files set.
         /// 
-        /// By default, the maximum number of media files that can be cached is 1,000.
+        /// The default maximum number of cache files in the SDK is 1000.
         /// </summary>
         ///
         /// <returns>
-        /// &gt; 0: The call succeeds and returns the maximum number of media files that can be cached.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// &gt; 0: The method call succeeds and returns the maximum number of cache files.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract int GetMaxCacheFileCount();
 
         ///
         /// <summary>
-        /// Gets the maximum size of the aggregate storage space for cached media files.
+        /// Gets the maximum total cache size of cached media files set.
         /// 
-        /// By default, the maximum size of the aggregate storage space for cached media files is 1 GB. You can call the SetMaxCacheFileSize method to set the limit according to your scenarios.
+        /// The default maximum total cache size of cache files in the SDK is 1 GB. You can call the SetMaxCacheFileSize method to customize the maximum total cache size.
         /// </summary>
         ///
         /// <returns>
-        /// &gt; 0: The call succeeds and returns the maximum size (in bytes) of the aggregate storage space for cached media files.
-        /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
+        /// &gt; 0: The method call succeeds and returns the maximum total cache size of cache files in bytes.
+        /// &lt; 0: The method call fails. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
         public abstract long GetMaxCacheFileSize();
 
         ///
         /// <summary>
-        /// Gets the number of media files that are cached.
+        /// Gets the total number of currently cached media files.
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: The call succeeds and returns the number of media files that are cached.
+        /// ≥ 0: Success. Returns the total number of currently cached media files.
         /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///

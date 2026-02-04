@@ -10,7 +10,7 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The metadata observer.
+    /// Metadata observer.
     /// </summary>
     ///
     public abstract class IMetadataObserver
@@ -27,17 +27,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when the SDK is ready to send metadata.
+        /// Occurs when the sender is ready to send metadata.
         /// 
         /// This callback is triggered when the SDK is ready to send metadata.
         /// </summary>
         ///
-        /// <param name="source_type"> Video data type. See VIDEO_SOURCE_TYPE. </param>
+        /// <param name="source_Type"> The type of video data. See VIDEO_SOURCE_TYPE. </param>
         ///
-        /// <param name="metadata"> The metadata that the user wants to send. See Metadata. </param>
+        /// <param name="metadata"> The metadata the user wants to send. See Metadata. </param>
         ///
         /// <returns>
-        /// true : Send the video frame. false : Do not send the video frame.
+        /// true : Send false : Do not send
         /// </returns>
         ///
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
@@ -49,10 +49,10 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when the local user receives the metadata.
+        /// Occurs when metadata is received on the receiving end.
         /// </summary>
         ///
-        /// <param name="metadata"> The metadata received. See Metadata. </param>
+        /// <param name="metadata"> The received metadata. See Metadata. </param>
         ///
         public virtual void OnMetadataReceived(Metadata metadata)
         {

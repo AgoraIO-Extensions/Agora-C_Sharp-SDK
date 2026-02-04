@@ -17,450 +17,450 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Enumerates the audio playback devices.
+        /// Gets the list of all playback devices in the system.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
         /// <returns>
-        /// Success: Returns a DeviceInfo array, which includes the device ID and device name of all the audio playback devices.
-        /// Failure: NULL.
+        /// If the method call succeeds, returns a DeviceInfo array containing the device ID and device name of all audio playback devices.
+        /// If the method call fails: null.
         /// </returns>
         ///
         public abstract DeviceInfo[] EnumeratePlaybackDevices();
 
         ///
         /// <summary>
-        /// Enumerates the audio capture devices.
+        /// Gets the list of all audio recording devices in the system.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
         /// <returns>
-        /// Success: A DeviceInfo array, which includes the device ID and device name of all the audio capture devices.
-        /// Failure: NULL.
+        /// If the method call succeeds, returns a DeviceInfo array containing the device ID and device name of all audio recording devices.
+        /// If the method call fails: null.
         /// </returns>
         ///
         public abstract DeviceInfo[] EnumerateRecordingDevices();
 
         ///
         /// <summary>
-        /// Gets the default audio playback device.
+        /// Gets the system default audio playback device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio playback device. </param>
+        /// <param name="deviceId"> Output parameter. The ID of the system default audio playback device. </param>
         ///
-        /// <param name="deviceName"> Output parameter; indicates the name of the default audio playback device. </param>
+        /// <param name="deviceName"> Output parameter. The name of the system default audio playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceName);
 
         ///
         /// <summary>
-        /// Get the system‘s default audio playback device and its type.
+        /// Gets the system default audio playback device and its type.
         /// 
-        /// This method applies to macOS only.
+        /// (macOS only)
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio playback device. </param>
+        /// <param name="deviceId"> Output parameter. The ID of the system default audio playback device. </param>
         ///
-        /// <param name="deviceName"> Output parameter; indicates the name of the default audio playback device. </param>
+        /// <param name="deviceName"> Output parameter. The name of the system default audio playback device. </param>
         ///
-        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio devices, such as built-in, USB and HDMI. </param>
+        /// <param name="deviceTypeName"> Output parameter. The type of the audio device, such as: built-in, USB, HDMI, etc. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName);
 
         ///
         /// <summary>
-        /// Gets the default audio capture device.
+        /// Retrieves the system default audio recording device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio capture device. </param>
+        /// <param name="deviceId"> Output parameter. The ID of the system default audio recording device. </param>
         ///
-        /// <param name="deviceName"> Output parameter; indicates the name of the default audio capture device. </param>
+        /// <param name="deviceName"> Output parameter. The name of the system default audio recording device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName);
 
         ///
         /// <summary>
-        /// Gets the default audio capture device and its type.
+        /// Retrieves the system default audio recording device and its type.
         /// 
-        /// This method applies to macOS only.
+        /// (macOS only)
         /// </summary>
         ///
-        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio devices, such as built-in, USB and HDMI. </param>
+        /// <param name="deviceId"> Output parameter. The ID of the system default audio recording device. </param>
         ///
-        /// <param name="deviceId"> Output parameter; indicates the ID of the default audio capture device. </param>
+        /// <param name="deviceName"> Output parameter. The name of the system default audio recording device. </param>
         ///
-        /// <param name="deviceName"> Output parameter; indicates the name of the default audio capture device. </param>
+        /// <param name="deviceTypeName"> Output parameter. The type of the audio device, such as built-in, USB, HDMI, etc. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceTypeName, ref string deviceName);
 
         ///
         /// <summary>
-        /// Sets the audio playback device.
+        /// Specifies the playback device.
         /// 
-        /// This method is for Windows and macOS only. You can call this method to change the audio route currently being used, but this does not change the default audio route. For example, if the default audio route is speaker 1, you call this method to set the audio route as speaker 2 before joinging a channel and then start a device test, the SDK conducts device test on speaker 2. After the device test is completed and you join a channel, the SDK still uses speaker 1, the default audio route.
+        /// This method changes the current audio route but does not change the system default audio route. For example, if the system default audio route is Speaker 1, and you call this method before joining a channel to set the audio route to Speaker 2, the SDK performs device testing on Speaker 2. After testing, when you join a channel, the SDK still uses the system default audio route, which is Speaker 1. This method applies to Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> The ID of the specified audio playback device. You can get the device ID by calling EnumeratePlaybackDevices. Connecting or disconnecting the audio device does not change the value of deviceId. </param>
+        /// <param name="deviceId"> Specifies the playback device. Obtained via EnumeratePlaybackDevices. Plugging or unplugging devices does not affect deviceId. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetPlaybackDevice(string deviceId);
 
         ///
         /// <summary>
-        /// Retrieves the audio playback device associated with the device ID.
+        /// Gets the current audio playback device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter. The device ID of the audio playback device. </param>
+        /// <param name="deviceId"> Output parameter. The device ID of the current audio playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetPlaybackDevice(ref string deviceId);
 
         ///
         /// <summary>
-        /// Retrieves the information of the audio playback device.
+        /// Retrieves information about the audio playback device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="deviceId"> Th ID of the audio playback device. </param>
+        /// <param name="deviceId"> Output parameter. The device ID of the playback device. </param>
         ///
-        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
+        /// <param name="deviceName"> Output parameter. The device name of the playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetPlaybackDeviceInfo(ref string deviceId, ref string deviceName);
 
         ///
         /// <summary>
-        /// Get the information and type of the audio playback device.
+        /// Retrieves information about the audio playback device and its type.
         /// 
-        /// This method applies to macOS only.
+        /// (macOS only)
         /// </summary>
         ///
-        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
+        /// <param name="deviceId"> Output parameter. The device ID of the playback device. </param>
         ///
-        /// <param name="deviceId"> Th ID of the audio playback device. </param>
+        /// <param name="deviceName"> Output parameter. The device name of the playback device. </param>
         ///
-        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio playback devices, such as built-in, USB and HDMI. </param>
+        /// <param name="deviceTypeName"> Output parameter. The type of the audio playback device, such as built-in, USB, HDMI, etc. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetPlaybackDeviceInfo(ref string deviceId, ref string deviceName, ref string deviceTypeName);
 
         ///
         /// <summary>
-        /// Sets the volume of the audio playback device.
+        /// Sets the playback device volume.
         /// 
         /// This method applies to Windows only.
         /// </summary>
         ///
-        /// <param name="volume"> The volume of the audio playback device. The value range is [0,255]. </param>
+        /// <param name="volume"> Playback device volume. Value range: [0,255]. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetPlaybackDeviceVolume(int volume);
 
         ///
         /// <summary>
-        /// Retrieves the volume of the audio playback device.
+        /// Retrieves the volume of the playback device.
         /// </summary>
         ///
         /// <returns>
-        /// The volume of the audio playback device. The value range is [0,255].
+        /// Playback device volume. Value range: [0,255].
         /// </returns>
         ///
         public abstract int GetPlaybackDeviceVolume(ref int volume);
 
         ///
         /// <summary>
-        /// Sets the audio capture device.
+        /// Specifies the recording device.
         /// 
-        /// This method is for Windows and macOS only. You can call this method to change the audio route currently being used, but this does not change the default audio route. For example, if the default audio route is microphone, you call this method to set the audio route as bluetooth earphones before joinging a channel and then start a device test, the SDK conducts device test on the bluetooth earphones. After the device test is completed and you join a channel, the SDK still uses the microphone for audio capturing.
+        /// This method changes the current recording device used by the SDK but does not change the system default recording device. For example, if the system default recording device is Microphone 1, and you call this method before joining a channel to set the current audio route to Bluetooth Headset 1, the SDK performs device testing on Bluetooth Headset 1. After testing, when you join a channel, the SDK still uses the system default recording device, which is Microphone 1. This method applies to Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> The ID of the audio capture device. You can get the Device ID by calling EnumerateRecordingDevices. Connecting or disconnecting the audio device does not change the value of deviceId. </param>
+        /// <param name="deviceId"> Device ID of the recording device. You can obtain it via EnumerateRecordingDevices. Plugging or unplugging devices does not affect deviceId. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetRecordingDevice(string deviceId);
 
         ///
         /// <summary>
-        /// Gets the current audio recording device.
+        /// Retrieves the current audio recording device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="deviceId"> An output parameter. The device ID of the recording device. </param>
+        /// <param name="deviceId"> Output parameter. The device ID of the current recording device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetRecordingDevice(ref string deviceId);
 
         ///
         /// <summary>
-        /// Retrieves the information of the audio recording device.
+        /// Retrieves information about the audio recording device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="deviceId"> Th ID of the audio playback device. </param>
+        /// <param name="deviceId"> Output parameter. The device ID of the playback device. </param>
         ///
-        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
+        /// <param name="deviceName"> Output parameter. The device name of the playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetRecordingDeviceInfo(ref string deviceId, ref string deviceName);
 
         ///
         /// <summary>
-        /// Get the information and type of the audio capturing device.
+        /// Retrieves information about the audio recording device and its type.
         /// 
-        /// This method applies to macOS only.
+        /// (macOS only)
         /// </summary>
         ///
-        /// <param name="deviceName"> Output parameter; the name of the playback device. </param>
+        /// <param name="deviceId"> Output parameter. The device ID of the playback device. </param>
         ///
-        /// <param name="deviceId"> Th ID of the audio playback device. </param>
+        /// <param name="deviceName"> Output parameter. The device name of the playback device. </param>
         ///
-        /// <param name="deviceTypeName"> Output parameter; indicates the type of audio capturing devices, such as built-in, USB and HDMI. </param>
+        /// <param name="deviceTypeName"> Output parameter. The type of the audio recording device, such as built-in, USB, HDMI, etc. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetRecordingDeviceInfo(ref string deviceId, ref string deviceName, ref string deviceTypeName);
 
         ///
         /// <summary>
-        /// Sets the volume of the audio capture device.
+        /// Sets the volume of the audio recording device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// This method is only available on Windows and macOS.
         /// </summary>
         ///
-        /// <param name="volume"> The volume of the audio recording device. The value range is [0,255]. 0 means no sound, 255 means maximum volume. </param>
+        /// <param name="volume"> The volume of the audio recording device. The range is [0,255]. 0 means mute, and 255 means the maximum volume. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and troubleshooting.
         /// </returns>
         ///
         public abstract int SetRecordingDeviceVolume(int volume);
 
         ///
         /// <summary>
-        /// Retrieves the volume of the audio recording device.
+        /// Gets the volume of the recording device.
         /// 
         /// This method applies to Windows only.
         /// </summary>
         ///
         /// <returns>
-        /// The volume of the audio recording device. The value range is [0,255].
+        /// The volume of the recording device. Value range: [0,255].
         /// </returns>
         ///
         public abstract int GetRecordingDeviceVolume(ref int volume);
 
         ///
         /// <summary>
-        /// Sets the loopback device.
+        /// Specifies the loopback device.
         /// 
-        /// The SDK uses the current playback device as the loopback device by default. If you want to specify another audio device as the loopback device, call this method, and set deviceId to the loopback device you want to specify. You can call this method to change the audio route currently being used, but this does not change the default audio route. For example, if the default audio route is microphone, you call this method to set the audio route as a sound card before joinging a channel and then start a device test, the SDK conducts device test on the sound card. After the device test is completed and you join a channel, the SDK still uses the microphone for audio capturing. This method is for Windows and macOS only. The scenarios where this method is applicable are as follows: Use app A to play music through a Bluetooth headset; when using app B for a video conference, play through the speakers.
-        /// If the loopback device is set as the Bluetooth headset, the SDK publishes the music in app A to the remote end.
-        /// If the loopback device is set as the speaker, the SDK does not publish the music in app A to the remote end.
-        /// If you set the loopback device as the Bluetooth headset, and then use a wired headset to play the music in app A, you need to call this method again, set the loopback device as the wired headset, and the SDK continues to publish the music in app A to remote end.
+        /// By default, the SDK uses the current playback device as the loopback device. To specify another audio device as the loopback device, call this method and set deviceId to the desired loopback device.
+        /// This method changes the current recording device used by the SDK but does not change the system default recording device. For example, if the system default recording device is Microphone 1, and you call this method before joining a channel to set the current audio route to Soundcard 1, the SDK performs device testing on Soundcard 1. After testing, when you join a channel, the SDK still uses the system default recording device, which is Microphone 1. This method applies to Windows and macOS only.
+        /// Applicable scenario:
+        /// App A plays music through a Bluetooth headset; App B is used for video conferencing through a speaker.
+        /// If the loopback device is set to the Bluetooth headset, the SDK publishes the music from App A to the remote end.
+        /// If the loopback device is set to the speaker, the SDK does not publish the music from App A to the remote end.
+        /// If you switch from Bluetooth headset to wired headset for App A after setting the loopback device to Bluetooth headset, you need to call this method again to set the loopback device to the wired headset. The SDK will then continue to publish the music from App A to the remote end.
         /// </summary>
         ///
-        /// <param name="deviceId"> Specifies the loopback device of the SDK. You can get the device ID by calling EnumeratePlaybackDevices. Connecting or disconnecting the audio device does not change the value of deviceId. </param>
+        /// <param name="deviceId"> Specifies the loopback device used by the SDK. Obtained via EnumeratePlaybackDevices. Plugging or unplugging devices does not affect deviceId. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetLoopbackDevice(string deviceId);
 
         ///
         /// <summary>
-        /// Gets the current loopback device.
+        /// Gets the current loopback capture device.
         /// 
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter, the ID of the current loopback device. </param>
+        /// <param name="deviceId"> Output parameter. The ID of the current loopback capture device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetLoopbackDevice(ref string deviceId);
 
         ///
         /// <summary>
-        /// Mutes the audio playback device.
+        /// Sets the playback device to mute.
         /// </summary>
         ///
-        /// <param name="mute"> Whether to mute the audio playback device: true : Mute the audio playback device. false : Unmute the audio playback device. </param>
+        /// <param name="mute"> Whether to mute the playback device: true : Mute the playback device. false : Do not mute the playback device. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetPlaybackDeviceMute(bool mute);
 
         ///
-        /// <summary>
-        /// Retrieves whether the audio playback device is muted.
-        /// </summary>
-        ///
-        /// <returns>
-        /// true : The audio playback device is muted. false : The audio playback device is unmuted.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int GetPlaybackDeviceMute(ref bool mute);
 
         ///
         /// <summary>
-        /// Sets the mute status of the audio capture device.
+        /// Sets the current recording device to mute.
         /// </summary>
         ///
-        /// <param name="mute"> Whether to mute the audio recording device: true : Mute the audio capture device. false : Unmute the audio capture device. </param>
+        /// <param name="mute"> Whether to mute the recording device: true : The recording device is muted. false : The recording device is not muted. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetRecordingDeviceMute(bool mute);
 
         ///
         /// <summary>
-        /// Gets whether the audio capture device is muted.
+        /// Gets the mute status of the current recording device.
         /// </summary>
         ///
         /// <returns>
-        /// true : The microphone is muted. false : The microphone is unmuted.
+        /// true : The recording device is muted. false : The recording device is not muted.
         /// </returns>
         ///
         public abstract int GetRecordingDeviceMute(ref bool mute);
 
         ///
         /// <summary>
-        /// Starts the audio playback device test.
+        /// Starts a playback device test.
         /// 
-        /// This method tests whether the audio device for local playback works properly. Once a user starts the test, the SDK plays an audio file specified by the user. If the user can hear the audio, the playback device works properly. After calling this method, the SDK triggers the OnAudioVolumeIndication callback every 100 ms, reporting uid = 1 and the volume information of the playback device. The difference between this method and the StartEchoTest method is that the former checks if the local audio playback device is working properly, while the latter can check the audio and video devices and network conditions. Call this method before joining a channel. After the test is completed, call StopPlaybackDeviceTest to stop the test before joining a channel.
+        /// This method tests whether the local playback device is working properly. After starting the test, the SDK plays the specified audio file. If the tester hears sound, the playback device is functioning properly.
+        /// After calling this method, the SDK triggers the OnAudioVolumeIndication callback every 100 milliseconds to report the volume information of uid = 1 and the playback device.
+        /// The difference between this method and StartEchoTest is that this method checks whether the local playback device is working, while the latter checks whether the audio/video devices and network are functioning properly. You must call this method before joining a channel. After the test is complete, if you want to join a channel, make sure to call StopPlaybackDeviceTest to stop the test first.
         /// </summary>
         ///
         /// <param name="testAudioFilePath">
-        /// The path of the audio file. The data format is string in UTF-8.
-        /// Supported file formats: wav, mp3, m4a, and aac.
-        /// Supported file sample rates: 8000, 16000, 32000, 44100, and 48000 Hz.
+        /// The absolute path of the audio file. The path string must be in UTF-8 encoding.
+        /// Supported file formats: wav, mp3, m4a, aac.
+        /// Supported sampling rates: 8000, 16000, 32000, 44100, 48000.
         /// </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and troubleshooting.
         /// </returns>
         ///
         public abstract int StartPlaybackDeviceTest(string testAudioFilePath);
 
         ///
         /// <summary>
-        /// Stops the audio playback device test.
+        /// Stops the playback device test.
         /// 
-        /// This method stops the audio playback device test. You must call this method to stop the test after calling the StartPlaybackDeviceTest method. Call this method before joining a channel.
+        /// This method stops the playback device test. After calling StartPlaybackDeviceTest, you must call this method to stop the test. You must call this method before joining a channel.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and troubleshooting.
         /// </returns>
         ///
         public abstract int StopPlaybackDeviceTest();
 
         ///
         /// <summary>
-        /// Starts the audio capturing device test.
+        /// Starts a recording device test.
         /// 
-        /// This method tests whether the audio capturing device works properly. After calling this method, the SDK triggers the OnAudioVolumeIndication callback at the time interval set in this method, which reports uid = 0 and the volume information of the capturing device. The difference between this method and the StartEchoTest method is that the former checks if the local audio capturing device is working properly, while the latter can check the audio and video devices and network conditions. Call this method before joining a channel. After the test is completed, call StopRecordingDeviceTest to stop the test before joining a channel.
+        /// This method tests whether the local recording device is working properly. After calling this method, the SDK triggers the OnAudioVolumeIndication callback at the specified time interval to report the volume information of uid = 0 and the recording device.
+        /// The difference between this method and StartEchoTest is that this method checks whether the local recording device is working, while the latter checks whether the audio/video devices and network are functioning properly. You must call this method before joining a channel. After the test is complete, if you want to join a channel, make sure to call StopRecordingDeviceTest to stop the test first.
         /// </summary>
         ///
-        /// <param name="indicationInterval"> The interval (ms) for triggering the OnAudioVolumeIndication callback. This value should be set to greater than 10, otherwise, you will not receive the OnAudioVolumeIndication callback and the SDK returns the error code -2. Agora recommends that you set this value to 100. </param>
+        /// <param name="indicationInterval"> The time interval in milliseconds at which the SDK triggers the OnAudioVolumeIndication callback. The minimum value is 10. Otherwise, the OnAudioVolumeIndication callback will not be received and the SDK will return error code -2. Agora recommends setting this value to 100. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
-        /// -2: Invalid parameters. Check your parameter settings.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and troubleshooting.
+        /// -2: Invalid parameter. Please reset the parameter.
         /// </returns>
         ///
         public abstract int StartRecordingDeviceTest(int indicationInterval);
 
         ///
         /// <summary>
-        /// Stops the audio capturing device test.
+        /// Stops the recording device test.
         /// 
-        /// This method stops the audio capturing device test. You must call this method to stop the test after calling the StartRecordingDeviceTest method. Call this method before joining a channel.
+        /// This method stops the recording device test. After calling StartRecordingDeviceTest, you must call this method to stop the test. You must call this method before joining a channel.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and troubleshooting.
         /// </returns>
         ///
         public abstract int StopRecordingDeviceTest();
@@ -469,19 +469,19 @@ namespace Agora.Rtc
         /// <summary>
         /// Starts an audio device loopback test.
         /// 
-        /// This method tests whether the local audio capture device and playback device are working properly. After starting the test, the audio capture device records the local audio, and the audio playback device plays the captured audio. The SDK triggers two independent OnAudioVolumeIndication callbacks at the time interval set in this method, which reports the volume information of the capture device (uid = 0) and the volume information of the playback device (uid = 1) respectively.
-        /// This method is for Windows and macOS only.
-        /// You can call this method either before or after joining a channel.
-        /// This method only takes effect when called by the host.
-        /// This method tests local audio devices and does not report the network conditions.
-        /// When you finished testing, call StopAudioDeviceLoopbackTest to stop the audio device loopback test.
+        /// This method tests whether the audio recording and playback devices are working properly. Once the test starts, the recording device captures local audio and plays it back through the playback device. The SDK triggers two OnAudioVolumeIndication callbacks at the specified time interval to report the volume levels of the recording device (uid = 0) and the playback device (uid = 1).
+        /// This method is only available on Windows and macOS.
+        /// You can call this method before or after joining a channel.
+        /// Only the host role can call this method.
+        /// This method only tests local audio devices and does not involve network connections.
+        /// After the test is complete, you must call StopAudioDeviceLoopbackTest to stop the loopback test.
         /// </summary>
         ///
-        /// <param name="indicationInterval"> The time interval (ms) at which the SDK triggers the OnAudioVolumeIndication callback. Agora recommends setting a value greater than 200 ms. This value must not be less than 10 ms; otherwise, you can not receive the OnAudioVolumeIndication callback. </param>
+        /// <param name="indicationInterval"> The time interval in milliseconds at which the SDK triggers the OnAudioVolumeIndication callback. It is recommended to set this to more than 200 ms. If set to less than 10 ms, the OnAudioVolumeIndication callback will not be received. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and troubleshooting.
         /// </returns>
         ///
         public abstract int StartAudioDeviceLoopbackTest(int indicationInterval);
@@ -490,63 +490,63 @@ namespace Agora.Rtc
         /// <summary>
         /// Stops the audio device loopback test.
         /// 
-        /// This method is for Windows and macOS only.
-        /// You can call this method either before or after joining a channel.
-        /// This method only takes effect when called by the host.
-        /// Ensure that you call this method to stop the loopback test after calling the StartAudioDeviceLoopbackTest method.
+        /// This method is only available on Windows and macOS.
+        /// You can call this method before or after joining a channel.
+        /// Only the host role can call this method.
+        /// After calling StartAudioDeviceLoopbackTest, you must call this method to stop the loopback test.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and troubleshooting.
         /// </returns>
         ///
         public abstract int StopAudioDeviceLoopbackTest();
 
         ///
         /// <summary>
-        /// Sets the audio playback device used by the SDK to follow the system default audio playback device.
+        /// Sets whether the audio playback device used by the SDK follows the system default audio playback device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="enable"> Whether to follow the system default audio playback device: true : Follow the system default audio playback device. The SDK immediately switches the audio playback device when the system default audio playback device changes. false : Do not follow the system default audio playback device. The SDK switches the audio playback device to the system default audio playback device only when the currently used audio playback device is disconnected. </param>
+        /// <param name="enable"> Whether to follow the system default audio playback device: true : Follow. When the system default audio playback device changes, the SDK immediately switches to it. false : Do not follow. The SDK switches to the system default audio playback device only when the current device used by the SDK is removed. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int FollowSystemPlaybackDevice(bool enable);
 
         ///
         /// <summary>
-        /// Sets the audio recording device used by the SDK to follow the system default audio recording device.
+        /// Sets whether the audio recording device used by the SDK follows the system default audio recording device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// (Windows and macOS only)
         /// </summary>
         ///
-        /// <param name="enable"> Whether to follow the system default audio recording device: true : Follow the system default audio playback device. The SDK immediately switches the audio recording device when the system default audio recording device changes. false : Do not follow the system default audio playback device. The SDK switches the audio recording device to the system default audio recording device only when the currently used audio recording device is disconnected. </param>
+        /// <param name="enable"> Whether to follow the system default audio recording device: true : Follow. When the system default audio recording device changes, the SDK immediately switches to it. false : Do not follow. The SDK switches to the system default audio recording device only when the current device used by the SDK is removed. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int FollowSystemRecordingDevice(bool enable);
 
         ///
         /// <summary>
-        /// Sets whether the loopback device follows the system default playback device.
+        /// Sets whether the loopback capture device follows the system default playback device.
         /// 
-        /// This method is for Windows and macOS only.
+        /// This method is only applicable to Windows and macOS.
         /// </summary>
         ///
-        /// <param name="enable"> Whether to follow the system default audio playback device: true : Follow the system default audio playback device. When the default playback device of the system is changed, the SDK immediately switches to the loopback device. false : Do not follow the system default audio playback device. The SDK switches the audio loopback device to the system default audio playback device only when the current audio playback device is disconnected. </param>
+        /// <param name="enable"> Whether to follow the system default playback device: true : Follow. When the system default playback device changes, the SDK immediately switches the loopback capture device accordingly. false : Do not follow. The SDK switches to the system default playback device only when the current loopback capture device is removed. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int FollowSystemLoopbackDevice(bool enable);

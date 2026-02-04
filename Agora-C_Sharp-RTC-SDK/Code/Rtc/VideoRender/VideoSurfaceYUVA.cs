@@ -190,7 +190,7 @@ namespace Agora.Rtc
             }
 
             _material.SetFloat("_yStrideScale", _textureManagerYUVA.YStrideScale);
-            
+
             var colorSpace = new IrisColorSpace()
             {
                 primaries = (int)this._primaries,

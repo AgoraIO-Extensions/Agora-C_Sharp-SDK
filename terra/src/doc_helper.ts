@@ -35,7 +35,7 @@ let UnityDirPath = [
     "../Agora-C_Sharp-RTC-SDK/Code/Rtc/VideoRender/VideoSurfaceYUVA.cs",
 ]
 
-let DocPath = "./unity_ng_json_template_en.json";
+let DocPath = "./unity_en_ng.json";
 
 
 function DeleteOldDocWithFile(filePath: string) {
@@ -315,15 +315,18 @@ function GetDocs(): DocData[] {
     let str = fs.readFileSync(docPath, { encoding: 'utf-8' });
     str = SwapString(str, "api_irtcengine_enableextension", "api_irtcengine_enableextension2");
     str = SwapString(str, "api_irtcengine_setextensionproperty", "api_irtcengine_setextensionproperty2");
+    str = SwapString(str, "api_irtcengine_setlocalrendermode1", "api_irtcengine_setlocalrendermode2");
     str = str.replaceAll("iaudioframeobserverbase", "iaudioframeobserver")
     str = str.replaceAll("api_iaudioframeobserver", "callback_iaudioframeobserver")
     str = str.replaceAll("ibasespatialaudioengine", "ilocalspatialaudioengine")
+    str = str.replaceAll("\"api_imediaengine_unregistervideoframeobserver_imediaengine\"", "\"api_irtcengine_unregistervideoframeobserver_irtcengine\"")
+    str = str.replaceAll("\"api_imediaplayercachemanager_getmediaplayercachemanager\"", "\"api_irtcengine_getmediaplayercachemanager\"")
     str = str.replaceAll("api_imediaengine", "api_irtcengine")
     str = str.replaceAll("pushaudioframe0", "pushaudioframe")
     str = str.replaceAll("\"api_irtcengine_enabledualstreammode2\"", "\"api_irtcengine_delete\"")
     str = str.replaceAll("\"api_irtcengine_enabledualstreammode3\"", "\"api_irtcengine_enabledualstreammode2\"")
     str = str.replaceAll("\"api_getmediaplayercachemanager\"", "\"api_irtcengine_getmediaplayercachemanager\"")
-    str = str.replaceAll("\"api_iagoraparameter_setparameters\"", "\"api_irtcengine_setparameters2\"")
+    str = str.replaceAll("\"api_iagoraparameter_setparameters_iagoraparameter\"", "\"api_irtcengine_setparameters2\"")
     str = str.replaceAll("\"api_irtcengine_getnativehandle\"", "\"api_irtcengine_getnativehandler\"")
     str = str.replaceAll("class_deviceinfo", "class_deviceinfomobile")
     str = str.replaceAll("class_videodeviceinfo", "class_deviceinfo")
@@ -359,7 +362,31 @@ function SwapString(src: string, str1: string, str2: string): string {
 
 
 function FindDocWithId(id: string, docs: DocData[]) {
-    return docs.find((e) => { return e.id == id });
+    return docs.find((e) => {
+        if (e.id == id)
+            return true;
+
+        //maybe code id is like api_irtcengine_enableextension
+        //but doc id is api_irtcengine_enableextension1
+        if (e.id == id + "1") {
+            return true;
+        }
+
+        //maybe code id is three element like api_irtcengine_enableextension
+        //but doc id is api_irtcengine_enableextension_irtcengine
+        let className = id.split('_')[1];
+        if (e.id  == id + `_${className}`) {
+            return true;
+        }
+
+        //maybe code id is three element like api_irtcengine_enableextension
+        //but doc id is api_irtcengine_enableextension1_irtcengine
+        if(e.id == id + `1_${className}`){
+            return true;
+        }
+
+        return false;
+    });
 }
 
 function GenerateEnumOrClassDoc(doc: DocData) {

@@ -11,35 +11,35 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The context information of the extension.
+    /// Plugin context information.
     /// </summary>
     ///
     public class ExtensionContext
     {
         ///
         /// <summary>
-        /// Whether the uid in ExtensionContext is valid: true : The uid is valid. false : The uid is invalid.
+        /// Whether the uid reported in ExtensionContext is valid: true : uid is valid. false : uid is invalid.
         /// </summary>
         ///
         public bool isValid;
 
         ///
         /// <summary>
-        /// The user ID. 0 represents a local user, while greater than 0 represents a remote user.
+        /// User ID. 0 represents the local user; values greater than 0 represent remote users.
         /// </summary>
         ///
         public uint uid;
 
         ///
         /// <summary>
-        /// The name of the extension provider.
+        /// Name of the provider offering the plugin.
         /// </summary>
         ///
         public string providerName;
 
         ///
         /// <summary>
-        /// The name of the extension.
+        /// Name of the plugin.
         /// </summary>
         ///
         public string extensionName;
@@ -63,138 +63,140 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The type of the video source.
+    /// Types of video sources.
     /// </summary>
     ///
     public enum VIDEO_SOURCE_TYPE
     {
         ///
         /// <summary>
-        /// 0: (Default) The primary camera.
+        /// 0: (Default) Video source is the primary camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_PRIMARY = 0,
 
         ///
         /// <summary>
-        /// 0: (Default) The primary camera.
+        /// 0: (Default) Video source is the primary camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
 
         ///
         /// <summary>
-        /// 1: The secondary camera.
+        /// 1: Video source is the secondary camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_SECONDARY = 1,
 
         ///
         /// <summary>
-        /// 2: The primary screen.
+        /// 2: Video source is the primary screen.
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN_PRIMARY = 2,
 
         ///
         /// <summary>
-        /// 2: The primary screen.
+        /// 2: Video source is the primary screen.
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
 
         ///
         /// <summary>
-        /// 3: The secondary screen.
+        /// 3: Video source is the secondary screen.
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN_SECONDARY = 3,
 
         ///
         /// <summary>
-        /// 4: A custom video source.
+        /// 4: Custom video source.
         /// </summary>
         ///
         VIDEO_SOURCE_CUSTOM = 4,
 
         ///
         /// <summary>
-        /// 5: The media player.
+        /// 5: Video source is a media player.
         /// </summary>
         ///
         VIDEO_SOURCE_MEDIA_PLAYER = 5,
 
         ///
         /// <summary>
-        /// 6: One PNG image.
+        /// 6: Video source is a PNG image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_PNG = 6,
 
         ///
         /// <summary>
-        /// 7: One JPEG image.
+        /// 7: Video source is a JPEG image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_JPEG = 7,
 
         ///
         /// <summary>
-        /// 8: One GIF image.
+        /// 8: Video source is a GIF image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_GIF = 8,
 
         ///
         /// <summary>
-        /// 9: One remote video acquired by the network.
+        /// 9: Video source is a remote video retrieved over the network.
         /// </summary>
         ///
         VIDEO_SOURCE_REMOTE = 9,
 
         ///
         /// <summary>
-        /// 10: One transcoded video source.
+        /// 10: Transcoded video source.
         /// </summary>
         ///
         VIDEO_SOURCE_TRANSCODED = 10,
 
         ///
         /// <summary>
-        /// 11: (For Android, Windows, and macOS only) The third camera.
+        /// 11: (Android, Windows, and macOS only) Video source is the third camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_THIRD = 11,
 
         ///
         /// <summary>
-        /// 12: (For Android, Windows, and macOS only) The fourth camera.
+        /// 12: (Android, Windows, and macOS only) Video source is the fourth camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_FOURTH = 12,
 
         ///
         /// <summary>
-        /// 13: (For Windows and macOS only) The third screen.
+        /// 13: (Windows and macOS only) Video source is the third screen.
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN_THIRD = 13,
 
         ///
         /// <summary>
-        /// 14: (For Windows and macOS only) The fourth screen.
+        /// 14: (Windows and macOS only) Video source is the fourth screen.
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN_FOURTH = 14,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 15: Video source is video processed by a speech-driven plugin.
+        /// </summary>
         ///
         VIDEO_SOURCE_SPEECH_DRIVEN = 15,
 
         ///
         /// <summary>
-        /// 100: An unknown video source.
+        /// 100: Unknown video source.
         /// </summary>
         ///
         VIDEO_SOURCE_UNKNOWN = 100,
@@ -203,7 +205,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The audio source type.
+    /// Audio source type.
     /// </summary>
     ///
     public enum AUDIO_SOURCE_TYPE
@@ -217,7 +219,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Custom audio stream.
+        /// 1: Custom captured audio stream.
         /// </summary>
         ///
         AUDIO_SOURCE_CUSTOM = 1,
@@ -250,14 +252,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: Mixed audio streams from all users in the current channel.
+        /// 6: Mixed audio stream of all audio in the current channel.
         /// </summary>
         ///
         AUDIO_SOURCE_REMOTE_CHANNEL = 6,
 
         ///
         /// <summary>
-        /// 100: An unknown audio source.
+        /// 100: Unknown audio source.
         /// </summary>
         ///
         AUDIO_SOURCE_UNKNOWN = 100,
@@ -266,91 +268,91 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The type of the audio route.
+    /// Type of audio route.
     /// </summary>
     ///
     public enum AudioRoute
     {
         ///
         /// <summary>
-        /// -1: The default audio route.
+        /// -1: Use the default audio route.
         /// </summary>
         ///
         ROUTE_DEFAULT = -1,
 
         ///
         /// <summary>
-        /// 0: Audio output routing is a headset with microphone.
+        /// 0: Audio routed to headset with microphone.
         /// </summary>
         ///
         ROUTE_HEADSET = 0,
 
         ///
         /// <summary>
-        /// 1: The audio route is an earpiece.
+        /// 1: Audio routed to earpiece.
         /// </summary>
         ///
         ROUTE_EARPIECE = 1,
 
         ///
         /// <summary>
-        /// 2: The audio route is a headset without a microphone.
+        /// 2: Audio routed to headset without microphone.
         /// </summary>
         ///
         ROUTE_HEADSETNOMIC = 2,
 
         ///
         /// <summary>
-        /// 3: The audio route is the speaker that comes with the device.
+        /// 3: Audio routed to the device's built-in speaker.
         /// </summary>
         ///
         ROUTE_SPEAKERPHONE = 3,
 
         ///
         /// <summary>
-        /// 4: The audio route is an external speaker. (iOS and macOS only)
+        /// 4: Audio routed to external speaker. (iOS and macOS only)
         /// </summary>
         ///
         ROUTE_LOUDSPEAKER = 4,
 
         ///
         /// <summary>
-        /// 5: The audio route is a Bluetooth device using the HFP protocol.
+        /// 5: Audio routed to Bluetooth device using HFP protocol.
         /// </summary>
         ///
         ROUTE_BLUETOOTH_DEVICE_HFP = 5,
 
         ///
         /// <summary>
-        /// 6: The audio route is a USB peripheral device. (For macOS only)
+        /// 6: Audio routed to USB peripheral device. (macOS only)
         /// </summary>
         ///
         ROUTE_USB = 6,
 
         ///
         /// <summary>
-        /// 7: The audio route is an HDMI peripheral device. (For macOS only)
+        /// 7: Audio routed to HDMI peripheral device. (macOS only)
         /// </summary>
         ///
         ROUTE_HDMI = 7,
 
         ///
         /// <summary>
-        /// 8: The audio route is a DisplayPort peripheral device. (For macOS only)
+        /// 8: Audio routed to DisplayPort peripheral device. (macOS only)
         /// </summary>
         ///
         ROUTE_DISPLAYPORT = 8,
 
         ///
         /// <summary>
-        /// 9: The audio route is Apple AirPlay. (For macOS only)
+        /// 9: Audio routed to Apple AirPlay. (macOS only)
         /// </summary>
         ///
         ROUTE_AIRPLAY = 9,
 
         ///
         /// <summary>
-        /// 10: The audio route is a Bluetooth device using the A2DP protocol.
+        /// 10: Audio routed to Bluetooth device using A2DP protocol.
         /// </summary>
         ///
         ROUTE_BLUETOOTH_DEVICE_A2DP = 10,
@@ -406,21 +408,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The use mode of the audio data.
+    /// Usage mode of audio data.
     /// </summary>
     ///
     public enum RAW_AUDIO_FRAME_OP_MODE_TYPE
     {
         ///
         /// <summary>
-        /// 0: Read-only mode, For example, when users acquire the data with the Agora SDK, then start the media push.
+        /// 0: (Default) Read-only mode. For example, if you use the SDK to capture data and perform CDN streaming yourself, you can use this mode.
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
 
         ///
         /// <summary>
-        /// 2: Read and write mode, For example, when users have their own audio-effect processing module and perform some voice preprocessing, such as a voice change.
+        /// 2: Read-write mode. For example, if you have your own audio effects module and want to pre-process the data (e.g., voice changing), you can use this mode.
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
@@ -443,21 +445,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Audio capturing device.
+        /// 1: Audio recording device.
         /// </summary>
         ///
         AUDIO_RECORDING_SOURCE = 1,
 
         ///
         /// <summary>
-        /// 2: The primary camera.
+        /// 2: Primary camera.
         /// </summary>
         ///
         PRIMARY_CAMERA_SOURCE = 2,
 
         ///
         /// <summary>
-        /// 3: A secondary camera.
+        /// 3: Secondary camera.
         /// </summary>
         ///
         SECONDARY_CAMERA_SOURCE = 3,
@@ -474,7 +476,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: Custom video source.
+        /// 6: Custom video capture source.
         /// </summary>
         ///
         CUSTOM_VIDEO_SOURCE = 6,
@@ -510,7 +512,9 @@ namespace Agora.Rtc
         TRANSCODED_VIDEO_SOURCE = 12,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 13: Video source processed by speech-driven plugin.
+        /// </summary>
         ///
         SPEECH_DRIVEN_VIDEO_SOURCE = 13,
 
@@ -581,35 +585,35 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The parameters of the audio frame in PCM format.
+    /// Information about external PCM format audio frames.
     /// </summary>
     ///
     public class AudioPcmFrame
     {
         ///
         /// <summary>
-        /// The timestamp (ms) of the audio frame.
+        /// Timestamp of the audio frame (ms).
         /// </summary>
         ///
         public long capture_timestamp;
 
         ///
         /// <summary>
-        /// The number of samples per channel in the audio frame.
+        /// Number of samples per channel.
         /// </summary>
         ///
         public ulong samples_per_channel_;
 
         ///
         /// <summary>
-        /// Audio sample rate (Hz).
+        /// Audio sampling rate (Hz).
         /// </summary>
         ///
         public int sample_rate_hz_;
 
         ///
         /// <summary>
-        /// The number of audio channels.
+        /// Number of audio channels.
         /// </summary>
         ///
         public ulong num_channels_;
@@ -621,14 +625,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of bytes per sample.
+        /// Number of bytes in the audio data.
         /// </summary>
         ///
         public BYTES_PER_SAMPLE bytes_per_sample;
 
         ///
         /// <summary>
-        /// The audio frame.
+        /// Audio frame data.
         /// </summary>
         ///
         public int16_t[] data_;
@@ -675,7 +679,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The channel mode.
+    /// Channel mode.
     /// </summary>
     ///
     public enum AUDIO_DUAL_MONO_MODE
@@ -689,21 +693,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Left channel mode. This mode replaces the audio of the right channel with the audio of the left channel, which means the user can only hear the audio of the left channel.
+        /// 1: Left channel mode. This mode replaces the right channel audio with the left channel audio, so the user only hears the left channel.
         /// </summary>
         ///
         AUDIO_DUAL_MONO_L = 1,
 
         ///
         /// <summary>
-        /// 2: Right channel mode. This mode replaces the audio of the left channel with the audio of the right channel, which means the user can only hear the audio of the right channel.
+        /// 2: Right channel mode. This mode replaces the left channel audio with the right channel audio, so the user only hears the right channel.
         /// </summary>
         ///
         AUDIO_DUAL_MONO_R = 2,
 
         ///
         /// <summary>
-        /// 3: Mixed channel mode. This mode mixes the audio of the left channel and the right channel, which means the user can hear the audio of the left channel and the right channel at the same time.
+        /// 3: Mixed mode. This mode overlays the left and right channel data, so the user hears both channels simultaneously.
         /// </summary>
         ///
         AUDIO_DUAL_MONO_MIX = 3,
@@ -712,7 +716,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The video pixel format.
+    /// Video pixel formats.
     /// </summary>
     ///
     public enum VIDEO_PIXEL_FORMAT
@@ -726,7 +730,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: The format is I420.
+        /// 1: I420 format.
         /// </summary>
         ///
         VIDEO_PIXEL_I420 = 1,
@@ -743,7 +747,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 4: The format is RGBA.
+        /// 4: RGBA format.
         /// </summary>
         ///
         VIDEO_PIXEL_RGBA = 4,
@@ -785,14 +789,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 16: The format is I422.
+        /// 16: I422 format.
         /// </summary>
         ///
         VIDEO_PIXEL_I422 = 16,
 
         ///
         /// <summary>
-        /// 17: The ID3D11TEXTURE2D format. Currently supported types are DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_B8G8R8A8_TYPELESS and DXGI_FORMAT_NV12.
+        /// 17: ID3D11TEXTURE2D format. Currently supported types include DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_B8G8R8A8_TYPELESS, and DXGI_FORMAT_NV12.
         /// </summary>
         ///
         VIDEO_TEXTURE_ID3D11TEXTURE2D = 17,
@@ -806,28 +810,28 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Video display modes.
+    /// Video display mode.
     /// </summary>
     ///
     public enum RENDER_MODE_TYPE
     {
         ///
         /// <summary>
-        /// 1: Hidden mode. The priority is to fill the window. Any excess video that does not match the window size will be cropped.
+        /// 1: Video is scaled proportionally. Prioritizes filling the view. Excess video outside the view due to size mismatch is cropped.
         /// </summary>
         ///
         RENDER_MODE_HIDDEN = 1,
 
         ///
         /// <summary>
-        /// 2: Fit mode. The priority is to ensure that all video content is displayed. Any areas of the window that are not filled due to the mismatch between video size and window size will be filled with black.
+        /// 2: Video is scaled proportionally. Prioritizes showing the entire video content. Black bars fill the unused view area due to size mismatch.
         /// </summary>
         ///
         RENDER_MODE_FIT = 2,
 
         ///
         /// <summary>
-        /// 3: Adaptive mode. Deprecated: This enumerator is deprecated and not recommended for use.
+        /// 3: Adaptive mode. Deprecated: This enum is deprecated and not recommended for use.
         /// </summary>
         ///
         RENDER_MODE_ADAPTIVE = 3,
@@ -1273,14 +1277,14 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The relative position of alphaBuffer and video frames.
+    /// Relative position of alphaBuffer and the video frame.
     /// </summary>
     ///
     public enum ALPHA_STITCH_MODE
     {
         ///
         /// <summary>
-        /// 0: (Default) Only video frame, that is, alphaBuffer is not stitched with the video frame.
+        /// 0: (Default) Only the video frame, i.e., alphaBuffer is not stitched with the video frame.
         /// </summary>
         ///
         NO_ALPHA_STITCH = 0,
@@ -1317,107 +1321,107 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The external video frame.
+    /// External video frame.
     /// </summary>
     ///
     public class ExternalVideoFrame
     {
         ///
         /// <summary>
-        /// The video type. See VIDEO_BUFFER_TYPE.
+        /// Video type. See VIDEO_BUFFER_TYPE.
         /// </summary>
         ///
         public VIDEO_BUFFER_TYPE type;
 
         ///
         /// <summary>
-        /// The pixel format. See VIDEO_PIXEL_FORMAT.
+        /// Pixel format. See VIDEO_PIXEL_FORMAT.
         /// </summary>
         ///
         public VIDEO_PIXEL_FORMAT format;
 
         ///
         /// <summary>
-        /// Video frame buffer.
+        /// Video buffer.
         /// </summary>
         ///
         public byte[] buffer;
 
         ///
         /// <summary>
-        /// Line spacing of the incoming video frame, which must be in pixels instead of bytes. For textures, it is the width of the texture.
+        /// Stride of the input video frame, in pixels (not bytes). For Texture, this refers to the width of the Texture.
         /// </summary>
         ///
         public int stride;
 
         ///
         /// <summary>
-        /// Height of the incoming video frame.
+        /// Height of the input video frame.
         /// </summary>
         ///
         public int height;
 
         ///
         /// <summary>
-        /// Raw data related parameter. The number of pixels trimmed from the left. The default value is 0.
+        /// (Raw video only)
         /// </summary>
         ///
         public int cropLeft;
 
         ///
         /// <summary>
-        /// Raw data related parameter. The number of pixels trimmed from the top. The default value is 0.
+        /// (Raw video only)
         /// </summary>
         ///
         public int cropTop;
 
         ///
         /// <summary>
-        /// Raw data related parameter. The number of pixels trimmed from the right. The default value is 0.
+        /// (Raw video only)
         /// </summary>
         ///
         public int cropRight;
 
         ///
         /// <summary>
-        /// Raw data related parameter. The number of pixels trimmed from the bottom. The default value is 0.
+        /// (Raw video only)
         /// </summary>
         ///
         public int cropBottom;
 
         ///
         /// <summary>
-        /// Raw data related parameter. The clockwise rotation of the video frame. You can set the rotation angle as 0, 90, 180, or 270. The default value is 0.
+        /// Raw data field. Specifies clockwise rotation of the input video group. Options: 0, 90, 180, 270. Default is 0.
         /// </summary>
         ///
         public int rotation;
 
         ///
         /// <summary>
-        /// Timestamp (ms) of the incoming video frame. An incorrect timestamp results in frame loss or unsynchronized audio and video.
+        /// Timestamp of the input video frame in milliseconds. Incorrect timestamps may cause frame drops or AV sync issues.
         /// </summary>
         ///
         public long timestamp;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format.
-        ///  When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos, set eglContext to this field.
-        ///  When using the OpenGL interface (android.opengl.*) defined by Android, set eglContext to this field.
+        /// (Texture only)
+        ///  When using the Khronos-defined OpenGL interface (javax.microedition.khronos.egl.*), set eglContext to this field.
+        ///  When using the Android-defined OpenGL interface (android.opengl.*), set eglContext to this field.
         /// </summary>
         ///
         public IntPtr eglContext;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. Texture ID of the video frame.
+        /// (Texture only) Type of the Texture ID for the video frame.
         /// </summary>
         ///
         public EGL_CONTEXT_TYPE eglType;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. Incoming 4 × 4 transformational matrix. The typical value is a unit matrix.
+        /// (Texture only) A 4x4 transformation matrix input, typically an identity matrix.
         /// </summary>
         ///
         public int textureId;
@@ -1434,51 +1438,52 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
+        /// (Texture only) Metadata buffer. Default is NULL.
         /// </summary>
         ///
         public byte[] metadataBuffer;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
+        /// (Texture only) Size of the metadata. Default is 0.
         /// </summary>
         ///
         public int metadataSize;
 
         ///
         /// <summary>
-        /// The alpha channel data output by using portrait segmentation algorithm. This data matches the size of the video frame, with each pixel value ranging from [0,255], where 0 represents the background and 255 represents the foreground (portrait). By setting this parameter, you can render the video background into various effects, such as transparent, solid color, image, video, etc. In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are of the Full Range type; other types may cause abnormal alpha data rendering.
+        /// Alpha channel data output by portrait segmentation algorithm. The data matches the video frame size, with pixel values ranging from [0,255], where 0 represents background and 255 represents foreground (portrait).
+        /// You can use this parameter to render the video background with various effects, such as transparency, solid color, image, or video. In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are Full Range. Other types may cause abnormal Alpha rendering.
         /// </summary>
         ///
         public byte[] alphaBuffer;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in BGRA or RGBA format. Whether to extract the alpha channel data from the video frame and automatically fill it into alphaBuffer : true ：Extract and fill the alpha channel data. false : (Default) Do not extract and fill the Alpha channel data. For video data in BGRA or RGBA format, you can set the Alpha channel data in either of the following ways:
-        ///  Automatically by setting this parameter to true.
-        ///  Manually through the alphaBuffer parameter.
+        /// For BGRA or RGBA video data, you can set Alpha channel data using either of the following:
+        ///  Automatically fill by setting this parameter to true.
+        ///  Set via the alphaBuffer parameter. (BGRA or RGBA only) Whether to extract the Alpha channel data from the video frame and automatically fill it into alphaBuffer : true : Extract and fill Alpha channel data. false : (default) Do not extract or fill Alpha channel data.
         /// </summary>
         ///
         public bool fillAlphaBuffer;
 
         ///
         /// <summary>
-        /// When the video frame contains alpha channel data, it represents the relative position of alphaBuffer and the video frame. See ALPHA_STITCH_MODE.
+        /// When the video frame contains Alpha channel data, sets the relative position of alphaBuffer and the video frame. See ALPHA_STITCH_MODE.
         /// </summary>
         ///
         public ALPHA_STITCH_MODE alphaStitchMode;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
+        /// (Windows Texture only) A pointer to an ID3D11Texture2D object used by the video frame.
         /// </summary>
         ///
         public IntPtr d3d11Texture2d;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Windows Texture format. It represents an index of an ID3D11Texture2D texture object used by the video frame in the ID3D11Texture2D array.
+        /// (Windows Texture only) Index of the ID3D11Texture2D texture object used by the video frame in the ID3D11Texture2D array.
         /// </summary>
         ///
         public int textureSliceIndex;
@@ -1490,7 +1495,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// By default, the color space properties of video frames will apply the Full Range and BT.709 standard configurations. You can configure the settings according your needs for custom video capturing and rendering.
+        /// Color space property of the video frame. By default, Full Range and BT.709 configurations are applied. You can customize this based on custom capture or rendering needs. See [VideoColorSpace](https://developer.mozilla.org/en-US/docs/Web/API/VideoColorSpace).
         /// </summary>
         ///
         public ColorSpace colorSpace;
@@ -1570,28 +1575,28 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The video buffer type.
+    /// Video buffer type.
     /// </summary>
     ///
     public enum VIDEO_BUFFER_TYPE
     {
         ///
         /// <summary>
-        /// 1: The video buffer in the format of raw data.
+        /// 1: Type is raw data.
         /// </summary>
         ///
         VIDEO_BUFFER_RAW_DATA = 1,
 
         ///
         /// <summary>
-        /// 2: The video buffer in the format of raw data.
+        /// 2: Type is raw data.
         /// </summary>
         ///
         VIDEO_BUFFER_ARRAY = 2,
 
         ///
         /// <summary>
-        /// 3: The video buffer in the format of Texture.
+        /// 3: Type is Texture.
         /// </summary>
         ///
         VIDEO_BUFFER_TEXTURE = 3,
@@ -1600,9 +1605,9 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Configurations of the video frame.
+    /// Video frame property settings.
     /// 
-    /// Note that the buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer, but it can modify the content of the buffer.
+    /// The buffer is a pointer to a pointer. This interface cannot modify the buffer pointer, only the buffer content.
     /// </summary>
     ///
     public class VideoFrame
@@ -1629,142 +1634,143 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The pixel format. See VIDEO_PIXEL_FORMAT.
+        /// Pixel format. See VIDEO_PIXEL_FORMAT.
         /// </summary>
         ///
         public VIDEO_PIXEL_FORMAT type;
 
         ///
         /// <summary>
-        /// The width of the video, in pixels.
+        /// Video pixel width.
         /// </summary>
         ///
         public int width;
 
         ///
         /// <summary>
-        /// The height of the video, in pixels.
+        /// Video pixel height.
         /// </summary>
         ///
         public int height;
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
+        /// For YUV data, indicates the stride of the Y buffer; for RGBA data, indicates the total data length. When processing video data, you need to handle the offset between each row of pixel data according to this parameter, otherwise image distortion may occur.
         /// </summary>
         ///
         public int yStride;
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
+        /// For YUV data, indicates the stride of the U buffer; for RGBA data, the value is 0. When processing video data, you need to handle the offset between each row of pixel data according to this parameter, otherwise image distortion may occur.
         /// </summary>
         ///
         public int uStride;
 
         ///
         /// <summary>
-        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0. When dealing with video data, it is necessary to process the offset between each line of pixel data based on this parameter, otherwise it may result in image distortion.
+        /// For YUV data, indicates the stride of the V buffer; for RGBA data, the value is 0. When processing video data, you need to handle the offset between each row of pixel data according to this parameter, otherwise image distortion may occur.
         /// </summary>
         ///
         public int vStride;
 
         ///
         /// <summary>
-        /// For YUV data, the pointer to the Y buffer; for RGBA data, the data buffer.
+        /// For YUV data, indicates the pointer to the Y buffer; for RGBA data, indicates the data buffer.
         /// </summary>
         ///
         public byte[] yBuffer;
 
         ///
         /// <summary>
-        /// For YUV data, the pointer to the U buffer; for RGBA data, the value is 0.
+        /// For YUV data, indicates the pointer to the U buffer; for RGBA data, the value is null.
         /// </summary>
         ///
         public byte[] uBuffer;
 
         ///
         /// <summary>
-        /// For YUV data, the pointer to the V buffer; for RGBA data, the value is 0.
+        /// For YUV data, indicates the pointer to the V buffer; for RGBA data, the value is null.
         /// </summary>
         ///
         public byte[] vBuffer;
 
         ///
         /// <summary>
-        /// The clockwise rotation of the video frame before rendering. Supported values include 0, 90, 180, and 270 degrees.
+        /// Set the clockwise rotation angle of the frame before rendering the video. Currently supports 0, 90, 180, and 270 degrees.
         /// </summary>
         ///
         public int rotation;
 
         ///
         /// <summary>
-        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. This parameter is required.
+        /// The Unix timestamp (in milliseconds) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. This parameter is required.
         /// </summary>
         ///
         public long renderTimeMs;
 
         ///
         /// <summary>
-        /// Reserved for future use.
+        /// Reserved parameter.
         /// </summary>
         ///
         public int avsync_type;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
+        /// This parameter is only applicable to video data in Texture format. Refers to the metadata buffer. The default value is NULL.
         /// </summary>
         ///
         public IntPtr metadata_buffer;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
+        /// This parameter is only applicable to video data in Texture format. Refers to the size of the metadata. The default value is 0.
         /// </summary>
         ///
         public int metadata_size;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. EGL Context.
+        /// This parameter is only applicable to video data in Texture format. EGL Context.
         /// </summary>
         ///
         public IntPtr sharedContext;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. Texture ID.
+        /// This parameter is only applicable to video data in Texture format. Texture ID.
         /// </summary>
         ///
         public int textureId;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
+        /// This parameter is only applicable to video data in Windows Texture format. Represents a pointer to an object of type ID3D11Texture2D, which is used by the video frame.
         /// </summary>
         ///
         public IntPtr d3d11Texture2d;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. Incoming 4 × 4 transformational matrix. The typical value is a unit matrix.
+        /// This parameter is only applicable to video data in Texture format. It is an input 4x4 transformation matrix, typically an identity matrix.
         /// </summary>
         ///
         public float[] matrix;
 
         ///
         /// <summary>
-        /// The alpha channel data output by using portrait segmentation algorithm. This data matches the size of the video frame, with each pixel value ranging from [0,255], where 0 represents the background and 255 represents the foreground (portrait). By setting this parameter, you can render the video background into various effects, such as transparent, solid color, image, video, etc.
-        ///  In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are of the Full Range type; other types may cause abnormal alpha data rendering.
-        ///  Make sure that alphaBuffer is exactly the same size as the video frame (width × height), otherwise it may cause the app to crash.
+        /// Alpha channel data output by the portrait segmentation algorithm. This data matches the size of the video frame. Each pixel value ranges from [0, 255], where 0 represents the background and 255 represents the foreground (portrait).
+        /// You can use this parameter to render the video background with various effects, such as transparency, solid color, image, video, etc.
+        ///  In custom video rendering scenarios, ensure that both the video frame and alphaBuffer are of Full Range type; other types may cause abnormal Alpha data rendering.
+        ///  Make sure that alphaBuffer exactly matches the size of the video frame (width × height), otherwise the app may crash.
         /// </summary>
         ///
         public byte[] alphaBuffer;
 
         ///
         /// <summary>
-        /// When the video frame contains alpha channel data, it represents the relative position of alphaBuffer and the video frame. See ALPHA_STITCH_MODE.
+        /// When the video frame contains Alpha channel data, sets the relative position of alphaBuffer and the video frame. See ALPHA_STITCH_MODE.
         /// </summary>
         ///
         public ALPHA_STITCH_MODE alphaStitchMode;
@@ -1776,7 +1782,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The meta information in the video frame. To use this parameter, contact.
+        /// Metadata in the video frame. This parameter requires [contacting technical support](https://ticket.shengwang.cn/) for use.
         /// </summary>
         ///
         public IVideoFrameMetaInfo metaInfo;
@@ -1788,7 +1794,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// By default, the color space properties of video frames will apply the Full Range and BT.709 standard configurations. You can configure the settings according your needs for custom video capturing and rendering.
+        /// Color space attributes of the video frame. By default, Full Range and BT.709 standard configurations are applied. You can customize the settings based on your custom capture and rendering requirements. See [VideoColorSpace](https://developer.mozilla.org/en-US/docs/Web/API/VideoColorSpace).
         /// </summary>
         ///
         public ColorSpace colorSpace;
@@ -1871,7 +1877,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The frame position of the video observer.
+    /// Video observation position.
     /// </summary>
     ///
     [Flags]
@@ -1879,30 +1885,30 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 1: The location of the locally collected video data after preprocessing corresponds to the OnCaptureVideoFrame callback. The observed video here has the effect of video pre-processing, which can be verified by enabling image enhancement, virtual background, or watermark.
+        /// 1: Position after local video capture and preprocessing, corresponding to the OnCaptureVideoFrame callback. The observed video includes preprocessing effects, which can be verified by enabling beauty effects, virtual background, or watermark.
         /// </summary>
         ///
         POSITION_POST_CAPTURER = 1 << 0,
 
         ///
         /// <summary>
-        /// 2: The pre-renderer position, which corresponds to the video data in the OnRenderVideoFrame callback.
+        /// 2: Position before rendering the received remote video, corresponding to the OnRenderVideoFrame callback.
         /// </summary>
         ///
         POSITION_PRE_RENDERER = 1 << 1,
 
         ///
         /// <summary>
-        /// 4: The pre-encoder position, which corresponds to the video data in the OnPreEncodeVideoFrame callback. The observed video here has the effects of video pre-processing and encoding pre-processing.
-        ///  To verify the pre-processing effects of the video, you can enable image enhancement, virtual background, or watermark.
-        ///  To verify the pre-encoding processing effect, you can set a lower frame rate (for example, 5 fps).
+        /// 4: Position before local video encoding, corresponding to the OnPreEncodeVideoFrame callback. The observed video includes preprocessing and pre-encoding effects:
+        ///  Preprocessing effects can be verified by enabling beauty effects, virtual background, or watermark.
+        ///  Pre-encoding effects can be verified by setting a low frame rate (e.g., 5 fps).
         /// </summary>
         ///
         POSITION_PRE_ENCODER = 1 << 2,
 
         ///
         /// <summary>
-        /// 8: The position after local video capture and before pre-processing. The observed video here does not have pre-processing effects, which can be verified by enabling image enhancement, virtual background, or watermarks.
+        /// 8: Position after local video capture and before preprocessing. The observed video does not include preprocessing effects, which can be verified by enabling beauty effects, virtual background, or watermark.
         /// </summary>
         ///
         POSITION_POST_CAPTURER_ORIGIN = 1 << 3,
@@ -1933,7 +1939,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The type of video content moderation module.
+    /// Type of video content inspection module.
     /// </summary>
     ///
     public enum CONTENT_INSPECT_TYPE
@@ -1953,14 +1959,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 2: Video screenshot and upload via Agora self-developed extension. SDK takes screenshots of the video stream in the channel and uploads them.
+        /// 2: Uses Agora's proprietary plugin for screenshot and upload. The SDK captures and uploads screenshots of the video stream.
         /// </summary>
         ///
         CONTENT_INSPECT_SUPERVISION = 2,
 
         ///
         /// <summary>
-        /// 3: Video screenshot and upload via extensions from Agora Extensions Marketplace. SDK uses video moderation extensions from Agora Extensions Marketplace to take screenshots of the video stream in the channel and uploads them.
+        /// 3: Uses cloud marketplace plugin for screenshot and upload. The SDK uses the cloud marketplace video moderation plugin to capture and upload screenshots of the video stream.
         /// </summary>
         ///
         CONTENT_INSPECT_IMAGE_MODERATION = 3,
@@ -1969,27 +1975,29 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// ContentInspectModule A structure used to configure the frequency of video screenshot and upload.
+    /// The ContentInspectModule struct is used to configure the frequency of local screenshot uploads.
     /// </summary>
     ///
     public class ContentInspectModule
     {
         ///
         /// <summary>
-        /// Types of functional module. See CONTENT_INSPECT_TYPE.
+        /// Type of functional module. See CONTENT_INSPECT_TYPE.
         /// </summary>
         ///
         public CONTENT_INSPECT_TYPE type;
 
         ///
         /// <summary>
-        /// The frequency (s) of video screenshot and upload. The value should be set as larger than 0. The default value is 0, the SDK does not take screenshots. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
+        /// Interval for local screenshot upload, in seconds. The value must be greater than 0. Default is 0, which means no screenshot upload. Recommended value is 10 seconds, but you can adjust it based on your business needs.
         /// </summary>
         ///
         public uint interval;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Position of the video observer. See VIDEO_MODULE_POSITION.
+        /// </summary>
         ///
         public VIDEO_MODULE_POSITION position;
 
@@ -2007,35 +2015,37 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Screenshot and upload configuration.
+    /// Local screenshot upload configuration.
     /// </summary>
     ///
     public class ContentInspectConfig
     {
         ///
         /// <summary>
-        /// Additional information on the video content (maximum length: 1024 Bytes). The SDK sends the screenshots and additional information on the video content to the Agora server. Once the video screenshot and upload process is completed, the Agora server sends the additional information and the callback notification to your server.
+        /// Additional information, with a maximum length of 1024 bytes.
+        /// The SDK uploads the additional information along with the screenshot to the Agora server. After the screenshot is completed, the Agora server sends the additional information to your server along with the callback notification.
         /// </summary>
         ///
         public string extraInfo;
 
         ///
         /// <summary>
-        /// (Optional) Server configuration related to uploading video screenshots via extensions from Agora Extensions Marketplace. This parameter only takes effect when type in ContentInspectModule is set to CONTENT_INSPECT_IMAGE_MODERATION. If you want to use it, contact.
+        /// (Optional) Cloud Marketplace video moderation related server configuration. This parameter takes effect only when the type in ContentInspectModule is set to CONTENT_INSPECT_IMAGE_MODERATION. To use this feature, [contact technical support](https://ticket.shengwang.cn/).
         /// </summary>
         ///
         public string serverConfig;
 
         ///
         /// <summary>
-        /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
+        /// Functional modules. See ContentInspectModule.
+        /// Supports up to 32 ContentInspectModule instances. The value range for MAX_CONTENT_INSPECT_MODULE_COUNT is an integer between [1, 32]. Only one instance can be configured for each functional module. Currently, only screenshot upload is supported.
         /// </summary>
         ///
         public ContentInspectModule[] modules;
 
         ///
         /// <summary>
-        /// The number of functional modules, that is,the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
+        /// Number of functional modules, i.e., the number of configured ContentInspectModule instances. Must match the number of instances configured in modules. Maximum value is 32.
         /// </summary>
         ///
         public int moduleCount;
@@ -2058,25 +2068,25 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The snapshot configuration.
+    /// Video snapshot settings.
     /// </summary>
     ///
     public class SnapshotConfig
     {
         ///
         /// <summary>
-        /// The local path (including filename extensions) of the snapshot. For example:
+        /// Make sure the directory exists and is writable. The local path to save the snapshot, including the file name and format. For example:
         ///  Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.jpg
         ///  iOS: /App Sandbox/Library/Caches/example.jpg
         ///  macOS: ～/Library/Logs/example.jpg
-        ///  Android: /storage/emulated/0/Android/data/<package name>/files/example.jpg Ensure that the path you specify exists and is writable.
+        ///  Android: /storage/emulated/0/Android/data/<package name>/files/example.jpg
         /// </summary>
         ///
         public string filePath;
 
         ///
         /// <summary>
-        /// The position of the snapshot video frame in the video pipeline. See VIDEO_MODULE_POSITION.
+        /// The position of the video frame in the video pipeline to capture the snapshot. See VIDEO_MODULE_POSITION.
         /// </summary>
         ///
         public VIDEO_MODULE_POSITION position;
@@ -2119,44 +2129,45 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved. The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample.
+        /// Audio data buffer (for stereo, data is interleaved).
+        /// Buffer size buffer = samples × channels × bytesPerSample.
         /// </summary>
         ///
         public byte[] RawBuffer = new byte[0];
 
         ///
         /// <summary>
-        /// The type of the audio frame. See AUDIO_FRAME_TYPE.
+        /// Audio frame type. See AUDIO_FRAME_TYPE.
         /// </summary>
         ///
         public AUDIO_FRAME_TYPE type;
 
         ///
         /// <summary>
-        /// The number of samples per channel in the audio frame.
+        /// Number of samples per channel.
         /// </summary>
         ///
         public int samplesPerChannel;
 
         ///
         /// <summary>
-        /// The number of bytes per sample. For PCM, this parameter is generally set to 16 bits (2 bytes).
+        /// Number of bytes per sample. For PCM, typically 16 bits, i.e., two bytes.
         /// </summary>
         ///
         public BYTES_PER_SAMPLE bytesPerSample;
 
         ///
         /// <summary>
-        /// The number of audio channels (the data are interleaved if it is stereo).
-        ///  1: Mono.
-        ///  2: Stereo.
+        /// Number of channels (for stereo, data is interleaved).
+        ///  1: Mono
+        ///  2: Stereo
         /// </summary>
         ///
         public int channels;
 
         ///
         /// <summary>
-        /// The number of samples per channel in the audio frame.
+        /// Number of samples per second per channel.
         /// </summary>
         ///
         public int samplesPerSec;
@@ -2168,14 +2179,15 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The timestamp (ms) of the external audio frame. You can use this timestamp to restore the order of the captured audio frame, and synchronize audio and video frames in video scenarios, including scenarios where external video sources are used.
+        /// Render timestamp of the external audio frame.
+        /// You can use this timestamp to restore the order of audio frames. In scenarios with video (including those using external video sources), this parameter can be used to achieve audio-video synchronization.
         /// </summary>
         ///
         public long renderTimeMs;
 
         ///
         /// <summary>
-        /// Reserved for future use.
+        /// Reserved parameter.
         /// </summary>
         ///
         public int avsync_type;
@@ -2268,19 +2280,20 @@ namespace Agora.Rtc
     /// <summary>
     /// Audio data format.
     /// 
-    /// You can pass the AudioParams object in the following APIs to set the audio data format for the corresponding callback: SetRecordingAudioFrameParameters : Sets the audio data format for the OnRecordAudioFrame callback. SetPlaybackAudioFrameParameters : Sets the audio data format for the OnPlaybackAudioFrame callback. SetMixedAudioFrameParameters : Sets the audio data format for the OnMixedAudioFrame callback. SetEarMonitoringAudioFrameParameters : Sets the audio data format for the OnEarMonitoringAudioFrame callback.
-    ///  The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks according to the sampling interval. Sample interval (sec) = samplePerCall /(sampleRate × channel).
-    ///  Ensure that the sample interval ≥ 0.01 (s).
+    /// You can pass an AudioParams object in the following APIs to set the audio data format for the corresponding callback: SetRecordingAudioFrameParameters : Sets the data format for the OnRecordAudioFrame callback. SetPlaybackAudioFrameParameters : Sets the data format for the OnPlaybackAudioFrame callback. SetMixedAudioFrameParameters : Sets the data format for the OnMixedAudioFrame callback. SetEarMonitoringAudioFrameParameters : Sets the data format for the OnEarMonitoringAudioFrame callback.
+    ///  The SDK calculates the sampling interval using the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks based on this interval.
+    ///  Sampling interval = samplesPerCall / (sampleRate × channel).
+    ///  Make sure the sampling interval is not less than 0.01 (s).
     /// </summary>
     ///
     public class AudioParams
     {
         ///
         /// <summary>
-        /// The audio sample rate (Hz), which can be set as one of the following values:
-        ///  8000.
-        ///  (Default) 16000.
-        ///  32000.
+        /// Sampling rate of the data in Hz. Valid values:
+        ///  8000
+        ///  16000 (default)
+        ///  32000
         ///  44100
         ///  48000
         /// </summary>
@@ -2289,23 +2302,23 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of audio channels, which can be set as either of the following values:
-        ///  1: (Default) Mono.
-        ///  2: Stereo.
+        /// Number of audio channels. Valid values:
+        ///  1: Mono (default)
+        ///  2: Stereo
         /// </summary>
         ///
         public int channels;
 
         ///
         /// <summary>
-        /// The use mode of the audio data. See RAW_AUDIO_FRAME_OP_MODE_TYPE.
+        /// Usage mode of the data. See RAW_AUDIO_FRAME_OP_MODE_TYPE.
         /// </summary>
         ///
         public RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
 
         ///
         /// <summary>
-        /// The number of samples, such as 1024 for the media push.
+        /// Number of samples per call. Typically 1024 in scenarios like media stream relay.
         /// </summary>
         ///
         public int samples_per_call;
@@ -2330,21 +2343,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The audio spectrum data.
+    /// Audio spectrum data.
     /// </summary>
     ///
     public class AudioSpectrumData
     {
         ///
         /// <summary>
-        /// The audio spectrum data. Agora divides the audio frequency into 256 frequency domains, and reports the energy value of each frequency domain through this parameter. The value range of each energy type is [-300, 1] and the unit is dBFS.
+        /// Audio spectrum data. Agora divides the audio frequency into 256 frequency bands and reports the energy value of each band through this parameter. The value range of each energy is [-300, 1], in dBFS.
         /// </summary>
         ///
         public float[] audioSpectrumData;
 
         ///
         /// <summary>
-        /// The audio spectrum data length is 256.
+        /// The length of the audio spectrum data is 256.
         /// </summary>
         ///
         public int dataLength;
@@ -2365,21 +2378,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Audio spectrum information of the remote user.
+    /// Audio spectrum information of a remote user.
     /// </summary>
     ///
     public class UserAudioSpectrumInfo
     {
         ///
         /// <summary>
-        /// The user ID of the remote user.
+        /// Remote user ID.
         /// </summary>
         ///
         public uint uid;
 
         ///
         /// <summary>
-        /// Audio spectrum information of the remote user. See AudioSpectrumData.
+        /// Audio spectrum data of the remote user. See AudioSpectrumData.
         /// </summary>
         ///
         public AudioSpectrumData spectrumData;
@@ -2421,21 +2434,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The external video frame encoding type.
+    /// Encoding type of external video frames.
     /// </summary>
     ///
     public enum EXTERNAL_VIDEO_SOURCE_TYPE
     {
         ///
         /// <summary>
-        /// 0: The video frame is not encoded.
+        /// 0: Unencoded video frame.
         /// </summary>
         ///
         VIDEO_FRAME = 0,
 
         ///
         /// <summary>
-        /// 1: The video frame is encoded.
+        /// 1: Encoded video frame.
         /// </summary>
         ///
         ENCODED_VIDEO_FRAME,
@@ -2455,30 +2468,22 @@ namespace Agora.Rtc
     }
 
     ///
-    /// <summary>
-    /// The recording content.
-    /// </summary>
+    /// @ignore
     ///
     public enum MediaRecorderStreamType
     {
         ///
-        /// <summary>
-        /// Only audio.
-        /// </summary>
+        /// @ignore
         ///
         STREAM_TYPE_AUDIO = 0x01,
 
         ///
-        /// <summary>
-        /// Only video.
-        /// </summary>
+        /// @ignore
         ///
         STREAM_TYPE_VIDEO = 0x02,
 
         ///
-        /// <summary>
-        /// (Default) Audio and video.
-        /// </summary>
+        /// @ignore
         ///
         STREAM_TYPE_BOTH = STREAM_TYPE_AUDIO | STREAM_TYPE_VIDEO,
 
@@ -2486,28 +2491,28 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The current recording state.
+    /// Current recording state.
     /// </summary>
     ///
     public enum RecorderState
     {
         ///
         /// <summary>
-        /// -1: An error occurs during the recording. See RecorderReasonCode for the reason.
+        /// -1: Audio/video stream recording error. See RecorderReasonCode.
         /// </summary>
         ///
         RECORDER_STATE_ERROR = -1,
 
         ///
         /// <summary>
-        /// 2: The audio and video recording starts.
+        /// 2: Audio/video stream recording starts.
         /// </summary>
         ///
         RECORDER_STATE_START = 2,
 
         ///
         /// <summary>
-        /// 3: The audio and video recording stops.
+        /// 3: Audio/video stream recording stops.
         /// </summary>
         ///
         RECORDER_STATE_STOP = 3,
@@ -2516,35 +2521,43 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The reason for the state change.
+    /// Reasons for recording state errors.
     /// </summary>
     ///
     public enum RecorderReasonCode
     {
         ///
         /// <summary>
-        /// 0: No error.
+        /// 0: Everything is normal.
         /// </summary>
         ///
         RECORDER_REASON_NONE = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: Failed to write to recording file.
+        /// </summary>
         ///
         RECORDER_REASON_WRITE_FAILED = 1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: No audio/video stream to record or the stream was interrupted for more than 5 seconds.
+        /// </summary>
         ///
         RECORDER_REASON_NO_STREAM = 2,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 3: Recording duration exceeds the maximum limit.
+        /// </summary>
         ///
         RECORDER_REASON_OVER_MAX_DURATION = 3,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 4: Recording configuration changed.
+        /// </summary>
         ///
         RECORDER_REASON_CONFIG_CHANGED = 4,
 

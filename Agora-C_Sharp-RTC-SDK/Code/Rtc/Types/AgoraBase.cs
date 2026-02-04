@@ -25,21 +25,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The information of the user.
+    /// User information.
     /// </summary>
     ///
     public class UserInfo
     {
         ///
         /// <summary>
-        /// The user ID.
+        /// User ID.
         /// </summary>
         ///
         public uint uid;
 
         ///
         /// <summary>
-        /// User account. The maximum data length is MAX_USER_ACCOUNT_LENGTH_TYPE.
+        /// User account. Length limit: MAX_USER_ACCOUNT_LENGTH_TYPE.
         /// </summary>
         ///
         public string userAccount;
@@ -53,21 +53,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The encoding bitrate of the video.
+    /// Video encoding bitrate.
     /// </summary>
     ///
     public enum BITRATE
     {
         ///
         /// <summary>
-        /// 0: (Recommended) Standard bitrate mode.
+        /// 0: (Default) Standard bitrate mode.
         /// </summary>
         ///
         STANDARD_BITRATE = 0,
 
         ///
         /// <summary>
-        /// -1: Adaptive bitrate mode.
+        /// -1: Compatible bitrate mode.
         /// </summary>
         ///
         COMPATIBLE_BITRATE = -1,
@@ -150,35 +150,35 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Built-in encryption configurations.
+    /// Configure built-in encryption mode and key.
     /// </summary>
     ///
     public class EncryptionConfig
     {
         ///
         /// <summary>
-        /// The built-in encryption mode. See ENCRYPTION_MODE. Agora recommends using AES_128_GCM2 or AES_256_GCM2 encrypted mode. These two modes support the use of salt for higher security.
+        /// Built-in encryption mode. See ENCRYPTION_MODE. It is recommended to use AES_128_GCM2 or AES_256_GCM2 modes, which support salt and offer higher security.
         /// </summary>
         ///
         public ENCRYPTION_MODE encryptionMode;
 
         ///
         /// <summary>
-        /// Encryption key in string type with unlimited length. Agora recommends using a 32-byte key. If you do not set an encryption key or set it as NULL, you cannot use the built-in encryption, and the SDK returns -2.
+        /// Built-in encryption key, string type, no length limit. It is recommended to use a 32-byte key. If this parameter is not specified or is set to NULL, built-in encryption cannot be enabled and the SDK returns error code -2.
         /// </summary>
         ///
         public string encryptionKey;
 
         ///
         /// <summary>
-        /// Salt, 32 bytes in length. Agora recommends that you use OpenSSL to generate salt on the server side. See Media Stream Encryption for details. This parameter takes effect only in AES_128_GCM2 or AES_256_GCM2 encrypted mode. In this case, ensure that this parameter is not 0.
+        /// Salt, 32 bytes in length. It is recommended to generate the salt on the server using OpenSSL. This parameter takes effect only when using AES_128_GCM2 or AES_256_GCM2 encryption modes. In this case, ensure the value of this parameter is not all 0.
         /// </summary>
         ///
         public byte[] encryptionKdfSalt;
 
         ///
         /// <summary>
-        /// Whether to enable data stream encryption: true : Enable data stream encryption. false : (Default) Disable data stream encryption.
+        /// Whether to enable data stream encryption: true : Enable data stream encryption. false : (default) Disable data stream encryption.
         /// </summary>
         ///
         public bool datastreamEncryptionEnabled;
@@ -227,7 +227,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The audio device information.
+    /// Audio device information.
     /// 
     /// This class is for Android only.
     /// </summary>
@@ -236,7 +236,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Whether the audio device supports ultra-low-latency capture and playback: true : The device supports ultra-low-latency capture and playback. false : The device does not support ultra-low-latency capture and playback.
+        /// Whether ultra-low latency audio capture and playback is supported: true : Supported false : Not supported
         /// </summary>
         ///
         public bool isLowLatencyAudioSupported;
@@ -254,14 +254,14 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The DeviceInfo class that contains the ID and device name of the video devices.
+    /// The DeviceInfo class, containing the video device ID and name.
     /// </summary>
     ///
     public class DeviceInfo
     {
         ///
         /// <summary>
-        /// The device name.
+        /// Device name.
         /// </summary>
         ///
         public string deviceName;
@@ -273,7 +273,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The device ID.
+        /// Device ID.
         /// </summary>
         ///
         public string deviceId;

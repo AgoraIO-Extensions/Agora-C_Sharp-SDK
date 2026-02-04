@@ -203,23 +203,17 @@ namespace Agora.Rtc
     }
 
     ///
-    /// <summary>
-    /// The climax parts of the music.
-    /// </summary>
+    /// @ignore
     ///
     public class ClimaxSegment
     {
         ///
-        /// <summary>
-        /// The time (ms) when the climax part begins.
-        /// </summary>
+        /// @ignore
         ///
         public int startTimeMs;
 
         ///
-        /// <summary>
-        /// The time (ms) when the climax part ends.
-        /// </summary>
+        /// @ignore
         ///
         public int endTimeMs;
 

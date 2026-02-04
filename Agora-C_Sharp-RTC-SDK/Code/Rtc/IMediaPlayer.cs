@@ -10,14 +10,14 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// This class provides media player functions and supports multiple instances.
+    /// Class that provides media player functionality and supports multiple instances.
     /// </summary>
     ///
     public abstract class IMediaPlayer
     {
         ///
         /// <summary>
-        /// Releases all the resources occupied by the media player.
+        /// Releases all resources used by the media player.
         /// </summary>
         ///
         public abstract void Dispose();
@@ -29,43 +29,48 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Adds callback event for media player.
+        /// Adds callback events for the media player.
         /// </summary>
         ///
-        /// <param name="engineEventHandler"> Callback events to be added. See IMediaPlayerSourceObserver. </param>
+        /// <param name="engineEventHandler"> The callback event to add. See IMediaPlayerSourceObserver. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
+        /// </returns>
         ///
         public abstract int InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
         ///
         /// <summary>
-        /// Opens the media resource.
+        /// Opens a media resource.
         /// 
-        /// This method is called asynchronously.
+        /// This method is asynchronous.
         /// </summary>
         ///
-        /// <param name="url"> The path of the media file. Both local path and online path are supported. </param>
+        /// <param name="url"> The path to the media file. Supports both local and online files. </param>
         ///
-        /// <param name="startPos"> The starting position (ms) for playback. Default value is 0. </param>
+        /// <param name="startPos"> The start position (in milliseconds) for playback. Default is 0. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int Open(string url, long startPos);
 
         ///
         /// <summary>
-        /// Opens a media file and configures the playback scenarios.
+        /// Opens a media resource and configures playback settings.
         /// 
-        /// This method supports opening media files of different sources, including a custom media source, and allows you to configure the playback scenarios.
+        /// This method allows you to open different types of media resources, including custom media files, and configure playback settings. This method is asynchronous. To play the media file, you need to call the Play method after receiving the OnPlayerSourceStateChanged callback reporting the PLAYER_STATE_OPEN_COMPLETED state.
         /// </summary>
         ///
-        /// <param name="source"> Media resources. See MediaSource. </param>
+        /// <param name="source"> The media resource. See MediaSource. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int OpenWithMediaSource(MediaSource source);
@@ -77,105 +82,105 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int Play();
 
         ///
         /// <summary>
-        /// Pauses the playback.
+        /// Pauses playback.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int Pause();
 
         ///
         /// <summary>
-        /// Stops playing the media track.
+        /// Stops playback.
         /// 
-        /// After calling this method to stop playback, if you want to play again, you need to call Open or OpenWithMediaSource to open the media resource.
+        /// After calling this method to stop playback, to play again you need to call Open or OpenWithMediaSource to reopen the media resource.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int Stop();
 
         ///
         /// <summary>
-        /// Resumes playing the media file.
+        /// Resumes playback after pause.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int Resume();
 
         ///
         /// <summary>
-        /// Seeks to a new playback position.
+        /// Seeks to the specified playback position in the media file.
         /// 
-        /// If you call Seek after the playback has completed (upon receiving callback OnPlayerSourceStateChanged reporting playback status as PLAYER_STATE_PLAYBACK_COMPLETED or PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED), the SDK will play the media file from the specified position. At this point, you will receive callback OnPlayerSourceStateChanged reporting playback status as PLAYER_STATE_PLAYING.
-        /// If you call Seek while the playback is paused, upon successful call of this method, the SDK will seek to the specified position. To resume playback, call Resume or Play .
+        /// If you call Seek after playback has completed (as indicated by the OnPlayerSourceStateChanged callback reporting the status as PLAYER_STATE_PLAYBACK_COMPLETED or PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED), the SDK will automatically start playback from the specified position upon successful call. You will receive an OnPlayerSourceStateChanged callback reporting the status as PLAYER_STATE_PLAYING.
+        /// If you call Seek while playback is paused, the SDK will seek to the specified position upon success. To play, call Resume or Play.
         /// </summary>
         ///
-        /// <param name="newPos"> The new playback position (ms). </param>
+        /// <param name="newPos"> The specified position (in milliseconds). </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int Seek(long newPos);
 
         ///
         /// <summary>
-        /// Sets the pitch of the current media resource.
+        /// Adjusts the pitch of the currently playing media resource.
         /// 
-        /// Call this method after calling Open.
+        /// You need to call this method after calling Open.
         /// </summary>
         ///
-        /// <param name="pitch"> Sets the pitch of the local music file by the chromatic scale. The default value is 0, which means keeping the original pitch. The value ranges from -12 to 12, and the pitch value between consecutive values is a chromatic value. The greater the absolute value of this parameter, the higher or lower the pitch of the local music file. </param>
+        /// <param name="pitch"> Adjusts the pitch of the locally played music file in semitone steps. The default value is 0, meaning no pitch adjustment. The valid range is [-12,12], where the pitch difference between two adjacent values is one semitone. The greater the absolute value, the more the pitch increases or decreases. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetAudioPitch(int pitch);
 
         ///
         /// <summary>
-        /// Gets the duration of the media resource.
+        /// Gets the total duration of the media file.
         /// </summary>
         ///
-        /// <param name="duration"> An output parameter. The total duration (ms) of the media file. </param>
+        /// <param name="duration"> Output parameter. Total duration of the media file (in milliseconds). </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetDuration(ref long duration);
 
         ///
         /// <summary>
-        /// Gets current local playback progress.
+        /// Gets the current playback position.
         /// </summary>
         ///
-        /// <param name="pos"> The playback position (ms) of the audio effect file. </param>
+        /// <param name="pos"> Current playback position of the media resource file, in milliseconds. </param>
         ///
         /// <returns>
-        /// Returns the current playback progress (ms) if the call succeeds.
+        /// If the method call succeeds, returns the current playback position (in milliseconds).
         /// &lt; 0: Failure. See MEDIA_PLAYER_REASON.
         /// </returns>
         ///
@@ -183,12 +188,12 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the number of the media streams in the media resource.
+        /// Gets the number of media streams in the current media file.
         /// 
-        /// Call this method after you call Open and receive the OnPlayerSourceStateChanged callback reporting the state PLAYER_STATE_OPEN_COMPLETED.
+        /// Call this method after Open and after receiving the OnPlayerSourceStateChanged callback reporting the playback state as PLAYER_STATE_OPEN_COMPLETED.
         /// </summary>
         ///
-        /// <param name="count"> An output parameter. The number of the media streams in the media resource. </param>
+        /// <param name="count"> Output parameter. Number of media streams in the current media file. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -199,87 +204,89 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the detailed information of the media stream.
+        /// Gets media stream information by index.
         /// </summary>
         ///
-        /// <param name="index"> The index of the media stream. This parameter needs to be less than the count parameter of GetStreamCount. </param>
+        /// <param name="index"> Media stream index. This parameter must be less than the count parameter returned by GetStreamCount. </param>
         ///
-        /// <param name="info"> An output parameter. The detailed information of the media stream. See PlayerStreamInfo. </param>
+        /// <param name="info"> Output parameter. All information of the media stream. See PlayerStreamInfo. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetStreamInfo(long index, ref PlayerStreamInfo info);
 
         ///
         /// <summary>
-        /// Sets the loop playback.
+        /// Sets loop playback.
         /// 
-        /// If you want to loop, call this method and set the number of the loops. When the loop finishes, the SDK triggers OnPlayerSourceStateChanged and reports the playback state as PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED.
+        /// If you want to enable loop playback, call this method and set the number of loops.
+        /// When loop playback ends, the SDK triggers the OnPlayerSourceStateChanged callback to report the playback state as PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED.
         /// </summary>
         ///
         /// <param name="loopCount">
-        /// The number of times the audio effect loops:
-        /// ≥0: Number of times for playing. For example, setting it to 0 means no loop playback, playing only once; setting it to 1 means loop playback once, playing a total of twice.
-        /// -1: Play the audio file in an infinite loop.
+        /// Number of playback loops.
+        /// ≥0: Number of loops. For example, 0 means no looping, play once; 1 means loop once, play twice in total.
+        /// -1: Infinite loop playback.
         /// </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetLoopCount(int loopCount);
 
         ///
         /// <summary>
-        /// Sets the channel mode of the current audio file.
+        /// Sets the playback speed of the current audio file.
         /// 
-        /// Call this method after calling Open.
+        /// You need to call this method after Open.
         /// </summary>
         ///
         /// <param name="speed">
-        /// The playback speed. Agora recommends that you set this to a value between 30 and 400, defined as follows:
-        /// 30: 0.3 times the original speed.
-        /// 100: The original speed.
-        /// 400: 4 times the original speed.
+        /// Playback speed. Recommended range is [30,400], where:
+        /// 30: 0.3x speed.
+        /// 100: Original speed.
+        /// 400: 4x speed.
         /// </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetPlaybackSpeed(int speed);
 
         ///
         /// <summary>
-        /// Selects the audio track used during playback.
+        /// Specifies the audio track to play in the current audio file.
         /// 
-        /// After getting the track index of the audio file, you can call this method to specify any track to play. For example, if different tracks of a multi-track file store songs in different languages, you can call this method to set the playback language. You need to call this method after calling GetStreamInfo to get the audio stream index value.
+        /// After obtaining the audio track index of the audio file, you can call this method to specify any track for playback. If different tracks of a multi-track file contain songs in different languages, you can use this method to set the playback language. You need to call this method after calling GetStreamInfo to get the audio stream index.
         /// </summary>
         ///
         /// <param name="index"> The index of the audio track. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SelectAudioTrack(int index);
 
         ///
         /// <summary>
-        /// Selects the audio tracks that you want to play on your local device and publish to the channel respectively.
+        /// Selects the audio tracks for local playback and remote sending.
         /// 
-        /// You can call this method to determine the audio track to be played on your local device and published to the channel. Before calling this method, you need to open the media file with the OpenWithMediaSource method and set enableMultiAudioTrack in MediaSource as true.
+        /// You can call this method to separately set the audio tracks for local playback and for sending to the remote end.
+        /// Before calling this method, you need to open the media file using OpenWithMediaSource and set enableMultiAudioTrack to true via MediaSource.
         /// </summary>
         ///
-        /// <param name="playoutTrackIndex"> The index of audio tracks for local playback. You can obtain the index through GetStreamInfo. </param>
+        /// <param name="playoutTrackIndex"> The index of the audio track used for local playback. You can get the index via GetStreamInfo. </param>
         ///
-        /// <param name="publishTrackIndex"> The index of audio tracks to be published in the channel. You can obtain the index through GetStreamInfo. </param>
+        /// <param name="publishTrackIndex"> The index of the audio track sent to the remote end. You can get the index via GetStreamInfo. </param>
         ///
         /// <returns>
         /// 0: Success.
@@ -292,16 +299,17 @@ namespace Agora.Rtc
         /// <summary>
         /// Sets media player options.
         /// 
-        /// The media player supports setting options through key and value. The difference between this method and setPlayerOption [2/2] is that the value parameter of this method is of type Int, while the value of setPlayerOption [2/2] is of type String. These two methods cannot be used together.
+        /// The media player supports setting options via key and value.
+        /// The difference between this method and setPlayerOption [2/2] is that the value in this method is of type Int, while in setPlayerOption [2/2] it is of type String. The two are not interchangeable.
         /// </summary>
         ///
-        /// <param name="key"> The key of the option. </param>
+        /// <param name="key"> Key value. </param>
         ///
-        /// <param name="value"> The value of the key. </param>
+        /// <param name="value"> Value. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetPlayerOption(string key, int value);
@@ -310,16 +318,17 @@ namespace Agora.Rtc
         /// <summary>
         /// Sets media player options.
         /// 
-        /// The media player supports setting options through key and value. The difference between this method and SetPlayerOption [1/2] is that the value parameter of this method is of type String, while the value of SetPlayerOption [1/2] is of type String. These two methods cannot be used together.
+        /// The media player supports setting options via key and value.
+        /// The difference between this method and SetPlayerOption [1/2] is that the value in this method is of type String, while in SetPlayerOption [1/2] it is of type Int. The two are not interchangeable.
         /// </summary>
         ///
-        /// <param name="key"> The key of the option. </param>
+        /// <param name="key"> Key value. </param>
         ///
-        /// <param name="value"> The value of the key. </param>
+        /// <param name="value"> Value. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetPlayerOption(string key, string value);
@@ -341,39 +350,39 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets current playback state.
+        /// Gets the current state of the player.
         /// </summary>
         ///
         /// <returns>
-        /// The current playback state. See MEDIA_PLAYER_STATE.
+        /// The current state of the player. See MEDIA_PLAYER_STATE.
         /// </returns>
         ///
         public abstract MEDIA_PLAYER_STATE GetState();
 
         ///
         /// <summary>
-        /// Sets whether to mute the media file.
+        /// Sets whether to mute.
         /// </summary>
         ///
-        /// <param name="muted"> Whether to mute the media file: true : Mute the media file. false : (Default) Unmute the media file. </param>
+        /// <param name="muted"> Mute option. true : Mute. false : (Default) Do not mute. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int Mute(bool muted);
 
         ///
         /// <summary>
-        /// Reports whether the media resource is muted.
+        /// Checks whether the currently playing media file is muted.
         /// </summary>
         ///
-        /// <param name="muted"> An output parameter. Whether the media file is muted: true : The media file is muted. false : The media file is not muted. </param>
+        /// <param name="muted"> Output parameter. Mute state: true : The media file is muted. false : The media file is not muted. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetMute(ref bool muted);
@@ -384,137 +393,137 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <param name="volume">
-        /// The local playback volume, which ranges from 0 to 100:
+        /// Local playback volume, ranging from 0 to 100:
         /// 0: Mute.
-        /// 100: (Default) The original volume.
+        /// 100: (Default) Original playback volume of the media file.
         /// </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int AdjustPlayoutVolume(int volume);
 
         ///
         /// <summary>
-        /// Gets the local playback volume.
+        /// Gets the current local playback volume.
         /// </summary>
         ///
         /// <param name="volume">
-        /// An output parameter. The local playback volume, which ranges from 0 to 100:
-        /// 0: Mute.
-        /// 100: (Default) The original volume.
+        /// Output parameter. Local playback volume, ranging from 0 to 100:
+        /// 0: Silent.
+        /// 100: (Default) Original playback volume of the media file.
         /// </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetPlayoutVolume(ref int volume);
 
         ///
         /// <summary>
-        /// Adjusts the volume of the media file for publishing.
+        /// Adjusts the volume heard by remote users.
         /// 
-        /// After connected to the Agora server, you can call this method to adjust the volume of the media file heard by the remote user.
+        /// After connecting to the Agora server, you can call this method to adjust the volume of the media file heard by remote users.
         /// </summary>
         ///
         /// <param name="volume">
-        /// The volume, which ranges from 0 to 400:
+        /// Signal volume, ranging from 0 to 400:
         /// 0: Mute.
-        /// 100: (Default) The original volume.
-        /// 400: Four times the original volume (amplifying the audio signals by four times).
+        /// 100: (Default) Original volume of the media file.
+        /// 400: Four times the original volume (with built-in overflow protection).
         /// </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int AdjustPublishSignalVolume(int volume);
 
         ///
         /// <summary>
-        /// Gets the volume of the media file for publishing.
+        /// Gets the volume heard by remote users.
         /// </summary>
         ///
-        /// <param name="volume"> An output parameter. The remote playback volume. </param>
+        /// <param name="volume"> Output parameter. Remote playback volume of the playing file. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int GetPublishSignalVolume(ref int volume);
 
         ///
         /// <summary>
-        /// Sets the view.
+        /// Sets the player rendering view.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetView(view_t view);
 
         ///
         /// <summary>
-        /// Sets the render mode of the media player.
+        /// Sets the rendering mode of the player view.
         /// </summary>
         ///
-        /// <param name="renderMode"> Sets the render mode of the view. See RENDER_MODE_TYPE. </param>
+        /// <param name="renderMode"> Rendering mode of the player view. See RENDER_MODE_TYPE. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetRenderMode(RENDER_MODE_TYPE renderMode);
 
         ///
         /// <summary>
-        /// Registers a PCM audio frame observer object.
+        /// Registers a PCM audio frame observer.
         /// 
-        /// You need to implement the IAudioPcmFrameSink class in this method and register callbacks according to your scenarios. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
+        /// You need to implement an IAudioPcmFrameSink class in this method and register its callback based on your scenario. After successfully registering the audio frame observer, the SDK triggers the registered callback whenever it captures an audio frame.
         /// </summary>
         ///
-        /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IAudioPcmFrameSink. </param>
+        /// <param name="observer"> Audio frame observer that monitors the reception of each audio frame. See IAudioPcmFrameSink. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int RegisterAudioFrameObserver(IAudioPcmFrameSink observer);
 
         ///
         /// <summary>
-        /// Registers an audio frame observer object.
+        /// Registers an audio frame observer.
         /// </summary>
         ///
-        /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IAudioPcmFrameSink. </param>
+        /// <param name="observer"> Audio frame observer that monitors the reception of each audio frame. See IAudioPcmFrameSink. </param>
         ///
-        /// <param name="mode"> The use mode of the audio frame. See RAW_AUDIO_FRAME_OP_MODE_TYPE. </param>
+        /// <param name="mode"> Usage mode of the audio frame. See RAW_AUDIO_FRAME_OP_MODE_TYPE. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int RegisterAudioFrameObserver(IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
         ///
         /// <summary>
-        /// Unregisters an audio frame observer.
+        /// Unregisters the audio frame observer.
         /// </summary>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int UnregisterAudioFrameObserver();
@@ -533,16 +542,16 @@ namespace Agora.Rtc
         /// <summary>
         /// Sets the channel mode of the current audio file.
         /// 
-        /// In a stereo music file, the left and right channels can store different audio data. According to your needs, you can set the channel mode to original mode, left channel mode, right channel mode, or mixed channel mode. For example, in the KTV scenario, the left channel of the music file stores the musical accompaniment, and the right channel stores the singing voice. If you only need to listen to the accompaniment, call this method to set the channel mode of the music file to left channel mode; if you need to listen to the accompaniment and the singing voice at the same time, call this method to set the channel mode to mixed channel mode.
-        /// Call this method after calling Open.
-        /// This method only applies to stereo audio files.
+        /// In stereo audio files, the left and right channels can store different audio data. Depending on your needs, you can set the channel mode to original, left, right, or mixed. For example, in a karaoke (KTV) scenario, the left channel of the audio file stores the accompaniment, while the right channel stores the original vocals. If you only want to hear the accompaniment, call this method to set the channel mode to left. If you want to hear both the accompaniment and the original vocals, set the channel mode to mixed.
+        /// You need to call this method after calling Open.
+        /// This method is only applicable to stereo audio files.
         /// </summary>
         ///
-        /// <param name="mode"> The channel mode. See AUDIO_DUAL_MONO_MODE. </param>
+        /// <param name="mode"> Channel mode. See AUDIO_DUAL_MONO_MODE. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetAudioDualMonoMode(AUDIO_DUAL_MONO_MODE mode);
@@ -608,25 +617,25 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Switches the media resource being played.
+        /// Switches the media resource.
         /// 
-        /// You can call this method to switch the media resource to be played according to the current network status. For example:
-        /// When the network is poor, the media resource to be played is switched to a media resource address with a lower bitrate.
-        /// When the network is good, the media resource to be played is switched to a media resource address with a higher bitrate. After calling this method, if you receive the OnPlayerEvent callback report the PLAYER_EVENT_SWITCH_COMPLETE event, the switching is successful. If the switching fails, the SDK will automatically retry 3 times. If it still fails, you will receive the OnPlayerEvent callback reporting the PLAYER_EVENT_SWITCH_ERROR event indicating an error occurred during media resource switching.
-        /// Ensure that you call this method after Open.
+        /// You can call this method to switch the bitrate of the currently playing media resource based on the network conditions. For example:
+        /// When the network is poor, switch to a lower bitrate media resource.
+        /// When the network is good, switch to a higher bitrate media resource. After calling this method, if you receive the OnPlayerEvent callback reporting the event PLAYER_EVENT_SWITCH_COMPLETE, the switch was successful. If the switch fails, the SDK retries 3 times. If it still fails, you receive the OnPlayerEvent callback reporting the PLAYER_EVENT_SWITCH_ERROR event, indicating an error occurred during the switch.
+        /// Make sure to call this method after Open.
         /// To ensure normal playback, pay attention to the following when calling this method:
-        /// Do not call this method when playback is paused.
-        /// Do not call the Seek method during switching.
-        /// Before switching the media resource, make sure that the playback position does not exceed the total duration of the media resource to be switched.
+        /// Do not call this method while playback is paused.
+        /// Do not call Seek during bitrate switching.
+        /// Ensure the playback position before switching is not greater than the total duration of the media resource being switched to.
         /// </summary>
         ///
-        /// <param name="src"> The URL of the media resource. </param>
+        /// <param name="src"> The network path of the media resource. </param>
         ///
-        /// <param name="syncPts"> Whether to synchronize the playback position (ms) before and after the switch: true : Synchronize the playback position before and after the switch. false : (Default) Do not synchronize the playback position before and after the switch. </param>
+        /// <param name="syncPts"> Whether to synchronize the start playback position before and after switching: true : Synchronize. false : (Default) Do not synchronize. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SwitchSrc(string src, bool syncPts = true);
@@ -635,66 +644,67 @@ namespace Agora.Rtc
         /// <summary>
         /// Preloads a media resource.
         /// 
-        /// You can call this method to preload a media resource into the playlist. If you need to preload multiple media resources, you can call this method multiple times. If the preload is successful and you want to play the media resource, call PlayPreloadedSrc; if you want to clear the playlist, call Stop.
-        /// Before calling this method, ensure that you have called Open or OpenWithMediaSource to open the media resource successfully.
-        /// Agora does not support preloading duplicate media resources to the playlist. However, you can preload the media resources that are being played to the playlist again.
+        /// You can call this method to preload a media resource into the playlist. To preload multiple media resources, call this method multiple times.
+        /// After successful preloading, call PlayPreloadedSrc to play the media resource, or call Stop to clear the playlist.
+        /// Before calling this method, make sure you have successfully opened the media resource using Open or OpenWithMediaSource.
+        /// The SDK does not support preloading duplicate media resources into the playlist, but it does support preloading the currently playing media resource again into the playlist.
         /// </summary>
         ///
-        /// <param name="src"> The URL of the media resource. </param>
+        /// <param name="src"> The network path of the media resource. </param>
         ///
-        /// <param name="startPos"> The starting position (ms) for playing after the media resource is preloaded to the playlist. When preloading a live stream, set this parameter to 0. </param>
+        /// <param name="startPos"> The start position (in milliseconds) for playback after preloading into the playlist. Set this parameter to 0 when preloading a live stream. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int PreloadSrc(string src, long startPos);
 
         ///
         /// <summary>
-        /// Plays preloaded media resources.
+        /// Plays a preloaded media resource.
         /// 
-        /// After calling the PreloadSrc method to preload the media resource into the playlist, you can call this method to play the preloaded media resource. After calling this method, if you receive the OnPlayerSourceStateChanged callback which reports the PLAYER_STATE_PLAYING state, the playback is successful. If you want to change the preloaded media resource to be played, you can call this method again and specify the URL of the new media resource that you want to preload. If you want to replay the media resource, you need to call PreloadSrc to preload the media resource to the playlist again before playing. If you want to clear the playlist, call the Stop method. If you call this method when playback is paused, this method does not take effect until playback is resumed.
+        /// After calling the PreloadSrc method to preload the media resource into the playlist, you can call this method to play the preloaded media resource. If you receive the OnPlayerSourceStateChanged callback reporting the status as PLAYER_STATE_PLAYING, the playback has succeeded.
+        /// If you want to switch the preloaded media resource to play, you can call this method again and specify the new media resource path. If you want to replay the media resource, you need to call PreloadSrc again to preload the resource into the playlist before playing. To clear the playlist, call Stop. If you call this method while playback is paused, it will take effect only after playback resumes.
         /// </summary>
         ///
-        /// <param name="src"> The URL of the media resource in the playlist must be consistent with the src set by the PreloadSrc method; otherwise, the media resource cannot be played. </param>
+        /// <param name="src"> The URL of the media resource in the playlist. It must match the src set by the PreloadSrc method, otherwise playback will fail. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int PlayPreloadedSrc(string src);
 
         ///
         /// <summary>
-        /// Unloads media resources that are preloaded.
-        /// 
-        /// This method cannot release the media resource being played.
+        /// Releases the preloaded media resource.
         /// </summary>
         ///
-        /// <param name="src"> The URL of the media resource. </param>
+        /// <param name="src"> The network path of the media resource. </param>
         ///
         /// <returns>
         /// 0: Success.
-        /// &lt; 0: Failure.
+        /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int UnloadSrc(string src);
 
         ///
         /// <summary>
-        /// Enables or disables the spatial audio effect for the media player.
+        /// Enables or disables spatial audio for the media player.
         /// 
-        /// After successfully setting the spatial audio effect parameters of the media player, the SDK enables the spatial audio effect for the media player, and the local user can hear the media resources with a sense of space. If you need to disable the spatial audio effect for the media player, set the params parameter to null.
+        /// After successfully setting the spatial audio parameters for the media player, the SDK enables spatial audio for the media player, allowing the local user to perceive spatial effects from the media source.
+        /// To disable spatial audio for the media player, you need to set the params parameter to null.
         /// </summary>
         ///
-        /// <param name="spatial_audio_params"> The spatial audio effect parameters of the media player. See SpatialAudioParams. </param>
+        /// <param name="spatial_audio_params"> Spatial audio parameters for the media player. See SpatialAudioParams. </param>
         ///
         /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
+        /// 0: Method call succeeds.
+        /// &lt; 0: Method call fails. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
         public abstract int SetSpatialAudioParams(SpatialAudioParams @params);
@@ -705,7 +715,16 @@ namespace Agora.Rtc
         public abstract int SetSoundPositionParams(float pan, float gain);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets the audio buffer delay when playing a media file.
+        /// </summary>
+        ///
+        /// <param name="delayMs"> Output parameter that indicates the audio buffer delay in milliseconds when playing a media file. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int GetAudioBufferDelay(ref int delayMs);
 

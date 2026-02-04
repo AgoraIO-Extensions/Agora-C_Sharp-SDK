@@ -7,7 +7,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. As of v4.2.0, Agora Unity SDK does not support rendering different video sources with both VideoSurface and VideoSurfaceYUV at the same time. Specifically, after successfully creating IRtcEngine, if the first view is rendered with VideoSurfaceYUV, then only VideoSurfaceYUV can be used for rendering throughout the entire lifecycle of IRtcEngine.
+    /// Provides methods related to video rendering. This class inherits from VideoSurface, but renders faster and with higher frame rate when rendering high-resolution (e.g., 4K) video images.
     /// </summary>
     ///
     public class VideoSurfaceYUV : VideoSurface
@@ -53,15 +53,15 @@ namespace Agora.Rtc
             matrix4x4[0, 0] = matrix3x3_colMajor[0]; // M00
             matrix4x4[1, 0] = matrix3x3_colMajor[1]; // M10
             matrix4x4[2, 0] = matrix3x3_colMajor[2]; // M20
-            
+
             matrix4x4[0, 1] = matrix3x3_colMajor[3]; // M01
             matrix4x4[1, 1] = matrix3x3_colMajor[4]; // M11
             matrix4x4[2, 1] = matrix3x3_colMajor[5]; // M21
-            
+
             matrix4x4[0, 2] = matrix3x3_colMajor[6]; // M02
             matrix4x4[1, 2] = matrix3x3_colMajor[7]; // M12
             matrix4x4[2, 2] = matrix3x3_colMajor[8]; // M22
-            
+
             float yOffset = offsets[0];
             float uOffset = offsets[1];
             float vOffset = offsets[2];
@@ -283,7 +283,7 @@ namespace Agora.Rtc
             }
 
             _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
-            
+
             var colorSpace = new IrisColorSpace()
             {
                 primaries = (int)this._primaries,
