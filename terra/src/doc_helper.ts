@@ -327,6 +327,7 @@ function GetDocs(): DocData[] {
     str = str.replaceAll("\"api_irtcengine_enabledualstreammode3\"", "\"api_irtcengine_enabledualstreammode2\"")
     str = str.replaceAll("\"api_getmediaplayercachemanager\"", "\"api_irtcengine_getmediaplayercachemanager\"")
     str = str.replaceAll("\"api_iagoraparameter_setparameters_iagoraparameter\"", "\"api_irtcengine_setparameters2\"")
+    str = str.replaceAll("\"api_iagoraparameter_setparameters\"", "\"api_irtcengine_setparameters2\"")
     str = str.replaceAll("\"api_irtcengine_getnativehandle\"", "\"api_irtcengine_getnativehandler\"")
     str = str.replaceAll("class_deviceinfo", "class_deviceinfomobile")
     str = str.replaceAll("class_videodeviceinfo", "class_deviceinfo")
