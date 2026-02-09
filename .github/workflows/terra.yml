@@ -55,8 +55,12 @@ jobs:
           dependencies-content: ${{ inputs.dependencies-content }}
 
       - name: Update dependencies
+        working-directory: ci/build
         run: |
-          python ci/build/Update-Deps.py ${{ steps.dep.outputs.matches }}
+          echo pwd
+          ls
+          python ./Update-Deps.py ${{ steps.dep.outputs.matches }}
+       
 
       - name: Generate code and comment by terra
         id: generate
