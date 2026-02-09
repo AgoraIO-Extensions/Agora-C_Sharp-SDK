@@ -161,15 +161,15 @@ if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" 
                             IRIS_ANDROID_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"IRIS_MAC"*)
+                    *"IRIS_MACOS"*)
                         if [ -z "$IRIS_MAC_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_MAC[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/IRIS_MACOS[[:space:]]*=//')
                             IRIS_MAC_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"IRIS_WIN"*)
+                    *"IRIS_WINDOWS"*)
                         if [ -z "$IRIS_WIN_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_WIN[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/IRIS_WINDOWS[[:space:]]*=//')
                             IRIS_WIN_URL=$(normalize_url "$tmp")
                         fi
                         ;;
@@ -185,15 +185,15 @@ if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" 
                             NATIVE_ANDROID_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"NATIVE_MAC"*)
+                    *"NATIVE_MACOS"*)
                         if [ -z "$NATIVE_MAC_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_MAC[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/NATIVE_MACOS[[:space:]]*=//')
                             NATIVE_MAC_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"NATIVE_WIN"*)
+                    *"NATIVE_WINDOWS"*)
                         if [ -z "$NATIVE_WIN_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_WIN[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/NATIVE_WINDOWS[[:space:]]*=//')
                             NATIVE_WIN_URL=$(normalize_url "$tmp")
                         fi
                         ;;
