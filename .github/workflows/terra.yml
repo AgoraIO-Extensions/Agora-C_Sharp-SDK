@@ -21,6 +21,33 @@ jobs:
       - name: Setup
         uses: ./.github/setup
 
+      - name: Save original branch name
+        id: save-ref
+        run: |
+          echo "original_branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          echo "target_branch=terra/${{ github.ref_name }}" >> $GITHUB_OUTPUT
+
+      - name: Ensure target branch exists and checkout
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          TARGET_BRANCH="${{ steps.save-ref.outputs.target_branch}}"
+          ORIGINAL_BRANCH="${{ steps.save-ref.outputs.original_branch }}"
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git fetch origin
+
+          if git ls-remote --heads origin "$TARGET_BRANCH" | grep -q "refs/heads/$TARGET_BRANCH"; then
+            echo "Branch '$TARGET_BRANCH' exists. Checking out..."
+            git checkout "$TARGET_BRANCH"
+          else
+            echo "Branch '$TARGET_BRANCH' does not exist. Creating..."
+            # Create from main if not exists
+            git checkout -b "$TARGET_BRANCH" "origin/$ORIGINAL_BRANCH"
+            git push origin "$TARGET_BRANCH"
+          fi
+
       - name: Get dependencies
         id: dep
         uses: AgoraIO-Extensions/actions/.github/actions/dep@main
@@ -29,29 +56,7 @@ jobs:
 
       - name: Update dependencies
         run: |
-          sh ci/build/dep.sh ${{ steps.dep.outputs.matches }}
-
-      - name: Extract version info
-        id: version
-        run: |
-          # Extract product_type and version from JSON
-          # Remove outer quotes and unescape JSON
-          JSON_RAW='${{ steps.dep.outputs.matches }}'
-          JSON_OUTPUT=$(printf '%s' "$JSON_RAW" | sed 's/^"//;s/"$//' | sed 's/\\"/"/g')
-          PRODUCT_TYPE=$(echo "$JSON_OUTPUT" | jq -r '.[] | select(.version != "" and .version != null) | .product_type' | head -n 1)
-          VERSION=$(echo "$JSON_OUTPUT" | jq -r '.[] | select(.version != "" and .version != null) | .version' | head -n 1)
-          FULL_VERSION="${PRODUCT_TYPE}_${VERSION}"
-          echo "product_type=$PRODUCT_TYPE" >> $GITHUB_OUTPUT
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "full_version=$FULL_VERSION" >> $GITHUB_OUTPUT
-          echo "Extracted: $FULL_VERSION"
-
-      - name: Replace rtc version
-        run: |
-          # Remove outer quotes and unescape JSON
-          JSON_RAW='${{ steps.dep.outputs.matches }}'
-          JSON_OUTPUT=$(printf '%s' "$JSON_RAW" | sed 's/^"//;s/"$//' | sed 's/\\"/"/g')
-          sh terra/replace_rtc_version.sh "$JSON_OUTPUT"
+          python ./Update-Deps.py ${{ steps.dep.outputs.matches }}
 
       - name: Generate code and comment by terra
         id: generate
@@ -67,66 +72,35 @@ jobs:
             sh rtc.sh
 
       - name: Create pull request
-        uses: AgoraIO-Extensions/actions/.github/actions/pr@main
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          target-repo: ${{ github.workspace }}
-          target-branch: ${{ github.ref_name }}
-          target-branch-name-surffix: terra-update/${{ steps.version.outputs.full_version }}
-          pull-request-title: |
-            [AUTO] Generate codes by terra(${{ steps.version.outputs.full_version }}) ${{ steps.generate.outcome == 'failure' && '(Failed)' || '' }}
-          add-paths: .
-
-
-
-      - name: Create branch in Agora-Unity-Quickstart
-        shell: bash
+        id: create_pr
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          echo "Preparing to create branch ${{ github.ref_name }} in Agora-Unity-Quickstart..."
+          TARGET_BRANCH="${{ steps.save-ref.outputs.target_branch }}"
+          ORIGINAL_BRANCH="${{ steps.save-ref.outputs.original_branch }}"
+          PR_TITLE="Auto: Generate code and update dependencies"
+          PR_BODY="This PR is automatically created by GitHub Actions to generate code and update dependencies."
           
-          # 1. 配置 git 身份
+          if git diff --quiet; then
+             echo "No changes to commit."
+          exit 0
+          fi
+
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          
-          # 2. 克隆目标仓库 (使用 Token 进行认证)
-          # 注意：这里使用 depth=1 浅克隆以加快速度，默认克隆 default 分支 (通常是 main)
-          git clone --depth 1 https://x-access-token:${GH_TOKEN}@github.com/AgoraIO-Extensions/Agora-Unity-Quickstart.git temp_quickstart
-          
-          cd temp_quickstart
-          
-          # 3. 检查分支是否已存在
-          if git ls-remote --heads origin ${{ github.ref_name }} | grep -q "refs/heads/${{ github.ref_name }}"; then
-            echo "Branch '${{ github.ref_name }}' already exists in Agora-Unity-Quickstart. Skipping creation."
+
+          git add .
+          git commit -m "update dependencies and generate code by terra"
+          git push origin "$TARGET_BRANCH"
+
+          PR_URL=$(gh pr list --base "$TARGET_BRANCH" --head "$TARGET_BRANCH" --json url --jq '.[0].url')
+          if [ -z "$PR_URL" ]; then
+            PR_URL=$(gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base "$ORIGINAL_BRANCH" --head "$TARGET_BRANCH")
+            echo "Created PR: $PR_URL"
           else
-            echo "Creating branch '${{ github.ref_name }}'..."
-            
-            # 计算父分支名 (简单截取掉最后一个版本号)
-            # 比如 release/4.5.1 -> release/4.5
-            PARENT_BRANCH=$(echo "${{ github.ref_name }}" | sed 's/\.[0-9]\+$//')
-            
-            echo "Checking for parent branch: $PARENT_BRANCH"
-            
-            if [ "$PARENT_BRANCH" != "${{ github.ref_name }}" ] && git ls-remote --heads origin "$PARENT_BRANCH" | grep -q "refs/heads/$PARENT_BRANCH"; then
-                echo "Parent branch $PARENT_BRANCH found. Fetching..."
-                # 必须先 fetch 才能基于远程分支创建
-                git fetch origin "$PARENT_BRANCH"
-                
-                echo "Creating ${{ github.ref_name }} from origin/$PARENT_BRANCH"
-                git checkout -b "${{ github.ref_name }}" "origin/$PARENT_BRANCH"
-            else
-                echo "Parent branch $PARENT_BRANCH not found or is same as target. Creating from default (main)."
-                # 基于当前 checkout 的分支 (main) 创建新分支
-                git checkout -b ${{ github.ref_name }}
-            fi
-            
-            # 推送到远程仓库
-            git push origin ${{ github.ref_name }}
-            
-            echo "Successfully created and pushed branch '${{ github.ref_name }}'."
+            echo "PR already exists: $PR_URL"
           fi
-          
+
       - name: Check csharp codes compile
         run: |
           cd Agora-C_Sharp_RTC-SDK_UT
