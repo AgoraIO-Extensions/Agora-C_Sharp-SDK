@@ -56,7 +56,7 @@ jobs:
 
       - name: Update dependencies
         run: |
-          python ./github/workflows/Update-Deps.py ${{ steps.dep.outputs.matches }}
+          python ci/build/Update-Deps.py ${{ steps.dep.outputs.matches }}
 
       - name: Generate code and comment by terra
         id: generate
