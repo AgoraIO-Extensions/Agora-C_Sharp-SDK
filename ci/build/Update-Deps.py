@@ -87,7 +87,6 @@ def update_url_config_lines(lines: list[str], deps_data: dict[str, dict[str, str
 
 json_str = sys.argv[1]
 data:list[DepItem] = json.loads(json_str)
-rtc_version = data[0]["iris_version"]
 
 for item in data:
     p_type = item["product_type"]
@@ -120,6 +119,13 @@ updated_lines = update_url_config_lines(url_config_lines, deps)
 with open(url_config_path, "w", encoding="utf-8", newline="") as handle:
     handle.writelines(updated_lines)
 
+
+# Update rtc.yaml with iris_version
+rtc_version = ""
+for item in data:
+    if item["iris_version"] != "":
+        rtc_version = item["iris_version"]
+        break
 
 rtc_yaml_path = os.path.join(script_dir, "..", "..", "terra","rtc.yaml")
 
