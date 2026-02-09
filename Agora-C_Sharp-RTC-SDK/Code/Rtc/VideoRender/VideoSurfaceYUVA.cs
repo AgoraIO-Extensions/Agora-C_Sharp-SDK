@@ -38,7 +38,6 @@ namespace Agora.Rtc
                         _textureManagerYUVA = _TextureManagerGameObject.AddComponent<TextureManagerYUVA>();
                         _textureManagerYUVA.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
                         _textureManagerYUVA.EnableVideoFrameWithIdentity();
-                        _textureManagerYUVA.SetEnableMetricReporting(true);
                     }
                     else
                     {
@@ -75,6 +74,10 @@ namespace Agora.Rtc
                         this.YStrideScale = this._textureManagerYUVA.YStrideScale;
                     }
 
+                    if (_material != null)
+                    {
+                        UpdateYUV2RGBMatrixIfNeed();
+                    }
                 }
             }
             else
@@ -187,34 +190,27 @@ namespace Agora.Rtc
             }
 
             _material.SetFloat("_yStrideScale", _textureManagerYUVA.YStrideScale);
+
+            var colorSpace = new IrisColorSpace()
+            {
+                primaries = (int)this._primaries,
+                range = (int)this._rangeID,
+            };
+            var matrix4x4 = GetMatrix4X4ByColorSpace(colorSpace);
+            _material.SetMatrix("_yuv2rgb", matrix4x4);
         }
 
-        /// <summary>
-        /// Enable or disable metric reporting for this VideoSurfaceYUVA
-        /// </summary>
-        /// <param name="enable">True to enable reporting, false to disable</param>
-        public override void SetEnableMetricReporting(bool enable)
+        protected override void UpdateYUV2RGBMatrixIfNeed()
         {
-            // Update the TextureManagerYUVA if it already exists
-            if (_textureManagerYUVA != null)
+            var colorSpace = _textureManagerYUVA.ColorSpace;
+            if (this._primaries != (PrimaryID)colorSpace.primaries || this._rangeID != (RangeID)colorSpace.range)
             {
-                _textureManagerYUVA.SetEnableMetricReporting(enable);
+                var matrix4x4 = GetMatrix4X4ByColorSpace(colorSpace);
+                _material.SetMatrix("_yuv2rgb", matrix4x4);
+                this._primaries = (PrimaryID)colorSpace.primaries;
+                this._rangeID = (RangeID)colorSpace.range;
             }
         }
-
-        /// <summary>
-        /// Check if metric reporting is enabled for this VideoSurfaceYUVA
-        /// </summary>
-        /// <returns>True if reporting is enabled, false otherwise</returns>
-        public override bool IsMetricReportingEnabled()
-        {
-            if (_textureManagerYUVA != null)
-            {
-                return _textureManagerYUVA.IsMetricReportingEnabled();
-            }
-            return false;
-        }
-
     }
 }
 

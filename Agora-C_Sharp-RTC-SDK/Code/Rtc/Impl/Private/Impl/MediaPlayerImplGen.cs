@@ -848,7 +848,6 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("playerId", playerId);
-            _param.Add("delayMs", delayMs);
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAPLAYER_GETAUDIOBUFFERDELAY_c30e349,

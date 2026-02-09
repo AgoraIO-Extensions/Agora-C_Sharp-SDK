@@ -10,24 +10,28 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The IVideoFrameObserver class.
+    /// Video frame observer.
+    /// 
+    /// You can call RegisterVideoFrameObserver to register or unregister the IVideoFrameObserver video observer.
     /// </summary>
     ///
     public abstract class IVideoFrameObserver
     {
         ///
         /// <summary>
-        /// Occurs each time the SDK receives a video frame captured by local devices.
+        /// Obtains video data captured by the local device.
         /// 
-        /// You can get raw video data collected by the local device through this callback and preprocess it as needed. Once the preprocessing is complete, you can directly modify videoFrame in this callback, and set the return value to true to send the modified video data to the SDK.
+        /// You can obtain the raw video data captured by the local device in this callback and perform pre-processing as needed. After completing the pre-processing, you can directly modify videoFrame in this callback and return true to send the modified video data to the SDK.
+        /// If the video data type you obtain is RGBA, the SDK does not support processing the Alpha channel values.
+        /// When modifying parameters in videoFrame, it is recommended to ensure that the modified parameters match the actual conditions of the video frame in the buffer. Otherwise, unexpected rotation, distortion, or other issues may occur in the local preview or the remote video.
         /// </summary>
         ///
-        /// <param name="sourceType"> Video source types, including cameras, screens, or media player. See VIDEO_SOURCE_TYPE. </param>
+        /// <param name="sourceType"> Type of video source, which may include: camera, screen, or media player. See VIDEO_SOURCE_TYPE. </param>
         ///
-        /// <param name="videoFrame"> The video frame. See VideoFrame. </param>
+        /// <param name="videoFrame"> Video frame data. See VideoFrame. </param>
         ///
         /// <returns>
-        /// true : Sets the SDK to receive the video frame. false : Sets the SDK to discard the video frame.
+        /// true : Instructs the SDK to receive the video frame. false : Instructs the SDK to discard the video frame.
         /// </returns>
         ///
         public virtual bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
@@ -37,20 +41,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs each time the SDK receives a video frame before encoding.
+        /// Obtains local video data before encoding.
         /// 
-        /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data before encoding and then process the data according to your particular scenarios. After processing, you can send the processed video data back to the SDK in this callback.
-        /// It is recommended that you ensure the modified parameters in videoFrame are consistent with the actual situation of the video frames in the video frame buffer. Otherwise, it may cause unexpected rotation, distortion, and other issues in the local preview and remote video display.
-        /// To get the video data captured from the second screen before encoding, you need to set POSITION_PRE_ENCODER (1 << 2) as a frame position through the position parameter of the RegisterVideoFrameObserver method.
-        /// The video data that this callback gets has been preprocessed, with its content cropped and rotated, and the image enhanced.
+        /// After successfully registering the video data observer, the SDK triggers this callback when each video frame is captured. You can obtain the video data before encoding in this callback and process it as needed based on your scenario.
+        /// After processing, you can pass the processed video data back to the SDK in this callback.
+        /// You need to set the position parameter of RegisterVideoFrameObserver to POSITION_PRE_ENCODER (1 << 2) to use this callback to obtain local video data before encoding.
+        /// The video data obtained here has already been pre-processed, such as cropping, rotation, and beautification.
+        /// When modifying parameters in videoFrame, it is recommended to ensure that the modified parameters match the actual conditions of the video frame in the buffer. Otherwise, unexpected rotation, distortion, or other issues may occur in the local preview or the remote video.
         /// </summary>
         ///
-        /// <param name="videoFrame"> The video frame. See VideoFrame. </param>
+        /// <param name="sourceType"> Type of video source. See VIDEO_SOURCE_TYPE. </param>
         ///
-        /// <param name="sourceType"> The type of the video source. See VIDEO_SOURCE_TYPE. </param>
+        /// <param name="videoFrame"> Video frame data. See VideoFrame. </param>
         ///
         /// <returns>
-        /// true : Sets the SDK to receive the video frame. false : Sets the SDK to discard the video frame.
+        /// true : Instructs the SDK to receive the video frame. false : Instructs the SDK to discard the video frame.
         /// </returns>
         ///
         public virtual bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
@@ -68,19 +73,19 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs each time the SDK receives a video frame sent by the remote user.
+        /// Obtains video data sent by the remote user.
         /// 
-        /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data sent from the remote end before rendering, and then process it according to the particular scenarios. If you use Unity for development, Agora only supports sending video data in YUV format to SDK. Ensure that you set mode as INTPTR when you call the RegisterVideoFrameObserver method to register a video frame observer.
+        /// After successfully registering the video data observer, the SDK triggers this callback when each video frame is captured. You can obtain the video data sent by the remote user before rendering and process it as needed based on your scenario. Unity only supports sending YUV format video data back to the SDK. Make sure to set mode to INTPTR when calling RegisterVideoFrameObserver to register the raw video frame observer.
         /// </summary>
         ///
-        /// <param name="videoFrame"> The video frame. See VideoFrame. </param>
+        /// <param name="remoteUid"> Remote user ID who sent the video frame. </param>
         ///
-        /// <param name="remoteUid"> The user ID of the remote user who sends the current video frame. </param>
+        /// <param name="videoFrame"> Video frame data. See VideoFrame. </param>
         ///
-        /// <param name="channelId"> The channel ID. </param>
+        /// <param name="channelId"> Channel ID. </param>
         ///
         /// <returns>
-        /// true : Sets the SDK to receive the video frame. false : Sets the SDK to discard the video frame.
+        /// true : Instructs the SDK to receive the video frame. false : Instructs the SDK to discard the video frame.
         /// </returns>
         ///
         public virtual bool OnRenderVideoFrame(string channelId, uint remoteUid, VideoFrame videoFrame)

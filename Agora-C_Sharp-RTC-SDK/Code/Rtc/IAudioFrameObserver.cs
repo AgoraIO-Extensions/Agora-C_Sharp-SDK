@@ -10,24 +10,26 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The audio frame observer.
+    /// Audio frame observer.
+    /// 
+    /// You can call RegisterAudioFrameObserver to register or unregister the IAudioFrameObserver audio observer.
     /// </summary>
     ///
     public abstract class IAudioFrameObserver
     {
         ///
         /// <summary>
-        /// Retrieves the audio frame before mixing of subscribed remote users.
+        /// Gets the audio of the subscribed remote user before mixing.
         /// </summary>
         ///
-        /// <param name="channel_id"> The channel ID. </param>
+        /// <param name="channel_id"> Channel ID. </param>
         ///
-        /// <param name="uid"> The ID of subscribed remote users. </param>
+        /// <param name="uid"> The ID of the subscribed remote user. </param>
         ///
-        /// <param name="audio_Frame"> The raw audio data. See AudioFrame. </param>
+        /// <param name="audio_frame"> The raw audio data. See AudioFrame. </param>
         ///
         /// <returns>
-        /// Without practical meaning.
+        /// No practical meaning.
         /// </returns>
         ///
         public virtual bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, AudioFrame audioFrame)
@@ -37,17 +39,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the captured audio frame.
+        /// Gets the raw audio data for recording.
         /// 
-        /// To ensure that the data format of captured audio frame is as expected, Agora recommends that you set the audio data format as follows: After calling SetRecordingAudioFrameParameters to set the audio data format, call RegisterAudioFrameObserver to register the audio observer object, the SDK will calculate the sampling interval according to the parameters set in this method, and triggers the OnRecordAudioFrame callback according to the sampling interval.
+        /// To ensure the recorded audio data format meets expectations, you can call SetRecordingAudioFrameParameters to set the audio format, then call RegisterAudioFrameObserver to register the audio frame observer. The SDK calculates the sampling interval using the parameters in this method and triggers the OnRecordAudioFrame callback accordingly.
         /// </summary>
         ///
         /// <param name="audioFrame"> The raw audio data. See AudioFrame. </param>
         ///
-        /// <param name="channelId"> The channel ID. </param>
+        /// <param name="channelId"> Channel ID. </param>
         ///
         /// <returns>
-        /// Without practical meaning.
+        /// No practical meaning.
         /// </returns>
         ///
         public virtual bool OnRecordAudioFrame(string channelId, AudioFrame audioFrame)
@@ -57,17 +59,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the raw audio frame for playback.
+        /// Gets the raw audio data for playback.
         /// 
-        /// To ensure that the data format of audio frame for playback is as expected, Agora recommends that you set the audio data format as follows: After calling SetPlaybackAudioFrameParameters to set the audio data format and RegisterAudioFrameObserver to register the audio frame observer object, the SDK calculates the sampling interval according to the parameters set in the methods, and triggers the OnPlaybackAudioFrame callback according to the sampling interval.
+        /// To ensure the playback audio data format meets expectations, you can call SetPlaybackAudioFrameParameters to set the audio format, then call RegisterAudioFrameObserver to register the audio frame observer. The SDK calculates the sampling interval using the parameters in this method and triggers the OnPlaybackAudioFrame callback accordingly.
         /// </summary>
         ///
-        /// <param name="audio_Frame"> The raw audio data. See AudioFrame. </param>
+        /// <param name="audio_frame"> The raw audio data. See AudioFrame. </param>
         ///
-        /// <param name="channelId"> The channel ID. </param>
+        /// <param name="channelId"> Channel ID. </param>
         ///
         /// <returns>
-        /// Without practical meaning.
+        /// No practical meaning.
         /// </returns>
         ///
         public virtual bool OnPlaybackAudioFrame(string channelId, AudioFrame audioFrame)
@@ -77,17 +79,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Retrieves the mixed captured and playback audio frame.
+        /// Retrieves the audio data after mixing captured and playback audio.
         /// 
-        /// To ensure that the data format of mixed captured and playback audio frame meets the expectations, Agora recommends that you set the data format as follows: After calling SetMixedAudioFrameParameters to set the audio data format and RegisterAudioFrameObserver to register the audio frame observer object, the SDK calculates the sampling interval according to the parameters set in the methods, and triggers the OnMixedAudioFrame callback according to the sampling interval.
+        /// To ensure the format of the audio data after mixing capture and playback meets expectations, you can call SetMixedAudioFrameParameters to set the audio data format, and then call RegisterAudioFrameObserver to register the audio frame observer. The SDK calculates the sampling interval based on the parameters of this method and triggers the OnMixedAudioFrame callback accordingly.
         /// </summary>
         ///
-        /// <param name="audio_Frame"> The raw audio data. See AudioFrame. </param>
+        /// <param name="audio_frame"> Raw audio data. See AudioFrame. </param>
         ///
-        /// <param name="channelId"> The channel ID. </param>
+        /// <param name="channelId"> Channel ID. </param>
         ///
         /// <returns>
-        /// Without practical meaning.
+        /// No actual meaning.
         /// </returns>
         ///
         public virtual bool OnMixedAudioFrame(string channelId, AudioFrame audioFrame)
@@ -97,15 +99,15 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the in-ear monitoring audio frame.
+        /// Gets the raw audio data for ear monitoring.
         /// 
-        /// In order to ensure that the obtained in-ear audio data meets the expectations, Agora recommends that you set the in-ear monitoring-ear audio data format as follows: After calling SetEarMonitoringAudioFrameParameters to set the audio data format and RegisterAudioFrameObserver to register the audio frame observer object, the SDK calculates the sampling interval according to the parameters set in the methods, and triggers the OnEarMonitoringAudioFrame callback according to the sampling interval.
+        /// To ensure the ear monitoring audio data format meets expectations, you can call SetEarMonitoringAudioFrameParameters to set the audio format, then call RegisterAudioFrameObserver to register the audio frame observer. The SDK calculates the sampling interval using the parameters in this method and triggers the OnEarMonitoringAudioFrame callback accordingly.
         /// </summary>
         ///
         /// <param name="audioFrame"> The raw audio data. See AudioFrame. </param>
         ///
         /// <returns>
-        /// Without practical meaning.
+        /// No practical meaning.
         /// </returns>
         ///
         public virtual bool OnEarMonitoringAudioFrame(AudioFrame audioFrame)

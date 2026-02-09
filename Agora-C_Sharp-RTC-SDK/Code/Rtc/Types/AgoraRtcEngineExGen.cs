@@ -11,21 +11,21 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// Contains connection information.
+    /// Class that contains connection information.
     /// </summary>
     ///
     public class RtcConnection
     {
         ///
         /// <summary>
-        /// The channel name.
+        /// Channel name.
         /// </summary>
         ///
         public string channelId;
 
         ///
         /// <summary>
-        /// The ID of the local user.
+        /// Local user ID.
         /// </summary>
         ///
         public uint localUid;

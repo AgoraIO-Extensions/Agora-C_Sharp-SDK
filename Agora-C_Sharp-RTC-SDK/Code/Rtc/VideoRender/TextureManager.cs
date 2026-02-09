@@ -34,8 +34,35 @@ namespace Agora.Rtc
         }
 
         protected uint _uid = 0;
+
+        public uint Uid
+        {
+            get
+            {
+                return _uid;
+            }
+        }
+
         protected string _channelId = "";
+
+        public string ChannelId
+        {
+            get
+            {
+                return _channelId;
+            }
+        }
+
         protected VIDEO_SOURCE_TYPE _sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+
+        public VIDEO_SOURCE_TYPE SourceType
+        {
+            get
+            {
+                return _sourceType;
+            }
+        }
+
         protected VIDEO_OBSERVER_FRAME_TYPE _frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
 
         protected bool _needResize = false;
@@ -50,7 +77,15 @@ namespace Agora.Rtc
         protected bool _canAttach = false;
 
         // Per-instance render stat tracker
-        protected RenderStatTracker _renderStatTracker;
+        protected RenderTrackClock _renderTrackClock;
+
+        public RenderTrackClock renderTrackClock
+        {
+            get
+            {
+                return _renderTrackClock;
+            }
+        }
 
         protected Texture2D _texture;
         public Texture2D Texture
@@ -86,18 +121,13 @@ namespace Agora.Rtc
             DontDestroyOnLoad(this.gameObject);
             InitTexture();
             InitIrisVideoFrame();
+             _renderTrackClock = new RenderTrackClock(60);
         }
 
         protected virtual void Update()
         {
             if (_needUpdateInfo) return;
             ReFreshTexture();
-
-            // Tick the render stat tracker to check and report metrics
-            if (_renderStatTracker != null)
-            {
-                _renderStatTracker.Tick();
-            }
         }
 
         protected virtual void OnDestroy()
@@ -148,8 +178,8 @@ namespace Agora.Rtc
             }
 #else
 
-     _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
-       
+            _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
+
 #endif
         }
 
@@ -177,27 +207,19 @@ namespace Agora.Rtc
                 {
                     _videoStreamManager.EnableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
                     _needUpdateInfo = false;
-
-                    // Initialize render stat tracker
-                    if (_renderStatTracker == null)
-                    {
-                        _renderStatTracker = new RenderStatTracker(_uid, _channelId, _sourceType);
-                    }
                 }
             }
         }
 
         internal virtual void ReFreshTexture()
         {
-            float getFrameStartTime;
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType, out getFrameStartTime);
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
                 _canAttach = false;
                 return;
             }
-
             else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_RESIZED)
             {
                 _videoPixelWidth = _cachedVideoFrame.width;
@@ -218,11 +240,11 @@ _texture.Resize(_videoPixelWidth, _videoPixelHeight);
                 }
 #else
 
-  _needResize = true;
-     FreeMemory();
-   _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-   _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
-    return;
+                _needResize = true;
+                FreeMemory();
+                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
+                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
+                return;
 #endif
             }
             else
@@ -242,30 +264,25 @@ _texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
 #else
-       if (_needResize)
-        {
+                if (_needResize)
+                {
 #if UNITY_2021_2_OR_NEWER
-      _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
+                    _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #else
-     _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+                    _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #endif
-  _texture.Apply();
-  _needResize = false;
-   }
+                    _texture.Apply();
+                    _needResize = false;
+                }
 
-      _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
- (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
-   _texture.Apply();
+                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
+                    (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
+                _texture.Apply();
 #endif
                 // ✅ Calculate draw cost from GetVideoFrame start time to now
-                var endTime = Time.realtimeSinceStartup;
-                var cost = (endTime - getFrameStartTime) * 1000.0f;
-
-                // Log to per-instance tracker only
-                if (_renderStatTracker != null)
+                if (_renderTrackClock != null)
                 {
-                    _renderStatTracker.LogDrawCost(cost);
-                    _renderStatTracker.LogOutFrame();
+                    _renderTrackClock.Tick();
                 }
 
             }
@@ -273,58 +290,16 @@ _texture.Resize(_videoPixelWidth, _videoPixelHeight);
             {
                 AgoraLog.Log("Exception e = " + e);
             }
-
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
- VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY,
-   VIDEO_OBSERVER_FRAME_TYPE frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA)
+            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY,
+            VIDEO_OBSERVER_FRAME_TYPE frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA)
         {
             _uid = uid;
             _channelId = channelId;
             _sourceType = source_type;
             _frameType = frameType;
-        }
-
-        /// <summary>
-        /// Update connection information and propagate to RenderStatTracker
-        /// This is useful when OnLocalVideoStats or other callbacks provide updated connection info
-        /// </summary>
-        /// <param name="uid">User ID</param>
-        /// <param name="channelId">Channel ID</param>
-        /// <param name="sourceType">Video source type</param>
-        public void UpdateConnectionInfo(uint uid, string channelId, VIDEO_SOURCE_TYPE sourceType)
-        {
-            // ?? IMPORTANT: Do NOT update _uid, _channelId, _sourceType here!
-            // These values are used as keys to fetch video frames from VideoStreamManager.
-            // Changing them will cause ERR_NO_CACHE because the cache keys won't match.
-
-            // Only propagate the updated info to RenderStatTracker for reporting purposes
-            if (_renderStatTracker != null)
-            {
-                _renderStatTracker.UpdateConnectionInfo(uid, channelId, sourceType);
-            }
-        }
-
-        /// <summary>
-        /// Enable or disable metric reporting for this TextureManager instance
-        /// </summary>
-        /// <param name="enable">True to enable reporting, false to disable</param>
-        public void SetEnableMetricReporting(bool enable)
-        {
-            if (_renderStatTracker != null)
-            {
-                _renderStatTracker.SetEnableReporting(enable);
-                AgoraLog.Log($"TextureManager (UID: {_uid}): Metric reporting {(enable ? "enabled" : "disabled")}");
-            }
-        }
-
-        /// <summary>
-        /// Check if metric reporting is enabled for this instance
-        /// </summary>
-        public bool IsMetricReportingEnabled()
-        {
-            return _renderStatTracker != null && _renderStatTracker.IsReportingEnabled();
         }
 
         virtual internal void Attach()
@@ -357,11 +332,11 @@ _texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
             _cachedVideoFrame.yBuffer = IntPtr.Zero;
 #else
-     if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
-      {
+            if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
+            {
                 Marshal.FreeHGlobal(_cachedVideoFrame.yBuffer);
-   _cachedVideoFrame.yBuffer = IntPtr.Zero;
-   }
+                _cachedVideoFrame.yBuffer = IntPtr.Zero;
+            }
 #endif
         }
 

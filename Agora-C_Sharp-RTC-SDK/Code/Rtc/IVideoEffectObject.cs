@@ -9,54 +9,183 @@ using view_t = System.UInt64;
 namespace Agora.Rtc
 {
     ///
-    /// @ignore
+    /// <summary>
+    /// Used to manage and configure video effects, such as beauty filters, makeup styles, and filters.
+    /// 
+    /// Since Available since v4.6.2.
+    /// </summary>
     ///
     public abstract class IVideoEffectObject
     {
-        public abstract int GetObjectId();
-        
         ///
         /// @ignore
+        ///
+        public abstract int GetObjectId();
+
+        ///
+        /// <summary>
+        /// Adds or updates the effect for the specified video effect node and template.
+        /// 
+        /// Since Available since v4.6.2. Priority rules:
+        /// Style makeup nodes take precedence over filter effect nodes.
+        /// To apply filter effects, you must first remove the style makeup effect node.
+        /// </summary>
+        ///
+        /// <param name="nodeId"> Unique identifier or combination of identifiers for the video effect node. See VIDEO_EFFECT_NODE_ID. </param>
+        ///
+        /// <param name="templateName"> Name of the effect template. If set to NULL or an empty string, the SDK loads the default configuration from the resource package. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int AddOrUpdateVideoEffect(uint nodeId, string templateName);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Removes the video effect for the specified node ID.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="nodeId"> Unique identifier of the video effect node to remove. See VIDEO_EFFECT_NODE_ID. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int RemoveVideoEffect(uint nodeId);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Performs an action on the specified video effect node.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="nodeId"> Unique identifier of the video effect node. </param>
+        ///
+        /// <param name="actionId"> Action to perform. See VIDEO_EFFECT_ACTION. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int PerformVideoEffectAction(uint nodeId, VIDEO_EFFECT_ACTION actionId);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets a float parameter for the video effect.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="option"> Category of the parameter option. </param>
+        ///
+        /// <param name="key"> Key name of the parameter. </param>
+        ///
+        /// <param name="param"> Float value to set. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetVideoEffectFloatParam(string option, string key, float param);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// setVideoEffectIntParam : Sets an integer parameter for the video effect.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="option"> The category of the option to which the parameter belongs. </param>
+        ///
+        /// <param name="key"> The key name of the parameter. </param>
+        ///
+        /// <param name="param"> The integer value to set. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetVideoEffectIntParam(string option, string key, int param);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets a boolean parameter for the video effect.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="option"> The category of the option. </param>
+        ///
+        /// <param name="key"> The key name of the parameter. </param>
+        ///
+        /// <param name="param"> The boolean value to set: true : Enable the option. false : Disable the option. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetVideoEffectBoolParam(string option, string key, bool param);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets the value of the specified float parameter in the video effect.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="option"> The category of the option to which the parameter belongs. </param>
+        ///
+        /// <param name="key"> The key name of the parameter. </param>
+        ///
+        /// <returns>
+        /// If the parameter exists, returns the corresponding float value.
+        /// If the parameter does not exist or an error occurs, returns 0.0f.
+        /// </returns>
         ///
         public abstract float GetVideoEffectFloatParam(string option, string key);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets the integer parameter in the video effect.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="option"> The category of the option. </param>
+        ///
+        /// <param name="key"> The key name of the parameter. </param>
+        ///
+        /// <returns>
+        /// If the parameter exists, returns the corresponding integer value.
+        /// If the parameter does not exist or an error occurs, returns 0.
+        /// </returns>
         ///
         public abstract int GetVideoEffectIntParam(string option, string key);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets the boolean parameter in the video effect.
+        /// 
+        /// Since Available since v4.6.2.
+        /// </summary>
+        ///
+        /// <param name="option"> The category of the option to which the parameter belongs. </param>
+        ///
+        /// <param name="key"> The key name of the parameter. </param>
+        ///
+        /// <returns>
+        /// true : The parameter is enabled. false : The parameter is not enabled or does not exist.
+        /// </returns>
         ///
         public abstract bool GetVideoEffectBoolParam(string option, string key);
 

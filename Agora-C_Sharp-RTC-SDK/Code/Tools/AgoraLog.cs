@@ -22,9 +22,7 @@ namespace Agora.Rtm
         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
             Debug.LogFormat("{0} {1}\n", AgoraMsgTag, msg);
-#endif
-
-#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+#elif  NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             Debug.WriteLine("[Agora Log] {0} {1}\n", AgoraMsgTag, msg);
 #endif
         }
@@ -32,11 +30,9 @@ namespace Agora.Rtm
         internal static void LogWarning(string warningMsg)
         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-           
-            Debug.LogWarningFormat("{0} {1}\n", AgoraMsgTag, warningMsg);
-#endif
 
-#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            Debug.LogWarningFormat("{0} {1}\n", AgoraMsgTag, warningMsg);
+#elif  NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             Debug.WriteLine("[Agora Warning] {0} {1}\n", AgoraMsgTag, warningMsg);
 #endif
         }
@@ -44,11 +40,9 @@ namespace Agora.Rtm
         internal static void LogError(string errorMsg)
         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-           
-            Debug.LogErrorFormat("{0} {1}\n", AgoraMsgTag, errorMsg);
-#endif
 
-#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            Debug.LogErrorFormat("{0} {1}\n", AgoraMsgTag, errorMsg);
+# elif  NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             Debug.WriteLine("[Agora Error] {0} {1}\n", AgoraMsgTag, errorMsg);
 #endif
         }

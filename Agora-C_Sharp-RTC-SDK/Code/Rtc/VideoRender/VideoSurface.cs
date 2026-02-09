@@ -31,9 +31,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// This callback is triggered when the width and height of Texture are changed.
+        /// Occurs when the width or height of the Texture changes.
         /// 
-        /// When the width and height of Texture are changed, the SDK triggers this callback.
+        /// This callback is triggered when the width or height of the Texture changes.
         /// </summary>
         ///
         public event OnTextureSizeModifyHandler OnTextureSizeModify;
@@ -63,9 +63,6 @@ namespace Agora.Rtc
                         _textureManager = _TextureManagerGameObject.AddComponent<TextureManager>();
                         _textureManager.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
                         _textureManager.EnableVideoFrameWithIdentity();
-                        
-                        // Apply metric reporting setting to TextureManager
-                        _textureManager.SetEnableMetricReporting(true);
                     }
                     else
                     {
@@ -202,68 +199,36 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Sets the local or remote video display.
+        /// Sets local/remote video display.
         /// 
-        /// Ensure that you call this method in the main thread.
-        /// Ensure that you call this method before binding VideoSurface.cs.
+        /// Make sure to call this method on the main thread.
+        /// Make sure to call this method before binding VideoSurface.cs.
         /// </summary>
         ///
-        /// <param name="uid"> The ID of remote users, obtained through OnUserJoined. The default value is 0, which means you can see the local video. </param>
+        /// <param name="uid"> The remote user ID, obtained via OnUserJoined. The default value is 0, which means the local video is visible. </param>
         ///
-        /// <param name="channelId"> The ID of the channel. </param>
+        /// <param name="channelId"> Channel ID. </param>
         ///
-        /// <param name="source_type"> The type of the video source. See VIDEO_SOURCE_TYPE. </param>
+        /// <param name="source_type"> Video stream type. See VIDEO_SOURCE_TYPE. </param>
         ///
         public virtual void SetForUser(uint uid = 0, string channelId = "", VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
-        Uid = uid;
+            Uid = uid;
             ChannelId = uid == 0 ? "" : channelId;
             SourceType = source_type;
-     _needUpdateInfo = false;
+            _needUpdateInfo = false;
         }
 
         ///
         /// <summary>
-        /// Sets whether to enable the video rendering.
+        /// Starts/stops video rendering.
         /// </summary>
         ///
-        /// <param name="enable"> Whether to enable the video rendering: true : (Default) Enable the video rendering. false : Disable the video rendering. </param>
+        /// <param name="enable"> Whether to start video rendering. true : (default) enable false : disable </param>
         ///
         public virtual void SetEnable(bool enable)
         {
             Enable = enable;
-        }
-
-        ///
-        /// <summary>
-        /// Enable or disable metric reporting for this VideoSurface
-        /// </summary>
-        ///
-        /// <param name="enable">True to enable reporting, false to disable</param>
-        ///
-        public virtual void SetEnableMetricReporting(bool enable)
-        {   
-            // Update the TextureManager if it already exists
-            if (_textureManager != null)
-            {
-                _textureManager.SetEnableMetricReporting(enable);
-            }
-        }
-
-        ///
-        /// <summary>
-        /// Check if metric reporting is enabled for this VideoSurface
-        /// </summary>
-        ///
-        /// <returns>True if reporting is enabled, false otherwise</returns>
-        ///
-        public virtual bool IsMetricReportingEnabled()
-        {
-            if (_textureManager != null)
-            {
-                return _textureManager.IsMetricReportingEnabled();
-            }
-            return false;
         }
 
         virtual protected string GenerateTextureManagerUniqueName()

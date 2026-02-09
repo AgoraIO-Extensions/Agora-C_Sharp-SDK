@@ -11,42 +11,42 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The output log level of the SDK.
+    /// Log output level.
     /// </summary>
     ///
     public enum LOG_LEVEL
     {
         ///
         /// <summary>
-        /// 0: Do not output any log information.
+        /// 0: Do not output any logs.
         /// </summary>
         ///
         LOG_LEVEL_NONE = 0x0000,
 
         ///
         /// <summary>
-        /// 0x0001: (Default) Output FATAL, ERROR, WARN, and INFO level log information. We recommend setting your log filter to this level.
+        /// 0x0001: (Default) Output logs at FATAL, ERROR, WARN, and INFO levels. It is recommended to set the log level to this value.
         /// </summary>
         ///
         LOG_LEVEL_INFO = 0x0001,
 
         ///
         /// <summary>
-        /// 0x0002: Output FATAL, ERROR, and WARN level log information.
+        /// 0x0002: Output only FATAL, ERROR, and WARN level logs.
         /// </summary>
         ///
         LOG_LEVEL_WARN = 0x0002,
 
         ///
         /// <summary>
-        /// 0x0004: Output FATAL and ERROR level log information.
+        /// 0x0004: Output only FATAL and ERROR level logs.
         /// </summary>
         ///
         LOG_LEVEL_ERROR = 0x0004,
 
         ///
         /// <summary>
-        /// 0x0008: Output FATAL level log information.
+        /// 0x0008: Output only FATAL level logs.
         /// </summary>
         ///
         LOG_LEVEL_FATAL = 0x0008,
@@ -107,34 +107,36 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Configuration of Agora SDK log files.
+    /// Configuration for SDK log files.
     /// </summary>
     ///
     public class LogConfig
     {
         ///
         /// <summary>
-        /// The complete path of the log files. Agora recommends using the default log directory. If you need to modify the default directory, ensure that the directory you specify exists and is writable. The default log directory is:
-        ///  Android: /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.
-        ///  iOS: App Sandbox/Library/caches/agorasdk.log.
+        /// Full path of the log file. Agora recommends using the default log path. If you need to change the default path, make sure the specified path exists and is writable.
+        /// Default paths:
+        ///  Android: /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log
+        ///  iOS: App Sandbox/Library/caches/agorasdk.log
         ///  macOS:
-        ///  If Sandbox is enabled: App Sandbox/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.
-        ///  If Sandbox is disabled: ~/Library/Logs/agorasdk.log
-        ///  Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\agorasdk.log.
+        ///  Sandbox enabled: App Sandbox/Library/Logs/agorasdk.log, e.g., /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log
+        ///  Sandbox disabled: ~/Library/Logs/agorasdk.log
+        ///  Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\agorasdk.log
         /// </summary>
         ///
         public string filePath;
 
         ///
         /// <summary>
-        /// The size (KB) of an agorasdk.log file. The value range is [128,20480]. The default value is 2,048 KB. If you set fileSizeInKByte smaller than 128 KB, the SDK automatically adjusts it to 128 KB; if you set fileSizeInKByte greater than 20,480 KB, the SDK automatically adjusts it to 20,480 KB.
+        /// Size of a single agorasdk.log file in KB. The valid range is [128, 20480], with a default of 2048 KB. If you set fileSizeInKByte to less than 128 KB, the SDK automatically adjusts it to 128 KB; if you set it to more than 20480 KB, the SDK adjusts it to 20480 KB.
         /// </summary>
         ///
         public uint fileSizeInKB;
 
         ///
         /// <summary>
-        /// The output level of the SDK log file. See LOG_LEVEL. For example, if you set the log level to WARN, the SDK outputs the logs within levels FATAL, ERROR, and WARN.
+        /// Log output level of the SDK. See LOG_LEVEL.
+        /// For example, if you choose WARN level, you will see all log messages at FATAL, ERROR, and WARN levels.
         /// </summary>
         ///
         public LOG_LEVEL level;

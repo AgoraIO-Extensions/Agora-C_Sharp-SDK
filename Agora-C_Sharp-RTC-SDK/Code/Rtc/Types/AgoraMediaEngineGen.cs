@@ -11,7 +11,7 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The channel mode.
+    /// Channel mode.
     /// </summary>
     ///
     public enum AUDIO_MIXING_DUAL_MONO_MODE
@@ -25,21 +25,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Left channel mode. This mode replaces the audio of the right channel with the audio of the left channel, which means the user can only hear the audio of the left channel.
+        /// 1: Left channel mode. This mode replaces the right channel audio with the left channel audio, so the user hears only the left channel.
         /// </summary>
         ///
         AUDIO_MIXING_DUAL_MONO_L = 1,
 
         ///
         /// <summary>
-        /// 2: Right channel mode. This mode replaces the audio of the left channel with the audio of the right channel, which means the user can only hear the audio of the right channel.
+        /// 2: Right channel mode. This mode replaces the left channel audio with the right channel audio, so the user hears only the right channel.
         /// </summary>
         ///
         AUDIO_MIXING_DUAL_MONO_R = 2,
 
         ///
         /// <summary>
-        /// 3: Mixed channel mode. This mode mixes the audio of the left channel and the right channel, which means the user can hear the audio of the left channel and the right channel at the same time.
+        /// 3: Mix mode. This mode overlays the left and right channel data so the user hears both channels simultaneously.
         /// </summary>
         ///
         AUDIO_MIXING_DUAL_MONO_MIX = 3,

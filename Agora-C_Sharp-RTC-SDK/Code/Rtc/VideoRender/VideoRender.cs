@@ -6,7 +6,7 @@ namespace Agora.Rtc
 {
     using IrisVideoFrameBufferHandle = IntPtr;
 
-     ///
+    ///
     /// @ignore
     ///
     public enum VideoSurfaceType
@@ -35,12 +35,6 @@ namespace Agora.Rtc
         internal abstract IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisCVideoFrame video_frame,
             ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key, VIDEO_OBSERVER_FRAME_TYPE frameType);
 
-        /// <summary>
-        /// Get video frame with start time tracking for draw cost calculation
-        /// </summary>
-        internal abstract IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisCVideoFrame video_frame,
-            ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key, VIDEO_OBSERVER_FRAME_TYPE frameType, out float startTime);
-
         public abstract void Dispose();
     }
 
@@ -58,6 +52,7 @@ namespace Agora.Rtc
             _agoraRtcEngine.OnRtcEngineImpleWillDispose += RtcEngineImplWillDispose;
             _videoFrameConfig = new IrisRtcVideoFrameConfig();
             _videoFrameConfig.video_view_setup_mode = 0;
+            _videoFrameConfig.use_queue = false;
             _videoFrameConfig.observed_frame_position = (uint)(position | VIDEO_MODULE_POSITION.POSITION_PRE_RENDERER);
         }
 
@@ -114,31 +109,6 @@ namespace Agora.Rtc
 
         internal override IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisCVideoFrame video_frame, ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key, VIDEO_OBSERVER_FRAME_TYPE frameType)
         {
-            if (_agoraRtcEngine == null)
-            {
-                AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
-                return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
-            }
-
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetIrisHandler();
-            IntPtr rtcRenderingHandle = (_agoraRtcEngine as RtcEngineImpl).GetRtcRenderingHandle();
-
-            if (irisEngine != IntPtr.Zero)
-            {
-                _videoFrameConfig.video_source_type = (int)sourceType;
-                _videoFrameConfig.video_frame_format = (int)frameType;
-                _videoFrameConfig.uid = uid;
-                _videoFrameConfig.channelId = key;
-                return AgoraRtcNative.GetVideoFrameCache(rtcRenderingHandle, ref _videoFrameConfig, ref video_frame, out is_new_frame);
-            }
-            return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
-        }
-
-        internal override IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisCVideoFrame video_frame, ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key, VIDEO_OBSERVER_FRAME_TYPE frameType, out float startTime)
-        {
-            // ? Record the start time when getting video frame
-            startTime = UnityEngine.Time.realtimeSinceStartup;
-        
             if (_agoraRtcEngine == null)
             {
                 AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
