@@ -22,7 +22,7 @@ namespace Agora.Rtm
     public class MetricCounters
     {
         public List<MetricCounter> counters = new List<MetricCounter>();
-        public int uid;
+        public uint uid;
     }
 
     public class TrackData
@@ -145,7 +145,7 @@ namespace Agora.Rtm
                                 int drawCost = (int)tm.renderTrackClock.Average;
                                 int fps = (int)(1000 / drawCost);
                                 var mcs = new MetricCounters();
-                                mcs.uid = (int)tm.Uid;
+                                mcs.uid = tm.Uid;
                                 if (tm.SourceType == VIDEO_SOURCE_TYPE.VIDEO_SOURCE_REMOTE)
                                 {
                                     //remote video
