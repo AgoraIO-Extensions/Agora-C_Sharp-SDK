@@ -695,7 +695,8 @@ if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
                 '${IRIS_MAC_URL}'
                 '${IRIS_WIN_URL}'
                 '${IRIS_ANDROID_URL}'
-                '${IRIS_IOS_URL}'
+                '${IRIS_IOS_URL}'"
+            }
         }'
 
     # 发送 POST 请求
