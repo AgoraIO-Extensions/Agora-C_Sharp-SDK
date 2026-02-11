@@ -161,15 +161,15 @@ if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" 
                             IRIS_ANDROID_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"IRIS_MAC"*)
+                    *"IRIS_MACOS"*)
                         if [ -z "$IRIS_MAC_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_MAC[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/IRIS_MACOS[[:space:]]*=//')
                             IRIS_MAC_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"IRIS_WIN"*)
+                    *"IRIS_WINDOWS"*)
                         if [ -z "$IRIS_WIN_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/IRIS_WIN[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/IRIS_WINDOWS[[:space:]]*=//')
                             IRIS_WIN_URL=$(normalize_url "$tmp")
                         fi
                         ;;
@@ -185,15 +185,15 @@ if [ -z "$IRIS_IOS_URL" ] || [ -z "$IRIS_ANDROID_URL" ] || [ -z "$IRIS_MAC_URL" 
                             NATIVE_ANDROID_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"NATIVE_MAC"*)
+                    *"NATIVE_MACOS"*)
                         if [ -z "$NATIVE_MAC_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_MAC[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/NATIVE_MACOS[[:space:]]*=//')
                             NATIVE_MAC_URL=$(normalize_url "$tmp")
                         fi
                         ;;
-                    *"NATIVE_WIN"*)
+                    *"NATIVE_WINDOWS"*)
                         if [ -z "$NATIVE_WIN_URL" ]; then
-                            tmp=$(echo "$line" | sed 's/NATIVE_WIN[[:space:]]*=//')
+                            tmp=$(echo "$line" | sed 's/NATIVE_WINDOWS[[:space:]]*=//')
                             NATIVE_WIN_URL=$(normalize_url "$tmp")
                         fi
                         ;;
@@ -706,14 +706,31 @@ fi
 
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
 { set +x; } 2>/dev/null
-echo "[Pipeline Center]JOB_RESULT_TEXT START
+
+notify_content="Unity SDK Download URL:
 ${download_file}
+
+Native SDK Download URLs:
+${NATIVE_MAC_URL}
+${NATIVE_WIN_URL}
+${NATIVE_ANDROID_URL}
+${NATIVE_IOS_URL}
+
+Iris Download URLs:
+${IRIS_MAC_URL}
+${IRIS_WIN_URL}
+${IRIS_ANDROID_URL}
+${IRIS_IOS_URL}"
+
+echo "[Pipeline Center]JOB_RESULT_TEXT START
+Unity SDK Download URL:
+${notify_content}
 [Pipeline Center]JOB_RESULT_TEXT END"
 set -x
 payload1='{
             "msgtype": "text",
             "text": {
-                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
+                "content": "Unity SDK 【'${SDK_VERSION}'】\n'${notify_content}'"
             }
         }'
 
