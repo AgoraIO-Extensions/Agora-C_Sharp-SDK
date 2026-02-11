@@ -683,8 +683,19 @@ if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     payload1='{
             "msgtype": "text",
             "text": {
-                "content": "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'"
-            }
+                "content": 
+                "Unity SDK 【'${SDK_VERSION}'】 打包:\n'${download_file}'
+                Native SDK Download URLs:
+                '${NATIVE_MAC_URL}'
+                '${NATIVE_WIN_URL}'
+                '${NATIVE_ANDROID_URL}'
+                '${NATIVE_IOS_URL}'
+
+                Iris Download URLs:
+                '${IRIS_MAC_URL}'
+                '${IRIS_WIN_URL}'
+                '${IRIS_ANDROID_URL}'
+                '${IRIS_IOS_URL}'
         }'
 
     # 发送 POST 请求
@@ -715,7 +726,6 @@ ${NATIVE_MAC_URL}
 ${NATIVE_WIN_URL}
 ${NATIVE_ANDROID_URL}
 ${NATIVE_IOS_URL}
-${NATIVE_VISIONOS_URL}
 
 Iris Download URLs:
 ${IRIS_MAC_URL}
