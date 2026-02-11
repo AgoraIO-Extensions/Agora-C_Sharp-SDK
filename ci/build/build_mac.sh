@@ -707,7 +707,21 @@ fi
 download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
 { set +x; } 2>/dev/null
 echo "[Pipeline Center]JOB_RESULT_TEXT START
+Unity SDK Download URL:
 ${download_file}
+
+Native SDK Download URLs:
+${NATIVE_MAC_URL}
+${NATIVE_WIN_URL}
+${NATIVE_ANDROID_URL}
+${NATIVE_IOS_URL}
+${NATIVE_VISIONOS_URL}
+
+Iris Download URLs:
+${IRIS_MAC_URL}
+${IRIS_WIN_URL}
+${IRIS_ANDROID_URL}
+${IRIS_IOS_URL}
 [Pipeline Center]JOB_RESULT_TEXT END"
 set -x
 payload1='{
