@@ -109,6 +109,13 @@ for item in data:
             deps["audio"][f"IRIS_{platform.upper()}"] = iris_cdn
 
 
+# deps["audio"]["NATIVE_MACOS"],  deps["audio"]["NATIVE_WINDOWS"] will use Native_SDK_Video
+if deps["audio"]["NATIVE_MACOS"] == "" and deps["video"]["NATIVE_MACOS"] != "":
+    deps["audio"]["NATIVE_MACOS"] = deps["video"]["NATIVE_MACOS"]
+if deps["audio"]["NATIVE_WINDOWS"] == "" and deps["video"]["NATIVE_WINDOWS"] != "":
+    deps["audio"]["NATIVE_WINDOWS"] = deps["video"]["NATIVE_WINDOWS"]
+
+
 script_dir = os.path.dirname(os.path.abspath(__file__))
 url_config_path = os.path.join(script_dir, "..", "..", "ci", "build", "url_config.txt")
 with open(url_config_path, "r", encoding="utf-8", newline="") as handle:
@@ -120,11 +127,11 @@ with open(url_config_path, "w", encoding="utf-8", newline="") as handle:
     handle.writelines(updated_lines)
 
 
-# Update rtc.yaml with iris_version
-rtc_version = ""
+# Update rtc.yaml with version
+version = ""
 for item in data:
-    if item["iris_version"] != "":
-        rtc_version = item["iris_version"]
+    if item["version"] != "":
+        version = item["version"]
         break
 
 rtc_yaml_path = os.path.join(script_dir, "..", "..", "terra","rtc.yaml")
@@ -133,7 +140,7 @@ with open(rtc_yaml_path, "r", encoding="utf-8") as handle:
     rtc_yaml_content = handle.read()
 
 pattern = re.compile(r"rtc_\d+(?:\.\d+)*")
-rtc_yaml_content = pattern.sub(f"rtc_{rtc_version}", rtc_yaml_content)
+rtc_yaml_content = pattern.sub(f"rtc_{version}", rtc_yaml_content)
 
 with open(rtc_yaml_path, "w", encoding="utf-8") as handle:
     handle.write(rtc_yaml_content)
