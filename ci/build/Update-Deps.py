@@ -110,9 +110,10 @@ for item in data:
 
 
 # deps["audio"]["NATIVE_MACOS"],  deps["audio"]["NATIVE_WINDOWS"] will use Native_SDK_Video
-deps["audio"]["NATIVE_MACOS"] = deps["video"]["NATIVE_MACOS"]
-deps["audio"]["NATIVE_WINDOWS"] = deps["video"]["NATIVE_WINDOWS"]
-
+if deps["audio"]["NATIVE_MACOS"] == "" and deps["video"]["NATIVE_MACOS"] != "":
+    deps["audio"]["NATIVE_MACOS"] = deps["video"]["NATIVE_MACOS"]
+if deps["audio"]["NATIVE_WINDOWS"] == "" and deps["video"]["NATIVE_WINDOWS"] != "":
+    deps["audio"]["NATIVE_WINDOWS"] = deps["video"]["NATIVE_WINDOWS"]
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
