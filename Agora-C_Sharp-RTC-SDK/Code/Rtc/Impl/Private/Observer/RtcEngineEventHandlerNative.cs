@@ -121,7 +121,7 @@ namespace Agora.Rtc
                             break;
                         }
 
-                    case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_0cebfd7:
+                    case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_3ac0eb4:
                         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                             CallbackObject._CallbackQueue.EnQueue(() =>
@@ -129,18 +129,18 @@ namespace Agora.Rtc
 #endif
                             // Extract connection info
                             var connection = (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
-                            var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
+                            // var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                             if(AgoraRenderTrackerMgr.Instance != null)
                             {
-                                AgoraRenderTrackerMgr.Instance.MarkLocalVideoInfo(connection, new LocalVideoMark(sourceType, 0));
+                                AgoraRenderTrackerMgr.Instance.MarkLocalVideoInfo(connection, new LocalVideoMark(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA, 0));
                             }   
 #endif
                             if (rtcEngineEventHandler == null) return;
                             rtcEngineEventHandler.OnLocalVideoStats(
                             connection,
-                            sourceType,
+                            // sourceType,
                             (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
                             );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
