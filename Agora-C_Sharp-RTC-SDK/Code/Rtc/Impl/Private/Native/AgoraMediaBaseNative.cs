@@ -27,6 +27,8 @@ namespace Agora.Rtc
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public float[] matrix;
         public IntPtr alphaBuffer;
+
+        public IrisColorSpace colorSpace;
     }
 
     //[StructLayout(LayoutKind.Sequential)]
@@ -52,6 +54,8 @@ namespace Agora.Rtc
         internal int video_view_setup_mode;
 
         internal uint observed_frame_position;
+
+        internal bool use_queue;
     }
 
     [StructLayout(LayoutKind.Sequential)]

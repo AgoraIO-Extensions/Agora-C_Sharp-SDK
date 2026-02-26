@@ -11,21 +11,21 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The spatial position of the remote user or the media player.
+    /// Spatial position information of a remote user or media player.
     /// </summary>
     ///
     public class RemoteVoicePositionInfo
     {
         ///
         /// <summary>
-        /// The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn. And the front, right, and top coordinates correspond to the positive directions of Unity's Vector3 axes (z, x, and y, respectively).
+        /// Coordinates in the world coordinate system. This parameter is an array of length 3, with the three values representing the coordinates of the forward, right, and up directions, respectively. Forward, right, and up correspond to the positive directions of the z, x, and y axes of Unity's Vector3.
         /// </summary>
         ///
         public float[] position;
 
         ///
         /// <summary>
-        /// The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn. And the front, right, and top coordinates correspond to the positive directions of Unity's Vector3 axes (z, x, and y, respectively).
+        /// Unit vector of the forward axis in the world coordinate system. This parameter is an array of length 3, with the three values representing the coordinates of the forward, right, and up directions, respectively. Forward, right, and up correspond to the positive directions of the z, x, and y axes of Unity's Vector3.
         /// </summary>
         ///
         public float[] forward;
@@ -43,74 +43,74 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Sound insulation area settings.
+    /// Sound insulation zone settings.
     /// </summary>
     ///
     public class SpatialAudioZone
     {
         ///
         /// <summary>
-        /// The ID of the sound insulation area.
+        /// The ID of the sound insulation zone.
         /// </summary>
         ///
         public int zoneSetId;
 
         ///
         /// <summary>
-        /// The spatial center point of the sound insulation area. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// The spatial center of the sound insulation zone. This parameter is an array of length 3, representing the coordinates in the forward, right, and up directions.
         /// </summary>
         ///
         public float[] position;
 
         ///
         /// <summary>
-        /// Starting at position, the forward unit vector. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// The unit vector in the forward direction from position. This parameter is an array of length 3, representing the coordinates in the forward, right, and up directions.
         /// </summary>
         ///
         public float[] forward;
 
         ///
         /// <summary>
-        /// Starting at position, the right unit vector. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// The unit vector in the right direction from position. This parameter is an array of length 3, representing the coordinates in the forward, right, and up directions.
         /// </summary>
         ///
         public float[] right;
 
         ///
         /// <summary>
-        /// Starting at position, the up unit vector. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// The unit vector in the upward direction from position. This parameter is an array of length 3, representing the coordinates in the forward, right, and up directions.
         /// </summary>
         ///
         public float[] up;
 
         ///
         /// <summary>
-        /// The entire sound insulation area is regarded as a cube; this represents the length of the forward side in the unit length of the game engine.
+        /// Assuming the sound insulation zone is a cube, this represents the length in the forward direction, in game engine units.
         /// </summary>
         ///
         public float forwardLength;
 
         ///
         /// <summary>
-        /// The entire sound insulation area is regarded as a cube; this represents the length of the right side in the unit length of the game engine.
+        /// Assuming the sound insulation zone is a cube, this represents the length in the right direction, in game engine units.
         /// </summary>
         ///
         public float rightLength;
 
         ///
         /// <summary>
-        /// The entire sound insulation area is regarded as a cube; this represents the length of the up side in the unit length of the game engine.
+        /// Assuming the sound insulation zone is a cube, this represents the length in the upward direction, in game engine units.
         /// </summary>
         ///
         public float upLength;
 
         ///
         /// <summary>
-        /// The sound attenuation coefficient when users within the sound insulation area communicate with external users. The value range is [0,1]. The values are as follows:
-        ///  0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.
-        ///  (0,0.5): Weak attenuation mode, that is, the volume and timbre are only weakly attenuated during the propagation process, and the sound can travel farther than the real environment.
-        ///  0.5: (Default) simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the audioAttenuation parameter.
-        ///  (0.5,1]: Strong attenuation mode (default value is 1), that is, the volume and timbre attenuate rapidly during propagation.
+        /// The sound attenuation coefficient when users inside and outside the sound insulation zone communicate. Range: [0,1]:
+        ///  0: Broadcast mode, no volume or timbre attenuation with distance.
+        ///  (0,0.5): Weak attenuation, slight volume and timbre attenuation, allowing sound to travel farther than in real environments.
+        ///  0.5: Simulates real-world volume attenuation, same as not setting the audioAttenuation parameter.
+        ///  (0.5,1]: Strong attenuation (default is 1), rapid volume and timbre attenuation during propagation.
         /// </summary>
         ///
         public float audioAttenuation;
@@ -135,7 +135,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The configuration of ILocalSpatialAudioEngine.
+    /// Configuration for ILocalSpatialAudioEngine.
     /// </summary>
     ///
     public class LocalSpatialAudioConfig

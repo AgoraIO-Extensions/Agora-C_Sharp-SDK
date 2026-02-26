@@ -1,4 +1,4 @@
-#define USE_UNSAFE_CODE
+﻿#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using System;
 using System.Runtime.InteropServices;
@@ -87,11 +87,8 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
+            
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
-
-
-
-
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
                 _canAttach = false;
@@ -171,6 +168,7 @@ namespace Agora.Rtc
 
             try
             {
+                // ✅ Use the start time from GetVideoFrame instead of measuring here
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
                 _uTexture.Apply();
@@ -203,7 +201,7 @@ namespace Agora.Rtc
                     _aTexture.Resize(_cachedVideoFrame.width, _cachedVideoFrame.height);
 #endif
                     _aTexture.Apply();
-                   
+
                     _needResize = false;
                 }
 
@@ -220,6 +218,10 @@ namespace Agora.Rtc
                     (int)_cachedVideoFrame.width * (int)_videoPixelHeight);
                 _aTexture.Apply();
 #endif
+                if (_renderTrackClock != null)
+                {
+                    _renderTrackClock.Tick();
+                }
 
             }
             catch (Exception e)
@@ -280,7 +282,7 @@ namespace Agora.Rtc
                 _cachedVideoFrame.vBuffer = IntPtr.Zero;
             }
 
-             if (_cachedVideoFrame.alphaBuffer != IntPtr.Zero)
+            if (_cachedVideoFrame.alphaBuffer != IntPtr.Zero)
             {
                 Marshal.FreeHGlobal(_cachedVideoFrame.alphaBuffer);
                 _cachedVideoFrame.yBuffer = IntPtr.Zero;

@@ -67,8 +67,8 @@ namespace Agora.Rtc
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null)
-                return;
+                if (CallbackObject == null || CallbackObject._CallbackQueue == null)
+                    return;
 #endif
 
                 IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
@@ -89,14 +89,14 @@ namespace Agora.Rtc
                                 Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
                             }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                CallbackObject._CallbackQueue.EnQueue(() =>
-                                                      {
+                            CallbackObject._CallbackQueue.EnQueue(() =>
+                                                                  {
 #endif
                             if (!mediaPlayerSourceObserverDic.ContainsKey(playerId))
                                 return;
                             mediaPlayerSourceObserverDic[playerId].OnMetaData(byteData, byteLength);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                                                      });
+                                                                  });
 #endif
                             break;
                         }

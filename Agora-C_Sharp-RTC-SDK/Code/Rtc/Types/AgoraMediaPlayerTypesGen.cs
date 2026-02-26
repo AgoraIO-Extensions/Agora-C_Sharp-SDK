@@ -11,63 +11,63 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The playback state.
+    /// Media player state.
     /// </summary>
     ///
     public enum MEDIA_PLAYER_STATE
     {
         ///
         /// <summary>
-        /// 0: The default state. The media player returns this state code before you open the media resource or after you stop the playback.
+        /// 0: Default state. The player returns this state before you open a media file and after playback ends.
         /// </summary>
         ///
         PLAYER_STATE_IDLE = 0,
 
         ///
         /// <summary>
-        /// 1: Opening the media resource.
+        /// 1: Opening media file.
         /// </summary>
         ///
         PLAYER_STATE_OPENING,
 
         ///
         /// <summary>
-        /// 2: Opens the media resource successfully.
+        /// 2: Media file opened successfully.
         /// </summary>
         ///
         PLAYER_STATE_OPEN_COMPLETED,
 
         ///
         /// <summary>
-        /// 3: The media resource is playing.
+        /// 3: Playing.
         /// </summary>
         ///
         PLAYER_STATE_PLAYING,
 
         ///
         /// <summary>
-        /// 4: Pauses the playback.
+        /// 4: Playback paused.
         /// </summary>
         ///
         PLAYER_STATE_PAUSED,
 
         ///
         /// <summary>
-        /// 5: The playback is complete.
+        /// 5: Playback completed.
         /// </summary>
         ///
         PLAYER_STATE_PLAYBACK_COMPLETED,
 
         ///
         /// <summary>
-        /// 6: The loop is complete.
+        /// 6: All playback loops completed.
         /// </summary>
         ///
         PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED,
 
         ///
         /// <summary>
-        /// 7: The playback stops.
+        /// 7: Playback stopped.
         /// </summary>
         ///
         PLAYER_STATE_STOPPED,
@@ -109,7 +109,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 100: The media player fails to play the media resource.
+        /// 100: Playback failed.
         /// </summary>
         ///
         PLAYER_STATE_FAILED = 100,
@@ -117,87 +117,121 @@ namespace Agora.Rtc
     }
 
     ///
-    /// @ignore
+    /// <summary>
+    /// Reason for media player state change.
+    /// </summary>
     ///
     public enum MEDIA_PLAYER_REASON
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 0: No error.
+        /// </summary>
         ///
         PLAYER_REASON_NONE = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -1: Invalid parameters.
+        /// </summary>
         ///
         PLAYER_REASON_INVALID_ARGUMENTS = -1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -2: Internal error.
+        /// </summary>
         ///
         PLAYER_REASON_INTERNAL = -2,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -3: No resource.
+        /// </summary>
         ///
         PLAYER_REASON_NO_RESOURCE = -3,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -4: Invalid resource.
+        /// </summary>
         ///
         PLAYER_REASON_INVALID_MEDIA_SOURCE = -4,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -5: Unknown media stream type.
+        /// </summary>
         ///
         PLAYER_REASON_UNKNOWN_STREAM_TYPE = -5,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -6: Object not initialized.
+        /// </summary>
         ///
         PLAYER_REASON_OBJ_NOT_INITIALIZED = -6,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -7: Codec not supported by decoder.
+        /// </summary>
         ///
         PLAYER_REASON_CODEC_NOT_SUPPORTED = -7,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -8: Invalid renderer.
+        /// </summary>
         ///
         PLAYER_REASON_VIDEO_RENDER_FAILED = -8,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -9: Invalid internal player state.
+        /// </summary>
         ///
         PLAYER_REASON_INVALID_STATE = -9,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -10: URL not found.
+        /// </summary>
         ///
         PLAYER_REASON_URL_NOT_FOUND = -10,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -11: Invalid connection between player and Agora server.
+        /// </summary>
         ///
         PLAYER_REASON_INVALID_CONNECTION_STATE = -11,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -12: Insufficient data in playback buffer.
+        /// </summary>
         ///
         PLAYER_REASON_SRC_BUFFER_UNDERFLOW = -12,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -13: Playback was interrupted abnormally and ended.
+        /// </summary>
         ///
         PLAYER_REASON_INTERRUPTED = -13,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -14: API call not supported by SDK.
+        /// </summary>
         ///
         PLAYER_REASON_NOT_SUPPORTED = -14,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -15: Authentication information for media resource network path has expired.
+        /// </summary>
         ///
         PLAYER_REASON_TOKEN_EXPIRED = -15,
 
@@ -207,7 +241,9 @@ namespace Agora.Rtc
         PLAYER_REASON_IP_EXPIRED = -16,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// -17: Unknown error.
+        /// </summary>
         ///
         PLAYER_REASON_UNKNOWN = -17,
 
@@ -215,35 +251,35 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The type of the media stream.
+    /// Media stream type.
     /// </summary>
     ///
     public enum MEDIA_STREAM_TYPE
     {
         ///
         /// <summary>
-        /// 0: The type is unknown.
+        /// 0: Unknown type.
         /// </summary>
         ///
         STREAM_TYPE_UNKNOWN = 0,
 
         ///
         /// <summary>
-        /// 1: The video stream.
+        /// 1: Video stream.
         /// </summary>
         ///
         STREAM_TYPE_VIDEO = 1,
 
         ///
         /// <summary>
-        /// 2: The audio stream.
+        /// 2: Audio stream.
         /// </summary>
         ///
         STREAM_TYPE_AUDIO = 2,
 
         ///
         /// <summary>
-        /// 3: The subtitle stream.
+        /// 3: Subtitle stream.
         /// </summary>
         ///
         STREAM_TYPE_SUBTITLE = 3,
@@ -259,98 +295,98 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: The player begins to seek to a new playback position.
+        /// 0: Start seeking.
         /// </summary>
         ///
         PLAYER_EVENT_SEEK_BEGIN = 0,
 
         ///
         /// <summary>
-        /// 1: The player finishes seeking to a new playback position.
+        /// 1: Seek completed.
         /// </summary>
         ///
         PLAYER_EVENT_SEEK_COMPLETE = 1,
 
         ///
         /// <summary>
-        /// 2: An error occurs when seeking to a new playback position.
+        /// 2: Seek error.
         /// </summary>
         ///
         PLAYER_EVENT_SEEK_ERROR = 2,
 
         ///
         /// <summary>
-        /// 5: The audio track used by the player has been changed.
+        /// 5: Current audio track changed.
         /// </summary>
         ///
         PLAYER_EVENT_AUDIO_TRACK_CHANGED = 5,
 
         ///
         /// <summary>
-        /// 6: The currently buffered data is not enough to support playback.
+        /// 6: Current buffered data is insufficient for playback.
         /// </summary>
         ///
         PLAYER_EVENT_BUFFER_LOW = 6,
 
         ///
         /// <summary>
-        /// 7: The currently buffered data is just enough to support playback.
+        /// 7: Current buffered data is just enough for playback.
         /// </summary>
         ///
         PLAYER_EVENT_BUFFER_RECOVER = 7,
 
         ///
         /// <summary>
-        /// 8: The audio or video playback freezes.
+        /// 8: Audio or video stutter occurred.
         /// </summary>
         ///
         PLAYER_EVENT_FREEZE_START = 8,
 
         ///
         /// <summary>
-        /// 9: The audio or video playback resumes without freezing.
+        /// 9: Audio and video stutter stopped.
         /// </summary>
         ///
         PLAYER_EVENT_FREEZE_STOP = 9,
 
         ///
         /// <summary>
-        /// 10: The player starts switching the media resource.
+        /// 10: Start switching media source.
         /// </summary>
         ///
         PLAYER_EVENT_SWITCH_BEGIN = 10,
 
         ///
         /// <summary>
-        /// 11: Media resource switching is complete.
+        /// 11: Media source switch completed.
         /// </summary>
         ///
         PLAYER_EVENT_SWITCH_COMPLETE = 11,
 
         ///
         /// <summary>
-        /// 12: Media resource switching error.
+        /// 12: Media source switch error.
         /// </summary>
         ///
         PLAYER_EVENT_SWITCH_ERROR = 12,
 
         ///
         /// <summary>
-        /// 13: The first video frame is rendered.
+        /// 13: First video frame displayed.
         /// </summary>
         ///
         PLAYER_EVENT_FIRST_DISPLAYED = 13,
 
         ///
         /// <summary>
-        /// 14: The cached media files reach the limit in number.
+        /// 14: Reached maximum number of cacheable files.
         /// </summary>
         ///
         PLAYER_EVENT_REACH_CACHE_FILE_MAX_COUNT = 14,
 
         ///
         /// <summary>
-        /// 15: The cached media files reach the limit in aggregate storage space.
+        /// 15: Reached maximum size of cacheable files.
         /// </summary>
         ///
         PLAYER_EVENT_REACH_CACHE_FILE_MAX_SIZE = 15,
@@ -370,32 +406,37 @@ namespace Agora.Rtc
         ///
         PLAYER_EVENT_TRY_OPEN_FAILED = 18,
 
+        ///
+        /// @ignore
+        ///
+        PLAYER_EVENT_HTTP_REDIRECT = 19,
+
     }
 
     ///
     /// <summary>
-    /// Events that occur when media resources are preloaded.
+    /// Events during preloading of media resources.
     /// </summary>
     ///
     public enum PLAYER_PRELOAD_EVENT
     {
         ///
         /// <summary>
-        /// 0: Starts preloading media resources.
+        /// 0: Start preloading media resource.
         /// </summary>
         ///
         PLAYER_PRELOAD_EVENT_BEGIN = 0,
 
         ///
         /// <summary>
-        /// 1: Preloading media resources is complete.
+        /// 1: Media resource preload completed.
         /// </summary>
         ///
         PLAYER_PRELOAD_EVENT_COMPLETE = 1,
 
         ///
         /// <summary>
-        /// 2: An error occurs when preloading media resources.
+        /// 2: Error occurred during media resource preload.
         /// </summary>
         ///
         PLAYER_PRELOAD_EVENT_ERROR = 2,
@@ -404,96 +445,98 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The detailed information of the media stream.
+    /// All information about the media stream of the player.
     /// </summary>
     ///
     public class PlayerStreamInfo
     {
         ///
         /// <summary>
-        /// The index of the media stream.
+        /// Index of the media stream.
         /// </summary>
         ///
         public int streamIndex;
 
         ///
         /// <summary>
-        /// The type of the media stream. See MEDIA_STREAM_TYPE.
+        /// Type of the media stream. See MEDIA_STREAM_TYPE.
         /// </summary>
         ///
         public MEDIA_STREAM_TYPE streamType;
 
         ///
         /// <summary>
-        /// The codec of the media stream.
+        /// Codec specification of the media stream.
         /// </summary>
         ///
         public string codecName;
 
         ///
         /// <summary>
-        /// The language of the media stream.
+        /// Language of the media stream.
         /// </summary>
         ///
         public string language;
 
         ///
         /// <summary>
-        /// This parameter only takes effect for video streams, and indicates the video frame rate (fps).
+        /// This parameter applies only to video streams and indicates the video frame rate (fps).
         /// </summary>
         ///
         public int videoFrameRate;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter applies only to video streams and indicates the video bitrate (bps).
+        /// </summary>
         ///
         public int videoBitRate;
 
         ///
         /// <summary>
-        /// This parameter only takes effect for video streams, and indicates the video width (pixel).
+        /// This parameter applies only to video streams and indicates the video width (px).
         /// </summary>
         ///
         public int videoWidth;
 
         ///
         /// <summary>
-        /// This parameter only takes effect for video streams, and indicates the video height (pixel).
+        /// This parameter applies only to video streams and indicates the video height (px).
         /// </summary>
         ///
         public int videoHeight;
 
         ///
         /// <summary>
-        /// This parameter only takes effect for video streams, and indicates the video rotation angle.
+        /// This parameter applies only to video streams and indicates the rotation angle.
         /// </summary>
         ///
         public int videoRotation;
 
         ///
         /// <summary>
-        /// This parameter only takes effect for audio streams, and indicates the audio sample rate (Hz).
+        /// This parameter applies only to audio streams and indicates the audio sample rate (Hz).
         /// </summary>
         ///
         public int audioSampleRate;
 
         ///
         /// <summary>
-        /// This parameter only takes effect for audio streams, and indicates the audio channel number.
+        /// This parameter applies only to audio streams and indicates the number of audio channels.
         /// </summary>
         ///
         public int audioChannels;
 
         ///
         /// <summary>
-        /// This parameter only takes effect for audio streams, and indicates the bit number of each audio sample.
+        /// This parameter applies only to audio streams and indicates the number of bits per audio sample (bit).
         /// </summary>
         ///
         public int audioBitsPerSample;
 
         ///
         /// <summary>
-        /// The total duration (ms) of the media stream.
+        /// Duration of the media stream (milliseconds).
         /// </summary>
         ///
         public long duration;
@@ -533,14 +576,14 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Information about the video bitrate of the media resource being played.
+    /// Video bitrate information during media playback.
     /// </summary>
     ///
     public class SrcInfo
     {
         ///
         /// <summary>
-        /// The video bitrate (Kbps) of the media resource being played.
+        /// The video bitrate (Kbps) during media playback.
         /// </summary>
         ///
         public int bitrateInKbps;
@@ -565,21 +608,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The type of media metadata.
+    /// Media metadata type.
     /// </summary>
     ///
     public enum MEDIA_PLAYER_METADATA_TYPE
     {
         ///
         /// <summary>
-        /// 0: The type is unknown.
+        /// 0: Unknown type.
         /// </summary>
         ///
         PLAYER_METADATA_TYPE_UNKNOWN = 0,
 
         ///
         /// <summary>
-        /// 1: The type is SEI.
+        /// 1: SEI (Supplemental Enhancement Information) type.
         /// </summary>
         ///
         PLAYER_METADATA_TYPE_SEI = 1,
@@ -588,28 +631,28 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Statistics about the media files being cached.
+    /// Statistics of cached files.
     /// </summary>
     ///
     public class CacheStatistics
     {
         ///
         /// <summary>
-        /// The size (bytes) of the media file being played.
+        /// Size of the media file being played, in bytes.
         /// </summary>
         ///
         public long fileSize;
 
         ///
         /// <summary>
-        /// The size (bytes) of the media file that you want to cache.
+        /// Size of the cached data of the media file being played, in bytes.
         /// </summary>
         ///
         public long cacheSize;
 
         ///
         /// <summary>
-        /// The size (bytes) of the media file that has been downloaded.
+        /// Size of the downloaded media file being played, in bytes.
         /// </summary>
         ///
         public long downloadSize;
@@ -628,35 +671,35 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The information of the media file being played.
+    /// Information about the currently playing media resource.
     /// </summary>
     ///
     public class PlayerPlaybackStats
     {
         ///
         /// <summary>
-        /// The frame rate (fps) of the video.
+        /// Video frame rate, in fps.
         /// </summary>
         ///
         public int videoFps;
 
         ///
         /// <summary>
-        /// The bitrate (kbps) of the video.
+        /// Video bitrate, in kbps.
         /// </summary>
         ///
         public int videoBitrateInKbps;
 
         ///
         /// <summary>
-        /// The bitrate (kbps) of the audio.
+        /// Audio bitrate, in kbps.
         /// </summary>
         ///
         public int audioBitrateInKbps;
 
         ///
         /// <summary>
-        /// The total bitrate (kbps) of the media stream.
+        /// Total bitrate of the media stream, in kbps.
         /// </summary>
         ///
         public int totalBitrateInKbps;
@@ -688,21 +731,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The ID of a deivce.
+        /// Device ID, identifies a device.
         /// </summary>
         ///
         public string deviceId;
 
         ///
         /// <summary>
-        /// Height (pixel) of the video.
+        /// Video height (pixel).
         /// </summary>
         ///
         public int videoHeight;
 
         ///
         /// <summary>
-        /// Width (pixel) of the video.
+        /// Video width (pixel).
         /// </summary>
         ///
         public int videoWidth;
@@ -716,14 +759,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of audio channels.
+        /// Number of audio channels.
         /// </summary>
         ///
         public int audioChannels;
 
         ///
         /// <summary>
-        /// The number of bits per audio sample point.
+        /// Number of bits per audio sample (bit).
         /// </summary>
         ///
         public int audioBitsPerSample;
@@ -753,73 +796,72 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Information related to the media file to be played and the playback scenario configurations.
+    /// Information and playback settings for the media file to be played.
     /// </summary>
     ///
     public class MediaSource : IOptionalJsonParse
     {
         ///
         /// <summary>
-        /// The URL of the media file to be played. If you open a common media resource, pass in the value to url. If you open a custom media resource, pass in the value to provider. Agora recommends that you do not pass in values to both parameters in one call; otherwise, this call may fail.
+        /// URL of the media resource to be played. If you are opening a regular media resource, assign a value to url; if you are opening a custom media resource, assign a value to provider. Assigning values to both will cause the method call to fail.
         /// </summary>
         ///
         public string url;
 
         ///
         /// <summary>
-        /// The URI (Uniform Resource Identifier) of the media file.
+        /// URI (Uniform Resource Identifier) of the media file, used to identify the media file.
         /// </summary>
         ///
         public string uri;
 
         ///
         /// <summary>
-        /// The starting position (ms) for playback. The default value is 0.
+        /// Start playback position in milliseconds. Default is 0.
         /// </summary>
         ///
         public long startPos;
 
         ///
         /// <summary>
-        /// Whether to enable autoplay once the media file is opened: true : (Default) Yes. false : No. If autoplay is disabled, you need to call the Play method to play a media file after it is opened.
+        /// If you disable auto-play, call the Play method after opening the media file to start playback. Whether to enable auto-play after opening the media file: true : (Default) Enable auto-play. false : Disable auto-play.
         /// </summary>
         ///
         public bool autoPlay;
 
         ///
         /// <summary>
-        /// Whether to cache the media file when it is being played: true :Enables caching. false : (Default) Disables caching.
-        ///  Agora only supports caching on-demand audio and video streams that are not transmitted in HLS protocol.
-        ///  If you need to enable caching, pass in a value to uri; otherwise, caching is based on the url of the media file.
-        ///  If you enable this function, the Media Player caches part of the media file being played on your local device, and you can play the cached media file without internet connection. The statistics about the media file being cached are updated every second after the media file is played. See CacheStatistics.
+        /// The SDK currently supports caching for on-demand streams, but not for on-demand streams delivered via HLS protocol.
+        ///  Before caching, assign a value to uri, otherwise the player will use the media file's url as the cache index.
+        ///  When real-time caching is enabled, the player preloads part of the currently playing media file to local storage. The next time you play the file, the player loads data directly from the cache, saving network traffic. Statistics for the cached media file are updated every second after playback starts. See CacheStatistics. Whether to enable real-time caching for this playback: true : Enable real-time caching. false : (Default) Disable real-time caching.
         /// </summary>
         ///
         public bool enableCache;
 
         ///
         /// <summary>
-        /// Whether to allow the selection of different audio tracks when playing this media file: true : Allow to select different audio tracks. false : (Default) Do not allow to select different audio tracks. If you need to set different audio tracks for local playback and publishing to the channel, you need to set this parameter to true, and then call the SelectMultiAudioTrack method to select the audio track.
+        /// Whether to allow selecting different audio tracks for this playback: true : Allow selecting different audio tracks. false : (Default) Do not allow selecting different audio tracks. If you need to set different audio tracks for local playback and publishing to remote, set this parameter to true and then call the SelectMultiAudioTrack method to configure audio tracks.
         /// </summary>
         ///
         public bool enableMultiAudioTrack;
 
         ///
         /// <summary>
-        /// Whether the media resource to be opened is a live stream or on-demand video distributed through Media Broadcast service: true : The media resource to be played is a live or on-demand video distributed through Media Broadcast service. false : (Default) The media resource is not a live stream or on-demand video distributed through Media Broadcast service. If you need to open a live stream or on-demand video distributed through Broadcast Streaming service, pass in the URL of the media resource to url, and set isAgoraSource as true; otherwise, you don't need to set the isAgoraSource parameter.
+        /// If the media resource to be opened is a live or on-demand stream delivered via Agora Fusion CDN, assign the stream URL to url and set isAgoraSource to true. Otherwise, there is no need to set isAgoraSource. Whether the media resource is a live or on-demand stream delivered via Agora Fusion CDN: true : The media resource is delivered via Agora Fusion CDN. false : (Default) The media resource is not delivered via Agora Fusion CDN.
         /// </summary>
         ///
         public Optional<bool> isAgoraSource = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether the media resource to be opened is a live stream: true : The media resource is a live stream. false : (Default) The media resource is not a live stream. If the media resource you want to open is a live stream, Agora recommends that you set this parameter as true so that the live stream can be loaded more quickly. If the media resource you open is not a live stream, but you set isLiveSource as true, the media resource is not to be loaded more quickly.
+        /// Only when the media resource is a live stream, setting isLiveSource to true can speed up the opening of the media resource. Whether the media resource is a live stream: true : Live stream. false : (Default) Not a live stream. If the media resource is a live stream, it is recommended to set this parameter to true to speed up the opening of the live stream.
         /// </summary>
         ///
         public Optional<bool> isLiveSource = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The callback for custom media resource files. See IMediaPlayerCustomDataProvider. If you open a custom media resource, pass in the value to provider. If you open a common media resource, pass in the value to url. Agora recommends that you do not pass in values to both url and provider in one call; otherwise, this call may fail.
+        /// Callback for custom media resource files. See IMediaPlayerCustomDataProvider. If you are opening a custom media resource, assign a value to provider only. If you are opening a regular media resource, assign a value to url. Assigning values to both url and provider will cause the method call to fail.
         /// </summary>
         ///
         public IMediaPlayerCustomDataProvider provider;

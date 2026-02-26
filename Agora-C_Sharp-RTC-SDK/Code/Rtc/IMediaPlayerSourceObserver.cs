@@ -10,21 +10,21 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// Provides callbacks for media players.
+    /// Provides callbacks for the media player.
     /// </summary>
     ///
     public abstract class IMediaPlayerSourceObserver
     {
         ///
         /// <summary>
-        /// Reports the changes of playback state.
+        /// Reports changes in player state.
         /// 
-        /// When the state of the media player changes, the SDK triggers this callback to report the current playback state.
+        /// This callback is triggered by the SDK when the player state changes, reporting the new playback state.
         /// </summary>
         ///
-        /// <param name="state"> The playback state. See MEDIA_PLAYER_STATE. </param>
+        /// <param name="state"> The new playback state. See MEDIA_PLAYER_STATE. </param>
         ///
-        /// <param name="reason"> The reason for the changes in the media player status. See MEDIA_PLAYER_REASON. </param>
+        /// <param name="reason"> The reason for the player state change. See MEDIA_PLAYER_REASON. </param>
         ///
         public virtual void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_REASON reason)
         {
@@ -32,14 +32,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the playback progress of the media file.
+        /// Reports the current playback progress of the media resource.
         /// 
-        /// When playing media files, the SDK triggers this callback every two second to report current playback progress.
+        /// While playing a media file, the SDK automatically triggers this callback every second to report the current playback progress.
         /// </summary>
         ///
-        /// <param name="position_ms"> The playback position (ms) of media files. </param>
+        /// <param name="position_ms"> Current playback progress in milliseconds. </param>
         ///
-        /// <param name="timeStampMs"> The NTP timestamp (ms) of the current playback progress. </param>
+        /// <param name="timestampMs"> NTP timestamp of the current playback progress in milliseconds. </param>
         ///
         public virtual void OnPositionChanged(long positionMs, long timestampMs)
         {
@@ -47,14 +47,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the player events.
+        /// Reports player events.
         /// 
-        /// After calling the Seek method, the SDK triggers the callback to report the results of the seek operation.
+        /// After calling Seek to seek playback, the SDK triggers this callback to report the result of the seek operation.
         /// </summary>
         ///
-        /// <param name="eventCode"> The player event. See MEDIA_PLAYER_EVENT. </param>
+        /// <param name="eventCode"> Player event. See MEDIA_PLAYER_EVENT. </param>
         ///
-        /// <param name="elapsedTime"> The time (ms) when the event occurs. </param>
+        /// <param name="elapsedTime"> Time when the event occurred (milliseconds). </param>
         ///
         /// <param name="message"> Information about the event. </param>
         ///
@@ -64,14 +64,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when the media metadata is received.
+        /// Reports acquired media metadata.
         /// 
-        /// The callback occurs when the player receives the media metadata and reports the detailed information of the media metadata.
+        /// After parsing the media metadata, the SDK triggers this callback to report the data type and actual data of the metadata.
         /// </summary>
         ///
-        /// <param name="data"> The detailed data of the media metadata. </param>
+        /// <param name="data"> Actual data in a user-defined format. </param>
         ///
-        /// <param name="length"> The data length (bytes). </param>
+        /// <param name="length"> Length of the data in bytes. </param>
         ///
         public virtual void OnMetaData(byte[] data, int length)
         {
@@ -79,14 +79,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the playback duration that the buffered data can support.
+        /// Reports the duration the current buffered data can support playback.
         /// 
-        /// When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.
-        /// When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_LOW (6).
-        /// When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_RECOVER (7).
+        /// During online media playback, the SDK triggers this callback every second to report the playback duration supported by the current buffered data.
+        /// When the buffered playback duration is less than the threshold (default is 0), PLAYER_EVENT_BUFFER_LOW (6) is returned.
+        /// When the buffered playback duration exceeds the threshold (default is 0), PLAYER_EVENT_BUFFER_RECOVER (7) is returned.
         /// </summary>
         ///
-        /// <param name="playCachedBuffer"> The playback duration (ms) that the buffered data can support. </param>
+        /// <param name="playCachedBuffer"> Playback duration supported by the current buffered data (milliseconds). </param>
         ///
         public virtual void OnPlayBufferUpdated(long playCachedBuffer)
         {
@@ -94,12 +94,12 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the events of preloaded media resources.
+        /// Reports events related to preloading media resources.
         /// </summary>
         ///
-        /// <param name="src"> The URL of the media resource. </param>
+        /// <param name="src"> Path to the media resource. </param>
         ///
-        /// <param name="@event"> Events that occur when media resources are preloaded. See PLAYER_PRELOAD_EVENT. </param>
+        /// <param name="@event"> Event that occurred during media resource preloading. See PLAYER_PRELOAD_EVENT. </param>
         ///
         public virtual void OnPreloadEvent(string src, PLAYER_PRELOAD_EVENT @event)
         {
@@ -115,18 +115,19 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        [Obsolete("4.6.0")]
         public virtual void OnAgoraCDNTokenWillExpire()
         {
         }
 
         ///
         /// <summary>
-        /// Occurs when the video bitrate of the media resource changes.
+        /// Callback for video bitrate changes in media resource.
         /// </summary>
         ///
-        /// <param name="from"> Information about the video bitrate of the media resource being played. See SrcInfo. </param>
+        /// <param name="from"> Information about the video bitrate before the change during media playback. See SrcInfo. </param>
         ///
-        /// <param name="to"> Information about the changed video bitrate of media resource being played. See SrcInfo. </param>
+        /// <param name="to"> Information about the video bitrate after the change during media playback. See SrcInfo. </param>
         ///
         public virtual void OnPlayerSrcInfoChanged(SrcInfo from, SrcInfo to)
         {
@@ -134,12 +135,12 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when information related to the media player changes.
+        /// Callback when media player related information changes.
         /// 
-        /// When the information about the media player changes, the SDK triggers this callback. You can use this callback for troubleshooting.
+        /// This callback is triggered by the SDK when media player related information changes. You can use it for troubleshooting and diagnostics.
         /// </summary>
         ///
-        /// <param name="info"> Information related to the media player. See PlayerUpdatedInfo. </param>
+        /// <param name="info"> Media player related information. See PlayerUpdatedInfo. </param>
         ///
         public virtual void OnPlayerInfoUpdated(PlayerUpdatedInfo info)
         {
@@ -147,12 +148,12 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the statistics of the media file being cached.
+        /// Reports information about the media resources currently in cache.
         /// 
-        /// After you call the OpenWithMediaSource method and set enableCache as true, the SDK triggers this callback once per second to report the statistics of the media file being cached.
+        /// After calling the OpenWithMediaSource method and setting the enableCache member to true, the SDK triggers this callback once per second after the media file is opened to report statistics about the currently cached media files.
         /// </summary>
         ///
-        /// <param name="stats"> The statistics of the media file being cached. See CacheStatistics. </param>
+        /// <param name="stats"> Information about the media resources in the cache. See CacheStatistics. </param>
         ///
         public virtual void OnPlayerCacheStats(CacheStatistics stats)
         {
@@ -160,12 +161,12 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The statistics of the media file being played.
+        /// Reports information about the currently playing media resource.
         /// 
-        /// The SDK triggers this callback once per second to report the statistics of the media file being played.
+        /// After the media resource starts playing, the SDK triggers this callback every second to report related information about the media resource.
         /// </summary>
         ///
-        /// <param name="stats"> The statistics of the media file. See PlayerPlaybackStats. </param>
+        /// <param name="stats"> Information about the media resource. See PlayerPlaybackStats. </param>
         ///
         public virtual void OnPlayerPlaybackStats(PlayerPlaybackStats stats)
         {
@@ -173,12 +174,12 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the volume of the media player.
+        /// Callback for media player volume indication.
         /// 
         /// The SDK triggers this callback every 200 milliseconds to report the current volume of the media player.
         /// </summary>
         ///
-        /// <param name="volume"> The volume of the media player. The value ranges from 0 to 255. </param>
+        /// <param name="volume"> Current volume of the player, range: [0,255]. </param>
         ///
         public virtual void OnAudioVolumeIndication(int volume)
         {

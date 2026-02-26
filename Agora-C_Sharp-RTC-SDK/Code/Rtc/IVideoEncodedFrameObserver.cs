@@ -10,31 +10,33 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// Receives encoded video images.
+    /// A class used to receive encoded video frames.
     /// </summary>
     ///
     public abstract class IVideoEncodedFrameObserver
     {
         ///
         /// <summary>
-        /// Reports that the receiver has received the to-be-decoded video frame sent by the remote end.
+        /// Reports that the receiver has received an encoded video frame sent by a remote user.
         /// 
-        /// If you call the SetRemoteVideoSubscriptionOptions method and set encodedFrameOnly to true, the SDK triggers this callback locally to report the received encoded video frame information.
+        /// When you call the SetRemoteVideoSubscriptionOptions method and set encodedFrameOnly to true, the SDK triggers this callback locally to report the received encoded video frame information.
         /// </summary>
         ///
-        /// <param name="uid"> The user ID of the remote user. </param>
+        /// <param name="channelId"> Channel name. </param>
         ///
-        /// <param name="imageBufferPtr"> The encoded video image buffer. </param>
+        /// <param name="uid"> Remote user ID. </param>
         ///
-        /// <param name="length"> The data length of the video image. </param>
+        /// <param name="imageBufferPtr"> Video image buffer. </param>
         ///
-        /// <param name="videoEncodedFrameInfo"> For the information of the encoded video frame, see EncodedVideoFrameInfo. </param>
+        /// <param name="length"> Data length of the video image. </param>
+        ///
+        /// <param name="videoEncodedFrameInfo"> Encoded video frame information. See EncodedVideoFrameInfo. </param>
         ///
         /// <returns>
-        /// Without practical meaning.
+        /// No actual meaning.
         /// </returns>
         ///
-        public virtual bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
+        public virtual bool OnEncodedVideoFrameReceived(string channelId, uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)
         {
             return true;
         }

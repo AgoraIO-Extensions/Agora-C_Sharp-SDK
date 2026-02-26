@@ -11,7 +11,7 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// Media device types.
+    /// Device type.
     /// </summary>
     ///
     public enum MEDIA_DEVICE_TYPE
@@ -32,7 +32,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Audio capturing device.
+        /// 1: Audio recording device.
         /// </summary>
         ///
         AUDIO_RECORDING_DEVICE = 1,
@@ -46,28 +46,28 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 3: Video capturing device.
+        /// 3: Video capture device.
         /// </summary>
         ///
         VIDEO_CAPTURE_DEVICE = 3,
 
         ///
         /// <summary>
-        /// 4: Audio playback device for an app.
+        /// 4: Audio application playback device.
         /// </summary>
         ///
         AUDIO_APPLICATION_PLAYOUT_DEVICE = 4,
 
         ///
         /// <summary>
-        /// (For macOS only) 5: Virtual audio playback device (virtual sound card).
+        /// (macOS only) 5: Virtual audio playback device (virtual sound card).
         /// </summary>
         ///
         AUDIO_VIRTUAL_PLAYOUT_DEVICE = 5,
 
         ///
         /// <summary>
-        /// (For macOS only) 6: Virtual audio capturing device (virtual sound card).
+        /// (macOS only) 6: Virtual audio recording device (virtual sound card).
         /// </summary>
         ///
         AUDIO_VIRTUAL_RECORDING_DEVICE = 6,
@@ -76,35 +76,42 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The playback state of the music file.
+    /// Music file playback state.
     /// </summary>
     ///
     public enum AUDIO_MIXING_STATE_TYPE
     {
         ///
         /// <summary>
-        /// 710: The music file is playing.
+        /// 710: Music file is playing normally.
         /// </summary>
         ///
         AUDIO_MIXING_STATE_PLAYING = 710,
 
         ///
         /// <summary>
-        /// 711: The music file pauses playing.
+        /// 711: Music file playback is paused.
         /// </summary>
         ///
         AUDIO_MIXING_STATE_PAUSED = 711,
 
         ///
         /// <summary>
-        /// 713: The music file stops playing. The possible reasons include: AUDIO_MIXING_REASON_ALL_LOOPS_COMPLETED (723) AUDIO_MIXING_REASON_STOPPED_BY_USER (724)
+        /// 713: Music file playback stopped.
+        /// This state may be caused by:
+        ///  AUDIO_MIXING_REASON_ALL_LOOPS_COMPLETED(723)
+        ///  AUDIO_MIXING_REASON_STOPPED_BY_USER(724)
         /// </summary>
         ///
         AUDIO_MIXING_STATE_STOPPED = 713,
 
         ///
         /// <summary>
-        /// 714: An error occurs during the playback of the audio mixing file. The possible reasons include: AUDIO_MIXING_REASON_CAN_NOT_OPEN (701) AUDIO_MIXING_REASON_TOO_FREQUENT_CALL (702) AUDIO_MIXING_REASON_INTERRUPTED_EOF (703)
+        /// 714: Music file playback failed.
+        /// This state may be caused by:
+        ///  AUDIO_MIXING_REASON_CAN_NOT_OPEN(701)
+        ///  AUDIO_MIXING_REASON_TOO_FREQUENT_CALL(702)
+        ///  AUDIO_MIXING_REASON_INTERRUPTED_EOF(703)
         /// </summary>
         ///
         AUDIO_MIXING_STATE_FAILED = 714,
@@ -113,49 +120,49 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The reason why the playback state of the music file changes. Reported in the OnAudioMixingStateChanged callback.
+    /// Reason for music file playback state change. Reported in the OnAudioMixingStateChanged callback.
     /// </summary>
     ///
     public enum AUDIO_MIXING_REASON_TYPE
     {
         ///
         /// <summary>
-        /// 701: The SDK cannot open the music file. For example, the local music file does not exist, the SDK does not support the file format, or the the SDK cannot access the music file URL.
+        /// 701: Failed to open music file. For example, the local music file does not exist, the file format is not supported, or the online music file URL is inaccessible.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_CAN_NOT_OPEN = 701,
 
         ///
         /// <summary>
-        /// 702: The SDK opens the music file too frequently. If you need to call startAudioMixing multiple times, ensure that the call interval is more than 500 ms.
+        /// 702: Music file opened too frequently. If you need to call startAudioMixing multiple times, ensure the interval between calls is greater than 500 ms.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_TOO_FREQUENT_CALL = 702,
 
         ///
         /// <summary>
-        /// 703: The music file playback is interrupted.
+        /// 703: Music file playback interrupted.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_INTERRUPTED_EOF = 703,
 
         ///
         /// <summary>
-        /// 721: The music file completes a loop playback.
+        /// 721: One loop of music file playback completed.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_ONE_LOOP_COMPLETED = 721,
 
         ///
         /// <summary>
-        /// 723: The music file completes all loop playback.
+        /// 723: All loops of music file playback completed.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_ALL_LOOPS_COMPLETED = 723,
 
         ///
         /// <summary>
-        /// 724: Successfully call StopAudioMixing to stop playing the music file.
+        /// 724: Music file playback stopped successfully by calling StopAudioMixing.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_STOPPED_BY_USER = 724,
@@ -167,7 +174,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 0: The SDK opens music file successfully.
+        /// 0: Music file opened successfully.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_OK = 0,
@@ -238,7 +245,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The midrange frequency for audio equalization.
+    /// Center frequencies of voice equalization bands.
     /// </summary>
     ///
     public enum AUDIO_EQUALIZATION_BAND_FREQUENCY
@@ -317,42 +324,42 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Audio reverberation types.
+    /// Audio reverb types.
     /// </summary>
     ///
     public enum AUDIO_REVERB_TYPE
     {
         ///
         /// <summary>
-        /// 0: The level of the dry signal (dB). The value is between -20 and 10.
+        /// 0: Original sound intensity, also known as dry signal, range [-20,10], unit: dB.
         /// </summary>
         ///
         AUDIO_REVERB_DRY_LEVEL = 0,
 
         ///
         /// <summary>
-        /// 1: The level of the early reflection signal (wet signal) (dB). The value is between -20 and 10.
+        /// 1: Early reflection signal intensity, also known as wet signal, range [-20,10], unit: dB.
         /// </summary>
         ///
         AUDIO_REVERB_WET_LEVEL = 1,
 
         ///
         /// <summary>
-        /// 2: The room size of the reflection. The value is between 0 and 100.
+        /// 2: Room size for desired reverb effect. Generally, the larger the room, the stronger the reverb. Range [0,100], unit: dB.
         /// </summary>
         ///
         AUDIO_REVERB_ROOM_SIZE = 2,
 
         ///
         /// <summary>
-        /// 3: The length of the initial delay of the wet signal (ms). The value is between 0 and 200.
+        /// 3: Initial delay length of wet signal, range [0,200], unit: milliseconds.
         /// </summary>
         ///
         AUDIO_REVERB_WET_DELAY = 3,
 
         ///
         /// <summary>
-        /// 4: The reverberation strength. The value is between 0 and 100.
+        /// 4: Intensity of reverb duration, range [0,100].
         /// </summary>
         ///
         AUDIO_REVERB_STRENGTH = 4,
@@ -361,28 +368,28 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Options for handling audio and video stream fallback when network conditions are weak.
+    /// Options for handling audio/video stream fallback under poor network conditions.
     /// </summary>
     ///
     public enum STREAM_FALLBACK_OPTIONS
     {
         ///
         /// <summary>
-        /// 0: No fallback processing is performed on audio and video streams, the quality of the audio and video streams cannot be guaranteed.
+        /// 0: Do not apply fallback to audio/video streams, but the quality of the streams is not guaranteed.
         /// </summary>
         ///
         STREAM_FALLBACK_OPTION_DISABLED = 0,
 
         ///
         /// <summary>
-        /// 1: Only receive low-quality (low resolution, low bitrate) video stream.
+        /// 1: Receive only the low-quality video stream (low resolution, low bitrate).
         /// </summary>
         ///
         STREAM_FALLBACK_OPTION_VIDEO_STREAM_LOW = 1,
 
         ///
         /// <summary>
-        /// 2: When the network conditions are weak, try to receive the low-quality video stream first. If the video cannot be displayed due to extremely weak network environment, then fall back to receiving audio-only stream.
+        /// 2: Under poor network conditions, first attempt to receive only the low-quality video stream; if the network is too poor to display video, fallback to receiving only the subscribed audio stream.
         /// </summary>
         ///
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
@@ -438,7 +445,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The statistics of the local video stream.
+    /// Statistics of the local video stream.
     /// </summary>
     ///
     public class LocalVideoStats
@@ -452,140 +459,140 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The actual bitrate (Kbps) while sending the local video stream. This value does not include the bitrate for resending the video after packet loss.
+        /// Actual sending bitrate (Kbps) Excludes bitrate of retransmitted video due to packet loss.
         /// </summary>
         ///
         public int sentBitrate;
 
         ///
         /// <summary>
-        /// The actual frame rate (fps) while sending the local video stream. This value does not include the frame rate for resending the video after packet loss.
+        /// Actual sending frame rate (fps). Excludes frame rate of retransmitted video due to packet loss.
         /// </summary>
         ///
         public int sentFrameRate;
 
         ///
         /// <summary>
-        /// The frame rate (fps) for capturing the local video stream.
+        /// Local video capture frame rate (fps).
         /// </summary>
         ///
         public int captureFrameRate;
 
         ///
         /// <summary>
-        /// The width (px) for capturing the local video stream.
+        /// Local video capture width (px).
         /// </summary>
         ///
         public int captureFrameWidth;
 
         ///
         /// <summary>
-        /// The height (px) for capturing the local video stream.
+        /// Local video capture height (px).
         /// </summary>
         ///
         public int captureFrameHeight;
 
         ///
         /// <summary>
-        /// The frame rate (fps) adjusted by the built-in video capture adapter (regulator) of the SDK for capturing the local video stream. The regulator adjusts the frame rate of the video captured by the camera according to the video encoding configuration.
+        /// Camera capture frame rate (fps) adjusted by the SDK's built-in video capture adapter (regulator). The regulator adjusts the camera capture frame rate based on the video encoding configuration.
         /// </summary>
         ///
         public int regulatedCaptureFrameRate;
 
         ///
         /// <summary>
-        /// The width (px) adjusted by the built-in video capture adapter (regulator) of the SDK for capturing the local video stream. The regulator adjusts the height and width of the video captured by the camera according to the video encoding configuration.
+        /// Camera capture width (px) adjusted by the SDK's built-in video capture adapter (regulator). The regulator adjusts the camera capture resolution based on the video encoding configuration.
         /// </summary>
         ///
         public int regulatedCaptureFrameWidth;
 
         ///
         /// <summary>
-        /// The height (px) adjusted by the built-in video capture adapter (regulator) of the SDK for capturing the local video stream. The regulator adjusts the height and width of the video captured by the camera according to the video encoding configuration.
+        /// Camera capture height (px) adjusted by the SDK's built-in video capture adapter (regulator). The regulator adjusts the camera capture resolution based on the video encoding configuration.
         /// </summary>
         ///
         public int regulatedCaptureFrameHeight;
 
         ///
         /// <summary>
-        /// The output frame rate (fps) of the local video encoder.
+        /// Output frame rate of the local video encoder, in fps.
         /// </summary>
         ///
         public int encoderOutputFrameRate;
 
         ///
         /// <summary>
-        /// The width of the encoded video (px).
+        /// Video encoding width (px).
         /// </summary>
         ///
         public int encodedFrameWidth;
 
         ///
         /// <summary>
-        /// The height of the encoded video (px).
+        /// Video encoding height (px).
         /// </summary>
         ///
         public int encodedFrameHeight;
 
         ///
         /// <summary>
-        /// The output frame rate (fps) of the local video renderer.
+        /// Output frame rate of the local video renderer, in fps.
         /// </summary>
         ///
         public int rendererOutputFrameRate;
 
         ///
         /// <summary>
-        /// The target bitrate (Kbps) of the current encoder. This is an estimate made by the SDK based on the current network conditions.
+        /// Target encoding bitrate (Kbps) of the current encoder. This value is estimated by the SDK based on the current network conditions.
         /// </summary>
         ///
         public int targetBitrate;
 
         ///
         /// <summary>
-        /// The target frame rate (fps) of the current encoder.
+        /// Target encoding frame rate (fps) of the current encoder.
         /// </summary>
         ///
         public int targetFrameRate;
 
         ///
         /// <summary>
-        /// The quality adaptation of the local video stream in the reported interval (based on the target frame rate and target bitrate). See QUALITY_ADAPT_INDICATION.
+        /// Adaptation status of local video quality (based on target frame rate and target bitrate) during the statistical period. See QUALITY_ADAPT_INDICATION.
         /// </summary>
         ///
         public QUALITY_ADAPT_INDICATION qualityAdaptIndication;
 
         ///
         /// <summary>
-        /// The bitrate (Kbps) while encoding the local video stream. This value does not include the bitrate for resending the video after packet loss.
+        /// Video encoding bitrate (Kbps). Excludes bitrate of retransmitted video due to packet loss.
         /// </summary>
         ///
         public int encodedBitrate;
 
         ///
         /// <summary>
-        /// The number of the sent video frames, represented by an aggregate value.
+        /// Number of video frames sent, cumulative value.
         /// </summary>
         ///
         public int encodedFrameCount;
 
         ///
         /// <summary>
-        /// The codec type of the local video. See VIDEO_CODEC_TYPE.
+        /// Video codec type. See VIDEO_CODEC_TYPE.
         /// </summary>
         ///
         public VIDEO_CODEC_TYPE codecType;
 
         ///
         /// <summary>
-        /// The video packet loss rate (%) from the local client to the Agora server before applying the anti-packet loss strategies.
+        /// Video packet loss rate (%) from the local end to the Agora edge server before network resilience.
         /// </summary>
         ///
         public ushort txPacketLossRate;
 
         ///
         /// <summary>
-        /// The brightness level of the video image captured by the local camera. See CAPTURE_BRIGHTNESS_LEVEL_TYPE.
+        /// Brightness level of the locally captured video. See CAPTURE_BRIGHTNESS_LEVEL_TYPE.
         /// </summary>
         ///
         public CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel;
@@ -597,9 +604,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The local video encoding acceleration type.
-        ///  0: Software encoding is applied without acceleration.
-        ///  1: Hardware encoding is applied for acceleration.
+        /// Local video encoder acceleration type.
+        ///  0: Uses software encoding, no acceleration.
+        ///  1: Uses hardware encoding for acceleration.
         /// </summary>
         ///
         public int hwEncoderAccelerating;
@@ -609,7 +616,12 @@ namespace Agora.Rtc
         ///
         public VideoDimensions[] simulcastDimensions;
 
-        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating, VideoDimensions[] simulcastDimensions)
+        ///
+        /// @ignore
+        ///
+        public int encodedFrameDepth;
+
+        public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating, VideoDimensions[] simulcastDimensions, int encodedFrameDepth)
         {
             this.uid = uid;
             this.sentBitrate = sentBitrate;
@@ -635,6 +647,7 @@ namespace Agora.Rtc
             this.dualStreamEnabled = dualStreamEnabled;
             this.hwEncoderAccelerating = hwEncoderAccelerating;
             this.simulcastDimensions = simulcastDimensions;
+            this.encodedFrameDepth = encodedFrameDepth;
         }
         public LocalVideoStats()
         {
@@ -644,84 +657,84 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Audio statistics of the remote user.
+    /// Audio statistics of a remote user.
     /// </summary>
     ///
     public class RemoteAudioStats
     {
         ///
         /// <summary>
-        /// The user ID of the remote user.
+        /// User ID of the remote user.
         /// </summary>
         ///
         public uint uid;
 
         ///
         /// <summary>
-        /// The quality of the audio stream sent by the user. See QUALITY_TYPE.
+        /// Audio stream quality sent by the remote user. See QUALITY_TYPE.
         /// </summary>
         ///
         public int quality;
 
         ///
         /// <summary>
-        /// The network delay (ms) from the sender to the receiver.
+        /// Network delay from the audio sender to the receiver (ms).
         /// </summary>
         ///
         public int networkTransportDelay;
 
         ///
         /// <summary>
-        /// The network delay (ms) from the audio receiver to the jitter buffer. When the receiving end is an audience member and audienceLatencyLevel of ClientRoleOptions is 1, this parameter does not take effect.
+        /// Network delay from the receiver to the jitter buffer (ms). This parameter is not valid when the receiver is an audience member and ClientRoleOptions 's audienceLatencyLevel is 1.
         /// </summary>
         ///
         public int jitterBufferDelay;
 
         ///
         /// <summary>
-        /// The frame loss rate (%) of the remote audio stream in the reported interval.
+        /// Audio frame loss rate (%) of the remote stream during the reporting interval.
         /// </summary>
         ///
         public int audioLossRate;
 
         ///
         /// <summary>
-        /// The number of audio channels.
+        /// Number of audio channels.
         /// </summary>
         ///
         public int numChannels;
 
         ///
         /// <summary>
-        /// The sampling rate of the received audio stream in the reported interval.
+        /// Sampling rate of the received remote audio stream during the reporting interval.
         /// </summary>
         ///
         public int receivedSampleRate;
 
         ///
         /// <summary>
-        /// The average bitrate (Kbps) of the received audio stream in the reported interval.
+        /// Average bitrate (Kbps) of the received remote audio stream during the reporting interval.
         /// </summary>
         ///
         public int receivedBitrate;
 
         ///
         /// <summary>
-        /// The total freeze time (ms) of the remote audio stream after the remote user joins the channel. In a session, audio freeze occurs when the audio frame loss rate reaches 4%.
+        /// Total duration (ms) of audio freezes after the remote user joins the channel. An audio freeze is defined as a frame loss rate of 4% or higher during a call.
         /// </summary>
         ///
         public int totalFrozenTime;
 
         ///
         /// <summary>
-        /// The total audio freeze time as a percentage (%) of the total time when the audio is available. The audio is considered available when the remote user neither stops sending the audio stream nor disables the audio module after joining the channel.
+        /// Percentage (%) of total freeze time relative to the total duration of valid audio. Valid audio duration refers to the time after the remote user joins the channel during which audio is neither stopped nor disabled.
         /// </summary>
         ///
         public int frozenRate;
 
         ///
         /// <summary>
-        /// The quality of the remote audio stream in the reported interval. The quality is determined by the Agora real-time audio MOS (Mean Opinion Score) measurement method. The return value range is [0, 500]. Dividing the return value by 100 gets the MOS score, which ranges from 0 to 5. The higher the score, the better the audio quality. The subjective perception of audio quality corresponding to the Agora real-time audio MOS scores is as follows: MOS score Perception of audio quality Greater than 4 Excellent. The audio sounds clear and smooth. From 3.5 to 4 Good. The audio has some perceptible impairment but still sounds clear. From 3 to 3.5 Fair. The audio freezes occasionally and requires attentive listening. From 2.5 to 3 Poor. The audio sounds choppy and requires considerable effort to understand. From 2 to 2.5 Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty. Less than 2 Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible.
+        /// During the reporting interval, the quality score of the received remote audio stream as assessed by Agora’s real-time audio MOS (Mean Opinion Score) method. The return value ranges from [0, 500]. Divide the value by 100 to get the MOS score, which ranges from 0 to 5. The higher the score, the better the audio quality. MOS Score Audio Quality Greater than 4 Excellent audio quality, clear and smooth. 3.5 - 4 Good audio quality, occasional artifacts, but still clear. 3 - 3.5 Fair audio quality, occasional stutters, not very smooth, requires some attention to understand. 2.5 - 3 Poor audio quality, frequent stutters, requires concentration to understand. 2 - 2.5 Very poor audio quality, occasional noise, partial semantic loss, difficult to communicate. Less than 2 Extremely poor audio quality, frequent noise, significant semantic loss, communication impossible.
         /// </summary>
         ///
         public int mosValue;
@@ -737,29 +750,40 @@ namespace Agora.Rtc
         public uint plcCount;
 
         ///
+        /// @ignore
+        ///
+        public uint frozenCntByCustom;
+
+        ///
+        /// @ignore
+        ///
+        public uint frozenTimeByCustom;
+
+        ///
         /// <summary>
-        /// The total active time (ms) between the start of the audio call and the callback of the remote user. The active time refers to the total duration of the remote user without the mute state.
+        /// Valid duration (ms) from the start of the audio call to the current callback.
+        /// Valid duration excludes the total time the remote user was muted.
         /// </summary>
         ///
         public int totalActiveTime;
 
         ///
         /// <summary>
-        /// The total duration (ms) of the remote audio stream.
+        /// Total publishing duration (ms) of the remote audio stream.
         /// </summary>
         ///
         public int publishDuration;
 
         ///
         /// <summary>
-        /// The Quality of Experience (QoE) of the local user when receiving a remote audio stream. See EXPERIENCE_QUALITY_TYPE.
+        /// Subjective quality of experience perceived by the local user when receiving remote audio. See EXPERIENCE_QUALITY_TYPE.
         /// </summary>
         ///
         public int qoeQuality;
 
         ///
         /// <summary>
-        /// Reasons why the QoE of the local user when receiving a remote audio stream is poor. See EXPERIENCE_POOR_REASON.
+        /// Reason for poor subjective experience quality when receiving remote audio. See EXPERIENCE_POOR_REASON.
         /// </summary>
         ///
         public int qualityChangedReason;
@@ -771,7 +795,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// End-to-end audio delay (in milliseconds), which refers to the time from when the audio is captured by the remote user to when it is played by the local user.
+        /// End-to-end audio delay (ms), i.e., the total time from when the remote user captures the audio to when the local user starts playing it.
         /// </summary>
         ///
         public int e2eDelay;
@@ -791,6 +815,8 @@ namespace Agora.Rtc
             this.mosValue = 0;
             this.frozenRateByCustomPlcCount = 0;
             this.plcCount = 0;
+            this.frozenCntByCustom = 0;
+            this.frozenTimeByCustom = 0;
             this.totalActiveTime = 0;
             this.publishDuration = 0;
             this.qoeQuality = 0;
@@ -799,7 +825,7 @@ namespace Agora.Rtc
             this.e2eDelay = 0;
         }
 
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
+        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, uint frozenCntByCustom, uint frozenTimeByCustom, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes, int e2eDelay)
         {
             this.uid = uid;
             this.quality = quality;
@@ -814,6 +840,8 @@ namespace Agora.Rtc
             this.mosValue = mosValue;
             this.frozenRateByCustomPlcCount = frozenRateByCustomPlcCount;
             this.plcCount = plcCount;
+            this.frozenCntByCustom = frozenCntByCustom;
+            this.frozenTimeByCustom = frozenTimeByCustom;
             this.totalActiveTime = totalActiveTime;
             this.publishDuration = publishDuration;
             this.qoeQuality = qoeQuality;
@@ -832,42 +860,42 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The user ID of the remote user sending the video stream.
+        /// User ID specifying which user's video stream.
         /// </summary>
         ///
         public uint uid;
 
         ///
         /// <summary>
-        /// Deprecated: In scenarios where audio and video are synchronized, you can get the video delay data from networkTransportDelay and jitterBufferDelay in RemoteAudioStats. The video delay (ms).
+        /// Delay (ms). Deprecated: In audio-video scenarios with A/V sync mechanisms, refer to the networkTransportDelay and jitterBufferDelay members in RemoteAudioStats for video delay data.
         /// </summary>
         ///
         public int delay;
 
         ///
         /// <summary>
-        /// End-to-end video latency (ms). That is, the time elapsed from the video capturing on the remote user's end to the receiving and rendering of the video on the local user's end.
+        /// End-to-end video delay (ms). That is, the total time from when the remote user captures the video to when the local user receives and renders it.
         /// </summary>
         ///
         public int e2eDelay;
 
         ///
         /// <summary>
-        /// The width (pixels) of the video.
+        /// Width of the video stream (pixels).
         /// </summary>
         ///
         public int width;
 
         ///
         /// <summary>
-        /// The height (pixels) of the video.
+        /// Height of the video stream (pixels).
         /// </summary>
         ///
         public int height;
 
         ///
         /// <summary>
-        /// The bitrate (Kbps) of the remote video received since the last count.
+        /// Bitrate (Kbps) received since the last report.
         /// </summary>
         ///
         public int receivedBitrate;
@@ -879,76 +907,85 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The frame rate (fps) of decoding the remote video.
+        /// Output frame rate of the remote video decoder, in fps.
         /// </summary>
         ///
         public int decoderOutputFrameRate;
 
         ///
         /// <summary>
-        /// The frame rate (fps) of rendering the remote video.
+        /// Output frame rate of the remote video renderer, in fps.
         /// </summary>
         ///
         public int rendererOutputFrameRate;
 
         ///
         /// <summary>
-        /// The packet loss rate (%) of the remote video.
+        /// Packet loss rate (%) of the remote video.
         /// </summary>
         ///
         public int frameLossRate;
 
         ///
         /// <summary>
-        /// The packet loss rate (%) of the remote video after using the anti-packet-loss technology.
+        /// Packet loss rate (%) of the remote video after applying anti-packet-loss techniques.
         /// </summary>
         ///
         public int packetLossRate;
 
         ///
         /// <summary>
-        /// The type of the video stream. See VIDEO_STREAM_TYPE.
+        /// Video stream type: high stream or low stream. See VIDEO_STREAM_TYPE.
         /// </summary>
         ///
         public VIDEO_STREAM_TYPE rxStreamType;
 
         ///
         /// <summary>
-        /// The total freeze time (ms) of the remote video stream after the remote user joins the channel. In a video session where the frame rate is set to no less than 5 fps, video freeze occurs when the time interval between two adjacent renderable video frames is more than 500 ms.
+        /// Total duration (ms) of video freezes after the remote user joins the channel. During the call, if the video frame rate is set to no less than 5 fps and the interval between two consecutive rendered frames exceeds 500 ms, it is counted as a video freeze.
         /// </summary>
         ///
         public int totalFrozenTime;
 
         ///
         /// <summary>
-        /// The total video freeze time as a percentage (%) of the total time the video is available. The video is considered available as long as that the remote user neither stops sending the video stream nor disables the video module after joining the channel.
+        /// Percentage (%) of total freeze time relative to the total duration of valid video. Valid video duration refers to the time after the remote user joins the channel during which video is neither stopped nor disabled.
         /// </summary>
         ///
         public int frozenRate;
 
         ///
         /// <summary>
-        /// The amount of time (ms) that the audio is ahead of the video. If this value is negative, the audio is lagging behind the video.
+        /// Time (ms) that audio leads video. If the value is negative, it means audio lags behind video.
         /// </summary>
         ///
         public int avSyncTimeMs;
 
         ///
         /// <summary>
-        /// The total active time (ms) of the video. As long as the remote user or host neither stops sending the video stream nor disables the video module after joining the channel, the video is available.
+        /// Valid video duration (ms).
+        /// Total valid video duration refers to the time after the remote user or host joins the channel during which video is neither stopped nor disabled.
         /// </summary>
         ///
         public int totalActiveTime;
 
         ///
         /// <summary>
-        /// The total duration (ms) of the remote video stream.
+        /// Total publishing duration (ms) of the remote video stream.
         /// </summary>
         ///
         public int publishDuration;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Quality of the remote audio stream during the reporting interval. The quality is measured by Agora’s real-time audio MOS (Mean Opinion Score) method. The return value ranges from [0, 500]; divide by 100 to get the MOS score, ranging from 0 to 5. The higher the score, the better the audio quality. The subjective audio quality corresponding to the Agora real-time audio MOS score is as follows:
+        ///  Greater than 4: Excellent audio quality, clear and smooth.
+        ///  3.5 - 4: Good audio quality, occasional artifacts, but still clear.
+        ///  3 - 3.5: Fair audio quality, occasional stutters, not very smooth, requires some attention to understand.
+        ///  2.5 - 3: Poor audio quality, frequent stutters, requires concentration to understand.
+        ///  2 - 2.5: Very poor audio quality, occasional noise, partial semantic loss, difficult to communicate.
+        ///  Less than 2: Extremely poor audio quality, frequent noise, significant semantic loss, communication impossible.
+        /// </summary>
         ///
         public int mosValue;
 
@@ -1190,23 +1227,23 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Lifecycle of the CDN live video stream.
+    /// Lifecycle of server-side transcoding stream.
     /// 
-    /// Deprecated
+    /// Deprecated Deprecated
     /// </summary>
     ///
     public enum RTMP_STREAM_LIFE_CYCLE_TYPE
     {
         ///
         /// <summary>
-        /// Bind to the channel lifecycle. If all hosts leave the channel, the CDN live streaming stops after 30 seconds.
+        /// Bound to the channel lifecycle. That is, when all hosts leave the channel, the server-side transcoding stream stops after 30 seconds.
         /// </summary>
         ///
         RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL = 1,
 
         ///
         /// <summary>
-        /// Bind to the owner of the RTMP stream. If the owner leaves the channel, the CDN live streaming stops immediately.
+        /// Bound to the lifecycle of the host who started the server-side transcoding stream. That is, when the host leaves, the server-side transcoding stream stops immediately.
         /// </summary>
         ///
         RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
@@ -1320,21 +1357,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The camera direction.
+    /// Camera direction.
     /// </summary>
     ///
     public enum CAMERA_DIRECTION
     {
         ///
         /// <summary>
-        /// 0: The rear camera.
+        /// 0: Rear camera.
         /// </summary>
         ///
         CAMERA_REAR = 0,
 
         ///
         /// <summary>
-        /// 1: (Default) The front camera.
+        /// 1: (Default) Front camera.
         /// </summary>
         ///
         CAMERA_FRONT = 1,
@@ -1343,28 +1380,28 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The cloud proxy type.
+    /// Cloud proxy type.
     /// </summary>
     ///
     public enum CLOUD_PROXY_TYPE
     {
         ///
         /// <summary>
-        /// 0: The automatic mode. The SDK has this mode enabled by default. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TCP/TLS 443 if the attempt fails.
+        /// 0: Automatic mode. This is the default mode. In this mode, the SDK first connects to SD-RTN™. If it fails, it automatically switches to TLS 443.
         /// </summary>
         ///
         NONE_PROXY = 0,
 
         ///
         /// <summary>
-        /// 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
+        /// 1: UDP protocol cloud proxy, i.e., Force UDP mode. In this mode, the SDK always transmits data via UDP.
         /// </summary>
         ///
         UDP_PROXY = 1,
 
         ///
         /// <summary>
-        /// 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TCP/TLS 443.
+        /// 2: TCP (encrypted) protocol cloud proxy, i.e., Force TCP mode. In this mode, the SDK always transmits data via TLS 443.
         /// </summary>
         ///
         TCP_PROXY = 2,
@@ -1373,58 +1410,58 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The camera capturer preference.
+    /// Camera capture configuration.
     /// </summary>
     ///
     public class CameraCapturerConfiguration : IOptionalJsonParse
     {
         ///
         /// <summary>
-        /// (Optional) The camera direction. See CAMERA_DIRECTION. This parameter is for Android and iOS only.
+        /// (Optional) Camera direction. See CAMERA_DIRECTION. This parameter applies to Android and iOS only.
         /// </summary>
         ///
         public Optional<CAMERA_DIRECTION> cameraDirection = new Optional<CAMERA_DIRECTION>();
 
         ///
         /// <summary>
-        /// (Optional) The camera focal length type. See CAMERA_FOCAL_LENGTH_TYPE.
-        ///  This parameter is for Android and iOS only.
-        ///  To set the focal length type of the camera, it is only supported to specify the camera through cameraDirection, and not supported to specify it through cameraId.
-        ///  For iOS devices equipped with multi-lens rear cameras, such as those featuring dual-camera (wide-angle and ultra-wide-angle) or triple-camera (wide-angle, ultra-wide-angle, and telephoto), you can use one of the following methods to capture video with an ultra-wide-angle perspective:
-        ///  Method one: Set this parameter to CAMERA_FOCAL_LENGTH_ULTRA_WIDE (2) (ultra-wide lens).
-        ///  Method two: Set this parameter to CAMERA_FOCAL_LENGTH_DEFAULT (0) (standard lens), then call SetCameraZoomFactor to set the camera's zoom factor to a value less than 1.0, with the minimum setting being 0.5. The difference is that the size of the ultra-wide angle in method one is not adjustable, whereas method two supports adjusting the camera's zoom factor freely.
+        /// (Optional) Camera focal length type. See CAMERA_FOCAL_LENGTH_TYPE.
+        ///  This parameter applies to Android and iOS only.
+        ///  To set the camera focal length type, only cameraDirection is supported. cameraId is not supported.
+        ///  Some iOS devices have composite rear cameras, such as dual (wide and ultra-wide) or triple (wide, ultra-wide, and telephoto) lenses. For such composite lenses with ultra-wide capabilities, you can achieve ultra-wide capture using either of the following methods:
+        ///  Method 1: Set this parameter to CAMERA_FOCAL_LENGTH_ULTRA_WIDE (2) (ultra-wide lens).
+        ///  Method 2: Set this parameter to CAMERA_FOCAL_LENGTH_DEFAULT (0) (standard lens), then call SetCameraZoomFactor to set the camera zoom factor to a value less than 1.0 (minimum 0.5). The difference is that Method 1 provides a fixed ultra-wide view, while Method 2 allows flexible zoom adjustment.
         /// </summary>
         ///
         public Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType = new Optional<CAMERA_FOCAL_LENGTH_TYPE>();
 
         ///
         /// <summary>
-        /// The camera ID. This parameter is for Windows and macOS only.
+        /// (Optional) ID of the camera. This parameter applies to Windows and macOS only.
         /// </summary>
         ///
         public Optional<string> deviceId = new Optional<string>();
 
         ///
         /// <summary>
-        /// (Optional) The camera ID. The default value is the camera ID of the front camera. You can get the camera ID through the Android native system API, see and for details.
-        ///  This parameter is for Android only.
-        ///  This parameter and cameraDirection are mutually exclusive in specifying the camera; you can choose one based on your needs. The differences are as follows:
-        ///  Specifying the camera via cameraDirection is more straightforward. You only need to indicate the camera direction (front or rear), without specifying a specific camera ID; the SDK will retrieve and confirm the actual camera ID through Android native system APIs.
-        ///  Specifying via cameraId allows for more precise identification of a particular camera. For devices with multiple cameras, where cameraDirection cannot recognize or access all available cameras, it is recommended to use cameraId to specify the desired camera ID directly.
+        /// (Optional) Camera ID. Defaults to the ID of the front-facing camera. You can obtain the camera ID via Android native system APIs. See [Camera.open()](https://developer.android.google.cn/reference/android/hardware/Camera#open(int)) and [CameraManager.getCameraIdList()](https://developer.android.google.cn/reference/android/hardware/camera2/CameraManager?hl=en#getCameraIdList).
+        ///  This parameter applies to Android only.
+        ///  This parameter and cameraDirection are both used to specify the camera and are mutually exclusive. You can choose either one as needed. The differences are as follows:
+        ///  Using cameraDirection is simpler. You only need to specify the direction (front or rear), and the SDK will retrieve and determine the actual camera ID using system APIs.
+        ///  Using cameraId allows you to precisely specify a particular camera. On multi-camera devices, cameraDirection may not be able to identify or access all available cameras. In such cases, it is recommended to use cameraId to directly specify the desired camera ID.
         /// </summary>
         ///
         public Optional<string> cameraId = new Optional<string>();
 
         ///
         /// <summary>
-        /// (Optional) Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame. false : Do not follow the system default audio playback device. The SDK does not change the aspect ratio of the captured video frame.
+        /// (Optional) Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration : true : (Default) Follow. The SDK crops the captured video to match the configured aspect ratio, and this affects local preview, OnCaptureVideoFrame, and OnPreEncodeVideoFrame. false : Do not follow. The SDK does not change the aspect ratio of the captured video frames.
         /// </summary>
         ///
         public Optional<bool> followEncodeDimensionRatio = new Optional<bool>();
 
         ///
         /// <summary>
-        /// (Optional) The format of the video frame. See VideoFormat.
+        /// (Optional) Video frame format. See VideoFormat.
         /// </summary>
         ///
         public VideoFormat format;
@@ -1490,35 +1527,35 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The configuration of the captured screen.
+    /// Screen capture configuration.
     /// </summary>
     ///
     public class ScreenCaptureConfiguration
     {
         ///
         /// <summary>
-        /// Whether to capture the window on the screen: true : Capture the window. false : (Default) Capture the screen, not the window.
+        /// Whether to capture a window on the screen: true : Capture the window. false : (Default) Capture the screen, not the window.
         /// </summary>
         ///
         public bool isCaptureWindow;
 
         ///
         /// <summary>
-        /// (macOS only) The display ID of the screen. This parameter takes effect only when you want to capture the screen on macOS.
+        /// (macOS only) The display ID of the screen. Use this parameter only when capturing the screen on Mac devices.
         /// </summary>
         ///
         public long displayId;
 
         ///
         /// <summary>
-        /// (Windows only) The relative position of the shared screen to the virtual screen. This parameter takes effect only when you want to capture the screen on Windows.
+        /// (Windows only) The position of the screen to be shared relative to the virtual screen. Use this parameter only when capturing the screen on Windows devices.
         /// </summary>
         ///
         public Rectangle screenRect;
 
         ///
         /// <summary>
-        /// (For Windows and macOS only) Window ID. This parameter takes effect only when you want to capture the window.
+        /// (Windows and macOS only) The window ID. Use this parameter only when capturing a window.
         /// </summary>
         ///
         public long windowId;
@@ -1527,7 +1564,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (For Windows and macOS only) The relative position of the shared region to the whole screen. See Rectangle. If you do not set this parameter, the SDK shares the whole screen. If the region you set exceeds the boundary of the screen, only the region within in the screen is shared. If you set width or height in Rectangle as 0, the whole screen is shared.
+        /// (Windows and macOS only) The position of the region to be shared relative to the entire screen. See Rectangle. If not set, the entire screen is shared. If the shared region exceeds the screen boundaries, only the content within the screen is shared. If the width or height in Rectangle is set to 0, the entire screen is shared.
         /// </summary>
         ///
         public Rectangle regionRect;
@@ -1581,9 +1618,9 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The image content of the thumbnail or icon. Set in ScreenCaptureSourceInfo.
+    /// Image content of a thumbnail or icon. Set in ScreenCaptureSourceInfo.
     /// 
-    /// The default image is in the ARGB format. If you need to use another format, you need to convert the image on your own.
+    /// The image is in ARGB format by default. If you need another format, please convert it manually.
     /// </summary>
     ///
     public class ThumbImageBuffer
@@ -1635,35 +1672,35 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The type of the shared target. Set in ScreenCaptureSourceInfo.
+    /// The type of capture target. Set in ScreenCaptureSourceInfo.
     /// </summary>
     ///
     public enum ScreenCaptureSourceType
     {
         ///
         /// <summary>
-        /// -1: Unknown type.
+        /// -1: Unknown.
         /// </summary>
         ///
         ScreenCaptureSourceType_Unknown = -1,
 
         ///
         /// <summary>
-        /// 0: The shared target is a window.
+        /// 0: The capture target is a specific window.
         /// </summary>
         ///
         ScreenCaptureSourceType_Window = 0,
 
         ///
         /// <summary>
-        /// 1: The shared target is a screen of a particular monitor.
+        /// 1: The capture target is the screen of a specific monitor.
         /// </summary>
         ///
         ScreenCaptureSourceType_Screen = 1,
 
         ///
         /// <summary>
-        /// 2: Reserved parameter
+        /// 2: Reserved parameter.
         /// </summary>
         ///
         ScreenCaptureSourceType_Custom = 2,
@@ -1672,63 +1709,63 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The information about the specified shareable window or screen.
+    /// Information about shareable windows or screens.
     /// </summary>
     ///
     public class ScreenCaptureSourceInfo
     {
         ///
         /// <summary>
-        /// The type of the shared target. See ScreenCaptureSourceType.
+        /// Type of the sharing target. See ScreenCaptureSourceType.
         /// </summary>
         ///
         public ScreenCaptureSourceType type;
 
         ///
         /// <summary>
-        /// The window ID for a window or the display ID for a screen.
+        /// For a window, this is the Window ID; for a screen, this is the Display ID.
         /// </summary>
         ///
         public long sourceId;
 
         ///
         /// <summary>
-        /// The name of the window or screen. UTF-8 encoding.
+        /// Name of the window or screen. UTF-8 encoded.
         /// </summary>
         ///
         public string sourceName;
 
         ///
         /// <summary>
-        /// The image content of the thumbnail. See ThumbImageBuffer.
+        /// Image content of the thumbnail. See ThumbImageBuffer.
         /// </summary>
         ///
         public ThumbImageBuffer thumbImage;
 
         ///
         /// <summary>
-        /// The image content of the icon. See ThumbImageBuffer.
+        /// Image content of the icon. See ThumbImageBuffer.
         /// </summary>
         ///
         public ThumbImageBuffer iconImage;
 
         ///
         /// <summary>
-        /// The process to which the window belongs. UTF-8 encoding.
+        /// Process to which the window belongs. UTF-8 encoded.
         /// </summary>
         ///
         public string processPath;
 
         ///
         /// <summary>
-        /// The title of the window. UTF-8 encoding.
+        /// Window title. UTF-8 encoded.
         /// </summary>
         ///
         public string sourceTitle;
 
         ///
         /// <summary>
-        /// Determines whether the screen is the primary display: true : The screen is the primary display. false : The screen is not the primary display.
+        /// Whether the screen is the primary display: true : The screen is the primary display. false : The screen is not the primary display.
         /// </summary>
         ///
         public bool primaryMonitor;
@@ -1740,7 +1777,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The position of a window relative to the entire screen space (including all shareable screens). See Rectangle.
+        /// Position of the window relative to the entire screen space (including all shareable screens). See Rectangle.
         /// </summary>
         ///
         public Rectangle position;
@@ -1752,7 +1789,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (For Windows only) Screen ID where the window is located. If the window is displayed across multiple screens, this parameter indicates the ID of the screen with which the window has the largest intersection area. If the window is located outside of the visible screens, the value of this member is -2.
+        /// (Windows only) ID of the screen where the window is located. If the window spans multiple screens, this is the ID of the screen with the largest intersection area. If the window is outside the visible screen area, the value is -2.
         /// </summary>
         ///
         public long sourceDisplayId;
@@ -1789,14 +1826,14 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The advanced options for audio.
+    /// Advanced options for audio.
     /// </summary>
     ///
     public class AdvancedAudioOptions : IOptionalJsonParse
     {
         ///
         /// <summary>
-        /// The number of channels for audio preprocessing. See AUDIO_PROCESSING_CHANNELS.
+        /// Number of channels for audio pre-processing. See AUDIO_PROCESSING_CHANNELS.
         /// </summary>
         ///
         public Optional<int> audioProcessingChannels = new Optional<int>();
@@ -1829,21 +1866,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Image configurations.
+    /// Settings options for placeholder images.
     /// </summary>
     ///
     public class ImageTrackOptions
     {
         ///
         /// <summary>
-        /// The image URL. Supported formats of images include JPEG, JPG, PNG and GIF. This method supports adding an image from the local absolute or relative file path. On the Android platform, adding images from /assets/ is not supported.
+        /// The URL of the placeholder image. Currently supports JPEG, JPG, PNG, and GIF formats. You can add a placeholder image from a local absolute or relative path. On Android, adding placeholder images from /assets/ is not supported.
         /// </summary>
         ///
         public string imageUrl;
 
         ///
         /// <summary>
-        /// The frame rate of the video streams being published. The value range is [1,30]. The default value is 1.
+        /// Video frame rate, ranging from [1, 30]. The default value is 1.
         /// </summary>
         ///
         public int fps;
@@ -1870,210 +1907,213 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The channel media options.
+    /// Channel media configuration options.
     /// 
-    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection. For example, publishMicrophoneTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenCaptureVideo, publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true. Agora recommends that you set member parameter values yourself according to your business scenario, otherwise the SDK will automatically assign values to member parameters.
+    /// RtcConnection publishMicrophoneTrack publishCustomAudioTrack publishMediaPlayerAudioTrack true publishCameraTrack publishScreenCaptureVideo, publishScreenTrack, publishCustomVideoTrack publishEncodedVideoTrack true It is recommended that you set the member parameter values according to your business scenario. Otherwise, the SDK will assign values to the member parameters automatically.
     /// </summary>
     ///
     public class ChannelMediaOptions : IOptionalJsonParse
     {
         ///
         /// <summary>
-        /// Whether to publish the video captured by the camera: true : Publish the video captured by the camera. false : Do not publish the video captured by the camera.
+        /// Sets whether to publish the video captured by the camera: true : Publishes the video captured by the camera. false : Does not publish the video captured by the camera.
         /// </summary>
         ///
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured by the second camera: true : Publish the video captured by the second camera. false : Do not publish the video captured by the second camera.
+        /// Sets whether to publish the video captured by the second camera: true : Publishes the video captured by the second camera. false : Does not publish the video captured by the second camera.
         /// </summary>
         ///
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This parameter is for Android, Windows and macOS only.
+        /// This parameter is only applicable to Android, Windows, and macOS platforms. Sets whether to publish the video captured by the third camera: true : Publishes the video captured by the third camera. false : Does not publish the video captured by the third camera.
         /// </summary>
         ///
         public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This parameter is for Android, Windows and macOS only.
+        /// This parameter is only applicable to Android, Windows, and macOS platforms. Sets whether to publish the video captured by the fourth camera: true : Publishes the video captured by the fourth camera. false : Does not publish the video captured by the fourth camera.
         /// </summary>
         ///
         public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the audio captured by the microphone: true : Publish the audio captured by the microphone. false : Do not publish the audio captured by the microphone.
+        /// Sets whether to publish the audio captured by the microphone: true : Publishes the audio captured by the microphone. false : Does not publish the audio captured by the microphone.
         /// </summary>
         ///
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only.
+        /// This parameter is only applicable to Android and iOS platforms. Sets whether to publish the audio captured from the screen: true : Publishes the audio captured from the screen. false : Does not publish the audio captured from the screen.
         /// </summary>
         ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This is for Windows and macOS only.
+        /// This parameter is only applicable to Android and iOS platforms. Sets whether to publish the video captured from the screen: true : Publishes the video captured from the screen. false : Does not publish the video captured from the screen.
+        /// </summary>
+        ///
+        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
+
+        ///
+        /// <summary>
+        /// This parameter is only applicable to Windows and macOS platforms. Sets whether to publish the video captured from the screen: true : Publishes the video captured from the screen. false : Does not publish the video captured from the screen.
         /// </summary>
         ///
         public Optional<bool> publishScreenTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the second screen: true : Publish the video captured from the second screen. false : Do not publish the video captured from the second screen.
+        /// Sets whether to publish the video captured from the second screen: true : Publishes the video captured from the second screen. false : Does not publish the video captured from the second screen.
         /// </summary>
         ///
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the third screen: true : Publish the captured video from the third screen. false : Do not publish the video captured from the third screen. This is for Windows and macOS only.
+        /// This parameter is only applicable to Windows and macOS platforms. Sets whether to publish the video captured from the third screen: true : Publishes the video captured from the third screen. false : Does not publish the video captured from the third screen.
         /// </summary>
         ///
         public Optional<bool> publishThirdScreenTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from the fourth screen: true : Publish the captured video from the fourth screen. false : Do not publish the video captured from the fourth screen. This is for Windows and macOS only.
+        /// This parameter is only applicable to Windows and macOS platforms. Sets whether to publish the video captured from the fourth screen: true : Publishes the video captured from the fourth screen. false : Does not publish the video captured from the fourth screen.
         /// </summary>
         ///
         public Optional<bool> publishFourthScreenTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the audio captured from a custom source: true : Publish the audio captured from the custom source. false : Do not publish the captured audio from a custom source.
+        /// Sets whether to publish the custom captured audio: true : Publishes the custom captured audio. false : Does not publish the custom captured audio.
         /// </summary>
         ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The ID of the custom audio track to be published. The default value is 0. You can obtain the custom audio track ID through the CreateCustomAudioTrack method.
+        /// ID of the custom audio track to be published. The default value is 0. You can get the custom audio track ID through the CreateCustomAudioTrack method.
         /// </summary>
         ///
         public Optional<int> publishCustomAudioTrackId = new Optional<int>();
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from a custom source: true : Publish the video captured from the custom source. false : Do not publish the captured video from a custom source.
+        /// Sets whether to publish the custom captured video: true : Publishes the custom captured video. false : Does not publish the custom captured video.
         /// </summary>
         ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the encoded video: true : Publish the encoded video. false : Do not publish the encoded video.
+        /// Sets whether to publish the encoded video: true : Publishes the encoded video. false : Does not publish the encoded video.
         /// </summary>
         ///
         public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the audio from the media player: true : Publish the audio from the media player. false : Do not publish the audio from the media player.
+        /// Sets whether to publish the audio from the media player: true : Publishes the audio from the media player. false : Does not publish the audio from the media player.
         /// </summary>
         ///
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the video from the media player: true : Publish the video from the media player. false : Do not publish the video from the media player.
+        /// Sets whether to publish the video from the media player: true : Publishes the video from the media player. false : Does not publish the video from the media player.
         /// </summary>
         ///
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the local transcoded video: true : Publish the local transcoded video. false : Do not publish the local transcoded video.
+        /// Sets whether to publish the local transcoded video: true : Publishes the local transcoded video. false : Does not publish the local transcoded video.
         /// </summary>
         ///
         public Optional<bool> publishTranscodedVideoTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the mixed audio track: true : Publish the mixed audio track. false : Do not publish the mixed audio track.
+        /// Sets whether to publish the local audio mixing: true : Publishes the local audio mixing. false : Does not publish the local audio mixing.
         /// </summary>
         ///
         public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets whether to publish the video processed by the voice-driven plugin: true : Publishes the video processed by the voice-driven plugin. false : (default) Does not publish the video processed by the voice-driven plugin.
+        /// </summary>
         ///
         public Optional<bool> publishLipSyncTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to automatically subscribe to all remote audio streams when the user joins a channel: true : Subscribe to all remote audio streams. false : Do not automatically subscribe to any remote audio streams.
+        /// Sets whether to automatically subscribe to all audio streams: true : Automatically subscribes to all audio streams. false : Does not automatically subscribe to any audio stream.
         /// </summary>
         ///
         public Optional<bool> autoSubscribeAudio = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to automatically subscribe to all remote video streams when the user joins the channel: true : Subscribe to all remote video streams. false : Do not automatically subscribe to any remote video streams.
+        /// Sets whether to automatically subscribe to all video streams: true : Automatically subscribes to all video streams. false : Does not automatically subscribe to any video stream.
         /// </summary>
         ///
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to enable audio capturing or playback: true : Enable audio capturing or playback. false : Do not enable audio capturing or playback. If you need to publish the audio streams captured by your microphone, ensure this parameter is set as true.
+        /// If you need to publish the audio stream captured by the microphone, make sure this parameter is set to true. Sets whether to enable audio recording or playback: true : Enables audio recording or playback. false : Disables audio recording or playback.
         /// </summary>
         ///
         public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The ID of the media player to be published. The default value is 0.
+        /// ID of the media player to be published. The default value is 0.
         /// </summary>
         ///
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
         ///
         /// <summary>
-        /// The user role. See CLIENT_ROLE_TYPE. If you set the user role as an audience member, you cannot publish audio and video streams in the channel. If you want to publish media streams in a channel during live streaming, ensure you set the user role as broadcaster.
+        /// User role. See CLIENT_ROLE_TYPE. Users with the audience role cannot publish audio or video streams in the channel. When publishing streams in a live broadcast scenario, make sure the user role is set to broadcaster.
         /// </summary>
         ///
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
 
         ///
         /// <summary>
-        /// The latency level of an audience member in interactive live streaming. See AUDIENCE_LATENCY_LEVEL_TYPE.
+        /// Audience latency level. See AUDIENCE_LATENCY_LEVEL_TYPE.
         /// </summary>
         ///
         public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
 
         ///
         /// <summary>
-        /// The default video-stream type. See VIDEO_STREAM_TYPE.
+        /// Default video stream type to subscribe to: VIDEO_STREAM_TYPE.
         /// </summary>
         ///
         public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
 
         ///
         /// <summary>
-        /// The channel profile. See CHANNEL_PROFILE_TYPE.
+        /// Channel usage scenario. See CHANNEL_PROFILE_TYPE.
         /// </summary>
         ///
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
 
         ///
         /// <summary>
-        /// Delay (in milliseconds) for sending audio frames. You can use this parameter to set the delay of the audio frames that need to be sent, to ensure audio and video synchronization. To switch off the delay, set the value to 0.
+        /// Delay (in milliseconds) for sending audio frames. You can use this parameter to set the delay for sending audio frames to ensure audio-video synchronization.
+        /// To disable the delay, set this parameter to 0.
         /// </summary>
         ///
         public Optional<int> audioDelayMs = new Optional<int>();
@@ -2085,9 +2125,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (Optional) The token generated on your server for authentication.
+        /// (Optional) A dynamic key generated on the server for authentication. See [Use Token for Authentication](https://doc.shengwang.cn/doc/rtc/unity/basic-features/token-authentication).
         ///  This parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx.
-        ///  Ensure that the App ID, channel name, and user name used for creating the token are the same as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
+        ///  Make sure the App ID, channel name, and user name used to generate the token are the same as those used in the Initialize method to initialize the engine, and the channel name and user name used in JoinChannel [2/2] or JoinChannelEx to join the channel.
         /// </summary>
         ///
         public Optional<string> token = new Optional<string>();
@@ -2099,30 +2139,29 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the sound of a metronome to remote users: true : Publish processed audio frames. Both the local user and remote users can hear the metronome. false : Do not publish the sound of the metronome. Only the local user can hear the metronome.
+        /// Sets whether to publish the virtual metronome sound to remote users: true : Publishes. Both local and remote users can hear the metronome. false : Does not publish. Only the local user can hear the metronome.
         /// </summary>
         ///
         public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to enable interactive mode: true : Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency. false :Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.
-        ///  This parameter only applies to co-streaming scenarios. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.
-        ///  This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
+        /// This parameter is used to implement cross-room co-hosting scenarios. The co-host needs to call the JoinChannelEx method to join the other live room as an audience and set isInteractiveAudience to true.
+        ///  This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE. Whether to enable interactive audience mode: true : Enables interactive audience mode. After successfully enabling, the local user, as an interactive audience, receives low-latency and smooth video from remote users. false : Disables interactive audience mode. The local user, as a regular audience, receives remote user video with default settings.
         /// </summary>
         ///
         public Optional<bool> isInteractiveAudience = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0.
+        /// Video track ID returned by the CreateCustomVideoTrack method. The default value is 0.
         /// </summary>
         ///
         public Optional<uint> customVideoTrackId = new Optional<uint>();
 
         ///
         /// <summary>
-        /// Whether the audio stream being published is filtered according to the volume algorithm: true : The audio stream is filtered. If the audio stream filter is not enabled, this setting does not takes effect. false : The audio stream is not filtered. If you need to enable this function, contact.
+        /// To enable this feature, please [contact sales](https://www.shengwang.cn/contact-sales/). Sets whether the current audio stream participates in stream selection based on volume level algorithm. true : Participates in volume-based stream selection. If volume-based stream selection is not enabled, this parameter has no effect. false : Does not participate in volume-based stream selection.
         /// </summary>
         ///
         public Optional<bool> isAudioFilterable = new Optional<bool>();
@@ -2132,19 +2171,51 @@ namespace Agora.Rtc
         ///
         public Optional<string> parameters = new Optional<string>();
 
+        ///
+        /// <summary>
+        /// Permissions and system requirements:
+        ///  Android: Android 7.0 or later (API level 24 or above), requires ACCESS_NETWORK_STATE and CHANGE_NETWORK_STATE permissions.
+        ///  iOS: iOS 12.0 or later.
+        ///  macOS: 10.14 or later.
+        ///  Windows: Windows Vista or later. Whether to enable multipath transmission: true : Enables multipath transmission. false : Disables multipath transmission.
+        /// </summary>
+        ///
+        public Optional<bool> enableMultipath = new Optional<bool>();
+
+        ///
+        /// <summary>
+        /// Uplink transmission mode. See MultipathMode. When using this parameter, make sure enableMultipath is set to true.
+        /// </summary>
+        ///
+        public Optional<MultipathMode> uplinkMultipathMode = new Optional<MultipathMode>();
+
+        ///
+        /// <summary>
+        /// Downlink transmission mode. See MultipathMode. When using this parameter, make sure enableMultipath is set to true.
+        /// </summary>
+        ///
+        public Optional<MultipathMode> downlinkMultipathMode = new Optional<MultipathMode>();
+
+        ///
+        /// <summary>
+        /// Preferred transmission path type. See MultipathType. When using this parameter, make sure enableMultipath is set to true.
+        /// </summary>
+        ///
+        public Optional<MultipathType> preferMultipathType = new Optional<MultipathType>();
+
         public ChannelMediaOptions()
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
             this.publishThirdCameraTrack = publishThirdCameraTrack;
             this.publishFourthCameraTrack = publishFourthCameraTrack;
             this.publishMicrophoneTrack = publishMicrophoneTrack;
-            this.publishScreenCaptureVideo = publishScreenCaptureVideo;
             this.publishScreenCaptureAudio = publishScreenCaptureAudio;
+            this.publishScreenCaptureVideo = publishScreenCaptureVideo;
             this.publishScreenTrack = publishScreenTrack;
             this.publishSecondaryScreenTrack = publishSecondaryScreenTrack;
             this.publishThirdScreenTrack = publishThirdScreenTrack;
@@ -2175,6 +2246,10 @@ namespace Agora.Rtc
             this.customVideoTrackId = customVideoTrackId;
             this.isAudioFilterable = isAudioFilterable;
             this.parameters = parameters;
+            this.enableMultipath = enableMultipath;
+            this.uplinkMultipathMode = uplinkMultipathMode;
+            this.downlinkMultipathMode = downlinkMultipathMode;
+            this.preferMultipathType = preferMultipathType;
         }
 
         ///
@@ -2214,16 +2289,16 @@ namespace Agora.Rtc
                 writer.Write(this.publishMicrophoneTrack.GetValue());
             }
 
-            if (this.publishScreenCaptureVideo.HasValue())
-            {
-                writer.WritePropertyName("publishScreenCaptureVideo");
-                writer.Write(this.publishScreenCaptureVideo.GetValue());
-            }
-
             if (this.publishScreenCaptureAudio.HasValue())
             {
                 writer.WritePropertyName("publishScreenCaptureAudio");
                 writer.Write(this.publishScreenCaptureAudio.GetValue());
+            }
+
+            if (this.publishScreenCaptureVideo.HasValue())
+            {
+                writer.WritePropertyName("publishScreenCaptureVideo");
+                writer.Write(this.publishScreenCaptureVideo.GetValue());
             }
 
             if (this.publishScreenTrack.HasValue())
@@ -2406,48 +2481,72 @@ namespace Agora.Rtc
                 writer.Write(this.parameters.GetValue());
             }
 
+            if (this.enableMultipath.HasValue())
+            {
+                writer.WritePropertyName("enableMultipath");
+                writer.Write(this.enableMultipath.GetValue());
+            }
+
+            if (this.uplinkMultipathMode.HasValue())
+            {
+                writer.WritePropertyName("uplinkMultipathMode");
+                AgoraJson.WriteEnum(writer, this.uplinkMultipathMode.GetValue());
+            }
+
+            if (this.downlinkMultipathMode.HasValue())
+            {
+                writer.WritePropertyName("downlinkMultipathMode");
+                AgoraJson.WriteEnum(writer, this.downlinkMultipathMode.GetValue());
+            }
+
+            if (this.preferMultipathType.HasValue())
+            {
+                writer.WritePropertyName("preferMultipathType");
+                AgoraJson.WriteEnum(writer, this.preferMultipathType.GetValue());
+            }
+
             writer.WriteObjectEnd();
         }
     }
 
     ///
     /// <summary>
-    /// The cloud proxy type.
+    /// Proxy types.
     /// </summary>
     ///
     public enum PROXY_TYPE
     {
         ///
         /// <summary>
-        /// 0: Reserved for future use.
+        /// 0: Reserved parameter, not supported yet.
         /// </summary>
         ///
         NONE_PROXY_TYPE = 0,
 
         ///
         /// <summary>
-        /// 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
+        /// 1: Cloud proxy using UDP protocol, i.e., Force UDP cloud proxy mode. In this mode, the SDK always transmits data via UDP.
         /// </summary>
         ///
         UDP_PROXY_TYPE = 1,
 
         ///
         /// <summary>
-        /// 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TCP/TLS 443.
+        /// 2: Cloud proxy using TCP (encrypted) protocol, i.e., Force TCP cloud proxy mode. In this mode, the SDK always transmits data via TLS 443.
         /// </summary>
         ///
         TCP_PROXY_TYPE = 2,
 
         ///
         /// <summary>
-        /// 3: Reserved for future use.
+        /// 3: Reserved parameter, not supported yet.
         /// </summary>
         ///
         LOCAL_PROXY_TYPE = 3,
 
         ///
         /// <summary>
-        /// 4: Automatic mode. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TCP/TLS 443 if the attempt fails.
+        /// 4: Auto mode. In this mode, the SDK first attempts to connect to SD-RTN™. If it fails, it automatically switches to TLS 443.
         /// </summary>
         ///
         TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
@@ -2466,21 +2565,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The type of the advanced feature.
+    /// Advanced feature types.
     /// </summary>
     ///
     public enum FeatureType
     {
         ///
         /// <summary>
-        /// 1: Virtual background.
+        /// 1: Virtual background feature.
         /// </summary>
         ///
         VIDEO_VIRTUAL_BACKGROUND = 1,
 
         ///
         /// <summary>
-        /// 2: Image enhancement.
+        /// 2: Beauty effect feature.
         /// </summary>
         ///
         VIDEO_BEAUTY_EFFECT = 2,
@@ -2489,28 +2588,28 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The options for leaving a channel.
+    /// Options for leaving a channel.
     /// </summary>
     ///
     public class LeaveChannelOptions
     {
         ///
         /// <summary>
-        /// Whether to stop playing and mixing the music file when a user leaves the channel. true : (Default) Stop playing and mixing the music file. false : Do not stop playing and mixing the music file.
+        /// Whether to stop playing music files and audio mixing when leaving the channel: true : (Default) Stop playing music files and audio mixing. false : Do not stop playing music files and audio mixing.
         /// </summary>
         ///
         public bool stopAudioMixing;
 
         ///
         /// <summary>
-        /// Whether to stop playing all audio effects when a user leaves the channel. true : (Default) Stop playing all audio effects. false : Do not stop playing any audio effect.
+        /// Whether to stop playing sound effects when leaving the channel: true : (Default) Stop playing sound effects. false : Do not stop playing sound effects.
         /// </summary>
         ///
         public bool stopAllEffect;
 
         ///
         /// <summary>
-        /// Whether to stop microphone recording when a user leaves the channel. true : (Default) Stop microphone recording. false : Do not stop microphone recording.
+        /// Whether to stop microphone capture when leaving the channel: true : (Default) Stop microphone capture. false : Do not stop microphone capture.
         /// </summary>
         ///
         public bool stopMicrophoneRecording;
@@ -2528,6 +2627,63 @@ namespace Agora.Rtc
             this.stopAllEffect = stopAllEffect;
             this.stopMicrophoneRecording = stopMicrophoneRecording;
         }
+    }
+
+    ///
+    /// <summary>
+    /// Video effect node types.
+    /// 
+    /// Since Available since v4.6.2.
+    /// </summary>
+    ///
+    public enum VIDEO_EFFECT_NODE_ID : uint
+    {
+        ///
+        /// <summary>
+        /// (1): Beauty effect node.
+        /// </summary>
+        ///
+        BEAUTY = 1U << 0,
+
+        ///
+        /// <summary>
+        /// (2): Style makeup effect node.
+        /// </summary>
+        ///
+        STYLE_MAKEUP = 1U << 1,
+
+        ///
+        /// <summary>
+        /// (4): Filter effect node.
+        /// </summary>
+        ///
+        FILTER = 1U << 2,
+
+    }
+
+    ///
+    /// <summary>
+    /// Operation types performed on video effect nodes.
+    /// 
+    /// Since Available since v4.6.2.
+    /// </summary>
+    ///
+    public enum VIDEO_EFFECT_ACTION
+    {
+        ///
+        /// <summary>
+        /// (1): Save the current parameters of the video effect.
+        /// </summary>
+        ///
+        SAVE = 1,
+
+        ///
+        /// <summary>
+        /// (2): Reset the video effect to default parameters.
+        /// </summary>
+        ///
+        RESET = 2,
+
     }
 
     ///
@@ -2668,21 +2824,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Metadata type of the observer. We only support video metadata for now.
+    /// Metadata type for the observer. Currently only supports video metadata.
     /// </summary>
     ///
     public enum METADATA_TYPE
     {
         ///
         /// <summary>
-        /// The type of metadata is unknown.
+        /// -1: Unknown metadata type.
         /// </summary>
         ///
         UNKNOWN_METADATA = -1,
 
         ///
         /// <summary>
-        /// The type of metadata is video.
+        /// 0: Metadata type is video.
         /// </summary>
         ///
         VIDEO_METADATA = 0,
@@ -2720,37 +2876,37 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The channel name.
+        /// Channel name.
         /// </summary>
         ///
         public string channelId;
 
         ///
         /// <summary>
-        /// The user ID.
-        ///  For the recipient: The ID of the remote user who sent the Metadata.
-        ///  For the sender: Ignore it.
+        /// User ID.
+        ///  For receiver: ID of the remote user who sent this Metadata.
+        ///  For sender: Ignore this.
         /// </summary>
         ///
         public uint uid;
 
         ///
         /// <summary>
-        /// The buffer size of the sent or received Metadata.
+        /// Buffer size of the received or sent Metadata.
         /// </summary>
         ///
         public uint size;
 
         ///
         /// <summary>
-        /// The buffer address of the received Metadata.
+        /// Buffer address of the received Metadata.
         /// </summary>
         ///
         public IntPtr buffer;
 
         ///
         /// <summary>
-        /// The timestamp (ms) of when the Metadata is sent.
+        /// Timestamp when the Metadata is sent, in milliseconds.
         /// </summary>
         ///
         public long timeStampMs;
@@ -2776,49 +2932,51 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Reasons for the changes in CDN streaming status.
+    /// Reason for change in CDN streaming status.
+    /// 
+    /// Deprecated Deprecated since v4.6.2.
     /// </summary>
     ///
     public enum DIRECT_CDN_STREAMING_REASON
     {
         ///
         /// <summary>
-        /// 0: No error.
+        /// 0: Streaming status is normal.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_REASON_OK = 0,
 
         ///
         /// <summary>
-        /// 1: A general error; no specific reason. You can try to push the media stream again.
+        /// 1: General error with no specific reason. You may try restarting the stream.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_REASON_FAILED = 1,
 
         ///
         /// <summary>
-        /// 2: An error occurs when pushing audio streams. For example, the local audio capture device is not working properly, is occupied by another process, or does not get the permission required.
+        /// 2: Audio streaming error. For example, local audio capture device not working properly, occupied by another process, or lacking permission.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_REASON_AUDIO_PUBLICATION = 2,
 
         ///
         /// <summary>
-        /// 3: An error occurs when pushing video streams. For example, the local video capture device is not working properly, is occupied by another process, or does not get the permission required.
+        /// 3: Video streaming error. For example, local video capture device not working properly, occupied by another process, or lacking permission.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_REASON_VIDEO_PUBLICATION = 3,
 
         ///
         /// <summary>
-        /// 4: Fails to connect to the CDN.
+        /// 4: Failed to connect to CDN.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_REASON_NET_CONNECT = 4,
 
         ///
         /// <summary>
-        /// 5: The URL is already being used. Use a new URL for streaming.
+        /// 5: The URL has already been used for streaming. Please use a new URL.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_REASON_BAD_NAME = 5,
@@ -2827,42 +2985,44 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The current CDN streaming state.
+    /// Current CDN streaming state.
+    /// 
+    /// Deprecated Deprecated since v4.6.2.
     /// </summary>
     ///
     public enum DIRECT_CDN_STREAMING_STATE
     {
         ///
         /// <summary>
-        /// 0: The initial state before the CDN streaming starts.
+        /// 0: Initial state, streaming has not started yet.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_STATE_IDLE = 0,
 
         ///
         /// <summary>
-        /// 1: Streams are being pushed to the CDN. The SDK returns this value when you call the StartDirectCdnStreaming method to push streams to the CDN.
+        /// 1: Streaming in progress. When you call StartDirectCdnStreaming and streaming starts successfully, the SDK returns this value.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_STATE_RUNNING = 1,
 
         ///
         /// <summary>
-        /// 2: Stops pushing streams to the CDN. The SDK returns this value when you call the StopDirectCdnStreaming method to stop pushing streams to the CDN.
+        /// 2: Streaming has ended normally. When you call StopDirectCdnStreaming to stop streaming manually, the SDK returns this value.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_STATE_STOPPED = 2,
 
         ///
         /// <summary>
-        /// 3: Fails to push streams to the CDN. You can troubleshoot the issue with the information reported by the OnDirectCdnStreamingStateChanged callback, and then push streams to the CDN again.
+        /// 3: Streaming failed. You can troubleshoot using the information reported by the OnDirectCdnStreamingStateChanged callback and then restart streaming.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_STATE_FAILED = 3,
 
         ///
         /// <summary>
-        /// 4: Tries to reconnect the Agora server to the CDN. The SDK attempts to reconnect a maximum of 10 times; if the connection is not restored, the streaming state becomes DIRECT_CDN_STREAMING_STATE_FAILED.
+        /// 4: Attempting to reconnect to the Agora server and CDN. It retries up to 10 times. If reconnection still fails, the streaming state changes to DIRECT_CDN_STREAMING_STATE_FAILED.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
@@ -2871,42 +3031,44 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The statistics of the current CDN streaming.
+    /// Current CDN streaming statistics.
+    /// 
+    /// Deprecated Deprecated since v4.6.2.
     /// </summary>
     ///
     public class DirectCdnStreamingStats
     {
         ///
         /// <summary>
-        /// The width (px) of the video frame.
+        /// Video width (px).
         /// </summary>
         ///
         public int videoWidth;
 
         ///
         /// <summary>
-        /// The height (px) of the video frame.
+        /// Video height (px).
         /// </summary>
         ///
         public int videoHeight;
 
         ///
         /// <summary>
-        /// The frame rate (fps) of the current video frame.
+        /// Current video frame rate (fps).
         /// </summary>
         ///
         public int fps;
 
         ///
         /// <summary>
-        /// The bitrate (bps) of the current video frame.
+        /// Current video bitrate (bps).
         /// </summary>
         ///
         public int videoBitrate;
 
         ///
         /// <summary>
-        /// The bitrate (bps) of the current audio frame.
+        /// Current audio bitrate (bps).
         /// </summary>
         ///
         public int audioBitrate;
@@ -2927,35 +3089,37 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The media setting options for the host.
+    /// Media options for the host.
+    /// 
+    /// Deprecated Deprecated since v4.6.2.
     /// </summary>
     ///
     public class DirectCdnStreamingMediaOptions : IOptionalJsonParse
     {
         ///
         /// <summary>
-        /// Sets whether to publish the video captured by the camera: true : Publish the video captured by the camera. false : (Default) Do not publish the video captured by the camera.
+        /// Sets whether to publish the video captured by the camera. true : Publish camera-captured video. false : (Default) Do not publish camera-captured video.
         /// </summary>
         ///
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Sets whether to publish the audio captured by the microphone: true : Publish the audio captured by the microphone. false : (Default) Do not publish the audio captured by the microphone.
+        /// Sets whether to publish the audio captured by the microphone. true : Publish microphone-captured audio. false : (Default) Do not publish microphone-captured audio.
         /// </summary>
         ///
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Sets whether to publish the captured audio from a custom source: true : Publish the captured audio from a custom source. false : (Default) Do not publish the captured audio from the custom source.
+        /// Sets whether to publish custom-captured audio. true : Publish custom-captured audio. false : (Default) Do not publish custom-captured audio.
         /// </summary>
         ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Sets whether to publish the captured video from a custom source: true : Publish the captured video from a custom source. false : (Default) Do not publish the captured video from the custom source.
+        /// Sets whether to publish custom-captured video. true : Publish custom-captured video. false : (Default) Do not publish custom-captured video.
         /// </summary>
         ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
@@ -2972,7 +3136,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0.
+        /// The video track ID returned by the CreateCustomVideoTrack method. Default is 0.
         /// </summary>
         ///
         public Optional<uint> customVideoTrackId = new Optional<uint>();
@@ -3106,49 +3270,49 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Media device states.
+    /// Device state.
     /// </summary>
     ///
     public enum MEDIA_DEVICE_STATE_TYPE
     {
         ///
         /// <summary>
-        /// 0: The device is ready for use.
+        /// 0: Device is ready.
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_IDLE = 0,
 
         ///
         /// <summary>
-        /// 1: The device is in use.
+        /// 1: Device is in use.
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_ACTIVE = 1,
 
         ///
         /// <summary>
-        /// 2: The device is disabled.
+        /// 2: Device is disabled.
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_DISABLED = 2,
 
         ///
         /// <summary>
-        /// 3: The device is plugged in.
+        /// 3: Device is plugged in.
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_PLUGGED_IN = 3,
 
         ///
         /// <summary>
-        /// 4: The device is not found.
+        /// 4: Device not present.
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_NOT_PRESENT = 4,
 
         ///
         /// <summary>
-        /// 8: The device is unplugged.
+        /// 8: Device is unplugged.
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_UNPLUGGED = 8,

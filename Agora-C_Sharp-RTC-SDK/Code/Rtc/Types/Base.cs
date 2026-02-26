@@ -6,14 +6,14 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The mode for receiving data.
+    /// Raw data callback mode.
     /// </summary>
     ///
     public enum OBSERVER_MODE
     {
         ///
         /// <summary>
-        /// Raw data mode, which means the SDK sends you raw data.
+        /// Callback in raw data mode.
         /// </summary>
         ///
         RAW_DATA,
@@ -144,18 +144,22 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Video frame formats.
+    /// Raw video data types.
     /// </summary>
     ///
     public enum VIDEO_OBSERVER_FRAME_TYPE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// Raw video pixel format.
+        /// </summary>
         ///
         FRAME_TYPE_DEFAULT = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Video data in YUV420 format.
+        /// </summary>
         ///
         FRAME_TYPE_YUV420 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I420,
 
@@ -171,7 +175,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 2: The format of the video frame is RGBA.
+        /// Video data in RGBA format.
         /// </summary>
         ///
         FRAME_TYPE_RGBA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_RGBA,
@@ -207,7 +211,9 @@ namespace Agora.Rtc
         FRAME_TYPE_CVPIXEL_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_BGRA,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Video data in YUV422 format.
+        /// </summary>
         ///
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
 

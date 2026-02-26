@@ -10,25 +10,25 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The callback for custom media resource files.
+    /// Provides callbacks for opening custom media resource files.
     /// </summary>
     ///
     public abstract class IMediaPlayerCustomDataProvider
     {
         ///
         /// <summary>
-        /// Occurs when the SDK reads the media resource data.
+        /// Callback to read media resource data.
         /// 
-        /// When you call the OpenWithMediaSource method to open a media resource, the SDK triggers this callback and request you to pass in the buffer of the media resource data.
+        /// When using OpenWithMediaSource to open a media resource, the SDK triggers this callback to request a buffer containing media resource data from you.
         /// </summary>
         ///
-        /// <param name="bufferPtr"> An input parameter. Data buffer (bytes). Write the bufferSize data reported by the SDK into this parameter. </param>
+        /// <param name="bufferPtr"> Input parameter. Data buffer in bytes. Write the data of size bufferSize reported by the SDK into this parameter. </param>
         ///
-        /// <param name="bufferSize"> The length of the data buffer (bytes). </param>
+        /// <param name="bufferSize"> Length of the data buffer in bytes. </param>
         ///
         /// <returns>
-        /// If the data is read successfully, pass in the length of the data (bytes) you actually read in the return value.
-        /// If reading the data fails, pass in 0 in the return value.
+        /// If data is read successfully, return the actual number of bytes read.
+        /// If data reading fails, return 0.
         /// </returns>
         ///
         public virtual int OnReadData(IntPtr buffer, int bufferSize)
@@ -38,25 +38,25 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when the SDK seeks the media resource data.
+        /// Callback for seeking media resource data.
         /// 
-        /// When you call the OpenWithMediaSource or Open method to open a custom media resource, the SDK triggers this callback to request the specified location in the media resource.
+        /// When opening a media resource using OpenWithMediaSource or Open, the SDK triggers this callback to request seeking to a specified position in the media resource.
         /// </summary>
         ///
-        /// <param name="offset"> An input parameter. The offset of the target position relative to the starting point, in bytes. The value can be positive or negative. </param>
+        /// <param name="offset"> Input parameter. The offset from the origin to seek to, in bytes. Can be positive or negative. </param>
         ///
         /// <param name="whence">
-        /// An input parameter. The starting point. You can set it as one of the following values:
-        /// 0: The starting point is the head of the data, and the actual data offset after seeking is offset.
-        /// 1: The starting point is the current position, and the actual data offset after seeking is the current position plus offset.
-        /// 2: The starting point is the end of the data, and the actual data offset after seeking is the whole data length plus offset.
-        /// 65536: Do not perform position seeking, return the file size. Agora recommends that you use this parameter value when playing pure audio files such as MP3 and WAV.
+        /// Input parameter. Indicates the origin position for seeking. Possible values:
+        /// 0: Origin is the beginning of the data. Actual offset is offset.
+        /// 1: Origin is the current position. Actual offset is current position plus offset.
+        /// 2: Origin is the end of the data. Actual offset is file length plus offset.
+        /// 65536: Do not perform seek operation; return file size. Recommended for playing pure audio files such as MP3 or WAV.
         /// </param>
         ///
         /// <returns>
-        /// When whence is 65536, the media file size is returned.
-        /// When whence is 0, 1, or 2, the actual data offset after the seeking is returned.
-        /// -1: Seeking failed.
+        /// When whence is 65536, returns the media file size.
+        /// When whence is 0 / 1 / 2, returns the actual offset after seeking.
+        /// -1: Seek failed.
         /// </returns>
         ///
         public virtual long OnSeek(long offset, int whence)

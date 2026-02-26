@@ -74,6 +74,10 @@ namespace Agora.Rtc
                         this.YStrideScale = this._textureManagerYUVA.YStrideScale;
                     }
 
+                    if (_material != null)
+                    {
+                        UpdateYUV2RGBMatrixIfNeed();
+                    }
                 }
             }
             else
@@ -186,8 +190,27 @@ namespace Agora.Rtc
             }
 
             _material.SetFloat("_yStrideScale", _textureManagerYUVA.YStrideScale);
+
+            var colorSpace = new IrisColorSpace()
+            {
+                primaries = (int)this._primaries,
+                range = (int)this._rangeID,
+            };
+            var matrix4x4 = GetMatrix4X4ByColorSpace(colorSpace);
+            _material.SetMatrix("_yuv2rgb", matrix4x4);
         }
 
+        protected override void UpdateYUV2RGBMatrixIfNeed()
+        {
+            var colorSpace = _textureManagerYUVA.ColorSpace;
+            if (this._primaries != (PrimaryID)colorSpace.primaries || this._rangeID != (RangeID)colorSpace.range)
+            {
+                var matrix4x4 = GetMatrix4X4ByColorSpace(colorSpace);
+                _material.SetMatrix("_yuv2rgb", matrix4x4);
+                this._primaries = (PrimaryID)colorSpace.primaries;
+                this._rangeID = (RangeID)colorSpace.range;
+            }
+        }
     }
 }
 

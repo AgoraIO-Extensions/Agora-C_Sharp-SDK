@@ -10,7 +10,7 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The encoded audio observer.
+    /// Observer for encoded audio.
     /// </summary>
     ///
     public abstract class IAudioEncodedFrameObserver

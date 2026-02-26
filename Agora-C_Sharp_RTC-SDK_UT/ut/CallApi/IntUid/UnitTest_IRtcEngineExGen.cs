@@ -436,6 +436,40 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SendRdtMessageEx_3a2998e()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var type = ParamsHelper.CreateParam<RdtStreamType>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = @interface.SendRdtMessageEx(uid, type, data, length, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_SendMediaControlMessageEx_907822a()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var data = ParamsHelper.CreateParam<string>();
+
+            var length = ParamsHelper.CreateParam<ulong>();
+
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = @interface.SendMediaControlMessageEx(uid, data, length, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_AddVideoWatermarkEx_ad7daa3()
         {
             var watermarkUrl = ParamsHelper.CreateParam<string>();
@@ -445,6 +479,30 @@ namespace Agora.Rtc.Ut
             var connection = ParamsHelper.CreateParam<RtcConnection>();
 
             var nRet = @interface.AddVideoWatermarkEx(watermarkUrl, options, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_AddVideoWatermarkEx_985f23a()
+        {
+            var config = ParamsHelper.CreateParam<WatermarkConfig>();
+
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = @interface.AddVideoWatermarkEx(config, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_RemoveVideoWatermarkEx_e405325()
+        {
+            var id = ParamsHelper.CreateParam<string>();
+
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = @interface.RemoveVideoWatermarkEx(id, connection);
             Assert.AreEqual(0, nRet);
         }
 
@@ -757,6 +815,48 @@ namespace Agora.Rtc.Ut
             var length = ParamsHelper.CreateParam<ulong>();
 
             var nRet = @interface.SendAudioMetadataEx(connection, metadata, length);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_PreloadEffectEx_c9fae88()
+        {
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var soundId = ParamsHelper.CreateParam<int>();
+
+            var filePath = ParamsHelper.CreateParam<string>();
+
+            var startPos = ParamsHelper.CreateParam<int>();
+
+            var nRet = @interface.PreloadEffectEx(connection, soundId, filePath, startPos);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_PlayEffectEx_ae5345c()
+        {
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var soundId = ParamsHelper.CreateParam<int>();
+
+            var filePath = ParamsHelper.CreateParam<string>();
+
+            var loopCount = ParamsHelper.CreateParam<int>();
+
+            var pitch = ParamsHelper.CreateParam<double>();
+
+            var pan = ParamsHelper.CreateParam<double>();
+
+            var gain = ParamsHelper.CreateParam<int>();
+
+            var publish = ParamsHelper.CreateParam<bool>();
+
+            var startPos = ParamsHelper.CreateParam<int>();
+
+            var nRet = @interface.PlayEffectEx(connection, soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
             Assert.AreEqual(0, nRet);
         }
 

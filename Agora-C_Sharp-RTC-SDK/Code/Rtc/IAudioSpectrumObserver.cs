@@ -10,22 +10,22 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The audio spectrum observer.
+    /// Audio spectrum observer.
     /// </summary>
     ///
     public abstract class IAudioSpectrumObserver
     {
         ///
         /// <summary>
-        /// Gets the statistics of a local audio spectrum.
+        /// Receives local audio spectrum.
         /// 
-        /// After successfully calling RegisterAudioSpectrumObserver to implement the OnLocalAudioSpectrum callback in IAudioSpectrumObserver and calling EnableAudioSpectrumMonitor to enable audio spectrum monitoring, the SDK triggers this callback as the time interval you set to report the received remote audio data spectrum before encoding.
+        /// After successfully calling RegisterAudioSpectrumObserver, implementing the OnLocalAudioSpectrum callback in IAudioSpectrumObserver, and calling EnableAudioSpectrumMonitor to enable audio spectrum monitoring, the SDK triggers this callback at the interval you set to report the spectrum of local audio data before encoding.
         /// </summary>
         ///
-        /// <param name="data"> The audio spectrum data of the local user. See AudioSpectrumData. </param>
+        /// <param name="data"> Audio spectrum data of the local user. See AudioSpectrumData. </param>
         ///
         /// <returns>
-        /// Whether the spectrum data is received: true : Spectrum data is received. false : No spectrum data is received.
+        /// Whether to receive spectrum data: true : Receive. false : Do not receive.
         /// </returns>
         ///
         public virtual bool OnLocalAudioSpectrum(AudioSpectrumData data)
@@ -35,17 +35,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Gets the remote audio spectrum.
+        /// Receives remote audio spectrum.
         /// 
-        /// After successfully calling RegisterAudioSpectrumObserver to implement the OnRemoteAudioSpectrum callback in the IAudioSpectrumObserver and calling EnableAudioSpectrumMonitor to enable audio spectrum monitoring, the SDK will trigger the callback as the time interval you set to report the received remote audio data spectrum.
+        /// After successfully calling RegisterAudioSpectrumObserver, implementing the OnRemoteAudioSpectrum callback in IAudioSpectrumObserver, and calling EnableAudioSpectrumMonitor to enable audio spectrum monitoring, the SDK triggers this callback at the interval you set to report the spectrum of received remote audio data.
         /// </summary>
         ///
-        /// <param name="spectrums"> The audio spectrum information of the remote user. See UserAudioSpectrumInfo. The number of arrays is the number of remote users monitored by the SDK. If the array is null, it means that no audio spectrum of remote users is detected. </param>
+        /// <param name="spectrums"> Audio spectrum information of remote users. See UserAudioSpectrumInfo. The array size equals the number of remote users detected by the SDK. An empty array indicates no remote user audio spectrum was detected. </param>
         ///
-        /// <param name="spectrumNumber"> The number of remote users. </param>
+        /// <param name="spectrumNumber"> Number of remote users. </param>
         ///
         /// <returns>
-        /// Whether the spectrum data is received: true : Spectrum data is received. false : No spectrum data is received.
+        /// Whether to receive spectrum data: true : Receive. false : Do not receive.
         /// </returns>
         ///
         public virtual bool OnRemoteAudioSpectrum(UserAudioSpectrumInfo[] spectrums, uint spectrumNumber)

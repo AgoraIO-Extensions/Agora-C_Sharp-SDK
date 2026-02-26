@@ -237,28 +237,6 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
-        public bool OnDownlinkNetworkInfoUpdated_e9d5bd9_be_trigger = false;
-        public DownlinkNetworkInfo OnDownlinkNetworkInfoUpdated_e9d5bd9_info;
-
-        public override void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info)
-        {
-            OnDownlinkNetworkInfoUpdated_e9d5bd9_be_trigger = true;
-            OnDownlinkNetworkInfoUpdated_e9d5bd9_info = info;
-        }
-
-        public bool OnDownlinkNetworkInfoUpdatedPassed(DownlinkNetworkInfo info)
-        {
-            if (OnDownlinkNetworkInfoUpdated_e9d5bd9_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<DownlinkNetworkInfo>(OnDownlinkNetworkInfoUpdated_e9d5bd9_info, info) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
         public bool OnLastmileQuality_46f8ab7_be_trigger = false;
         public int OnLastmileQuality_46f8ab7_quality;
 
@@ -308,6 +286,32 @@ namespace Agora.Rtc.Ut
             if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_ebdfd19_height, height) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnFirstLocalVideoFrame_ebdfd19_elapsed, elapsed) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnLocalVideoEvent_7c57d16_be_trigger = false;
+        public VIDEO_SOURCE_TYPE OnLocalVideoEvent_7c57d16_source;
+        public LOCAL_VIDEO_EVENT_TYPE OnLocalVideoEvent_7c57d16_event;
+
+        public override void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
+        {
+            OnLocalVideoEvent_7c57d16_be_trigger = true;
+            OnLocalVideoEvent_7c57d16_source = source;
+            OnLocalVideoEvent_7c57d16_event = @event;
+        }
+
+        public bool OnLocalVideoEventPassed(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
+        {
+            if (OnLocalVideoEvent_7c57d16_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnLocalVideoEvent_7c57d16_source, source) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_EVENT_TYPE>(OnLocalVideoEvent_7c57d16_event, @event) == false)
                 return false;
 
             return true;
@@ -713,28 +717,6 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
-        public bool OnLocalPublishFallbackToAudioOnly_5039d15_be_trigger = false;
-        public bool OnLocalPublishFallbackToAudioOnly_5039d15_isFallbackOrRecover;
-
-        public override void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover)
-        {
-            OnLocalPublishFallbackToAudioOnly_5039d15_be_trigger = true;
-            OnLocalPublishFallbackToAudioOnly_5039d15_isFallbackOrRecover = isFallbackOrRecover;
-        }
-
-        public bool OnLocalPublishFallbackToAudioOnlyPassed(bool isFallbackOrRecover)
-        {
-            if (OnLocalPublishFallbackToAudioOnly_5039d15_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<bool>(OnLocalPublishFallbackToAudioOnly_5039d15_isFallbackOrRecover, isFallbackOrRecover) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
         public bool OnRemoteSubscribeFallbackToAudioOnly_dbdc15a_be_trigger = false;
         public uint OnRemoteSubscribeFallbackToAudioOnly_dbdc15a_uid;
         public bool OnRemoteSubscribeFallbackToAudioOnly_dbdc15a_isFallbackOrRecover;
@@ -776,6 +758,28 @@ namespace Agora.Rtc.Ut
                 return false;
 
             if (ParamsHelper.Compare<PERMISSION_TYPE>(OnPermissionError_f37c62b_permissionType, permissionType) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnPermissionGranted_f37c62b_be_trigger = false;
+        public PERMISSION_TYPE OnPermissionGranted_f37c62b_permissionType;
+
+        public override void OnPermissionGranted(PERMISSION_TYPE permissionType)
+        {
+            OnPermissionGranted_f37c62b_be_trigger = true;
+            OnPermissionGranted_f37c62b_permissionType = permissionType;
+        }
+
+        public bool OnPermissionGrantedPassed(PERMISSION_TYPE permissionType)
+        {
+            if (OnPermissionGranted_f37c62b_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<PERMISSION_TYPE>(OnPermissionGranted_f37c62b_permissionType, permissionType) == false)
                 return false;
 
             return true;
@@ -1789,25 +1793,29 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
-        public bool OnLocalVideoStats_3ac0eb4_be_trigger = false;
-        public RtcConnection OnLocalVideoStats_3ac0eb4_connection;
-        public LocalVideoStats OnLocalVideoStats_3ac0eb4_stats;
+        public bool OnLocalVideoStats_0cebfd7_be_trigger = false;
+        public RtcConnection OnLocalVideoStats_0cebfd7_connection;
+        public VIDEO_SOURCE_TYPE OnLocalVideoStats_0cebfd7_sourceType;
+        public LocalVideoStats OnLocalVideoStats_0cebfd7_stats;
 
-        public override void OnLocalVideoStats(RtcConnection connection, LocalVideoStats stats)
+        public override void OnLocalVideoStats(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, LocalVideoStats stats)
         {
-            OnLocalVideoStats_3ac0eb4_be_trigger = true;
-            OnLocalVideoStats_3ac0eb4_connection = connection;
-            OnLocalVideoStats_3ac0eb4_stats = stats;
+            OnLocalVideoStats_0cebfd7_be_trigger = true;
+            OnLocalVideoStats_0cebfd7_connection = connection;
+            OnLocalVideoStats_0cebfd7_sourceType = sourceType;
+            OnLocalVideoStats_0cebfd7_stats = stats;
         }
 
-        public bool OnLocalVideoStatsPassed(RtcConnection connection, LocalVideoStats stats)
+        public bool OnLocalVideoStatsPassed(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, LocalVideoStats stats)
         {
-            if (OnLocalVideoStats_3ac0eb4_be_trigger == false)
+            if (OnLocalVideoStats_0cebfd7_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStats_3ac0eb4_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStats_0cebfd7_connection, connection) == false)
                 return false;
-            if (ParamsHelper.Compare<LocalVideoStats>(OnLocalVideoStats_3ac0eb4_stats, stats) == false)
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnLocalVideoStats_0cebfd7_sourceType, sourceType) == false)
+                return false;
+            if (ParamsHelper.Compare<LocalVideoStats>(OnLocalVideoStats_0cebfd7_stats, stats) == false)
                 return false;
 
             return true;
@@ -1984,6 +1992,108 @@ namespace Agora.Rtc.Ut
             if (ParamsHelper.Compare<int>(OnStreamMessageError_fe302fc_missed, missed) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnStreamMessageError_fe302fc_cached, cached) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnRdtMessage_1f6f532_be_trigger = false;
+        public RtcConnection OnRdtMessage_1f6f532_connection;
+        public uint OnRdtMessage_1f6f532_userId;
+        public RdtStreamType OnRdtMessage_1f6f532_type;
+        public string OnRdtMessage_1f6f532_data;
+        public ulong OnRdtMessage_1f6f532_length;
+
+        public override void OnRdtMessage(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
+        {
+            OnRdtMessage_1f6f532_be_trigger = true;
+            OnRdtMessage_1f6f532_connection = connection;
+            OnRdtMessage_1f6f532_userId = userId;
+            OnRdtMessage_1f6f532_type = type;
+            OnRdtMessage_1f6f532_data = data;
+            OnRdtMessage_1f6f532_length = length;
+        }
+
+        public bool OnRdtMessagePassed(RtcConnection connection, uint userId, RdtStreamType type, string data, ulong length)
+        {
+            if (OnRdtMessage_1f6f532_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnRdtMessage_1f6f532_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRdtMessage_1f6f532_userId, userId) == false)
+                return false;
+            if (ParamsHelper.Compare<RdtStreamType>(OnRdtMessage_1f6f532_type, type) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnRdtMessage_1f6f532_data, data) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnRdtMessage_1f6f532_length, length) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnRdtStateChanged_bf4ade0_be_trigger = false;
+        public RtcConnection OnRdtStateChanged_bf4ade0_connection;
+        public uint OnRdtStateChanged_bf4ade0_userId;
+        public RdtState OnRdtStateChanged_bf4ade0_state;
+
+        public override void OnRdtStateChanged(RtcConnection connection, uint userId, RdtState state)
+        {
+            OnRdtStateChanged_bf4ade0_be_trigger = true;
+            OnRdtStateChanged_bf4ade0_connection = connection;
+            OnRdtStateChanged_bf4ade0_userId = userId;
+            OnRdtStateChanged_bf4ade0_state = state;
+        }
+
+        public bool OnRdtStateChangedPassed(RtcConnection connection, uint userId, RdtState state)
+        {
+            if (OnRdtStateChanged_bf4ade0_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnRdtStateChanged_bf4ade0_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRdtStateChanged_bf4ade0_userId, userId) == false)
+                return false;
+            if (ParamsHelper.Compare<RdtState>(OnRdtStateChanged_bf4ade0_state, state) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnMediaControlMessage_0d4eb96_be_trigger = false;
+        public RtcConnection OnMediaControlMessage_0d4eb96_connection;
+        public uint OnMediaControlMessage_0d4eb96_userId;
+        public string OnMediaControlMessage_0d4eb96_data;
+        public ulong OnMediaControlMessage_0d4eb96_length;
+
+        public override void OnMediaControlMessage(RtcConnection connection, uint userId, string data, ulong length)
+        {
+            OnMediaControlMessage_0d4eb96_be_trigger = true;
+            OnMediaControlMessage_0d4eb96_connection = connection;
+            OnMediaControlMessage_0d4eb96_userId = userId;
+            OnMediaControlMessage_0d4eb96_data = data;
+            OnMediaControlMessage_0d4eb96_length = length;
+        }
+
+        public bool OnMediaControlMessagePassed(RtcConnection connection, uint userId, string data, ulong length)
+        {
+            if (OnMediaControlMessage_0d4eb96_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnMediaControlMessage_0d4eb96_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnMediaControlMessage_0d4eb96_userId, userId) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnMediaControlMessage_0d4eb96_data, data) == false)
+                return false;
+            if (ParamsHelper.Compare<ulong>(OnMediaControlMessage_0d4eb96_length, length) == false)
                 return false;
 
             return true;
@@ -2415,70 +2525,6 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
-        public bool OnWlAccMessage_2b9068e_be_trigger = false;
-        public RtcConnection OnWlAccMessage_2b9068e_connection;
-        public WLACC_MESSAGE_REASON OnWlAccMessage_2b9068e_reason;
-        public WLACC_SUGGEST_ACTION OnWlAccMessage_2b9068e_action;
-        public string OnWlAccMessage_2b9068e_wlAccMsg;
-
-        public override void OnWlAccMessage(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
-        {
-            OnWlAccMessage_2b9068e_be_trigger = true;
-            OnWlAccMessage_2b9068e_connection = connection;
-            OnWlAccMessage_2b9068e_reason = reason;
-            OnWlAccMessage_2b9068e_action = action;
-            OnWlAccMessage_2b9068e_wlAccMsg = wlAccMsg;
-        }
-
-        public bool OnWlAccMessagePassed(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
-        {
-            if (OnWlAccMessage_2b9068e_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<RtcConnection>(OnWlAccMessage_2b9068e_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<WLACC_MESSAGE_REASON>(OnWlAccMessage_2b9068e_reason, reason) == false)
-                return false;
-            if (ParamsHelper.Compare<WLACC_SUGGEST_ACTION>(OnWlAccMessage_2b9068e_action, action) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnWlAccMessage_2b9068e_wlAccMsg, wlAccMsg) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
-        public bool OnWlAccStats_b162607_be_trigger = false;
-        public RtcConnection OnWlAccStats_b162607_connection;
-        public WlAccStats OnWlAccStats_b162607_currentStats;
-        public WlAccStats OnWlAccStats_b162607_averageStats;
-
-        public override void OnWlAccStats(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
-        {
-            OnWlAccStats_b162607_be_trigger = true;
-            OnWlAccStats_b162607_connection = connection;
-            OnWlAccStats_b162607_currentStats = currentStats;
-            OnWlAccStats_b162607_averageStats = averageStats;
-        }
-
-        public bool OnWlAccStatsPassed(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
-        {
-            if (OnWlAccStats_b162607_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<RtcConnection>(OnWlAccStats_b162607_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_b162607_currentStats, currentStats) == false)
-                return false;
-            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_b162607_averageStats, averageStats) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
         public bool OnNetworkTypeChanged_388fd6f_be_trigger = false;
         public RtcConnection OnNetworkTypeChanged_388fd6f_connection;
         public NETWORK_TYPE OnNetworkTypeChanged_388fd6f_type;
@@ -2766,6 +2812,62 @@ namespace Agora.Rtc.Ut
             if (ParamsHelper.Compare<byte[]>(OnAudioMetadataReceived_0d4eb96_metadata, metadata) == false)
                 return false;
             if (ParamsHelper.Compare<ulong>(OnAudioMetadataReceived_0d4eb96_length, length) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnMultipathStats_bc711cf_be_trigger = false;
+        public RtcConnection OnMultipathStats_bc711cf_connection;
+        public MultipathStats OnMultipathStats_bc711cf_stats;
+
+        public override void OnMultipathStats(RtcConnection connection, MultipathStats stats)
+        {
+            OnMultipathStats_bc711cf_be_trigger = true;
+            OnMultipathStats_bc711cf_connection = connection;
+            OnMultipathStats_bc711cf_stats = stats;
+        }
+
+        public bool OnMultipathStatsPassed(RtcConnection connection, MultipathStats stats)
+        {
+            if (OnMultipathStats_bc711cf_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnMultipathStats_bc711cf_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<MultipathStats>(OnMultipathStats_bc711cf_stats, stats) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnRenewTokenResult_ed06196_be_trigger = false;
+        public RtcConnection OnRenewTokenResult_ed06196_connection;
+        public string OnRenewTokenResult_ed06196_token;
+        public RENEW_TOKEN_ERROR_CODE OnRenewTokenResult_ed06196_code;
+
+        public override void OnRenewTokenResult(RtcConnection connection, string token, RENEW_TOKEN_ERROR_CODE code)
+        {
+            OnRenewTokenResult_ed06196_be_trigger = true;
+            OnRenewTokenResult_ed06196_connection = connection;
+            OnRenewTokenResult_ed06196_token = token;
+            OnRenewTokenResult_ed06196_code = code;
+        }
+
+        public bool OnRenewTokenResultPassed(RtcConnection connection, string token, RENEW_TOKEN_ERROR_CODE code)
+        {
+            if (OnRenewTokenResult_ed06196_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnRenewTokenResult_ed06196_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnRenewTokenResult_ed06196_token, token) == false)
+                return false;
+            if (ParamsHelper.Compare<RENEW_TOKEN_ERROR_CODE>(OnRenewTokenResult_ed06196_code, code) == false)
                 return false;
 
             return true;

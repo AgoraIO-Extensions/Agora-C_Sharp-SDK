@@ -27,10 +27,15 @@ export default function (
         return e.name == "IMediaPlayer";
     });
 
+    const videoEffectObjectInterface = interfaces.find((e) => {
+        return e.name == "IVideoEffectObject";
+    });
+
     interfaces = interfaces.filter((e) => {
         return e.name != "IMediaRecorder" &&
             e.name != "IMusicPlayer" &&
-            e.name != "IMediaPlayer";
+            e.name != "IMediaPlayer" &&
+            e.name != "IVideoEffectObject";
     });
 
     const interfaceResult: RenderResult[] = renderWithConfiguration({
@@ -57,10 +62,17 @@ export default function (
         view: mediaPlayerInterface
     });
 
+    const videoEffectObjectInterfaceResult: RenderResult[] = renderWithConfiguration({
+        fileNameTemplatePath: path.join(__dirname, "interface_file_name.mustache"),
+        fileContentTemplatePath: path.join(__dirname, "interface_file_video_effect_object_content.mustache"),
+        view: videoEffectObjectInterface
+    });
+
     return [
         ...interfaceResult,
         ...mediaRecorderInterfaceResult,
         ...musicPlayerInterfaceResult,
-        ...mediaPlayerInterfaceResult
+        ...mediaPlayerInterfaceResult,
+        ...videoEffectObjectInterfaceResult
     ];
 }

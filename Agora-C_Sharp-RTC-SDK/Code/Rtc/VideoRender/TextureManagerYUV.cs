@@ -1,4 +1,4 @@
-#define USE_UNSAFE_CODE
+﻿#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using System;
 using System.Runtime.InteropServices;
@@ -49,6 +49,23 @@ namespace Agora.Rtc
                 return _vTexture;
             }
         }
+
+        public IrisColorSpace ColorSpace
+        {
+            get
+            {
+                return _cachedVideoFrame.colorSpace;
+            }
+        }
+
+        /// <summary>
+        /// Gets the color space information as a C# ColorSpace object
+        /// </summary>
+        public ColorSpace GetColorSpaceInfo()
+        {
+            return _cachedVideoFrame.colorSpace.ToColorSpace();
+        }
+
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
         protected NativeArray<byte> _uTextureNative;
         protected NativeArray<byte> _vTextureNative;
@@ -114,9 +131,6 @@ namespace Agora.Rtc
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
-
-
-
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
                 _canAttach = false;
@@ -137,7 +151,7 @@ namespace Agora.Rtc
 #if UNITY_2021_2_OR_NEWER
                 _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #else
-                _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+    _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #endif
                 _uTexture.Apply();
 #if UNITY_2021_2_OR_NEWER
@@ -187,6 +201,7 @@ namespace Agora.Rtc
 
             try
             {
+                // ✅ Use the start time from GetVideoFrame instead of measuring here
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
                 _uTexture.Apply();
@@ -201,7 +216,7 @@ namespace Agora.Rtc
 #endif
                     _texture.Apply();
 #if UNITY_2021_2_OR_NEWER
-                    _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
+     _uTexture.Reinitialize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #else
                     _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
 #endif
@@ -213,20 +228,25 @@ namespace Agora.Rtc
 #endif
                     _vTexture.Apply();
 
-                   
                     _needResize = false;
                 }
 
                 _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-                    (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
+                (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
                 _texture.Apply();
                 _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
-                    (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
+                (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
                 _uTexture.Apply();
                 _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
-                    (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
+               (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
                 _vTexture.Apply();
 #endif
+             
+                // Log to per-instance tracker only
+                if (_renderTrackClock != null)
+                {
+                    _renderTrackClock.Tick();
+                }
 
             }
             catch (Exception e)
