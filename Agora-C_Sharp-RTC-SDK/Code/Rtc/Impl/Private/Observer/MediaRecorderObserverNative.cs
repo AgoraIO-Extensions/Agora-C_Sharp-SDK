@@ -82,7 +82,7 @@ namespace Agora.Rtc
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
+                if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
                 IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
                 var @event = eventParam.@event;
@@ -100,7 +100,8 @@ namespace Agora.Rtc
                     case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED_c38849f:
                         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() =>{
+                            CallbackObject._CallbackQueue.EnQueue(() =>
+                            {
 #endif
                             if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
                             ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderStateChanged(
@@ -110,7 +111,7 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                                 (RecorderReasonCode)AgoraJson.GetData<int>(jsonData, "reason")
                             );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
+                            });
 #endif
                             break;
                         }
@@ -118,7 +119,8 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                     case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED_64fa74a:
                         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() =>{
+                            CallbackObject._CallbackQueue.EnQueue(() =>
+                            {
 #endif
                             if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
                             ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderInfoUpdated(
@@ -127,7 +129,7 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
                                 AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
                             );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
+                            });
 #endif
                             break;
                         }

@@ -126,7 +126,7 @@ namespace Agora.Rtc
         public const string IMEDIAPLAYER_SETSPATIALAUDIOPARAMS_5035667 = "MediaPlayer_setSpatialAudioParams_5035667";
         //IMediaPlayer::setSoundPositionParams(float pan, float gain, );
         public const string IMEDIAPLAYER_SETSOUNDPOSITIONPARAMS_f282d50 = "MediaPlayer_setSoundPositionParams_f282d50";
-        //IMediaPlayer::getAudioBufferDelay(ref int delayMs, );
+        //IMediaPlayer::getAudioBufferDelay(int32_t& delayMs, );
         public const string IMEDIAPLAYER_GETAUDIOBUFFERDELAY_c30e349 = "MediaPlayer_getAudioBufferDelay_c30e349";
         //IMediaPlayerCacheManager::removeAllCaches();
         public const string IMEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES = "MediaPlayerCacheManager_removeAllCaches";
@@ -212,8 +212,10 @@ namespace Agora.Rtc
         public const string IVIDEOEFFECTOBJECT_ADDORUPDATEVIDEOEFFECT_303a98c = "VideoEffectObject_addOrUpdateVideoEffect_303a98c";
         //IVideoEffectObject::removeVideoEffect(uint32_t nodeId, );
         public const string IVIDEOEFFECTOBJECT_REMOVEVIDEOEFFECT_b48de50 = "VideoEffectObject_removeVideoEffect_b48de50";
-        //IVideoEffectObject::performVideoEffectAction(uint32_t nodeId, agora::rtc::VIDEO_EFFECT_ACTION actionId, );
+        //IVideoEffectObject::performVideoEffectAction(uint32_t nodeId, agora::rtc::IVideoEffectObject::VIDEO_EFFECT_ACTION actionId, );
         public const string IVIDEOEFFECTOBJECT_PERFORMVIDEOEFFECTACTION_eddb1a6 = "VideoEffectObject_performVideoEffectAction_eddb1a6";
+        //IVideoEffectObject::setVideoEffectStringParam(char const* option, char const* key, char const* param, );
+        public const string IVIDEOEFFECTOBJECT_SETVIDEOEFFECTSTRINGPARAM_0e4f59e = "VideoEffectObject_setVideoEffectStringParam_0e4f59e";
         //IVideoEffectObject::setVideoEffectFloatParam(char const* option, char const* key, float param, );
         public const string IVIDEOEFFECTOBJECT_SETVIDEOEFFECTFLOATPARAM_e8dfcf8 = "VideoEffectObject_setVideoEffectFloatParam_e8dfcf8";
         //IVideoEffectObject::setVideoEffectIntParam(char const* option, char const* key, int param, );
@@ -1180,6 +1182,8 @@ namespace Agora.Rtc
         public const string IRTCENGINEEVENTHANDLER_ONLASTMILEQUALITY_46f8ab7 = "RtcEngineEventHandler_onLastmileQuality_46f8ab7";
         //IRtcEngineEventHandler::onFirstLocalVideoFrame(agora::rtc::VIDEO_SOURCE_TYPE source, int width, int height, int elapsed, );
         public const string IRTCENGINEEVENTHANDLER_ONFIRSTLOCALVIDEOFRAME_ebdfd19 = "RtcEngineEventHandler_onFirstLocalVideoFrame_ebdfd19";
+        //IRtcEngineEventHandler::onLocalVideoEvent(agora::rtc::VIDEO_SOURCE_TYPE source, agora::rtc::LOCAL_VIDEO_EVENT_TYPE event, );
+        public const string IRTCENGINEEVENTHANDLER_ONLOCALVIDEOEVENT_7c57d16 = "RtcEngineEventHandler_onLocalVideoEvent_7c57d16";
         //IRtcEngineEventHandler::onLocalVideoStateChanged(agora::rtc::VIDEO_SOURCE_TYPE source, agora::rtc::LOCAL_VIDEO_STREAM_STATE state, agora::rtc::LOCAL_VIDEO_STREAM_REASON reason, );
         public const string IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED_a44228a = "RtcEngineEventHandler_onLocalVideoStateChanged_a44228a";
         //IRtcEngineEventHandler::onCameraReady();
@@ -1346,6 +1350,8 @@ namespace Agora.Rtc
         public const string IRTCENGINEEVENTHANDLER_ONTRANSCODEDSTREAMLAYOUTINFO_48f6419 = "RtcEngineEventHandler_onTranscodedStreamLayoutInfo_48f6419";
         //IRtcEngineEventHandlerEx::onAudioMetadataReceived(agora::rtc::RtcConnection const& connection, agora::rtc::uid_t uid, char const* metadata, size_t length, );
         public const string IRTCENGINEEVENTHANDLER_ONAUDIOMETADATARECEIVED_0d4eb96 = "RtcEngineEventHandler_onAudioMetadataReceived_0d4eb96";
+        //IRtcEngineEventHandlerEx::onMultipathStats(agora::rtc::RtcConnection const& connection, agora::rtc::MultipathStats const& stats, );
+        public const string IRTCENGINEEVENTHANDLER_ONMULTIPATHSTATS_bc711cf = "RtcEngineEventHandler_onMultipathStats_bc711cf";
         //IDirectCdnStreamingEventHandler::onDirectCdnStreamingStateChanged(agora::rtc::DIRECT_CDN_STREAMING_STATE state, agora::rtc::DIRECT_CDN_STREAMING_REASON reason, char const* message, );
         public const string IDIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED_40f1fa3 = "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged_40f1fa3";
         //IDirectCdnStreamingEventHandler::onDirectCdnStreamingStats(agora::rtc::DirectCdnStreamingStats const& stats, );

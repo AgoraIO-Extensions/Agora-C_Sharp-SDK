@@ -387,7 +387,7 @@ namespace Agora.Rtc.Ut
             var type = ParamsHelper.CreateParam<MEDIA_SOURCE_TYPE>();
 
             var nRet = @interface.CreateVideoEffectObject(bundlePath, type);
-            Assert.IsNotNull(nRet);
+            Assert.AreEqual(null, nRet);
         }
 
 

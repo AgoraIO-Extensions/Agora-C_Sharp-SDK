@@ -61,28 +61,28 @@ namespace Agora.Rtm.Internal
                         messageList[i] = messageListInternal[i].GenerateHistoryMessage();
                     }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                CallbackObject._CallbackQueue.EnQueue(() =>
-                                                      {
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                                                          {
 #endif
                     if (rtmEventHandler == null)
                         return;
                     rtmEventHandler.OnGetHistoryMessagesResult(requestId, messageList, count, newStart, errorCode);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                                                      });
+                                                          });
 #endif
                     break;
                 case AgoraApiType.FUNC_RTMEVENTHANDLER_ONMESSAGEEVENT:
                     Internal.MessageEvent messageEventInternal = AgoraJson.JsonToStruct<Internal.MessageEvent>(jsonData, "event");
                     Rtm.MessageEvent messageEvent = messageEventInternal.GenerateMessageEvent();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                CallbackObject._CallbackQueue.EnQueue(() =>
-                                                      {
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                                                          {
 #endif
                     if (rtmEventHandler == null)
                         return;
                     rtmEventHandler.OnMessageEvent(messageEvent);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                                                      });
+                                                          });
 #endif
                     break;
 

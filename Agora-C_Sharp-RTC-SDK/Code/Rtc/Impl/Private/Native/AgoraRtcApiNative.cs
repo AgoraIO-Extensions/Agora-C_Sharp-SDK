@@ -478,6 +478,19 @@ namespace Agora.Rtc
                 this.range = (int)RangeID.RANGEID_INVALID;
             }
         }
+
+        /// <summary>
+        /// Converts IrisColorSpace to managed ColorSpace object
+        /// </summary>
+        public ColorSpace ToColorSpace()
+        {
+            return new ColorSpace(
+                (PrimaryID)primaries,
+                (TransferID)transfer,
+                (MatrixID)matrix,
+                (RangeID)range
+            );
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -565,7 +578,7 @@ namespace Agora.Rtc
 
         public IrisEncodedVideoFrameInfo(EncodedVideoFrameInfo info)
         {
-            this.uid = info.uid;
+            this.uid = 0;
             this.codecType = (int)info.codecType;
             this.width = info.width;
             this.height = info.height;

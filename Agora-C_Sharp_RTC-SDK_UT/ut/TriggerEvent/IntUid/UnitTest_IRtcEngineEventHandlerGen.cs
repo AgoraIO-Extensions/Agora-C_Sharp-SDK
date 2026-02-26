@@ -271,6 +271,28 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
+        public void Test_IRtcEngineEventHandler_OnLocalVideoEvent_7c57d16()
+        {
+            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOEVENT_7c57d16;
+
+            jsonObj.Clear();
+
+            VIDEO_SOURCE_TYPE source = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
+            jsonObj.Add("source", source);
+
+            LOCAL_VIDEO_EVENT_TYPE @event = ParamsHelper.CreateParam<LOCAL_VIDEO_EVENT_TYPE>();
+            jsonObj.Add("event", @event);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnLocalVideoEventPassed(source, @event));
+        }
+
+        [Test]
         public void Test_IRtcEngineEventHandler_OnLocalVideoStateChanged_a44228a()
         {
             ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED_a44228a;
@@ -2257,6 +2279,28 @@ namespace Agora.Rtc.Ut.Event
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, callback.OnTranscodedStreamLayoutInfoPassed(connection, uid, width, height, layoutCount, layoutlist));
+        }
+
+        [Test]
+        public void Test_IRtcEngineEventHandler_OnMultipathStats_bc711cf()
+        {
+            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONMULTIPATHSTATS_bc711cf;
+
+            jsonObj.Clear();
+
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            jsonObj.Add("connection", connection);
+
+            MultipathStats stats = ParamsHelper.CreateParam<MultipathStats>();
+            jsonObj.Add("stats", stats);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnMultipathStatsPassed(connection, stats));
         }
 
         [Test]

@@ -199,6 +199,21 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOEVENT_7c57d16:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnLocalVideoEvent(
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source"),
+                        (LOCAL_VIDEO_EVENT_TYPE)AgoraJson.GetData<int>(jsonData, "event")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED_a44228a:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -648,21 +663,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONJOINCHANNELSUCCESS_263e4cd:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnJoinChannelSuccess(
-                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONREJOINCHANNELSUCCESS_263e4cd:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -707,21 +707,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         (AudioVolumeInfo[])AgoraJson.JsonToStructArray<AudioVolumeInfo>(jsonData, "speakers"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "speakerNumber"),
                         (int)AgoraJson.GetData<int>(jsonData, "totalVolume")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLEAVECHANNEL_c8e730d:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnLeaveChannel(
-                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (RtcStats)AgoraJson.JsonToStruct<RtcStats>(jsonData, "stats")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
@@ -998,21 +983,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         rtcEngineEventHandler.OnRemoteAudioStats(
                         (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (RemoteAudioStats)AgoraJson.JsonToStruct<RemoteAudioStats>(jsonData, "stats")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_3ac0eb4:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnLocalVideoStats(
-                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });
@@ -1480,6 +1450,21 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         (int)AgoraJson.GetData<int>(jsonData, "height"),
                         (int)AgoraJson.GetData<int>(jsonData, "layoutCount"),
                         (VideoLayout[])AgoraJson.JsonToStructArray<VideoLayout>(jsonData, "layoutlist")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONMULTIPATHSTATS_bc711cf:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnMultipathStats(
+                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (MultipathStats)AgoraJson.JsonToStruct<MultipathStats>(jsonData, "stats")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });

@@ -2750,20 +2750,7 @@ namespace Agora.Rtc
         public abstract int SetRemoteRenderTargetFps(int targetFps);
 
         ///
-        /// <summary>
-        /// Updates the display mode of the local video view.
-        /// 
-        /// After initializing the local video view, you can call this method to update its rendering and mirror modes. It affects only the video view that the local user sees and does not impact the publishing of the local video.
-        /// </summary>
-        ///
-        /// <param name="renderMode"> The local video display mode. See RENDER_MODE_TYPE. </param>
-        ///
-        /// <param name="mirrorMode"> The mirror mode of the local video view. See VIDEO_MIRROR_MODE_TYPE. This parameter is only effective when rendering custom videos. If you want to mirror the video view, set the scaleX of the GameObject attached to the video view as -1 or +1. If you use a front camera, the SDK enables the mirror mode by default; if you use a rear camera, the SDK disables the mirror mode by default. </param>
-        ///
-        /// <returns>
-        /// 0: Success.
-        /// &lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
 

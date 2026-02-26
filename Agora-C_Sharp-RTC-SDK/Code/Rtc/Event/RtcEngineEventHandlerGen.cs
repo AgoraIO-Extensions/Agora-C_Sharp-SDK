@@ -106,6 +106,14 @@ namespace Agora.Rtc
             EventOnFirstLocalVideoFrame.Invoke(source, width, height, elapsed);
         }
 
+        public event Action<VIDEO_SOURCE_TYPE, LOCAL_VIDEO_EVENT_TYPE> EventOnLocalVideoEvent;
+
+        public override void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
+        {
+            if (EventOnLocalVideoEvent == null) return;
+            EventOnLocalVideoEvent.Invoke(source, @event);
+        }
+
         public event Action<VIDEO_SOURCE_TYPE, LOCAL_VIDEO_STREAM_STATE, LOCAL_VIDEO_STREAM_REASON> EventOnLocalVideoStateChanged;
 
         public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
@@ -768,6 +776,14 @@ namespace Agora.Rtc
         {
             if (EventOnAudioMetadataReceived == null) return;
             EventOnAudioMetadataReceived.Invoke(connection, uid, metadata, length);
+        }
+
+        public event Action<RtcConnection, MultipathStats> EventOnMultipathStats;
+
+        public override void OnMultipathStats(RtcConnection connection, MultipathStats stats)
+        {
+            if (EventOnMultipathStats == null) return;
+            EventOnMultipathStats.Invoke(connection, stats);
         }
 
         public event Action<DIRECT_CDN_STREAMING_STATE, DIRECT_CDN_STREAMING_REASON, string> EventOnDirectCdnStreamingStateChanged;

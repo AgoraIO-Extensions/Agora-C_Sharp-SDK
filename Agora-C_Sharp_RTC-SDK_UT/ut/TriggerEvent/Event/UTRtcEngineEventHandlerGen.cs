@@ -315,6 +315,32 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
+        public bool OnLocalVideoEvent_7c57d16_be_trigger = false;
+        public VIDEO_SOURCE_TYPE OnLocalVideoEvent_7c57d16_source;
+        public LOCAL_VIDEO_EVENT_TYPE OnLocalVideoEvent_7c57d16_event;
+
+        public override void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
+        {
+            OnLocalVideoEvent_7c57d16_be_trigger = true;
+            OnLocalVideoEvent_7c57d16_source = source;
+            OnLocalVideoEvent_7c57d16_event = @event;
+        }
+
+        public bool OnLocalVideoEventPassed(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
+        {
+            if (OnLocalVideoEvent_7c57d16_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnLocalVideoEvent_7c57d16_source, source) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_EVENT_TYPE>(OnLocalVideoEvent_7c57d16_event, @event) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
         public bool OnLocalVideoStateChanged_a44228a_be_trigger = false;
         public VIDEO_SOURCE_TYPE OnLocalVideoStateChanged_a44228a_source;
         public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged_a44228a_state;
@@ -2766,6 +2792,32 @@ namespace Agora.Rtc.Ut
             if (ParamsHelper.Compare<byte[]>(OnAudioMetadataReceived_0d4eb96_metadata, metadata) == false)
                 return false;
             if (ParamsHelper.Compare<ulong>(OnAudioMetadataReceived_0d4eb96_length, length) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+        public bool OnMultipathStats_bc711cf_be_trigger = false;
+        public RtcConnection OnMultipathStats_bc711cf_connection;
+        public MultipathStats OnMultipathStats_bc711cf_stats;
+
+        public override void OnMultipathStats(RtcConnection connection, MultipathStats stats)
+        {
+            OnMultipathStats_bc711cf_be_trigger = true;
+            OnMultipathStats_bc711cf_connection = connection;
+            OnMultipathStats_bc711cf_stats = stats;
+        }
+
+        public bool OnMultipathStatsPassed(RtcConnection connection, MultipathStats stats)
+        {
+            if (OnMultipathStats_bc711cf_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<RtcConnection>(OnMultipathStats_bc711cf_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<MultipathStats>(OnMultipathStats_bc711cf_stats, stats) == false)
                 return false;
 
             return true;

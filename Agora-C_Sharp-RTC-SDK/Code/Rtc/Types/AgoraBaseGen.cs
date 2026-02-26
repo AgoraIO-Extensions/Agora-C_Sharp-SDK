@@ -182,6 +182,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        WARN_ADM_RECORD_IS_OCCUPIED = 1033,
+
+        ///
+        /// @ignore
+        ///
         WARN_ADM_WINDOWS_NO_DATA_READY_EVENT = 1040,
 
         ///
@@ -2964,6 +2969,156 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum MultipathMode
+    {
+        ///
+        /// @ignore
+        ///
+        Duplicate = 0,
+
+        ///
+        /// @ignore
+        ///
+        Dynamic,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum MultipathType
+    {
+        ///
+        /// @ignore
+        ///
+        LAN = 0,
+
+        ///
+        /// @ignore
+        ///
+        WIFI,
+
+        ///
+        /// @ignore
+        ///
+        Mobile,
+
+        ///
+        /// @ignore
+        ///
+        Unknown = 99,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class PathStats
+    {
+        ///
+        /// @ignore
+        ///
+        public MultipathType type;
+
+        ///
+        /// @ignore
+        ///
+        public int txKBitRate;
+
+        ///
+        /// @ignore
+        ///
+        public int rxKBitRate;
+
+        public PathStats()
+        {
+            this.type = MultipathType.Unknown;
+            this.txKBitRate = 0;
+            this.rxKBitRate = 0;
+        }
+
+        public PathStats(MultipathType t, int tx, int rx)
+        {
+            this.type = t;
+            this.txKBitRate = tx;
+            this.rxKBitRate = rx;
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class MultipathStats
+    {
+        ///
+        /// @ignore
+        ///
+        public uint lanTxBytes;
+
+        ///
+        /// @ignore
+        ///
+        public uint lanRxBytes;
+
+        ///
+        /// @ignore
+        ///
+        public uint wifiTxBytes;
+
+        ///
+        /// @ignore
+        ///
+        public uint wifiRxBytes;
+
+        ///
+        /// @ignore
+        ///
+        public uint mobileTxBytes;
+
+        ///
+        /// @ignore
+        ///
+        public uint mobileRxBytes;
+
+        ///
+        /// @ignore
+        ///
+        public int activePathNum;
+
+        ///
+        /// @ignore
+        ///
+        public PathStats[] pathStats;
+
+        public MultipathStats()
+        {
+            this.lanTxBytes = 0;
+            this.lanRxBytes = 0;
+            this.wifiTxBytes = 0;
+            this.wifiRxBytes = 0;
+            this.mobileTxBytes = 0;
+            this.mobileRxBytes = 0;
+            this.activePathNum = 0;
+            this.pathStats = null;
+        }
+
+        public MultipathStats(uint lanTxBytes, uint lanRxBytes, uint wifiTxBytes, uint wifiRxBytes, uint mobileTxBytes, uint mobileRxBytes, int activePathNum, PathStats[] pathStats)
+        {
+            this.lanTxBytes = lanTxBytes;
+            this.lanRxBytes = lanRxBytes;
+            this.wifiTxBytes = wifiTxBytes;
+            this.wifiRxBytes = wifiRxBytes;
+            this.mobileTxBytes = mobileTxBytes;
+            this.mobileRxBytes = mobileRxBytes;
+            this.activePathNum = activePathNum;
+            this.pathStats = pathStats;
+        }
+    }
+
+    ///
     /// <summary>
     /// Statistics of a call session.
     /// </summary>
@@ -4024,6 +4179,33 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_STATE_FAILED = 3,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum LOCAL_VIDEO_EVENT_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_EVENT_TYPE_SCREEN_CAPTURE_WINDOW_HIDDEN = 1,
+
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_EVENT_TYPE_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN = 2,
+
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_EVENT_TYPE_SCREEN_CAPTURE_STOPPED_BY_USER = 3,
+
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_EVENT_TYPE_SCREEN_CAPTURE_SYSTEM_INTERNAL_ERROR = 4,
 
     }
 
@@ -8003,10 +8185,9 @@ namespace Agora.Rtc
 
         public ScreenAudioParameters()
         {
-            this.sampleRate = 16000;
+            this.sampleRate = 48000;
             this.channels = 2;
             this.captureSignalVolume = 100;
-            this.excludeCurrentProcessAudio = false;
         }
 
         public ScreenAudioParameters(int sampleRate, int channels, int captureSignalVolume, bool excludeCurrentProcessAudio)

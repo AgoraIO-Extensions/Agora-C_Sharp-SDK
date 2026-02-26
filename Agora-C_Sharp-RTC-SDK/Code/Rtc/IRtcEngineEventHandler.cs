@@ -198,6 +198,13 @@ namespace Agora.Rtc
         }
 
         ///
+        /// @ignore
+        ///
+        public virtual void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
+        {
+        }
+
+        ///
         /// <summary>
         /// Occurs when the local video stream state changes.
         /// 
@@ -1532,6 +1539,13 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnAudioMetadataReceived(RtcConnection connection, uint uid, byte[] metadata, ulong length)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
+        public virtual void OnMultipathStats(RtcConnection connection, MultipathStats stats)
         {
         }
 

@@ -41,14 +41,15 @@ namespace Agora.Rtc
                 switch (@event)
                 {
 
-                    case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697:
+                    case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_5f183eb:
                         {
                             var jsonData = AgoraJson.ToObject(data);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
                             IntPtr imageBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "imageBuffer");
                             UInt64 imageBufferLength = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "length");
                             EncodedVideoFrameInfo videoEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedVideoFrameInfo>(jsonData, "videoEncodedFrameInfo");
-                            bool result = videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, imageBufferLength, videoEncodedFrameInfo);
+                            bool result = videoEncodedFrameObserver.OnEncodedVideoFrameReceived(channelId, uid, imageBuffer, imageBufferLength, videoEncodedFrameInfo);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -69,7 +70,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697:
+                case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_5f183eb:
                     {
                         bool result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
