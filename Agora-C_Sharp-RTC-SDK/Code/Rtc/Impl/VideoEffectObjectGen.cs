@@ -38,6 +38,15 @@ namespace Agora.Rtc
             return _impl.PerformVideoEffectAction(GetObjectId(), nodeId, actionId);
         }
 
+        public override int SetVideoEffectStringParam(string option, string key, string param)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SetVideoEffectStringParam(GetObjectId(), option, key, param);
+        }
+
         public override int SetVideoEffectFloatParam(string option, string key, float param)
         {
             if (_impl == null)
@@ -90,11 +99,6 @@ namespace Agora.Rtc
                 return false;
             }
             return _impl.GetVideoEffectBoolParam(GetObjectId(), option, key);
-        }
-
-        public override int GetObjectId()
-        {
-            return _objectId;
         }
 
     }

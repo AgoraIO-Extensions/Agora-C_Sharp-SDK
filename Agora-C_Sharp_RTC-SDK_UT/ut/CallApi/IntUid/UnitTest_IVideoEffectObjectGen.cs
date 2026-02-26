@@ -44,6 +44,20 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SetVideoEffectStringParam_0e4f59e()
+        {
+            var option = ParamsHelper.CreateParam<string>();
+
+            var key = ParamsHelper.CreateParam<string>();
+
+            var param = ParamsHelper.CreateParam<string>();
+
+            var nRet = @interface.SetVideoEffectStringParam(option, key, param);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_SetVideoEffectFloatParam_e8dfcf8()
         {
             var option = ParamsHelper.CreateParam<string>();
@@ -93,13 +107,6 @@ namespace Agora.Rtc.Ut
             var key = ParamsHelper.CreateParam<string>();
 
             var nRet = @interface.GetVideoEffectFloatParam(option, key);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetObjectId()
-        {
-            var nRet = @interface.GetObjectId();
             Assert.AreEqual(0, nRet);
         }
 

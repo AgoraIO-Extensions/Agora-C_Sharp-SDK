@@ -103,7 +103,7 @@ Shader "UI/RendererShader601WithAlpha"
             sampler2D _VTex;
             sampler2D _ATex;
             float _yStrideScale;
-          
+            float4x4 _yuv2rgb;
 
             fixed4 frag(v2f IN) : SV_Target
             {
@@ -115,13 +115,7 @@ Shader "UI/RendererShader601WithAlpha"
                 float2 uv = IN.texcoord *float2(_yStrideScale, 1.0);
                 half4 color = half4(tex2D(_MainTex, uv).r, tex2D(_UTex, uv).r, tex2D(_VTex, uv).r, 1.0);
 
-                float4x4 yuvToRgb = float4x4(
-                    1.1643835616, 0, 1.7927410714, -0.9729450750,
-                    1.1643835616, -0.2132486143, -0.5329093286, 0.3014826655,
-                    1.1643835616, 2.1124017857, 0, -1.1334022179,
-                    0, 0, 0, 1);
-               
-                color = mul(yuvToRgb,color);
+                color = mul(_yuv2rgb,color);
                 color.a = tex2D(_ATex, IN.texcoord).r;
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);

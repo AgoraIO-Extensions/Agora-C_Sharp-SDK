@@ -67,6 +67,26 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SetVideoEffectStringParam(int objectId, string option, string key, string param)
+        {
+            _param.Clear();
+            _param.Add("objectId", objectId);
+            _param.Add("option", option);
+            _param.Add("key", key);
+            _param.Add("param", param);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IVIDEOEFFECTOBJECT_SETVIDEOEFFECTSTRINGPARAM_0e4f59e,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
         public int SetVideoEffectFloatParam(int objectId, string option, string key, float param)
         {
             _param.Clear();

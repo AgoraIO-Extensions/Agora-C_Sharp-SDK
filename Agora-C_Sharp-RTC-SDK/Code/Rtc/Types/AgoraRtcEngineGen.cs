@@ -2132,11 +2132,31 @@ namespace Agora.Rtc
         ///
         public Optional<string> parameters = new Optional<string>();
 
+        ///
+        /// @ignore
+        ///
+        public Optional<bool> enableMultipath = new Optional<bool>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<MultipathMode> uplinkMultipathMode = new Optional<MultipathMode>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<MultipathMode> downlinkMultipathMode = new Optional<MultipathMode>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<MultipathType> preferMultipathType = new Optional<MultipathType>();
+
         public ChannelMediaOptions()
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
@@ -2175,6 +2195,10 @@ namespace Agora.Rtc
             this.customVideoTrackId = customVideoTrackId;
             this.isAudioFilterable = isAudioFilterable;
             this.parameters = parameters;
+            this.enableMultipath = enableMultipath;
+            this.uplinkMultipathMode = uplinkMultipathMode;
+            this.downlinkMultipathMode = downlinkMultipathMode;
+            this.preferMultipathType = preferMultipathType;
         }
 
         ///
@@ -2404,6 +2428,30 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("parameters");
                 writer.Write(this.parameters.GetValue());
+            }
+
+            if (this.enableMultipath.HasValue())
+            {
+                writer.WritePropertyName("enableMultipath");
+                writer.Write(this.enableMultipath.GetValue());
+            }
+
+            if (this.uplinkMultipathMode.HasValue())
+            {
+                writer.WritePropertyName("uplinkMultipathMode");
+                AgoraJson.WriteEnum(writer, this.uplinkMultipathMode.GetValue());
+            }
+
+            if (this.downlinkMultipathMode.HasValue())
+            {
+                writer.WritePropertyName("downlinkMultipathMode");
+                AgoraJson.WriteEnum(writer, this.downlinkMultipathMode.GetValue());
+            }
+
+            if (this.preferMultipathType.HasValue())
+            {
+                writer.WritePropertyName("preferMultipathType");
+                AgoraJson.WriteEnum(writer, this.preferMultipathType.GetValue());
             }
 
             writer.WriteObjectEnd();

@@ -1,6 +1,7 @@
-using System;
-using Agora.Rtc;
 using NUnit.Framework;
+using Agora.Rtc;
+using System;
+
 namespace Agora.Rtc.Ut
 {
     public partial class UnitTest_IVideoEffectObject
@@ -16,15 +17,21 @@ namespace Agora.Rtc.Ut
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
-            @interface = Engine.CreateVideoEffectObject("");
+
+            string bundlePath = "test_bundle";
+            MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE;
+            @interface = Engine.CreateVideoEffectObject(bundlePath, type);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Engine.DestroyVideoEffectObject(@interface);
+            if (@interface != null)
+            {
+                Engine.DestroyVideoEffectObject(@interface);
+            }
             Engine.Dispose();
         }
-
     }
 }
+

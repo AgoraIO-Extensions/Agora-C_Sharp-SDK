@@ -1,4 +1,4 @@
-#define USE_UNSAFE_CODE
+﻿#define USE_UNSAFE_CODE
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 using System;
 using System.Runtime.InteropServices;
@@ -34,8 +34,35 @@ namespace Agora.Rtc
         }
 
         protected uint _uid = 0;
+
+        public uint Uid
+        {
+            get
+            {
+                return _uid;
+            }
+        }
+
         protected string _channelId = "";
+
+        public string ChannelId
+        {
+            get
+            {
+                return _channelId;
+            }
+        }
+
         protected VIDEO_SOURCE_TYPE _sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+
+        public VIDEO_SOURCE_TYPE SourceType
+        {
+            get
+            {
+                return _sourceType;
+            }
+        }
+
         protected VIDEO_OBSERVER_FRAME_TYPE _frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
 
         protected bool _needResize = false;
@@ -49,6 +76,16 @@ namespace Agora.Rtc
         protected int _refCount = 0;
         protected bool _canAttach = false;
 
+        // Per-instance render stat tracker
+        protected RenderTrackClock _renderTrackClock;
+
+        public RenderTrackClock renderTrackClock
+        {
+            get
+            {
+                return _renderTrackClock;
+            }
+        }
 
         protected Texture2D _texture;
         public Texture2D Texture
@@ -57,6 +94,22 @@ namespace Agora.Rtc
             {
                 return _texture;
             }
+        }
+
+        public IrisColorSpace ColorSpace
+        {
+            get
+            {
+                return _cachedVideoFrame.colorSpace;
+            }
+        }
+
+        /// <summary>
+        /// Gets the color space information as a C# ColorSpace object
+        /// </summary>
+        public ColorSpace GetColorSpaceInfo()
+        {
+            return _cachedVideoFrame.colorSpace.ToColorSpace();
         }
 
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
@@ -68,6 +121,7 @@ namespace Agora.Rtc
             DontDestroyOnLoad(this.gameObject);
             InitTexture();
             InitIrisVideoFrame();
+             _renderTrackClock = new RenderTrackClock(60);
         }
 
         protected virtual void Update()
@@ -125,7 +179,7 @@ namespace Agora.Rtc
 #else
 
             _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
-           
+
 #endif
         }
 
@@ -166,7 +220,6 @@ namespace Agora.Rtc
                 _canAttach = false;
                 return;
             }
-
             else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_RESIZED)
             {
                 _videoPixelWidth = _cachedVideoFrame.width;
@@ -177,7 +230,7 @@ namespace Agora.Rtc
 #if UNITY_2021_2_OR_NEWER
                 _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #else
-                _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+_texture.Resize(_videoPixelWidth, _videoPixelHeight);
 #endif
                 _texture.Apply();
                 _textureNative = _texture.GetRawTextureData<byte>();
@@ -207,6 +260,7 @@ namespace Agora.Rtc
 
             try
             {
+                // ✅ Use the start time from GetVideoFrame instead of measuring here
 #if USE_UNSAFE_CODE && UNITY_2018_1_OR_NEWER
                 _texture.Apply();
 #else
@@ -215,7 +269,7 @@ namespace Agora.Rtc
 #if UNITY_2021_2_OR_NEWER
                     _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #else
-                    _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+                    _texture.Reinitialize(_videoPixelWidth, _videoPixelHeight);
 #endif
                     _texture.Apply();
                     _needResize = false;
@@ -225,14 +279,17 @@ namespace Agora.Rtc
                     (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
                 _texture.Apply();
 #endif
-
+                // ✅ Calculate draw cost from GetVideoFrame start time to now
+                if (_renderTrackClock != null)
+                {
+                    _renderTrackClock.Tick();
+                }
 
             }
             catch (Exception e)
             {
                 AgoraLog.Log("Exception e = " + e);
             }
-
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
@@ -244,7 +301,6 @@ namespace Agora.Rtc
             _sourceType = source_type;
             _frameType = frameType;
         }
-
 
         virtual internal void Attach()
         {
