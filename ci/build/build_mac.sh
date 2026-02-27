@@ -485,7 +485,15 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     #copy iris ios
     cp -PRf $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
     #copy native ios
-    cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64/*.framework "$IOS_DST_PATH"
+    
+    if [ -d "$NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64" ]; then
+        cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64/*.framework "$IOS_DST_PATH"
+    fi
+
+    if [ -d "$NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64_armv7" ]; then
+        cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+    fi
+
     #remove framework
     delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 
