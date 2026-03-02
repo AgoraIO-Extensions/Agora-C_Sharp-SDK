@@ -132,10 +132,10 @@ namespace Agora.Rtc
                             // var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            if(AgoraRenderTrackerMgr.Instance != null)
-                            {
-                                AgoraRenderTrackerMgr.Instance.MarkLocalVideoInfo(connection, new LocalVideoMark(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA, 0));
-                            }   
+                            // if(AgoraRenderTrackerMgr.Instance != null)
+                            // {
+                            //     AgoraRenderTrackerMgr.Instance.MarkLocalVideoInfo(connection, new LocalVideoMark(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA, 0));
+                            // }   
 #endif
                             if (rtcEngineEventHandler == null) return;
                             rtcEngineEventHandler.OnLocalVideoStats(
@@ -157,8 +157,8 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                             if(AgoraRenderTrackerMgr.Instance != null)
                             {
-                            AgoraRenderTrackerMgr.Instance.AddRtcConnection(
-                            (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"));
+                                AgoraRenderTrackerMgr.Instance.AddRtcConnection(
+                                (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"));
                             }
 #endif
                             if (rtcEngineEventHandler == null) return;
