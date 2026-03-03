@@ -115,10 +115,6 @@ namespace Agora.Rtm
                 if (remoteUids.Contains(remoteUid))
                 {
                     remoteUids.Remove(remoteUid);
-                    if (remoteUids.Count == 0)
-                    {
-                        connection2RemoteUid.Remove(connection);
-                    }
                 }
             }
         }
@@ -213,7 +209,6 @@ namespace Agora.Rtm
                                 mcs.uid = tm.Uid;
                                 trackData.data.Add(mcs);
                                 trackData.connection.SetValue(kvp.Key);
-                                trackData.videoSourceType.SetValue(tm.SourceType);
                                 Report(trackData);
                             }
                         }
