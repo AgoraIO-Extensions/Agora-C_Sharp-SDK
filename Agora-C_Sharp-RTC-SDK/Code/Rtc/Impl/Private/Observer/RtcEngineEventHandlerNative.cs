@@ -120,34 +120,6 @@ namespace Agora.Rtc
 #endif
                             break;
                         }
-
-                    case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_3ac0eb4:
-                        {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            CallbackObject._CallbackQueue.EnQueue(() =>
-                            {
-#endif
-                            // Extract connection info
-                            var connection = (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
-                            // var sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            // if(AgoraRenderTrackerMgr.Instance != null)
-                            // {
-                            //     AgoraRenderTrackerMgr.Instance.MarkLocalVideoInfo(connection, new LocalVideoMark(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA, 0));
-                            // }   
-#endif
-                            if (rtcEngineEventHandler == null) return;
-                            rtcEngineEventHandler.OnLocalVideoStats(
-                            connection,
-                            // sourceType,
-                            (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
-                            );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            });
-#endif
-                            break;
-                        }
                     case AgoraApiType.IRTCENGINEEVENTHANDLER_ONJOINCHANNELSUCCESS_263e4cd:
                         {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -191,6 +163,38 @@ namespace Agora.Rtc
                             );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                             });
+#endif
+                            break;
+                        }
+
+                    case AgoraApiType.IRTCENGINEEVENTHANDLER_ONREMOTEVIDEOSTATECHANGED_a14e9d1:
+                        {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                            var connection = (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
+                            var remoteUid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
+                            var  state = (REMOTE_VIDEO_STATE)AgoraJson.GetData<int>(jsonData, "state");
+                            if(state == REMOTE_VIDEO_STATE.REMOTE_VIDEO_STATE_STARTING && AgoraRenderTrackerMgr.Instance != null)
+                            {
+                                AgoraRenderTrackerMgr.Instance.AddRemoteUid(connection, remoteUid);
+                            }
+                            else if(state == REMOTE_VIDEO_STATE.REMOTE_VIDEO_STATE_STOPPED && AgoraRenderTrackerMgr.Instance != null)
+                            {
+                                AgoraRenderTrackerMgr.Instance.RemoveRemoteUid(connection, remoteUid);
+                            }
+#endif
+                            if (rtcEngineEventHandler == null) return;
+                            rtcEngineEventHandler.OnRemoteVideoStateChanged(
+                            (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                            (REMOTE_VIDEO_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                            (REMOTE_VIDEO_STATE_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
+                            (int)AgoraJson.GetData<int>(jsonData, "elapsed")
+                            );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
 #endif
                             break;
                         }

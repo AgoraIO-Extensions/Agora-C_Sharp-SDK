@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 #if AGORA_RTC
@@ -53,6 +54,25 @@ namespace Agora.Rtm
         }
     }
 
+    class RtcConnectionComparer : IEqualityComparer<RtcConnection>
+    {
+        public static readonly RtcConnectionComparer Instance = new RtcConnectionComparer();
+
+        public bool Equals(RtcConnection x, RtcConnection y)
+        {
+
+            if (ReferenceEquals(x, y)) return true;
+            if (x is null || y is null) return false;
+            return x.localUid == y.localUid &&
+                   string.Equals(x.channelId, y.channelId);
+        }
+
+        public int GetHashCode(RtcConnection obj)
+        {
+            return (obj.localUid, obj.channelId).GetHashCode();
+        }
+    }
+
 
     internal sealed class AgoraRenderTrackerMgr : MonoBehaviour
     {
@@ -68,24 +88,61 @@ namespace Agora.Rtm
 
         private const long TRACK_INTERVAL_MS = 6000;
         
-        List<RtcConnection> rtcConnections = new List<RtcConnection>();
-    
-        public void AddRtcConnection(RtcConnection connection)
+        private Dictionary<RtcConnection, List<uint>> connection2RemoteUid = new Dictionary<RtcConnection, List<uint>>(RtcConnectionComparer.Instance);
+
+        
+        public void AddRemoteUid(RtcConnection connection, uint remoteUid)
         {
-            if (!rtcConnections.Contains(connection))
+            if (connection2RemoteUid.ContainsKey(connection))
             {
-                rtcConnections.Add(connection);
+                var remoteUids = connection2RemoteUid[connection];
+                if (!remoteUids.Contains(remoteUid))
+                {
+                    remoteUids.Add(remoteUid);
+                }
+            }
+            else
+            {
+                AgoraLog.LogWarning("" + connection.channelId + " not exist in connection2RemoteUid");
             }
         }
 
-        public void RemoveRtcConnection(RtcConnection connection)
+        public void RemoveRemoteUid(RtcConnection connection, uint remoteUid)
         {
-            if (rtcConnections.Contains(connection))
+            if (connection2RemoteUid.ContainsKey(connection))
             {
-                rtcConnections.Remove(connection);
+                var remoteUids = connection2RemoteUid[connection];
+                if (remoteUids.Contains(remoteUid))
+                {
+                    remoteUids.Remove(remoteUid);
+                    if (remoteUids.Count == 0)
+                    {
+                        connection2RemoteUid.Remove(connection);
+                    }
+                }
             }
         }
-        
+
+       
+        //when onUserJoinedSucess, will call this
+        public void AddRtcConnection(RtcConnection connection)
+        {
+            if (!connection2RemoteUid.ContainsKey(connection))
+            {
+                connection2RemoteUid.Add(connection, new List<uint>());
+            }
+        }
+
+        //when onUserOffline, will call this
+        public void RemoveRtcConnection(RtcConnection connection)
+        {
+            if (connection2RemoteUid.ContainsKey(connection))
+            {
+                connection2RemoteUid.Remove(connection);
+            }
+        }
+
+    
         private void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
@@ -97,7 +154,7 @@ namespace Agora.Rtm
             var engine = RtcEngine.Get();
             if (engine != null)
             {
-                AgoraLog.Log(AgoraJson.ToJson(trackData));
+                // AgoraLog.Log(AgoraJson.ToJson(trackData));
                 int ret = engine.SetParameters("rtc.report.argus_counters", trackData);
                 if (ret != 0)
                 {
@@ -141,8 +198,10 @@ namespace Agora.Rtm
                     else
                     {
                         //ChannelId != "" mean remote video view, report with connection info
-                        foreach (var connection in rtcConnections)
+                        foreach (var connection in connection2RemoteUid)
                         {
+                            
+
                             if (connection.channelId == tm.ChannelId)
                             {
                                 var trackData = new TrackData();
