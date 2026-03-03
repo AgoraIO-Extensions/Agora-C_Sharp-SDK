@@ -198,11 +198,9 @@ namespace Agora.Rtm
                     else
                     {
                         //ChannelId != "" mean remote video view, report with connection info
-                        foreach (var connection in connection2RemoteUid)
+                        foreach (var kvp in connection2RemoteUid)
                         {
-                            
-
-                            if (connection.channelId == tm.ChannelId)
+                            if(kvp.Value.Contains(tm.Uid) && kvp.Key.channelId == tm.ChannelId)
                             {
                                 var trackData = new TrackData();
                                 int drawCost = (int)tm.renderTrackClock.Average;
@@ -214,7 +212,8 @@ namespace Agora.Rtm
                                     { counterId = ID_REMOTE_DRAW_COST, value = drawCost });
                                 mcs.uid = tm.Uid;
                                 trackData.data.Add(mcs);
-                                trackData.connection.SetValue(connection);
+                                trackData.connection.SetValue(kvp.Key);
+                                trackData.videoSourceType.SetValue(tm.SourceType);
                                 Report(trackData);
                             }
                         }
