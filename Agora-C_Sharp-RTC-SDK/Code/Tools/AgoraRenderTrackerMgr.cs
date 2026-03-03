@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 #if AGORA_RTC
@@ -12,7 +13,6 @@ namespace Agora.Rtc
 namespace Agora.Rtm
 #endif
 {
-
     public class MetricCounter
     {
         public int counterId;
@@ -25,12 +25,34 @@ namespace Agora.Rtm
         public uint uid;
     }
 
-    public class TrackData
+    public class TrackData : IOptionalJsonParse
     {
         public List<MetricCounters> data = new List<MetricCounters>();
-        public RtcConnection connection;
-    }
+        public Optional<RtcConnection> connection = new Optional<RtcConnection>();
+        public Optional<VIDEO_SOURCE_TYPE> videoSourceType = new Optional<VIDEO_SOURCE_TYPE>();
 
+        public void ToJson(Agora.Rtc.LitJson.JsonWriter writer)
+        {
+            writer.WriteObjectStart();
+            
+            writer.WritePropertyName("data");
+            Agora.Rtc.LitJson.JsonMapper.WriteValue(this.data, writer, false, 0);
+
+            if (connection.HasValue())
+            {
+                writer.WritePropertyName("connection");
+                Agora.Rtc.LitJson.JsonMapper.WriteValue(this.connection.GetValue(), writer, false, 0);
+            }
+
+            if (videoSourceType.HasValue())
+            {
+                writer.WritePropertyName("videoSourceType");
+                AgoraJson.WriteEnum(writer, videoSourceType.GetValue());
+            }
+            
+            writer.WriteObjectEnd();
+        }
+    }
 
     class RtcConnectionComparer : IEqualityComparer<RtcConnection>
     {
@@ -52,75 +74,93 @@ namespace Agora.Rtm
     }
 
 
-    // Marks which local video stream is the pushed stream for the current connection
-    class LocalVideoMark
-    {
-        public VIDEO_SOURCE_TYPE sourceType;
-        public int id;
-
-        public LocalVideoMark(VIDEO_SOURCE_TYPE sourceType, int id)
-        {
-            this.sourceType = sourceType;
-            this.id = id;
-        }
-    }
-
     internal sealed class AgoraRenderTrackerMgr : MonoBehaviour
     {
         public const int ID_LOCAL_IN_FPS = 526;
         public const int ID_LOCAL_DRAW_COST = 577;
-        
+
         public const int ID_REMOTE_OUT_FPS = 537;
         public const int ID_REMOTE_DRAW_COST = 576;
 
         public static AgoraRenderTrackerMgr Instance = null;
 
-        // All RtcConnections to be tracked
-        HashSet<RtcConnection> rtcConnections = new HashSet<RtcConnection>(RtcConnectionComparer.Instance);
-
-        // Which tracked connection corresponds to the local video stream
-        Dictionary<RtcConnection, LocalVideoMark> localVideoMarks = new Dictionary<RtcConnection, LocalVideoMark>(RtcConnectionComparer.Instance);
-
         private long _lastTrackTimestampMs = 0;
 
         private const long TRACK_INTERVAL_MS = 6000;
+        
+        private Dictionary<RtcConnection, List<uint>> connection2RemoteUid = new Dictionary<RtcConnection, List<uint>>(RtcConnectionComparer.Instance);
 
-        public void AddRtcConnection(RtcConnection connection)
+        
+        public void AddRemoteUid(RtcConnection connection, uint remoteUid)
         {
-            if (!rtcConnections.Contains(connection))
+            if (connection2RemoteUid.ContainsKey(connection))
             {
-                rtcConnections.Add(connection);
-            }
-        }
-
-        public void RemoveRtcConnection(RtcConnection connection)
-        {
-            if (rtcConnections.Contains(connection))
-            {
-                rtcConnections.Remove(connection);
-            }
-        }
-
-        // Mark local video stream info for the given connection
-        public void MarkLocalVideoInfo(RtcConnection connection, LocalVideoMark mark)
-        {
-            if (localVideoMarks.ContainsKey(connection))
-            {
-                localVideoMarks[connection] = mark;
+                var remoteUids = connection2RemoteUid[connection];
+                if (!remoteUids.Contains(remoteUid))
+                {
+                    remoteUids.Add(remoteUid);
+                }
             }
             else
             {
-                localVideoMarks.Add(connection, mark);
+                AgoraLog.LogWarning("" + connection.channelId + " not exist in connection2RemoteUid");
             }
         }
 
+        public void RemoveRemoteUid(RtcConnection connection, uint remoteUid)
+        {
+            if (connection2RemoteUid.ContainsKey(connection))
+            {
+                var remoteUids = connection2RemoteUid[connection];
+                if (remoteUids.Contains(remoteUid))
+                {
+                    remoteUids.Remove(remoteUid);
+                }
+            }
+        }
+
+       
+        //when onUserJoinedSucess, will call this
+        public void AddRtcConnection(RtcConnection connection)
+        {
+            if (!connection2RemoteUid.ContainsKey(connection))
+            {
+                connection2RemoteUid.Add(connection, new List<uint>());
+            }
+        }
+
+        //when onUserOffline, will call this
+        public void RemoveRtcConnection(RtcConnection connection)
+        {
+            if (connection2RemoteUid.ContainsKey(connection))
+            {
+                connection2RemoteUid.Remove(connection);
+            }
+        }
+
+    
         private void Awake()
         {
             DontDestroyOnLoad(this.gameObject);
             gameObject.hideFlags = HideFlags.HideInHierarchy;
         }
 
-    
+        private void Report(TrackData trackData)
+        {
+            var engine = RtcEngine.Get();
+            if (engine != null)
+            {
+                // AgoraLog.Log(AgoraJson.ToJson(trackData));
+                int ret = engine.SetParameters("rtc.report.argus_counters", trackData);
+                if (ret != 0)
+                {
+                    AgoraLog.LogWarning(
+                        "AgoraRenderTrackerMgr SetParameters rtc.report.argus_counters failed, ret:" + ret);
+                }
+            }
+        }
+
+
         private void Update()
         {
             long currentTimestampMs = RenderTrackClock.curTimestampMs;
@@ -128,65 +168,51 @@ namespace Agora.Rtm
             {
                 _lastTrackTimestampMs = currentTimestampMs;
                 var textureManagers = GameObject.FindObjectsOfType<TextureManager>();
-                foreach (var connection in rtcConnections)
-                {
-                    var trackData = new TrackData();
-                    trackData.connection = connection;
-                    foreach (var tm in textureManagers)
-                    {
-                        if(tm.renderTrackClock == null)
-                            continue;
 
-                        //tm.ChannelId == "" mean local video view
-                        if (tm.ChannelId == connection.channelId || tm.ChannelId == "")
+                foreach (var tm in textureManagers)
+                {
+                    if (tm.renderTrackClock == null || tm.renderTrackClock.Average == 0)
+                        continue;
+
+                    //ChannelId == "" mean local video view
+                    if (tm.ChannelId == "")
+                    {
+                        var trackData = new TrackData();
+                        int drawCost = (int)tm.renderTrackClock.Average;
+                        int fps = (int)(1000 / drawCost);
+                        var mcs = new MetricCounters();
+                        mcs.counters.Add(new MetricCounter()
+                            { counterId = ID_LOCAL_IN_FPS, value = fps });
+                        mcs.counters.Add(new MetricCounter()
+                            { counterId = ID_LOCAL_DRAW_COST, value = drawCost });
+                        //local video view uid must be set to 0
+                        mcs.uid = 0;
+                        trackData.data.Add(mcs);
+                        trackData.videoSourceType.SetValue(tm.SourceType);
+                        Report(trackData);
+                    }
+                    else
+                    {
+                        //ChannelId != "" mean remote video view, report with connection info
+                        foreach (var kvp in connection2RemoteUid)
                         {
-                            if (tm.renderTrackClock.Average != 0)
+                            if(kvp.Value.Contains(tm.Uid) && kvp.Key.channelId == tm.ChannelId)
                             {
+                                var trackData = new TrackData();
                                 int drawCost = (int)tm.renderTrackClock.Average;
                                 int fps = (int)(1000 / drawCost);
                                 var mcs = new MetricCounters();
+                                mcs.counters.Add(new MetricCounter()
+                                    { counterId = ID_REMOTE_OUT_FPS, value = fps });
+                                mcs.counters.Add(new MetricCounter()
+                                    { counterId = ID_REMOTE_DRAW_COST, value = drawCost });
                                 mcs.uid = tm.Uid;
-                                if (tm.SourceType == VIDEO_SOURCE_TYPE.VIDEO_SOURCE_REMOTE)
-                                {
-                                    //remote video
-                                    mcs.counters.Add(new MetricCounter() { counterId = ID_REMOTE_OUT_FPS, value = fps });
-                                    mcs.counters.Add(new MetricCounter() { counterId = ID_REMOTE_DRAW_COST, value = drawCost });
-                                }
-                                else
-                                {
-                                    //if have three mpk playing, this will report three times.
-                                    //local video
-                                    if (localVideoMarks.ContainsKey(connection) &&
-                                       localVideoMarks[connection].sourceType == tm.SourceType)
-                                    {
-
-                                        mcs.counters.Add(new MetricCounter() { counterId = ID_LOCAL_IN_FPS, value = fps });
-                                        mcs.counters.Add(new MetricCounter() { counterId = ID_LOCAL_DRAW_COST, value = drawCost });
-                                        //local video use uid 0
-                                        mcs.uid = 0;
-                                    }
-                                }
-                                if (mcs.counters.Count > 0)
-                                {
-                                    trackData.data.Add(mcs);
-                                }
+                                trackData.data.Add(mcs);
+                                trackData.connection.SetValue(kvp.Key);
+                                Report(trackData);
                             }
                         }
                     }
-
-                    if (trackData.data.Count > 0)
-                    {
-                        var engine = RtcEngine.Get();
-                        if (engine != null)
-                        {
-                            int ret = engine.SetParameters("rtc.report.argus_counters", trackData);
-                            if (ret != 0)
-                            {
-                                AgoraLog.LogWarning("AgoraRenderTrackerMgr SetParameters rtc.report.argus_counters failed, ret:" + ret);
-                            }
-                        }
-                    }
-
                 }
             }
         }

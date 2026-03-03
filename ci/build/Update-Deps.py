@@ -133,6 +133,9 @@ for item in data:
     if item["version"] != "":
         version = item["version"]
         break
+    if item["iris_version"] != "":
+        version = item["iris_version"]
+        break
 
 rtc_yaml_path = os.path.join(script_dir, "..", "..", "terra","rtc.yaml")
 
