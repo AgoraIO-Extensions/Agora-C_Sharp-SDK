@@ -408,9 +408,9 @@ if [ "$IRIS_ANDROID_URL" != "" ]; then
     #copy native
     cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-    if [ -f ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.aar ]; then
-        cp ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
-    fi
+    for f in ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/*.aar; do
+        [ -f "$f" ] && cp "$f" "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
+    done
 
     cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
     cp -r ${NATIVE_ANDROID_SRC_PATH}/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
@@ -464,10 +464,20 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     7za x ./${temp_zip_name} || exit 1
     rm ./${temp_zip_name}
 
-    if [ -d ./*_Native_SDK_for_iOS_* ]; then
-        NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_iOS_*"
-    elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
-        NATIVE_IOS_SRC_PATH="./*_Native_SDK_for_APPLE_*"
+    NATIVE_IOS_SRC_PATH=""
+    for dir in ./*_Native_SDK_for_iOS_*; do
+        if [ -d "$dir" ]; then
+            NATIVE_IOS_SRC_PATH="$dir"
+            break
+        fi
+    done
+    if [ -z "$NATIVE_IOS_SRC_PATH" ]; then
+        for dir in ./*_Native_SDK_for_APPLE_*; do
+            if [ -d "$dir" ]; then
+                NATIVE_IOS_SRC_PATH="$dir"
+                break
+            fi
+        done
     fi
 
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
@@ -565,10 +575,20 @@ if [ "$IRIS_MAC_URL" != "" ]; then
     7za x ./${temp_zip_name} || exit 1
     rm ./${temp_zip_name}
 
-    if [ -d ./*_Native_SDK_for_Mac_* ]; then
-        NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_Mac_*"
-    elif [ -d ./*_Native_SDK_for_APPLE_* ]; then
-        NATIVE_MAC_SRC_PATH="./*_Native_SDK_for_APPLE_*"
+    NATIVE_MAC_SRC_PATH=""
+    for dir in ./*_Native_SDK_for_Mac_*; do
+        if [ -d "$dir" ]; then
+            NATIVE_MAC_SRC_PATH="$dir"
+            break
+        fi
+    done
+    if [ -z "$NATIVE_MAC_SRC_PATH" ]; then
+        for dir in ./*_Native_SDK_for_APPLE_*; do
+            if [ -d "$dir" ]; then
+                NATIVE_MAC_SRC_PATH="$dir"
+                break
+            fi
+        done
     fi
 
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
