@@ -1,12 +1,12 @@
 >>>video
-IRIS_IOS=https://download.agora.io/sdk/release/iris_4.5.3-dev.5_DCG_iOS_Video_Standalone_20260323_0336_33906.zip
-IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.5.3-dev.5_DCG_Android_Video_Standalone_16K_20260323_0336_341060.zip
-IRIS_MACOS=https://download.agora.io/sdk/release/iris_4.5.3-dev.5_DCG_Mac_Video_Unity_20260323_0336_32877.zip
-IRIS_WINDOWS=https://download.agora.io/sdk/release/iris_4.5.3-dev.5_DCG_Windows_Video_Standalone_20260323_0336_31940.zip
-NATIVE_IOS=https://download.agora.io/sdk/release/AgoraRtcEngine_iOS_Preview_4.5.3-dev.5_Video_20260323_153303.zip
-NATIVE_ANDROID=https://download.agora.io/sdk/release/AgoraRtcEngine_Android_Preview_4.5.3-dev.5_Video_20260323_153303.zip
-NATIVE_MACOS=https://download.agora.io/sdk/release/AgoraRtcEngine_macOS_Preview_4.5.3-dev.5_Video_20260323_153303.zip
-NATIVE_WINDOWS=https://download.agora.io/sdk/release/AgoraRtcEngine_windows_Preview_4.5.3-dev.5_Video_20260323_153303.zip
+IRIS_IOS=https://download.agora.io/sdk/release/iris_4.5.3-dev.7_DCG_iOS_Video_Standalone_20260323_0620_33908.zip
+IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.5.3-dev.7_DCG_Android_Video_Standalone_16K_20260323_0620_341062.zip
+IRIS_MACOS=https://download.agora.io/sdk/release/iris_4.5.3-dev.7_DCG_Mac_Video_Unity_20260323_0620_32879.zip
+IRIS_WINDOWS=https://download.agora.io/sdk/release/iris_4.5.3-dev.7_DCG_Windows_Video_Standalone_20260323_0620_31942.zip
+NATIVE_IOS=https://download.agora.io/sdk/release/AgoraRtcEngine_iOS_Preview_4.5.3-dev.7_Video_20260323_181935.zip
+NATIVE_ANDROID=https://download.agora.io/sdk/release/AgoraRtcEngine_Android_Preview_4.5.3-dev.7_Video_20260323_181935.zip
+NATIVE_MACOS=https://download.agora.io/sdk/release/AgoraRtcEngine_macOS_Preview_4.5.3-dev.7_Video_20260323_181935.zip
+NATIVE_WINDOWS=https://download.agora.io/sdk/release/AgoraRtcEngine_windows_Preview_4.5.3-dev.7_Video_20260323_181935.zip
 <<<end
 
 >>>audio
@@ -16,6 +16,6 @@ IRIS_MACOS=https://download.agora.io/sdk/release/iris_4.6.2-build.1_DCG_Mac_Audi
 IRIS_WINDOWS=https://download.agora.io/sdk/release/iris_4.6.2-build.1_DCG_Windows_Audio_Standalone_20260212_1004_31927.zip
 NATIVE_IOS=https://download.agora.io/sdk/release/Agora_Native_SDK_for_iOS_rel.v4.6.2.70_56560_VOICE_20260211_1723_1009713.zip
 NATIVE_ANDROID=https://download.agora.io/sdk/release/Agora_Native_SDK_for_Android_rel.v4.6.2.70_79059_VOICE_20260211_1721_1009708.zip
-NATIVE_MACOS=https://download.agora.io/sdk/release/AgoraRtcEngine_macOS_Preview_4.5.3-dev.5_Video_20260323_153303.zip
-NATIVE_WINDOWS=https://download.agora.io/sdk/release/AgoraRtcEngine_windows_Preview_4.5.3-dev.5_Video_20260323_153303.zip
+NATIVE_MACOS=https://download.agora.io/sdk/release/AgoraRtcEngine_macOS_Preview_4.5.3-dev.7_Video_20260323_181935.zip
+NATIVE_WINDOWS=https://download.agora.io/sdk/release/AgoraRtcEngine_windows_Preview_4.5.3-dev.7_Video_20260323_181935.zip
 <<<end
