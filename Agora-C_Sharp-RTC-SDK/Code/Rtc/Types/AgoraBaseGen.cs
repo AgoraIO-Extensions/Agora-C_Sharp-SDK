@@ -8312,7 +8312,7 @@ namespace Agora.Rtc
             this.volume = 100;
             this.deviceName = "";
             this.appName = "";
-            this.processId = -1;
+            this.processId = 0xffffffff;
         }
 
         public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)
