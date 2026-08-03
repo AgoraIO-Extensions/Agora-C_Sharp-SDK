@@ -338,6 +338,7 @@ namespace Agora.Rtc
         ///
         /// <param name="reason"> Error code and message when an error occurs in the virtual metronome. See RHYTHM_PLAYER_REASON. </param>
         ///
+        [Obsolete("v4.6.0")]
         public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_REASON reason)
         {
         }

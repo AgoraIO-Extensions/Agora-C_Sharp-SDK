@@ -1874,6 +1874,15 @@ namespace Agora.Rtc
             return _impl.GetAudioDeviceInfo(ref deviceInfo);
         }
 
+        public override int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SetRemoteRenderRotation(uid, rotation);
+        }
+
         public override int StartScreenCaptureByWindowId(long windowId, Rectangle regionRect, ScreenCaptureParameters captureParams)
         {
             if (_impl == null)
@@ -2873,6 +2882,15 @@ namespace Agora.Rtc
             return _impl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
         }
 
+        public override int SetRemoteRenderRotationEx(uint uid, VIDEO_ORIENTATION rotation, RtcConnection connection)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SetRemoteRenderRotationEx(uid, rotation, connection);
+        }
+
         public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = "")
         {
             if (_impl == null)
@@ -3330,6 +3348,33 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
+        }
+
+        public override uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config)
+        {
+            if (_impl == null)
+            {
+                return 0;
+            }
+            return _impl.CreateLoopbackAudioTrack(config);
+        }
+
+        public override int DestroyLoopbackAudioTrack(uint trackId)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.DestroyLoopbackAudioTrack(trackId);
+        }
+
+        public override int UpdateLoopbackAudioTrackConfig(uint trackId, LoopbackAudioTrackConfig config)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.UpdateLoopbackAudioTrackConfig(trackId, config);
         }
 
     }
