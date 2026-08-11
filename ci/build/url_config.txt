@@ -3,10 +3,10 @@ IRIS_IOS=https://download.agora.io/sdk/release/iris_4.7.0-dev.3_DCG_iOS_Video_St
 IRIS_ANDROID=https://download.agora.io/sdk/release/iris_4.7.0-dev.3_DCG_Android_Video_Standalone_16K_20260811_0225_341119.zip
 IRIS_MACOS=https://download.agora.io/sdk/release/iris_4.7.0-dev.3_DCG_Mac_Video_Unity_20260811_0225_32938.zip
 IRIS_WINDOWS=https://download.agora.io/sdk/release/iris_4.7.0-dev.3_DCG_Windows_Video_Standalone_20260811_0225_311025.zip
-NATIVE_IOS=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/ios/full/Shengwang_Native_SDK_for_iOS_rel.v3.0_arsenal_20260811.59465_59465_FULL_20260811_0045_1247828_external.zip
-NATIVE_ANDROID=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/android/full/Shengwang_Native_SDK_for_Android_rel.v3.0_arsenal_20260811.82906_82906_FULL_20260811_0045_1247830_external.zip
-NATIVE_MACOS=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/mac/full/Shengwang_Native_SDK_for_Mac_rel.v3.0_arsenal_20260811.28402_28402_FULL_20260811_0045_1247827_external.zip
-NATIVE_WINDOWS=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/windows/full/Shengwang_Native_SDK_for_Windows_rel.v3.0_arsenal_20260811.33029_33029_FULL_20260811_0045_1247829_external.zip
+NATIVE_IOS=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/ios/full/Shengwang_Native_SDK_for_iOS_rel.v3.0_arsenal_20260811.59465_59465_FULL_20260811_0045_1247828.zip
+NATIVE_ANDROID=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/android/full/Shengwang_Native_SDK_for_Android_rel.v3.0_arsenal_20260811.82906_82906_FULL_20260811_0045_1247830.zip
+NATIVE_MACOS=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/mac/full/Shengwang_Native_SDK_for_Mac_rel.v3.0_arsenal_20260811.28402_28402_FULL_20260811_0045_1247827.zip
+NATIVE_WINDOWS=http://10.80.1.174:8090/agora_sdk/arsenal/nightly_build/2026-08-11/windows/full/Shengwang_Native_SDK_for_Windows_rel.v3.0_arsenal_20260811.33029_33029_FULL_20260811_0045_1247829.zip
 <<<end
 
 >>>audio
