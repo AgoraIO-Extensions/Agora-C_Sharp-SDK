@@ -314,6 +314,20 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SetRemoteRenderRotationEx_4106f7a()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var rotation = ParamsHelper.CreateParam<VIDEO_ORIENTATION>();
+
+            var connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = @interface.SetRemoteRenderRotationEx(uid, rotation, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_EnableLoopbackRecordingEx_4f41542()
         {
             var connection = ParamsHelper.CreateParam<RtcConnection>();

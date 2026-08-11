@@ -214,6 +214,8 @@ namespace Agora.Rtc
         public const string IVIDEOEFFECTOBJECT_REMOVEVIDEOEFFECT_b48de50 = "VideoEffectObject_removeVideoEffect_b48de50";
         //IVideoEffectObject::performVideoEffectAction(uint32_t nodeId, agora::rtc::IVideoEffectObject::VIDEO_EFFECT_ACTION actionId, );
         public const string IVIDEOEFFECTOBJECT_PERFORMVIDEOEFFECTACTION_eddb1a6 = "VideoEffectObject_performVideoEffectAction_eddb1a6";
+        //IVideoEffectObject::setVideoEffectStringParam(char const* option, char const* key, char const* param, );
+        public const string IVIDEOEFFECTOBJECT_SETVIDEOEFFECTSTRINGPARAM_0e4f59e = "VideoEffectObject_setVideoEffectStringParam_0e4f59e";
         //IVideoEffectObject::setVideoEffectFloatParam(char const* option, char const* key, float param, );
         public const string IVIDEOEFFECTOBJECT_SETVIDEOEFFECTFLOATPARAM_e8dfcf8 = "VideoEffectObject_setVideoEffectFloatParam_e8dfcf8";
         //IVideoEffectObject::setVideoEffectIntParam(char const* option, char const* key, int param, );
@@ -648,6 +650,8 @@ namespace Agora.Rtc
         public const string IRTCENGINE_STARTSCREENCAPTUREBYSCREENRECT_e286286 = "RtcEngine_startScreenCaptureByScreenRect_e286286";
         //IRtcEngine::getAudioDeviceInfo(agora::rtc::DeviceInfo& deviceInfo, );
         public const string IRTCENGINE_GETAUDIODEVICEINFO_505aa0c = "RtcEngine_getAudioDeviceInfo_505aa0c";
+        //IRtcEngine::setRemoteRenderRotation(agora::rtc::uid_t uid, agora::rtc::VIDEO_ORIENTATION rotation, );
+        public const string IRTCENGINE_SETREMOTERENDERROTATION_41280f1 = "RtcEngine_setRemoteRenderRotation_41280f1";
         //IRtcEngine::startScreenCaptureByWindowId(int64_t windowId, agora::rtc::Rectangle const& regionRect, agora::rtc::ScreenCaptureParameters const& captureParams, );
         public const string IRTCENGINE_STARTSCREENCAPTUREBYWINDOWID_ce89867 = "RtcEngine_startScreenCaptureByWindowId_ce89867";
         //IRtcEngine::setScreenCaptureContentHint(agora::rtc::VIDEO_CONTENT_HINT contentHint, );
@@ -854,6 +858,12 @@ namespace Agora.Rtc
         public const string IMEDIAENGINE_PUSHVIDEOFRAME_4e544e2 = "MediaEngine_pushVideoFrame_4e544e2";
         //IMediaEngine::pushEncodedVideoImage(unsigned char const* imageBuffer, size_t length, agora::rtc::EncodedVideoFrameInfo const& videoEncodedFrameInfo, unsigned int videoTrackId, );
         public const string IMEDIAENGINE_PUSHENCODEDVIDEOIMAGE_e71452b = "MediaEngine_pushEncodedVideoImage_e71452b";
+        //IMediaEngine::createLoopbackAudioTrack(rtc::LoopbackAudioTrackConfig const& config, );
+        public const string IMEDIAENGINE_CREATELOOPBACKAUDIOTRACK_599af35 = "MediaEngine_createLoopbackAudioTrack_599af35";
+        //IMediaEngine::destroyLoopbackAudioTrack(rtc::track_id_t trackId, );
+        public const string IMEDIAENGINE_DESTROYLOOPBACKAUDIOTRACK_6178b5d = "MediaEngine_destroyLoopbackAudioTrack_6178b5d";
+        //IMediaEngine::updateLoopbackAudioTrackConfig(rtc::track_id_t trackId, rtc::LoopbackAudioTrackConfig const& config, );
+        public const string IMEDIAENGINE_UPDATELOOPBACKAUDIOTRACKCONFIG_080b602 = "MediaEngine_updateLoopbackAudioTrackConfig_080b602";
         //IRtcEngineEx::joinChannelEx(char const* token, agora::rtc::RtcConnection const& connection, agora::rtc::ChannelMediaOptions const& options, agora::rtc::IRtcEngineEventHandler* eventHandler, );
         public const string IRTCENGINEEX_JOINCHANNELEX_a3cd08c = "RtcEngineEx_joinChannelEx_a3cd08c";
         //IRtcEngineEx::leaveChannelEx(agora::rtc::RtcConnection const& connection, );
@@ -900,6 +910,8 @@ namespace Agora.Rtc
         public const string IRTCENGINEEX_SETREMOTEUSERSPATIALAUDIOPARAMSEX_40ca9fb = "RtcEngineEx_setRemoteUserSpatialAudioParamsEx_40ca9fb";
         //IRtcEngineEx::setRemoteRenderModeEx(agora::rtc::uid_t uid, media::base::RENDER_MODE_TYPE renderMode, agora::rtc::VIDEO_MIRROR_MODE_TYPE mirrorMode, agora::rtc::RtcConnection const& connection, );
         public const string IRTCENGINEEX_SETREMOTERENDERMODEEX_a72fe4e = "RtcEngineEx_setRemoteRenderModeEx_a72fe4e";
+        //IRtcEngineEx::setRemoteRenderRotationEx(agora::rtc::uid_t uid, agora::rtc::VIDEO_ORIENTATION rotation, agora::rtc::RtcConnection const& connection, );
+        public const string IRTCENGINEEX_SETREMOTERENDERROTATIONEX_4106f7a = "RtcEngineEx_setRemoteRenderRotationEx_4106f7a";
         //IRtcEngineEx::enableLoopbackRecordingEx(agora::rtc::RtcConnection const& connection, bool enabled, char const* deviceName, );
         public const string IRTCENGINEEX_ENABLELOOPBACKRECORDINGEX_4f41542 = "RtcEngineEx_enableLoopbackRecordingEx_4f41542";
         //IRtcEngineEx::adjustRecordingSignalVolumeEx(int volume, agora::rtc::RtcConnection const& connection, );

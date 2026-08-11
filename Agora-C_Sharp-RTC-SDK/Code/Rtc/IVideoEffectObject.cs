@@ -77,6 +77,11 @@ namespace Agora.Rtc
         public abstract int PerformVideoEffectAction(uint nodeId, VIDEO_EFFECT_ACTION actionId);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetVideoEffectStringParam(string option, string key, string param);
+
+        ///
         /// <summary>
         /// Sets a float parameter for the video effect.
         /// 
