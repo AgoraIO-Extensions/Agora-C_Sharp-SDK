@@ -7121,7 +7121,7 @@ namespace Agora.Rtc
     public class VideoCanvas
     {
         public VideoCanvas(uint uid, uint subviewUid, view_t view, uint backgroundColor, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_VIEW_SETUP_MODE setupMode, VIDEO_SOURCE_TYPE sourceType, int mediaPlayerId, Rectangle cropArea, bool enableAlphaMask, VIDEO_MODULE_POSITION position)
-            : this(uid, subviewUid, view, backgroundColor, renderMode, mirrorMode, setupMode, sourceType, mediaPlayerId, cropArea, enableAlphaMask, position, VIDEO_ORIENTATION.VIDEO_ORIENTATION_0)
+        : this(uid, subviewUid, view, backgroundColor, renderMode, mirrorMode, setupMode, sourceType, mediaPlayerId, cropArea, enableAlphaMask, position, VIDEO_ORIENTATION.VIDEO_ORIENTATION_0)
         {
         }
 
