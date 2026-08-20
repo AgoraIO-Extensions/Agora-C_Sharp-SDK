@@ -57,6 +57,23 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
+    public enum CHANNEL_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        CHANNEL_TYPE_STANDARD = 0,
+
+        ///
+        /// @ignore
+        ///
+        CHANNEL_TYPE_LARGE_SCALE = 1,
+
+    }
+
+    ///
+    /// @ignore
+    ///
     public enum WARN_CODE_TYPE
     {
         ///
@@ -178,6 +195,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         WARN_ADM_PLAYOUT_AUDIO_LOWLEVEL = 1032,
+
+        ///
+        /// @ignore
+        ///
+        WARN_ADM_RECORD_IS_OCCUPIED = 1033,
 
         ///
         /// @ignore
@@ -701,6 +723,76 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_ASSET_INVALID = 1700,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_SAVE_FAILED = 1701,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_ENGINE_INVALID = 1702,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_NODE_NOT_ACTIVE = 1704,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_INVALID_PARAM = 1705,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_NOT_SUPPORTED = 1706,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_INVALID_BUNDLE_PATH = 1707,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_APPLICATION_LOOPBACK = 2007,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_APPLICATION_LOOPBACK_STOPPED = 2008,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_SYSTEM_LOOPBACK = 2009,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_SYSTEM_LOOPBACK_STOPPED = 2010,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_LOOPBACK_NO_PERMISSION = 2011,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_LOOPBACK_SILENT_DETECTED = 2012,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_LOOPBACK_SILENT_RECOVERED = 2013,
 
     }
 
@@ -7028,6 +7120,11 @@ namespace Agora.Rtc
     ///
     public class VideoCanvas
     {
+        public VideoCanvas(uint uid, uint subviewUid, view_t view, uint backgroundColor, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_VIEW_SETUP_MODE setupMode, VIDEO_SOURCE_TYPE sourceType, int mediaPlayerId, Rectangle cropArea, bool enableAlphaMask, VIDEO_MODULE_POSITION position)
+        : this(uid, subviewUid, view, backgroundColor, renderMode, mirrorMode, setupMode, sourceType, mediaPlayerId, cropArea, enableAlphaMask, position, VIDEO_ORIENTATION.VIDEO_ORIENTATION_0)
+        {
+        }
+
         ///
         /// <summary>
         /// For Android and iOS platforms, when the video source is a composite video stream (VIDEO_SOURCE_TRANSCODED), this parameter represents the user ID that publishes the composite video stream.
@@ -7115,6 +7212,11 @@ namespace Agora.Rtc
         ///
         public VIDEO_MODULE_POSITION position;
 
+        ///
+        /// @ignore
+        ///
+        public VIDEO_ORIENTATION rotation;
+
         public VideoCanvas()
         {
             this.uid = 0;
@@ -7129,6 +7231,7 @@ namespace Agora.Rtc
             this.cropArea = new Rectangle(0, 0, 0, 0);
             this.enableAlphaMask = false;
             this.position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
+            this.rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt)
@@ -7145,6 +7248,7 @@ namespace Agora.Rtc
             this.cropArea = new Rectangle(0, 0, 0, 0);
             this.enableAlphaMask = false;
             this.position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
+            this.rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, uint u)
@@ -7161,6 +7265,7 @@ namespace Agora.Rtc
             this.cropArea = new Rectangle(0, 0, 0, 0);
             this.enableAlphaMask = false;
             this.position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
+            this.rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, uint u, uint subu)
@@ -7177,9 +7282,10 @@ namespace Agora.Rtc
             this.cropArea = new Rectangle(0, 0, 0, 0);
             this.enableAlphaMask = false;
             this.position = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
+            this.rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
         }
 
-        public VideoCanvas(uint uid, uint subviewUid, view_t view, uint backgroundColor, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_VIEW_SETUP_MODE setupMode, VIDEO_SOURCE_TYPE sourceType, int mediaPlayerId, Rectangle cropArea, bool enableAlphaMask, VIDEO_MODULE_POSITION position)
+        public VideoCanvas(uint uid, uint subviewUid, view_t view, uint backgroundColor, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_VIEW_SETUP_MODE setupMode, VIDEO_SOURCE_TYPE sourceType, int mediaPlayerId, Rectangle cropArea, bool enableAlphaMask, VIDEO_MODULE_POSITION position, VIDEO_ORIENTATION rotation)
         {
             this.uid = uid;
             this.subviewUid = subviewUid;
@@ -7193,6 +7299,7 @@ namespace Agora.Rtc
             this.cropArea = cropArea;
             this.enableAlphaMask = enableAlphaMask;
             this.position = position;
+            this.rotation = rotation;
         }
     }
 
@@ -7403,6 +7510,11 @@ namespace Agora.Rtc
         FACE_SHAPE_AREA_CHIN = 108,
 
         ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_FACESMALL = 109,
+
+        ///
         /// <summary>
         /// (200): Eye area, used to achieve a big eye effect. Value range is [0, 100], default is 50. The larger the value, the more obvious the adjustment.
         /// </summary>
@@ -7450,6 +7562,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         FACE_SHAPE_AREA_EYEOUTERCORNER = 206,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYEANGLE = 207,
 
         ///
         /// <summary>
@@ -8134,6 +8251,82 @@ namespace Agora.Rtc
         {
             this.enableLocalPlayback = enableLocalPlayback;
             this.enableAudioProcessing = enableAudioProcessing;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum LOOPBACK_AUDIO_TRACK_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_SYSTEM = 0,
+
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_SYSTEM_EXCLUDE_SELF = 1,
+
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_APPLICATION = 2,
+
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_PROCESS = 3,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class LoopbackAudioTrackConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public LOOPBACK_AUDIO_TRACK_TYPE loopbackType;
+
+        ///
+        /// @ignore
+        ///
+        public int volume;
+
+        ///
+        /// @ignore
+        ///
+        public string deviceName;
+
+        ///
+        /// @ignore
+        ///
+        public string appName;
+
+        ///
+        /// @ignore
+        ///
+        public uint processId;
+
+        public LoopbackAudioTrackConfig()
+        {
+            this.loopbackType = LOOPBACK_AUDIO_TRACK_TYPE.LOOPBACK_SYSTEM;
+            this.volume = 100;
+            this.deviceName = "";
+            this.appName = "";
+            this.processId = 0xffffffff;
+        }
+
+        public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)
+        {
+            this.loopbackType = loopbackType;
+            this.volume = volume;
+            this.deviceName = deviceName;
+            this.appName = appName;
+            this.processId = processId;
         }
     }
 

@@ -491,6 +491,11 @@ namespace Agora.Rtc
         public abstract int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetRemoteRenderRotationEx(uint uid, VIDEO_ORIENTATION rotation, RtcConnection connection);
+
+        ///
         /// <summary>
         /// Enables loopback recording.
         /// 
@@ -972,7 +977,7 @@ namespace Agora.Rtc
         /// &lt; 0: The method call fails. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
-        [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamModeEx instead")]
+        [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamModeEx instead.")]
         public abstract int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         ///

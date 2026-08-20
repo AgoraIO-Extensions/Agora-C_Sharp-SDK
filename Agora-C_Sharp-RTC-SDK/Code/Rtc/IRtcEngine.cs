@@ -1867,6 +1867,7 @@ namespace Agora.Rtc
         /// Check the integrity of the assembly. IRtcEngine initialization failed. Reinitialize IRtcEngine.
         /// </returns>
         ///
+        [Obsolete("This method is deprecated. Use startAudioMixing(const char* filePath, bool loopback, int cycle, int startPos) instead.")]
         public abstract int StartAudioMixing(string filePath, bool loopback, int cycle);
 
         ///
@@ -2793,6 +2794,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("Use `context` in `initialize` to set up the log file path.")]
         public abstract int SetLogFile(string filePath);
 
         ///
@@ -2809,6 +2811,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("Use `logConfig` in `initialize` to set the log filter.")]
         public abstract int SetLogFilter(uint filter);
 
         ///
@@ -2825,6 +2828,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("Use `context` in `initialize` to set the log level.")]
         public abstract int SetLogLevel(LOG_LEVEL level);
 
         ///
@@ -2852,6 +2856,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("Use `logConfig` in `initialize` to set the log file size.")]
         public abstract int SetLogFileSize(uint fileSizeInKBytes);
 
         ///
@@ -2950,6 +2955,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("This method is deprecated since v4.0.0. Use `setLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)` instead.")]
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
 
         ///
@@ -2966,6 +2972,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("This method is deprecated. Use `setupLocalVideo` or `setLocalRenderMode` instead.")]
         public abstract int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
         ///
@@ -2987,6 +2994,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("This method is deprecated since v4.2.0. Use `setDualStreamMode` instead.")]
         public abstract int EnableDualStreamMode(bool enabled);
 
         ///
@@ -3010,6 +3018,7 @@ namespace Agora.Rtc
         /// &lt; 0: The method call fails. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("This method is deprecated since v4.2.0. Use `setDualStreamMode` instead.")]
         public abstract int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig);
 
         ///
@@ -4178,6 +4187,11 @@ namespace Agora.Rtc
         public abstract int GetAudioDeviceInfo(ref DeviceInfoMobile deviceInfo);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation);
+
+        ///
         /// <summary>
         /// Starts capturing the video stream of the specified window.
         /// 
@@ -4896,7 +4910,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
-        [Obsolete("Use addVideoWatermarkEx(const WatermarkConfig& config, const RtcConnection& connection) instead.")]
+        [Obsolete("Use addVideoWatermark(const WatermarkConfig& configs) instead.")]
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
 
         ///
@@ -4970,7 +4984,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
-        [Obsolete("The Agora NG SDK enables the interoperablity with the Web SDK.")]
+        [Obsolete("By default, the Agora RTC SDK enables the interoperablity with the Web SDK.")]
         public abstract int EnableWebSdkInteroperability(bool enabled);
 
         ///
@@ -5379,6 +5393,7 @@ namespace Agora.Rtc
         /// -22: Audio file not found. Please provide correct sound1 and sound2.
         /// </returns>
         ///
+        [Obsolete("v4.6.0")]
         public abstract int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config);
 
         ///
@@ -5393,6 +5408,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("v4.6.0")]
         public abstract int StopRhythmPlayer();
 
         ///
@@ -5412,6 +5428,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure. See [Error Codes](https://docs.agora.io/en/video-calling/troubleshooting/error-codes) for details and resolution suggestions.
         /// </returns>
         ///
+        [Obsolete("v4.6.0")]
         public abstract int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config);
 
         ///
@@ -5898,6 +5915,21 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
+
+        ///
+        /// @ignore
+        ///
+        public abstract uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int DestroyLoopbackAudioTrack(uint trackId);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int UpdateLoopbackAudioTrackConfig(uint trackId, LoopbackAudioTrackConfig config);
 
     }
 }

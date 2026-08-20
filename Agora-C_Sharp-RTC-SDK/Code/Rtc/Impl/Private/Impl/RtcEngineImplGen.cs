@@ -3503,6 +3503,24 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation)
+        {
+            _param.Clear();
+            _param.Add("uid", uid);
+            _param.Add("rotation", rotation);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SETREMOTERENDERROTATION_41280f1,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
         public int StartScreenCaptureByWindowId(long windowId, Rectangle regionRect, ScreenCaptureParameters captureParams)
         {
             _param.Clear();
@@ -5381,6 +5399,25 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SetRemoteRenderRotationEx(uint uid, VIDEO_ORIENTATION rotation, RtcConnection connection)
+        {
+            _param.Clear();
+            _param.Add("uid", uid);
+            _param.Add("rotation", rotation);
+            _param.Add("connection", connection);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_SETREMOTERENDERROTATIONEX_4106f7a,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
         public int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = "")
         {
             _param.Clear();
@@ -6213,6 +6250,58 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_SETEXTERNALAUDIOSINK_d275ce0,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config)
+        {
+            _param.Clear();
+            _param.Add("config", config);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_CREATELOOPBACKAUDIOTRACK_599af35,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? 0 : (uint)AgoraJson.GetData<uint>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int DestroyLoopbackAudioTrack(uint trackId)
+        {
+            _param.Clear();
+            _param.Add("trackId", trackId);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_DESTROYLOOPBACKAUDIOTRACK_6178b5d,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int UpdateLoopbackAudioTrackConfig(uint trackId, LoopbackAudioTrackConfig config)
+        {
+            _param.Clear();
+            _param.Add("trackId", trackId);
+            _param.Add("config", config);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_UPDATELOOPBACKAUDIOTRACKCONFIG_080b602,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

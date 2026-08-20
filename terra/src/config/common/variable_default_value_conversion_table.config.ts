@@ -91,6 +91,7 @@ export const variableDefaultValueConversionTable: ConversionTable = {
         "IMusicContentCenter.searchMusic.jsonOption:nullptr": "\"\"",
         "Metadata.Metadata.buffer:NULL": "IntPtr.Zero",
         "MixedAudioStream.MixedAudioStream.trackId:-1": "0xffffffff",
+        "LoopbackAudioTrackConfig.LoopbackAudioTrackConfig.processId:-1": "0xffffffff",
         "WatermarkBuffer.WatermarkBuffer.buffer:NULL": "IntPtr.Zero",
         "MultipathStats.MultipathStats.pathStats:nullptr": "null",
     },
