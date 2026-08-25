@@ -598,9 +598,9 @@ namespace Agora.Rtm.LitJson
                             }
                         }
 
-                        ((IDictionary)instance).Add(
-                            property, ReadValue(
-                                t_data.ElementType, reader));
+                      ((IDictionary)instance).Add(
+                          property, ReadValue(
+                              t_data.ElementType, reader));
                     }
 
                 }

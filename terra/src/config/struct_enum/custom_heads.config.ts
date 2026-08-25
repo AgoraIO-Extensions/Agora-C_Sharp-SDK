@@ -97,6 +97,12 @@ export const customHeads: CustomHead[] = [
         name: "RtcEngineContext",
         hide_members: [
             "eventHandler"
+        ],
+        custom_members: [
+            `public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions)
+        : this(appId, context, channelProfile, license, audioScenario, areaCode, logConfig, threadPriority, useExternalEglContext, domainLimit, autoRegisterAgoraExtensions, string.Empty)
+    {
+    }`
         ]
     },
     {
