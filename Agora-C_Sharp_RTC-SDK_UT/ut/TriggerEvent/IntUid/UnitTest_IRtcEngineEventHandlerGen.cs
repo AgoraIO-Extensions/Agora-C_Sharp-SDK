@@ -271,6 +271,28 @@ namespace Agora.Rtc.Ut.Event
         }
 
         [Test]
+        public void Test_IRtcEngineEventHandler_OnVideoBlackFrameDetected_2ad83d8()
+        {
+            ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONVIDEOBLACKFRAMEDETECTED_2ad83d8;
+
+            jsonObj.Clear();
+
+            VIDEO_SOURCE_TYPE source = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
+            jsonObj.Add("source", source);
+
+            int reason = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("reason", reason);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnVideoBlackFrameDetectedPassed(source, reason));
+        }
+
+        [Test]
         public void Test_IRtcEngineEventHandler_OnLocalVideoEvent_7c57d16()
         {
             ApiParam.@event = AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOEVENT_7c57d16;

@@ -199,6 +199,21 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONVIDEOBLACKFRAMEDETECTED_2ad83d8:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnVideoBlackFrameDetected(
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source"),
+                        (int)AgoraJson.GetData<int>(jsonData, "reason")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOEVENT_7c57d16:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS

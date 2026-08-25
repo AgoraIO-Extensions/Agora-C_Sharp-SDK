@@ -3007,6 +3007,11 @@ namespace Agora.Rtc
         public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel);
 
         ///
+        /// @ignore
+        ///
+        public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel, int samplesPerCall);
+
+        ///
         /// <summary>
         /// Turns on audio spectrum monitoring.
         /// 

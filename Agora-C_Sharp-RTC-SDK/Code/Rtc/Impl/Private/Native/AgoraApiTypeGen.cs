@@ -530,6 +530,8 @@ namespace Agora.Rtc
         public const string IRTCENGINE_SETEARMONITORINGAUDIOFRAMEPARAMETERS_bd46d1d = "RtcEngine_setEarMonitoringAudioFrameParameters_bd46d1d";
         //IRtcEngine::setPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel, );
         public const string IRTCENGINE_SETPLAYBACKAUDIOFRAMEBEFOREMIXINGPARAMETERS_4e92b3c = "RtcEngine_setPlaybackAudioFrameBeforeMixingParameters_4e92b3c";
+        //IRtcEngine::setPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel, int samplesPerCall, );
+        public const string IRTCENGINE_SETPLAYBACKAUDIOFRAMEBEFOREMIXINGPARAMETERS_ee7e270 = "RtcEngine_setPlaybackAudioFrameBeforeMixingParameters_ee7e270";
         //IRtcEngine::enableAudioSpectrumMonitor(int intervalInMS, );
         public const string IRTCENGINE_ENABLEAUDIOSPECTRUMMONITOR_46f8ab7 = "RtcEngine_enableAudioSpectrumMonitor_46f8ab7";
         //IRtcEngine::disableAudioSpectrumMonitor();
@@ -1182,6 +1184,8 @@ namespace Agora.Rtc
         public const string IRTCENGINEEVENTHANDLER_ONLASTMILEQUALITY_46f8ab7 = "RtcEngineEventHandler_onLastmileQuality_46f8ab7";
         //IRtcEngineEventHandler::onFirstLocalVideoFrame(agora::rtc::VIDEO_SOURCE_TYPE source, int width, int height, int elapsed, );
         public const string IRTCENGINEEVENTHANDLER_ONFIRSTLOCALVIDEOFRAME_ebdfd19 = "RtcEngineEventHandler_onFirstLocalVideoFrame_ebdfd19";
+        //IRtcEngineEventHandler::onVideoBlackFrameDetected(agora::rtc::VIDEO_SOURCE_TYPE source, int reason, );
+        public const string IRTCENGINEEVENTHANDLER_ONVIDEOBLACKFRAMEDETECTED_2ad83d8 = "RtcEngineEventHandler_onVideoBlackFrameDetected_2ad83d8";
         //IRtcEngineEventHandler::onLocalVideoEvent(agora::rtc::VIDEO_SOURCE_TYPE source, agora::rtc::LOCAL_VIDEO_EVENT_TYPE event, );
         public const string IRTCENGINEEVENTHANDLER_ONLOCALVIDEOEVENT_7c57d16 = "RtcEngineEventHandler_onLocalVideoEvent_7c57d16";
         //IRtcEngineEventHandler::onLocalVideoStateChanged(agora::rtc::VIDEO_SOURCE_TYPE source, agora::rtc::LOCAL_VIDEO_STREAM_STATE state, agora::rtc::LOCAL_VIDEO_STREAM_REASON reason, );

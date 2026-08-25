@@ -200,6 +200,13 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        public virtual void OnVideoBlackFrameDetected(VIDEO_SOURCE_TYPE source, int reason)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
         public virtual void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)
         {
         }

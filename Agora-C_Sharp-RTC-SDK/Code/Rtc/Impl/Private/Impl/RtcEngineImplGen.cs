@@ -2498,6 +2498,25 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel, int samplesPerCall)
+        {
+            _param.Clear();
+            _param.Add("sampleRate", sampleRate);
+            _param.Add("channel", channel);
+            _param.Add("samplesPerCall", samplesPerCall);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SETPLAYBACKAUDIOFRAMEBEFOREMIXINGPARAMETERS_ee7e270,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
         public int EnableAudioSpectrumMonitor(int intervalInMS = 100)
         {
             _param.Clear();

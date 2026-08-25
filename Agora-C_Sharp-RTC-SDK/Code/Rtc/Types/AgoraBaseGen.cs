@@ -670,6 +670,41 @@ namespace Agora.Rtc
         ///
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
 
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_ASSET_INVALID = 1700,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_SAVE_FAILED = 1701,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_ENGINE_INVALID = 1702,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_NODE_NOT_ACTIVE = 1704,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_INVALID_PARAM = 1705,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_NOT_SUPPORTED = 1706,
+
+        ///
+        /// @ignore
+        ///
+        ERR_VIDEOEFFECT_INVALID_BUNDLE_PATH = 1707,
+
     }
 
     ///
@@ -7035,6 +7070,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        FACE_SHAPE_AREA_FACESMALL = 109,
+
+        ///
+        /// @ignore
+        ///
         FACE_SHAPE_AREA_EYESCALE = 200,
 
         ///
@@ -7066,6 +7106,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         FACE_SHAPE_AREA_EYEOUTERCORNER = 206,
+
+        ///
+        /// @ignore
+        ///
+        FACE_SHAPE_AREA_EYEANGLE = 207,
 
         ///
         /// @ignore
