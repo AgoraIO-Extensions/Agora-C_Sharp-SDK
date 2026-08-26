@@ -315,6 +315,32 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
+        public bool OnVideoBlackFrameDetected_2ad83d8_be_trigger = false;
+        public VIDEO_SOURCE_TYPE OnVideoBlackFrameDetected_2ad83d8_source;
+        public int OnVideoBlackFrameDetected_2ad83d8_reason;
+
+        public override void OnVideoBlackFrameDetected(VIDEO_SOURCE_TYPE source, int reason)
+        {
+            OnVideoBlackFrameDetected_2ad83d8_be_trigger = true;
+            OnVideoBlackFrameDetected_2ad83d8_source = source;
+            OnVideoBlackFrameDetected_2ad83d8_reason = reason;
+        }
+
+        public bool OnVideoBlackFrameDetectedPassed(VIDEO_SOURCE_TYPE source, int reason)
+        {
+            if (OnVideoBlackFrameDetected_2ad83d8_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoBlackFrameDetected_2ad83d8_source, source) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnVideoBlackFrameDetected_2ad83d8_reason, reason) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
         public bool OnLocalVideoEvent_7c57d16_be_trigger = false;
         public VIDEO_SOURCE_TYPE OnLocalVideoEvent_7c57d16_source;
         public LOCAL_VIDEO_EVENT_TYPE OnLocalVideoEvent_7c57d16_event;

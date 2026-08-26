@@ -1602,6 +1602,20 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SetPlaybackAudioFrameBeforeMixingParameters_ee7e270()
+        {
+            var sampleRate = ParamsHelper.CreateParam<int>();
+
+            var channel = ParamsHelper.CreateParam<int>();
+
+            var samplesPerCall = ParamsHelper.CreateParam<int>();
+
+            var nRet = @interface.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel, samplesPerCall);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_EnableAudioSpectrumMonitor_46f8ab7()
         {
             var intervalInMS = ParamsHelper.CreateParam<int>();

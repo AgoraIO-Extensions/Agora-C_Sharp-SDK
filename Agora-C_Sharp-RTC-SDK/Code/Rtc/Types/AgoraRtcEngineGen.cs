@@ -2634,6 +2634,11 @@ namespace Agora.Rtc
     ///
     public class RtcEngineContext : IOptionalJsonParse
     {
+        public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions)
+            : this(appId, context, channelProfile, license, audioScenario, areaCode, logConfig, threadPriority, useExternalEglContext, domainLimit, autoRegisterAgoraExtensions, string.Empty)
+        {
+        }
+
         ///
         /// @ignore
         ///
@@ -2689,6 +2694,11 @@ namespace Agora.Rtc
         ///
         public bool autoRegisterAgoraExtensions;
 
+        ///
+        /// @ignore
+        ///
+        public string parameters;
+
         public RtcEngineContext()
         {
             this.appId = "";
@@ -2701,9 +2711,10 @@ namespace Agora.Rtc
             this.useExternalEglContext = false;
             this.domainLimit = false;
             this.autoRegisterAgoraExtensions = true;
+            this.parameters = "";
         }
 
-        public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions)
+        public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions, string parameters)
         {
             this.appId = appId;
             this.context = context;
@@ -2716,6 +2727,7 @@ namespace Agora.Rtc
             this.useExternalEglContext = useExternalEglContext;
             this.domainLimit = domainLimit;
             this.autoRegisterAgoraExtensions = autoRegisterAgoraExtensions;
+            this.parameters = parameters;
         }
 
         ///
@@ -2760,6 +2772,9 @@ namespace Agora.Rtc
 
             writer.WritePropertyName("autoRegisterAgoraExtensions");
             writer.Write(this.autoRegisterAgoraExtensions);
+
+            writer.WritePropertyName("parameters");
+            writer.Write(this.parameters);
 
             writer.WriteObjectEnd();
         }

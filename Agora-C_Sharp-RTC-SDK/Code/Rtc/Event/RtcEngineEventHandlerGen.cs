@@ -106,6 +106,14 @@ namespace Agora.Rtc
             EventOnFirstLocalVideoFrame.Invoke(source, width, height, elapsed);
         }
 
+        public event Action<VIDEO_SOURCE_TYPE, int> EventOnVideoBlackFrameDetected;
+
+        public override void OnVideoBlackFrameDetected(VIDEO_SOURCE_TYPE source, int reason)
+        {
+            if (EventOnVideoBlackFrameDetected == null) return;
+            EventOnVideoBlackFrameDetected.Invoke(source, reason);
+        }
+
         public event Action<VIDEO_SOURCE_TYPE, LOCAL_VIDEO_EVENT_TYPE> EventOnLocalVideoEvent;
 
         public override void OnLocalVideoEvent(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_EVENT_TYPE @event)

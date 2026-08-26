@@ -199,6 +199,21 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONVIDEOBLACKFRAMEDETECTED_2ad83d8:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnVideoBlackFrameDetected(
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source"),
+                        (int)AgoraJson.GetData<int>(jsonData, "reason")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOEVENT_7c57d16:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -811,24 +826,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
-                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONREMOTEVIDEOSTATECHANGED_a14e9d1:
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-CallbackObject._CallbackQueue.EnQueue(() => {
-#endif
-                        if (rtcEngineEventHandler == null) return;
-                        rtcEngineEventHandler.OnRemoteVideoStateChanged(
-                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
-                        (REMOTE_VIDEO_STATE)AgoraJson.GetData<int>(jsonData, "state"),
-                        (REMOTE_VIDEO_STATE_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
-                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
-                        );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-});
-#endif
-                        break;
-                    }
                 case AgoraApiType.IRTCENGINEEVENTHANDLER_ONFIRSTREMOTEVIDEOFRAME_a68170a:
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -983,6 +980,21 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         rtcEngineEventHandler.OnRemoteAudioStats(
                         (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (RemoteAudioStats)AgoraJson.JsonToStruct<RemoteAudioStats>(jsonData, "stats")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
+                case AgoraApiType.IRTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS_3ac0eb4:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (rtcEngineEventHandler == null) return;
+                        rtcEngineEventHandler.OnLocalVideoStats(
+                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (LocalVideoStats)AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 });

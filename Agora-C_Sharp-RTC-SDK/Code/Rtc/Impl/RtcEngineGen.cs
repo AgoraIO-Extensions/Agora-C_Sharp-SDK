@@ -1334,6 +1334,15 @@ namespace Agora.Rtc
             return _impl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel);
         }
 
+        public override int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel, int samplesPerCall)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel, samplesPerCall);
+        }
+
         public override int EnableAudioSpectrumMonitor(int intervalInMS = 100)
         {
             if (_impl == null)
