@@ -177,6 +177,8 @@ export const customHeads: CustomHead[] = [
     {
         name: "IMediaEngine",
         hide_methods: [
+            "registerAudioTrackObserver",
+            "unregisterAudioTrackObserver",
             "release",
             "enableCustomAudioLocalPlayback",
             "registerAudioFrameObserver",

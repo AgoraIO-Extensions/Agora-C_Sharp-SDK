@@ -231,6 +231,8 @@ export const customHeads: CustomHead[] = [
             "public abstract int UnRegisterFaceInfoObserver();"
         ],
         hide_methods: [
+            "registerAudioTrackObserver",
+            "unregisterAudioTrackObserver",
             "release",
             "enableCustomAudioLocalPlayback",
             "registerAudioFrameObserver",
