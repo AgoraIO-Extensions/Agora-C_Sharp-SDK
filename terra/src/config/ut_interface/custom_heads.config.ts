@@ -158,6 +158,8 @@ export const customHeads: CustomHead[] = [
             "release",
             "queryInterface",
             "registerPacketObserver",
+            "registerAudioTrackObserver",
+            "unregisterAudioTrackObserver",
             "registerEventHandler",
             "unregisterEventHandler",
             "joinChannelWithUserAccountEx",

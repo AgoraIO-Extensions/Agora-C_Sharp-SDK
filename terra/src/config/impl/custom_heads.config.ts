@@ -2,6 +2,11 @@ import { CustomHead } from "../../type_definition";
 
 export const customHeads: CustomHead[] = [
     {
+        name: "IAudioTrackObserver",
+        is_callback_cross_thread: true,
+        listener_name: "audioTrackObserver"
+    },
+    {
         name: "IAgoraParameter",
         is_hide: true,
     },
@@ -131,6 +136,8 @@ export const customHeads: CustomHead[] = [
             "initialize",
             "queryInterface",
             "registerPacketObserver",
+            "registerAudioTrackObserver",
+            "unregisterAudioTrackObserver",
             "registerEventHandler",
             "unregisterEventHandler",
             "joinChannelWithUserAccountEx",
