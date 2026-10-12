@@ -3332,7 +3332,7 @@ namespace Agora.Rtc
             return _impl.DestroyLoopbackAudioTrack(trackId);
         }
 
-        public override int RegisterAudioTrackObserver(uint id, IAudioTrackObserver* observer)
+        public override int RegisterAudioTrackObserver(uint id, IAudioTrackObserver observer)
         {
             if (_impl == null)
             {
@@ -3341,7 +3341,7 @@ namespace Agora.Rtc
             return _impl.RegisterAudioTrackObserver(id, observer);
         }
 
-        public override int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver* observer)
+        public override int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver observer)
         {
             if (_impl == null)
             {

@@ -7803,9 +7803,9 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int[8] levels;
+        public int[] levels;
 
-        public AudioTrackVolumeInfo(int channelCount, int[8] levels)
+        public AudioTrackVolumeInfo(int channelCount, int[] levels)
         {
             this.channelCount = channelCount;
             this.levels = levels;
@@ -7852,7 +7852,7 @@ namespace Agora.Rtc
             this.volume = 100;
             this.deviceName = "";
             this.appName = "";
-            this.processId = -1;
+            this.processId = uint.MaxValue;
         }
 
         public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)

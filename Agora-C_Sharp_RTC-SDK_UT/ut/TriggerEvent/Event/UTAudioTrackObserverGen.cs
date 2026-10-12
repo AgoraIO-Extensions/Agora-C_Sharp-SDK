@@ -9,23 +9,23 @@ namespace Agora.Rtc.Ut
     {
         public bool OnAudioTrackVolumeIndication_9bd73f7_be_trigger = false;
         public uint OnAudioTrackVolumeIndication_9bd73f7_trackId;
-        public AudioTrackVolumeInfo const* OnAudioTrackVolumeIndication_9bd73f7_volumeInfo;
+        public AudioTrackVolumeInfo OnAudioTrackVolumeIndication_9bd73f7_volumeInfo;
 
-        public override void OnAudioTrackVolumeIndication(uint trackId, AudioTrackVolumeInfo const* volumeInfo) 
+        public override void OnAudioTrackVolumeIndication(uint trackId, AudioTrackVolumeInfo volumeInfo)
         {
             OnAudioTrackVolumeIndication_9bd73f7_be_trigger = true;
             OnAudioTrackVolumeIndication_9bd73f7_trackId = trackId;
             OnAudioTrackVolumeIndication_9bd73f7_volumeInfo = volumeInfo;
         }
 
-        public bool OnAudioTrackVolumeIndicationPassed(uint trackId, AudioTrackVolumeInfo const* volumeInfo)
+        public bool OnAudioTrackVolumeIndicationPassed(uint trackId, AudioTrackVolumeInfo volumeInfo)
         {
             if (OnAudioTrackVolumeIndication_9bd73f7_be_trigger == false)
                 return false;
 
             if (ParamsHelper.Compare<uint>(OnAudioTrackVolumeIndication_9bd73f7_trackId, trackId) == false)
                 return false;
-            if (ParamsHelper.Compare < AudioTrackVolumeInfo const*> (OnAudioTrackVolumeIndication_9bd73f7_volumeInfo, volumeInfo) == false)
+            if (ParamsHelper.Compare<AudioTrackVolumeInfo>(OnAudioTrackVolumeIndication_9bd73f7_volumeInfo, volumeInfo) == false)
                 return false;
 
             return true;

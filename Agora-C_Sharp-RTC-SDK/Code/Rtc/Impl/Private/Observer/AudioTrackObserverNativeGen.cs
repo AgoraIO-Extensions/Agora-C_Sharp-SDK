@@ -21,9 +21,17 @@ namespace Agora.Rtc
             {
                 case AgoraApiType.IAUDIOTRACKOBSERVER_ONAUDIOTRACKVOLUMEINDICATION_9bd73f7:
                     {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (audioTrackObserver == null) return;
+                        audioTrackObserver.OnAudioTrackVolumeIndication(
                         (uint)AgoraJson.GetData<uint>(jsonData, "trackId"),
-							(AudioTrackVolumeInfo const*)AgoraJson.JsonToStruct < AudioTrackVolumeInfo const*> (jsonData, "volumeInfo")
-                            );
+                        (AudioTrackVolumeInfo)AgoraJson.JsonToStruct<AudioTrackVolumeInfo>(jsonData, "volumeInfo")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
                         break;
                     }
                 default:

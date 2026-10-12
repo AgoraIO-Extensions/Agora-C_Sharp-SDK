@@ -5599,12 +5599,12 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int RegisterAudioTrackObserver(uint id, IAudioTrackObserver* observer);
+        public abstract int RegisterAudioTrackObserver(uint id, IAudioTrackObserver observer);
 
         ///
         /// @ignore
         ///
-        public abstract int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver* observer);
+        public abstract int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver observer);
 
     }
 }

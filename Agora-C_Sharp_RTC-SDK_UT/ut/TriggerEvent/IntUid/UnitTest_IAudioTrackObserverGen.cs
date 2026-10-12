@@ -19,7 +19,7 @@ namespace Agora.Rtc.Ut.Event
             uint trackId = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("trackId", trackId);
 
-            AudioTrackVolumeInfo const* volumeInfo = ParamsHelper.CreateParam < AudioTrackVolumeInfo const*> ();
+            AudioTrackVolumeInfo volumeInfo = ParamsHelper.CreateParam<AudioTrackVolumeInfo>();
             jsonObj.Add("volumeInfo", volumeInfo);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);

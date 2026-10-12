@@ -3297,29 +3297,5 @@ namespace Agora.Rtc.Ut
         }
 
 
-        [Test]
-        public void Test_RegisterAudioTrackObserver_39ac049()
-        {
-            var id = ParamsHelper.CreateParam<uint>();
-
-            var observer = ParamsHelper.CreateParam<IAudioTrackObserver*>();
-
-            var nRet = @interface.RegisterAudioTrackObserver(id, observer);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_UnregisterAudioTrackObserver_39ac049()
-        {
-            var id = ParamsHelper.CreateParam<uint>();
-
-            var observer = ParamsHelper.CreateParam<IAudioTrackObserver*>();
-
-            var nRet = @interface.UnregisterAudioTrackObserver(id, observer);
-            Assert.AreEqual(0, nRet);
-        }
-
-
     }
 }

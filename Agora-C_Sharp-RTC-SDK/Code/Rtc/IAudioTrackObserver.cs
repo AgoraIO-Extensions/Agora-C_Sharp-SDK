@@ -16,9 +16,9 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public virtual void OnAudioTrackVolumeIndication(uint trackId, AudioTrackVolumeInfo const* volumeInfo)
+        public virtual void OnAudioTrackVolumeIndication(uint trackId, AudioTrackVolumeInfo volumeInfo)
         {
         }
 
-}
+    }
 }

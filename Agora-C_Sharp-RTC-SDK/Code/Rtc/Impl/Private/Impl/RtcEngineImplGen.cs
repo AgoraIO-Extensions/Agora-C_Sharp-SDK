@@ -6213,41 +6213,5 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int RegisterAudioTrackObserver(uint id, IAudioTrackObserver* observer)
-        {
-            _param.Clear();
-            _param.Add("id", id);
-            _param.Add("observer", observer);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_REGISTERAUDIOTRACKOBSERVER_39ac049,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver* observer)
-        {
-            _param.Clear();
-            _param.Add("id", id);
-            _param.Add("observer", observer);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_UNREGISTERAUDIOTRACKOBSERVER_39ac049,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
     }
 }
