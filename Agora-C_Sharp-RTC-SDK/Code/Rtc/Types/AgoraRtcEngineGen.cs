@@ -1869,1766 +1869,1825 @@ namespace Agora.Rtc
     }
 
     ///
-    /// <summary>
-    /// The channel media options.
-    /// 
-    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection. For example, publishMicrophoneTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenCaptureVideo, publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true. Agora recommends that you set member parameter values yourself according to your business scenario, otherwise the SDK will automatically assign values to member parameters.
-    /// </summary>
+    /// @ignore
     ///
+    public class AudioTrackIdList
+    {
+        public track_id_t const* trackIds;
+
+        ///
+        /// @ignore
+        ///
+        public int trackCount;
+
+        public AudioTrackIdList(track_id_t const* trackIds,int trackCount)
+{
+this.trackIds = trackIds;
+this.trackCount = trackCount;
+}
+public AudioTrackIdList()
+        {
+        }
+
+    }
+
+///
+/// <summary>
+/// The channel media options.
+/// 
+/// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection. For example, publishMicrophoneTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenCaptureVideo, publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true. Agora recommends that you set member parameter values yourself according to your business scenario, otherwise the SDK will automatically assign values to member parameters.
+/// </summary>
+///
     public class ChannelMediaOptions : IOptionalJsonParse
-    {
-        ///
-        /// <summary>
-        /// Whether to publish the video captured by the camera: true : Publish the video captured by the camera. false : Do not publish the video captured by the camera.
-        /// </summary>
-        ///
-        public Optional<bool> publishCameraTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured by the second camera: true : Publish the video captured by the second camera. false : Do not publish the video captured by the second camera.
-        /// </summary>
-        ///
-        public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This parameter is for Android, Windows and macOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This parameter is for Android, Windows and macOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the audio captured by the microphone: true : Publish the audio captured by the microphone. false : Do not publish the audio captured by the microphone.
-        /// </summary>
-        ///
-        public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This is for Windows and macOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishScreenTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured from the second screen: true : Publish the video captured from the second screen. false : Do not publish the video captured from the second screen.
-        /// </summary>
-        ///
-        public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured from the third screen: true : Publish the captured video from the third screen. false : Do not publish the video captured from the third screen. This is for Windows and macOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishThirdScreenTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured from the fourth screen: true : Publish the captured video from the fourth screen. false : Do not publish the video captured from the fourth screen. This is for Windows and macOS only.
-        /// </summary>
-        ///
-        public Optional<bool> publishFourthScreenTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the audio captured from a custom source: true : Publish the audio captured from the custom source. false : Do not publish the captured audio from a custom source.
-        /// </summary>
-        ///
-        public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// The ID of the custom audio track to be published. The default value is 0. You can obtain the custom audio track ID through the CreateCustomAudioTrack method.
-        /// </summary>
-        ///
-        public Optional<int> publishCustomAudioTrackId = new Optional<int>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video captured from a custom source: true : Publish the video captured from the custom source. false : Do not publish the captured video from a custom source.
-        /// </summary>
-        ///
-        public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the encoded video: true : Publish the encoded video. false : Do not publish the encoded video.
-        /// </summary>
-        ///
-        public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the audio from the media player: true : Publish the audio from the media player. false : Do not publish the audio from the media player.
-        /// </summary>
-        ///
-        public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the video from the media player: true : Publish the video from the media player. false : Do not publish the video from the media player.
-        /// </summary>
-        ///
-        public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the local transcoded video: true : Publish the local transcoded video. false : Do not publish the local transcoded video.
-        /// </summary>
-        ///
-        public Optional<bool> publishTranscodedVideoTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the mixed audio track: true : Publish the mixed audio track. false : Do not publish the mixed audio track.
-        /// </summary>
-        ///
-        public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<bool> publishLipSyncTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to automatically subscribe to all remote audio streams when the user joins a channel: true : Subscribe to all remote audio streams. false : Do not automatically subscribe to any remote audio streams.
-        /// </summary>
-        ///
-        public Optional<bool> autoSubscribeAudio = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to automatically subscribe to all remote video streams when the user joins the channel: true : Subscribe to all remote video streams. false : Do not automatically subscribe to any remote video streams.
-        /// </summary>
-        ///
-        public Optional<bool> autoSubscribeVideo = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to enable audio capturing or playback: true : Enable audio capturing or playback. false : Do not enable audio capturing or playback. If you need to publish the audio streams captured by your microphone, ensure this parameter is set as true.
-        /// </summary>
-        ///
-        public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// The ID of the media player to be published. The default value is 0.
-        /// </summary>
-        ///
-        public Optional<int> publishMediaPlayerId = new Optional<int>();
-
-        ///
-        /// <summary>
-        /// The user role. See CLIENT_ROLE_TYPE. If you set the user role as an audience member, you cannot publish audio and video streams in the channel. If you want to publish media streams in a channel during live streaming, ensure you set the user role as broadcaster.
-        /// </summary>
-        ///
-        public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
-
-        ///
-        /// <summary>
-        /// The latency level of an audience member in interactive live streaming. See AUDIENCE_LATENCY_LEVEL_TYPE.
-        /// </summary>
-        ///
-        public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
-
-        ///
-        /// <summary>
-        /// The default video-stream type. See VIDEO_STREAM_TYPE.
-        /// </summary>
-        ///
-        public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
-
-        ///
-        /// <summary>
-        /// The channel profile. See CHANNEL_PROFILE_TYPE.
-        /// </summary>
-        ///
-        public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
-
-        ///
-        /// <summary>
-        /// Delay (in milliseconds) for sending audio frames. You can use this parameter to set the delay of the audio frames that need to be sent, to ensure audio and video synchronization. To switch off the delay, set the value to 0.
-        /// </summary>
-        ///
-        public Optional<int> audioDelayMs = new Optional<int>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
-
-        ///
-        /// <summary>
-        /// (Optional) The token generated on your server for authentication.
-        ///  This parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx.
-        ///  Ensure that the App ID, channel name, and user name used for creating the token are the same as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
-        /// </summary>
-        ///
-        public Optional<string> token = new Optional<string>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to publish the sound of a metronome to remote users: true : Publish processed audio frames. Both the local user and remote users can hear the metronome. false : Do not publish the sound of the metronome. Only the local user can hear the metronome.
-        /// </summary>
-        ///
-        public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Whether to enable interactive mode: true : Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency. false :Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.
-        ///  This parameter only applies to co-streaming scenarios. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.
-        ///  This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
-        /// </summary>
-        ///
-        public Optional<bool> isInteractiveAudience = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0.
-        /// </summary>
-        ///
-        public Optional<uint> customVideoTrackId = new Optional<uint>();
-
-        ///
-        /// <summary>
-        /// Whether the audio stream being published is filtered according to the volume algorithm: true : The audio stream is filtered. If the audio stream filter is not enabled, this setting does not takes effect. false : The audio stream is not filtered. If you need to enable this function, contact.
-        /// </summary>
-        ///
-        public Optional<bool> isAudioFilterable = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<string> parameters = new Optional<string>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<bool> enableMultipath = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<MultipathMode> uplinkMultipathMode = new Optional<MultipathMode>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<MultipathMode> downlinkMultipathMode = new Optional<MultipathMode>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<MultipathType> preferMultipathType = new Optional<MultipathType>();
-
-        public ChannelMediaOptions()
-        {
-        }
-
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType)
-        {
-            this.publishCameraTrack = publishCameraTrack;
-            this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
-            this.publishThirdCameraTrack = publishThirdCameraTrack;
-            this.publishFourthCameraTrack = publishFourthCameraTrack;
-            this.publishMicrophoneTrack = publishMicrophoneTrack;
-            this.publishScreenCaptureAudio = publishScreenCaptureAudio;
-            this.publishScreenCaptureVideo = publishScreenCaptureVideo;
-            this.publishScreenTrack = publishScreenTrack;
-            this.publishSecondaryScreenTrack = publishSecondaryScreenTrack;
-            this.publishThirdScreenTrack = publishThirdScreenTrack;
-            this.publishFourthScreenTrack = publishFourthScreenTrack;
-            this.publishCustomAudioTrack = publishCustomAudioTrack;
-            this.publishCustomAudioTrackId = publishCustomAudioTrackId;
-            this.publishCustomVideoTrack = publishCustomVideoTrack;
-            this.publishEncodedVideoTrack = publishEncodedVideoTrack;
-            this.publishMediaPlayerAudioTrack = publishMediaPlayerAudioTrack;
-            this.publishMediaPlayerVideoTrack = publishMediaPlayerVideoTrack;
-            this.publishTranscodedVideoTrack = publishTranscodedVideoTrack;
-            this.publishMixedAudioTrack = publishMixedAudioTrack;
-            this.publishLipSyncTrack = publishLipSyncTrack;
-            this.autoSubscribeAudio = autoSubscribeAudio;
-            this.autoSubscribeVideo = autoSubscribeVideo;
-            this.enableAudioRecordingOrPlayout = enableAudioRecordingOrPlayout;
-            this.publishMediaPlayerId = publishMediaPlayerId;
-            this.clientRoleType = clientRoleType;
-            this.audienceLatencyLevel = audienceLatencyLevel;
-            this.defaultVideoStreamType = defaultVideoStreamType;
-            this.channelProfile = channelProfile;
-            this.audioDelayMs = audioDelayMs;
-            this.mediaPlayerAudioDelayMs = mediaPlayerAudioDelayMs;
-            this.token = token;
-            this.enableBuiltInMediaEncryption = enableBuiltInMediaEncryption;
-            this.publishRhythmPlayerTrack = publishRhythmPlayerTrack;
-            this.isInteractiveAudience = isInteractiveAudience;
-            this.customVideoTrackId = customVideoTrackId;
-            this.isAudioFilterable = isAudioFilterable;
-            this.parameters = parameters;
-            this.enableMultipath = enableMultipath;
-            this.uplinkMultipathMode = uplinkMultipathMode;
-            this.downlinkMultipathMode = downlinkMultipathMode;
-            this.preferMultipathType = preferMultipathType;
-        }
-
-        ///
-        /// @ignore
-        ///
-        public virtual void ToJson(JsonWriter writer)
-        {
-            writer.WriteObjectStart();
-
-            if (this.publishCameraTrack.HasValue())
-            {
-                writer.WritePropertyName("publishCameraTrack");
-                writer.Write(this.publishCameraTrack.GetValue());
-            }
-
-            if (this.publishSecondaryCameraTrack.HasValue())
-            {
-                writer.WritePropertyName("publishSecondaryCameraTrack");
-                writer.Write(this.publishSecondaryCameraTrack.GetValue());
-            }
-
-            if (this.publishThirdCameraTrack.HasValue())
-            {
-                writer.WritePropertyName("publishThirdCameraTrack");
-                writer.Write(this.publishThirdCameraTrack.GetValue());
-            }
-
-            if (this.publishFourthCameraTrack.HasValue())
-            {
-                writer.WritePropertyName("publishFourthCameraTrack");
-                writer.Write(this.publishFourthCameraTrack.GetValue());
-            }
-
-            if (this.publishMicrophoneTrack.HasValue())
-            {
-                writer.WritePropertyName("publishMicrophoneTrack");
-                writer.Write(this.publishMicrophoneTrack.GetValue());
-            }
-
-            if (this.publishScreenCaptureAudio.HasValue())
-            {
-                writer.WritePropertyName("publishScreenCaptureAudio");
-                writer.Write(this.publishScreenCaptureAudio.GetValue());
-            }
-
-            if (this.publishScreenCaptureVideo.HasValue())
-            {
-                writer.WritePropertyName("publishScreenCaptureVideo");
-                writer.Write(this.publishScreenCaptureVideo.GetValue());
-            }
-
-            if (this.publishScreenTrack.HasValue())
-            {
-                writer.WritePropertyName("publishScreenTrack");
-                writer.Write(this.publishScreenTrack.GetValue());
-            }
-
-            if (this.publishSecondaryScreenTrack.HasValue())
-            {
-                writer.WritePropertyName("publishSecondaryScreenTrack");
-                writer.Write(this.publishSecondaryScreenTrack.GetValue());
-            }
-
-            if (this.publishThirdScreenTrack.HasValue())
-            {
-                writer.WritePropertyName("publishThirdScreenTrack");
-                writer.Write(this.publishThirdScreenTrack.GetValue());
-            }
-
-            if (this.publishFourthScreenTrack.HasValue())
-            {
-                writer.WritePropertyName("publishFourthScreenTrack");
-                writer.Write(this.publishFourthScreenTrack.GetValue());
-            }
-
-            if (this.publishCustomAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishCustomAudioTrack");
-                writer.Write(this.publishCustomAudioTrack.GetValue());
-            }
-
-            if (this.publishCustomAudioTrackId.HasValue())
-            {
-                writer.WritePropertyName("publishCustomAudioTrackId");
-                writer.Write(this.publishCustomAudioTrackId.GetValue());
-            }
-
-            if (this.publishCustomVideoTrack.HasValue())
-            {
-                writer.WritePropertyName("publishCustomVideoTrack");
-                writer.Write(this.publishCustomVideoTrack.GetValue());
-            }
-
-            if (this.publishEncodedVideoTrack.HasValue())
-            {
-                writer.WritePropertyName("publishEncodedVideoTrack");
-                writer.Write(this.publishEncodedVideoTrack.GetValue());
-            }
-
-            if (this.publishMediaPlayerAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishMediaPlayerAudioTrack");
-                writer.Write(this.publishMediaPlayerAudioTrack.GetValue());
-            }
-
-            if (this.publishMediaPlayerVideoTrack.HasValue())
-            {
-                writer.WritePropertyName("publishMediaPlayerVideoTrack");
-                writer.Write(this.publishMediaPlayerVideoTrack.GetValue());
-            }
-
-            if (this.publishTranscodedVideoTrack.HasValue())
-            {
-                writer.WritePropertyName("publishTranscodedVideoTrack");
-                writer.Write(this.publishTranscodedVideoTrack.GetValue());
-            }
-
-            if (this.publishMixedAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishMixedAudioTrack");
-                writer.Write(this.publishMixedAudioTrack.GetValue());
-            }
-
-            if (this.publishLipSyncTrack.HasValue())
-            {
-                writer.WritePropertyName("publishLipSyncTrack");
-                writer.Write(this.publishLipSyncTrack.GetValue());
-            }
-
-            if (this.autoSubscribeAudio.HasValue())
-            {
-                writer.WritePropertyName("autoSubscribeAudio");
-                writer.Write(this.autoSubscribeAudio.GetValue());
-            }
-
-            if (this.autoSubscribeVideo.HasValue())
-            {
-                writer.WritePropertyName("autoSubscribeVideo");
-                writer.Write(this.autoSubscribeVideo.GetValue());
-            }
-
-            if (this.enableAudioRecordingOrPlayout.HasValue())
-            {
-                writer.WritePropertyName("enableAudioRecordingOrPlayout");
-                writer.Write(this.enableAudioRecordingOrPlayout.GetValue());
-            }
-
-            if (this.publishMediaPlayerId.HasValue())
-            {
-                writer.WritePropertyName("publishMediaPlayerId");
-                writer.Write(this.publishMediaPlayerId.GetValue());
-            }
-
-            if (this.clientRoleType.HasValue())
-            {
-                writer.WritePropertyName("clientRoleType");
-                AgoraJson.WriteEnum(writer, this.clientRoleType.GetValue());
-            }
-
-            if (this.audienceLatencyLevel.HasValue())
-            {
-                writer.WritePropertyName("audienceLatencyLevel");
-                AgoraJson.WriteEnum(writer, this.audienceLatencyLevel.GetValue());
-            }
-
-            if (this.defaultVideoStreamType.HasValue())
-            {
-                writer.WritePropertyName("defaultVideoStreamType");
-                AgoraJson.WriteEnum(writer, this.defaultVideoStreamType.GetValue());
-            }
-
-            if (this.channelProfile.HasValue())
-            {
-                writer.WritePropertyName("channelProfile");
-                AgoraJson.WriteEnum(writer, this.channelProfile.GetValue());
-            }
-
-            if (this.audioDelayMs.HasValue())
-            {
-                writer.WritePropertyName("audioDelayMs");
-                writer.Write(this.audioDelayMs.GetValue());
-            }
-
-            if (this.mediaPlayerAudioDelayMs.HasValue())
-            {
-                writer.WritePropertyName("mediaPlayerAudioDelayMs");
-                writer.Write(this.mediaPlayerAudioDelayMs.GetValue());
-            }
-
-            if (this.token.HasValue())
-            {
-                writer.WritePropertyName("token");
-                writer.Write(this.token.GetValue());
-            }
-
-            if (this.enableBuiltInMediaEncryption.HasValue())
-            {
-                writer.WritePropertyName("enableBuiltInMediaEncryption");
-                writer.Write(this.enableBuiltInMediaEncryption.GetValue());
-            }
-
-            if (this.publishRhythmPlayerTrack.HasValue())
-            {
-                writer.WritePropertyName("publishRhythmPlayerTrack");
-                writer.Write(this.publishRhythmPlayerTrack.GetValue());
-            }
-
-            if (this.isInteractiveAudience.HasValue())
-            {
-                writer.WritePropertyName("isInteractiveAudience");
-                writer.Write(this.isInteractiveAudience.GetValue());
-            }
-
-            if (this.customVideoTrackId.HasValue())
-            {
-                writer.WritePropertyName("customVideoTrackId");
-                writer.Write(this.customVideoTrackId.GetValue());
-            }
-
-            if (this.isAudioFilterable.HasValue())
-            {
-                writer.WritePropertyName("isAudioFilterable");
-                writer.Write(this.isAudioFilterable.GetValue());
-            }
-
-            if (this.parameters.HasValue())
-            {
-                writer.WritePropertyName("parameters");
-                writer.Write(this.parameters.GetValue());
-            }
-
-            if (this.enableMultipath.HasValue())
-            {
-                writer.WritePropertyName("enableMultipath");
-                writer.Write(this.enableMultipath.GetValue());
-            }
-
-            if (this.uplinkMultipathMode.HasValue())
-            {
-                writer.WritePropertyName("uplinkMultipathMode");
-                AgoraJson.WriteEnum(writer, this.uplinkMultipathMode.GetValue());
-            }
-
-            if (this.downlinkMultipathMode.HasValue())
-            {
-                writer.WritePropertyName("downlinkMultipathMode");
-                AgoraJson.WriteEnum(writer, this.downlinkMultipathMode.GetValue());
-            }
-
-            if (this.preferMultipathType.HasValue())
-            {
-                writer.WritePropertyName("preferMultipathType");
-                AgoraJson.WriteEnum(writer, this.preferMultipathType.GetValue());
-            }
-
-            writer.WriteObjectEnd();
-        }
-    }
+{
+    ///
+    /// <summary>
+    /// Whether to publish the video captured by the camera: true : Publish the video captured by the camera. false : Do not publish the video captured by the camera.
+    /// </summary>
+    ///
+    public Optional<bool> publishCameraTrack = new Optional<bool>();
 
     ///
     /// <summary>
-    /// The cloud proxy type.
+    /// Whether to publish the video captured by the second camera: true : Publish the video captured by the second camera. false : Do not publish the video captured by the second camera.
     /// </summary>
     ///
-    public enum PROXY_TYPE
-    {
-        ///
-        /// <summary>
-        /// 0: Reserved for future use.
-        /// </summary>
-        ///
-        NONE_PROXY_TYPE = 0,
-
-        ///
-        /// <summary>
-        /// 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
-        /// </summary>
-        ///
-        UDP_PROXY_TYPE = 1,
-
-        ///
-        /// <summary>
-        /// 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TCP/TLS 443.
-        /// </summary>
-        ///
-        TCP_PROXY_TYPE = 2,
-
-        ///
-        /// <summary>
-        /// 3: Reserved for future use.
-        /// </summary>
-        ///
-        LOCAL_PROXY_TYPE = 3,
-
-        ///
-        /// <summary>
-        /// 4: Automatic mode. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TCP/TLS 443 if the attempt fails.
-        /// </summary>
-        ///
-        TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
-
-        ///
-        /// @ignore
-        ///
-        HTTP_PROXY_TYPE = 5,
-
-        ///
-        /// @ignore
-        ///
-        HTTPS_PROXY_TYPE = 6,
-
-    }
+    public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
     ///
     /// <summary>
-    /// The type of the advanced feature.
+    /// Whether to publish the video captured by the third camera: true : Publish the video captured by the third camera. false : Do not publish the video captured by the third camera. This parameter is for Android, Windows and macOS only.
     /// </summary>
     ///
-    public enum FeatureType
-    {
-        ///
-        /// <summary>
-        /// 1: Virtual background.
-        /// </summary>
-        ///
-        VIDEO_VIRTUAL_BACKGROUND = 1,
-
-        ///
-        /// <summary>
-        /// 2: Image enhancement.
-        /// </summary>
-        ///
-        VIDEO_BEAUTY_EFFECT = 2,
-
-    }
+    public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
 
     ///
     /// <summary>
-    /// The options for leaving a channel.
+    /// Whether to publish the video captured by the fourth camera: true : Publish the video captured by the fourth camera. false : Do not publish the video captured by the fourth camera. This parameter is for Android, Windows and macOS only.
     /// </summary>
     ///
-    public class LeaveChannelOptions
+    public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the audio captured by the microphone: true : Publish the audio captured by the microphone. false : Do not publish the audio captured by the microphone.
+    /// </summary>
+    ///
+    public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the audio captured from the screen: true : Publish the audio captured from the screen. false : Publish the audio captured from the screen. This parameter is for Android and iOS only.
+    /// </summary>
+    ///
+    public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This parameter is for Android and iOS only.
+    /// </summary>
+    ///
+    public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the video captured from the screen: true : Publish the video captured from the screen. false : Do not publish the video captured from the screen. This is for Windows and macOS only.
+    /// </summary>
+    ///
+    public Optional<bool> publishScreenTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the video captured from the second screen: true : Publish the video captured from the second screen. false : Do not publish the video captured from the second screen.
+    /// </summary>
+    ///
+    public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the video captured from the third screen: true : Publish the captured video from the third screen. false : Do not publish the video captured from the third screen. This is for Windows and macOS only.
+    /// </summary>
+    ///
+    public Optional<bool> publishThirdScreenTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the video captured from the fourth screen: true : Publish the captured video from the fourth screen. false : Do not publish the video captured from the fourth screen. This is for Windows and macOS only.
+    /// </summary>
+    ///
+    public Optional<bool> publishFourthScreenTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the audio captured from a custom source: true : Publish the audio captured from the custom source. false : Do not publish the captured audio from a custom source.
+    /// </summary>
+    ///
+    public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// The ID of the custom audio track to be published. The default value is 0. You can obtain the custom audio track ID through the CreateCustomAudioTrack method.
+    /// </summary>
+    ///
+    public Optional<int> publishCustomAudioTrackId = new Optional<int>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<bool> publishLoopbackAudioTrack = new Optional<bool>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<AudioTrackIdList> publishLoopbackAudioTrackIds = new Optional<AudioTrackIdList>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the video captured from a custom source: true : Publish the video captured from the custom source. false : Do not publish the captured video from a custom source.
+    /// </summary>
+    ///
+    public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the encoded video: true : Publish the encoded video. false : Do not publish the encoded video.
+    /// </summary>
+    ///
+    public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the audio from the media player: true : Publish the audio from the media player. false : Do not publish the audio from the media player.
+    /// </summary>
+    ///
+    public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the video from the media player: true : Publish the video from the media player. false : Do not publish the video from the media player.
+    /// </summary>
+    ///
+    public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the local transcoded video: true : Publish the local transcoded video. false : Do not publish the local transcoded video.
+    /// </summary>
+    ///
+    public Optional<bool> publishTranscodedVideoTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the mixed audio track: true : Publish the mixed audio track. false : Do not publish the mixed audio track.
+    /// </summary>
+    ///
+    public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<bool> publishLipSyncTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to automatically subscribe to all remote audio streams when the user joins a channel: true : Subscribe to all remote audio streams. false : Do not automatically subscribe to any remote audio streams.
+    /// </summary>
+    ///
+    public Optional<bool> autoSubscribeAudio = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to automatically subscribe to all remote video streams when the user joins the channel: true : Subscribe to all remote video streams. false : Do not automatically subscribe to any remote video streams.
+    /// </summary>
+    ///
+    public Optional<bool> autoSubscribeVideo = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to enable audio capturing or playback: true : Enable audio capturing or playback. false : Do not enable audio capturing or playback. If you need to publish the audio streams captured by your microphone, ensure this parameter is set as true.
+    /// </summary>
+    ///
+    public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// The ID of the media player to be published. The default value is 0.
+    /// </summary>
+    ///
+    public Optional<int> publishMediaPlayerId = new Optional<int>();
+
+    ///
+    /// <summary>
+    /// The user role. See CLIENT_ROLE_TYPE. If you set the user role as an audience member, you cannot publish audio and video streams in the channel. If you want to publish media streams in a channel during live streaming, ensure you set the user role as broadcaster.
+    /// </summary>
+    ///
+    public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
+
+    ///
+    /// <summary>
+    /// The latency level of an audience member in interactive live streaming. See AUDIENCE_LATENCY_LEVEL_TYPE.
+    /// </summary>
+    ///
+    public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
+
+    ///
+    /// <summary>
+    /// The default video-stream type. See VIDEO_STREAM_TYPE.
+    /// </summary>
+    ///
+    public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
+
+    ///
+    /// <summary>
+    /// The channel profile. See CHANNEL_PROFILE_TYPE.
+    /// </summary>
+    ///
+    public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
+
+    ///
+    /// <summary>
+    /// Delay (in milliseconds) for sending audio frames. You can use this parameter to set the delay of the audio frames that need to be sent, to ensure audio and video synchronization. To switch off the delay, set the value to 0.
+    /// </summary>
+    ///
+    public Optional<int> audioDelayMs = new Optional<int>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
+
+    ///
+    /// <summary>
+    /// (Optional) The token generated on your server for authentication.
+    ///  This parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx.
+    ///  Ensure that the App ID, channel name, and user name used for creating the token are the same as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
+    /// </summary>
+    ///
+    public Optional<string> token = new Optional<string>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to publish the sound of a metronome to remote users: true : Publish processed audio frames. Both the local user and remote users can hear the metronome. false : Do not publish the sound of the metronome. Only the local user can hear the metronome.
+    /// </summary>
+    ///
+    public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Whether to enable interactive mode: true : Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency. false :Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.
+    ///  This parameter only applies to co-streaming scenarios. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.
+    ///  This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
+    /// </summary>
+    ///
+    public Optional<bool> isInteractiveAudience = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0.
+    /// </summary>
+    ///
+    public Optional<uint> customVideoTrackId = new Optional<uint>();
+
+    ///
+    /// <summary>
+    /// Whether the audio stream being published is filtered according to the volume algorithm: true : The audio stream is filtered. If the audio stream filter is not enabled, this setting does not takes effect. false : The audio stream is not filtered. If you need to enable this function, contact.
+    /// </summary>
+    ///
+    public Optional<bool> isAudioFilterable = new Optional<bool>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<string> parameters = new Optional<string>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<bool> enableMultipath = new Optional<bool>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<MultipathMode> uplinkMultipathMode = new Optional<MultipathMode>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<MultipathMode> downlinkMultipathMode = new Optional<MultipathMode>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<MultipathType> preferMultipathType = new Optional<MultipathType>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<string> customUserInfo = new Optional<string>();
+
+    public ChannelMediaOptions()
     {
-        ///
-        /// <summary>
-        /// Whether to stop playing and mixing the music file when a user leaves the channel. true : (Default) Stop playing and mixing the music file. false : Do not stop playing and mixing the music file.
-        /// </summary>
-        ///
-        public bool stopAudioMixing;
+    }
 
-        ///
-        /// <summary>
-        /// Whether to stop playing all audio effects when a user leaves the channel. true : (Default) Stop playing all audio effects. false : Do not stop playing any audio effect.
-        /// </summary>
-        ///
-        public bool stopAllEffect;
-
-        ///
-        /// @ignore
-        ///
-        public bool unloadAllEffect;
-
-        ///
-        /// <summary>
-        /// Whether to stop microphone recording when a user leaves the channel. true : (Default) Stop microphone recording. false : Do not stop microphone recording.
-        /// </summary>
-        ///
-        public bool stopMicrophoneRecording;
-
-        public LeaveChannelOptions()
-        {
-            this.stopAudioMixing = true;
-            this.stopAllEffect = true;
-            this.unloadAllEffect = false;
-            this.stopMicrophoneRecording = true;
-        }
-
-        public LeaveChannelOptions(bool stopAudioMixing, bool stopAllEffect, bool unloadAllEffect, bool stopMicrophoneRecording)
-        {
-            this.stopAudioMixing = stopAudioMixing;
-            this.stopAllEffect = stopAllEffect;
-            this.unloadAllEffect = unloadAllEffect;
-            this.stopMicrophoneRecording = stopMicrophoneRecording;
-        }
+    public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishLoopbackAudioTrack, Optional<AudioTrackIdList> publishLoopbackAudioTrackIds, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType, Optional<string> customUserInfo)
+    {
+        this.publishCameraTrack = publishCameraTrack;
+        this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
+        this.publishThirdCameraTrack = publishThirdCameraTrack;
+        this.publishFourthCameraTrack = publishFourthCameraTrack;
+        this.publishMicrophoneTrack = publishMicrophoneTrack;
+        this.publishScreenCaptureAudio = publishScreenCaptureAudio;
+        this.publishScreenCaptureVideo = publishScreenCaptureVideo;
+        this.publishScreenTrack = publishScreenTrack;
+        this.publishSecondaryScreenTrack = publishSecondaryScreenTrack;
+        this.publishThirdScreenTrack = publishThirdScreenTrack;
+        this.publishFourthScreenTrack = publishFourthScreenTrack;
+        this.publishCustomAudioTrack = publishCustomAudioTrack;
+        this.publishCustomAudioTrackId = publishCustomAudioTrackId;
+        this.publishLoopbackAudioTrack = publishLoopbackAudioTrack;
+        this.publishLoopbackAudioTrackIds = publishLoopbackAudioTrackIds;
+        this.publishCustomVideoTrack = publishCustomVideoTrack;
+        this.publishEncodedVideoTrack = publishEncodedVideoTrack;
+        this.publishMediaPlayerAudioTrack = publishMediaPlayerAudioTrack;
+        this.publishMediaPlayerVideoTrack = publishMediaPlayerVideoTrack;
+        this.publishTranscodedVideoTrack = publishTranscodedVideoTrack;
+        this.publishMixedAudioTrack = publishMixedAudioTrack;
+        this.publishLipSyncTrack = publishLipSyncTrack;
+        this.autoSubscribeAudio = autoSubscribeAudio;
+        this.autoSubscribeVideo = autoSubscribeVideo;
+        this.enableAudioRecordingOrPlayout = enableAudioRecordingOrPlayout;
+        this.publishMediaPlayerId = publishMediaPlayerId;
+        this.clientRoleType = clientRoleType;
+        this.audienceLatencyLevel = audienceLatencyLevel;
+        this.defaultVideoStreamType = defaultVideoStreamType;
+        this.channelProfile = channelProfile;
+        this.audioDelayMs = audioDelayMs;
+        this.mediaPlayerAudioDelayMs = mediaPlayerAudioDelayMs;
+        this.token = token;
+        this.enableBuiltInMediaEncryption = enableBuiltInMediaEncryption;
+        this.publishRhythmPlayerTrack = publishRhythmPlayerTrack;
+        this.isInteractiveAudience = isInteractiveAudience;
+        this.customVideoTrackId = customVideoTrackId;
+        this.isAudioFilterable = isAudioFilterable;
+        this.parameters = parameters;
+        this.enableMultipath = enableMultipath;
+        this.uplinkMultipathMode = uplinkMultipathMode;
+        this.downlinkMultipathMode = downlinkMultipathMode;
+        this.preferMultipathType = preferMultipathType;
+        this.customUserInfo = customUserInfo;
     }
 
     ///
     /// @ignore
     ///
-    public enum VIDEO_EFFECT_NODE_ID : uint
+    public virtual void ToJson(JsonWriter writer)
     {
-        ///
-        /// @ignore
-        ///
-        BEAUTY = 1U << 0,
+        writer.WriteObjectStart();
 
-        ///
-        /// @ignore
-        ///
-        STYLE_MAKEUP = 1U << 1,
-
-        ///
-        /// @ignore
-        ///
-        FILTER = 1U << 2,
-
-        ///
-        /// @ignore
-        ///
-        STICKER = 1U << 3,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum VIDEO_EFFECT_ACTION
-    {
-        ///
-        /// @ignore
-        ///
-        SAVE = 1,
-
-        ///
-        /// @ignore
-        ///
-        RESET = 2,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class RtcEngineContext : IOptionalJsonParse
-    {
-        public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions)
-            : this(appId, context, channelProfile, license, audioScenario, areaCode, logConfig, threadPriority, useExternalEglContext, domainLimit, autoRegisterAgoraExtensions, string.Empty)
+        if (this.publishCameraTrack.HasValue())
         {
+            writer.WritePropertyName("publishCameraTrack");
+            writer.Write(this.publishCameraTrack.GetValue());
         }
 
-        ///
-        /// @ignore
-        ///
-        public string appId;
-
-        ///
-        /// @ignore
-        ///
-        public ulong context;
-
-        ///
-        /// @ignore
-        ///
-        public CHANNEL_PROFILE_TYPE channelProfile;
-
-        ///
-        /// @ignore
-        ///
-        public string license;
-
-        ///
-        /// @ignore
-        ///
-        public AUDIO_SCENARIO_TYPE audioScenario;
-
-        ///
-        /// @ignore
-        ///
-        public AREA_CODE areaCode;
-
-        ///
-        /// @ignore
-        ///
-        public LogConfig logConfig;
-
-        ///
-        /// @ignore
-        ///
-        public Optional<THREAD_PRIORITY_TYPE> threadPriority = new Optional<THREAD_PRIORITY_TYPE>();
-
-        ///
-        /// @ignore
-        ///
-        public bool useExternalEglContext;
-
-        ///
-        /// @ignore
-        ///
-        public bool domainLimit;
-
-        ///
-        /// @ignore
-        ///
-        public bool autoRegisterAgoraExtensions;
-
-        ///
-        /// @ignore
-        ///
-        public string parameters;
-
-        public RtcEngineContext()
+        if (this.publishSecondaryCameraTrack.HasValue())
         {
-            this.appId = "";
-            this.context = 0;
-            this.channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
-            this.license = "";
-            this.audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT;
-            this.areaCode = AREA_CODE.AREA_CODE_GLOB;
-            this.logConfig = new LogConfig();
-            this.useExternalEglContext = false;
-            this.domainLimit = false;
-            this.autoRegisterAgoraExtensions = true;
-            this.parameters = "";
+            writer.WritePropertyName("publishSecondaryCameraTrack");
+            writer.Write(this.publishSecondaryCameraTrack.GetValue());
         }
 
-        public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions, string parameters)
+        if (this.publishThirdCameraTrack.HasValue())
         {
-            this.appId = appId;
-            this.context = context;
-            this.channelProfile = channelProfile;
-            this.license = license;
-            this.audioScenario = audioScenario;
-            this.areaCode = areaCode;
-            this.logConfig = logConfig;
-            this.threadPriority = threadPriority;
-            this.useExternalEglContext = useExternalEglContext;
-            this.domainLimit = domainLimit;
-            this.autoRegisterAgoraExtensions = autoRegisterAgoraExtensions;
-            this.parameters = parameters;
+            writer.WritePropertyName("publishThirdCameraTrack");
+            writer.Write(this.publishThirdCameraTrack.GetValue());
         }
 
-        ///
-        /// @ignore
-        ///
-        public virtual void ToJson(JsonWriter writer)
+        if (this.publishFourthCameraTrack.HasValue())
         {
-            writer.WriteObjectStart();
+            writer.WritePropertyName("publishFourthCameraTrack");
+            writer.Write(this.publishFourthCameraTrack.GetValue());
+        }
 
-            writer.WritePropertyName("appId");
-            writer.Write(this.appId);
+        if (this.publishMicrophoneTrack.HasValue())
+        {
+            writer.WritePropertyName("publishMicrophoneTrack");
+            writer.Write(this.publishMicrophoneTrack.GetValue());
+        }
 
-            writer.WritePropertyName("context");
-            writer.Write(this.context);
+        if (this.publishScreenCaptureAudio.HasValue())
+        {
+            writer.WritePropertyName("publishScreenCaptureAudio");
+            writer.Write(this.publishScreenCaptureAudio.GetValue());
+        }
 
+        if (this.publishScreenCaptureVideo.HasValue())
+        {
+            writer.WritePropertyName("publishScreenCaptureVideo");
+            writer.Write(this.publishScreenCaptureVideo.GetValue());
+        }
+
+        if (this.publishScreenTrack.HasValue())
+        {
+            writer.WritePropertyName("publishScreenTrack");
+            writer.Write(this.publishScreenTrack.GetValue());
+        }
+
+        if (this.publishSecondaryScreenTrack.HasValue())
+        {
+            writer.WritePropertyName("publishSecondaryScreenTrack");
+            writer.Write(this.publishSecondaryScreenTrack.GetValue());
+        }
+
+        if (this.publishThirdScreenTrack.HasValue())
+        {
+            writer.WritePropertyName("publishThirdScreenTrack");
+            writer.Write(this.publishThirdScreenTrack.GetValue());
+        }
+
+        if (this.publishFourthScreenTrack.HasValue())
+        {
+            writer.WritePropertyName("publishFourthScreenTrack");
+            writer.Write(this.publishFourthScreenTrack.GetValue());
+        }
+
+        if (this.publishCustomAudioTrack.HasValue())
+        {
+            writer.WritePropertyName("publishCustomAudioTrack");
+            writer.Write(this.publishCustomAudioTrack.GetValue());
+        }
+
+        if (this.publishCustomAudioTrackId.HasValue())
+        {
+            writer.WritePropertyName("publishCustomAudioTrackId");
+            writer.Write(this.publishCustomAudioTrackId.GetValue());
+        }
+
+        if (this.publishLoopbackAudioTrack.HasValue())
+        {
+            writer.WritePropertyName("publishLoopbackAudioTrack");
+            writer.Write(this.publishLoopbackAudioTrack.GetValue());
+        }
+
+        if (this.publishLoopbackAudioTrackIds.HasValue())
+        {
+            writer.WritePropertyName("publishLoopbackAudioTrackIds");
+            JsonMapper.WriteValue(this.publishLoopbackAudioTrackIds.GetValue(), writer, false, 0);
+        }
+
+        if (this.publishCustomVideoTrack.HasValue())
+        {
+            writer.WritePropertyName("publishCustomVideoTrack");
+            writer.Write(this.publishCustomVideoTrack.GetValue());
+        }
+
+        if (this.publishEncodedVideoTrack.HasValue())
+        {
+            writer.WritePropertyName("publishEncodedVideoTrack");
+            writer.Write(this.publishEncodedVideoTrack.GetValue());
+        }
+
+        if (this.publishMediaPlayerAudioTrack.HasValue())
+        {
+            writer.WritePropertyName("publishMediaPlayerAudioTrack");
+            writer.Write(this.publishMediaPlayerAudioTrack.GetValue());
+        }
+
+        if (this.publishMediaPlayerVideoTrack.HasValue())
+        {
+            writer.WritePropertyName("publishMediaPlayerVideoTrack");
+            writer.Write(this.publishMediaPlayerVideoTrack.GetValue());
+        }
+
+        if (this.publishTranscodedVideoTrack.HasValue())
+        {
+            writer.WritePropertyName("publishTranscodedVideoTrack");
+            writer.Write(this.publishTranscodedVideoTrack.GetValue());
+        }
+
+        if (this.publishMixedAudioTrack.HasValue())
+        {
+            writer.WritePropertyName("publishMixedAudioTrack");
+            writer.Write(this.publishMixedAudioTrack.GetValue());
+        }
+
+        if (this.publishLipSyncTrack.HasValue())
+        {
+            writer.WritePropertyName("publishLipSyncTrack");
+            writer.Write(this.publishLipSyncTrack.GetValue());
+        }
+
+        if (this.autoSubscribeAudio.HasValue())
+        {
+            writer.WritePropertyName("autoSubscribeAudio");
+            writer.Write(this.autoSubscribeAudio.GetValue());
+        }
+
+        if (this.autoSubscribeVideo.HasValue())
+        {
+            writer.WritePropertyName("autoSubscribeVideo");
+            writer.Write(this.autoSubscribeVideo.GetValue());
+        }
+
+        if (this.enableAudioRecordingOrPlayout.HasValue())
+        {
+            writer.WritePropertyName("enableAudioRecordingOrPlayout");
+            writer.Write(this.enableAudioRecordingOrPlayout.GetValue());
+        }
+
+        if (this.publishMediaPlayerId.HasValue())
+        {
+            writer.WritePropertyName("publishMediaPlayerId");
+            writer.Write(this.publishMediaPlayerId.GetValue());
+        }
+
+        if (this.clientRoleType.HasValue())
+        {
+            writer.WritePropertyName("clientRoleType");
+            AgoraJson.WriteEnum(writer, this.clientRoleType.GetValue());
+        }
+
+        if (this.audienceLatencyLevel.HasValue())
+        {
+            writer.WritePropertyName("audienceLatencyLevel");
+            AgoraJson.WriteEnum(writer, this.audienceLatencyLevel.GetValue());
+        }
+
+        if (this.defaultVideoStreamType.HasValue())
+        {
+            writer.WritePropertyName("defaultVideoStreamType");
+            AgoraJson.WriteEnum(writer, this.defaultVideoStreamType.GetValue());
+        }
+
+        if (this.channelProfile.HasValue())
+        {
             writer.WritePropertyName("channelProfile");
-            AgoraJson.WriteEnum(writer, this.channelProfile);
+            AgoraJson.WriteEnum(writer, this.channelProfile.GetValue());
+        }
 
-            writer.WritePropertyName("license");
-            writer.Write(this.license);
+        if (this.audioDelayMs.HasValue())
+        {
+            writer.WritePropertyName("audioDelayMs");
+            writer.Write(this.audioDelayMs.GetValue());
+        }
 
-            writer.WritePropertyName("audioScenario");
-            AgoraJson.WriteEnum(writer, this.audioScenario);
+        if (this.mediaPlayerAudioDelayMs.HasValue())
+        {
+            writer.WritePropertyName("mediaPlayerAudioDelayMs");
+            writer.Write(this.mediaPlayerAudioDelayMs.GetValue());
+        }
 
-            writer.WritePropertyName("areaCode");
-            AgoraJson.WriteEnum(writer, this.areaCode);
+        if (this.token.HasValue())
+        {
+            writer.WritePropertyName("token");
+            writer.Write(this.token.GetValue());
+        }
 
-            writer.WritePropertyName("logConfig");
-            JsonMapper.WriteValue(this.logConfig, writer, false, 0);
+        if (this.enableBuiltInMediaEncryption.HasValue())
+        {
+            writer.WritePropertyName("enableBuiltInMediaEncryption");
+            writer.Write(this.enableBuiltInMediaEncryption.GetValue());
+        }
 
-            if (this.threadPriority.HasValue())
-            {
-                writer.WritePropertyName("threadPriority");
-                AgoraJson.WriteEnum(writer, this.threadPriority.GetValue());
-            }
+        if (this.publishRhythmPlayerTrack.HasValue())
+        {
+            writer.WritePropertyName("publishRhythmPlayerTrack");
+            writer.Write(this.publishRhythmPlayerTrack.GetValue());
+        }
 
-            writer.WritePropertyName("useExternalEglContext");
-            writer.Write(this.useExternalEglContext);
+        if (this.isInteractiveAudience.HasValue())
+        {
+            writer.WritePropertyName("isInteractiveAudience");
+            writer.Write(this.isInteractiveAudience.GetValue());
+        }
 
-            writer.WritePropertyName("domainLimit");
-            writer.Write(this.domainLimit);
+        if (this.customVideoTrackId.HasValue())
+        {
+            writer.WritePropertyName("customVideoTrackId");
+            writer.Write(this.customVideoTrackId.GetValue());
+        }
 
-            writer.WritePropertyName("autoRegisterAgoraExtensions");
-            writer.Write(this.autoRegisterAgoraExtensions);
+        if (this.isAudioFilterable.HasValue())
+        {
+            writer.WritePropertyName("isAudioFilterable");
+            writer.Write(this.isAudioFilterable.GetValue());
+        }
 
+        if (this.parameters.HasValue())
+        {
             writer.WritePropertyName("parameters");
-            writer.Write(this.parameters);
-
-            writer.WriteObjectEnd();
+            writer.Write(this.parameters.GetValue());
         }
+
+        if (this.enableMultipath.HasValue())
+        {
+            writer.WritePropertyName("enableMultipath");
+            writer.Write(this.enableMultipath.GetValue());
+        }
+
+        if (this.uplinkMultipathMode.HasValue())
+        {
+            writer.WritePropertyName("uplinkMultipathMode");
+            AgoraJson.WriteEnum(writer, this.uplinkMultipathMode.GetValue());
+        }
+
+        if (this.downlinkMultipathMode.HasValue())
+        {
+            writer.WritePropertyName("downlinkMultipathMode");
+            AgoraJson.WriteEnum(writer, this.downlinkMultipathMode.GetValue());
+        }
+
+        if (this.preferMultipathType.HasValue())
+        {
+            writer.WritePropertyName("preferMultipathType");
+            AgoraJson.WriteEnum(writer, this.preferMultipathType.GetValue());
+        }
+
+        if (this.customUserInfo.HasValue())
+        {
+            writer.WritePropertyName("customUserInfo");
+            writer.Write(this.customUserInfo.GetValue());
+        }
+
+        writer.WriteObjectEnd();
     }
+}
+
+///
+/// <summary>
+/// The cloud proxy type.
+/// </summary>
+///
+public enum PROXY_TYPE
+{
+    ///
+    /// <summary>
+    /// 0: Reserved for future use.
+    /// </summary>
+    ///
+    NONE_PROXY_TYPE = 0,
 
     ///
     /// <summary>
-    /// Metadata type of the observer. We only support video metadata for now.
+    /// 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
     /// </summary>
     ///
-    public enum METADATA_TYPE
+    UDP_PROXY_TYPE = 1,
+
+    ///
+    /// <summary>
+    /// 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TCP/TLS 443.
+    /// </summary>
+    ///
+    TCP_PROXY_TYPE = 2,
+
+    ///
+    /// <summary>
+    /// 3: Reserved for future use.
+    /// </summary>
+    ///
+    LOCAL_PROXY_TYPE = 3,
+
+    ///
+    /// <summary>
+    /// 4: Automatic mode. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TCP/TLS 443 if the attempt fails.
+    /// </summary>
+    ///
+    TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
+
+    ///
+    /// @ignore
+    ///
+    HTTP_PROXY_TYPE = 5,
+
+    ///
+    /// @ignore
+    ///
+    HTTPS_PROXY_TYPE = 6,
+
+}
+
+///
+/// <summary>
+/// The type of the advanced feature.
+/// </summary>
+///
+public enum FeatureType
+{
+    ///
+    /// <summary>
+    /// 1: Virtual background.
+    /// </summary>
+    ///
+    VIDEO_VIRTUAL_BACKGROUND = 1,
+
+    ///
+    /// <summary>
+    /// 2: Image enhancement.
+    /// </summary>
+    ///
+    VIDEO_BEAUTY_EFFECT = 2,
+
+}
+
+///
+/// <summary>
+/// The options for leaving a channel.
+/// </summary>
+///
+public class LeaveChannelOptions
+{
+    ///
+    /// <summary>
+    /// Whether to stop playing and mixing the music file when a user leaves the channel. true : (Default) Stop playing and mixing the music file. false : Do not stop playing and mixing the music file.
+    /// </summary>
+    ///
+    public bool stopAudioMixing;
+
+    ///
+    /// <summary>
+    /// Whether to stop playing all audio effects when a user leaves the channel. true : (Default) Stop playing all audio effects. false : Do not stop playing any audio effect.
+    /// </summary>
+    ///
+    public bool stopAllEffect;
+
+    ///
+    /// @ignore
+    ///
+    public bool unloadAllEffect;
+
+    ///
+    /// <summary>
+    /// Whether to stop microphone recording when a user leaves the channel. true : (Default) Stop microphone recording. false : Do not stop microphone recording.
+    /// </summary>
+    ///
+    public bool stopMicrophoneRecording;
+
+    public LeaveChannelOptions()
     {
-        ///
-        /// <summary>
-        /// The type of metadata is unknown.
-        /// </summary>
-        ///
-        UNKNOWN_METADATA = -1,
+        this.stopAudioMixing = true;
+        this.stopAllEffect = true;
+        this.unloadAllEffect = false;
+        this.stopMicrophoneRecording = true;
+    }
 
-        ///
-        /// <summary>
-        /// The type of metadata is video.
-        /// </summary>
-        ///
-        VIDEO_METADATA = 0,
+    public LeaveChannelOptions(bool stopAudioMixing, bool stopAllEffect, bool unloadAllEffect, bool stopMicrophoneRecording)
+    {
+        this.stopAudioMixing = stopAudioMixing;
+        this.stopAllEffect = stopAllEffect;
+        this.unloadAllEffect = unloadAllEffect;
+        this.stopMicrophoneRecording = stopMicrophoneRecording;
+    }
+}
 
+///
+/// @ignore
+///
+public enum VIDEO_EFFECT_NODE_ID : uint
+{
+    ///
+    /// @ignore
+    ///
+    BEAUTY = 1U << 0,
+
+    ///
+    /// @ignore
+    ///
+    STYLE_MAKEUP = 1U << 1,
+
+    ///
+    /// @ignore
+    ///
+    FILTER = 1U << 2,
+
+    ///
+    /// @ignore
+    ///
+    STICKER = 1U << 3,
+
+}
+
+///
+/// @ignore
+///
+public enum VIDEO_EFFECT_ACTION
+{
+    ///
+    /// @ignore
+    ///
+    SAVE = 1,
+
+    ///
+    /// @ignore
+    ///
+    RESET = 2,
+
+}
+
+///
+/// @ignore
+///
+public class RtcEngineContext : IOptionalJsonParse
+{
+    public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions)
+    : this(appId, context, channelProfile, license, audioScenario, areaCode, logConfig, threadPriority, useExternalEglContext, domainLimit, autoRegisterAgoraExtensions, string.Empty)
+    {
     }
 
     ///
     /// @ignore
     ///
-    public enum MAX_METADATA_SIZE_TYPE
+    public string appId;
+
+    ///
+    /// @ignore
+    ///
+    public ulong context;
+
+    ///
+    /// @ignore
+    ///
+    public CHANNEL_PROFILE_TYPE channelProfile;
+
+    ///
+    /// @ignore
+    ///
+    public string license;
+
+    ///
+    /// @ignore
+    ///
+    public AUDIO_SCENARIO_TYPE audioScenario;
+
+    ///
+    /// @ignore
+    ///
+    public AREA_CODE areaCode;
+
+    ///
+    /// @ignore
+    ///
+    public LogConfig logConfig;
+
+    ///
+    /// @ignore
+    ///
+    public Optional<THREAD_PRIORITY_TYPE> threadPriority = new Optional<THREAD_PRIORITY_TYPE>();
+
+    ///
+    /// @ignore
+    ///
+    public bool useExternalEglContext;
+
+    ///
+    /// @ignore
+    ///
+    public bool domainLimit;
+
+    ///
+    /// @ignore
+    ///
+    public bool autoRegisterAgoraExtensions;
+
+    ///
+    /// @ignore
+    ///
+    public string parameters;
+
+    public RtcEngineContext()
     {
-        ///
-        /// @ignore
-        ///
-        INVALID_METADATA_SIZE_IN_BYTE = -1,
-
-        ///
-        /// @ignore
-        ///
-        DEFAULT_METADATA_SIZE_IN_BYTE = 512,
-
-        ///
-        /// @ignore
-        ///
-        MAX_METADATA_SIZE_IN_BYTE = 1024,
-
+        this.appId = "";
+        this.context = 0;
+        this.channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
+        this.license = "";
+        this.audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT;
+        this.areaCode = AREA_CODE.AREA_CODE_GLOB;
+        this.logConfig = new LogConfig();
+        this.useExternalEglContext = false;
+        this.domainLimit = false;
+        this.autoRegisterAgoraExtensions = true;
+        this.parameters = "";
     }
 
-    ///
-    /// <summary>
-    /// Media metadata.
-    /// </summary>
-    ///
-    public class Metadata
+    public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions, string parameters)
     {
-        ///
-        /// <summary>
-        /// The channel name.
-        /// </summary>
-        ///
-        public string channelId;
-
-        ///
-        /// <summary>
-        /// The user ID.
-        ///  For the recipient: The ID of the remote user who sent the Metadata.
-        ///  For the sender: Ignore it.
-        /// </summary>
-        ///
-        public uint uid;
-
-        ///
-        /// <summary>
-        /// The buffer size of the sent or received Metadata.
-        /// </summary>
-        ///
-        public uint size;
-
-        ///
-        /// <summary>
-        /// The buffer address of the received Metadata.
-        /// </summary>
-        ///
-        public IntPtr buffer;
-
-        ///
-        /// <summary>
-        /// The timestamp (ms) of when the Metadata is sent.
-        /// </summary>
-        ///
-        public long timeStampMs;
-
-        public Metadata()
-        {
-            this.channelId = "";
-            this.uid = 0;
-            this.size = 0;
-            this.buffer = IntPtr.Zero;
-            this.timeStampMs = 0;
-        }
-
-        public Metadata(string channelId, uint uid, uint size, IntPtr buffer, long timeStampMs)
-        {
-            this.channelId = channelId;
-            this.uid = uid;
-            this.size = size;
-            this.buffer = buffer;
-            this.timeStampMs = timeStampMs;
-        }
-    }
-
-    ///
-    /// <summary>
-    /// Reasons for the changes in CDN streaming status.
-    /// </summary>
-    ///
-    public enum DIRECT_CDN_STREAMING_REASON
-    {
-        ///
-        /// <summary>
-        /// 0: No error.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_REASON_OK = 0,
-
-        ///
-        /// <summary>
-        /// 1: A general error; no specific reason. You can try to push the media stream again.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_REASON_FAILED = 1,
-
-        ///
-        /// <summary>
-        /// 2: An error occurs when pushing audio streams. For example, the local audio capture device is not working properly, is occupied by another process, or does not get the permission required.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_REASON_AUDIO_PUBLICATION = 2,
-
-        ///
-        /// <summary>
-        /// 3: An error occurs when pushing video streams. For example, the local video capture device is not working properly, is occupied by another process, or does not get the permission required.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_REASON_VIDEO_PUBLICATION = 3,
-
-        ///
-        /// <summary>
-        /// 4: Fails to connect to the CDN.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_REASON_NET_CONNECT = 4,
-
-        ///
-        /// <summary>
-        /// 5: The URL is already being used. Use a new URL for streaming.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_REASON_BAD_NAME = 5,
-
-    }
-
-    ///
-    /// <summary>
-    /// The current CDN streaming state.
-    /// </summary>
-    ///
-    public enum DIRECT_CDN_STREAMING_STATE
-    {
-        ///
-        /// <summary>
-        /// 0: The initial state before the CDN streaming starts.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_STATE_IDLE = 0,
-
-        ///
-        /// <summary>
-        /// 1: Streams are being pushed to the CDN. The SDK returns this value when you call the StartDirectCdnStreaming method to push streams to the CDN.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_STATE_RUNNING = 1,
-
-        ///
-        /// <summary>
-        /// 2: Stops pushing streams to the CDN. The SDK returns this value when you call the StopDirectCdnStreaming method to stop pushing streams to the CDN.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_STATE_STOPPED = 2,
-
-        ///
-        /// <summary>
-        /// 3: Fails to push streams to the CDN. You can troubleshoot the issue with the information reported by the OnDirectCdnStreamingStateChanged callback, and then push streams to the CDN again.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_STATE_FAILED = 3,
-
-        ///
-        /// <summary>
-        /// 4: Tries to reconnect the Agora server to the CDN. The SDK attempts to reconnect a maximum of 10 times; if the connection is not restored, the streaming state becomes DIRECT_CDN_STREAMING_STATE_FAILED.
-        /// </summary>
-        ///
-        DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
-
-    }
-
-    ///
-    /// <summary>
-    /// The statistics of the current CDN streaming.
-    /// </summary>
-    ///
-    public class DirectCdnStreamingStats
-    {
-        ///
-        /// <summary>
-        /// The width (px) of the video frame.
-        /// </summary>
-        ///
-        public int videoWidth;
-
-        ///
-        /// <summary>
-        /// The height (px) of the video frame.
-        /// </summary>
-        ///
-        public int videoHeight;
-
-        ///
-        /// <summary>
-        /// The frame rate (fps) of the current video frame.
-        /// </summary>
-        ///
-        public int fps;
-
-        ///
-        /// <summary>
-        /// The bitrate (bps) of the current video frame.
-        /// </summary>
-        ///
-        public int videoBitrate;
-
-        ///
-        /// <summary>
-        /// The bitrate (bps) of the current audio frame.
-        /// </summary>
-        ///
-        public int audioBitrate;
-
-        public DirectCdnStreamingStats(int videoWidth, int videoHeight, int fps, int videoBitrate, int audioBitrate)
-        {
-            this.videoWidth = videoWidth;
-            this.videoHeight = videoHeight;
-            this.fps = fps;
-            this.videoBitrate = videoBitrate;
-            this.audioBitrate = audioBitrate;
-        }
-        public DirectCdnStreamingStats()
-        {
-        }
-
-    }
-
-    ///
-    /// <summary>
-    /// The media setting options for the host.
-    /// </summary>
-    ///
-    public class DirectCdnStreamingMediaOptions : IOptionalJsonParse
-    {
-        ///
-        /// <summary>
-        /// Sets whether to publish the video captured by the camera: true : Publish the video captured by the camera. false : (Default) Do not publish the video captured by the camera.
-        /// </summary>
-        ///
-        public Optional<bool> publishCameraTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Sets whether to publish the audio captured by the microphone: true : Publish the audio captured by the microphone. false : (Default) Do not publish the audio captured by the microphone.
-        /// </summary>
-        ///
-        public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Sets whether to publish the captured audio from a custom source: true : Publish the captured audio from a custom source. false : (Default) Do not publish the captured audio from the custom source.
-        /// </summary>
-        ///
-        public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
-
-        ///
-        /// <summary>
-        /// Sets whether to publish the captured video from a custom source: true : Publish the captured video from a custom source. false : (Default) Do not publish the captured video from the custom source.
-        /// </summary>
-        ///
-        public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<int> publishMediaPlayerId = new Optional<int>();
-
-        ///
-        /// <summary>
-        /// The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0.
-        /// </summary>
-        ///
-        public Optional<uint> customVideoTrackId = new Optional<uint>();
-
-        public DirectCdnStreamingMediaOptions()
-        {
-        }
-
-        public DirectCdnStreamingMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishCustomAudioTrack, Optional<bool> publishCustomVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<int> publishMediaPlayerId, Optional<uint> customVideoTrackId)
-        {
-            this.publishCameraTrack = publishCameraTrack;
-            this.publishMicrophoneTrack = publishMicrophoneTrack;
-            this.publishCustomAudioTrack = publishCustomAudioTrack;
-            this.publishCustomVideoTrack = publishCustomVideoTrack;
-            this.publishMediaPlayerAudioTrack = publishMediaPlayerAudioTrack;
-            this.publishMediaPlayerId = publishMediaPlayerId;
-            this.customVideoTrackId = customVideoTrackId;
-        }
-
-        ///
-        /// @ignore
-        ///
-        public virtual void ToJson(JsonWriter writer)
-        {
-            writer.WriteObjectStart();
-
-            if (this.publishCameraTrack.HasValue())
-            {
-                writer.WritePropertyName("publishCameraTrack");
-                writer.Write(this.publishCameraTrack.GetValue());
-            }
-
-            if (this.publishMicrophoneTrack.HasValue())
-            {
-                writer.WritePropertyName("publishMicrophoneTrack");
-                writer.Write(this.publishMicrophoneTrack.GetValue());
-            }
-
-            if (this.publishCustomAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishCustomAudioTrack");
-                writer.Write(this.publishCustomAudioTrack.GetValue());
-            }
-
-            if (this.publishCustomVideoTrack.HasValue())
-            {
-                writer.WritePropertyName("publishCustomVideoTrack");
-                writer.Write(this.publishCustomVideoTrack.GetValue());
-            }
-
-            if (this.publishMediaPlayerAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishMediaPlayerAudioTrack");
-                writer.Write(this.publishMediaPlayerAudioTrack.GetValue());
-            }
-
-            if (this.publishMediaPlayerId.HasValue())
-            {
-                writer.WritePropertyName("publishMediaPlayerId");
-                writer.Write(this.publishMediaPlayerId.GetValue());
-            }
-
-            if (this.customVideoTrackId.HasValue())
-            {
-                writer.WritePropertyName("customVideoTrackId");
-                writer.Write(this.customVideoTrackId.GetValue());
-            }
-
-            writer.WriteObjectEnd();
-        }
+        this.appId = appId;
+        this.context = context;
+        this.channelProfile = channelProfile;
+        this.license = license;
+        this.audioScenario = audioScenario;
+        this.areaCode = areaCode;
+        this.logConfig = logConfig;
+        this.threadPriority = threadPriority;
+        this.useExternalEglContext = useExternalEglContext;
+        this.domainLimit = domainLimit;
+        this.autoRegisterAgoraExtensions = autoRegisterAgoraExtensions;
+        this.parameters = parameters;
     }
 
     ///
     /// @ignore
     ///
-    public class ExtensionInfo
+    public virtual void ToJson(JsonWriter writer)
     {
-        ///
-        /// @ignore
-        ///
-        public MEDIA_SOURCE_TYPE mediaSourceType;
+        writer.WriteObjectStart();
 
-        ///
-        /// @ignore
-        ///
-        public uint remoteUid;
+        writer.WritePropertyName("appId");
+        writer.Write(this.appId);
 
-        ///
-        /// @ignore
-        ///
-        public string channelId;
+        writer.WritePropertyName("context");
+        writer.Write(this.context);
 
-        ///
-        /// @ignore
-        ///
-        public uint localUid;
+        writer.WritePropertyName("channelProfile");
+        AgoraJson.WriteEnum(writer, this.channelProfile);
 
-        public ExtensionInfo()
+        writer.WritePropertyName("license");
+        writer.Write(this.license);
+
+        writer.WritePropertyName("audioScenario");
+        AgoraJson.WriteEnum(writer, this.audioScenario);
+
+        writer.WritePropertyName("areaCode");
+        AgoraJson.WriteEnum(writer, this.areaCode);
+
+        writer.WritePropertyName("logConfig");
+        JsonMapper.WriteValue(this.logConfig, writer, false, 0);
+
+        if (this.threadPriority.HasValue())
         {
-            this.mediaSourceType = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE;
-            this.remoteUid = 0;
-            this.channelId = "";
-            this.localUid = 0;
+            writer.WritePropertyName("threadPriority");
+            AgoraJson.WriteEnum(writer, this.threadPriority.GetValue());
         }
 
-        public ExtensionInfo(MEDIA_SOURCE_TYPE mediaSourceType, uint remoteUid, string channelId, uint localUid)
-        {
-            this.mediaSourceType = mediaSourceType;
-            this.remoteUid = remoteUid;
-            this.channelId = channelId;
-            this.localUid = localUid;
-        }
+        writer.WritePropertyName("useExternalEglContext");
+        writer.Write(this.useExternalEglContext);
+
+        writer.WritePropertyName("domainLimit");
+        writer.Write(this.domainLimit);
+
+        writer.WritePropertyName("autoRegisterAgoraExtensions");
+        writer.Write(this.autoRegisterAgoraExtensions);
+
+        writer.WritePropertyName("parameters");
+        writer.Write(this.parameters);
+
+        writer.WriteObjectEnd();
     }
+}
 
+///
+/// <summary>
+/// Metadata type of the observer. We only support video metadata for now.
+/// </summary>
+///
+public enum METADATA_TYPE
+{
     ///
-    /// @ignore
+    /// <summary>
+    /// The type of metadata is unknown.
+    /// </summary>
     ///
-    public enum QUALITY_REPORT_FORMAT_TYPE
-    {
-        ///
-        /// @ignore
-        ///
-        QUALITY_REPORT_JSON = 0,
-
-        ///
-        /// @ignore
-        ///
-        QUALITY_REPORT_HTML = 1,
-
-    }
+    UNKNOWN_METADATA = -1,
 
     ///
     /// <summary>
-    /// Media device states.
+    /// The type of metadata is video.
     /// </summary>
     ///
-    public enum MEDIA_DEVICE_STATE_TYPE
+    VIDEO_METADATA = 0,
+
+}
+
+///
+/// @ignore
+///
+public enum MAX_METADATA_SIZE_TYPE
+{
+    ///
+    /// @ignore
+    ///
+    INVALID_METADATA_SIZE_IN_BYTE = -1,
+
+    ///
+    /// @ignore
+    ///
+    DEFAULT_METADATA_SIZE_IN_BYTE = 512,
+
+    ///
+    /// @ignore
+    ///
+    MAX_METADATA_SIZE_IN_BYTE = 1024,
+
+}
+
+///
+/// <summary>
+/// Media metadata.
+/// </summary>
+///
+public class Metadata
+{
+    ///
+    /// <summary>
+    /// The channel name.
+    /// </summary>
+    ///
+    public string channelId;
+
+    ///
+    /// <summary>
+    /// The user ID.
+    ///  For the recipient: The ID of the remote user who sent the Metadata.
+    ///  For the sender: Ignore it.
+    /// </summary>
+    ///
+    public uint uid;
+
+    ///
+    /// <summary>
+    /// The buffer size of the sent or received Metadata.
+    /// </summary>
+    ///
+    public uint size;
+
+    ///
+    /// <summary>
+    /// The buffer address of the received Metadata.
+    /// </summary>
+    ///
+    public IntPtr buffer;
+
+    ///
+    /// <summary>
+    /// The timestamp (ms) of when the Metadata is sent.
+    /// </summary>
+    ///
+    public long timeStampMs;
+
+    public Metadata()
     {
-        ///
-        /// <summary>
-        /// 0: The device is ready for use.
-        /// </summary>
-        ///
-        MEDIA_DEVICE_STATE_IDLE = 0,
+        this.channelId = "";
+        this.uid = 0;
+        this.size = 0;
+        this.buffer = IntPtr.Zero;
+        this.timeStampMs = 0;
+    }
 
-        ///
-        /// <summary>
-        /// 1: The device is in use.
-        /// </summary>
-        ///
-        MEDIA_DEVICE_STATE_ACTIVE = 1,
+    public Metadata(string channelId, uint uid, uint size, IntPtr buffer, long timeStampMs)
+    {
+        this.channelId = channelId;
+        this.uid = uid;
+        this.size = size;
+        this.buffer = buffer;
+        this.timeStampMs = timeStampMs;
+    }
+}
 
-        ///
-        /// <summary>
-        /// 2: The device is disabled.
-        /// </summary>
-        ///
-        MEDIA_DEVICE_STATE_DISABLED = 2,
+///
+/// <summary>
+/// Reasons for the changes in CDN streaming status.
+/// </summary>
+///
+public enum DIRECT_CDN_STREAMING_REASON
+{
+    ///
+    /// <summary>
+    /// 0: No error.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_REASON_OK = 0,
 
-        ///
-        /// <summary>
-        /// 3: The device is plugged in.
-        /// </summary>
-        ///
-        MEDIA_DEVICE_STATE_PLUGGED_IN = 3,
+    ///
+    /// <summary>
+    /// 1: A general error; no specific reason. You can try to push the media stream again.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_REASON_FAILED = 1,
 
-        ///
-        /// <summary>
-        /// 4: The device is not found.
-        /// </summary>
-        ///
-        MEDIA_DEVICE_STATE_NOT_PRESENT = 4,
+    ///
+    /// <summary>
+    /// 2: An error occurs when pushing audio streams. For example, the local audio capture device is not working properly, is occupied by another process, or does not get the permission required.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_REASON_AUDIO_PUBLICATION = 2,
 
-        ///
-        /// <summary>
-        /// 8: The device is unplugged.
-        /// </summary>
-        ///
-        MEDIA_DEVICE_STATE_UNPLUGGED = 8,
+    ///
+    /// <summary>
+    /// 3: An error occurs when pushing video streams. For example, the local video capture device is not working properly, is occupied by another process, or does not get the permission required.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_REASON_VIDEO_PUBLICATION = 3,
 
+    ///
+    /// <summary>
+    /// 4: Fails to connect to the CDN.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_REASON_NET_CONNECT = 4,
+
+    ///
+    /// <summary>
+    /// 5: The URL is already being used. Use a new URL for streaming.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_REASON_BAD_NAME = 5,
+
+}
+
+///
+/// <summary>
+/// The current CDN streaming state.
+/// </summary>
+///
+public enum DIRECT_CDN_STREAMING_STATE
+{
+    ///
+    /// <summary>
+    /// 0: The initial state before the CDN streaming starts.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_STATE_IDLE = 0,
+
+    ///
+    /// <summary>
+    /// 1: Streams are being pushed to the CDN. The SDK returns this value when you call the StartDirectCdnStreaming method to push streams to the CDN.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_STATE_RUNNING = 1,
+
+    ///
+    /// <summary>
+    /// 2: Stops pushing streams to the CDN. The SDK returns this value when you call the StopDirectCdnStreaming method to stop pushing streams to the CDN.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_STATE_STOPPED = 2,
+
+    ///
+    /// <summary>
+    /// 3: Fails to push streams to the CDN. You can troubleshoot the issue with the information reported by the OnDirectCdnStreamingStateChanged callback, and then push streams to the CDN again.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_STATE_FAILED = 3,
+
+    ///
+    /// <summary>
+    /// 4: Tries to reconnect the Agora server to the CDN. The SDK attempts to reconnect a maximum of 10 times; if the connection is not restored, the streaming state becomes DIRECT_CDN_STREAMING_STATE_FAILED.
+    /// </summary>
+    ///
+    DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
+
+}
+
+///
+/// <summary>
+/// The statistics of the current CDN streaming.
+/// </summary>
+///
+public class DirectCdnStreamingStats
+{
+    ///
+    /// <summary>
+    /// The width (px) of the video frame.
+    /// </summary>
+    ///
+    public int videoWidth;
+
+    ///
+    /// <summary>
+    /// The height (px) of the video frame.
+    /// </summary>
+    ///
+    public int videoHeight;
+
+    ///
+    /// <summary>
+    /// The frame rate (fps) of the current video frame.
+    /// </summary>
+    ///
+    public int fps;
+
+    ///
+    /// <summary>
+    /// The bitrate (bps) of the current video frame.
+    /// </summary>
+    ///
+    public int videoBitrate;
+
+    ///
+    /// <summary>
+    /// The bitrate (bps) of the current audio frame.
+    /// </summary>
+    ///
+    public int audioBitrate;
+
+    public DirectCdnStreamingStats(int videoWidth, int videoHeight, int fps, int videoBitrate, int audioBitrate)
+    {
+        this.videoWidth = videoWidth;
+        this.videoHeight = videoHeight;
+        this.fps = fps;
+        this.videoBitrate = videoBitrate;
+        this.audioBitrate = audioBitrate;
+    }
+    public DirectCdnStreamingStats()
+    {
+    }
+
+}
+
+///
+/// <summary>
+/// The media setting options for the host.
+/// </summary>
+///
+public class DirectCdnStreamingMediaOptions : IOptionalJsonParse
+{
+    ///
+    /// <summary>
+    /// Sets whether to publish the video captured by the camera: true : Publish the video captured by the camera. false : (Default) Do not publish the video captured by the camera.
+    /// </summary>
+    ///
+    public Optional<bool> publishCameraTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Sets whether to publish the audio captured by the microphone: true : Publish the audio captured by the microphone. false : (Default) Do not publish the audio captured by the microphone.
+    /// </summary>
+    ///
+    public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Sets whether to publish the captured audio from a custom source: true : Publish the captured audio from a custom source. false : (Default) Do not publish the captured audio from the custom source.
+    /// </summary>
+    ///
+    public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
+
+    ///
+    /// <summary>
+    /// Sets whether to publish the captured video from a custom source: true : Publish the captured video from a custom source. false : (Default) Do not publish the captured video from the custom source.
+    /// </summary>
+    ///
+    public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
+
+    ///
+    /// @ignore
+    ///
+    public Optional<int> publishMediaPlayerId = new Optional<int>();
+
+    ///
+    /// <summary>
+    /// The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0.
+    /// </summary>
+    ///
+    public Optional<uint> customVideoTrackId = new Optional<uint>();
+
+    public DirectCdnStreamingMediaOptions()
+    {
+    }
+
+    public DirectCdnStreamingMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishCustomAudioTrack, Optional<bool> publishCustomVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<int> publishMediaPlayerId, Optional<uint> customVideoTrackId)
+    {
+        this.publishCameraTrack = publishCameraTrack;
+        this.publishMicrophoneTrack = publishMicrophoneTrack;
+        this.publishCustomAudioTrack = publishCustomAudioTrack;
+        this.publishCustomVideoTrack = publishCustomVideoTrack;
+        this.publishMediaPlayerAudioTrack = publishMediaPlayerAudioTrack;
+        this.publishMediaPlayerId = publishMediaPlayerId;
+        this.customVideoTrackId = customVideoTrackId;
     }
 
     ///
     /// @ignore
     ///
-    public enum VIDEO_PROFILE_TYPE
+    public virtual void ToJson(JsonWriter writer)
     {
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_120P = 0,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_120P_3 = 2,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_180P = 10,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_180P_3 = 12,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_180P_4 = 13,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_240P = 20,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_240P_3 = 22,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_240P_4 = 23,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P = 30,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_3 = 32,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_4 = 33,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_6 = 35,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_7 = 36,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_8 = 37,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_9 = 38,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_10 = 39,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_360P_11 = 100,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_480P = 40,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_480P_3 = 42,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_480P_4 = 43,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_480P_6 = 45,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_480P_8 = 47,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_480P_9 = 48,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_480P_10 = 49,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_720P = 50,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_720P_3 = 52,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_720P_5 = 54,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_720P_6 = 55,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_1080P = 60,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_1080P_3 = 62,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_1080P_5 = 64,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_1440P = 66,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_1440P_2 = 67,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_4K = 70,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_LANDSCAPE_4K_3 = 72,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_120P = 1000,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_120P_3 = 1002,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_180P = 1010,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_180P_3 = 1012,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_180P_4 = 1013,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_240P = 1020,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_240P_3 = 1022,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_240P_4 = 1023,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P = 1030,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_3 = 1032,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_4 = 1033,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_6 = 1035,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_7 = 1036,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_8 = 1037,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_9 = 1038,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_10 = 1039,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_360P_11 = 1100,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_480P = 1040,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_480P_3 = 1042,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_480P_4 = 1043,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_480P_6 = 1045,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_480P_8 = 1047,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_480P_9 = 1048,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_480P_10 = 1049,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_720P = 1050,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_720P_3 = 1052,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_720P_5 = 1054,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_720P_6 = 1055,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_1080P = 1060,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_1080P_3 = 1062,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_1080P_5 = 1064,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_1440P = 1066,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_1440P_2 = 1067,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_4K = 1070,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_PORTRAIT_4K_3 = 1072,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_PROFILE_DEFAULT = VIDEO_PROFILE_LANDSCAPE_360P,
-
+        writer.WriteObjectStart();
+
+        if (this.publishCameraTrack.HasValue())
+        {
+            writer.WritePropertyName("publishCameraTrack");
+            writer.Write(this.publishCameraTrack.GetValue());
+        }
+
+        if (this.publishMicrophoneTrack.HasValue())
+        {
+            writer.WritePropertyName("publishMicrophoneTrack");
+            writer.Write(this.publishMicrophoneTrack.GetValue());
+        }
+
+        if (this.publishCustomAudioTrack.HasValue())
+        {
+            writer.WritePropertyName("publishCustomAudioTrack");
+            writer.Write(this.publishCustomAudioTrack.GetValue());
+        }
+
+        if (this.publishCustomVideoTrack.HasValue())
+        {
+            writer.WritePropertyName("publishCustomVideoTrack");
+            writer.Write(this.publishCustomVideoTrack.GetValue());
+        }
+
+        if (this.publishMediaPlayerAudioTrack.HasValue())
+        {
+            writer.WritePropertyName("publishMediaPlayerAudioTrack");
+            writer.Write(this.publishMediaPlayerAudioTrack.GetValue());
+        }
+
+        if (this.publishMediaPlayerId.HasValue())
+        {
+            writer.WritePropertyName("publishMediaPlayerId");
+            writer.Write(this.publishMediaPlayerId.GetValue());
+        }
+
+        if (this.customVideoTrackId.HasValue())
+        {
+            writer.WritePropertyName("customVideoTrackId");
+            writer.Write(this.customVideoTrackId.GetValue());
+        }
+
+        writer.WriteObjectEnd();
     }
+}
+
+///
+/// @ignore
+///
+public class ExtensionInfo
+{
+    ///
+    /// @ignore
+    ///
+    public MEDIA_SOURCE_TYPE mediaSourceType;
+
+    ///
+    /// @ignore
+    ///
+    public uint remoteUid;
+
+    ///
+    /// @ignore
+    ///
+    public string channelId;
+
+    ///
+    /// @ignore
+    ///
+    public uint localUid;
+
+    public ExtensionInfo()
+    {
+        this.mediaSourceType = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE;
+        this.remoteUid = 0;
+        this.channelId = "";
+        this.localUid = 0;
+    }
+
+    public ExtensionInfo(MEDIA_SOURCE_TYPE mediaSourceType, uint remoteUid, string channelId, uint localUid)
+    {
+        this.mediaSourceType = mediaSourceType;
+        this.remoteUid = remoteUid;
+        this.channelId = channelId;
+        this.localUid = localUid;
+    }
+}
+
+///
+/// @ignore
+///
+public enum QUALITY_REPORT_FORMAT_TYPE
+{
+    ///
+    /// @ignore
+    ///
+    QUALITY_REPORT_JSON = 0,
+
+    ///
+    /// @ignore
+    ///
+    QUALITY_REPORT_HTML = 1,
+
+}
+
+///
+/// <summary>
+/// Media device states.
+/// </summary>
+///
+public enum MEDIA_DEVICE_STATE_TYPE
+{
+    ///
+    /// <summary>
+    /// 0: The device is ready for use.
+    /// </summary>
+    ///
+    MEDIA_DEVICE_STATE_IDLE = 0,
+
+    ///
+    /// <summary>
+    /// 1: The device is in use.
+    /// </summary>
+    ///
+    MEDIA_DEVICE_STATE_ACTIVE = 1,
+
+    ///
+    /// <summary>
+    /// 2: The device is disabled.
+    /// </summary>
+    ///
+    MEDIA_DEVICE_STATE_DISABLED = 2,
+
+    ///
+    /// <summary>
+    /// 3: The device is plugged in.
+    /// </summary>
+    ///
+    MEDIA_DEVICE_STATE_PLUGGED_IN = 3,
+
+    ///
+    /// <summary>
+    /// 4: The device is not found.
+    /// </summary>
+    ///
+    MEDIA_DEVICE_STATE_NOT_PRESENT = 4,
+
+    ///
+    /// <summary>
+    /// 8: The device is unplugged.
+    /// </summary>
+    ///
+    MEDIA_DEVICE_STATE_UNPLUGGED = 8,
+
+}
+
+///
+/// @ignore
+///
+public enum VIDEO_PROFILE_TYPE
+{
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_120P = 0,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_120P_3 = 2,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_180P = 10,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_180P_3 = 12,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_180P_4 = 13,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_240P = 20,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_240P_3 = 22,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_240P_4 = 23,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P = 30,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_3 = 32,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_4 = 33,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_6 = 35,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_7 = 36,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_8 = 37,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_9 = 38,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_10 = 39,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_360P_11 = 100,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_480P = 40,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_480P_3 = 42,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_480P_4 = 43,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_480P_6 = 45,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_480P_8 = 47,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_480P_9 = 48,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_480P_10 = 49,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_720P = 50,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_720P_3 = 52,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_720P_5 = 54,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_720P_6 = 55,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_1080P = 60,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_1080P_3 = 62,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_1080P_5 = 64,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_1440P = 66,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_1440P_2 = 67,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_4K = 70,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_LANDSCAPE_4K_3 = 72,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_120P = 1000,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_120P_3 = 1002,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_180P = 1010,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_180P_3 = 1012,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_180P_4 = 1013,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_240P = 1020,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_240P_3 = 1022,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_240P_4 = 1023,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P = 1030,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_3 = 1032,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_4 = 1033,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_6 = 1035,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_7 = 1036,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_8 = 1037,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_9 = 1038,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_10 = 1039,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_360P_11 = 1100,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_480P = 1040,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_480P_3 = 1042,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_480P_4 = 1043,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_480P_6 = 1045,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_480P_8 = 1047,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_480P_9 = 1048,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_480P_10 = 1049,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_720P = 1050,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_720P_3 = 1052,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_720P_5 = 1054,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_720P_6 = 1055,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_1080P = 1060,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_1080P_3 = 1062,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_1080P_5 = 1064,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_1440P = 1066,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_1440P_2 = 1067,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_4K = 1070,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_PORTRAIT_4K_3 = 1072,
+
+    ///
+    /// @ignore
+    ///
+    VIDEO_PROFILE_DEFAULT = VIDEO_PROFILE_LANDSCAPE_360P,
+
+}
 
 }

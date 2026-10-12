@@ -705,6 +705,41 @@ namespace Agora.Rtc
         ///
         ERR_VIDEOEFFECT_INVALID_BUNDLE_PATH = 1707,
 
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_APPLICATION_LOOPBACK = 2007,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_APPLICATION_LOOPBACK_STOPPED = 2008,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_SYSTEM_LOOPBACK = 2009,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_SYSTEM_LOOPBACK_STOPPED = 2010,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_LOOPBACK_NO_PERMISSION = 2011,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_LOOPBACK_SILENT_DETECTED = 2012,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_LOOPBACK_SILENT_RECOVERED = 2013,
+
     }
 
     ///
@@ -1987,6 +2022,18 @@ namespace Agora.Rtc
         /// </summary>
         ///
         MAX_USER_ACCOUNT_LENGTH = 256,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum MAX_CUSTOM_USER_INFO_LENGTH_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        MAX_CUSTOM_USER_INFO_LENGTH = 1024,
 
     }
 
@@ -7713,6 +7760,108 @@ namespace Agora.Rtc
         {
             this.enableLocalPlayback = enableLocalPlayback;
             this.enableAudioProcessing = enableAudioProcessing;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public enum LOOPBACK_AUDIO_TRACK_TYPE
+    {
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_SYSTEM = 0,
+
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_SYSTEM_EXCLUDE_SELF = 1,
+
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_APPLICATION = 2,
+
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_PROCESS = 3,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class AudioTrackVolumeInfo
+    {
+        ///
+        /// @ignore
+        ///
+        public int channelCount;
+
+        ///
+        /// @ignore
+        ///
+        public int[8] levels;
+
+        public AudioTrackVolumeInfo(int channelCount, int[8] levels)
+        {
+            this.channelCount = channelCount;
+            this.levels = levels;
+        }
+        public AudioTrackVolumeInfo()
+        {
+        }
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class LoopbackAudioTrackConfig
+    {
+        ///
+        /// @ignore
+        ///
+        public LOOPBACK_AUDIO_TRACK_TYPE loopbackType;
+
+        ///
+        /// @ignore
+        ///
+        public int volume;
+
+        ///
+        /// @ignore
+        ///
+        public string deviceName;
+
+        ///
+        /// @ignore
+        ///
+        public string appName;
+
+        ///
+        /// @ignore
+        ///
+        public uint processId;
+
+        public LoopbackAudioTrackConfig()
+        {
+            this.loopbackType = LOOPBACK_AUDIO_TRACK_TYPE.LOOPBACK_SYSTEM;
+            this.volume = 100;
+            this.deviceName = "";
+            this.appName = "";
+            this.processId = -1;
+        }
+
+        public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)
+        {
+            this.loopbackType = loopbackType;
+            this.volume = volume;
+            this.deviceName = deviceName;
+            this.appName = appName;
+            this.processId = processId;
         }
     }
 

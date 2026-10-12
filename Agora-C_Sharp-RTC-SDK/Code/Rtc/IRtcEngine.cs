@@ -3218,6 +3218,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete("This method is deprecated. Use `IMediaEngine::createLoopbackAudioTrack` to create a loopback audio track, then use `ChannelMediaOptions::publishLoopbackAudioTrackIds` to publish it. Use `IMediaEngine::adjustLoopbackAudioPublishVolume` to adjust its volume.")]
         public abstract int EnableLoopbackRecording(bool enabled, string deviceName = "");
 
         ///
@@ -4054,6 +4055,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int StartScreenCapture(ScreenCaptureParameters2 captureParams);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int StartScreenCaptureInApp(ScreenCaptureParameters2 captureParams);
 
         ///
         /// <summary>
@@ -5569,6 +5575,36 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int EnableAudioTrackVolumeIndication(uint id, int interval);
+
+        ///
+        /// @ignore
+        ///
+        public abstract uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int AdjustLoopbackAudioPublishVolume(uint trackId, int volume);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int DestroyLoopbackAudioTrack(uint trackId);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int RegisterAudioTrackObserver(uint id, IAudioTrackObserver* observer);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver* observer);
 
     }
 }

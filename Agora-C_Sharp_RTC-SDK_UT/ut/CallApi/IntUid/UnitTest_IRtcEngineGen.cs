@@ -2280,6 +2280,16 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_StartScreenCaptureInApp_270da41()
+        {
+            var captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters2>();
+
+            var nRet = @interface.StartScreenCaptureInApp(captureParams);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_UpdateScreenCapture_270da41()
         {
             var captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters2>();
@@ -3239,6 +3249,74 @@ namespace Agora.Rtc.Ut
             var videoTrackId = ParamsHelper.CreateParam<uint>();
 
             var nRet = @interface.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_EnableAudioTrackVolumeIndication_a2698bb()
+        {
+            var id = ParamsHelper.CreateParam<uint>();
+
+            var interval = ParamsHelper.CreateParam<int>();
+
+            var nRet = @interface.EnableAudioTrackVolumeIndication(id, interval);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_CreateLoopbackAudioTrack_599af35()
+        {
+            var config = ParamsHelper.CreateParam<LoopbackAudioTrackConfig>();
+
+            var nRet = @interface.CreateLoopbackAudioTrack(config);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_AdjustLoopbackAudioPublishVolume_a2698bb()
+        {
+            var trackId = ParamsHelper.CreateParam<uint>();
+
+            var volume = ParamsHelper.CreateParam<int>();
+
+            var nRet = @interface.AdjustLoopbackAudioPublishVolume(trackId, volume);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_DestroyLoopbackAudioTrack_6178b5d()
+        {
+            var trackId = ParamsHelper.CreateParam<uint>();
+
+            var nRet = @interface.DestroyLoopbackAudioTrack(trackId);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_RegisterAudioTrackObserver_39ac049()
+        {
+            var id = ParamsHelper.CreateParam<uint>();
+
+            var observer = ParamsHelper.CreateParam<IAudioTrackObserver*>();
+
+            var nRet = @interface.RegisterAudioTrackObserver(id, observer);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_UnregisterAudioTrackObserver_39ac049()
+        {
+            var id = ParamsHelper.CreateParam<uint>();
+
+            var observer = ParamsHelper.CreateParam<IAudioTrackObserver*>();
+
+            var nRet = @interface.UnregisterAudioTrackObserver(id, observer);
             Assert.AreEqual(0, nRet);
         }
 

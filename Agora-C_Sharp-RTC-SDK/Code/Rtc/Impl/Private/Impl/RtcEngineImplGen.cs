@@ -3607,6 +3607,23 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int StartScreenCaptureInApp(ScreenCaptureParameters2 captureParams)
+        {
+            _param.Clear();
+            _param.Add("captureParams", captureParams);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_STARTSCREENCAPTUREINAPP_270da41,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
         public int UpdateScreenCapture(ScreenCaptureParameters2 captureParams)
         {
             _param.Clear();
@@ -6116,6 +6133,112 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_SETEXTERNALAUDIOSINK_d275ce0,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int EnableAudioTrackVolumeIndication(uint id, int interval)
+        {
+            _param.Clear();
+            _param.Add("id", id);
+            _param.Add("interval", interval);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_ENABLEAUDIOTRACKVOLUMEINDICATION_a2698bb,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config)
+        {
+            _param.Clear();
+            _param.Add("config", config);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_CREATELOOPBACKAUDIOTRACK_599af35,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? 0 : (uint)AgoraJson.GetData<uint>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int AdjustLoopbackAudioPublishVolume(uint trackId, int volume)
+        {
+            _param.Clear();
+            _param.Add("trackId", trackId);
+            _param.Add("volume", volume);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_ADJUSTLOOPBACKAUDIOPUBLISHVOLUME_a2698bb,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int DestroyLoopbackAudioTrack(uint trackId)
+        {
+            _param.Clear();
+            _param.Add("trackId", trackId);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_DESTROYLOOPBACKAUDIOTRACK_6178b5d,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int RegisterAudioTrackObserver(uint id, IAudioTrackObserver* observer)
+        {
+            _param.Clear();
+            _param.Add("id", id);
+            _param.Add("observer", observer);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_REGISTERAUDIOTRACKOBSERVER_39ac049,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver* observer)
+        {
+            _param.Clear();
+            _param.Add("id", id);
+            _param.Add("observer", observer);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_UNREGISTERAUDIOTRACKOBSERVER_39ac049,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

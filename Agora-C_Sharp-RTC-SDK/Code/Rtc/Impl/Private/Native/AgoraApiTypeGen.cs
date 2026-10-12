@@ -662,6 +662,8 @@ namespace Agora.Rtc
         public const string IRTCENGINE_UPDATESCREENCAPTUREPARAMETERS_a2eef93 = "RtcEngine_updateScreenCaptureParameters_a2eef93";
         //IRtcEngine::startScreenCapture(agora::rtc::ScreenCaptureParameters2 const& captureParams, );
         public const string IRTCENGINE_STARTSCREENCAPTURE_270da41 = "RtcEngine_startScreenCapture_270da41";
+        //IRtcEngine::startScreenCaptureInApp(agora::rtc::ScreenCaptureParameters2 const& captureParams, );
+        public const string IRTCENGINE_STARTSCREENCAPTUREINAPP_270da41 = "RtcEngine_startScreenCaptureInApp_270da41";
         //IRtcEngine::updateScreenCapture(agora::rtc::ScreenCaptureParameters2 const& captureParams, );
         public const string IRTCENGINE_UPDATESCREENCAPTURE_270da41 = "RtcEngine_updateScreenCapture_270da41";
         //IRtcEngine::queryScreenCaptureCapability();
@@ -852,6 +854,18 @@ namespace Agora.Rtc
         public const string IMEDIAENGINE_PUSHVIDEOFRAME_4e544e2 = "MediaEngine_pushVideoFrame_4e544e2";
         //IMediaEngine::pushEncodedVideoImage(unsigned char const* imageBuffer, size_t length, agora::rtc::EncodedVideoFrameInfo const& videoEncodedFrameInfo, unsigned int videoTrackId, );
         public const string IMEDIAENGINE_PUSHENCODEDVIDEOIMAGE_e71452b = "MediaEngine_pushEncodedVideoImage_e71452b";
+        //IMediaEngine::enableAudioTrackVolumeIndication(rtc::track_id_t id, int interval, );
+        public const string IMEDIAENGINE_ENABLEAUDIOTRACKVOLUMEINDICATION_a2698bb = "MediaEngine_enableAudioTrackVolumeIndication_a2698bb";
+        //IMediaEngine::createLoopbackAudioTrack(rtc::LoopbackAudioTrackConfig const& config, );
+        public const string IMEDIAENGINE_CREATELOOPBACKAUDIOTRACK_599af35 = "MediaEngine_createLoopbackAudioTrack_599af35";
+        //IMediaEngine::adjustLoopbackAudioPublishVolume(rtc::track_id_t trackId, int volume, );
+        public const string IMEDIAENGINE_ADJUSTLOOPBACKAUDIOPUBLISHVOLUME_a2698bb = "MediaEngine_adjustLoopbackAudioPublishVolume_a2698bb";
+        //IMediaEngine::destroyLoopbackAudioTrack(rtc::track_id_t trackId, );
+        public const string IMEDIAENGINE_DESTROYLOOPBACKAUDIOTRACK_6178b5d = "MediaEngine_destroyLoopbackAudioTrack_6178b5d";
+        //IMediaEngine::registerAudioTrackObserver(rtc::track_id_t id, rtc::IAudioTrackObserver* observer, );
+        public const string IMEDIAENGINE_REGISTERAUDIOTRACKOBSERVER_39ac049 = "MediaEngine_registerAudioTrackObserver_39ac049";
+        //IMediaEngine::unregisterAudioTrackObserver(rtc::track_id_t id, rtc::IAudioTrackObserver* observer, );
+        public const string IMEDIAENGINE_UNREGISTERAUDIOTRACKOBSERVER_39ac049 = "MediaEngine_unregisterAudioTrackObserver_39ac049";
         //IRtcEngineEx::joinChannelEx(char const* token, agora::rtc::RtcConnection const& connection, agora::rtc::ChannelMediaOptions const& options, agora::rtc::IRtcEngineEventHandler* eventHandler, );
         public const string IRTCENGINEEX_JOINCHANNELEX_a3cd08c = "RtcEngineEx_joinChannelEx_a3cd08c";
         //IRtcEngineEx::leaveChannelEx(agora::rtc::RtcConnection const& connection, );
@@ -1070,6 +1084,8 @@ namespace Agora.Rtc
         public const string IAUDIODEVICEMANAGER_FOLLOWSYSTEMRECORDINGDEVICE_5039d15 = "AudioDeviceManager_followSystemRecordingDevice_5039d15";
         //IAudioDeviceManager::followSystemLoopbackDevice(bool enable, );
         public const string IAUDIODEVICEMANAGER_FOLLOWSYSTEMLOOPBACKDEVICE_5039d15 = "AudioDeviceManager_followSystemLoopbackDevice_5039d15";
+        //IAudioTrackObserver::onAudioTrackVolumeIndication(agora::rtc::track_id_t trackId, agora::rtc::AudioTrackVolumeInfo const* volumeInfo, );
+        public const string IAUDIOTRACKOBSERVER_ONAUDIOTRACKVOLUMEINDICATION_9bd73f7 = "AudioTrackObserver_onAudioTrackVolumeIndication_9bd73f7";
         //IAudioEncodedFrameObserver::onRecordAudioEncodedFrame(uint8_t const* frameBuffer, int length, agora::rtc::EncodedAudioFrameInfo const& audioEncodedFrameInfo, );
         public const string IAUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME_d930ddc = "AudioEncodedFrameObserver_onRecordAudioEncodedFrame_d930ddc";
         //IAudioEncodedFrameObserver::onPlaybackAudioEncodedFrame(uint8_t const* frameBuffer, int length, agora::rtc::EncodedAudioFrameInfo const& audioEncodedFrameInfo, );
