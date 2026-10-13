@@ -1323,6 +1323,11 @@ namespace Agora.Rtc
     ///
     public class ExternalVideoFrame
     {
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fenceObject, float[] matrix, byte[] metadataBuffer, int metadataSize, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11Texture2d, int textureSliceIndex, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
+                : this(type, format, buffer, stride, height, cropLeft, cropTop, cropRight, cropBottom, rotation, timestamp, eglContext, eglType, textureId, fenceObject, matrix, metadataBuffer, metadataSize, alphaBuffer, fillAlphaBuffer, alphaStitchMode, d3d11Texture2d, textureSliceIndex, hdr10MetadataInfo, colorSpace, IntPtr.Zero)
+            {
+            }
+
         ///
         /// <summary>
         /// The video type. See VIDEO_BUFFER_TYPE.
@@ -1496,6 +1501,11 @@ namespace Agora.Rtc
         ///
         public ColorSpace colorSpace;
 
+        ///
+        /// @ignore
+        ///
+        public IntPtr pixelBuffer;
+
         public ExternalVideoFrame()
         {
             this.type = VIDEO_BUFFER_TYPE.VIDEO_BUFFER_RAW_DATA;
@@ -1520,9 +1530,10 @@ namespace Agora.Rtc
             this.alphaStitchMode = ALPHA_STITCH_MODE.NO_ALPHA_STITCH;
             this.d3d11Texture2d = IntPtr.Zero;
             this.textureSliceIndex = 0;
+            this.pixelBuffer = IntPtr.Zero;
         }
 
-        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fenceObject, float[] matrix, byte[] metadataBuffer, int metadataSize, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11Texture2d, int textureSliceIndex, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fenceObject, float[] matrix, byte[] metadataBuffer, int metadataSize, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11Texture2d, int textureSliceIndex, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace, IntPtr pixelBuffer)
         {
             this.type = type;
             this.format = format;
@@ -1549,6 +1560,7 @@ namespace Agora.Rtc
             this.textureSliceIndex = textureSliceIndex;
             this.hdr10MetadataInfo = hdr10MetadataInfo;
             this.colorSpace = colorSpace;
+            this.pixelBuffer = pixelBuffer;
         }
     }
 

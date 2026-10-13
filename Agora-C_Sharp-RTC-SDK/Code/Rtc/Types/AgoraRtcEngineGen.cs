@@ -1869,14 +1869,45 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public class AudioTrackIdList
+    {
+        ///
+        /// @ignore
+        ///
+        public uint[] trackIds;
+
+        ///
+        /// @ignore
+        ///
+        public int trackCount;
+
+        public AudioTrackIdList(uint[] trackIds, int trackCount)
+        {
+            this.trackIds = trackIds;
+            this.trackCount = trackCount;
+        }
+        public AudioTrackIdList()
+        {
+        }
+
+    }
+
+    ///
     /// <summary>
     /// The channel media options.
-    /// 
+    ///
     /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection. For example, publishMicrophoneTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenCaptureVideo, publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true. Agora recommends that you set member parameter values yourself according to your business scenario, otherwise the SDK will automatically assign values to member parameters.
     /// </summary>
     ///
     public class ChannelMediaOptions : IOptionalJsonParse
     {
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType)
+                : this(publishCameraTrack, publishSecondaryCameraTrack, publishThirdCameraTrack, publishFourthCameraTrack, publishMicrophoneTrack, publishScreenCaptureAudio, publishScreenCaptureVideo, publishScreenTrack, publishSecondaryScreenTrack, publishThirdScreenTrack, publishFourthScreenTrack, publishCustomAudioTrack, publishCustomAudioTrackId, new Optional<bool>(), new Optional<AudioTrackIdList>(), publishCustomVideoTrack, publishEncodedVideoTrack, publishMediaPlayerAudioTrack, publishMediaPlayerVideoTrack, publishTranscodedVideoTrack, publishMixedAudioTrack, publishLipSyncTrack, autoSubscribeAudio, autoSubscribeVideo, enableAudioRecordingOrPlayout, publishMediaPlayerId, clientRoleType, audienceLatencyLevel, defaultVideoStreamType, channelProfile, audioDelayMs, mediaPlayerAudioDelayMs, token, enableBuiltInMediaEncryption, publishRhythmPlayerTrack, isInteractiveAudience, customVideoTrackId, isAudioFilterable, parameters, enableMultipath, uplinkMultipathMode, downlinkMultipathMode, preferMultipathType, new Optional<string>())
+            {
+            }
+
         ///
         /// <summary>
         /// Whether to publish the video captured by the camera: true : Publish the video captured by the camera. false : Do not publish the video captured by the camera.
@@ -1967,6 +1998,16 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public Optional<int> publishCustomAudioTrackId = new Optional<int>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<bool> publishLoopbackAudioTrack = new Optional<bool>();
+
+        ///
+        /// @ignore
+        ///
+        public Optional<AudioTrackIdList> publishLoopbackAudioTrackIds = new Optional<AudioTrackIdList>();
 
         ///
         /// <summary>
@@ -2152,11 +2193,16 @@ namespace Agora.Rtc
         ///
         public Optional<MultipathType> preferMultipathType = new Optional<MultipathType>();
 
+        ///
+        /// @ignore
+        ///
+        public Optional<string> customUserInfo = new Optional<string>();
+
         public ChannelMediaOptions()
         {
         }
 
-        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType)
+        public ChannelMediaOptions(Optional<bool> publishCameraTrack, Optional<bool> publishSecondaryCameraTrack, Optional<bool> publishThirdCameraTrack, Optional<bool> publishFourthCameraTrack, Optional<bool> publishMicrophoneTrack, Optional<bool> publishScreenCaptureAudio, Optional<bool> publishScreenCaptureVideo, Optional<bool> publishScreenTrack, Optional<bool> publishSecondaryScreenTrack, Optional<bool> publishThirdScreenTrack, Optional<bool> publishFourthScreenTrack, Optional<bool> publishCustomAudioTrack, Optional<int> publishCustomAudioTrackId, Optional<bool> publishLoopbackAudioTrack, Optional<AudioTrackIdList> publishLoopbackAudioTrackIds, Optional<bool> publishCustomVideoTrack, Optional<bool> publishEncodedVideoTrack, Optional<bool> publishMediaPlayerAudioTrack, Optional<bool> publishMediaPlayerVideoTrack, Optional<bool> publishTranscodedVideoTrack, Optional<bool> publishMixedAudioTrack, Optional<bool> publishLipSyncTrack, Optional<bool> autoSubscribeAudio, Optional<bool> autoSubscribeVideo, Optional<bool> enableAudioRecordingOrPlayout, Optional<int> publishMediaPlayerId, Optional<CLIENT_ROLE_TYPE> clientRoleType, Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel, Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType, Optional<CHANNEL_PROFILE_TYPE> channelProfile, Optional<int> audioDelayMs, Optional<int> mediaPlayerAudioDelayMs, Optional<string> token, Optional<bool> enableBuiltInMediaEncryption, Optional<bool> publishRhythmPlayerTrack, Optional<bool> isInteractiveAudience, Optional<uint> customVideoTrackId, Optional<bool> isAudioFilterable, Optional<string> parameters, Optional<bool> enableMultipath, Optional<MultipathMode> uplinkMultipathMode, Optional<MultipathMode> downlinkMultipathMode, Optional<MultipathType> preferMultipathType, Optional<string> customUserInfo)
         {
             this.publishCameraTrack = publishCameraTrack;
             this.publishSecondaryCameraTrack = publishSecondaryCameraTrack;
@@ -2171,6 +2217,8 @@ namespace Agora.Rtc
             this.publishFourthScreenTrack = publishFourthScreenTrack;
             this.publishCustomAudioTrack = publishCustomAudioTrack;
             this.publishCustomAudioTrackId = publishCustomAudioTrackId;
+            this.publishLoopbackAudioTrack = publishLoopbackAudioTrack;
+            this.publishLoopbackAudioTrackIds = publishLoopbackAudioTrackIds;
             this.publishCustomVideoTrack = publishCustomVideoTrack;
             this.publishEncodedVideoTrack = publishEncodedVideoTrack;
             this.publishMediaPlayerAudioTrack = publishMediaPlayerAudioTrack;
@@ -2199,6 +2247,7 @@ namespace Agora.Rtc
             this.uplinkMultipathMode = uplinkMultipathMode;
             this.downlinkMultipathMode = downlinkMultipathMode;
             this.preferMultipathType = preferMultipathType;
+            this.customUserInfo = customUserInfo;
         }
 
         ///
@@ -2284,6 +2333,18 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("publishCustomAudioTrackId");
                 writer.Write(this.publishCustomAudioTrackId.GetValue());
+            }
+
+            if (this.publishLoopbackAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishLoopbackAudioTrack");
+                writer.Write(this.publishLoopbackAudioTrack.GetValue());
+            }
+
+            if (this.publishLoopbackAudioTrackIds.HasValue())
+            {
+                writer.WritePropertyName("publishLoopbackAudioTrackIds");
+                JsonMapper.WriteValue(this.publishLoopbackAudioTrackIds.GetValue(), writer, false, 0);
             }
 
             if (this.publishCustomVideoTrack.HasValue())
@@ -2452,6 +2513,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("preferMultipathType");
                 AgoraJson.WriteEnum(writer, this.preferMultipathType.GetValue());
+            }
+
+            if (this.customUserInfo.HasValue())
+            {
+                writer.WritePropertyName("customUserInfo");
+                writer.Write(this.customUserInfo.GetValue());
             }
 
             writer.WriteObjectEnd();
@@ -2635,7 +2702,7 @@ namespace Agora.Rtc
     public class RtcEngineContext : IOptionalJsonParse
     {
         public RtcEngineContext(string appId, ulong context, CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario, AREA_CODE areaCode, LogConfig logConfig, Optional<THREAD_PRIORITY_TYPE> threadPriority, bool useExternalEglContext, bool domainLimit, bool autoRegisterAgoraExtensions)
-            : this(appId, context, channelProfile, license, audioScenario, areaCode, logConfig, threadPriority, useExternalEglContext, domainLimit, autoRegisterAgoraExtensions, string.Empty)
+        : this(appId, context, channelProfile, license, audioScenario, areaCode, logConfig, threadPriority, useExternalEglContext, domainLimit, autoRegisterAgoraExtensions, string.Empty)
         {
         }
 

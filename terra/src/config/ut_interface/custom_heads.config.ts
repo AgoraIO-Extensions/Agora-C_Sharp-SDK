@@ -158,6 +158,8 @@ export const customHeads: CustomHead[] = [
             "release",
             "queryInterface",
             "registerPacketObserver",
+            "registerAudioTrackObserver",
+            "unregisterAudioTrackObserver",
             "registerEventHandler",
             "unregisterEventHandler",
             "joinChannelWithUserAccountEx",
@@ -229,6 +231,8 @@ export const customHeads: CustomHead[] = [
             "public abstract int UnRegisterFaceInfoObserver();"
         ],
         hide_methods: [
+            "registerAudioTrackObserver",
+            "unregisterAudioTrackObserver",
             "release",
             "enableCustomAudioLocalPlayback",
             "registerAudioFrameObserver",

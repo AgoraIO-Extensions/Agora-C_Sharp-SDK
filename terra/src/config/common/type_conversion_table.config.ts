@@ -8,6 +8,7 @@ import { ConversionTable } from "../../type_definition";
 export const typeConversionTable: ConversionTable = {
 
     special_class_param: {
+        "AudioTrackIdList.trackIds": "uint[]",
         //The member buffer defined under ExternalVideoFrame will be defined as byte [] type
         "ExternalVideoFrame.buffer": "byte[]",
         "ExternalVideoFrame.eglContext": "IntPtr",
@@ -38,6 +39,8 @@ export const typeConversionTable: ConversionTable = {
         "MultipathStats.pathStats":"PathStats[]"
     },
     special_method_param: {
+        "AudioTrackIdList.AudioTrackIdList.trackIds": "uint[]",
+        "IAudioTrackObserver.onAudioTrackVolumeIndication.volumeInfo": "AudioTrackVolumeInfo",
         //The member build defined under IRtcEngine.getVersion will be defined as ref int type
         "IRtcEngine.getVersion.build": "ref int",
         "IRtcEngine.sendStreamMessage.data": "byte[]",
@@ -176,6 +179,9 @@ export const typeConversionTable: ConversionTable = {
         "unsigned int": "uint",
         "uid_t": "uint",
         "track_id_t": "uint",
+        "int[8]": "int[]",
+        "rtc::IAudioTrackObserver*": "IAudioTrackObserver",
+        "agora::rtc::IAudioTrackObserver*": "IAudioTrackObserver",
         "rtc::uid_t": "uint",
         "agora::rtc::uid_t": "uint",
         "rtc::track_id_t": "uint",

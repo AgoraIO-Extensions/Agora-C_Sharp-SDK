@@ -1928,6 +1928,15 @@ namespace Agora.Rtc
             return _impl.StartScreenCapture(captureParams);
         }
 
+        public override int StartScreenCaptureInApp(ScreenCaptureParameters2 captureParams)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.StartScreenCaptureInApp(captureParams);
+        }
+
         public override int UpdateScreenCapture(ScreenCaptureParameters2 captureParams)
         {
             if (_impl == null)
@@ -3285,6 +3294,60 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _impl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
+        }
+
+        public override int EnableAudioTrackVolumeIndication(uint id, int interval)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.EnableAudioTrackVolumeIndication(id, interval);
+        }
+
+        public override uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config)
+        {
+            if (_impl == null)
+            {
+                return 0;
+            }
+            return _impl.CreateLoopbackAudioTrack(config);
+        }
+
+        public override int AdjustLoopbackAudioPublishVolume(uint trackId, int volume)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.AdjustLoopbackAudioPublishVolume(trackId, volume);
+        }
+
+        public override int DestroyLoopbackAudioTrack(uint trackId)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.DestroyLoopbackAudioTrack(trackId);
+        }
+
+        public override int RegisterAudioTrackObserver(uint id, IAudioTrackObserver observer)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.RegisterAudioTrackObserver(id, observer);
+        }
+
+        public override int UnregisterAudioTrackObserver(uint id, IAudioTrackObserver observer)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.UnregisterAudioTrackObserver(id, observer);
         }
 
     }

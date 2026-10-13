@@ -112,6 +112,7 @@ namespace Agora.Rtc
                 UnSetIrisMetaDataObserver();
                 UnSetIrisAudioEncodedFrameObserver();
                 UnSetIrisAudioSpectrumObserver();
+                UnregisterAudioTrackObserver(_audioTrackObserverId, _registeredAudioTrackObserver);
                 UnSetIrisFaceInfoObserver();
 
                 _videoDeviceManagerInstance.Dispose();
@@ -141,6 +142,7 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeIrisRtcRendering(_rtcRenderingHandle);
             Release(sync);
+            ReleaseAudioTrackObserverHandle();
 
             ReleaseEventHandler();
             /// You must free cdn event handle after you release engine.

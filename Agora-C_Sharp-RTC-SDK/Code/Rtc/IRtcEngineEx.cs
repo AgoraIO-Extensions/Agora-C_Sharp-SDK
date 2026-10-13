@@ -494,6 +494,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete("This method is deprecated. Use `IMediaEngine::createLoopbackAudioTrack` to create a loopback audio track, then use the connection's channel media options and `publishLoopbackAudioTrackIds` to publish it. Use `IMediaEngine::adjustLoopbackAudioPublishVolume` to adjust its volume.")]
         public abstract int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = "");
 
         ///
