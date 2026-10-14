@@ -78,11 +78,6 @@ export default function (
 
     //interfaces process end
 
-    callbacks.forEach(callback => {
-        if (callback.name === "IAudioTrackObserver") {
-            callback.methods.forEach(method => { method.user_data.isAudioTrackObserver = true; });
-        }
-    });
     const callbackResult: RenderResult[] = renderWithConfiguration({
         fileNameTemplatePath: path.join(__dirname, "callback_file_name.mustache"),
         fileContentTemplatePath: path.join(__dirname, "callback_file_content.mustache"),

@@ -10,6 +10,9 @@ namespace Agora.Rtc
     internal static partial class AudioTrackObserverNative
     {
         private static readonly object observerLock = new object();
+        // Keep the legacy generated dispatcher's listener contract compilable.
+        // Multi-observer events exclusively use the handwritten dispatcher below.
+        private static readonly IAudioTrackObserver audioTrackObserver = null;
         private static readonly Dictionary<ulong, IAudioTrackObserver> observers = new Dictionary<ulong, IAudioTrackObserver>();
 
         internal static void SetAudioTrackObserver(IntPtr handle, IAudioTrackObserver observer)
@@ -52,7 +55,23 @@ namespace Agora.Rtc
 #endif
                 var eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
                 var jsonData = AgoraJson.ToObject(eventParam.data);
-                OnEventGen(ref eventParam, jsonData, eventParam.@event);
+                if (eventParam.@event != AgoraApiType.IAUDIOTRACKOBSERVER_ONAUDIOTRACKVOLUMEINDICATION_9bd73f7)
+                {
+                    AgoraLog.LogWarning("unknown audio track event: " + eventParam.@event);
+                    return;
+                }
+                var observer = GetAudioTrackObserver(jsonData);
+                if (observer == null) return;
+                var trackId = (uint)AgoraJson.GetData<uint>(jsonData, "trackId");
+                var volumeInfo = (AudioTrackVolumeInfo)AgoraJson.JsonToStruct<AudioTrackVolumeInfo>(jsonData, "volumeInfo");
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                    if (!ReferenceEquals(observer, GetAudioTrackObserver(jsonData))) return;
+                    observer.OnAudioTrackVolumeIndication(trackId, volumeInfo);
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                });
+#endif
             }
         }
     }
