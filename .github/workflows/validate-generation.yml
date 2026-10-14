@@ -30,7 +30,9 @@ jobs:
       - name: Compile RTC and unit tests
         run: dotnet build Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln --configuration Release
       - name: Run managed audio track regressions
-        run: dotnet run --project Agora-C_Sharp_RTC-SDK_UT/managed/managed.csproj --configuration Release
+        run: |
+          cc -shared -fPIC Agora-C_Sharp_RTC-SDK_UT/managed/audio_track_shim.c -o /tmp/audio_track_shim.so
+          AGORA_TEST_SHIM_PATH=/tmp/audio_track_shim.so dotnet run --project Agora-C_Sharp_RTC-SDK_UT/managed/managed.csproj --configuration Release
       - name: Preserve generated RTC code
         if: always()
         uses: actions/upload-artifact@v4

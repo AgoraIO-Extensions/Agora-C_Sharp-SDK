@@ -21,9 +21,11 @@ namespace Agora.Rtc
             {
                 case AgoraApiType.IAUDIOTRACKOBSERVER_ONAUDIOTRACKVOLUMEINDICATION_9bd73f7:
                     {
+                        var audioTrackObserver = GetAudioTrackObserver(jsonData);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
+                        if (!ReferenceEquals(audioTrackObserver, GetAudioTrackObserver(jsonData))) return;
                         if (audioTrackObserver == null) return;
                         audioTrackObserver.OnAudioTrackVolumeIndication(
                         (uint)AgoraJson.GetData<uint>(jsonData, "trackId"),

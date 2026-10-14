@@ -112,7 +112,7 @@ namespace Agora.Rtc
                 UnSetIrisMetaDataObserver();
                 UnSetIrisAudioEncodedFrameObserver();
                 UnSetIrisAudioSpectrumObserver();
-                UnregisterAudioTrackObserver(_audioTrackObserverId, _registeredAudioTrackObserver);
+                UnregisterAllAudioTrackObservers();
                 UnSetIrisFaceInfoObserver();
 
                 _videoDeviceManagerInstance.Dispose();

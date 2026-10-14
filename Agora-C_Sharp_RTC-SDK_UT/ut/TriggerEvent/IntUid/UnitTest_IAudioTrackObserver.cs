@@ -37,9 +37,11 @@ namespace Agora.Rtc.Ut.Event
         public void RejectsNullAndDuplicateObserversWithoutReplacingTheListener()
         {
             Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_INVALID_ARGUMENT, Engine.RegisterAudioTrackObserver(7, null));
-            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_ALREADY_IN_USE, Engine.RegisterAudioTrackObserver(8, new UTAudioTrackObserver()));
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_ALREADY_IN_USE, Engine.RegisterAudioTrackObserver(7, callback));
             Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_INVALID_ARGUMENT, Engine.UnregisterAudioTrackObserver(8, callback));
+            Assert.AreEqual(0, Engine.RegisterAudioTrackObserver(8, callback));
             Assert.AreEqual(0, Engine.UnregisterAudioTrackObserver(7, callback));
+            Assert.AreEqual(0, Engine.UnregisterAudioTrackObserver(8, callback));
         }
     }
 }

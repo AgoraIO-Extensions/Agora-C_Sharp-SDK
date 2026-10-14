@@ -25,12 +25,18 @@ namespace Agora.Rtc {
                     {{^user_data.isHide}}
                     case AgoraApiType.{{{user_data.IrisApiIdParser.key}}}:
                         {
+                            {{#user_data.isAudioTrackObserver}}
+                            var audioTrackObserver = GetAudioTrackObserver(jsonData);
+                            {{/user_data.isAudioTrackObserver}}
                             {{#user_data.isCallbackCrossThread}}
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                             {{/user_data.isCallbackCrossThread}}
                             {{#user_data.listenerName}}
+                            {{#user_data.isAudioTrackObserver}}
+                            if (!ReferenceEquals(audioTrackObserver, GetAudioTrackObserver(jsonData))) return;
+                            {{/user_data.isAudioTrackObserver}}
                             if({{{user_data.listenerName}}} == null) return;
                             {{{user_data.listenerName}}}.{{{user_data.nameString}}}(
                             {{/user_data.listenerName}}
