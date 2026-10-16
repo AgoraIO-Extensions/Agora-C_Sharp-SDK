@@ -1324,9 +1324,9 @@ namespace Agora.Rtc
     public class ExternalVideoFrame
     {
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fenceObject, float[] matrix, byte[] metadataBuffer, int metadataSize, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11Texture2d, int textureSliceIndex, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)
-                : this(type, format, buffer, stride, height, cropLeft, cropTop, cropRight, cropBottom, rotation, timestamp, eglContext, eglType, textureId, fenceObject, matrix, metadataBuffer, metadataSize, alphaBuffer, fillAlphaBuffer, alphaStitchMode, d3d11Texture2d, textureSliceIndex, hdr10MetadataInfo, colorSpace, IntPtr.Zero)
-            {
-            }
+        : this(type, format, buffer, stride, height, cropLeft, cropTop, cropRight, cropBottom, rotation, timestamp, eglContext, eglType, textureId, fenceObject, matrix, metadataBuffer, metadataSize, alphaBuffer, fillAlphaBuffer, alphaStitchMode, d3d11Texture2d, textureSliceIndex, hdr10MetadataInfo, colorSpace, IntPtr.Zero)
+        {
+        }
 
         ///
         /// <summary>

@@ -67,8 +67,8 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
-                    if (!ReferenceEquals(observer, GetAudioTrackObserver(jsonData))) return;
-                    observer.OnAudioTrackVolumeIndication(trackId, volumeInfo);
+                if (!ReferenceEquals(observer, GetAudioTrackObserver(jsonData))) return;
+                observer.OnAudioTrackVolumeIndication(trackId, volumeInfo);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 });
 #endif
