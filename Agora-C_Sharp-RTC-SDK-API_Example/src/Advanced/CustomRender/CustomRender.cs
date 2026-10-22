@@ -43,8 +43,9 @@ namespace C_Sharp_API_Example
             MainForm.dump_handler_(tag_ + "InitEventHandler", ret);
 
             // Register video frame observer
-            video_frame_observer = new CustomRenderVideoFrameObserver(view_);
-            ret = rtc_engine_.RegisterVideoFrameObserver(video_frame_observer);
+            var observer = new CustomRenderVideoFrameObserver(view_);
+            video_frame_observer = observer;
+            ret = rtc_engine_.RegisterVideoFrameObserver(video_frame_observer, observer.GetVideoFormatPreference(), VIDEO_MODULE_POSITION.POSITION_PRE_RENDERER | VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER);
             MainForm.dump_handler_(tag_ + "RegisterVideoFrameObserver", ret);
 
             return ret;
@@ -137,7 +138,7 @@ namespace C_Sharp_API_Example
             return true;
         }
 
-        public override VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
+        public VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
         {
             switch (view_.type_)
             {
@@ -152,9 +153,5 @@ namespace C_Sharp_API_Example
             }
         }
 
-        public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
-        {
-            return VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
-        }
     }
 }

@@ -18,3 +18,5 @@ install-state.gz
 yarn.lock
 .github/workflows/Update-Deps-Content.txt
 .github/workflows/Update-Deps-test.sh
+
+csharp-output/

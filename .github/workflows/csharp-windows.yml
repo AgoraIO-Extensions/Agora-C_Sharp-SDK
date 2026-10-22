@@ -1,0 +1,49 @@
+name: Standalone C# Windows package
+on:
+  pull_request:
+    branches: [release/4.5]
+    paths:
+      - ci/build/build_mac.groovy
+      - ci/build/csharp/**
+      - ci/build/url_config.txt
+      - Agora-C_Sharp-RTC-SDK/Code/**
+      - Agora-C_Sharp-RTC-SDK-API_Example/**
+      - .github/workflows/csharp-windows.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dispatch-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: |
+          curl --fail --location https://repo.maven.apache.org/maven2/org/codehaus/groovy/groovy-all/2.4.21/groovy-all-2.4.21.jar -o "$RUNNER_TEMP/groovy.jar"
+          java -cp "$RUNNER_TEMP/groovy.jar" groovy.ui.GroovyMain ci/build/csharp/test_dispatch.groovy
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.203
+      - name: Build candidate SDK and both Windows demos
+        shell: pwsh
+        run: |
+          $video = ((Get-Content ci/build/url_config.txt -Raw) -split '>>>video')[1] -split '<<<end' | Select-Object -First 1
+          $iris = [regex]::Match($video, '(?m)^IRIS_WINDOWS=(.+)').Groups[1].Value.Trim()
+          $native = [regex]::Match($video, '(?m)^NATIVE_WINDOWS=(.+)').Groups[1].Value.Trim()
+          ./ci/build/csharp/build.ps1 -Version "4.5.3.6-ci.${{ github.run_number }}" -IrisUrl $iris -NativeUrl $native
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python ci/build/csharp/verify_package.py csharp-output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: csharp-windows-candidate
+          path: csharp-output/*
+          retention-days: 3

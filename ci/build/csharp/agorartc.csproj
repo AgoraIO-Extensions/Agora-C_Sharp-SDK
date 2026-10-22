@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>agorartc</AssemblyName>
+    <PackageId>agora_rtc_sdk</PackageId>
+    <Authors>Agora</Authors>
+    <Description>Agora standalone C# Windows RTC SDK.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/AgoraIO-Extensions/Agora-C_Sharp-SDK</RepositoryUrl>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../Agora-C_Sharp-RTC-SDK/Code/Rtc/**/*.cs" />
+    <Compile Include="../../../Agora-C_Sharp-RTC-SDK/Code/Tools/**/*.cs" Exclude="**/bin/**;**/obj/**" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net40" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(NativeRoot)' != ''">
+    <None Include="$(NativeRoot)/x86/*" Pack="true" PackagePath="runtimes/win-x86/native/" />
+    <None Include="$(NativeRoot)/x64/*" Pack="true" PackagePath="runtimes/win-x64/native/" />
+    <None Include="agora_rtc_sdk.targets" Pack="true" PackagePath="build/" />
+  </ItemGroup>
+</Project>

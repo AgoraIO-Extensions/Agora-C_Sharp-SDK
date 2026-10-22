@@ -43,12 +43,12 @@ namespace C_Sharp_API_Example
 
             // Register audio frame observer
             audio_frame_observer = new ProcessRawDataAudioFrameObserver();
-            ret = rtc_engine_.RegisterAudioFrameObserver(audio_frame_observer);
+            ret = rtc_engine_.RegisterAudioFrameObserver(audio_frame_observer, AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_RECORD | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_PLAYBACK | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_MIXED | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_BEFORE_MIXING | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_EAR_MONITORING);
             MainForm.dump_handler_(ProcessRawData_TAG + "RegisterAudioFrameObserver", ret);
 
             // Register video frame observer
             video_frame_observer = new ProcessRawDataVideoFrameObserver();
-            ret = rtc_engine_.RegisterVideoFrameObserver(video_frame_observer);
+            ret = rtc_engine_.RegisterVideoFrameObserver(video_frame_observer, VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420, VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER | VIDEO_MODULE_POSITION.POSITION_PRE_RENDERER | VIDEO_MODULE_POSITION.POSITION_PRE_ENCODER);
             MainForm.dump_handler_(ProcessRawData_TAG + "RegisterVideoFrameObserver", ret);
 
             return ret;
@@ -82,7 +82,7 @@ namespace C_Sharp_API_Example
 
                 // Setup local video
                 VideoCanvas canvas = new VideoCanvas();
-                canvas.view = (long)view_.localVideoView.Handle;
+                canvas.view = unchecked((ulong)view_.localVideoView.Handle.ToInt64());
                 canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
 
                 ret = rtc_engine_.SetupLocalVideo(canvas);
@@ -133,7 +133,7 @@ namespace C_Sharp_API_Example
             Console.WriteLine("----->OnUserJoined uid={0}", remoteUid);
 
             VideoCanvas canvas = new VideoCanvas();
-            canvas.view = (long)view_.remoteVideoView.Handle;
+            canvas.view = unchecked((ulong)view_.remoteVideoView.Handle.ToInt64());
             canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
             canvas.uid = remoteUid;
 
@@ -217,14 +217,6 @@ namespace C_Sharp_API_Example
             return true;
         }
 
-        public override VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
-        {
-            return VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;  // default:FRAME_TYPE_RGBA
-        }
 
-        public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
-        {
-            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
-        }
     }
 }

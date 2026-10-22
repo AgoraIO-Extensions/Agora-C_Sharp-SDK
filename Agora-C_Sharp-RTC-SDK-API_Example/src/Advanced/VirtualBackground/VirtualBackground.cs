@@ -69,7 +69,7 @@ namespace C_Sharp_API_Example
 
                 // Setup local video
                 VideoCanvas canvas = new VideoCanvas();
-                canvas.view = (long)view_.localVideoView.Handle;
+                canvas.view = unchecked((ulong)view_.localVideoView.Handle.ToInt64());
                 canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
 
                 ret = rtc_engine_.SetupLocalVideo(canvas);
@@ -115,7 +115,7 @@ namespace C_Sharp_API_Example
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
-            VideoCanvas vs = new VideoCanvas((long)view_.localVideoView.Handle, RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
+            VideoCanvas vs = new VideoCanvas(unchecked((ulong)view_.localVideoView.Handle.ToInt64()), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
             int ret = rtc_engine_.SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
@@ -125,7 +125,7 @@ namespace C_Sharp_API_Example
             Console.WriteLine("----->OnUserJoined uid={0}", remoteUid);
 
             VideoCanvas canvas = new VideoCanvas();
-            canvas.view = (long)view_.remoteVideoView.Handle;
+            canvas.view = unchecked((ulong)view_.remoteVideoView.Handle.ToInt64());
             canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
             canvas.uid = remoteUid;
 
@@ -133,7 +133,7 @@ namespace C_Sharp_API_Example
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
-        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
             if(source == VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA && state == LOCAL_VIDEO_STREAM_STATE.LOCAL_VIDEO_STREAM_STATE_CAPTURING)
             {
@@ -147,7 +147,7 @@ namespace C_Sharp_API_Example
                 int ret = rtc_engine_.EnableVirtualBackground(true, virtual_background_source, new SegmentationProperty());
                 MainForm.dump_handler_(VirtualBackground_TAG + "EnableVirtualBackground", ret);
             }
-            base.OnLocalVideoStateChanged(source, state, errorCode);
+            base.OnLocalVideoStateChanged(source, state, reason);
         }
     }
 }
