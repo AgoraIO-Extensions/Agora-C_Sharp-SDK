@@ -23,9 +23,20 @@ function Ensure-Dotnet {
     if ([Environment]::OSVersion.Platform -ne 'Win32NT') {
         throw 'Install .NET SDK 8 before cross-compiling on a non-Windows host'
     }
+    $installedDirectory = Join-Path $env:ProgramFiles 'dotnet'
+    $installedExecutable = Join-Path $installedDirectory 'dotnet.exe'
+    if (Test-Path $installedExecutable) {
+        & $installedExecutable --version
+        if ($LASTEXITCODE -eq 0) {
+            $env:DOTNET_ROOT = $installedDirectory
+            $env:PATH = "$installedDirectory;$env:PATH"
+            return
+        }
+    }
+    Write-Host 'Preparing private .NET SDK 8.0.203 in this build workspace'
     $installScript = Join-Path $temp 'dotnet-install.ps1'
     $sdkDirectory = Join-Path $temp 'dotnet-sdk'
-    Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -OutFile $installScript -UseBasicParsing
+    Invoke-WebRequest -Uri 'https://builds.dotnet.microsoft.com/dotnet/scripts/v1/dotnet-install.ps1' -OutFile $installScript -UseBasicParsing -TimeoutSec 120
     & $installScript -Version '8.0.203' -InstallDir $sdkDirectory -NoPath
     if (-not (Test-Path (Join-Path $sdkDirectory 'dotnet.exe'))) { throw 'Private .NET SDK installation failed' }
     $env:DOTNET_ROOT = $sdkDirectory
