@@ -24,6 +24,7 @@ jobs:
       - run: |
           curl --fail --location https://repo.maven.apache.org/maven2/org/codehaus/groovy/groovy-all/2.4.21/groovy-all-2.4.21.jar -o "$RUNNER_TEMP/groovy.jar"
           java -cp "$RUNNER_TEMP/groovy.jar" groovy.ui.GroovyMain ci/build/csharp/test_dispatch.groovy
+          python3 ci/build/csharp/test_finalize_signed.py
   package:
     runs-on: windows-latest
     steps:
