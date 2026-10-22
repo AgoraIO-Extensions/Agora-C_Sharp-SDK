@@ -29,6 +29,26 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Windows PowerShell signing URL parsing and host rejection
+        shell: powershell
+        run: |
+          $verify = (Resolve-Path ci/build/csharp/verify_signed.ps1).Path
+          $contract = Join-Path $env:RUNNER_TEMP 'csharp-signing-contract'
+          New-Item -ItemType Directory -Path $contract | Out-Null
+          Push-Location $contract
+          try {
+            '["https://example.invalid/sdk.zip","https://example.invalid/x86.zip","https://example.invalid/x64.zip"]' | Set-Content urls.json
+            $ErrorActionPreference = 'Continue'
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $verify -UrlsFile urls.json 2>&1 | Out-Null
+            $verificationExit = $LASTEXITCODE
+            $ErrorActionPreference = 'Stop'
+            if ($verificationExit -eq 0) { throw 'Untrusted signing URLs must fail' }
+            $report = Get-Content csharp-signed/signature-report.json -Raw | ConvertFrom-Json
+            if ($report.passed -or $report.errors[0] -ne 'Signed package must use the internal HTTPS Artifactory host') {
+              throw 'Signing URL array parsing or host rejection failed'
+            }
+            $global:LASTEXITCODE = 0
+          } finally { Pop-Location }
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.203

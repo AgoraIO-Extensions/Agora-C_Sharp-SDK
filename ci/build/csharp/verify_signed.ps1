@@ -14,7 +14,7 @@ $records = @()
 $errors = @()
 $packages = @()
 try {
-    $urls = @(Get-Content -LiteralPath $UrlsFile -Raw | ConvertFrom-Json)
+    $urls = Get-Content -LiteralPath $UrlsFile -Raw | ConvertFrom-Json
     if ($urls.Count -ne 3) { throw "Expected three signed SDK/Demo ZIPs, got $($urls.Count)" }
     foreach ($url in $urls) {
         $uri = [Uri]$url
