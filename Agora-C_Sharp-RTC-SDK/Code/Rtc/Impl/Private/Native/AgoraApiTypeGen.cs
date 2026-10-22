@@ -858,12 +858,6 @@ namespace Agora.Rtc
         public const string IMEDIAENGINE_PUSHVIDEOFRAME_4e544e2 = "MediaEngine_pushVideoFrame_4e544e2";
         //IMediaEngine::pushEncodedVideoImage(unsigned char const* imageBuffer, size_t length, agora::rtc::EncodedVideoFrameInfo const& videoEncodedFrameInfo, unsigned int videoTrackId, );
         public const string IMEDIAENGINE_PUSHENCODEDVIDEOIMAGE_e71452b = "MediaEngine_pushEncodedVideoImage_e71452b";
-        //IMediaEngine::createLoopbackAudioTrack(rtc::LoopbackAudioTrackConfig const& config, );
-        public const string IMEDIAENGINE_CREATELOOPBACKAUDIOTRACK_599af35 = "MediaEngine_createLoopbackAudioTrack_599af35";
-        //IMediaEngine::destroyLoopbackAudioTrack(rtc::track_id_t trackId, );
-        public const string IMEDIAENGINE_DESTROYLOOPBACKAUDIOTRACK_6178b5d = "MediaEngine_destroyLoopbackAudioTrack_6178b5d";
-        //IMediaEngine::updateLoopbackAudioTrackConfig(rtc::track_id_t trackId, rtc::LoopbackAudioTrackConfig const& config, );
-        public const string IMEDIAENGINE_UPDATELOOPBACKAUDIOTRACKCONFIG_080b602 = "MediaEngine_updateLoopbackAudioTrackConfig_080b602";
         //IRtcEngineEx::joinChannelEx(char const* token, agora::rtc::RtcConnection const& connection, agora::rtc::ChannelMediaOptions const& options, agora::rtc::IRtcEngineEventHandler* eventHandler, );
         public const string IRTCENGINEEX_JOINCHANNELEX_a3cd08c = "RtcEngineEx_joinChannelEx_a3cd08c";
         //IRtcEngineEx::leaveChannelEx(agora::rtc::RtcConnection const& connection, );

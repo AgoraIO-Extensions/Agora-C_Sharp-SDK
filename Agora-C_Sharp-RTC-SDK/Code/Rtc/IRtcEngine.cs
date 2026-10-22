@@ -5916,20 +5916,5 @@ namespace Agora.Rtc
         ///
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
 
-        ///
-        /// @ignore
-        ///
-        public abstract uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int DestroyLoopbackAudioTrack(uint trackId);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int UpdateLoopbackAudioTrackConfig(uint trackId, LoopbackAudioTrackConfig config);
-
     }
 }

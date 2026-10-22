@@ -3285,37 +3285,5 @@ namespace Agora.Rtc.Ut
         }
 
 
-        [Test]
-        public void Test_CreateLoopbackAudioTrack_599af35()
-        {
-            var config = ParamsHelper.CreateParam<LoopbackAudioTrackConfig>();
-
-            var nRet = @interface.CreateLoopbackAudioTrack(config);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_DestroyLoopbackAudioTrack_6178b5d()
-        {
-            var trackId = ParamsHelper.CreateParam<uint>();
-
-            var nRet = @interface.DestroyLoopbackAudioTrack(trackId);
-            Assert.AreEqual(0, nRet);
-        }
-
-
-        [Test]
-        public void Test_UpdateLoopbackAudioTrackConfig_080b602()
-        {
-            var trackId = ParamsHelper.CreateParam<uint>();
-
-            var config = ParamsHelper.CreateParam<LoopbackAudioTrackConfig>();
-
-            var nRet = @interface.UpdateLoopbackAudioTrackConfig(trackId, config);
-            Assert.AreEqual(0, nRet);
-        }
-
-
     }
 }

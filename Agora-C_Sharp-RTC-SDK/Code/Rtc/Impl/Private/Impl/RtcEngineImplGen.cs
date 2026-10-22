@@ -6260,57 +6260,5 @@ namespace Agora.Rtc
             return result;
         }
 
-        public uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config)
-        {
-            _param.Clear();
-            _param.Add("config", config);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_CREATELOOPBACKAUDIOTRACK_599af35,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? 0 : (uint)AgoraJson.GetData<uint>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int DestroyLoopbackAudioTrack(uint trackId)
-        {
-            _param.Clear();
-            _param.Add("trackId", trackId);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_DESTROYLOOPBACKAUDIOTRACK_6178b5d,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
-        public int UpdateLoopbackAudioTrackConfig(uint trackId, LoopbackAudioTrackConfig config)
-        {
-            _param.Clear();
-            _param.Add("trackId", trackId);
-            _param.Add("config", config);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMEDIAENGINE_UPDATELOOPBACKAUDIOTRACKCONFIG_080b602,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-
-            return result;
-        }
-
     }
 }

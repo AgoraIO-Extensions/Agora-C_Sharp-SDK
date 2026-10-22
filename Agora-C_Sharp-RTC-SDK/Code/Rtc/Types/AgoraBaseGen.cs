@@ -4709,6 +4709,16 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_EVENT_TYPE_SCREEN_CAPTURE_SYSTEM_INTERNAL_ERROR = 4,
 
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_EVENT_TYPE_CAMERA_FOCAL_LENGTH_APPLIED = 5,
+
+        ///
+        /// @ignore
+        ///
+        LOCAL_VIDEO_EVENT_TYPE_CAMERA_FOCAL_LENGTH_FALLBACK_TO_DEFAULT = 6,
+
     }
 
     ///
@@ -8251,82 +8261,6 @@ namespace Agora.Rtc
         {
             this.enableLocalPlayback = enableLocalPlayback;
             this.enableAudioProcessing = enableAudioProcessing;
-        }
-    }
-
-    ///
-    /// @ignore
-    ///
-    public enum LOOPBACK_AUDIO_TRACK_TYPE
-    {
-        ///
-        /// @ignore
-        ///
-        LOOPBACK_SYSTEM = 0,
-
-        ///
-        /// @ignore
-        ///
-        LOOPBACK_SYSTEM_EXCLUDE_SELF = 1,
-
-        ///
-        /// @ignore
-        ///
-        LOOPBACK_APPLICATION = 2,
-
-        ///
-        /// @ignore
-        ///
-        LOOPBACK_PROCESS = 3,
-
-    }
-
-    ///
-    /// @ignore
-    ///
-    public class LoopbackAudioTrackConfig
-    {
-        ///
-        /// @ignore
-        ///
-        public LOOPBACK_AUDIO_TRACK_TYPE loopbackType;
-
-        ///
-        /// @ignore
-        ///
-        public int volume;
-
-        ///
-        /// @ignore
-        ///
-        public string deviceName;
-
-        ///
-        /// @ignore
-        ///
-        public string appName;
-
-        ///
-        /// @ignore
-        ///
-        public uint processId;
-
-        public LoopbackAudioTrackConfig()
-        {
-            this.loopbackType = LOOPBACK_AUDIO_TRACK_TYPE.LOOPBACK_SYSTEM;
-            this.volume = 100;
-            this.deviceName = "";
-            this.appName = "";
-            this.processId = 0xffffffff;
-        }
-
-        public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)
-        {
-            this.loopbackType = loopbackType;
-            this.volume = volume;
-            this.deviceName = deviceName;
-            this.appName = appName;
-            this.processId = processId;
         }
     }
 

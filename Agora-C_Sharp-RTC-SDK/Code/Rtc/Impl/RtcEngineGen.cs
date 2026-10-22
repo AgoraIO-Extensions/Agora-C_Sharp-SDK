@@ -3350,32 +3350,5 @@ namespace Agora.Rtc
             return _impl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
         }
 
-        public override uint CreateLoopbackAudioTrack(LoopbackAudioTrackConfig config)
-        {
-            if (_impl == null)
-            {
-                return 0;
-            }
-            return _impl.CreateLoopbackAudioTrack(config);
-        }
-
-        public override int DestroyLoopbackAudioTrack(uint trackId)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.DestroyLoopbackAudioTrack(trackId);
-        }
-
-        public override int UpdateLoopbackAudioTrackConfig(uint trackId, LoopbackAudioTrackConfig config)
-        {
-            if (_impl == null)
-            {
-                return ErrorCode;
-            }
-            return _impl.UpdateLoopbackAudioTrackConfig(trackId, config);
-        }
-
     }
 }
