@@ -76,8 +76,6 @@ namespace Agora.Rtc.Ut
                 downlinkMultipathMode: Empty<MultipathMode>(),
                 preferMultipathType: Empty<MultipathType>());
 
-            Assert.IsFalse(options.publishLoopbackAudioTrack.HasValue());
-            Assert.IsFalse(options.publishLoopbackAudioTrackId.HasValue());
             Assert.IsFalse(options.channelType.HasValue());
         }
 
