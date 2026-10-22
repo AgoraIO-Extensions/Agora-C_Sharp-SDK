@@ -7,6 +7,7 @@ param(
     [string]$Output = 'csharp-output'
 )
 $ErrorActionPreference = 'Stop'
+$ProgressPreference = 'SilentlyContinue'
 Set-StrictMode -Version Latest
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -52,7 +53,9 @@ function Download-Package([string]$Url, [string]$Name) {
         $headers['X-JFrog-Art-Api'] = $env:JFROG_TOKEN
     }
     $zip = Join-Path $temp "$Name.zip"
+    Write-Host "Downloading $Name dependency"
     Invoke-WebRequest -Uri $uri -Headers $headers -OutFile $zip -UseBasicParsing
+    Write-Host "Downloaded $Name dependency ($((Get-Item $zip).Length) bytes)"
     $directory = Join-Path $temp $Name
     Expand-Archive -LiteralPath $zip -DestinationPath $directory
     return $directory

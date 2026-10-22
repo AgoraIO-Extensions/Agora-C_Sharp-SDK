@@ -2,6 +2,7 @@
 [CmdletBinding()]
 param([string]$UrlsFile = 'csharp-signing-urls.json')
 $ErrorActionPreference = 'Stop'
+$ProgressPreference = 'SilentlyContinue'
 Set-StrictMode -Version Latest
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -26,7 +27,9 @@ try {
         $zip = Join-Path $output $name
         $headers = @{}
         if ($env:JFROG_TOKEN) { $headers['X-JFrog-Art-Api'] = $env:JFROG_TOKEN }
+        Write-Host "Downloading signed package $name"
         Invoke-WebRequest -Uri $uri -Headers $headers -OutFile $zip -UseBasicParsing -TimeoutSec 600
+        Write-Host "Downloaded signed package $name ($((Get-Item $zip).Length) bytes)"
         $packages += @{ name = $name; url = $url; sha256 = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant() }
     }
     & py -3 (Join-Path $PSScriptRoot 'finalize_signed.py') $output $release 'csharp-output/manifest.json'
