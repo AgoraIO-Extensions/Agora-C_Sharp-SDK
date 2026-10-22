@@ -3503,6 +3503,24 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SetRemoteRenderRotation(uint uid, VIDEO_ORIENTATION rotation)
+        {
+            _param.Clear();
+            _param.Add("uid", uid);
+            _param.Add("rotation", rotation);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINE_SETREMOTERENDERROTATION_41280f1,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
         public int StartScreenCaptureByWindowId(long windowId, Rectangle regionRect, ScreenCaptureParameters captureParams)
         {
             _param.Clear();
@@ -5371,6 +5389,25 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_SETREMOTERENDERMODEEX_a72fe4e,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+
+            return result;
+        }
+
+        public int SetRemoteRenderRotationEx(uint uid, VIDEO_ORIENTATION rotation, RtcConnection connection)
+        {
+            _param.Clear();
+            _param.Add("uid", uid);
+            _param.Add("rotation", rotation);
+            _param.Add("connection", connection);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IRTCENGINEEX_SETREMOTERENDERROTATIONEX_4106f7a,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

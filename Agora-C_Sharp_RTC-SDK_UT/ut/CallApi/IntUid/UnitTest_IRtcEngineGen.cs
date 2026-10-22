@@ -2226,6 +2226,18 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_SetRemoteRenderRotation_41280f1()
+        {
+            var uid = ParamsHelper.CreateParam<uint>();
+
+            var rotation = ParamsHelper.CreateParam<VIDEO_ORIENTATION>();
+
+            var nRet = @interface.SetRemoteRenderRotation(uid, rotation);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_StartScreenCaptureByWindowId_ce89867()
         {
             var windowId = ParamsHelper.CreateParam<long>();
