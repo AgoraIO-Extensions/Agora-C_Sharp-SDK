@@ -18,8 +18,11 @@ def verify(output):
     manifest = json.loads((output / 'manifest.json').read_text(encoding='utf-8-sig'))
     assert manifest['source_commit'] and manifest['sdk_version'].startswith('4.5.')
     for item in manifest['files']:
+        hasher = hashlib.sha256()
         with (output / item['name']).open('rb') as stream:
-            digest = hashlib.file_digest(stream, 'sha256').hexdigest()
+            for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+                hasher.update(chunk)
+        digest = hasher.hexdigest()
         assert digest == item['sha256'], f"Hash mismatch: {item['name']}"
     with ZipFile(next(output.glob('*.nupkg'))) as package:
         for tfm in ['net40', 'netstandard2.0']:

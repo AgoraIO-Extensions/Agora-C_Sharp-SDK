@@ -74,6 +74,7 @@ if (sdkTarget == 'Unity') {
                     withCredentials([string(credentialsId: 'jfrog-token', variable: 'JFROG_TOKEN')]) {
                         bat '@powershell -NoProfile -ExecutionPolicy Bypass -File ci\\build\\csharp\\build.ps1'
                     }
+                    bat '@py -3 ci\\build\\csharp\\verify_package.py csharp-output'
                     archiveArtifacts(artifacts: 'csharp-output/*.zip,csharp-output/*.nupkg,csharp-output/manifest.json', fingerprint: true)
                     if (params.Package_Publish) {
                         def urls = archive.archiveFiles([[

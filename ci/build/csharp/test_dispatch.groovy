@@ -33,6 +33,7 @@ assert csharp.find { it[0] == 'node' }[1] == 'windows'
 assert csharp.find { it[0] == 'workspace' }[1].endsWith('@csharp-42')
 assert csharp.find { it[0] == 'checkout' }[1] == 'same-sdk-scm'
 assert csharp.find { it[0] == 'bat' }[1].contains('csharp\\build.ps1')
+assert csharp.findAll { it[0] == 'bat' }[1][1].contains('verify_package.py')
 assert csharp.find { it[0] == 'artifacts' }[1].artifacts.contains('manifest.json')
 def published = run([SDK_TARGET: 'CSharp', SDK_VERSION: '4.5.3.6', Package_Publish: true,
                      IRIS_WIN_URL: 'iris', NATIVE_WIN_URL: 'native'])
