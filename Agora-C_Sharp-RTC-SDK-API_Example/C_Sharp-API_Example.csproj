@@ -42,7 +42,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="agora_rtc_sdk" Version="4.2.0.1" />
+      <PackageReference Include="agora_rtc_sdk" Version="$(AgoraSdkVersion)" Condition="'$(AgoraSdkVersion)' != ''" />
+      <ProjectReference Include="../ci/build/csharp/agorartc.csproj" Condition="'$(AgoraSdkVersion)' == ''" />
       <PackageReference Include="SharpDX" Version="4.2.0" />
       <PackageReference Include="SharpDX.Direct3D9" Version="4.2.0" />
       <PackageReference Include="SharpDX.Mathematics" Version="4.2.0" />

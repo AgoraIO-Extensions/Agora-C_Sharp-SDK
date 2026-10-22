@@ -33,7 +33,7 @@ The Windows agent needs .NET SDK 8, PowerShell 5.1+ and Git. It restores .NET Fr
 python ci/build/csharp/verify_package.py csharp-output
 ```
 
-The script creates `net40` and `netstandard2.0` managed libraries, a candidate `agora_rtc_sdk` NuGet package containing x86/x64 native libraries, two Windows RID-specific Demo ZIPs and a raw SDK ZIP. Demo restore uses an isolated cache and the candidate package, not public 4.2.0.1. Consumers of the .NET Framework package must explicitly select x86 or x64. Each output has a SHA256 in `manifest.json`, together with source commit/dirty state and dependency URLs. Windows DLLs/hosts can be cross-compiled and inspected on macOS; this is not Windows runtime/call acceptance.
+The script creates `net40` and `netstandard2.0` managed libraries, a candidate `agora_rtc_sdk` NuGet package containing x86/x64 native libraries, two Windows RID-specific Demo ZIPs and a raw SDK ZIP. Demo restore uses an isolated cache and `AgoraSdkVersion` to select the candidate package, not public 4.2.0.1. Opening the Demo directly without that property references the local standalone SDK project, so its updated 4.5 calls also compile outside CI. Consumers of the .NET Framework package must explicitly select x86 or x64. Each output has a SHA256 in `manifest.json`, together with source commit/dirty state and dependency URLs. Windows DLLs/hosts can be cross-compiled and inspected on macOS; this is not Windows runtime/call acceptance.
 
 The new PR workflow runs these checks on a Windows runner. `test_dispatch.groovy` executes the real Jenkins dispatcher against stubs, checking Unity default/explicit/empty behavior, C# workspace isolation, internal upload and invalid-target rejection. It does not claim a Unity Editor regression run.
 

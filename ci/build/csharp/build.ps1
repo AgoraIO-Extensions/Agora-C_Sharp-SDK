@@ -84,9 +84,6 @@ try {
     $demo = Join-Path $temp 'demo'
     Copy-Item $demoSource $demo -Recurse
     $demoProject = Join-Path $demo 'C_Sharp-API_Example.csproj'
-    [xml]$xml = Get-Content -LiteralPath $demoProject -Raw
-    $reference = $xml.SelectSingleNode('//PackageReference[@Include="agora_rtc_sdk"]')
-    if ($null -eq $reference) { throw 'Demo SDK reference not found' }
     # Read the normalized NuGet version from the actual package, not an old public package.
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     $package = [IO.Compression.ZipFile]::OpenRead($packages[0].FullName)
@@ -94,14 +91,13 @@ try {
         $entry = @($package.Entries | Where-Object { $_.FullName -like '*.nuspec' })[0]
         $reader = New-Object IO.StreamReader($entry.Open())
         try { [xml]$spec = $reader.ReadToEnd() } finally { $reader.Dispose() }
-        $reference.Version = $spec.package.metadata.version
+        $candidateVersion = $spec.package.metadata.version
     } finally { $package.Dispose() }
-    $xml.Save($demoProject)
     $cache = Join-Path $temp 'nuget-cache'
     foreach ($arch in @('x86', 'x64')) {
         $demoOutput = Join-Path $temp "APIExample-$arch"
         Run-Dotnet @('publish', $demoProject, '-c', 'Release', '-r', "win-$arch", '--self-contained', 'false', "-p:Platform=$arch", "-p:PlatformTarget=$arch",
-            "-p:RestorePackagesPath=$cache", "-p:EnableWindowsTargeting=true", '--source', $outputPath, '--source', 'https://api.nuget.org/v3/index.json', '-o', $demoOutput)
+            "-p:AgoraSdkVersion=$candidateVersion", "-p:RestorePackagesPath=$cache", "-p:EnableWindowsTargeting=true", '--source', $outputPath, '--source', 'https://api.nuget.org/v3/index.json', '-o', $demoOutput)
         foreach ($file in @('agorartc.dll', 'agora_rtc_sdk.dll', 'AgoraRtcWrapper.dll')) {
             if (-not (Test-Path (Join-Path $demoOutput $file))) { throw "Demo $arch missing $file" }
         }
