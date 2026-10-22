@@ -71,7 +71,7 @@ namespace C_Sharp_API_Example
 
                 // Setup local video
                 VideoCanvas canvas = new VideoCanvas();
-                canvas.view = (long)view_.localVideoView.Handle;
+                canvas.view = unchecked((ulong)view_.localVideoView.Handle.ToInt64());
                 canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
 
                 ret = rtc_engine_.SetupLocalVideo(canvas);
@@ -172,7 +172,7 @@ namespace C_Sharp_API_Example
             }
 
             VideoCanvas canvas = new VideoCanvas();
-            canvas.view = (long)win_id;
+            canvas.view = unchecked((ulong)win_id.ToInt64());
             canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
             canvas.uid = remoteUid;
 

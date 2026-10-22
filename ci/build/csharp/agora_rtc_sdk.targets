@@ -1,0 +1,9 @@
+<Project>
+  <ItemGroup Condition="'$(PlatformTarget)' == 'x86' Or '$(PlatformTarget)' == 'x64'">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-$(PlatformTarget)\native\*">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

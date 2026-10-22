@@ -1,0 +1,70 @@
+name: Standalone C# Windows package
+on:
+  pull_request:
+    branches: [release/4.5]
+    paths:
+      - ci/build/build_mac.groovy
+      - ci/build/csharp/**
+      - ci/build/url_config.txt
+      - Agora-C_Sharp-RTC-SDK/Code/**
+      - Agora-C_Sharp-RTC-SDK-API_Example/**
+      - .github/workflows/csharp-windows.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dispatch-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: |
+          curl --fail --location https://repo.maven.apache.org/maven2/org/codehaus/groovy/groovy-all/2.4.21/groovy-all-2.4.21.jar -o "$RUNNER_TEMP/groovy.jar"
+          java -cp "$RUNNER_TEMP/groovy.jar" groovy.ui.GroovyMain ci/build/csharp/test_dispatch.groovy
+          python3 ci/build/csharp/test_finalize_signed.py
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Windows PowerShell signing URL parsing and host rejection
+        shell: powershell
+        run: |
+          $verify = (Resolve-Path ci/build/csharp/verify_signed.ps1).Path
+          $contract = Join-Path $env:RUNNER_TEMP 'csharp-signing-contract'
+          New-Item -ItemType Directory -Path $contract | Out-Null
+          Push-Location $contract
+          try {
+            '["https://example.invalid/sdk.zip","https://example.invalid/x86.zip","https://example.invalid/x64.zip"]' | Set-Content urls.json
+            $ErrorActionPreference = 'Continue'
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $verify -UrlsFile urls.json 2>&1 | Out-Null
+            $verificationExit = $LASTEXITCODE
+            $ErrorActionPreference = 'Stop'
+            if ($verificationExit -eq 0) { throw 'Untrusted signing URLs must fail' }
+            $report = Get-Content csharp-signed/signature-report.json -Raw | ConvertFrom-Json
+            if ($report.passed -or $report.errors[0] -ne 'Signed package must use the internal HTTPS Artifactory host') {
+              throw 'Signing URL array parsing or host rejection failed'
+            }
+            $global:LASTEXITCODE = 0
+          } finally { Pop-Location }
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.203
+      - name: Build candidate SDK and both Windows demos
+        shell: pwsh
+        run: |
+          $video = ((Get-Content ci/build/url_config.txt -Raw) -split '>>>video')[1] -split '<<<end' | Select-Object -First 1
+          $iris = [regex]::Match($video, '(?m)^IRIS_WINDOWS=(.+)').Groups[1].Value.Trim()
+          $native = [regex]::Match($video, '(?m)^NATIVE_WINDOWS=(.+)').Groups[1].Value.Trim()
+          ./ci/build/csharp/build.ps1 -Version "4.5.3.6-alpha.${{ github.run_number }}" -IrisUrl $iris -NativeUrl $native
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python ci/build/csharp/verify_package.py csharp-output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: csharp-windows-candidate
+          path: csharp-output/*
+          retention-days: 3
