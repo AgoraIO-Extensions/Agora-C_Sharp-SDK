@@ -14,6 +14,23 @@ function Run-Dotnet {
     & dotnet @args
     if ($LASTEXITCODE -ne 0) { throw "dotnet $($args[0]) failed ($LASTEXITCODE)" }
 }
+function Ensure-Dotnet {
+    # Scope SDK installation and PATH to this build; leave Unity and the agent unchanged.
+    if (Get-Command dotnet -ErrorAction SilentlyContinue) {
+        & dotnet --version
+        if ($LASTEXITCODE -eq 0) { return }
+    }
+    if ([Environment]::OSVersion.Platform -ne 'Win32NT') {
+        throw 'Install .NET SDK 8 before cross-compiling on a non-Windows host'
+    }
+    $installScript = Join-Path $temp 'dotnet-install.ps1'
+    $sdkDirectory = Join-Path $temp 'dotnet-sdk'
+    Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -OutFile $installScript -UseBasicParsing
+    & $installScript -Version '8.0.203' -InstallDir $sdkDirectory -NoPath
+    if (-not (Test-Path (Join-Path $sdkDirectory 'dotnet.exe'))) { throw 'Private .NET SDK installation failed' }
+    $env:DOTNET_ROOT = $sdkDirectory
+    $env:PATH = "$sdkDirectory;$env:PATH"
+}
 function Download-Package([string]$Url, [string]$Name) {
     $uri = [Uri]$Url
     if (-not $uri.IsAbsoluteUri -or $uri.Scheme -ne 'https' -or $uri.UserInfo) {
@@ -58,6 +75,7 @@ $temp = Join-Path $outputPath 'staging'
 New-Item -ItemType Directory -Path $temp | Out-Null
 try {
     Push-Location $PSScriptRoot
+    Ensure-Dotnet
     Run-Dotnet @('--info')
     $iris = Download-Package $IrisUrl 'iris'
     $native = Download-Package $NativeUrl 'native'

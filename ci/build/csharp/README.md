@@ -24,7 +24,7 @@ C# parameters:
 | IRIS_WIN_URL / NATIVE_WIN_URL | Optional explicit overrides; otherwise use the selected branch's `ci/build/url_config.txt` video section (audio when TYPE=VOICE) |
 | Package_Publish | True uploads internal ZIPs to `CSharp_SDK_Build/<version>/<build>/windows`; false only archives Jenkins artifacts. Neither mode pushes NuGet, publishes CDN, or sends a webhook. |
 
-The Windows agent needs .NET SDK 8, PowerShell 5.1+ and Git. A C#-scoped global.json prevents a newer preinstalled SDK from silently taking over; the script uses a temporary NuGet.Config for the local candidate and nuget.org. It restores .NET Framework reference assemblies and .NET Core 3.1 Windows targeting/host packages through NuGet. The example retains its existing runtime requirement; upgrading that framework is a separate compatibility change. Set explicit Windows native URLs when branch defaults are not the intended version/product.
+The Windows agent needs PowerShell 5.1+ and Git. When a compatible .NET SDK is unavailable, the build installs official .NET SDK 8.0.203 into its private staging directory and changes PATH only for the child build process. The installation is removed with the workspace; no machine-wide SDK or environment is changed. A C#-scoped global.json prevents a newer preinstalled SDK from silently taking over; the script uses a temporary NuGet.Config for the local candidate and nuget.org. It restores .NET Framework reference assemblies and .NET Core 3.1 Windows targeting/host packages through NuGet. The example retains its existing runtime requirement; upgrading that framework is a separate compatibility change. Set explicit Windows native URLs when branch defaults are not the intended version/product.
 
 ## Local / CI verification
 
