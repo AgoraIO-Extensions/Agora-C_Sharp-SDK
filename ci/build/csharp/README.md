@@ -47,6 +47,12 @@ The script creates `net40` and `netstandard2.0` managed libraries, a candidate `
 
 The new PR workflow runs these checks on a Windows runner. `test_dispatch.groovy` executes the real Jenkins dispatcher against stubs, checking Unity default/explicit/empty behavior, C# workspace isolation, internal upload and invalid-target rejection. It does not claim a Unity Editor regression run.
 
+## Independent NuGet consumer acceptance
+
+On a clean Windows workspace, run `powershell -NoProfile -ExecutionPolicy Bypass -File ci/build/csharp/consumer/verify.ps1` with the existing Jenkins Artifactory credential injected as `JFROG_TOKEN`. This acceptance script is pinned to the signed alpha.1 package delivered by build #662 and its final SDK/NuGet SHA256 values. It downloads that actual final SDK ZIP, creates a local NuGet feed and isolated package cache, and creates fresh net40/net8.0 projects for x86/x64. There are no SDK source/project references or manual DLL copies into client output directories. Modern .NET clients publish self-contained so no machine-level runtime installation is needed.
+
+The check validates NuGet compile-asset selection, automatic native/managed file copy and exact signed-package bytes, process architecture, managed version, native GetVersion and three create/dispose cycles. It records `csharp-consumer-check/result.json` and per-case project/source/runtime logs. It does not call Initialize/JoinChannel or use an App ID/Token, so it is package-consumption/native-loading acceptance, not valid-App-ID initialization or call acceptance. SDK tooling and caches remain in the private workspace for the caller to clean.
+
 ## Rehoboam
 
 Use the companion EP-916 change in TOOL/rehoboam. It registers the independent `csharp` framework and emits Connection-ready Pipeline/template configurations. C# and Unity share `terra/release/4.5`; C# tags default to `csharp-v<version>`. The Demo lives in this repository, so it has no Unity Quickstart tag step.
