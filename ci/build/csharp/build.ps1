@@ -57,6 +57,7 @@ New-Item -ItemType Directory -Path $outputPath | Out-Null
 $temp = Join-Path $outputPath 'staging'
 New-Item -ItemType Directory -Path $temp | Out-Null
 try {
+    Push-Location $PSScriptRoot
     Run-Dotnet @('--info')
     $iris = Download-Package $IrisUrl 'iris'
     $native = Download-Package $NativeUrl 'native'
@@ -94,10 +95,19 @@ try {
         $candidateVersion = $spec.package.metadata.version
     } finally { $package.Dispose() }
     $cache = Join-Path $temp 'nuget-cache'
+    $nugetConfig = Join-Path $temp 'NuGet.Config'
+    $escapedSource = [Security.SecurityElement]::Escape($outputPath)
+    @"
+<?xml version="1.0" encoding="utf-8"?>
+<configuration><packageSources><clear />
+  <add key="candidate" value="$escapedSource" />
+  <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+</packageSources></configuration>
+"@ | Set-Content -LiteralPath $nugetConfig -Encoding UTF8
     foreach ($arch in @('x86', 'x64')) {
         $demoOutput = Join-Path $temp "APIExample-$arch"
         Run-Dotnet @('publish', $demoProject, '-c', 'Release', '-r', "win-$arch", '--self-contained', 'false', "-p:Platform=$arch", "-p:PlatformTarget=$arch",
-            "-p:AgoraSdkVersion=$candidateVersion", "-p:RestorePackagesPath=$cache", "-p:EnableWindowsTargeting=true", '--source', $outputPath, '--source', 'https://api.nuget.org/v3/index.json', '-o', $demoOutput)
+            "-p:AgoraSdkVersion=$candidateVersion", "-p:RestorePackagesPath=$cache", "-p:EnableWindowsTargeting=true", "-p:RestoreConfigFile=$nugetConfig", '-o', $demoOutput)
         foreach ($file in @('agorartc.dll', 'agora_rtc_sdk.dll', 'AgoraRtcWrapper.dll')) {
             if (-not (Test-Path (Join-Path $demoOutput $file))) { throw "Demo $arch missing $file" }
         }
@@ -118,5 +128,6 @@ try {
     @{ sdk_version = $Version; source_commit = $commit; source_dirty = $dirty; iris_url = $IrisUrl; native_url = $NativeUrl; files = $files } |
         ConvertTo-Json -Depth 6 | Set-Content (Join-Path $outputPath 'manifest.json') -Encoding UTF8
 } finally {
+    Pop-Location
     if (Test-Path $temp) { Remove-Item -LiteralPath $temp -Recurse -Force }
 }
