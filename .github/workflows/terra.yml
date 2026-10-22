@@ -97,7 +97,7 @@ jobs:
           git commit -m "update dependencies and generate code by terra"
           git push origin "$TARGET_BRANCH"
 
-          PR_URL=$(gh pr list --base "$TARGET_BRANCH" --head "$TARGET_BRANCH" --json url --jq '.[0].url')
+          PR_URL=$(gh pr list --base "$ORIGINAL_BRANCH" --head "$TARGET_BRANCH" --json url --jq '.[0].url')
           if [ -z "$PR_URL" ]; then
             PR_URL=$(gh pr create --title "$PR_TITLE" --body "$PR_BODY" --base "$ORIGINAL_BRANCH" --head "$TARGET_BRANCH")
             echo "Created PR: $PR_URL"
