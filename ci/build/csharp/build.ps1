@@ -87,6 +87,8 @@ New-Item -ItemType Directory -Path $temp | Out-Null
 try {
     Push-Location $PSScriptRoot
     Ensure-Dotnet
+    $env:MSBUILDDISABLENODEREUSE = '1'
+    $env:DOTNET_CLI_USE_MSBUILD_SERVER = '0'
     Run-Dotnet @('--info')
     $iris = Download-Package $IrisUrl 'iris'
     $native = Download-Package $NativeUrl 'native'
@@ -106,7 +108,7 @@ try {
     }
     $project = Join-Path $PSScriptRoot 'agorartc.csproj'
     $assemblyVersion = ($Version -split '-')[0]
-    Run-Dotnet @('pack', $project, '-c', 'Release', '-o', $outputPath,
+    Run-Dotnet @('pack', $project, '--disable-build-servers', '-p:UseSharedCompilation=false', '-c', 'Release', '-p:Platform=AnyCPU', '-o', $outputPath,
         "-p:Version=$Version", "-p:AssemblyVersion=$assemblyVersion", "-p:FileVersion=$assemblyVersion", "-p:NativeRoot=$nativeRoot")
     $packages = @(Get-ChildItem $outputPath -Filter '*.nupkg')
     if ($packages.Count -ne 1) { throw 'Expected exactly one candidate NuGet package' }
@@ -135,7 +137,7 @@ try {
 "@ | Set-Content -LiteralPath $nugetConfig -Encoding UTF8
     foreach ($arch in @('x86', 'x64')) {
         $demoOutput = Join-Path $temp "APIExample-$arch"
-        Run-Dotnet @('publish', $demoProject, '-c', 'Release', '-r', "win-$arch", '--self-contained', 'false', "-p:Platform=$arch", "-p:PlatformTarget=$arch",
+        Run-Dotnet @('publish', $demoProject, '--disable-build-servers', '-p:UseSharedCompilation=false', '-c', 'Release', '-r', "win-$arch", '--self-contained', 'false', "-p:Platform=$arch", "-p:PlatformTarget=$arch",
             "-p:AgoraSdkVersion=$candidateVersion", "-p:RestorePackagesPath=$cache", "-p:EnableWindowsTargeting=true", "-p:RestoreConfigFile=$nugetConfig", '-o', $demoOutput)
         foreach ($file in @('agorartc.dll', 'agora_rtc_sdk.dll', 'AgoraRtcWrapper.dll')) {
             if (-not (Test-Path (Join-Path $demoOutput $file))) { throw "Demo $arch missing $file" }

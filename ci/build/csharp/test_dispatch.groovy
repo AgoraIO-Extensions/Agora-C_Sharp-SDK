@@ -7,7 +7,7 @@ def source = file.text.replaceAll(/(?m)^@Library\([^\n]+\n/, '')
 def run = { parameters ->
     def calls = []
     def binding = new Binding([
-        params: parameters, env: [BUILD_NUMBER: '42'], scm: 'same-sdk-scm',
+        params: Collections.unmodifiableMap(parameters), env: [BUILD_NUMBER: '42'], scm: 'same-sdk-scm',
         pipelineLoad: { Object... args -> calls << ['unity', args.toList().drop(1)] },
         withNode: { label, block -> calls << ['node', label]; block() },
         pwd: { -> 'C:/jenkins/workspace/Unity_SDK_Build/build_mac' },

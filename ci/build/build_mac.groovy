@@ -60,7 +60,7 @@ def doPublish(buildVariables) {
 }
 
 // Missing target preserves every existing Unity invocation. C# is explicit opt-in.
-def sdkTarget = params.get('SDK_TARGET', 'Unity') ?: 'Unity'
+def sdkTarget = params.get('SDK_TARGET') ?: 'Unity'
 if (sdkTarget == 'Unity') {
     pipelineLoad(this, "Unity_SDK_Build", "build", "mac", "mac && unity")
 } else if (sdkTarget == 'CSharp') {
