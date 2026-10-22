@@ -11,11 +11,13 @@ New-Item -ItemType Directory -Path $output | Out-Null
 $cases = @()
 $errors = @()
 $version = '4.5.3.6-alpha.1'
+$initialize = $env:CONSUMER_REQUIRE_INITIALIZE -eq 'true'
 function Run-Dotnet {
     & dotnet @args
     if ($LASTEXITCODE -ne 0) { throw "dotnet $($args[0]) failed ($LASTEXITCODE)" }
 }
 try {
+    if ($initialize -and $env:CONSUMER_APP_ID -notmatch '^[a-fA-F0-9]{32}$') { throw 'Initialization requires a runtime 32-character App ID' }
     $stage = Join-Path $output 'stage'
     New-Item -ItemType Directory -Path $stage | Out-Null
     $installer = Join-Path $stage 'dotnet-install.ps1'
@@ -123,6 +125,10 @@ try {
                 if (-not $finished) { $process.Kill(); $process.WaitForExit() }
                 $text = $stdoutTask.Result
                 $errorText = $stderrTask.Result
+                if ($env:CONSUMER_APP_ID) {
+                    $text = [regex]::Replace($text, [regex]::Escape($env:CONSUMER_APP_ID), '[APP_ID]', [Text.RegularExpressions.RegexOptions]::IgnoreCase)
+                    $errorText = [regex]::Replace($errorText, [regex]::Escape($env:CONSUMER_APP_ID), '[APP_ID]', [Text.RegularExpressions.RegexOptions]::IgnoreCase)
+                }
                 $exitCode = $process.ExitCode
                 $process.Dispose()
                 $text | Set-Content $log -Encoding UTF8
@@ -132,6 +138,10 @@ try {
                 if (-not $finished) { throw 'Consumer exceeded 60 seconds' }
                 if ($exitCode -ne 0 -or $text -notmatch 'CONSUMER_PASS') {
                     throw "Consumer runtime failed ($exitCode): $errorText"
+                }
+                if ($initialize) {
+                    $record.initialization_successes = [regex]::Matches($text, 'INITIALIZE_RESULT=0 ATTEMPT=[012]').Count
+                    if ($record.initialization_successes -ne 3) { throw 'Expected three successful SDK initializations' }
                 }
                 $record.runtime_output = $text
                 $record.passed = $true
@@ -145,7 +155,8 @@ try {
     }
 } catch { $errors += $_.Exception.Message }
 finally {
-    @{ sdk_version = $version; source_build = 662; cases = $cases; errors = $errors; passed = ($cases.Count -eq 4 -and $errors.Count -eq 0); scope = 'NuGet restore/build/native-load/GetVersion/dispose; no Initialize or channel calls' } |
+    $scope = if ($initialize) { 'NuGet restore/build/native-load/Initialize/GetVersion/dispose; no channel calls' } else { 'NuGet restore/build/native-load/GetVersion/dispose; no Initialize or channel calls' }
+    @{ sdk_version = $version; source_build = 662; cases = $cases; errors = $errors; passed = ($cases.Count -eq 4 -and $errors.Count -eq 0); initialize_requested = $initialize; scope = $scope } |
         ConvertTo-Json -Depth 8 | Set-Content (Join-Path $output 'result.json') -Encoding UTF8
 }
 if ($errors.Count -or $cases.Count -ne 4) { throw ($errors -join "`n") }
