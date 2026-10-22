@@ -58,7 +58,7 @@ jobs:
           $video = ((Get-Content ci/build/url_config.txt -Raw) -split '>>>video')[1] -split '<<<end' | Select-Object -First 1
           $iris = [regex]::Match($video, '(?m)^IRIS_WINDOWS=(.+)').Groups[1].Value.Trim()
           $native = [regex]::Match($video, '(?m)^NATIVE_WINDOWS=(.+)').Groups[1].Value.Trim()
-          ./ci/build/csharp/build.ps1 -Version "4.5.3.6-ci.${{ github.run_number }}" -IrisUrl $iris -NativeUrl $native
+          ./ci/build/csharp/build.ps1 -Version "4.5.3.6-alpha.${{ github.run_number }}" -IrisUrl $iris -NativeUrl $native
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'

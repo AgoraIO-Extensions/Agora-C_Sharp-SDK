@@ -20,7 +20,7 @@ with TemporaryDirectory() as temp:
     root = Path(temp)
     inputs = root / 'inputs'
     inputs.mkdir()
-    version = '4.5.3.6-test.1'
+    version = '4.5.3.6-alpha.1'
     manifest = root / 'manifest.json'
     manifest.write_text(json.dumps({'sdk_version': version, 'source_commit': 'abc', 'files': []}))
     canonical = {f'managed/{tfm}/agorartc.dll': f'signed-{tfm}'.encode() for tfm in ('net40', 'netstandard2.0')}

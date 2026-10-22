@@ -20,9 +20,11 @@ C# parameters:
 |---|---|
 | SDK_TARGET | Explicitly `CSharp` |
 | agora_c_sharp_sdk_branch | The SDK branch used by the existing SCM definition; initially `release/4.5` |
-| SDK_VERSION | Concrete `4.5.x[.x][-suffix]` candidate version |
+| SDK_VERSION | Concrete 4.5 series version; prerelease `4.5.3.6-alpha.1`, stable `4.5.3.6` |
 | IRIS_WIN_URL / NATIVE_WIN_URL | Optional explicit overrides; otherwise use the selected branch's `ci/build/url_config.txt` video section (audio when TYPE=VOICE) |
 | Package_Publish | True uploads internal ZIPs to `CSharp_SDK_Build/<version>/<build>/windows`, waits for CodeSign, then emits release URLs; false only archives unsigned Jenkins candidates. Neither mode pushes NuGet, publishes CDN, or sends a webhook. |
+
+Version naming follows the existing `agora_rtc_sdk` NuGet history (for example `4.2.6.19-alpha.1`): use `<base-version>-alpha.<sequence>` for prereleases and `<base-version>` for stable releases. For this 4.5 baseline, start with `4.5.3.6-alpha.1`, increment to `alpha.2` for the next prerelease, and use `4.5.3.6` for stable. Keep issue IDs, Jenkins build numbers and signing attempts in build records/manifest provenance rather than customer release versions. CI uses its run number as the alpha sequence for unpublished validation candidates; select the customer release sequence explicitly through SDK_VERSION. Existing acceptance artifacts retain their original names and hashes.
 
 ## Windows CodeSign integration
 
@@ -37,7 +39,7 @@ The Windows agent needs PowerShell 5.1+, Git and Python 3 (`py -3`) for package 
 ## Local / CI verification
 
 ```powershell
-./ci/build/csharp/build.ps1 -Version 4.5.3.6-dev.1 -IrisUrl <iris-windows-standalone-zip> -NativeUrl <native-windows-zip>
+./ci/build/csharp/build.ps1 -Version 4.5.3.6-alpha.1 -IrisUrl <iris-windows-standalone-zip> -NativeUrl <native-windows-zip>
 python ci/build/csharp/verify_package.py csharp-output
 ```
 
