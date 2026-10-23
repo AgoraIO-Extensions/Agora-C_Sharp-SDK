@@ -1,0 +1,71 @@
+name: Update RTM dependencies and validate bindings
+
+on:
+  workflow_dispatch:
+    inputs:
+      dependencies-content:
+        description: Four-platform Native RTM and Unity-compatible standalone Iris release results
+        required: true
+        type: string
+  pull_request:
+    paths:
+      - .github/workflows/rtm.yml
+      - ci/build/rtm*
+      - ci/build/test_rtm_dependencies.py
+      - ci/build/remove_code_by_macor.py
+      - Agora-C_Sharp-RTC-SDK/Code/Rtm/**
+      - Agora-C_Sharp-RTC-SDK/Code/Tools/**
+
+permissions:
+  contents: read
+
+jobs:
+  validate-rtm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Check dependency selection
+        run: python3 -m unittest discover -s ci/build -p test_rtm_dependencies.py
+      - name: Parse release results
+        if: github.event_name == 'workflow_dispatch'
+        id: dep
+        uses: AgoraIO-Extensions/actions/.github/actions/dep@main
+        with:
+          dependencies-content: ${{ inputs.dependencies-content }}
+      - name: Update isolated RTM manifest
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          RTM_RESULTS: ${{ steps.dep.outputs.matches }}
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, 'ci/build')
+          from rtm_dependencies import from_results, CONFIG
+          results = json.loads(os.environ['RTM_RESULTS'])
+          if isinstance(results, str):
+              results = json.loads(results)
+          CONFIG.write_text(json.dumps(from_results(results), indent=2, sort_keys=True) + '\n')
+          PY
+      - name: Compile RTM-only packaged source
+        run: bash ci/build/rtm-compile.sh
+      # RTM 2.x bindings are intentionally handwritten; do not run RTC Terra.
+      - name: Create dependency pull request
+        if: github.event_name == 'workflow_dispatch'
+        uses: AgoraIO-Extensions/actions/.github/actions/pr@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          target-repo: ${{ github.workspace }}
+          target-branch: ${{ github.ref_name }}
+          target-branch-name-surffix: rtm-dep-update
+          pull-request-title: '[AUTO] Update Unity RTM dependencies'
+          pull-request-body: |
+            RTM-only dependency manifest updated. RTC dependencies and Terra outputs are unchanged.
+            RTM source selection was compiled before PR creation. Runtime and API parity still require review.

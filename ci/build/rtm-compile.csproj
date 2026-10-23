@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="sdk/Code/Rtm/**/*.cs" />
+    <Compile Include="sdk/Code/Tools/*.cs" />
+    <Compile Include="sdk/Code/Tools/litjson-0.17.0/src/LitJson/*.cs" />
+  </ItemGroup>
+</Project>
