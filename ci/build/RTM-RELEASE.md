@@ -16,8 +16,11 @@ Historical design and packaging contracts:
   reuse Unity_SDK_Build/build_mac with RTC=false and RTM=true. Historical branch
   examples are not a requirement to use an old branch today.
 
-Run `rtm.yml` on the intended SDK base branch with the release-family result
-text. It parses the existing dependency result format, requires all four Native
+Dispatch the `rtm.yml` entry from `main`, setting `rtm-branch` to
+`release/rtm-2.x` and supplying the release-family result text. The entry checks
+out that RTM branch and opens the dependency PR against that same branch.
+Only the workflow entry belongs on `main`; implementation scripts stay on RTM.
+It parses the existing dependency result format, requires all four Native
 and Iris ZIPs, writes `ci/build/rtm_dependencies.json`, compiles a temporary
 RTM-only copy using the packaging source selector, then creates a PR. Native
 URLs must be RTM; Iris requires Standalone on Android/iOS/Windows and Unity on

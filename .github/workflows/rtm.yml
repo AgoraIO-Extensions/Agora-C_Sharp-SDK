@@ -3,11 +3,17 @@ name: Update RTM dependencies and validate bindings
 on:
   workflow_dispatch:
     inputs:
+      rtm-branch:
+        description: RTM implementation and dependency PR target branch
+        required: true
+        default: release/rtm-2.x
+        type: string
       dependencies-content:
         description: Four-platform Native RTM and Unity-compatible standalone Iris release results
         required: true
         type: string
   pull_request:
+    branches: [release/rtm-2.x]
     paths:
       - .github/workflows/rtm.yml
       - ci/build/rtm*
@@ -24,7 +30,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Validate RTM branch
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          RTM_BRANCH: ${{ inputs.rtm-branch }}
+        run: |
+          case "$RTM_BRANCH" in
+            release/rtm-*) ;;
+            *) echo 'Select a release/rtm-* implementation branch'; exit 1 ;;
+          esac
+          git check-ref-format --branch "$RTM_BRANCH"
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.rtm-branch || github.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -63,7 +81,7 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           target-repo: ${{ github.workspace }}
-          target-branch: ${{ github.ref_name }}
+          target-branch: ${{ inputs.rtm-branch }}
           target-branch-name-surffix: rtm-dep-update
           pull-request-title: '[AUTO] Update Unity RTM dependencies'
           pull-request-body: |
