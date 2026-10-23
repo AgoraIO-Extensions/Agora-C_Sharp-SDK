@@ -71,6 +71,11 @@
 
 set -ex
 
+# RTM uses the reviewed separate Native/Iris manifest and modern ZIP layouts.
+if [ "$RTC" == "false" ] && [ "$RTM" == "true" ]; then
+    exec bash ./ci/build/rtm-build.sh
+fi
+
 echo Package_Publish: $Package_Publish
 echo is_tag_fetch: $is_tag_fetch
 echo arch: $arch
