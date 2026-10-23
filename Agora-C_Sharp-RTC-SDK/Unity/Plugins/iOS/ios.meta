@@ -33,7 +33,7 @@ PluginImporter:
       settings:
         CPU: ARMv7
   - first:
-      Any: 
+      Any:
     second:
       enabled: 0
       settings: {}
@@ -99,8 +99,8 @@ PluginImporter:
       enabled: 1
       settings:
         AddToEmbeddedBinaries: true
-        CompileFlags: 
-        FrameworkDependencies: 
-  userData: 
-  assetBundleName: 
+        CompileFlags:
+        FrameworkDependencies:
+  userData:
+  assetBundleName:
   assetBundleVariant:

@@ -20,7 +20,7 @@ namespace Agora.Rtm
         /// <param name="options"> The query options.</param>
         ///
         /// <returns>
-        /// 
+        ///
         /// the result of GetMessages
         /// </returns>
         ///
