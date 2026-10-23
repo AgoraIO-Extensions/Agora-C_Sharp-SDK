@@ -2,6 +2,15 @@ using System;
 using System.Threading.Tasks;
 namespace Agora.Rtm
 {
+
+    ///
+    /// <summary>
+    /// Occurs when link state change
+    /// </summary>
+    ///
+    /// <param name="event"> details of link state event</param>
+    ///
+    public delegate void OnLinkStateEventHandler(LinkStateEvent @event);
     ///
     /// <summary>
     /// Occurs when receive a message.
@@ -67,6 +76,7 @@ namespace Agora.Rtm
     /// <param name="channelName"> The name of the channel.</param>
     ///
     public delegate void OnTokenPrivilegeWillExpireHandler(string channelName);
+    public delegate void OnTokenEventHandler(TokenEvent @event);
 
     ///
     /// <summary>
@@ -79,6 +89,13 @@ namespace Agora.Rtm
     ///
     public interface IRtmClient
     {
+        ///
+        /// <summary>
+        /// Occurs when link state change
+        /// </summary>
+        ///
+        event OnLinkStateEventHandler OnLinkStateEvent;
+
         ///
         /// <summary>
         /// Occurs when receive a message.
@@ -128,6 +145,7 @@ namespace Agora.Rtm
         /// </summary>
         ///
         event OnTokenPrivilegeWillExpireHandler OnTokenPrivilegeWillExpire;
+        event OnTokenEventHandler OnTokenEvent;
 
         ///
         /// <summary>
@@ -206,6 +224,18 @@ namespace Agora.Rtm
         /// </returns>
         ///
         IRtmPresence GetPresence();
+
+        ///
+        /// <summary>
+        /// Get the history instance.
+        /// </summary>
+        ///
+        /// <returns>
+        ///
+        /// - return NULL if error occurred
+        /// </returns>
+        ///
+        IRtmHistory GetHistory();
 
         ///
         /// <summary>
@@ -290,7 +320,7 @@ namespace Agora.Rtm
         /// - return NULL if error occurred
         /// </returns>
         ///
-        IStreamChannel CreateStreamChannel(string channelName);
+        IStreamChannel CreateStreamChannel(string channelName, ref int errorCode);
 
         ///
         /// <summary>

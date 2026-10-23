@@ -72,6 +72,8 @@ namespace Agora.Rtm
         ///
         Task<RtmResult<GetUserChannelsResult>> GetUserChannelsAsync(string userId);
 
+        Task<RtmResult<GetUserOnlineStatusResult>> GetUserOnlineStatusAsync(string userId);
+
         ///
         /// <summary>
         /// Set user state

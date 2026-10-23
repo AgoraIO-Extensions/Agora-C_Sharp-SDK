@@ -26,6 +26,18 @@ class RtmDependenciesTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 from_results(values)
 
+    def test_published_native_zip_and_platform_identity(self):
+        values = self.inputs()
+        values[0]["cdn"][0] = "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_Android_Preview_2.3.1-dev.4_Video_20261022_034607.zip"
+        self.assertEqual(len(from_results(values)), 8)
+        values[0]["cdn"][0] = values[0]["cdn"][0].replace("download.shengwang.cn", "unapproved.invalid")
+        with self.assertRaises(ValueError):
+            from_results(values)
+        values = self.inputs()
+        values[0]["cdn"][0] = values[0]["cdn"][0].replace("_Android_", "_iOS_")
+        with self.assertRaises(ValueError):
+            from_results(values)
+
 
 if __name__ == "__main__":
     unittest.main()

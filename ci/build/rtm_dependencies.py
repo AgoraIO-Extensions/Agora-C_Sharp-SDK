@@ -12,6 +12,7 @@ CONFIG = Path(__file__).with_name("rtm_dependencies.json")
 def validate_url(url, platform, iris):
     parsed = urlsplit(url)
     if (parsed.scheme != "https" or parsed.hostname not in {"download.agora.io", "download.shengwang.cn"}
+            or parsed.port not in {None, 443}
             or parsed.username or parsed.password or parsed.query or parsed.fragment
             or not re.fullmatch(r"/[A-Za-z0-9_./%+-]+\.zip", parsed.path)):
         raise ValueError("RTM requires an explicit HTTPS SDK ZIP on the release CDN")
@@ -19,10 +20,12 @@ def validate_url(url, platform, iris):
     if "rtm" not in name.lower() or "dcg" in name.lower():
         raise ValueError("RTC or unidentified artifact supplied to RTM")
     filename_platform = "Mac" if platform == "MAC" else {"IOS": "iOS", "ANDROID": "Android", "WIN": "Windows"}[platform]
-    if f"_{filename_platform}_" not in name:
+    aliases = {"MAC": ("Mac", "macOS"), "WIN": ("Windows", "windows")}.get(platform, (filename_platform,))
+    if not any(f"_{alias}_" in name for alias in aliases):
         raise ValueError("Artifact filename does not match its declared platform")
-    if not iris and f"_Native_SDK_for_{filename_platform}_" not in name:
-        raise ValueError("Unity packaging requires the original Native SDK ZIP layout")
+    if not iris and not (f"_Native_SDK_for_{filename_platform}_" in name or
+                         re.match(r"(?:Agora|Shengwang)RtmEngine_(?:Android|iOS|windows|macOS)_Preview_", name)):
+        raise ValueError("Unity packaging requires a Native SDK release ZIP")
     if iris and not name.startswith("iris_"):
         raise ValueError("Unity requires the standalone Iris build, not a CocoaPods ZIP")
     required = "_Unity_" if platform == "MAC" else "_Standalone_"

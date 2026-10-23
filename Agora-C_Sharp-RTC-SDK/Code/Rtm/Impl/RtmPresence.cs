@@ -124,6 +124,24 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
+        public Task<RtmResult<GetUserOnlineStatusResult>> GetUserOnlineStatusAsync(string userId)
+        {
+            TaskCompletionSource<RtmResult<GetUserOnlineStatusResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetUserOnlineStatusResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmPresence.GetUserOnlineStatus(userId, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<GetUserOnlineStatusResult> result = new RtmResult<GetUserOnlineStatusResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetUserOnlineStatusOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutGetUserOnlineStatusResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
+
         public Task<RtmResult<GetOnlineUsersResult>> GetOnlineUsersAsync(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options)
         {
             TaskCompletionSource<RtmResult<GetOnlineUsersResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetOnlineUsersResult>>();

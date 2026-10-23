@@ -19,7 +19,7 @@ namespace Agora.Rtm
         /// The result of SetChannelMetadata
         /// </returns>
         ///
-        Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
+        Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName);
 
         ///
         /// <summary>
@@ -36,7 +36,7 @@ namespace Agora.Rtm
         /// The result of UpdateChannelMetadata
         /// </returns>
         ///
-        Task<RtmResult<UpdateChannelMetadataResult>> UpdateChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
+        Task<RtmResult<UpdateChannelMetadataResult>> UpdateChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName);
 
         ///
         /// <summary>
@@ -53,7 +53,7 @@ namespace Agora.Rtm
         /// The result of RemoveChannelMetadata
         /// </returns>
         ///
-        Task<RtmResult<RemoveChannelMetadataResult>> RemoveChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
+        Task<RtmResult<RemoveChannelMetadataResult>> RemoveChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, Metadata data, MetadataOptions options, string lockName);
 
         ///
         /// <summary>
@@ -82,7 +82,7 @@ namespace Agora.Rtm
         /// The result of SetUserMetadata
         /// </returns>
         ///
-        Task<RtmResult<SetUserMetadataResult>> SetUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
+        Task<RtmResult<SetUserMetadataResult>> SetUserMetadataAsync(string userId, Metadata data, MetadataOptions options);
 
         ///
         /// <summary>
@@ -97,7 +97,7 @@ namespace Agora.Rtm
         /// The result of UpdateUserMetadata
         /// </returns>
         ///
-        Task<RtmResult<UpdateUserMetadataResult>> UpdateUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
+        Task<RtmResult<UpdateUserMetadataResult>> UpdateUserMetadataAsync(string userId, Metadata data, MetadataOptions options);
 
         ///
         /// <summary>
@@ -112,7 +112,7 @@ namespace Agora.Rtm
         /// The result of RemoveUserMetadata
         /// </returns>
         ///
-        Task<RtmResult<RemoveUserMetadataResult>> RemoveUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
+        Task<RtmResult<RemoveUserMetadataResult>> RemoveUserMetadataAsync(string userId, Metadata data, MetadataOptions options);
 
         ///
         /// <summary>

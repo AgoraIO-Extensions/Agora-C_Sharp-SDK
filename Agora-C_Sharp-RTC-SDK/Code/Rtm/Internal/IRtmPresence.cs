@@ -16,5 +16,7 @@ namespace Agora.Rtm.Internal
         public abstract int GetOnlineUsers(string channelName, RTM_CHANNEL_TYPE channelType, GetOnlineUsersOptions options, ref UInt64 requestId);
 
         public abstract int GetUserChannels(string userId, ref UInt64 requestId);
+
+        public abstract int GetUserOnlineStatus(string userId, ref UInt64 requestId);
     }
 }

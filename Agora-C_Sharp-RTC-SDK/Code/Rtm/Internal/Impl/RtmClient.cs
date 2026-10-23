@@ -13,6 +13,7 @@ namespace Agora.Rtm.Internal
         private RtmLock _rtmLock = null;
         private RtmPresence _rtmPresence = null;
         private RtmStorage _rtmStorage = null;
+        private RtmHistory _rtmHistory = null;
 
         private RtmClient(IntPtr engine_ptr)
         {
@@ -20,6 +21,7 @@ namespace Agora.Rtm.Internal
             _rtmLock = RtmLock.GetInstance(_rtmClientImpl.GetRtmLockImpl());
             _rtmPresence = RtmPresence.GetInstance(_rtmClientImpl.GetRtmPresenceImpl());
             _rtmStorage = RtmStorage.GetInstance(_rtmClientImpl.GetRtmStorageImpl());
+            _rtmHistory = RtmHistory.GetInstance(_rtmClientImpl.GetRtmHistoryImpl());
         }
 
         ~RtmClient()
@@ -61,6 +63,7 @@ namespace Agora.Rtm.Internal
             RtmLock.ReleaseInstance();
             RtmPresence.ReleaseInstance();
             RtmStorage.ReleaseInstance();
+            RtmHistory.ReleaseInstance();
 
             _rtmClientImpl.Dispose();
             _rtmClientImpl = null;
@@ -70,13 +73,13 @@ namespace Agora.Rtm.Internal
             return 0;
         }
 
-        public override int Initialize(RtmConfig config)
+        public override int Create(RtmConfig config)
         {
             if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtmClientImpl.Initialize(config);
+            return _rtmClientImpl.Create(config);
         }
 
         public override string GetVersion()
@@ -88,7 +91,7 @@ namespace Agora.Rtm.Internal
             return _rtmClientImpl.GetVersion();
         }
 
-        public override IStreamChannel CreateStreamChannel(string channelName)
+        public override IStreamChannel CreateStreamChannel(string channelName, ref int errorCode)
         {
             if (_rtmClientImpl == null)
             {
@@ -97,11 +100,12 @@ namespace Agora.Rtm.Internal
 
             if (_streamChannelDic.ContainsKey(channelName))
             {
+                errorCode = 0;
                 return _streamChannelDic[channelName];
             }
 
-            int ret = _rtmClientImpl.CreateStreamChannel(channelName);
-            if (ret != 0)
+            int ret = _rtmClientImpl.CreateStreamChannel(channelName, ref errorCode);
+            if (ret != 0 || errorCode != 0)
             {
                 return null;
             }
@@ -111,22 +115,24 @@ namespace Agora.Rtm.Internal
             return streamChannel;
         }
 
-        public override int Login(string token)
+        public override int Login(string token, ref UInt64 requestId)
         {
             if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtmClientImpl.Login(token);
+            return _rtmClientImpl.Login(token, ref requestId);
         }
 
-        public override int Logout()
+        public override int Logout(ref UInt64 requestId)
         {
             if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtmClientImpl.Logout();
+            //jira RTM2-1276
+            DisposeAllStreamChannel();
+            return _rtmClientImpl.Logout(ref requestId);
         }
 
         public override IRtmStorage GetStorage()
@@ -157,13 +163,22 @@ namespace Agora.Rtm.Internal
             return _rtmPresence;
         }
 
-        public override int RenewToken(string token)
+        public override IRtmHistory GetHistory()
+        {
+            if (_rtmClientImpl == null)
+            {
+                return null;
+            }
+            return _rtmHistory;
+        }
+
+        public override int RenewToken(string token, ref UInt64 requestId)
         {
             if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtmClientImpl.RenewToken(token);
+            return _rtmClientImpl.RenewToken(token, ref requestId);
         }
 
         public override int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId)
@@ -194,13 +209,13 @@ namespace Agora.Rtm.Internal
             return _rtmClientImpl.Subscribe(channelName, options, ref requestId);
         }
 
-        public override int Unsubscribe(string channelName)
+        public override int Unsubscribe(string channelName, ref UInt64 requestId)
         {
             if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtmClientImpl.Unsubscribe(channelName);
+            return _rtmClientImpl.Unsubscribe(channelName, ref requestId);
         }
 
         public override int SetParameters(string parameters)
@@ -217,6 +232,22 @@ namespace Agora.Rtm.Internal
             if (this._streamChannelDic.ContainsKey(channelName))
             {
                 this._streamChannelDic.Remove(channelName);
+            }
+        }
+
+        public void DisposeAllStreamChannel()
+        {
+            List<StreamChannel> streamChannels = new List<StreamChannel>();
+
+            foreach (var e in this._streamChannelDic)
+            {
+                streamChannels.Add(e.Value);
+            }
+            this._streamChannelDic.Clear();
+
+            foreach (var channel in streamChannels)
+            {
+                channel.Dispose();
             }
         }
 

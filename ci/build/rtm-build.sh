@@ -501,13 +501,24 @@ if [ "$IRIS_IOS_URL" != "" ]; then
     #copy iris ios
     cp -PRf $IRIS_IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
     #copy native ios
-    cp -PRf $NATIVE_IOS_SRC_PATH/libs/*.xcframework/ios-arm64/*.framework "$IOS_DST_PATH"
+    for framework in $NATIVE_IOS_SRC_PATH/libs/*.xcframework; do
+        if [ -d "$framework/ios-arm64" ]; then
+            cp -PRf "$framework"/ios-arm64/*.framework "$IOS_DST_PATH"
+        elif [ -d "$framework/ios-arm64_armv7" ]; then
+            cp -PRf "$framework"/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+        else
+            echo "Missing iOS device slice: $framework"
+            exit 1
+        fi
+    done
     #remove framework
     delete_files "$IOS_DST_PATH" "$EXCLUDE_LIST_IN_MOBILE"
 
-    files=$(ls $IOS_DST_PATH)
-    for filename in $files; do
-        cp -f "$ROOT_DIR"/Unity/Plugins/iOS/ios.meta $IOS_DST_PATH/${filename}.meta
+    for framework in "$IOS_DST_PATH"/*.framework; do
+        [ -d "$framework" ] || continue
+        filename=$(basename "$framework")
+        framework_guid=$(printf '%s' "AgoraRTM/iOS/$filename" | shasum -a 256 | cut -c1-32)
+        sed "s/^guid:.*/guid: $framework_guid/" "$ROOT_DIR"/Unity/Plugins/iOS/ios.meta > "$IOS_DST_PATH/${filename}.meta"
     done
 
     rm $IOS_DST_PATH/ios.meta
@@ -587,6 +598,9 @@ if [ "$IRIS_MAC_URL" != "" ]; then
 
     #copy iris
     cp -PRf $IRIS_MAC_SRC_PATH/MAC/Release/$bundle_name "$MAC_DST_PATH"
+    rm -f "$MAC_DST_PATH/AgoraRtcWrapperUnity.bundle.meta"
+    bundle_guid=$(printf '%s' "AgoraRTM/macOS/$bundle_name" | shasum -a 256 | cut -c1-32)
+    sed "s/^guid:.*/guid: $bundle_guid/" "$ROOT_DIR"/Unity/Plugins/macOS/AgoraRtcWrapperUnity.bundle.meta > "$MAC_DST_PATH/$bundle_name.meta"
     rm -rf "$MAC_DST_PATH/$bundle_name/Contents/Frameworks/*.framework"
 
     #copy native

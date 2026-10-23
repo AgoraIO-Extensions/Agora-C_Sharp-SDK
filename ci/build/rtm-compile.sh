@@ -7,4 +7,5 @@ cp -R "$root/Agora-C_Sharp-RTC-SDK" "$candidate/sdk"
 # Compile the same RTM-only source selection as the Unity packaging job.
 python3 "$root/ci/build/remove_code_by_macor.py" "$candidate/sdk" false true false false true false
 cp "$root/ci/build/rtm-compile.csproj" "$candidate/rtm.csproj"
-dotnet build "$candidate/rtm.csproj" --configuration Release
+cp "$root/ci/build/rtm-regression.cs" "$candidate/rtm-regression.cs"
+dotnet run --project "$candidate/rtm.csproj" --configuration Release

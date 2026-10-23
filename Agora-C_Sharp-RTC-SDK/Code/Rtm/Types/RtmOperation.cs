@@ -3,7 +3,7 @@ namespace Agora.Rtm
 {
     public class RtmOperation
     {
-        public static readonly string RTMInitializeOperation = "RTMInitializeOperation";
+        public static readonly string RTMCreateClientOperation = "RTMInitializeOperation";
         public static readonly string RTMReleaseOperation = "RTMReleaseOperation";
         public static readonly string RTMLoginOperation = "RTMLoginOperation";
         public static readonly string RTMLogoutOperation = "RTMLogoutOperation";
@@ -32,6 +32,8 @@ namespace Agora.Rtm
         public static readonly string RTMWhereNowOperation = "RTMWhereNowOperation";
         public static readonly string RTMGetOnlineUsersOperation = "RTMGetOnlineUsersOperation";
         public static readonly string RTMGetUserChannelsOperation = "RTMGetUserChannelsOperation";
+
+        public static readonly string RTMGetUserOnlineStatusOperation = "RTMGetUserOnlineStatusOperation";
         public static readonly string RTMSetStateOperation = "RTMSetStateOperation";
         public static readonly string RTMRemoveStateOperation = "RTMRemoveStateOperation";
         public static readonly string RTMGetStateOperation = "RTMGetStateOperation";
@@ -57,5 +59,7 @@ namespace Agora.Rtm
         public static readonly string RTMSubscribeTopicOperation = "RTMSubscribeTopicOperation";
         public static readonly string RTMUnsubscribeTopicOperation = "RTMUnsubscribeTopicOperation";
         public static readonly string RTMGetSubscribedUserListOperation = "RTMGetSubscribedUserListOperation";
+
+        public static readonly string RTMHistoryGetMessagesOperation = "RTMHistoryGetMessagesOperation";
     }
 }

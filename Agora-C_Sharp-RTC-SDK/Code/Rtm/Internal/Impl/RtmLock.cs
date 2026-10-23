@@ -5,7 +5,7 @@ namespace Agora.Rtm.Internal
     internal sealed class RtmLock : IRtmLock
     {
         private RtmLockImpl _rtmLockImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = (int)RTM_ERROR_CODE.NOT_INITIALIZED;
 
         internal RtmLock(RtmLockImpl impl)
         {

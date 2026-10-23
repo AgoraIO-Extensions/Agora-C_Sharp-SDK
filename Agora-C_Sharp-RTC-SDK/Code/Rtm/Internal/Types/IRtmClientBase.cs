@@ -16,30 +16,24 @@ namespace Agora.Rtm.Internal
             encryptionConfig = new RtmEncryptionConfig();
         }
 
-        public RtmConfig(string appId, string userId, RTM_AREA_CODE areaCode, IRtmEventHandler eventHandler, RtmLogConfig logConfig, RtmProxyConfig proxyConfig, RtmEncryptionConfig encryptionConfig)
-        {
-            this.appId = appId;
-            this.userId = userId;
-            this.areaCode = areaCode;
-            this.presenceTimeout = 300;
-            this.useStringUserId = true;
-            this.eventHandler = eventHandler;
-            this.logConfig = logConfig;
-            this.proxyConfig = proxyConfig;
-            this.encryptionConfig = encryptionConfig;
-        }
-
         public RtmConfig(Rtm.RtmConfig config, IRtmEventHandler eventHandler)
         {
             this.appId = config.appId;
             this.userId = config.userId;
             this.areaCode = config.areaCode;
+            this.protocolType = config.protocolType;
             this.presenceTimeout = config.presenceTimeout;
+            this.heartbeatInterval = config.heartbeatInterval;
             this.useStringUserId = config.useStringUserId;
+            this.multipath = config.multipath;
             this.eventHandler = eventHandler;
             this.logConfig = config.logConfig;
             this.proxyConfig = config.proxyConfig;
             this.encryptionConfig = config.encryptionConfig;
+            this.privateConfig = config.privateConfig;
+            this.reconnectTimeout = config.reconnectTimeout;
+            this.ispPolicyEnabled = config.ispPolicyEnabled;
+            this.parameters = config.parameters;
         }
 
         public void setEventHandler(IRtmEventHandler eventHandler)
@@ -58,9 +52,15 @@ namespace Agora.Rtm.Internal
 
         public RTM_AREA_CODE areaCode;
 
+        public RTM_PROTOCOL_TYPE protocolType;
+
         public UInt32 presenceTimeout;
 
+        public UInt32 heartbeatInterval;
+
         public bool useStringUserId;
+
+        public bool multipath;
 
         private IRtmEventHandler eventHandler;
 
@@ -69,6 +69,12 @@ namespace Agora.Rtm.Internal
         public RtmProxyConfig proxyConfig;
 
         public RtmEncryptionConfig encryptionConfig;
+
+        public RtmPrivateConfig privateConfig;
+
+        public UInt32 reconnectTimeout;
+        public bool ispPolicyEnabled;
+        public string parameters;
     };
 
     public class IntervalInfo
@@ -89,9 +95,9 @@ namespace Agora.Rtm.Internal
         public Rtm.IntervalInfo GenerateIntervalInfo()
         {
             Rtm.IntervalInfo intervalInfo = new Rtm.IntervalInfo();
-            intervalInfo.joinUserList = this.joinUserList.users;
-            intervalInfo.leaveUserList = this.leaveUserList.users;
-            intervalInfo.timeoutUserList = this.timeoutUserList.users;
+            intervalInfo.joinUserList = this.joinUserList == null ? new string[0] : this.joinUserList.users;
+            intervalInfo.leaveUserList = this.leaveUserList == null ? new string[0] : this.leaveUserList.users;
+            intervalInfo.timeoutUserList = this.timeoutUserList == null ? new string[0] : this.timeoutUserList.users;
             intervalInfo.userStateList = this.userStateList;
             return intervalInfo;
         }
@@ -123,6 +129,10 @@ namespace Agora.Rtm.Internal
 
         public SnapshotInfo snapshot;
 
+        public UInt64 timestamp;
+
+        public UInt64 totalOccupancy;
+
         public Rtm.PresenceEvent GeneratePresenceEvent()
         {
             Rtm.PresenceEvent presenceEvent = new Rtm.PresenceEvent();
@@ -133,6 +143,8 @@ namespace Agora.Rtm.Internal
             presenceEvent.stateItems = this.stateItems;
             presenceEvent.interval = this.interval.GenerateIntervalInfo();
             presenceEvent.snapshot = this.snapshot;
+            presenceEvent.timestamp = this.timestamp;
+            presenceEvent.totalOccupancy = this.totalOccupancy;
             return presenceEvent;
         }
     };
