@@ -127,7 +127,7 @@ if [ -f "$CONFIG_FILE" ]; then
         if [[ $line == *"<<<end"* ]] && [[ $FLAG == 1 ]]; then
             FLAG=0
         fi
-        
+
         if [[ $FLAG == 1 ]]; then
             # Extract SDK version if not already set
             if [[ -z "$SDK_VERSION" ]] && [[ $line == *"SDKVer="* ]]; then
@@ -757,4 +757,3 @@ curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
 
 cd ..
 rm -rf ./tempDir
-
