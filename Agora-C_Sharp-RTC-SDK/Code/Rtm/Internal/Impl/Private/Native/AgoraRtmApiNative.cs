@@ -27,7 +27,7 @@ namespace Agora.Rtm.Internal
         private const string AgoraRtmLibName = "AgoraRtmWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         private const string AgoraRtmLibName = "AgoraRtmWrapperUnity";
-#elif UNITY_IPHONE
+#elif UNITY_IPHONE || UNITY_VISIONOS
         private const string AgoraRtmLibName = "__Internal";
 #else
         private const string AgoraRtmLibName = "AgoraRtmWrapper";
@@ -249,35 +249,6 @@ namespace Agora.Rtm.Internal
     //    internal uint buffer_count;
     //}
 
-    internal class MessageEventInternal
-    {
-        public RTM_CHANNEL_TYPE channelType;
 
-        public RTM_MESSAGE_TYPE messageType;
-
-        public string channelName;
-
-        public string channelTopic;
-
-        public UInt64 message;
-
-        public uint messageLength;
-
-        public string publisher;
-
-        public string customType;
-
-        public MessageEvent GenerateMessageEvent()
-        {
-            MessageEvent messageEvent = new MessageEvent();
-            messageEvent.channelType = this.channelType;
-            messageEvent.messageType = this.messageType;
-            messageEvent.channelName = this.channelName;
-            messageEvent.channelTopic = this.channelTopic;
-            messageEvent.publisher = this.publisher;
-            messageEvent.customType = this.customType;
-            return messageEvent;
-        }
-    };
 
 }

@@ -274,6 +274,13 @@ namespace Agora.Rtm
             return re.Substring(0, index);
         }
 
+        static public UInt64 ConvertNegativeToUInt64(Int64 value)
+        {
+            byte[] bytes = BitConverter.GetBytes(value);
+            ulong uNum = BitConverter.ToUInt64(bytes, 0);
+            return uNum;
+        }
+
         public static string StringFromNativeUtf8(IntPtr nativeUtf8)
         {
             int len = 0;

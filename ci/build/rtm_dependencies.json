@@ -1,0 +1,10 @@
+{
+  "NATIVE_ANDROID_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_Android_Preview_2.3.1-dev.4_Video_20261022_034607.zip",
+  "NATIVE_IOS_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_iOS_Preview_2.3.1-dev.4_Video_20261022_034607.zip",
+  "NATIVE_MAC_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_macOS_Preview_2.3.1-dev.4_Video_20261022_034607.zip",
+  "NATIVE_WIN_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_windows_Preview_2.3.1-dev.4_Video_20261022_034607.zip",
+  "IRIS_ANDROID_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_Android_Video_Standalone_16K_20261022_0648_341181.zip",
+  "IRIS_IOS_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_iOS_Video_Standalone_20261022_0648_331027.zip",
+  "IRIS_MAC_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_Mac_Video_Unity_20261022_0648_321000.zip",
+  "IRIS_WIN_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_Windows_Video_Standalone_20261022_0648_311090.zip"
+}
