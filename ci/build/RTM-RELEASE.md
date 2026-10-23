@@ -1,5 +1,9 @@
 # Unity RTM release automation (EP-936)
 
+The dedicated RTM 2.x maintenance branch is `release/rtm-2.x`, created from
+`release/RTM-2.1`. Target RTM dependency/API/release changes here, not `main`.
+The existing `release/RTM-2.1` branch remains as historical baseline.
+
 RTM 2.x APIs are intentionally handwritten. Do not run the RTC Terra workflow
 or label a dependency PR as generated RTM API coverage.
 
