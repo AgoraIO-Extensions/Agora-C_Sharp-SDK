@@ -91,7 +91,7 @@ if (sdkTarget == 'Unity') {
                         def codesignResult = build(job: '/CodeSign', parameters: [
                             text(name: 'PACKAGE_URLS', value: codesignUrls.join('\n')),
                             string(name: 'SIGN_PACKAGE_WHITELIST', value: 'Agora_CSharp_*.zip'),
-                            string(name: 'SIGN_FILE_WHITELIST', value: '*.dll,*.exe'),
+                            string(name: 'SIGN_FILE_WHITELIST', value: 'agorartc.dll,agora*.dll,Agora*.dll,C_Sharp-API_Example.dll,C_Sharp-API_Example.exe,SharpDX*.dll,glfw3.dll,lib*.dll,video*.dll'),
                         ], wait: true, propagate: false)
                         if (!codesignResult || codesignResult.result != 'SUCCESS') {
                             error("C# CodeSign failed: ${codesignResult?.result ?: 'UNKNOWN'}")
@@ -103,6 +103,11 @@ if (sdkTarget == 'Unity') {
                             }
                         } finally {
                             archiveArtifacts(artifacts: 'csharp-signed/signature-report.json', allowEmptyArchive: true)
+                        }
+                        try {
+                            bat '@powershell -NoProfile -ExecutionPolicy Bypass -File ci\\build\\csharp\\smoke_demo.ps1'
+                        } finally {
+                            archiveArtifacts(artifacts: 'csharp-startup-check/result.json,csharp-startup-check/*.log', allowEmptyArchive: true)
                         }
                         archiveArtifacts(artifacts: 'csharp-release/*.zip,csharp-release/*.nupkg,csharp-release/manifest.json', fingerprint: true)
                         urls = archive.archiveFiles([[

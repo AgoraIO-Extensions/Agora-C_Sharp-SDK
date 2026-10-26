@@ -51,7 +51,7 @@ jobs:
           } finally { Pop-Location }
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.203
+          dotnet-version: 10.0.114
       - name: Build candidate SDK and both Windows demos
         shell: pwsh
         run: |
@@ -63,8 +63,14 @@ jobs:
         with:
           python-version: '3.11'
       - run: python ci/build/csharp/verify_package.py csharp-output
+      - name: Start both demos with bundled runtimes
+        shell: powershell
+        run: ./ci/build/csharp/smoke_demo.ps1 -Packages csharp-output
       - uses: actions/upload-artifact@v4
         with:
           name: csharp-windows-candidate
-          path: csharp-output/*
+          path: |
+            csharp-output/*
+            csharp-startup-check/result.json
+            csharp-startup-check/*.log
           retention-days: 3
