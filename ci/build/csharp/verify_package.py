@@ -34,6 +34,15 @@ def verify(output):
             demo_zip = next(output.glob(f'*APIExample*_{arch}.zip'))
             with ZipFile(demo_zip) as demo:
                 assert machine(demo.read('C_Sharp-API_Example.exe')) == expected
+                runtime = json.loads(demo.read('C_Sharp-API_Example.runtimeconfig.json'))['runtimeOptions']
+                assert runtime['tfm'] == 'net10.0', 'Demo must target supported .NET 10'
+                assert not runtime.get('framework') and not runtime.get('frameworks'), 'Demo must not require installed .NET'
+                included = {item['name']: item['version'] for item in runtime['includedFrameworks']}
+                assert included['Microsoft.NETCore.App'].startswith('10.0.')
+                assert included['Microsoft.WindowsDesktop.App'].startswith('10.0.')
+                for name in ['hostfxr.dll', 'hostpolicy.dll', 'coreclr.dll', 'System.Private.CoreLib.dll', 'System.Windows.Forms.dll']:
+                    assert demo.read(name)[:2] == b'MZ', f'Missing bundled runtime: {arch}/{name}'
+                assert machine(demo.read('coreclr.dll')) == expected, 'Runtime architecture must match Demo host'
                 assert demo.read('agorartc.dll') == package.read('lib/netstandard2.0/agorartc.dll')
                 for name in ['AgoraRtcWrapper.dll', 'agora_rtc_sdk.dll']:
                     assert demo.read(name) == package.read(f'runtimes/win-{arch}/native/{name}')

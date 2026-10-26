@@ -45,7 +45,8 @@ assert published.find { it[0] == 'result' }[1].contains('[Pipeline Center]JOB_RE
 def signing = published.find { it[0] == 'sign' }[1]
 assert signing.job == '/CodeSign' && signing.wait && !signing.propagate
 assert signing.parameters.find { it.name == 'SIGN_PACKAGE_WHITELIST' }.value == 'Agora_CSharp_*.zip'
-assert signing.parameters.find { it.name == 'SIGN_FILE_WHITELIST' }.value == '*.dll,*.exe'
+assert signing.parameters.find { it.name == 'SIGN_FILE_WHITELIST' }.value.contains('C_Sharp-API_Example.exe')
+assert !signing.parameters.find { it.name == 'SIGN_FILE_WHITELIST' }.value.contains('*.dll,*.exe')
 assert published.findIndexOf { it[0] == 'upload' } < published.findIndexOf { it[0] == 'sign' }
 assert published.findIndexOf { it[0] == 'sign' } < published.findIndexOf { it[0] == 'result' }
 assert published.find { it[0] == 'bat' && it[1].contains('verify_signed.ps1') }

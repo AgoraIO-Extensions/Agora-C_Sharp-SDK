@@ -22,7 +22,7 @@ function Ensure-Dotnet {
         if ($LASTEXITCODE -eq 0) { return }
     }
     if ([Environment]::OSVersion.Platform -ne 'Win32NT') {
-        throw 'Install .NET SDK 8 before cross-compiling on a non-Windows host'
+        throw 'Install .NET SDK 10 before cross-compiling on a non-Windows host'
     }
     $installedDirectory = Join-Path $env:ProgramFiles 'dotnet'
     $installedExecutable = Join-Path $installedDirectory 'dotnet.exe'
@@ -34,11 +34,11 @@ function Ensure-Dotnet {
             return
         }
     }
-    Write-Host 'Preparing private .NET SDK 8.0.203 in this build workspace'
+    Write-Host 'Preparing private .NET SDK 10.0.114 in this build workspace'
     $installScript = Join-Path $temp 'dotnet-install.ps1'
     $sdkDirectory = Join-Path $temp 'dotnet-sdk'
     Invoke-WebRequest -Uri 'https://builds.dotnet.microsoft.com/dotnet/scripts/v1/dotnet-install.ps1' -OutFile $installScript -UseBasicParsing -TimeoutSec 120
-    & $installScript -Version '8.0.203' -InstallDir $sdkDirectory -NoPath
+    & $installScript -Version '10.0.114' -InstallDir $sdkDirectory -NoPath
     if (-not (Test-Path (Join-Path $sdkDirectory 'dotnet.exe'))) { throw 'Private .NET SDK installation failed' }
     $env:DOTNET_ROOT = $sdkDirectory
     $env:PATH = "$sdkDirectory;$env:PATH"
@@ -140,7 +140,7 @@ try {
 "@ | Set-Content -LiteralPath $nugetConfig -Encoding UTF8
     foreach ($arch in @('x86', 'x64')) {
         $demoOutput = Join-Path $temp "APIExample-$arch"
-        Run-Dotnet @('publish', $demoProject, '--disable-build-servers', '-p:UseSharedCompilation=false', '-c', 'Release', '-r', "win-$arch", '--self-contained', 'false', "-p:Platform=$arch", "-p:PlatformTarget=$arch",
+        Run-Dotnet @('publish', $demoProject, '--disable-build-servers', '-p:UseSharedCompilation=false', '-c', 'Release', '-r', "win-$arch", '--self-contained', 'true', "-p:Platform=$arch", "-p:PlatformTarget=$arch",
             "-p:AgoraSdkVersion=$candidateVersion", "-p:RestorePackagesPath=$cache", "-p:EnableWindowsTargeting=true", "-p:RestoreConfigFile=$nugetConfig", '-o', $demoOutput)
         foreach ($file in @('agorartc.dll', 'agora_rtc_sdk.dll', 'AgoraRtcWrapper.dll')) {
             if (-not (Test-Path (Join-Path $demoOutput $file))) { throw "Demo $arch missing $file" }

@@ -36,7 +36,8 @@ with TemporaryDirectory() as temp:
     for arch in ('x86', 'x64'):
         (inputs / f'Agora_CSharp_APIExample_{version}_{arch}.zip').write_bytes(zip_bytes({
             'agorartc.dll': b'signed elsewhere', 'agora_rtc_sdk.dll': b'signed elsewhere',
-            'AgoraRtcWrapper.dll': b'signed elsewhere', 'C_Sharp-API_Example.exe': b'signed demo host'}))
+            'AgoraRtcWrapper.dll': b'signed elsewhere', 'C_Sharp-API_Example.exe': b'signed demo host',
+            'coreclr.dll': b'Microsoft runtime signature preserved'}))
     output = root / 'release'
     finalize(inputs, output, manifest)
     with ZipFile(output / package_name) as package:
@@ -45,6 +46,7 @@ with TemporaryDirectory() as temp:
         for arch in ('x86', 'x64'):
             with ZipFile(output / f'Agora_CSharp_APIExample_{version}_{arch}.zip') as demo:
                 assert demo.read('C_Sharp-API_Example.exe') == b'signed demo host'
+                assert demo.read('coreclr.dll') == b'Microsoft runtime signature preserved'
                 assert demo.read('agorartc.dll') == package.read('lib/netstandard2.0/agorartc.dll')
                 for name in ('agora_rtc_sdk.dll', 'AgoraRtcWrapper.dll'):
                     assert demo.read(name) == package.read(f'runtimes/win-{arch}/native/{name}')
