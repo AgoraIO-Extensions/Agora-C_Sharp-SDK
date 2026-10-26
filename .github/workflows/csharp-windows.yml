@@ -72,6 +72,6 @@ jobs:
           name: csharp-windows-candidate
           path: |
             csharp-output/*
-            csharp-startup-check/result.json
+            csharp-startup-check/*.json
             csharp-startup-check/**/*.log
           retention-days: 3
