@@ -1,10 +1,30 @@
 # Validate final signed WinForms ZIPs without depending on a machine-level .NET install.
 [CmdletBinding()]
-param([string]$Packages = 'csharp-release')
+param([string]$Packages = 'csharp-release', [ValidateSet('x86', 'x64')][string]$Architecture)
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-$output = Join-Path (Get-Location) 'csharp-startup-check'
+$root = Join-Path (Get-Location) 'csharp-startup-check'
+if (-not $Architecture) {
+    New-Item -ItemType Directory -Path $root -ErrorAction Stop | Out-Null
+    $results = @()
+    try {
+        foreach ($arch in @('x86', 'x64')) {
+            # Inspect each process using matching bitness; 64-bit PowerShell cannot reliably enumerate WOW64 CLR modules.
+            $systemDirectory = if ($arch -eq 'x86') { 'SysWOW64' } else { 'System32' }
+            $powershell = Join-Path $env:WINDIR "$systemDirectory/WindowsPowerShell/v1.0/powershell.exe"
+            & $powershell -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath -Packages (Resolve-Path $Packages).Path -Architecture $arch
+            if ($LASTEXITCODE -ne 0) { throw "Demo $arch startup check failed" }
+            $report = Get-Content (Join-Path $root "$arch/result.json") -Raw | ConvertFrom-Json
+            if (-not $report.passed) { throw "Demo $arch startup evidence missing" }
+            $results += $report.results
+        }
+    } finally {
+        @{ results = $results; passed = ($results.Count -eq 2) } | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $root 'result.json') -Encoding UTF8
+    }
+    return
+}
+$output = Join-Path $root $Architecture
 New-Item -ItemType Directory -Path $output -ErrorAction Stop | Out-Null
 $results = @()
 $environmentNames = @('DOTNET_ROOT', 'DOTNET_ROOT_X86', 'DOTNET_ROOT_X64', 'DOTNET_MULTILEVEL_LOOKUP')
@@ -15,10 +35,10 @@ try {
         [Environment]::SetEnvironmentVariable($name, (Join-Path $output 'no-shared-runtime'), 'Process')
     }
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
-    foreach ($arch in @('x86', 'x64')) {
+    foreach ($arch in @($Architecture)) {
         $zips = @(Get-ChildItem $Packages -Filter "*APIExample*_$arch.zip" -File)
         if ($zips.Count -ne 1) { throw "Expected one final $arch Demo ZIP" }
-        $directory = Join-Path $output $arch
+        $directory = Join-Path $output 'app'
         [IO.Compression.ZipFile]::ExtractToDirectory($zips[0].FullName, $directory)
         $process = $null
         try {
@@ -29,7 +49,7 @@ try {
             if ($process.MainWindowHandle -eq [IntPtr]::Zero) { throw "Demo $arch did not create its main window" }
             $runtime = @($process.Modules | Where-Object { $_.ModuleName -ieq 'coreclr.dll' })
             if ($runtime.Count -ne 1 -or -not $runtime[0].FileName.StartsWith($directory + '\', [StringComparison]::OrdinalIgnoreCase)) {
-                throw "Demo $arch did not load its bundled CLR"
+                throw "Demo $arch did not load its bundled CLR (found: $($runtime.FileName -join ' , '))"
             }
             $results += @{ architecture = $arch; passed = $true; window_title = $process.MainWindowTitle; runtime = $runtime[0].FileName }
         } finally {
@@ -39,5 +59,5 @@ try {
     }
 } finally {
     foreach ($name in $environmentNames) { [Environment]::SetEnvironmentVariable($name, $saved[$name], 'Process') }
-    @{ results = $results; passed = ($results.Count -eq 2) } | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $output 'result.json') -Encoding UTF8
+    @{ results = $results; passed = ($results.Count -eq 1) } | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $output 'result.json') -Encoding UTF8
 }

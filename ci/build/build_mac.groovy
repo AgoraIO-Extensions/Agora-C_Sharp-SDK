@@ -107,7 +107,7 @@ if (sdkTarget == 'Unity') {
                         try {
                             bat '@powershell -NoProfile -ExecutionPolicy Bypass -File ci\\build\\csharp\\smoke_demo.ps1'
                         } finally {
-                            archiveArtifacts(artifacts: 'csharp-startup-check/result.json,csharp-startup-check/*.log', allowEmptyArchive: true)
+                            archiveArtifacts(artifacts: 'csharp-startup-check/result.json,csharp-startup-check/**/*.log', allowEmptyArchive: true)
                         }
                         archiveArtifacts(artifacts: 'csharp-release/*.zip,csharp-release/*.nupkg,csharp-release/manifest.json', fingerprint: true)
                         urls = archive.archiveFiles([[
