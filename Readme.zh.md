@@ -4,13 +4,15 @@
 
 Agora RTC C# SDK，目前支持 Windows 平台。
 
+- **独立 Windows C# SDK 4.5：[中文版 API 文档](docs/csharp/zh-CN/README.md)**，包括接入步骤、.NET Framework 4.5.2 说明、常用 API、回调、类型与接口签名索引。
 - 您可以在 [文档中心](https://docportal.shengwang.cn/cn/video-call-4.x/API%20Reference/cs_ng/v4.2.0/API/rtc_api_overview_ng.html)找到完整的API文档(Unity)
 - 您可以在 [发版说明](https://docportal.shengwang.cn/cn/video-call-4.x/release_cs_ng?platform=Windows)找到完整的发版说明(Unity)
 
 ## 运行环境
 
-- Visual Studio 2017+ with C++ (Windows)
-- .NET
+- SDK：`net40` / `netstandard2.0` 托管资产；.NET Framework 4.5.2 应用可引用 `net40` 资产，实际运行还需部署匹配位数的完整 Native/Iris 依赖。
+- 本分支 WinForms Demo：`net10.0-windows`；编译源码需要 .NET 10 SDK 和 Windows 桌面开发环境。发布的 Demo 按 x86/x64 自带运行时。
+- 请明确选择 x86 或 x64，详见[接入与运行环境](docs/csharp/zh-CN/integration.md)。
 
 ## 使用方法
 
@@ -32,7 +34,7 @@ Agora RTC C# SDK，目前支持 Windows 平台。
 
 ## 帮助
 
-如您需要了解关于我们API的更多信息，请参考[C# API Reference](https://docportal.shengwang.cn/cn/video-call-4.x/API%20Reference/cs_ng/v4.2.0/API/rtc_api_overview_ng.html)。
+独立 Windows C# 项目请先参考[本仓库的中文 API 文档](docs/csharp/zh-CN/README.md)。Unity 的旧版本文档仅供对应 Unity 版本参考，不作为本分支独立 SDK 的签名依据。
 
 ## 附录
 
