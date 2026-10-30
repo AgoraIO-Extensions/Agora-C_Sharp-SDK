@@ -60,3 +60,21 @@ Use the companion EP-916 change in TOOL/rehoboam. It registers the independent `
 Merge/deploy the framework support and merge the SDK change before enabling live C# execution. Start with `Package_Publish=false` on the actual Windows agent, then inspect the candidate packages and perform Windows runtime smoke testing before a business release. CDN remains an explicitly approved existing release task. NuGet push remains a separate release operation with credentials held outside normal template parameters.
 
 The final signed Demo ZIPs undergo Windows startup smoke checks with shared-runtime environment roots disabled. Both processes must remain running and report their actual shown main form handle, process architecture and package-local .NET 10 runtime directory through the opt-in AGORA_DEMO_STARTUP_REPORT diagnostic. This works on an interactive desktop and on a CI service desktop. This verifies startup only, not login/channel/device QA. Microsoft runtime files retain vendor signatures; CodeSign signs product and bundled third-party binaries.
+
+### Business API Demo checks
+
+The Windows Demo includes a separate Chinese business API panel. See
+[`BusinessApi/README.zh-CN.md`](../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/README.zh-CN.md)
+for the test procedure and the original Windows API mapping.
+
+Run the managed argument/callback contract checks without Native libraries or an App ID:
+
+```sh
+dotnet run --project ci/build/csharp/tests/BusinessDemoChecks.csproj -c Release
+```
+
+`smoke_demo.ps1` now also opens/renders the real panel from each packaged x86/x64 Demo,
+checks every allowlisted overload editor, and writes `*.business-ui.json` / `*.business-ui.png`.
+This opt-in diagnostic does not initialize Native or make calls. The existing shown-window
+and bundled-runtime checks run afterwards. Real device, audio, network, music authorization
+and two-party chorus acceptance remain separate QA steps.

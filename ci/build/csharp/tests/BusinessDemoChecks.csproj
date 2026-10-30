@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessApiCatalog.cs" />
+    <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessApiJson.cs" />
+    <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessApiEvents.cs" />
+    <Compile Include="BusinessDemoChecks.cs" />
+    <ProjectReference Include="../agorartc.csproj" />
+  </ItemGroup>
+</Project>

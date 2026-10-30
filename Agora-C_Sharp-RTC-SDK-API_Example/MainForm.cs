@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -14,6 +14,7 @@ namespace C_Sharp_API_Example
         internal static IEngine engine_ = null;
         internal static dumpHandler dump_handler_ = null;
 
+        private TabPage businessApiTab;
         private ConfigHelper config_helper_ = null;
         private readonly string SECTION = "must";
         private readonly string APPID_KEY = "AppId";
@@ -23,6 +24,31 @@ namespace C_Sharp_API_Example
         {
             InitializeComponent();
             InitUI();
+            businessApiTab = new TabPage("业务 API 测试");
+            var openBusinessApi = new Button
+            {
+                Text = "打开业务 API 测试面板", AutoSize = true, Location = new Point(20, 20)
+            };
+            openBusinessApi.Click += (sender, args) =>
+            {
+                SelectEngine(null); // Never run the old sample and the business test engine concurrently.
+                using var window = new Form
+                {
+                    Text = "独立 Windows C# — 业务 API 测试", Size = new Size(1250, 850),
+                    MinimumSize = new Size(1000, 700), StartPosition = FormStartPosition.CenterParent
+                };
+                var test = new BusinessApiView(appId_textBox.Text, channelId_textBox.Text);
+                window.Controls.Add(test);
+                window.FormClosing += (s, e) => test.Shutdown();
+                window.ShowDialog(this);
+            };
+            businessApiTab.Controls.Add(openBusinessApi);
+            businessApiTab.Controls.Add(new Label
+            {
+                Text = "在独立面板内操作：连接配置、音频设备、伴奏/播放器、录音、元数据/数据流、合唱组合测试。\n面板支持调整尺寸；原七个示例保留。主窗口上方进退频道按钮不控制这个面板。",
+                Location = new Point(20, 65), AutoSize = true
+            });
+            tabCtrl.TabPages.Add(businessApiTab);
 
             // Register dump handler
             dump_handler_ = new dumpHandler(DumpStatus);
@@ -125,7 +151,11 @@ namespace C_Sharp_API_Example
 
         private void OnSceneChanged(object sender, EventArgs e)
         {
-            if (tabCtrl.SelectedTab == joinChannelVideoTab)
+            if (tabCtrl.SelectedTab == businessApiTab)
+            {
+                SelectEngine(null);
+            }
+            else if (tabCtrl.SelectedTab == joinChannelVideoTab)
             {
                 SelectEngine(new JoinChannelVideo(joinChannelVideoView));
             }
