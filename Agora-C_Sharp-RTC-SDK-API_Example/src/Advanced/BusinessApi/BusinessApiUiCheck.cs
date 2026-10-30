@@ -32,7 +32,7 @@ namespace C_Sharp_API_Example
                 passed = true, overloads = count, scene_count = BusinessApiView.SceneNames.Length,
                 standalone_popup = false, generic_argument_editor = false,
                 architecture = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString(),
-                visible = window.Visible, width = window.Width, height = window.Height
+                visible = window.Visible, width = window.Width, height = window.Height, client_width = window.ClientSize.Width, client_height = window.ClientSize.Height
             }));
             window.Close();
         }

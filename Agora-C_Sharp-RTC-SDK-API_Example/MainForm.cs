@@ -42,7 +42,8 @@ namespace C_Sharp_API_Example
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            ClientSize = new Size(1250, 800);
+            var area = Screen.FromControl(this).WorkingArea;
+            ClientSize = new Size(Math.Min(1250, area.Width - 32), Math.Min(800, area.Height - 64));
             LayoutDemo();
             // Select default engine
             this.BeginInvoke(new Action(() =>

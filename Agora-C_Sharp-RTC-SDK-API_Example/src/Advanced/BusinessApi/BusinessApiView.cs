@@ -83,7 +83,10 @@ namespace C_Sharp_API_Example
         {
             var page = new Panel { Dock = DockStyle.Fill, AutoScroll = true };
             var table = new TableLayoutPanel { Dock = DockStyle.Top, ColumnCount = 1, AutoSize = true, Padding = new Padding(3) };
-            table.Controls.Add(new Label { Text = intro, AutoSize = true, MaximumSize = new Size(800, 0), Margin = new Padding(0, 0, 0, 8) });
+            table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            var introduction = new Label { Text = intro, AutoSize = true, MaximumSize = new Size(800, 0), Margin = new Padding(0, 0, 0, 8) };
+            table.Controls.Add(introduction);
+            page.SizeChanged += (_, __) => introduction.MaximumSize = new Size(Math.Max(200, page.ClientSize.Width - 24), 0);
             foreach (var row in rows) table.Controls.Add(row);
             page.Controls.Add(table); return page;
         }
