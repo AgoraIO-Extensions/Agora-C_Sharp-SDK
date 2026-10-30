@@ -17,6 +17,13 @@ internal static class BusinessDemoChecks
         var operations = BusinessApiOperation.Create();
         Check(operations.Select(o => o.Api).Distinct().Count() >= 100, "business allowlist incomplete");
         Check(!operations.Any(o => o.Method.Name == "SetEnableSpeakerphone"), "mobile API leaked into Windows catalog");
+        string sceneDirectory = System.IO.Path.Combine(Environment.CurrentDirectory, "Agora-C_Sharp-RTC-SDK-API_Example", "src", "Advanced", "BusinessApi");
+        foreach (var file in System.IO.Directory.GetFiles(sceneDirectory, "Business*Scenes.cs"))
+        {
+            foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpressions.Regex.Matches(
+                System.IO.File.ReadAllText(file), "\"((?:IRtcEngine(?:Ex)?|IAudioDeviceManager|IMediaPlayer|IMusicPlayer|IMusicContentCenter)\\.\\w+)\""))
+                Check(operations.Any(o => o.Api == match.Groups[1].Value), "unbound scene API: " + match.Groups[1].Value);
+        }
         var connection = new RtcConnection("offline-test", 1001);
         foreach (var op in operations)
         {
