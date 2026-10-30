@@ -13,6 +13,14 @@ on:
 permissions:
   contents: read
 jobs:
+  business-demo-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.114
+      - run: dotnet run --project ci/build/csharp/tests/BusinessDemoChecks.csproj --configuration Release
   dispatch-contract:
     runs-on: ubuntu-latest
     steps:
@@ -73,5 +81,14 @@ jobs:
           path: |
             csharp-output/*
             csharp-startup-check/*.json
+            csharp-startup-check/*.png
             csharp-startup-check/**/*.log
           retention-days: 3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: business-api-ui-evidence
+          path: |
+            csharp-startup-check/*.business-ui.json
+            csharp-startup-check/*.business-ui*.png
+          retention-days: 7
