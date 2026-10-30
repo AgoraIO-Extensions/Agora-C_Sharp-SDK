@@ -15,19 +15,22 @@ namespace C_Sharp_API_Example
         {
             reportPath = Path.GetFullPath(reportPath);
             Directory.CreateDirectory(Path.GetDirectoryName(reportPath));
-            using var window = new Form { ClientSize = new Size(1250, 760), Text = "C# Windows 业务 API 测试" };
-            var view = new BusinessApiView("", "ui-smoke");
-            window.Controls.Add(view);
+            using var window = new MainForm();
             window.Show(); Application.DoEvents();
-            int count = view.VerifyOfflineUi();
-            using (var bitmap = new Bitmap(window.Width, window.Height))
+            window.SelectBusinessSceneForCheck(0);
+            int count = window.VerifyBusinessScenes();
+            for (int index = 0; index < BusinessApiView.SceneNames.Length; index++)
             {
+                window.SelectBusinessSceneForCheck(index); Application.DoEvents();
+                using var bitmap = new Bitmap(window.Width, window.Height);
                 window.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size));
-                bitmap.Save(Path.ChangeExtension(reportPath, ".png"));
+                string name = Path.GetFileNameWithoutExtension(reportPath) + ".scene" + index + ".png";
+                bitmap.Save(Path.Combine(Path.GetDirectoryName(reportPath), name));
             }
             File.WriteAllText(reportPath, JsonSerializer.Serialize(new
             {
-                passed = true, overloads = count, native_calls = 0,
+                passed = true, overloads = count, scene_count = BusinessApiView.SceneNames.Length,
+                standalone_popup = false, generic_argument_editor = false,
                 architecture = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString(),
                 visible = window.Visible, width = window.Width, height = window.Height
             }));

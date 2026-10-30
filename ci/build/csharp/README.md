@@ -63,7 +63,7 @@ The final signed Demo ZIPs undergo Windows startup smoke checks with shared-runt
 
 ### Business API Demo checks
 
-The Windows Demo includes a separate Chinese business API panel. See
+The Windows Demo includes Chinese business scenes integrated in the original main window. See
 [`BusinessApi/README.zh-CN.md`](../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/README.zh-CN.md)
 for the test procedure and the original Windows API mapping.
 
@@ -73,8 +73,8 @@ Run the managed argument/callback contract checks without Native libraries or an
 dotnet run --project ci/build/csharp/tests/BusinessDemoChecks.csproj -c Release
 ```
 
-`smoke_demo.ps1` now also opens/renders the real panel from each packaged x86/x64 Demo,
-checks every allowlisted overload editor, and writes `*.business-ui.json` / `*.business-ui.png`.
+`smoke_demo.ps1` now also opens/renders the real integrated scenes from each packaged x86/x64 Demo,
+checks the typed scene button arguments and the backend overload contracts, and writes `*.business-ui.json` / `*.business-ui.png`.
 This opt-in diagnostic does not initialize Native or make calls. The existing shown-window
 and bundled-runtime checks run afterwards. Real device, audio, network, music authorization
 and two-party chorus acceptance remain separate QA steps.

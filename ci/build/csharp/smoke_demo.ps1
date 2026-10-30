@@ -31,7 +31,7 @@ try {
         }
         if ($uiProcess.ExitCode -ne 0 -or -not (Test-Path $uiReport)) { throw "Demo $arch business API UI check failed" }
         $ui = Get-Content $uiReport -Raw -Encoding UTF8 | ConvertFrom-Json
-        if (-not $ui.passed -or $ui.overloads -lt 100 -or $ui.native_calls -ne 0 -or $ui.architecture -ine $arch) {
+        if (-not $ui.passed -or $ui.overloads -lt 100 -or $ui.scene_count -ne 6 -or $ui.standalone_popup -or $ui.generic_argument_editor -or $ui.architecture -ine $arch) {
             throw "Demo $arch business API UI evidence is invalid"
         }
         $env:AGORA_DEMO_STARTUP_REPORT = Join-Path $output "$arch.startup.json"

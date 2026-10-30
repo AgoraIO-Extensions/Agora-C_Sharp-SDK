@@ -90,5 +90,5 @@ jobs:
           name: business-api-ui-evidence
           path: |
             csharp-startup-check/*.business-ui.json
-            csharp-startup-check/*.business-ui.png
+            csharp-startup-check/*.business-ui*.png
           retention-days: 7

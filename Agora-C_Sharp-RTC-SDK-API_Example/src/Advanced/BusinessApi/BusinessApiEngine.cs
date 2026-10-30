@@ -12,6 +12,14 @@ namespace C_Sharp_API_Example
 {
     // Owned by one test tab. All native commands and disposal run on the UI thread;
     // native callbacks only enqueue immutable log messages through the view.
+    internal sealed class BusinessApiResult
+    {
+        internal object Value { get; }
+        internal Dictionary<string, object> Outputs { get; }
+        internal BusinessApiResult(object value, Dictionary<string, object> outputs = null)
+        { Value = value; Outputs = outputs ?? new Dictionary<string, object>(); }
+    }
+
     internal sealed class BusinessApiEngine : IEngine
     {
         private readonly BusinessApiView view;
@@ -29,17 +37,18 @@ namespace C_Sharp_API_Example
 
         internal BusinessApiEngine(BusinessApiView view) { this.view = view; }
         internal bool Initialized => rtc_engine_ != null;
+        internal int Generation => generation;
         private void Log(string name, object data) => view.Log(name + " " + BusinessApiJson.Result(data));
         private Action<string, object> NewSink()
         {
             int epoch = generation;
-            return (name, data) => { if (epoch == generation) Log("回调 " + name, data); };
+            return (name, data) => { if (epoch == generation) { Log("回调 " + name, data); view.NoteEvent(epoch, name, data); } };
         }
 
         internal override int Init(string appId)
         {
             if (Initialized) return 0;
-            return Initialize(new RtcEngineContext { appId = appId });
+            return Initialize(view.EngineContext(appId));
         }
         private int Initialize(RtcEngineContext context)
         {
@@ -64,10 +73,7 @@ namespace C_Sharp_API_Example
         internal override int JoinChannel(string channelId)
         {
             RequireEngine();
-            var options = new ChannelMediaOptions();
-            options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
-            options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
-            options.publishMicrophoneTrack.SetValue(true);
+            var options = view.MediaOptions();
             int ret = Engine.JoinChannel(view.Token, channelId.Split(';')[0], view.Uid, options);
             Log("JoinChannel 返回（入会结果见回调）", ret);
             return ret;
@@ -103,6 +109,7 @@ namespace C_Sharp_API_Example
             {
                 rtc_engine_ = null; events = null; frames = null; music = null; musicObserver = null;
                 players.Clear(); playerObservers.Clear(); audioTracks.Clear();
+                view.SessionReleased();
             }
             return 0;
         }
@@ -129,19 +136,19 @@ namespace C_Sharp_API_Example
             playerObservers[id] = observer;
             int ret = player.InitEventHandler(observer);
             Log("播放器事件注册", new { playerId = id, result = ret });
-            view.SelectPlayer(id);
+            view.SelectPlayer(id, player is IMusicPlayer);
             return id;
         }
         private int DestroyPlayer(int id)
         {
             var player = players[id];
             int ret = player is IMusicPlayer mp ? Music().DestroyMusicPlayer(mp) : Engine.DestroyMediaPlayer(player);
-            if (ret >= 0) { players.Remove(id); playerObservers.Remove(id); }
+            if (ret >= 0) { players.Remove(id); playerObservers.Remove(id); view.PlayerRemoved(id); }
             Log("销毁播放器", new { playerId = id, result = ret });
             return ret;
         }
 
-        internal void Execute(BusinessApiOperation op, string json)
+        internal BusinessApiResult Execute(BusinessApiOperation op, string json)
         {
             // Parse even special commands so misspelled/unsafe inputs cannot be silently ignored.
             object[] args = BusinessApiJson.ReadArguments(op, json);
@@ -152,39 +159,39 @@ namespace C_Sharp_API_Example
             foreach (var media in args.OfType<ChannelMediaOptions>())
                 if (media.token != null && media.token.HasValue() && media.token.GetValue() == "$token") media.token.SetValue(view.Token);
             if (op.Target == "IRtcEngine" && name == "Initialize")
-            { Initialize((RtcEngineContext)args[0]); return; }
+            { return new BusinessApiResult(Initialize((RtcEngineContext)args[0])); }
             RequireEngine();
-            if (op.Target == "IRtcEngine" && name == "Dispose") { Release(args.Length != 0 && (bool)args[0]); return; }
+            if (op.Target == "IRtcEngine" && name == "Dispose") { return new BusinessApiResult(Release(args.Length != 0 && (bool)args[0])); }
             if (name == "CreateMediaPlayer")
             {
                 var player = Engine.CreateMediaPlayer() ?? throw new InvalidOperationException("CreateMediaPlayer返回null。");
-                Log(name, new { playerId = RegisterPlayer(player) }); return;
+                int id = RegisterPlayer(player); Log(name, new { playerId = id }); return new BusinessApiResult(id);
             }
             if (name == "CreateMusicPlayer")
             {
                 var player = Music().CreateMusicPlayer() ?? throw new InvalidOperationException("CreateMusicPlayer返回null；请检查曲库鉴权。");
-                Log(name, new { playerId = RegisterPlayer(player) }); return;
+                int id = RegisterPlayer(player); Log(name, new { playerId = id }); return new BusinessApiResult(id);
             }
             if (name == "DestroyMediaPlayer" || name == "DestroyMusicPlayer")
             {
                 bool isMusic = Player() is IMusicPlayer;
                 if ((name == "DestroyMusicPlayer") != isMusic)
                     throw new InvalidOperationException("播放器类型不匹配；普通播放器和曲库播放器使用各自销毁接口。");
-                DestroyPlayer(view.PlayerId); return;
+                return new BusinessApiResult(DestroyPlayer(view.PlayerId));
             }
             if (op.Target == "IRtcEngine" && name == "InitEventHandler")
-            { Log(name, Engine.InitEventHandler(events)); return; }
+            { int r = Engine.InitEventHandler(events); Log(name, r); return new BusinessApiResult(r); }
             if (op.Target == "IMediaPlayer" && name == "InitEventHandler")
-            { Log(name, Player().InitEventHandler(playerObservers[view.PlayerId])); return; }
+            { int r = Player().InitEventHandler(playerObservers[view.PlayerId]); Log(name, r); return new BusinessApiResult(r); }
             if (name == "RegisterEventHandler")
-            { musicObserver = new BusinessMusicEvents(NewSink()); Log(name, Music().RegisterEventHandler(musicObserver)); return; }
+            { musicObserver = new BusinessMusicEvents(NewSink()); int r = Music().RegisterEventHandler(musicObserver); Log(name, r); return new BusinessApiResult(r); }
             if (name == "RegisterAudioFrameObserver")
             {
                 var next = new BusinessAudioFrames(NewSink());
                 int ret = Engine.RegisterAudioFrameObserver(next, (AUDIO_FRAME_POSITION)args[1], (OBSERVER_MODE)args[2]);
                 if (ret >= 0) frames = next;
                 Log(name, ret);
-                return;
+                return new BusinessApiResult(ret);
             }
             object target = op.Target switch
             {
@@ -211,6 +218,7 @@ namespace C_Sharp_API_Example
                 result = new { available = result != null };
             Log(op.Api, new { result, outputs });
             // A 0 return is never recorded as an asynchronous join/play/relay success.
+            return new BusinessApiResult(result, outputs);
         }
 
         internal void StartPcm(string filePath, int sampleRate, int channels, uint trackId)

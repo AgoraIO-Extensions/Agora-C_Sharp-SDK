@@ -14,7 +14,8 @@ namespace C_Sharp_API_Example
         internal static IEngine engine_ = null;
         internal static dumpHandler dump_handler_ = null;
 
-        private TabPage businessApiTab;
+        private readonly System.Collections.Generic.List<TabPage> businessTabs = new System.Collections.Generic.List<TabPage>();
+        private BusinessApiView businessView;
         private ConfigHelper config_helper_ = null;
         private readonly string SECTION = "must";
         private readonly string APPID_KEY = "AppId";
@@ -24,31 +25,14 @@ namespace C_Sharp_API_Example
         {
             InitializeComponent();
             InitUI();
-            businessApiTab = new TabPage("业务 API 测试");
-            var openBusinessApi = new Button
+            businessView = new BusinessApiView(() => appId_textBox.Text, () => channelId_textBox.Text);
+            foreach (var name in BusinessApiView.SceneNames)
             {
-                Text = "打开业务 API 测试面板", AutoSize = true, Location = new Point(20, 20)
-            };
-            openBusinessApi.Click += (sender, args) =>
-            {
-                SelectEngine(null); // Never run the old sample and the business test engine concurrently.
-                using var window = new Form
-                {
-                    Text = "独立 Windows C# — 业务 API 测试", Size = new Size(1250, 850),
-                    MinimumSize = new Size(1000, 700), StartPosition = FormStartPosition.CenterParent
-                };
-                var test = new BusinessApiView(appId_textBox.Text, channelId_textBox.Text);
-                window.Controls.Add(test);
-                window.FormClosing += (s, e) => test.Shutdown();
-                window.ShowDialog(this);
-            };
-            businessApiTab.Controls.Add(openBusinessApi);
-            businessApiTab.Controls.Add(new Label
-            {
-                Text = "在独立面板内操作：连接配置、音频设备、伴奏/播放器、录音、元数据/数据流、合唱组合测试。\n面板支持调整尺寸；原七个示例保留。主窗口上方进退频道按钮不控制这个面板。",
-                Location = new Point(20, 65), AutoSize = true
-            });
-            tabCtrl.TabPages.Add(businessApiTab);
+                var page = new TabPage(name); businessTabs.Add(page); tabCtrl.TabPages.Add(page);
+            }
+            businessView.RegisterNavigationButtons(join_channel_btn, leave_channel_btn);
+            MaximizeBox = true; MinimizeBox = true; MinimumSize = new Size(1000, 700);
+            Resize += (s, e) => LayoutDemo();
 
             // Register dump handler
             dump_handler_ = new dumpHandler(DumpStatus);
@@ -58,12 +42,43 @@ namespace C_Sharp_API_Example
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            ClientSize = new Size(1250, 800);
+            LayoutDemo();
             // Select default engine
             this.BeginInvoke(new Action(() =>
             {
                 SelectEngine(new JoinChannelVideo(joinChannelVideoView));
             }));
         }
+
+        private void LayoutDemo()
+        {
+            if (ClientSize.Width < 400 || ClientSize.Height < 400) return;
+            const int left = 285;
+            appId_label.SetBounds(12, 12, left - 24, 22);
+            appId_textBox.SetBounds(12, 38, left - 24, 28);
+            channelName_label.SetBounds(12, 76, left - 24, 22);
+            channelId_textBox.SetBounds(12, 102, left - 24, 28);
+            join_channel_btn.SetBounds(12, 142, 124, 32);
+            leave_channel_btn.SetBounds(146, 142, 124, 32);
+            sdk_version.SetBounds(12, 186, left - 24, 40);
+            status_tips.SetBounds(12, 236, left - 24, ClientSize.Height - 332);
+            clear_msg_btn.SetBounds(12, ClientSize.Height - 86, left - 24, 28);
+            api_ref.SetBounds(12, ClientSize.Height - 48, 65, 24);
+            reg_linkLabel.SetBounds(80, ClientSize.Height - 48, 65, 24);
+            eg_linkLabel.SetBounds(148, ClientSize.Height - 48, 65, 24);
+            faq_linkLabel.SetBounds(216, ClientSize.Height - 48, 55, 24);
+            tabCtrl.SetBounds(left, 12, ClientSize.Width - left - 12, ClientSize.Height - 24);
+        }
+
+        internal void SelectBusinessSceneForCheck(int index)
+        {
+            appId_textBox.Text = "";
+            channelId_textBox.Text = "ui-smoke";
+            tabCtrl.SelectedTab = businessTabs[index];
+            LayoutDemo();
+        }
+        internal int VerifyBusinessScenes() => businessView.VerifyOfflineUi();
 
         private void CheckId()
         {
@@ -113,6 +128,7 @@ namespace C_Sharp_API_Example
                 ret = engine_.Init(appId_textBox.Text);
                 DumpStatus("Init", ret);
 
+                if (ret != 0) return;
                 if (0 == ret)
                 {
                     int build = 0;
@@ -132,13 +148,17 @@ namespace C_Sharp_API_Example
                 int ret = engine_.LeaveChannel();
                 DumpStatus("LeaveChannel", ret);
 
-                ret = engine_.UnInit();
-                DumpStatus("UnInit", ret);
+                if (!ReferenceEquals(engine_, businessView.Session))
+                {
+                    ret = engine_.UnInit();
+                    DumpStatus("UnInit", ret);
+                }
             }
         }
 
         private void SelectEngine(IEngine engine)
         {
+            if (ReferenceEquals(engine_, engine)) return;
             if (null != engine_)
             {
                 engine_.LeaveChannel();
@@ -151,9 +171,14 @@ namespace C_Sharp_API_Example
 
         private void OnSceneChanged(object sender, EventArgs e)
         {
-            if (tabCtrl.SelectedTab == businessApiTab)
+            int businessIndex = businessTabs.IndexOf(tabCtrl.SelectedTab);
+            join_channel_btn.Enabled = businessIndex != 4;
+            leave_channel_btn.Enabled = businessIndex != 4;
+            if (businessIndex >= 0)
             {
-                SelectEngine(null);
+                SelectEngine(businessView.Session);
+                businessView.ShowScene(businessIndex);
+                tabCtrl.SelectedTab.Controls.Add(businessView);
             }
             else if (tabCtrl.SelectedTab == joinChannelVideoTab)
             {

@@ -6,6 +6,34 @@ using Agora.Rtc;
 
 namespace C_Sharp_API_Example
 {
+    // Drives only the small demo sequence: source-ready -> correct connection joined -> play once.
+    internal sealed class BusinessLeadStart
+    {
+        private readonly int epoch;
+        private readonly string channel;
+        private readonly uint uid;
+        private int stage = 1;
+        internal int PlayerId { get; }
+        internal RtcConnection Connection => new RtcConnection(channel, uid);
+        internal BusinessLeadStart(int epoch, int playerId, RtcConnection connection)
+        { this.epoch = epoch; PlayerId = playerId; channel = connection.channelId; uid = connection.localUid; }
+        internal bool Opened(int currentEpoch, int playerId, bool ready, bool failed)
+        {
+            if (currentEpoch != epoch) { Cancel(); return false; }
+            if (playerId != PlayerId || stage != 1) return false;
+            if (failed) { Cancel(); return false; }
+            if (!ready) return false;
+            stage = 2; return true;
+        }
+        internal bool Joined(int currentEpoch, RtcConnection connection)
+        {
+            if (currentEpoch != epoch) { Cancel(); return false; }
+            if (stage != 2 || connection.channelId != channel || connection.localUid != uid) return false;
+            stage = 3; return true;
+        }
+        internal void Cancel() { stage = 0; }
+    }
+
     internal sealed class BusinessRtcEvents : IRtcEngineEventHandler
     {
         private readonly Action<string, object> log;

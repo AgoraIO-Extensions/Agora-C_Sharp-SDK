@@ -64,6 +64,20 @@ internal static class BusinessDemoChecks
         Check(callbacks.All(s => !s.Contains("private-test-token")), "token leaked to callback log");
         Check(!BusinessApiJson.Result(new { token = "private-test-token", appId = "private-app" }).Contains("private-"), "credential fields not redacted");
         Check(!BusinessApiJson.Result(BusinessApiJson.DiagnosticInfo("{\"url\":\"https://example.invalid/song?token=private-url\",\"token\":\"private-value\"}")).Contains("private-"), "signed URL/token leaked");
+        var lead = new BusinessLeadStart(7, 4, connection);
+        Check(!lead.Joined(7, connection), "lead played before source ready");
+        Check(!lead.Opened(7, 5, true, false), "wrong player advanced lead");
+        Check(lead.Opened(7, 4, true, false), "source ready did not advance lead");
+        Check(!lead.Joined(7, new RtcConnection("other", 1001)), "wrong channel started lead");
+        Check(!lead.Joined(7, new RtcConnection("offline-test", 2002)), "wrong uid started lead");
+        Check(lead.Joined(7, connection), "correct join did not start lead");
+        Check(!lead.Joined(7, connection), "duplicate join replayed play");
+        lead = new BusinessLeadStart(7, 4, connection); lead.Cancel();
+        Check(!lead.Opened(7, 4, true, false) && !lead.Joined(7, connection), "cancelled lead advanced");
+        lead = new BusinessLeadStart(7, 4, connection);
+        Check(!lead.Opened(8, 4, true, false) && !lead.Joined(7, connection), "stale session advanced lead");
+        lead = new BusinessLeadStart(7, 4, connection);
+        Check(!lead.Opened(7, 4, false, true) && !lead.Joined(7, connection), "failed source advanced lead");
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
     }
 }

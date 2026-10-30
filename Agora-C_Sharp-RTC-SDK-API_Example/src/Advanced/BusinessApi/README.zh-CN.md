@@ -1,69 +1,39 @@
-# 业务 API 测试面板
+# 独立 Windows C# 业务场景 Demo
 
-适用于独立 Windows C# Demo，不依赖 Unity。入口：主窗口 **业务 API 测试 → 打开业务 API 测试面板**。面板可放大，主窗口在此期间暂停操作；旧场景引擎已释放，避免两个引擎同时抢占设备。
+继续使用 FULL 包。仍是原来的 Demo、同一个 EXE、同一个主窗口；原有七个示例保留。新场景直接位于主窗口标签栏，不另开调试窗口，不需要选择任意 API 或手工拼参数。
 
-本面板按《RTC需要使用到的接口.xlsx》的 Windows 需求增加了固定接口目录。它是手工验收工具，不会把“方法存在”“返回0”“离线自检通过”自动记为业务测试通过。Android/iOS/服务端、云端合流、业务 IM 和歌词录音不在本面板范围。
+## 通用操作
 
-## 操作方式
+1. 主窗口左侧填写 AppId、频道。右侧顶部填写本轮 RTC Token、本地 UID、远端 UID和单频道角色。
+2. 点右侧“初始化”可先测试设备、播放器和录音；左侧“joinChannel”会初始化并加入当前单频道，“leaveChannel”退出但保留业务引擎以观察退出回调。需要结束本轮时点右侧“释放”。
+3. 在六个业务场景之间切换不会退出当前通话，播放器ID和Token等也保留。切回原来的七个示例会释放业务引擎，避免多引擎抢占设备。双频道合唱使用页面中的A/B进退按钮，左侧单频道按钮在该页暂停使用。
+4. 每个按钮有业务含义；选择设备/文件/用户后直接操作。同步返回、ref查询值和真实异步回调分开显示；进退频道、播放器状态、播放位置和接收消息还会更新页面结果。
+5. “导出日志”保存当前有界日志。事件拥塞/容量截断会有提示，必要时分轮测试、分轮导出。不会用SDK返回0自动认定业务验收通过。
 
-1. 填 AppId 和本轮 Token。Token 不保存到配置文件；日志不记录命令原始入参。曲库初始化的独立 Token 在其 configuration 中填写。
-2. 点击“初始化”，或选择 `IRtcEngine.Initialize`，生成并编辑 `context` 后执行。初始化成功后，面板自动注册引擎事件。修改初始化配置须先释放。
-3. 设置频道、本地 UID、远端 UID。两个进程测试时分别使用如 `1001` / `2001`，远端 UID 填对方；不能两个进程都使用同一 UID。
-4. 按对象/关键字选择 API 与重载，点击“生成入参”，编辑左侧 JSON 后执行。连接、UID、播放器或角色预设改变后应重新生成入参。
-5. 右侧日志分别记录同步返回、`ref` 输出及真实回调；频道回调包含 RtcConnection，播放器事件包含 playerId。`GetConnectionState` 可随时查询；不要用 `JoinChannel` 返回0判断入会已完成。
-6. “导出当前日志”保存当前有界日志；每轮测试结束及时导出。音频帧回调仅展示第1帧及每100帧的摘要。拥塞丢弃或容量截断会明确提示，不能把日志当作完整媒体帧记录。
-7. 退出前停止 PCM 推送，分别停止播放器、退连接并观察结果，最后释放。直接关闭窗口也会清理本轮引擎和子对象，但不是异步退出回调验收。
+## 六个新场景
 
-### 参数规则
-
-- 参数名和类型来自本分支真实 C# 签名。每个重载单独选择；没有调用任意类/方法的自由反射入口。
-- JSON 枚举使用对应枚举名称或数值。`Optional<T>` 直接写 `true`、`false`、整数或字符串；`null` 表示未设置，不是把 SDK Optional 字段写成空引用。
-- `token: "$token"` 使用上方本轮 Token；带连接的续期可使用 `UpdateChannelMediaOptionsEx` 的 `options.token`，同样支持该占位符。
-- `byte[]` 使用数字数组或 Base64 字符串。“填UTF8测试消息”会写入带时间戳的样例字节和正确长度。`length` 是字节数，不是字符数；不能超过数组长度。
-- 音频 metadata 在本 Native 4.5 接口中限1～255字节。空数据、越界长度、任意 Native 指针、不匹配的 PCM 长度在派发前被拒绝。验证 SDK 的错误行为时，应区别面板校验与真正的 SDK 返回。
-- `ref` 参数先填写初值（如 streamId=0、requestId=""），执行后从日志 outputs 读取结果，再填入后续接口。面板不会假造 ID 或重放上轮输出。
-- 观察器、事件处理器与播放器对象由面板持有，JSON 中保留 null。`DestroyMediaPlayer/DestroyMusicPlayer` 使用选中的播放器 ID，类型不匹配时拒绝。
-- “填文件路径”对录音打开保存对话框，对媒体/测试文件打开选择对话框；也可以直接填写可访问的 URL 或嵌套配置。
-- 耳返、曲库和技术预览 API 是否在当前交付包/设备/业务资质下可用，以真实返回和端到端测试为准。源码 `@ignore`、废弃方法会在说明里标注，不代表稳定支持承诺。
-
-## 建议验收顺序
-
-| 模块 | 操作与可观察结果 |
+| 场景 | 操作 |
 | --- | --- |
-| 生命周期/Token | Initialize → JoinChannel（自定义Token/UID/角色）→ OnJoinChannelSuccess；RenewToken/Token到期事件；LeaveChannel → OnLeaveChannel；Dispose后重新初始化。单频道/双连接分别记录。 |
-| 设备 | GetAudioDeviceManager → EnumerateRecordingDevices / EnumeratePlaybackDevices；从结果复制 deviceId，再测选择、音量、静音与查询、跟随系统设备。热插拔后重新枚举。设备数组的 Length/name/id 替代旧集合API。 |
-| 音频控制 | EnableLocalAudio 控制采集，MuteLocalAudioStream 控制发送，MuteRemoteAudioStream/MuteAllRemoteAudioStreams 控制订阅。检查两端听感、音量回调与状态，切勿把三种开关混为一谈。 |
-| 音量/音效 | EnableAudioVolumeIndication 指定周期、smooth、reportVad；观察 OnAudioVolumeIndication。调整录音/播放/指定远端音量；测试耳返和变声，记录平台/设备返回。 |
-| AudioMixing | StartAudioMixing（文件或URL、loopback、cycle、startPos）→ 状态回调 → 时长/进度 → pause/resume/seek → 播放/发布音量查询与设置 → stop。loopback=true仅本地播放，远端应使用false。 |
-| MediaPlayer | CreateMediaPlayer返回ID并自动注册事件 → 选择ID → Open → OnPlayerSourceStateChanged就绪 → Play → Pause/Resume/Seek → GetDuration/GetPlayPosition/GetState/音量/循环 → Stop → DestroyMediaPlayer。可创建多个ID切换测试；事件按ID区分。 |
-| 曲库 | GetMusicContentCenter → Initialize（独立configuration/Token/授权）→ RegisterEventHandler（初始化成功也自动注册）→ GetSongSimpleInfo/Preload/IsPreloaded → 观察结果和进度 → CreateMusicPlayer → 选中ID → IMusicPlayer.Open(songCode) / SetPlayMode → 播放/销毁。曲库访问需要业务资质，不能只凭RTC AppId判断可用。 |
-| 录音 | StartAudioRecording配置路径/采样率/内容/质量 → 通话/伴奏 → StopAudioRecording → 检查本地文件大小、格式及回放。不同重载单独测试，不把返回0当作文件完整证明。 |
-| 元数据 | 两端入会并按业务发布音频 → SendAudioMetadata或Ex → 对端OnAudioMetadataReceived核对连接、UID、字节数和hex/UTF8内容；测试中文、二进制、1/255字节。该接口属于技术预览，必须实际收发验证。 |
-| 数据流 | CreateDataStream/Ex → 从outputs取streamId → SendStreamMessage/Ex → 对端OnStreamMessage核对内容与连接；观察OnStreamMessageError。业务进度/歌词消息可使用UTF8 JSON测试，不能以发送返回代替对端确认。 |
-| 双连接/媒体选项 | 两个JoinChannelEx分别编辑connection；更新各自UpdateChannelMediaOptionsEx；验证指定连接的发送与接收；最后分别LeaveChannelEx。Token须与每条连接的频道/UID匹配。 |
-| 转发/诊断 | StartOrUpdateChannelMediaRelay / StopChannelMediaRelay配置目标频道和Token，观察真实状态；GetNtpWallTimeInMs、SetParameters、日志设置与版本查询按业务场景测试。高级参数只使用业务已确认的键和值。 |
+| 音频设备与控制 | 刷新/选择麦克风与扬声器、设备音量/静音及查询、跟随系统设备；独立控制采集/上行/下行、指定用户静音与屏蔽名单、信号音量、音量回调、耳返、音质/场景、变声、延迟补偿。 |
+| 伴奏与播放器 | 文件选择或URL、AudioMixing开始/暂停/继续/停止、seek、进度/时长、播放/发布音量；创建多个MediaPlayer，顶部选择ID，打开/播放/暂停/继续/seek/停止/循环/查询/销毁；音效和系统声音采集。 |
+| 录音与外部音频 | 选择输出文件、录音内容/质量/采样率/声道、开始/停止/检查文件，并可转为播放器音源回放。创建自定义音轨、发布、PCM文件/测试音推送、单帧推送、原始帧观察、停止和销毁。 |
+| 消息与音频元数据 | 选择单频道/A/B、创建数据流、直接输入文本或十六进制、发送/接收；音频元数据发送和接收。可填入当前播放器位置/NTP时间形成同步消息，对端核对连接、发送者、长度和内容。 |
+| 双频道合唱 | 主唱/伴唱/观众、A/B独立频道UID/Token、播放器伴奏/外部PCM发布、媒体选项更新、Token续期、单独退出、NTP查询、跨房转发。“开始主唱示例”自动创建/打开伴奏，等待真实就绪和入会回调后才播放。 |
+| 曲库与诊断 | 独立曲库鉴权、歌曲信息、预加载进度/结果、曲库播放器和原唱/伴唱模式；RTC角色/频道场景/连接状态/续期、SDK版本与错误说明、日志及业务高级参数、诊断上报。 |
 
-## 合唱 API 组合验证
+## 双端与合唱示例
 
-这不是自动实现音频同步的生产合唱方案，而是将组合流程中的 API 和回调都变为可操作、可观察的测试入口。
+- A、B两个进程使用不同的本地UID，远端UID填写对方。单频道可按SDK语义使用0自动分配；双连接场景要求明确的非0 UID，以免回调与Token身份不明确。
+- 先在主唱进程选择伴奏文件，点“开始主唱示例”。页面会分别展示打开请求、播放器就绪、等待入会、提交播放等阶段；只有收到对应连接的入会回调才播放。仍需观察播放器真实状态，并在另一进程确认伴奏和麦克风声音。
+- 手工验证时可在播放器场景创建/打开/播放，在合唱场景选角色并勾选“发布所选播放器的伴奏”，对A/B分别加入或更新媒体选项。顶部播放器ID在各场景共用。
+- 进度同步通过消息场景的“填播放器进度消息”生成，选择实际连接后发送；接收端核对内容、NTP、播放位置和端到端现象。这不是替业务实现所有网络抖动/时延补偿算法。
+- “停止并退出合唱”取消待开始流程、停止PCM，停止/销毁本轮主唱示例播放器（或手工所选播放器），分别请求退出A/B。其余手工创建播放器可继续在播放器场景管理；全部结束时释放引擎。
 
-1. 主唱进程创建播放器、取得 ID、Open 并等待播放器就绪。选择“主唱：麦克风+播放器”后，为对应 JoinChannelEx 生成入参；检查 `publishMediaPlayerId` 为本轮真实 ID、`publishMediaPlayerAudioTrack=true`。
-2. 伴唱进程使用不同 UID，选择“伴唱：麦克风”，按业务分别加入合唱/观众连接。用 OnJoinChannelSuccess 核对各自连接，不能只检查两个 JoinChannelEx 的返回值。
-3. GetNtpWallTimeInMs、播放器 GetPlayPosition 与数据流/音频metadata配合，传递实际播放位置和时间。远端必须核对消息内容、连接和播放位置；业务同步算法、网络抖动及端到端时延另做设备验收。
-4. 切换伴奏或角色时使用 UpdateChannelMediaOptions/Ex，检查发布轨道和所选播放器。主唱停播/伴唱退出/重连分别测试。
-5. 先 Stop 播放器，按对象类型 DestroyMediaPlayer / DestroyMusicPlayer，分别 LeaveChannelEx 并观察回调，最后释放引擎。
-6. 观众混流、服务端编排、鉴权和歌词业务逻辑需要对应业务环境，面板不模拟这些成功结果。
+## 验收边界
 
-## 自定义 PCM 音频
-
-1. 入会前用 CreateCustomAudioTrack 创建轨道，记录日志里的 trackId（不是播放器ID）。
-2. JoinChannel/Ex 的媒体选项设置 `publishCustomAudioTrack=true`、`publishCustomAudioTrackId=<实际trackId>`；若 trackType 为 AUDIO_TRACK_DIRECT，还须 `publishMicrophoneTrack=false`。
-3. PCM区填写相同 trackId、采样率、单/双声道和16bit裸PCM文件路径；留空会发送440Hz测试音。点击开始后以20ms帧调用 PushAudioFrame，记录发送帧数及失败返回，对端核对声音。
-4. 也可直接选择 PushAudioFrame，用 JSON 提交单帧 RawBuffer 测试。Raw Data 观察与推送外部音频是不同能力；RegisterAudioFrameObserver 可挂接录音/播放/混音等位置，摘要在日志显示。
-5. 停止推送后再退连接/DestroyCustomAudioTrack。面板的UI计时器不提供硬实时精度，不能用于合唱时延或漂移指标验收。
-
-## 自动检查的范围
-
-`dotnet run --project ci/build/csharp/tests/BusinessDemoChecks.csproj -c Release` 在不初始化Native的情况下验证目录、类型转换、Optional、长度/PCM边界和事件日志。
-
-Windows包的启动检查额外运行 `--business-api-ui-check <报告路径>`：打开真实WinForms面板、验证所有重载编辑器并保存PNG；不初始化Native、不发起通话。随后原有启动检查验证正式Demo主窗口及自包含运行时。上述检查均不代替x86/x64真机的音频、网络、设备、曲库或合唱QA。
+- 当前版本音频元数据是技术预览，发送与接收长度须匹配，范围1～255字节；文本按UTF8字节数计算。错误长度/空缓冲区等在派发前保护，不能把面板拦截当作SDK错误返回。
+- 曲库需要独立资质/Token；FULL包也不能替代业务服务鉴权。授权信息不写入命令日志。曲库、metadata和废弃日志Setter不作为稳定支持承诺，保留实际返回/回调。
+- 自定义音轨须在入会前创建，发布时填写真实trackId；DIRECT轨道应关闭麦克风发布。PCM区域用20ms UI计时器发送，不能用作硬实时/合唱漂移指标验收。
+- Windows音频设备枚举返回DeviceInfo数组，设备数量/名称/ID直接显示；不使用旧集合getCount或错误的视频设备查询。移动端SetEnableSpeakerphone不在Windows场景中调用。
+- 原业务表中的云端合流、服务端接口、IM和歌词业务逻辑仍需对应业务环境；不是补一个SDK按钮就能宣称方案已通过。
+- 离线检查验证参数、缓冲区和自动主唱流程的时序/身份保护。Windows CI会打开原主窗口的六个真实场景，检查按钮绑定及入参，逐页渲染截图，并验证x86/x64包启动。真机设备、双端通话、播放器和合唱效果另由QA验收。

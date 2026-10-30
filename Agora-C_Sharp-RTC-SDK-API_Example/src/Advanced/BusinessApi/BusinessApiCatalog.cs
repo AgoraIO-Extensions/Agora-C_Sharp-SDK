@@ -76,6 +76,7 @@ namespace C_Sharp_API_Example
             new[] { "IRtcEngine.CreateMediaPlayer", "开始播放伴奏（播放器）", "402、417" },
             new[] { "IRtcEngine.DestroyCustomAudioTrack", "销毁自定义音频轨道", "补充" },
             new[] { "IRtcEngine.DestroyMediaPlayer", "结束合唱", "494" },
+            new[] { "IRtcEngine.GetErrorDescription", "解释SDK错误码", "补充" },
             new[] { "IRtcEngine.Dispose", "反初始化（销毁引擎）", "358、470、487、504、536、574" },
             new[] { "IRtcEngine.EnableAudioVolumeIndication", "获取麦克风实时音量", "367、372、373、430、435、436、505" },
             new[] { "IRtcEngine.EnableInEarMonitoring", "开启/关闭耳返", "364、427" },
