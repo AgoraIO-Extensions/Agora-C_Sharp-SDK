@@ -52,7 +52,10 @@ try {
             $results += @{ architecture = $arch; passed = $true; window_title = $report.window_title; runtime = $report.runtime_directory }
             Write-Host "Demo $arch shown main window and bundled .NET 10 runtime verified"
         } finally {
-            if ($process -and -not $process.HasExited) { Stop-Process -Id $process.Id -Force }
+            if ($process -and -not $process.HasExited) {
+                Stop-Process -Id $process.Id -Force
+                if (-not $process.WaitForExit(10000)) { throw "Demo $arch did not finish exiting before cleanup" }
+            }
             if (Test-Path $directory) { Remove-Item $directory -Recurse -Force }
         }
     }
