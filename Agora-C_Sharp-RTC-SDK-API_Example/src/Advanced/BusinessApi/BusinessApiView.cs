@@ -44,6 +44,7 @@ namespace C_Sharp_API_Example
         {
             readAppId = appId; readChannel = channel; Dock = DockStyle.Fill;
             Session = new BusinessApiEngine(this);
+            secondChannel.Text = "business-b";
             var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 5, Padding = new Padding(6) };
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
