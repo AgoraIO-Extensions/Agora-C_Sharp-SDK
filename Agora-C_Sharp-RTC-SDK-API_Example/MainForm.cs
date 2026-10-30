@@ -56,6 +56,7 @@ namespace C_Sharp_API_Example
             if (ClientSize.Width < 400 || ClientSize.Height < 400) return;
             const int left = 285;
             appId_label.SetBounds(12, 12, left - 24, 22);
+            updateBtn.SetBounds(left - 92, 8, 80, 26);
             appId_textBox.SetBounds(12, 38, left - 24, 28);
             channelName_label.SetBounds(12, 76, left - 24, 22);
             channelId_textBox.SetBounds(12, 102, left - 24, 28);
