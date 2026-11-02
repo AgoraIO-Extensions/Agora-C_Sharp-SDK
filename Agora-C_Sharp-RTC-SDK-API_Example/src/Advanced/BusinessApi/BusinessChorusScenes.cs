@@ -140,7 +140,7 @@ namespace C_Sharp_API_Example
                     Bind("续期B Token", "IRtcEngineEx.UpdateChannelMediaOptionsEx", () => { var options = new ChannelMediaOptions(); options.token.SetValue(secondToken.Text.Trim()); return new { options, connection = Connection(true) }; }),
                     Bind("查询NTP时钟", "IRtcEngine.GetNtpWallTimeInMs", after: r => chorusState.Text = "SDK NTP墙钟毫秒：" + r.Value)),
                 Label("要验证进度同步：切到消息场景，选择A/B，填播放器进度消息后发送；切业务页不退出当前连接。"),
-                Label("跨房转发：先以直播主播加入所选源连接。启用证书时源转发Token按源频道、UID=0生成，不复用顶部入会Token；目标Token按目标频道/目标UID生成。"),
+                Label("跨房转发：先以直播主播加入所选源连接。\n启用证书时源转发Token按源频道、UID=0生成，不复用顶部入会Token。\n目标Token按目标频道/目标UID生成。"),
                 Row(Label("转发源连接"), relaySource, relaySourceToken),
                 Row(Label("跨房转发目标"), relayChannel, relayToken, Label("目标UID"), relayUid, startRelay, stopRelay));
         }

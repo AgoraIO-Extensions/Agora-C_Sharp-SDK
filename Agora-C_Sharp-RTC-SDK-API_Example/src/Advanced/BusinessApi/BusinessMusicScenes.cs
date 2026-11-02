@@ -68,7 +68,7 @@ namespace C_Sharp_API_Example
                 Row(Bind("重挂引擎事件", "IRtcEngine.InitEventHandler", () => new { engineEventHandler = (object)null }),
                     Bind("查询SDK版本", "IRtcEngine.GetVersion", () => new { build = 0 }, r => state.Text = "版本：" + r.Value + " build=" + Out<int>(r, "build")),
                     Label("错误码"), diagnosticCode, Bind("解释错误码", "IRtcEngine.GetErrorDescription", () => new { code = (int)diagnosticCode.Value }, r => state.Text = Convert.ToString(r.Value))),
-                Label("日志建议在初始化前配置：路径留空使用SDK默认目录，等级默认INFO。初始化后修改须点击对应旧接口按钮；旧接口不补写初始化前日志。NONE会关闭日志，导出日志按钮仅导出Demo界面记录，SDK/Iris日志需另行收集。"),
+                Label("日志建议在初始化前配置：路径留空使用SDK默认目录，等级默认INFO。\n初始化后修改须点击对应旧接口按钮；旧接口不补写初始化前日志。\nNONE会关闭日志，导出日志按钮仅导出Demo界面记录，SDK/Iris日志需另行收集。"),
                 Row(logPath, ActionButton("选择日志文件", () => { using var d = new SaveFileDialog { Filter = "日志|*.log" }; if (d.ShowDialog(this) == DialogResult.OK) logPath.Text = d.FileName; }),
                     Bind("设置SDK日志路径", "IRtcEngine.SetLogFile", () => new { filePath = ExplicitLogPath() })),
                 Row(logLevel, Bind("设置日志等级", "IRtcEngine.SetLogLevel", () => new { level = (LOG_LEVEL)logLevel.SelectedItem }),
