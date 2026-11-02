@@ -130,7 +130,7 @@ namespace C_Sharp_API_Example
         }
         private static T Out<T>(BusinessApiResult r, string name) => (T)r.Outputs[name];
         internal RtcEngineContext EngineContext(string appId) => new RtcEngineContext
-        { appId = appId, audioScenario = (AUDIO_SCENARIO_TYPE)audioScenario.SelectedItem, channelProfile = (CHANNEL_PROFILE_TYPE)channelProfile.SelectedItem };
+        { appId = appId, audioScenario = (AUDIO_SCENARIO_TYPE)audioScenario.SelectedItem, channelProfile = (CHANNEL_PROFILE_TYPE)channelProfile.SelectedItem, logConfig = SelectedLogConfig() };
         internal ChannelMediaOptions MediaOptions(bool? audience = null, bool publishPlayer = false)
         {
             bool listen = audience ?? role.SelectedIndex == 1;

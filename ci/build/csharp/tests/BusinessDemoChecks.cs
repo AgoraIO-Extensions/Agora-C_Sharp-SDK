@@ -100,6 +100,16 @@ internal static class BusinessDemoChecks
         relay = new BusinessRelayRequest(source, "", "target-b", 7777, "");
         source.channelId = "edited"; source.localUid = 999;
         Check(relay.Connection.channelId == "source-a" && relay.Connection.localUid == 1001, "editing source mutated captured relay connection");
+        Check(BusinessLogSettings.Levels[0] == LOG_LEVEL.LOG_LEVEL_INFO, "default log level must be INFO");
+        Check(!BusinessLogSettings.Levels.Contains(LOG_LEVEL.LOG_LEVEL_DEBUG) && !BusinessLogSettings.Levels.Contains(LOG_LEVEL.LOG_LEVEL_API_CALL), "internal log levels exposed");
+        var logConfig = BusinessLogSettings.Create("", 2048, LOG_LEVEL.LOG_LEVEL_INFO);
+        Check(logConfig.filePath == "" && logConfig.level == LOG_LEVEL.LOG_LEVEL_INFO, "SDK default log path lost");
+        var logPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "qa-sdk.log");
+        Check(BusinessLogSettings.Create(logPath, 5000, LOG_LEVEL.LOG_LEVEL_WARN).filePath == logPath, "explicit log path changed");
+        Reject(() => BusinessLogSettings.Create(logPath, 2048, LOG_LEVEL.LOG_LEVEL_DEBUG), "QA filter-zero regression accepted");
+        Reject(() => BusinessLogSettings.Create("relative.log", 2048, LOG_LEVEL.LOG_LEVEL_INFO), "relative log path accepted");
+        Reject(() => BusinessLogSettings.Create(System.IO.Path.GetTempPath(), 2048, LOG_LEVEL.LOG_LEVEL_INFO), "directory used as log file");
+        Reject(() => BusinessLogSettings.Create("", 1, LOG_LEVEL.LOG_LEVEL_INFO), "invalid log size accepted");
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
     }
 }

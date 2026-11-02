@@ -10,11 +10,25 @@ namespace C_Sharp_API_Example
     {
         private readonly TextBox musicToken = Input(220, "曲库独立Token", true), songInfo = new TextBox { Width = 700, Height = 65, Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical };
         private readonly NumericUpDown musicUid = Number(long.MaxValue, 1001), songCode = Number(long.MaxValue, 1), cacheSize = Number(10000, 10, 1);
-        private readonly ComboBox musicMode = Enums<MusicPlayMode>(), channelProfile = Enums<CHANNEL_PROFILE_TYPE>(), logLevel = Enums<LOG_LEVEL>();
+        private readonly ComboBox musicMode = Enums<MusicPlayMode>(), channelProfile = Enums<CHANNEL_PROFILE_TYPE>(), logLevel = LogLevels();
         private readonly Label musicProgress = Label("曲库未初始化，预加载结果会在此显示");
         private readonly TextBox logPath = Input(300, "SDK日志文件绝对路径"), parameterKey = Input(240, "业务确认的高级参数名"), parameterValue = Input(160, "整数/布尔值/文本");
-        private readonly NumericUpDown logSize = Number(102400, 2048, 1), diagnosticCode = Number(int.MaxValue, -2, int.MinValue), reportValue = Number(int.MaxValue, 1, int.MinValue);
+        private readonly NumericUpDown logSize = Number(20480, 2048, 128), diagnosticCode = Number(int.MaxValue, -2, int.MinValue), reportValue = Number(int.MaxValue, 1, int.MinValue);
         private readonly TextBox reportId = Input(90, "id"), reportCategory = Input(90, "category"), reportEvent = Input(90, "event"), reportLabel = Input(90, "label");
+        private static ComboBox LogLevels()
+        {
+            var box = new ComboBox { Width = 230, DropDownStyle = ComboBoxStyle.DropDownList };
+            foreach (var level in BusinessLogSettings.Levels) box.Items.Add(level);
+            box.SelectedIndex = 0;
+            return box;
+        }
+        private LogConfig SelectedLogConfig() => BusinessLogSettings.Create(logPath.Text, (uint)logSize.Value, (LOG_LEVEL)logLevel.SelectedItem);
+        private string ExplicitLogPath()
+        {
+            var path = SelectedLogConfig().filePath;
+            if (string.IsNullOrEmpty(path)) throw new ArgumentException("旧版日志路径接口须填写完整文件路径；留空仅表示初始化时使用SDK默认路径。");
+            return path;
+        }
         private bool IsMusicPlayer => playerList.SelectedItem is PlayerChoice choice && choice.Music;
         private sealed class PlayerChoice
         {
@@ -54,8 +68,9 @@ namespace C_Sharp_API_Example
                 Row(Bind("重挂引擎事件", "IRtcEngine.InitEventHandler", () => new { engineEventHandler = (object)null }),
                     Bind("查询SDK版本", "IRtcEngine.GetVersion", () => new { build = 0 }, r => state.Text = "版本：" + r.Value + " build=" + Out<int>(r, "build")),
                     Label("错误码"), diagnosticCode, Bind("解释错误码", "IRtcEngine.GetErrorDescription", () => new { code = (int)diagnosticCode.Value }, r => state.Text = Convert.ToString(r.Value))),
+                Label("日志建议在初始化前配置：路径留空使用SDK默认目录，等级默认INFO。初始化后修改须点击对应旧接口按钮；旧接口不补写初始化前日志。NONE会关闭日志，导出日志按钮仅导出Demo界面记录，SDK/Iris日志需另行收集。"),
                 Row(logPath, ActionButton("选择日志文件", () => { using var d = new SaveFileDialog { Filter = "日志|*.log" }; if (d.ShowDialog(this) == DialogResult.OK) logPath.Text = d.FileName; }),
-                    Bind("设置SDK日志路径", "IRtcEngine.SetLogFile", () => new { filePath = Path.GetFullPath(logPath.Text) })),
+                    Bind("设置SDK日志路径", "IRtcEngine.SetLogFile", () => new { filePath = ExplicitLogPath() })),
                 Row(logLevel, Bind("设置日志等级", "IRtcEngine.SetLogLevel", () => new { level = (LOG_LEVEL)logLevel.SelectedItem }),
                     Label("大小KiB"), logSize, Bind("设置旧版日志大小", "IRtcEngine.SetLogFileSize", () => new { fileSizeInKBytes = (uint)logSize.Value })),
                 Row(parameterKey, parameterValue, Bind("应用业务高级参数", "IRtcEngine.SetParameters", () =>

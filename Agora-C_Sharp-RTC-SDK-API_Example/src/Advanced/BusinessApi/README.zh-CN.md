@@ -47,3 +47,9 @@
 5. 更新时保持同一源连接，修改目标配置后再次点击。切源前先停止；“停止转发”使用启动时捕获的源连接，不随输入框变化。停止成功后仍需检查回调；释放引擎会清除本地绑定。
 
 日志案例：实际加入 business-b/1100122，却以123/1001作为源并向123转发，普通转发接口返回-8。现改用可选源Ex连接，源转发UID固定0并分离鉴权，防止再次形成同源同目标配置。实际服务鉴权和双端音频仍须Windows真机验收。
+
+## SDK 日志路径与等级
+
+在初始化前到“曲库与诊断”选择日志文件（父目录须存在且可写）、等级和大小，再点击顶部“初始化”。配置通过 RtcEngineContext.logConfig 传入；路径留空使用SDK默认目录，Windows通常为 `%LOCALAPPDATA%/Agora/<process_name>/agorasdk.log`。默认INFO，大小128–20480 KiB；NONE明确关闭日志。
+
+已初始化时，编辑输入框不会自动生效：可释放后重新初始化，或点击对应旧版设置按钮验证 SetLogFile/SetLogLevel/SetLogFileSize；旧接口不补写初始化前日志。内部DEBUG/API_CALL不再出现在下拉框。QA日志中的level=32是内部DEBUG，底层转为filter=0，两个198字节文件正好停在该切换处；SetLogFile本身返回0，不能据此判定路径设置失败。修改后实际落盘内容仍需Windows重测，收集SDK轮转日志、agora-iris.log及Demo导出记录，而不是只取一个文件。
