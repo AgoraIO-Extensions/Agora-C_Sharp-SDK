@@ -85,6 +85,21 @@ internal static class BusinessDemoChecks
         Check(!lead.Opened(8, 4, true, false) && !lead.Joined(7, connection), "stale session advanced lead");
         lead = new BusinessLeadStart(7, 4, connection);
         Check(!lead.Opened(7, 4, false, true) && !lead.Joined(7, connection), "failed source advanced lead");
+        // QA regression: joined business-b/1100122 must relay to 123, not 123 -> 123.
+        var relay = new BusinessRelayRequest(new RtcConnection("business-b", 1100122), "source-relay", "123", 7777, "target-relay");
+        Check(relay.Connection.channelId == "business-b" && relay.Connection.localUid == 1100122, "relay lost selected Ex connection");
+        Check(relay.Configuration.srcInfo.channelName == "business-b" && relay.Configuration.srcInfo.uid == 0, "relay reused join UID");
+        Check(relay.Configuration.srcInfo.token == "source-relay" && relay.Configuration.destInfos[0].token == "target-relay", "relay credentials mixed");
+        var startRelay = operations.Single(o => o.Api == "IRtcEngineEx.StartOrUpdateChannelMediaRelayEx");
+        var relayArgs = BusinessApiJson.ReadArguments(startRelay, JsonSerializer.Serialize(relay.Arguments, BusinessApiJson.Options));
+        Check(((RtcConnection)relayArgs[1]).localUid == 1100122, "Ex relay serialized wrong source");
+        Check(operations.Any(o => o.Api == "IRtcEngineEx.StopChannelMediaRelayEx"), "Ex relay stop missing");
+        Reject(() => new BusinessRelayRequest(connection, "", connection.channelId, 7777, ""), "same-channel relay accepted");
+        Reject(() => new BusinessRelayRequest(connection, "", " ", 7777, ""), "empty target accepted");
+        var source = new RtcConnection("source-a", 1001);
+        relay = new BusinessRelayRequest(source, "", "target-b", 7777, "");
+        source.channelId = "edited"; source.localUid = 999;
+        Check(relay.Connection.channelId == "source-a" && relay.Connection.localUid == 1001, "editing source mutated captured relay connection");
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
     }
 }

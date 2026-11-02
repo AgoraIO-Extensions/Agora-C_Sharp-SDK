@@ -13,6 +13,9 @@ namespace C_Sharp_API_Example
         private readonly CheckBox publishPlayer = new CheckBox { Text = "发布顶部所选播放器的伴奏", AutoSize = true }, publishExternal = new CheckBox { Text = "发布外部PCM（关闭麦克风）", AutoSize = true };
         private readonly Label chorusState = Label("尚未开始。A使用主窗口频道和本地UID，B使用下方配置。");
         private readonly TextBox relayChannel = Input(170, "转发目标频道"), relayToken = Input(200, "转发目标Token", true);
+        private readonly ComboBox relaySource = Choice("连接A", "连接B");
+        private readonly TextBox relaySourceToken = Input(240, "源转发Token（源频道、UID=0）", true);
+        private RtcConnection relayConnection;
         private readonly NumericUpDown relayUid = Number(uint.MaxValue, 3001);
         private BusinessLeadStart leadStart;
         private RtcConnection Connection(bool second)
@@ -90,9 +93,37 @@ namespace C_Sharp_API_Example
             Guard(() => Call("IRtcEngineEx.LeaveChannelEx", new { connection = Connection(true) }));
             chorusState.Text = "停止/退出请求已逐项提交；以各播放器和连接的真实回调为准。";
         }
+        private BusinessRelayRequest PrepareRelay()
+        {
+            var source = Connection(relaySource.SelectedIndex == 1);
+            if (relayConnection != null && (relayConnection.channelId != source.channelId || relayConnection.localUid != source.localUid))
+                throw new InvalidOperationException("请先停止原连接的转发，再切换转发源连接。");
+            return new BusinessRelayRequest(source, relaySourceToken.Text, relayChannel.Text, (uint)relayUid.Value, relayToken.Text);
+        }
+        private void StartRelay()
+        {
+            var request = PrepareRelay();
+            var connectionState = Call("IRtcEngineEx.GetConnectionStateEx", new { connection = request.Connection });
+            if ((CONNECTION_STATE_TYPE)connectionState.Value != CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED)
+                throw new InvalidOperationException("所选源连接尚未入会成功，请先加入对应连接并等待成功回调。");
+            Call("IRtcEngineEx.StartOrUpdateChannelMediaRelayEx", request.Arguments);
+            relayConnection = request.Connection;
+            chorusState.Text = "转发请求已提交：" + relayConnection.channelId + " → " + request.Configuration.destInfos[0].channelName + "；以转发回调及对端声音为准。";
+        }
+        private object StopRelayArguments() => new { connection = relayConnection ?? Connection(relaySource.SelectedIndex == 1) };
+        private void StopRelay()
+        {
+            Call("IRtcEngineEx.StopChannelMediaRelayEx", StopRelayArguments());
+            relayConnection = null;
+            chorusState.Text = "停止转发请求已提交；以转发停止回调为准。";
+        }
         private Control ChorusScene()
         {
             Button begin = ActionButton("开始主唱示例", StartLead), end = ActionButton("停止并退出合唱", StopChorus);
+            Button startRelay = ActionButton("开始/更新转发", StartRelay), stopRelay = ActionButton("停止转发", StopRelay);
+            bindings.Add(("IRtcEngineEx.StartOrUpdateChannelMediaRelayEx", startRelay, () => PrepareRelay().Arguments));
+            bindings.Add(("IRtcEngineEx.GetConnectionStateEx", startRelay, () => new { connection = Connection(relaySource.SelectedIndex == 1) }));
+            bindings.Add(("IRtcEngineEx.StopChannelMediaRelayEx", stopRelay, StopRelayArguments));
             foreach (var api in new[] { "IRtcEngine.CreateMediaPlayer", "IMediaPlayer.Open", "IRtcEngineEx.JoinChannelEx", "IMediaPlayer.Play", "IMediaPlayer.SetLoopCount" }) bindings.Add((api, begin, null));
             foreach (var api in new[] { "IMediaPlayer.Stop", "IRtcEngine.DestroyMediaPlayer", "IMusicContentCenter.DestroyMusicPlayer", "IRtcEngineEx.LeaveChannelEx" }) bindings.Add((api, end, null));
             return Page("同一Demo、同一引擎演示主唱/伴唱/观众和两条连接。主唱示例会等待播放器就绪与入会回调后播放；双端同步精度仍须真机验收。左侧单频道按钮在此页暂停使用。",
@@ -109,10 +140,9 @@ namespace C_Sharp_API_Example
                     Bind("续期B Token", "IRtcEngineEx.UpdateChannelMediaOptionsEx", () => { var options = new ChannelMediaOptions(); options.token.SetValue(secondToken.Text.Trim()); return new { options, connection = Connection(true) }; }),
                     Bind("查询NTP时钟", "IRtcEngine.GetNtpWallTimeInMs", after: r => chorusState.Text = "SDK NTP墙钟毫秒：" + r.Value)),
                 Label("要验证进度同步：切到消息场景，选择A/B，填播放器进度消息后发送；切业务页不退出当前连接。"),
-                Row(Label("跨房转发目标"), relayChannel, relayToken, Label("目标UID"), relayUid,
-                    Bind("开始/更新转发", "IRtcEngine.StartOrUpdateChannelMediaRelay", () => new { configuration = new ChannelMediaRelayConfiguration
-                    { srcInfo = new ChannelMediaInfo { channelName = readChannel().Split(';')[0], uid = Uid, token = Token }, destInfos = new[] { new ChannelMediaInfo { channelName = relayChannel.Text.Trim(), uid = (uint)relayUid.Value, token = relayToken.Text.Trim() } }, destCount = 1 } }),
-                    Bind("停止转发", "IRtcEngine.StopChannelMediaRelay")));
+                Label("跨房转发：先以直播主播加入所选源连接。启用证书时源转发Token按源频道、UID=0生成，不复用顶部入会Token；目标Token按目标频道/目标UID生成。"),
+                Row(Label("转发源连接"), relaySource, relaySourceToken),
+                Row(Label("跨房转发目标"), relayChannel, relayToken, Label("目标UID"), relayUid, startRelay, stopRelay));
         }
     }
 }

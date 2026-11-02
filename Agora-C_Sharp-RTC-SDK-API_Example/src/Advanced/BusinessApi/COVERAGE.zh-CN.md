@@ -62,8 +62,8 @@
 | 210 | `IRtcEngine.SetChannelProfile` | 设置频道场景 |
 | 211 | `IRtcEngine.SetAudioProfile` | 设置音质 |
 | 212 | `IRtcEngine.SetAudioScenario` | 设置音频场景 |
-| 213 | `IRtcEngine.StartOrUpdateChannelMediaRelay` | 开始/更新转发 |
-| 214 | `IRtcEngine.StopChannelMediaRelay` | 停止转发 |
+| 213 | `IRtcEngineEx.StartOrUpdateChannelMediaRelayEx`（Ex连接等价路径） | 开始/更新转发 |
+| 214 | `IRtcEngineEx.StopChannelMediaRelayEx`（Ex连接等价路径） | 停止转发 |
 | 215 | `IRtcEngineEx.JoinChannelEx` | 加入连接A |
 | 216 | `IRtcEngine.PlayEffect` | 播放音效 |
 | 217 | `IRtcEngine.GetAudioDeviceManager` | 获取设备管理器 |

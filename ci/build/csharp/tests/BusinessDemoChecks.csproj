@@ -9,6 +9,7 @@
     <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessApiCatalog.cs" />
     <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessApiJson.cs" />
     <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessApiEvents.cs" />
+    <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessRelayRequest.cs" />
     <Compile Include="BusinessDemoChecks.cs" />
     <ProjectReference Include="../agorartc.csproj" />
   </ItemGroup>

@@ -154,7 +154,7 @@ namespace C_Sharp_API_Example
             playerList.SelectedItem = item;
         }
         internal void SessionReleased()
-        { CancelLead(); playerList.Items.Clear(); recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); state.Text = "已释放；重新初始化后再操作。"; }
+        { CancelLead(); relayConnection = null; playerList.Items.Clear(); recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); state.Text = "已释放；重新初始化后再操作。"; }
         internal void NoteEvent(int epoch, string name, object value)
         { if (pendingEvents.Count < 1000) pendingEvents.Enqueue((epoch, name, BusinessApiJson.Result(value))); }
         private void UpdateEvent(string name, string json)
@@ -209,6 +209,7 @@ namespace C_Sharp_API_Example
             recordingDevices.SelectedIndex = 0; playbackDevices.SelectedIndex = 0;
             recordPath.Text = Path.Combine(Path.GetTempPath(), "scene-check.wav");
             logPath.Text = Path.Combine(Path.GetTempPath(), "scene-check.log");
+            relayChannel.Text = "relay-target-check";
             parameterKey.Text = "offline.check"; parameterValue.Text = "1";
             try
             {
@@ -222,7 +223,7 @@ namespace C_Sharp_API_Example
                     }
                 }
             }
-            finally { recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); recordPath.Clear(); logPath.Clear(); parameterKey.Clear(); parameterValue.Clear(); }
+            finally { recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); recordPath.Clear(); logPath.Clear(); parameterKey.Clear(); parameterValue.Clear(); relayChannel.Clear(); }
             if (Session.Initialized || pages.Count != SceneNames.Length || bindings.Count < 80) throw new InvalidOperationException("场景入口不完整。");
             return operations.Count;
         }
