@@ -7,6 +7,12 @@ on:
         description: The content of dependencies
         required: true
         type: string
+      native-mode:
+        description: 'For custom Native profiles: auto uses the selected same-platform Iris mode; choose video/audio when ambiguous.'
+        required: false
+        type: choice
+        default: auto
+        options: [auto, video, audio]
 
 jobs:
   generate-codes:
@@ -57,9 +63,11 @@ jobs:
       - name: Update dependencies
         working-directory: ci/build
         run: |
+          # The existing terra branch may still contain an older dependency updater.
+          git restore --source="${{ github.sha }}" -- Update-Deps.py
           echo pwd
           ls
-          python ./Update-Deps.py ${{ steps.dep.outputs.matches }}
+          python ./Update-Deps.py ${{ steps.dep.outputs.matches }} --native-mode "${{ inputs.native-mode || 'auto' }}"
        
 
       - name: Generate code and comment by terra
