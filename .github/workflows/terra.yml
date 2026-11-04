@@ -63,6 +63,8 @@ jobs:
       - name: Update dependencies
         working-directory: ci/build
         run: |
+          # The existing terra branch may still contain an older dependency updater.
+          git restore --source="${{ github.sha }}" -- Update-Deps.py
           echo pwd
           ls
           python ./Update-Deps.py ${{ steps.dep.outputs.matches }} --native-mode "${{ inputs.native-mode || 'auto' }}"
