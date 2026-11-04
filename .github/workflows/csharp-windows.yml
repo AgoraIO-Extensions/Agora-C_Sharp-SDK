@@ -60,6 +60,16 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.114
+      - name: Verify raw music callbacks on Windows x86 and x64
+        shell: pwsh
+        run: |
+          foreach ($arch in @('x86', 'x64')) {
+            $output = Join-Path $env:RUNNER_TEMP "music-callback-$arch"
+            dotnet publish ci/build/csharp/tests/BusinessDemoChecks.csproj -c Release -r "win-$arch" --self-contained true -o $output
+            if ($LASTEXITCODE -ne 0) { throw "Callback test publish failed: $arch" }
+            & (Join-Path $output 'BusinessDemoChecks.exe')
+            if ($LASTEXITCODE -ne 0) { throw "Callback tests failed: $arch" }
+          }
       - name: Build candidate SDK and both Windows demos
         shell: pwsh
         run: |

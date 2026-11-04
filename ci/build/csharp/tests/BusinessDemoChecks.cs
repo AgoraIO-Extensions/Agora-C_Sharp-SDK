@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using Agora.Rtc;
 using C_Sharp_API_Example;
 
@@ -12,6 +15,83 @@ internal static class BusinessDemoChecks
     { if (!value) throw new InvalidOperationException(name); checks++; }
     private static void Reject(Action action, string name)
     { try { action(); } catch (ArgumentException) { checks++; return; } catch (JsonException) { checks++; return; } throw new InvalidOperationException(name); }
+    [StructLayout(LayoutKind.Sequential)]
+    private struct RawMusicEvent
+    {
+        public IntPtr Name, Data;
+        public uint DataSize;
+        public IntPtr Result, Buffer, Length;
+        public uint BufferCount;
+    }
+    private static void CheckMusicCallbackBytes()
+    {
+        var assembly = typeof(IRtcEngine).Assembly;
+        var bridge = assembly.GetType("Agora.Rtc.MusicContentCenterEventHandlerNative", true);
+        var flags = BindingFlags.Static | BindingFlags.NonPublic;
+        var setHandler = bridge.GetMethod("SetMusicContentCenterEventHandler", flags);
+        var dispatch = bridge.GetMethod("OnEvent", flags);
+        int delivered = 0;
+        string observed = null;
+        var handler = new BusinessMusicEvents((name, value) => { delivered++; observed = BusinessApiJson.Result(value); });
+        string info = "{\"name\":\"爱人错过\",\"singer\":\"告五人\",\"duration\":316,\"pitchs\":null}";
+        // Test-only native wire fixture: nlohmann::json::dump emits raw UTF-8 and backslash-escaped quotes.
+        var rawOptions = new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+        string valid = JsonSerializer.Serialize(new { requestId = "utf8-request", songCode = 7162848780338400L, simpleInfo = info, reason = 0 }, rawOptions);
+        Check(Encoding.UTF8.GetByteCount(valid) > valid.Length, "music fixture must contain raw UTF-8 bytes");
+        // Windows CP936 can consume a JSON escape after an odd number of UTF-8 Chinese bytes.
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        string ansiCorrupted = Encoding.GetEncoding(936).GetString(Encoding.UTF8.GetBytes(valid));
+        var parsed = assembly.GetType("Agora.Rtc.AgoraJson", true).GetMethod("ToObject", BindingFlags.Static | BindingFlags.Public).Invoke(null, new object[] { ansiCorrupted });
+        bool missingRequest = false;
+        try { parsed.GetType().GetProperty("Item", new[] { typeof(string) }).GetValue(parsed, new object[] { "requestId" }); }
+        catch (TargetInvocationException error) { missingRequest = error.InnerException is KeyNotFoundException; }
+        Check(missingRequest, "legacy CP936 decoding no longer reproduces the reported requestId failure");
+
+        var originalError = Console.Error;
+        using var errors = new System.IO.StringWriter();
+        Console.SetError(errors);
+        setHandler.Invoke(null, new object[] { handler });
+        void Send(byte[] bytes, bool includesNul = false)
+        {
+            IntPtr name = Marshal.StringToHGlobalAnsi("MusicContentCenterEventHandler_onSongSimpleInfoResult_9ad9c90");
+            IntPtr data = Marshal.AllocHGlobal(bytes.Length + 1);
+            IntPtr header = Marshal.AllocHGlobal(Marshal.SizeOf<RawMusicEvent>());
+            try
+            {
+                Marshal.Copy(bytes, 0, data, bytes.Length); Marshal.WriteByte(data, bytes.Length, 0);
+                var packet = new RawMusicEvent { Name = name, Data = data, DataSize = (uint)(bytes.Length + (includesNul ? 1 : 0)) };
+                Marshal.StructureToPtr(packet, header, false);
+                dispatch.Invoke(null, new object[] { header });
+            }
+            finally { Marshal.FreeHGlobal(header); Marshal.FreeHGlobal(data); Marshal.FreeHGlobal(name); }
+        }
+        try
+        {
+            Send(Encoding.UTF8.GetBytes(valid));
+            Check(delivered == 1 && observed.Contains("爱人错过") && observed.Contains("告五人"), "raw UTF-8 music callback was corrupted");
+            Check(observed.Contains("7162848780338400") && observed.Contains("utf8-request"), "music callback identity changed");
+            Send(Encoding.UTF8.GetBytes(valid), true);
+            Check(delivered == 2, "NUL-inclusive transport size failed");
+            string missing = JsonSerializer.Serialize(new { songCode = 7162848780338400L, simpleInfo = info, reason = 0 }, rawOptions);
+            Send(Encoding.UTF8.GetBytes(missing));
+            Check(delivered == 2, "missing requestId was fabricated or delivered");
+            Send(Encoding.UTF8.GetBytes("{\"requestId\":\"malformed-sensitive-value\""));
+            Send(new byte[] { 0xff });
+            Check(delivered == 2, "malformed/invalid UTF-8 callback delivered");
+            var throwing = new BusinessMusicEvents((name, value) => { throw new InvalidOperationException("sensitive-observer-value"); });
+            setHandler.Invoke(null, new object[] { throwing });
+            Send(Encoding.UTF8.GetBytes(valid));
+            Check(errors.ToString().Contains("InvalidOperationException"), "observer error was not diagnosed");
+            Check(!errors.ToString().Contains("sensitive-"), "rejection diagnostics leaked payload or observer text");
+            setHandler.Invoke(null, new object[] { handler });
+            Send(Encoding.UTF8.GetBytes(valid));
+            Check(delivered == 3, "callback did not recover after rejected event/observer exception");
+            string failure = JsonSerializer.Serialize(new { requestId = "failure-request", songCode = 1L, simpleInfo = "", reason = 3 });
+            Send(Encoding.UTF8.GetBytes(failure));
+            Check(delivered == 4 && observed.Contains("failure-request"), "resource failure callback regressed");
+        }
+        finally { setHandler.Invoke(null, new object[] { null }); Console.SetError(originalError); }
+    }
     private static void Main()
     {
         var operations = BusinessApiOperation.Create();
@@ -161,6 +241,7 @@ internal static class BusinessDemoChecks
         audio.Reset(); Check(audio.EarRequested == null, "ear request state survived release");
         events.OnClientRoleChanged(connection, CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE, new ClientRoleOptions());
         Check(callbacks.Last().Contains("OnClientRoleChanged"), "role callback not observable");
+        CheckMusicCallbackBytes();
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
     }
 }
