@@ -159,7 +159,7 @@ rtc_yaml_path = os.path.join(script_dir, "..", "..", "terra","rtc.yaml")
 with open(rtc_yaml_path, "r", encoding="utf-8") as handle:
     rtc_yaml_content = handle.read()
 
-pattern = re.compile(r"rtc_\d+(?:\.\d+)*")
+pattern = re.compile(r"rtc_\d+(?:\.[A-Za-z0-9]+)*(?:[-+][A-Za-z0-9][A-Za-z0-9.+-]*)?")
 rtc_yaml_content = pattern.sub(f"rtc_{version}", rtc_yaml_content)
 
 with open(rtc_yaml_path, "w", encoding="utf-8") as handle:
