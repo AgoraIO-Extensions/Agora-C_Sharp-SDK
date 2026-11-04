@@ -78,3 +78,5 @@ checks the typed scene button arguments and the backend overload contracts, and 
 This opt-in diagnostic does not initialize Native or make calls. The existing shown-window
 and bundled-runtime checks run afterwards. Real device, audio, network, music authorization
 and two-party chorus acceptance remain separate QA steps.
+
+Standalone RTC callback safety covers all 16 handwritten event bridges through `RtcCallbackBoundary`: strict UTF-8 decoding by native byte length, parse/observer exception containment, and payload-free diagnostics. Frame/analysis failures return false, custom reads return 0, seeks return -1, and metadata failures return 0 or false with empty metadata; void notifications leave results untouched. Unity keeps its original marshalling/dispatch behavior; RTM is outside this change. The 415 offline checks include malformed raw bytes/JSON for every bridge, Chinese text, throwing observers and recovery, typed failure writebacks, NUL/guard bytes, and concurrent handler replacement. The Windows callback CI job runs these checks on both x86 and x64. These checks do not replace real-device QA.

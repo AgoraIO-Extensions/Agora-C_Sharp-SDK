@@ -12,6 +12,7 @@
     <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessRelayRequest.cs" />
     <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessLogSettings.cs" />
     <Compile Include="../../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/BusinessAudioControl.cs" />
+    <Compile Include="CallbackBoundaryChecks.cs" />
     <Compile Include="BusinessDemoChecks.cs" />
     <ProjectReference Include="../agorartc.csproj" />
   </ItemGroup>

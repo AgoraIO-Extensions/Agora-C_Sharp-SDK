@@ -194,9 +194,13 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
             lock (observerLock)
             {
-                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
                 if (videoFrameObserver == null)
                 {
@@ -211,7 +215,7 @@ namespace Agora.Rtc
                 {
                     case AgoraApiType.IVIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME_1673590:
                         {
-                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
                             VideoFrame videoFrame1 = GetVideoFrame("", 0);
@@ -228,7 +232,7 @@ namespace Agora.Rtc
 
                     case AgoraApiType.IVIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME_1673590:
                         {
-                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
                             VideoFrame videoFrame1 = GetVideoFrame("", 1);
@@ -245,7 +249,7 @@ namespace Agora.Rtc
 
                     case AgoraApiType.IVIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME_e648e2c:
                         {
-                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             int mediaPlayerId = (int)AgoraJson.GetData<int>(jsonData, "mediaPlayerId");
                             VideoFrame videoFrame1 = GetVideoFrame("", 2);
@@ -261,7 +265,7 @@ namespace Agora.Rtc
                         }
                     case AgoraApiType.IVIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME_27754d8:
                         {
-                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
 
                             VideoFrame videoFrame1 = GetVideoFrame("", 4);
@@ -277,7 +281,7 @@ namespace Agora.Rtc
                         }
                     case AgoraApiType.IVIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME_43dcf82:
                         {
-                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
                             uint remoteUid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
@@ -297,6 +301,14 @@ namespace Agora.Rtc
                         break;
                 }
             }
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "VideoFrameObserverNative");
+            }
+#endif
         }
 
         private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)

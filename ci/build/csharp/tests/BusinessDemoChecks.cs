@@ -242,6 +242,7 @@ internal static class BusinessDemoChecks
         events.OnClientRoleChanged(connection, CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE, new ClientRoleOptions());
         Check(callbacks.Last().Contains("OnClientRoleChanged"), "role callback not observable");
         CheckMusicCallbackBytes();
+        CallbackBoundaryChecks.Run(Check);
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
     }
 }

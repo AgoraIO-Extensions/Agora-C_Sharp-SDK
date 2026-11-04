@@ -25,9 +25,13 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
             lock (observerLock)
             {
-                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
                 if (videoEncodedFrameObserver == null)
                 {
@@ -43,7 +47,7 @@ namespace Agora.Rtc
 
                     case AgoraApiType.IVIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED_6922697:
                         {
-                            var jsonData = AgoraJson.ToObject(data);
+                            var jsonData = RtcCallbackBoundary.Parse(data);
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
                             IntPtr imageBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "imageBuffer");
                             UInt64 imageBufferLength = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "length");
@@ -62,6 +66,14 @@ namespace Agora.Rtc
                         break;
                 }
             }
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "VideoEncodedFrameObserverNative");
+            }
+#endif
         }
 
         private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)

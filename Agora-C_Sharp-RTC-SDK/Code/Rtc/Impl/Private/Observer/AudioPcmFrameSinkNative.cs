@@ -36,13 +36,17 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
             lock (observerLock)
             {
-                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
                 var data = eventParam.data;
 
-                LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
                 int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
                 if (mediaPlayerAudioFrameObserverDic.ContainsKey(playerId) == false)
                 {
@@ -84,6 +88,14 @@ namespace Agora.Rtc
                         break;
                 }
             }
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "AudioPcmFrameSinkNative");
+            }
+#endif
         }
 
 

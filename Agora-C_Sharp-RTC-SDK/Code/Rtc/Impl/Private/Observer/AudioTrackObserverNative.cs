@@ -47,14 +47,18 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
             lock (observerLock)
             {
                 if (observers.Count == 0) return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
-                var eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
-                var jsonData = AgoraJson.ToObject(eventParam.data);
+                var eventParam = RtcCallbackBoundary.ReadEvent(param);
+                var jsonData = RtcCallbackBoundary.Parse(eventParam.data);
                 if (eventParam.@event != AgoraApiType.IAUDIOTRACKOBSERVER_ONAUDIOTRACKVOLUMEINDICATION_9bd73f7)
                 {
                     AgoraLog.LogWarning("unknown audio track event: " + eventParam.@event);
@@ -73,6 +77,14 @@ namespace Agora.Rtc
                 });
 #endif
             }
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "AudioTrackObserverNative");
+            }
+#endif
         }
     }
 }
