@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using System.Text.Json.Serialization;
 using Agora.Rtc;
 
@@ -11,6 +13,7 @@ namespace C_Sharp_API_Example
     internal static class BusinessApiJson
     {
         internal static readonly JsonSerializerOptions Options = CreateOptions();
+        private static readonly JsonSerializerOptions DisplayOptions = new JsonSerializerOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
         private static JsonSerializerOptions CreateOptions()
         {
             var options = new JsonSerializerOptions
@@ -176,9 +179,10 @@ namespace C_Sharp_API_Example
                 if (e.ValueKind == JsonValueKind.String && Uri.TryCreate(e.GetString(), UriKind.Absolute, out var uri) &&
                     (uri.Scheme == "http" || uri.Scheme == "https"))
                     return uri.GetLeftPart(UriPartial.Path); // Do not export signed URL query credentials.
+                if (e.ValueKind == JsonValueKind.String) return e.GetString();
                 return e.Clone();
             }
-            return JsonSerializer.Serialize(Redact(doc.RootElement));
+            return JsonSerializer.Serialize(Redact(doc.RootElement), DisplayOptions);
         }
 
         private sealed class PointerConverter : JsonConverter<IntPtr>

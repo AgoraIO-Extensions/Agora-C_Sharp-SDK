@@ -12,14 +12,6 @@ namespace C_Sharp_API_Example
 {
     // Owned by one test tab. All native commands and disposal run on the UI thread;
     // native callbacks only enqueue immutable log messages through the view.
-    internal sealed class BusinessApiResult
-    {
-        internal object Value { get; }
-        internal Dictionary<string, object> Outputs { get; }
-        internal BusinessApiResult(object value, Dictionary<string, object> outputs = null)
-        { Value = value; Outputs = outputs ?? new Dictionary<string, object>(); }
-    }
-
     internal sealed class BusinessApiEngine : IEngine
     {
         private readonly BusinessApiView view;

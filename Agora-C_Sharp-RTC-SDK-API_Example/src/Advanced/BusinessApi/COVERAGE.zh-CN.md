@@ -20,14 +20,14 @@
 | 168 | `IRtcEngine.EnableAudioVolumeIndication` | 应用音量回调 |
 | 169 | `IAudioDeviceManager.EnumerateRecordingDevices` | 刷新麦克风 |
 | 170 | `IAudioDeviceManager.GetRecordingDeviceMute` | 查询静音 |
-| 171 | `IAudioDeviceManager.GetRecordingDeviceVolume` | 查询设备音量 |
+| 171 | `IAudioDeviceManager.GetRecordingDeviceVolume` | 查询当前设备音量 |
 | 172 | `IAudioDeviceManager.EnumeratePlaybackDevices` | 刷新扬声器 |
 | 173 | `IAudioDeviceManager.GetPlaybackDeviceMute` | 查询静音 |
-| 174 | `IAudioDeviceManager.GetPlaybackDeviceVolume` | 查询设备音量 |
+| 174 | `IAudioDeviceManager.GetPlaybackDeviceVolume` | 查询当前设备音量 |
 | 175 | `IAudioDeviceManager.SetRecordingDevice` | 切换麦克风 |
 | 176 | `IAudioDeviceManager.SetPlaybackDevice` | 切换扬声器 |
 | 177 | `IRtcEngine.AdjustRecordingSignalVolume` | 调整采集 |
-| 178 | `IAudioDeviceManager.SetRecordingDeviceVolume` | 设置设备音量 |
+| 178 | `IAudioDeviceManager.SetRecordingDeviceVolume` | 设置所选设备音量（设置后读回） |
 | 179 | `IRtcEngine.AdjustPlaybackSignalVolume` | 调整播放 |
 | 180 | `IRtcEngine.AdjustUserPlaybackSignalVolume` | 调整远端 |
 | 181 | `IRtcEngine.StartAudioRecording` | 开始录音 |
@@ -78,7 +78,7 @@
 | 226 | `IAudioDeviceManager.FollowSystemRecordingDevice` | 应用系统跟随 |
 | 227 | `IAudioDeviceManager.FollowSystemPlaybackDevice` | 应用系统跟随 |
 | 228 | `IRtcEngine.SetClientRole` | 应用单频道角色 |
-| 229 | `IAudioDeviceManager.SetPlaybackDeviceVolume` | 设置设备音量 |
+| 229 | `IAudioDeviceManager.SetPlaybackDeviceVolume` | 设置所选设备音量（设置后读回） |
 | 230 | `IAudioDeviceManager.SetRecordingDeviceMute` | 应用麦克风静音 |
 | 231 | `IRtcEngine.GetNtpWallTimeInMs` | 查询NTP时钟 |
 | 232 | `IMediaPlayer.GetId` | 查询ID |

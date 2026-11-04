@@ -47,6 +47,10 @@ namespace C_Sharp_API_Example
         public override void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason) => log(nameof(OnConnectionStateChanged), new { connection, state, reason });
         public override void OnRequestToken(RtcConnection connection) => log(nameof(OnRequestToken), new { connection, message = "请向业务服务获取有效Token并续期" });
         public override void OnTokenPrivilegeWillExpire(RtcConnection connection, string token) => log(nameof(OnTokenPrivilegeWillExpire), new { connection, message = "Token即将过期；请续期（不输出Token）" });
+        public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions) => log(nameof(OnClientRoleChanged), new { connection, oldRole, newRole, newRoleOptions });
+        public override void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) => log(nameof(OnClientRoleChangeFailed), new { connection, reason, currentRole });
+        public override void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) => log(nameof(OnAudioDeviceStateChanged), new { deviceId, deviceType, deviceState });
+        public override void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted) => log(nameof(OnAudioDeviceVolumeChanged), new { deviceType, volume, muted });
         public override void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume) => log(nameof(OnAudioVolumeIndication), new { connection, speakers, speakerNumber, totalVolume });
         public override void OnLocalAudioStats(RtcConnection connection, LocalAudioStats stats) => log(nameof(OnLocalAudioStats), new { connection, stats });
         public override void OnRemoteAudioStats(RtcConnection connection, RemoteAudioStats stats) => log(nameof(OnRemoteAudioStats), new { connection, stats });

@@ -33,6 +33,7 @@ namespace C_Sharp_API_Example
         private readonly HashSet<string> credentialsSeen = new HashSet<string>();
         private readonly System.Windows.Forms.Timer drain = new System.Windows.Forms.Timer { Interval = 100 };
         internal readonly BusinessApiEngine Session;
+        private readonly BusinessAudioControl audioControl;
         private bool shuttingDown;
         private int dropped;
         internal string AppId => readAppId().Trim();
@@ -44,6 +45,7 @@ namespace C_Sharp_API_Example
         {
             readAppId = appId; readChannel = channel; Dock = DockStyle.Fill;
             Session = new BusinessApiEngine(this);
+            audioControl = new BusinessAudioControl(Call);
             secondChannel.Text = "business-b";
             var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 5, Padding = new Padding(6) };
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -52,7 +54,7 @@ namespace C_Sharp_API_Example
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 28));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 170));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 34));
-            var header = Row(Label("Token"), token, Label("本地UID"), uid, Label("远端UID"), remoteUid, Label("单频道角色"), role, Label("播放器"), playerList,
+            var header = Row(Label("Token"), token, Label("本地UID"), uid, Label("远端UID"), remoteUid, Label("单频道角色"), role, RoleButton(), Label("播放器"), playerList,
                 Bind("初始化", "IRtcEngine.Initialize", () => new { context = EngineContext(AppId) }),
                 Bind("释放", "IRtcEngine.Dispose", () => new { sync = false }));
             layout.Controls.Add(header, 0, 0); layout.Controls.Add(host, 0, 1);
@@ -128,6 +130,16 @@ namespace C_Sharp_API_Example
             bindings.Add(("IRtcEngine.JoinChannel", join, null));
             bindings.Add(("IRtcEngine.LeaveChannel", leave, null));
         }
+        private Button RoleButton()
+        {
+            var button = ActionButton("应用单频道角色", () => state.Text = audioControl.ApplyRole(
+                (CHANNEL_PROFILE_TYPE)channelProfile.SelectedItem,
+                role.SelectedIndex == 1 ? CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE : CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, MediaOptions()));
+            bindings.Add(("IRtcEngine.SetClientRole", button, () => new { role = role.SelectedIndex == 1 ? CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE : CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER }));
+            bindings.Add(("IRtcEngine.UpdateChannelMediaOptions", button, () => new { options = MediaOptions() }));
+            bindings.Add(("IRtcEngine.GetConnectionState", button, null));
+            return button;
+        }
         private static T Out<T>(BusinessApiResult r, string name) => (T)r.Outputs[name];
         internal RtcEngineContext EngineContext(string appId) => new RtcEngineContext
         { appId = appId, audioScenario = (AUDIO_SCENARIO_TYPE)audioScenario.SelectedItem, channelProfile = (CHANNEL_PROFILE_TYPE)channelProfile.SelectedItem, logConfig = SelectedLogConfig() };
@@ -137,7 +149,7 @@ namespace C_Sharp_API_Example
             var options = new ChannelMediaOptions();
             options.channelProfile.SetValue((CHANNEL_PROFILE_TYPE)channelProfile.SelectedItem);
             options.clientRoleType.SetValue(listen ? CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE : CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
-            options.publishMicrophoneTrack.SetValue(!listen); options.publishCameraTrack.SetValue(false);
+            options.publishMicrophoneTrack.SetValue(!listen && sendAudio.Checked); options.publishCameraTrack.SetValue(false);
             options.autoSubscribeAudio.SetValue(true); options.autoSubscribeVideo.SetValue(false);
             options.audioDelayMs.SetValue((int)audioDelay.Value);
             if (publishPlayer)
@@ -154,7 +166,7 @@ namespace C_Sharp_API_Example
             playerList.SelectedItem = item;
         }
         internal void SessionReleased()
-        { CancelLead(); relayConnection = null; playerList.Items.Clear(); recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); state.Text = "已释放；重新初始化后再操作。"; }
+        { CancelLead(); audioControl.Reset(); relayConnection = null; playerList.Items.Clear(); recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); state.Text = "已释放；重新初始化后再操作。"; }
         internal void NoteEvent(int epoch, string name, object value)
         { if (pendingEvents.Count < 1000) pendingEvents.Enqueue((epoch, name, BusinessApiJson.Result(value))); }
         private void UpdateEvent(string name, string json)
@@ -164,6 +176,8 @@ namespace C_Sharp_API_Example
             if (name == "OnJoinChannelSuccess" || name == "OnLeaveChannel" || name == "OnConnectionStateChanged") state.Text = name + " " + json;
             if (name == "OnPositionChanged") playerProgress.Text = "播放器 " + value.GetProperty("playerId") + "：" + value.GetProperty("positionMs") + " ms";
             if (name == "OnPlayerSourceStateChanged") playerState.Text = "播放器 " + value.GetProperty("playerId") + "：" + value.GetProperty("state") + " / " + value.GetProperty("reason");
+            if (name == "OnClientRoleChanged" || name == "OnClientRoleChangeFailed") state.Text = name + " " + json;
+            if (name == "OnLocalAudioStateChanged" || name == "OnAudioDeviceStateChanged" || name == "OnAudioDeviceVolumeChanged") audioStatus.Text = name + " " + json;
             if (name == "OnAudioMixingStateChanged") mixingState.Text = "伴奏状态：" + json;
             if (name == "OnPreLoadEvent") musicProgress.Text = "预加载：" + json;
             if (name == "OnSongSimpleInfoResult") songInfo.Text = json;

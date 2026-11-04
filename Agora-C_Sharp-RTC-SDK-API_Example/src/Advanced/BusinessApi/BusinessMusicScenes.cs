@@ -62,7 +62,7 @@ namespace C_Sharp_API_Example
                     Bind("销毁曲库播放器", "IMusicContentCenter.DestroyMusicPlayer", () => new { music_player = (object)null })),
                 Label("播放/暂停/继续/跳转在伴奏与播放器页操作；顶部播放器ID在各场景共享。以下为连接与诊断设置。"),
                 Row(channelProfile, Bind("设置频道场景", "IRtcEngine.SetChannelProfile", () => new { profile = (CHANNEL_PROFILE_TYPE)channelProfile.SelectedItem }),
-                    Bind("应用单频道角色", "IRtcEngine.SetClientRole", () => new { role = role.SelectedIndex == 1 ? CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE : CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER }),
+                    RoleButton(),
                     Bind("查询连接", "IRtcEngine.GetConnectionState", after: r => state.Text = "连接状态：" + r.Value),
                     Bind("续期RTC Token", "IRtcEngine.RenewToken", () => new { token = Token })),
                 Row(Bind("重挂引擎事件", "IRtcEngine.InitEventHandler", () => new { engineEventHandler = (object)null }),

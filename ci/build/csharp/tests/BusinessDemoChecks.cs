@@ -110,6 +110,57 @@ internal static class BusinessDemoChecks
         Reject(() => BusinessLogSettings.Create("relative.log", 2048, LOG_LEVEL.LOG_LEVEL_INFO), "relative log path accepted");
         Reject(() => BusinessLogSettings.Create(System.IO.Path.GetTempPath(), 2048, LOG_LEVEL.LOG_LEVEL_INFO), "directory used as log file");
         Reject(() => BusinessLogSettings.Create("", 1, LOG_LEVEL.LOG_LEVEL_INFO), "invalid log size accepted");
+        var chinese = System.Text.Encoding.UTF8.GetBytes("回魂中文\n引号\"");
+        events.OnAudioMetadataReceived(connection, 2001, chinese, (ulong)chinese.Length);
+        Check(callbacks.Last().Contains("回魂中文") && !callbacks.Last().Contains("\\u56DE"), "Chinese callback display escaped");
+        Check(callbacks.Last().Contains(Convert.ToHexString(chinese)), "display fix changed payload bytes");
+        string protectedDisplay = BusinessApiJson.Result(new { text = "中文<script>\n\"", token = "secret-value", appId = "secret-app" });
+        using (var displayDoc = JsonDocument.Parse(protectedDisplay))
+            Check(displayDoc.RootElement.GetProperty("text").GetString() == "中文<script>\n\"", "display escaping changed text");
+        Check(!protectedDisplay.Contains("<script>") && !protectedDisplay.Contains("secret-"), "display fix weakened redaction/HTML escaping");
+        var calls = new List<string>();
+        string activeRecording = "mic-current", activePlayback = "speaker-current";
+        bool failSet = false;
+        CONNECTION_STATE_TYPE fakeState = CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
+        var audio = new BusinessAudioControl((api, args) =>
+        {
+            calls.Add(api);
+            var input = JsonSerializer.SerializeToElement(args, BusinessApiJson.Options);
+            if (failSet && api.EndsWith("DeviceVolume") && api.Contains(".Set")) throw new InvalidOperationException("native failure");
+            if (api == "IRtcEngine.GetConnectionState") return new BusinessApiResult(fakeState);
+            if (api == "IAudioDeviceManager.SetRecordingDevice") activeRecording = input.GetProperty("deviceId").GetString();
+            if (api == "IAudioDeviceManager.SetPlaybackDevice") activePlayback = input.GetProperty("deviceId").GetString();
+            if (api == "IAudioDeviceManager.GetRecordingDevice") return new BusinessApiResult(0, new Dictionary<string, object> { ["deviceId"] = activeRecording });
+            if (api == "IAudioDeviceManager.GetPlaybackDevice") return new BusinessApiResult(0, new Dictionary<string, object> { ["deviceId"] = activePlayback });
+            if (api.EndsWith("DeviceVolume") && api.Contains(".Get")) return new BusinessApiResult(0, new Dictionary<string, object> { ["volume"] = 66 });
+            return new BusinessApiResult(0);
+        });
+        var roleOptions = new ChannelMediaOptions(); roleOptions.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE); roleOptions.publishMicrophoneTrack.SetValue(false);
+        audio.ApplyRole(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE, roleOptions);
+        Check(calls.SequenceEqual(new[] { "IRtcEngine.GetConnectionState", "IRtcEngine.SetClientRole", "IRtcEngine.UpdateChannelMediaOptions" }), "in-channel role did not update SDK and publish options");
+        calls.Clear(); fakeState = CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED;
+        audio.ApplyRole(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, new ChannelMediaOptions());
+        Check(!calls.Contains("IRtcEngine.UpdateChannelMediaOptions"), "pre-join role attempted live media update");
+        calls.Clear();
+        var measured = audio.SetVolume(true, "mic-selected", 67);
+        Check(activeRecording == "mic-selected" && measured.Volume == 66 && measured.DeviceId == "mic-selected", "volume must target selected device and return actual readback");
+        Check(calls.SequenceEqual(new[] { "IAudioDeviceManager.SetRecordingDevice", "IAudioDeviceManager.SetRecordingDeviceVolume", "IAudioDeviceManager.GetRecordingDevice", "IAudioDeviceManager.GetRecordingDeviceVolume" }), "recording volume call sequence wrong");
+        calls.Clear(); audio.SetVolume(false, "speaker-selected", 67);
+        Check(activePlayback == "speaker-selected" && !calls.Any(c => c.Contains("Recording")), "playback control used microphone API");
+        calls.Clear(); failSet = true;
+        try { audio.SetVolume(true, "mic-selected", 67); throw new Exception("native failure swallowed"); } catch (InvalidOperationException) { checks++; }
+        Check(!calls.Any(c => c.Contains(".Get")), "readback executed after rejected setter");
+        failSet = false; calls.Clear();
+        try { audio.SetEarVolume(100); throw new Exception("ear prerequisite ignored"); } catch (InvalidOperationException) { checks++; }
+        Check(calls.Count == 0, "ear volume called before enable");
+        audio.ApplyEar(true, 400);
+        Check(calls.SequenceEqual(new[] { "IRtcEngine.EnableLocalAudio", "IRtcEngine.EnableInEarMonitoring", "IRtcEngine.SetInEarMonitoringVolume" }), "ear enable/capture/volume sequence wrong");
+        Check(audio.EarRequested == true, "ear request state absent");
+        Reject(() => audio.SetEarVolume(401), "ear upper limit accepted");
+        Reject(() => audio.SetVolume(true, "mic", 256), "device volume upper limit accepted");
+        audio.Reset(); Check(audio.EarRequested == null, "ear request state survived release");
+        events.OnClientRoleChanged(connection, CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE, new ClientRoleOptions());
+        Check(callbacks.Last().Contains("OnClientRoleChanged"), "role callback not observable");
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
     }
 }

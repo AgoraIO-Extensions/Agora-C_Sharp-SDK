@@ -31,6 +31,8 @@ namespace C_Sharp_API_Example
             new[] { "IAudioDeviceManager.EnumerateRecordingDevices", "获取麦克风设备列表", "368、369、431、432、532、540" },
             new[] { "IAudioDeviceManager.FollowSystemPlaybackDevice", "跟随系统默认音频设备", "531" },
             new[] { "IAudioDeviceManager.FollowSystemRecordingDevice", "跟随系统默认音频设备", "531" },
+            new[] { "IAudioDeviceManager.GetRecordingDevice", "查询当前麦克风", "设备路由诊断" },
+            new[] { "IAudioDeviceManager.GetPlaybackDevice", "查询当前扬声器", "设备路由诊断" },
             new[] { "IAudioDeviceManager.GetPlaybackDeviceMute", "获取扬声器开关状态", "376、379、439、442" },
             new[] { "IAudioDeviceManager.GetPlaybackDeviceVolume", "获取扬声器播放音量", "377、440" },
             new[] { "IAudioDeviceManager.GetRecordingDeviceMute", "获取麦克风开关状态", "370、378、433、441" },

@@ -18,7 +18,7 @@ namespace C_Sharp_API_Example
         private readonly CheckBox remoteMute = new CheckBox { Text = "指定远端静音", AutoSize = true };
         private readonly CheckBox followRecord = new CheckBox { Text = "跟随系统麦克风", AutoSize = true }, followPlayback = new CheckBox { Text = "跟随系统扬声器", AutoSize = true };
         private readonly CheckBox ear = new CheckBox { Text = "耳返", AutoSize = true }, vad = new CheckBox { Text = "报告人声检测", AutoSize = true };
-        private readonly NumericUpDown earVolume = Number(100, 100), indicationInterval = Number(10000, 300), smooth = Number(10, 3);
+        private readonly NumericUpDown earVolume = Number(400, 100), indicationInterval = Number(10000, 300), smooth = Number(10, 3);
         private readonly ComboBox audioProfile = Enums<AUDIO_PROFILE_TYPE>(), audioScenario = Enums<AUDIO_SCENARIO_TYPE>(), voicePreset = Enums<VOICE_CONVERSION_PRESET>();
         private readonly NumericUpDown audioDelay = Number(10000, 0);
         private readonly Label devicesStatus = Label("尚未枚举设备"), audioStatus = Label("音频状态/查询结果在此显示");
@@ -34,24 +34,73 @@ namespace C_Sharp_API_Example
             var devices = value as DeviceInfo[];
             if (devices == null) throw new InvalidOperationException("SDK设备枚举返回null。");
             foreach (var device in devices) list.Items.Add(new DeviceChoice { Value = device });
-            if (list.Items.Count > 0) list.SelectedIndex = 0;
-            devicesStatus.Text = $"麦克风{recordingDevices.Items.Count}个，播放设备{playbackDevices.Items.Count}个；名称/ID直接显示在下拉项中。";
+            string active = audioControl.CurrentDevice(list == recordingDevices);
+            list.SelectedIndex = -1;
+            for (int i = 0; i < list.Items.Count; i++)
+                if (((DeviceChoice)list.Items[i]).Value.deviceId == active) { list.SelectedIndex = i; break; }
+            devicesStatus.Text = $"麦克风{recordingDevices.Items.Count}个，播放设备{playbackDevices.Items.Count}个；下拉框匹配SDK当前设备；无匹配时请手动选择并切换设备。";
         }
         private Action<BusinessApiResult> AudioResult(string title) => r => audioStatus.Text = title + "：" + BusinessApiJson.Result(r.Outputs.Count > 0 ? r.Outputs : r.Value);
+        private void ShowDeviceVolume(bool recording, bool set)
+        {
+            var list = recording ? recordingDevices : playbackDevices;
+            var input = recording ? recordDeviceVolume : playDeviceVolume;
+            string requestedDevice = set ? DeviceId(list) : "";
+            int requestedVolume = (int)input.Value;
+            var actual = set ? audioControl.SetVolume(recording, requestedDevice, requestedVolume) : audioControl.ReadVolume(recording);
+            string mismatch = set && (actual.DeviceId != requestedDevice || actual.Volume != requestedVolume)
+                ? "（请求与读回不同，请检查路由/系统量化及驱动）" : "";
+            audioStatus.Text = (recording ? "麦克风" : "扬声器") +
+                (set ? " 请求设备=" + requestedDevice + "，请求音量=" + requestedVolume + "；" : " ") +
+                "SDK当前设备=" + actual.DeviceId + "，读回音量=" + actual.Volume + "/255 " + mismatch + "；实际声音需对端/本机验证。";
+            if (!set && actual.Volume >= 0 && actual.Volume <= 255) input.Value = actual.Volume;
+        }
+        private Button DeviceVolumeButton(bool recording, bool set)
+        {
+            var button = ActionButton(set ? "设置所选设备音量" : "查询当前设备音量", () => ShowDeviceVolume(recording, set));
+            var list = recording ? recordingDevices : playbackDevices;
+            if (set)
+            {
+                bindings.Add((recording ? "IAudioDeviceManager.SetRecordingDevice" : "IAudioDeviceManager.SetPlaybackDevice", button, () => new { deviceId = DeviceId(list) }));
+                bindings.Add((recording ? "IAudioDeviceManager.SetRecordingDeviceVolume" : "IAudioDeviceManager.SetPlaybackDeviceVolume", button, () => new { volume = (int)(recording ? recordDeviceVolume.Value : playDeviceVolume.Value) }));
+            }
+            bindings.Add((recording ? "IAudioDeviceManager.GetRecordingDevice" : "IAudioDeviceManager.GetPlaybackDevice", button, () => new { deviceId = "" }));
+            bindings.Add((recording ? "IAudioDeviceManager.GetRecordingDeviceVolume" : "IAudioDeviceManager.GetPlaybackDeviceVolume", button, () => new { volume = 0 }));
+            return button;
+        }
+        private Button EarButton(bool enable)
+        {
+            var button = ActionButton(enable ? "应用耳返" : "设置耳返音量", () =>
+            {
+                if (enable)
+                {
+                    audioControl.ApplyEar(ear.Checked, (int)earVolume.Value);
+                    if (ear.Checked) capture.Checked = true;
+                }
+                else audioControl.SetEarVolume((int)earVolume.Value);
+                audioStatus.Text = "耳返请求=" + audioControl.EarRequested + "，音量=" + earVolume.Value +
+                    "/400；SDK请求已返回，尚不代表可听见，请检查耳机、采集状态回调和本机声音。";
+            });
+            if (enable)
+            {
+                bindings.Add(("IRtcEngine.EnableLocalAudio", button, () => new { enabled = true }));
+                bindings.Add(("IRtcEngine.EnableInEarMonitoring", button, () => new { enabled = ear.Checked, includeAudioFilters = 0 }));
+            }
+            bindings.Add(("IRtcEngine.SetInEarMonitoringVolume", button, () => new { volume = (int)earVolume.Value }));
+            return button;
+        }
         private Control AudioScene() => Page(
             "先填写主窗口AppId/频道并初始化。选择真实设备或远端UID，分别控制采集、上行和下行。热插拔后刷新设备；不要将设备静音当作停止发布。",
             Row(Bind("获取设备管理器", "IRtcEngine.GetAudioDeviceManager"),
                 Bind("刷新麦克风", "IAudioDeviceManager.EnumerateRecordingDevices", after: r => Devices(recordingDevices, r.Value)),
                 Bind("刷新扬声器", "IAudioDeviceManager.EnumeratePlaybackDevices", after: r => Devices(playbackDevices, r.Value)), devicesStatus),
             Row(Label("麦克风"), recordingDevices, Bind("切换麦克风", "IAudioDeviceManager.SetRecordingDevice", () => new { deviceId = DeviceId(recordingDevices) }),
-                recordDeviceVolume, Bind("设置设备音量", "IAudioDeviceManager.SetRecordingDeviceVolume", () => new { volume = (int)recordDeviceVolume.Value }),
-                Bind("查询设备音量", "IAudioDeviceManager.GetRecordingDeviceVolume", () => new { volume = 0 }, AudioResult("麦克风音量"))),
+                Label("设备音量0–255"), recordDeviceVolume, DeviceVolumeButton(true, true), DeviceVolumeButton(true, false)),
             Row(recordMute, Bind("应用麦克风静音", "IAudioDeviceManager.SetRecordingDeviceMute", () => new { mute = recordMute.Checked }),
                 Bind("查询静音", "IAudioDeviceManager.GetRecordingDeviceMute", () => new { mute = false }, AudioResult("麦克风静音")),
                 followRecord, Bind("应用系统跟随", "IAudioDeviceManager.FollowSystemRecordingDevice", () => new { enable = followRecord.Checked })),
             Row(Label("扬声器"), playbackDevices, Bind("切换扬声器", "IAudioDeviceManager.SetPlaybackDevice", () => new { deviceId = DeviceId(playbackDevices) }),
-                playDeviceVolume, Bind("设置设备音量", "IAudioDeviceManager.SetPlaybackDeviceVolume", () => new { volume = (int)playDeviceVolume.Value }),
-                Bind("查询设备音量", "IAudioDeviceManager.GetPlaybackDeviceVolume", () => new { volume = 0 }, AudioResult("扬声器音量"))),
+                Label("设备音量0–255"), playDeviceVolume, DeviceVolumeButton(false, true), DeviceVolumeButton(false, false)),
             Row(playMute, Bind("应用播放设备静音", "IAudioDeviceManager.SetPlaybackDeviceMute", () => new { mute = playMute.Checked }),
                 Bind("查询静音", "IAudioDeviceManager.GetPlaybackDeviceMute", () => new { mute = false }, AudioResult("扬声器静音")),
                 followPlayback, Bind("应用系统跟随", "IAudioDeviceManager.FollowSystemPlaybackDevice", () => new { enable = followPlayback.Checked })),
@@ -66,8 +115,7 @@ namespace C_Sharp_API_Example
                 Label("远端音量"), remoteGain, Bind("调整远端", "IRtcEngine.AdjustUserPlaybackSignalVolume", () => new { uid = (uint)remoteUid.Value, volume = (int)remoteGain.Value })),
             Row(Label("音量回调周期ms（0关闭）"), indicationInterval, Label("平滑"), smooth, vad,
                 Bind("应用音量回调", "IRtcEngine.EnableAudioVolumeIndication", () => new { interval = (int)indicationInterval.Value, smooth = (int)smooth.Value, reportVad = vad.Checked })),
-            Row(ear, Bind("应用耳返", "IRtcEngine.EnableInEarMonitoring", () => new { enabled = ear.Checked, includeAudioFilters = 0 }),
-                earVolume, Bind("设置耳返音量", "IRtcEngine.SetInEarMonitoringVolume", () => new { volume = (int)earVolume.Value })),
+            Row(ear, EarButton(true), Label("耳返音量0–400"), earVolume, EarButton(false)),
             Row(audioProfile, Bind("设置音质", "IRtcEngine.SetAudioProfile", () => new { profile = (AUDIO_PROFILE_TYPE)audioProfile.SelectedItem }),
                 audioScenario, Bind("设置音频场景", "IRtcEngine.SetAudioScenario", () => new { scenario = (AUDIO_SCENARIO_TYPE)audioScenario.SelectedItem })),
             Row(voicePreset, Bind("应用变声", "IRtcEngine.SetVoiceConversionPreset", () => new { preset = (VOICE_CONVERSION_PRESET)voicePreset.SelectedItem }),
