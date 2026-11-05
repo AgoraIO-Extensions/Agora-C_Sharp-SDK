@@ -88,6 +88,7 @@ namespace C_Sharp_API_Example
             new[] { "IRtcEngine.GetErrorDescription", "解释SDK错误码", "补充" },
             new[] { "IRtcEngine.Dispose", "反初始化（销毁引擎）", "358、470、487、504、536、574" },
             new[] { "IRtcEngine.EnableAudioVolumeIndication", "获取麦克风实时音量", "367、372、373、430、435、436、505" },
+            new[] { "IRtcEngine.EnableAudio", "恢复音频模块", "耳返前置" },
             new[] { "IRtcEngine.EnableInEarMonitoring", "开启/关闭耳返", "364、427" },
             new[] { "IRtcEngine.EnableLocalAudio", "开启/关闭音频采集设备", "360、365、423、428、537" },
             new[] { "IRtcEngine.EnableLoopbackRecording", "开始采集系统声音作为伴奏", "403、406、418、421、565、573" },

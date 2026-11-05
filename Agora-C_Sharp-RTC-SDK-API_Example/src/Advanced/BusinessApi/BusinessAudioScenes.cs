@@ -18,6 +18,7 @@ namespace C_Sharp_API_Example
         private readonly CheckBox remoteMute = new CheckBox { Text = "指定远端静音", AutoSize = true };
         private readonly CheckBox followRecord = new CheckBox { Text = "跟随系统麦克风", AutoSize = true }, followPlayback = new CheckBox { Text = "跟随系统扬声器", AutoSize = true };
         private readonly CheckBox ear = new CheckBox { Text = "耳返", AutoSize = true }, vad = new CheckBox { Text = "报告人声检测", AutoSize = true };
+        private readonly ComboBox earFilters = Enums<EAR_MONITORING_FILTER_TYPE>();
         private readonly NumericUpDown earVolume = Number(400, 100), indicationInterval = Number(10000, 300), smooth = Number(10, 3);
         private readonly ComboBox audioProfile = Enums<AUDIO_PROFILE_TYPE>(), audioScenario = Enums<AUDIO_SCENARIO_TYPE>(), voicePreset = Enums<VOICE_CONVERSION_PRESET>();
         private readonly NumericUpDown audioDelay = Number(10000, 0);
@@ -74,7 +75,7 @@ namespace C_Sharp_API_Example
             {
                 if (enable)
                 {
-                    audioControl.ApplyEar(ear.Checked, (int)earVolume.Value);
+                    audioControl.ApplyEar(ear.Checked, (int)earVolume.Value, (EAR_MONITORING_FILTER_TYPE)earFilters.SelectedItem);
                     if (ear.Checked) capture.Checked = true;
                 }
                 else audioControl.SetEarVolume((int)earVolume.Value);
@@ -83,8 +84,9 @@ namespace C_Sharp_API_Example
             });
             if (enable)
             {
+                bindings.Add(("IRtcEngine.EnableAudio", button, null));
                 bindings.Add(("IRtcEngine.EnableLocalAudio", button, () => new { enabled = true }));
-                bindings.Add(("IRtcEngine.EnableInEarMonitoring", button, () => new { enabled = ear.Checked, includeAudioFilters = 0 }));
+                bindings.Add(("IRtcEngine.EnableInEarMonitoring", button, () => new { enabled = ear.Checked, includeAudioFilters = (int)(EAR_MONITORING_FILTER_TYPE)earFilters.SelectedItem }));
             }
             bindings.Add(("IRtcEngine.SetInEarMonitoringVolume", button, () => new { volume = (int)earVolume.Value }));
             return button;
@@ -132,7 +134,7 @@ namespace C_Sharp_API_Example
                 Label("远端音量"), remoteGain, Bind("调整远端", "IRtcEngine.AdjustUserPlaybackSignalVolume", () => new { uid = (uint)remoteUid.Value, volume = (int)remoteGain.Value })),
             Row(Label("音量回调周期ms（0关闭）"), indicationInterval, Label("平滑"), smooth, vad,
                 Bind("应用音量回调", "IRtcEngine.EnableAudioVolumeIndication", () => new { interval = (int)indicationInterval.Value, smooth = (int)smooth.Value, reportVad = vad.Checked })),
-            Row(ear, EarButton(true), Label("耳返音量0–400"), earVolume, EarButton(false)),
+            Row(ear, Label("耳返滤波类型"), earFilters, EarButton(true), Label("耳返音量0–400"), earVolume, EarButton(false)),
             Row(audioProfile, Bind("设置音质", "IRtcEngine.SetAudioProfile", () => new { profile = (AUDIO_PROFILE_TYPE)audioProfile.SelectedItem }),
                 audioScenario, Bind("设置音频场景", "IRtcEngine.SetAudioScenario", () => new { scenario = (AUDIO_SCENARIO_TYPE)audioScenario.SelectedItem })),
             Row(voicePreset, Bind("应用变声", "IRtcEngine.SetVoiceConversionPreset", () => new { preset = (VOICE_CONVERSION_PRESET)voicePreset.SelectedItem }),

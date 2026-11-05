@@ -48,11 +48,16 @@ namespace C_Sharp_API_Example
             call(recording ? "IAudioDeviceManager.SetRecordingDeviceVolume" : "IAudioDeviceManager.SetPlaybackDeviceVolume", new { volume });
             return ReadVolume(recording);
         }
-        internal void ApplyEar(bool enabled, int volume)
+        internal void ApplyEar(bool enabled, int volume, EAR_MONITORING_FILTER_TYPE filters)
         {
             if (volume < 0 || volume > 400) throw new ArgumentException("耳返音量范围为0–400。");
-            if (enabled) call("IRtcEngine.EnableLocalAudio", new { enabled = true });
-            call("IRtcEngine.EnableInEarMonitoring", new { enabled, includeAudioFilters = 0 });
+            if (!Enum.IsDefined(typeof(EAR_MONITORING_FILTER_TYPE), filters)) throw new ArgumentException("请选择SDK定义的耳返滤波类型；NONE为1，不是0。");
+            if (enabled)
+            {
+                call("IRtcEngine.EnableAudio", new { });
+                call("IRtcEngine.EnableLocalAudio", new { enabled = true });
+            }
+            call("IRtcEngine.EnableInEarMonitoring", new { enabled, includeAudioFilters = (int)filters });
             EarRequested = enabled;
             if (enabled) SetEarVolume(volume);
         }

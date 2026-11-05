@@ -185,6 +185,20 @@ namespace C_Sharp_API_Example
             return JsonSerializer.Serialize(Redact(doc.RootElement), DisplayOptions);
         }
 
+        internal static string MessageDisplay(JsonElement value)
+        {
+            var payload = value.GetProperty("payload");
+            var connection = value.GetProperty("connection");
+            JsonElement sender;
+            if (!value.TryGetProperty("remoteUid", out sender)) sender = value.GetProperty("uid");
+            return "频道：" + connection.GetProperty("channelId").GetString() + "；本地UID：" + connection.GetProperty("localUid").GetRawText() +
+                "；发送UID：" + sender.GetRawText() + "\r\nUTF-8文本：\r\n" + payload.GetProperty("utf8").GetString() +
+                "\r\n字节HEX：" + payload.GetProperty("hex").GetString() +
+                "\r\n上报字节数：" + payload.GetProperty("reportedLength").GetRawText() +
+                "；实际数组字节数：" + payload.GetProperty("arrayLength").GetRawText() +
+                "；显示截断：" + payload.GetProperty("truncated").GetRawText();
+        }
+
         private sealed class PointerConverter : JsonConverter<IntPtr>
         {
             public override IntPtr Read(ref Utf8JsonReader reader, Type type, JsonSerializerOptions options)

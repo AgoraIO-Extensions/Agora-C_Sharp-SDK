@@ -198,14 +198,28 @@ internal static class BusinessDemoChecks
         using (var displayDoc = JsonDocument.Parse(protectedDisplay))
             Check(displayDoc.RootElement.GetProperty("text").GetString() == "中文<script>\n\"", "display escaping changed text");
         Check(!protectedDisplay.Contains("<script>") && !protectedDisplay.Contains("secret-"), "display fix weakened redaction/HTML escaping");
+        const string punctuation = "中文 English: !@#$%^&*()_+-=[]{};:'\"<>,.?/\\|`~\r\n换行\tTAB";
+        var punctuationBytes = System.Text.Encoding.UTF8.GetBytes(punctuation);
+        events.OnStreamMessage(connection, 2002, 7, punctuationBytes, (ulong)punctuationBytes.Length, 0);
+        using (var packet = JsonDocument.Parse(callbacks.Last().Substring(callbacks.Last().IndexOf(' ') + 1)))
+        {
+            string shown = BusinessApiJson.MessageDisplay(packet.RootElement);
+            Check(shown.Contains(punctuation) && shown.Contains(Convert.ToHexString(punctuationBytes)), "stream punctuation displayed as JSON escapes or bytes changed");
+            Check(shown.Contains("2002") && shown.Contains(connection.channelId), "message display lost sender/connection");
+        }
+        events.OnAudioMetadataReceived(connection, 2002, punctuationBytes, (ulong)punctuationBytes.Length);
+        using (var packet = JsonDocument.Parse(callbacks.Last().Substring(callbacks.Last().IndexOf(' ') + 1)))
+            Check(BusinessApiJson.MessageDisplay(packet.RootElement).Contains(punctuation), "metadata punctuation display escaped");
         var calls = new List<string>();
         string activeRecording = "mic-current", activePlayback = "speaker-current";
-        bool failSet = false;
+        bool failSet = false, failEar = false;
+        int selectedEarFilter = 0;
         CONNECTION_STATE_TYPE fakeState = CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
         var audio = new BusinessAudioControl((api, args) =>
         {
             calls.Add(api);
             var input = JsonSerializer.SerializeToElement(args, BusinessApiJson.Options);
+            if (api == "IRtcEngine.EnableInEarMonitoring") { selectedEarFilter = input.GetProperty("includeAudioFilters").GetInt32(); if (failEar) throw new InvalidOperationException("native ear failure"); }
             if (failSet && api.EndsWith("DeviceVolume") && api.Contains(".Set")) throw new InvalidOperationException("native failure");
             if (api == "IRtcEngine.GetConnectionState") return new BusinessApiResult(fakeState);
             if (api == "IAudioDeviceManager.SetRecordingDevice") activeRecording = input.GetProperty("deviceId").GetString();
@@ -233,9 +247,22 @@ internal static class BusinessDemoChecks
         failSet = false; calls.Clear();
         try { audio.SetEarVolume(100); throw new Exception("ear prerequisite ignored"); } catch (InvalidOperationException) { checks++; }
         Check(calls.Count == 0, "ear volume called before enable");
-        audio.ApplyEar(true, 400);
-        Check(calls.SequenceEqual(new[] { "IRtcEngine.EnableLocalAudio", "IRtcEngine.EnableInEarMonitoring", "IRtcEngine.SetInEarMonitoringVolume" }), "ear enable/capture/volume sequence wrong");
+        audio.ApplyEar(true, 400, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE);
+        Check(calls.SequenceEqual(new[] { "IRtcEngine.EnableAudio", "IRtcEngine.EnableLocalAudio", "IRtcEngine.EnableInEarMonitoring", "IRtcEngine.SetInEarMonitoringVolume" }), "ear enable/capture/volume sequence wrong");
         Check(audio.EarRequested == true, "ear request state absent");
+        Check(selectedEarFilter == (int)EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE && selectedEarFilter == 1, "ear NONE filter incorrectly encoded as zero");
+        calls.Clear(); audio.ApplyEar(false, 100, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE); Check(calls.SequenceEqual(new[] { "IRtcEngine.EnableInEarMonitoring" }) && audio.EarRequested == false, "ear disable restarted audio/volume");
+        Reject(() => audio.ApplyEar(true, 100, (EAR_MONITORING_FILTER_TYPE)0), "zero ear filter accepted");
+        audio.Reset(); calls.Clear(); failEar = true;
+        try { audio.ApplyEar(true, 100, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE); throw new Exception("ear native error swallowed"); } catch (InvalidOperationException) { checks++; }
+        Check(audio.EarRequested == null && !calls.Contains("IRtcEngine.SetInEarMonitoringVolume"), "failed ear enable advanced state/volume");
+        failEar = false; audio.ApplyEar(true, 100, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS);
+        Check(selectedEarFilter == 2, "selected ear filter ignored");
+        foreach (EAR_MONITORING_FILTER_TYPE filter in Enum.GetValues(typeof(EAR_MONITORING_FILTER_TYPE)))
+        {
+            audio.ApplyEar(true, 100, filter);
+            Check(selectedEarFilter == (int)filter, "ear selection was replaced: " + filter);
+        }
         Reject(() => audio.SetEarVolume(401), "ear upper limit accepted");
         Reject(() => audio.SetVolume(true, "mic", 256), "device volume upper limit accepted");
         audio.Reset(); Check(audio.EarRequested == null, "ear request state survived release");

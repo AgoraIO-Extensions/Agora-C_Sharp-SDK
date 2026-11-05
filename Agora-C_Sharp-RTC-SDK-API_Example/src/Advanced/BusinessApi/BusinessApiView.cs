@@ -183,12 +183,7 @@ namespace C_Sharp_API_Example
             if (name == "OnExtResponse" || name == "OnSongSimpleInfoResult") songInfo.Text = json;
             if (name == "OnStreamMessage" || name == "OnAudioMetadataReceived")
             {
-                var payload = value.GetProperty("payload");
-                received.Text = "正文（UTF-8）：" + Environment.NewLine + payload.GetProperty("utf8").GetString() +
-                    Environment.NewLine + Environment.NewLine + "类型：" + name +
-                    Environment.NewLine + "字节数：" + payload.GetProperty("reportedLength").GetRawText() +
-                    "；十六进制：" + payload.GetProperty("hex").GetString() +
-                    (payload.GetProperty("truncated").GetBoolean() ? Environment.NewLine + "内容过长，展示已截断。" : "");
+                received.Text = "类型：" + name + Environment.NewLine + BusinessApiJson.MessageDisplay(value);
             }
         }
         internal void Log(string message)
@@ -247,6 +242,15 @@ namespace C_Sharp_API_Example
             }
             finally { recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); recordPath.Clear(); logPath.Clear(); parameterKey.Clear(); parameterValue.Clear(); relayChannel.Clear(); }
             if (Session.Initialized || pages.Count != SceneNames.Length || bindings.Count < 80) throw new InvalidOperationException("场景入口不完整。");
+            const string punctuation = "中文 English: !@#$%^&*()_+-=[]{};:\'\"<>,.?/\\|`~\r\n换行\tTAB";
+            byte[] payload = Encoding.UTF8.GetBytes(punctuation);
+            var events = new BusinessRtcEvents((name, value) => UpdateEvent(name, BusinessApiJson.Result(value)));
+            events.OnStreamMessage(new RtcConnection("ui-smoke", 1001), 1002, 7, payload, (ulong)payload.Length, 0);
+            if (!received.Text.Contains(punctuation) || !received.Text.Contains(Convert.ToHexString(payload)))
+                throw new InvalidOperationException("实际接收控件改变了消息标点或字节。");
+            events.OnAudioMetadataReceived(new RtcConnection("ui-smoke", 1001), 1002, payload, (ulong)payload.Length);
+            if (!received.Text.Contains(punctuation)) throw new InvalidOperationException("实际元数据接收控件改变了标点。");
+            received.Clear();
             return operations.Count;
         }
         protected override void Dispose(bool disposing)
