@@ -164,5 +164,14 @@ namespace Agora.Rtc
             return _impl.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
         }
 
+        public override int SendExtRequest(ref string requestId, string jsonOption)
+        {
+            if (_impl == null)
+            {
+                return ErrorCode;
+            }
+            return _impl.SendExtRequest(ref requestId, jsonOption);
+        }
+
     }
 }

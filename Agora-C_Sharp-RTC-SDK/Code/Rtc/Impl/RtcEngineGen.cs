@@ -1847,6 +1847,15 @@ namespace Agora.Rtc
             return _impl.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
         }
 
+        public override LoopbackRecordingSourceInfo[] GetLoopbackRecordingSources(LoopbackRecordingSourceOptions options)
+        {
+            if (_impl == null)
+            {
+                return null;
+            }
+            return _impl.GetLoopbackRecordingSources(options);
+        }
+
         public override int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction)
         {
             if (_impl == null)

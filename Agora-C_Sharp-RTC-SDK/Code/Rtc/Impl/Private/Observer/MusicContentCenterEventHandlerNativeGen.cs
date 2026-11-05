@@ -104,6 +104,23 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         break;
                     }
+                case AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONEXTRESPONSE_bd3489b:
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (EventHandler == null) return;
+                        EventHandler.OnExtResponse(
+                        (string)AgoraJson.GetData<string>(jsonData, "requestId"),
+                        (string)AgoraJson.GetData<string>(jsonData, "jsonOption"),
+                        (int)AgoraJson.GetData<int>(jsonData, "httpCode"),
+                        (string)AgoraJson.GetData<string>(jsonData, "response")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+});
+#endif
+                        break;
+                    }
                 default:
                     {
                         AgoraLog.LogWarning("unknow event: " + @event);

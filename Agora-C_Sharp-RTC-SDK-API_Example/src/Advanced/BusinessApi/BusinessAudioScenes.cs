@@ -89,8 +89,25 @@ namespace C_Sharp_API_Example
             bindings.Add(("IRtcEngine.SetInEarMonitoringVolume", button, () => new { volume = (int)earVolume.Value }));
             return button;
         }
+        private readonly NumericUpDown loopbackFlags = Number(3, 3, 1), loopbackId = Number(uint.MaxValue, 0);
+        private readonly TextBox excludedNames = Input(220, "排除应用名，逗号分隔"), excludedPids = Input(220, "排除进程ID，逗号分隔");
+        private LoopbackAudioTrackConfig LoopbackConfig()
+        {
+            var names = excludedNames.Text.Split(',').Select(x => x.Trim()).Where(x => x.Length != 0).ToArray();
+            var ids = excludedPids.Text.Split(',').Select(x => x.Trim()).Where(x => x.Length != 0).Select(uint.Parse).ToArray();
+            return new LoopbackAudioTrackConfig { excludedAppNames = names, excludedAppCount = (uint)names.Length,
+                excludedProcessIds = ids, excludedProcessCount = (uint)ids.Length };
+        }
         private Control AudioScene() => Page(
             "先填写主窗口AppId/频道并初始化。选择真实设备或远端UID，分别控制采集、上行和下行。热插拔后刷新设备；不要将设备静音当作停止发布。",
+            Row(Label("回环源类别：1音频输出 / 2运行应用 / 3全部"), loopbackFlags,
+                Bind("枚举回环录音源", "IRtcEngine.GetLoopbackRecordingSources", () => new { options = new LoopbackRecordingSourceOptions((uint)loopbackFlags.Value) }, AudioResult("回环源及进程ID"))),
+            Row(excludedNames, excludedPids,
+                Bind("创建系统回环音轨", "IRtcEngine.CreateLoopbackAudioTrack", () => new { config = LoopbackConfig() }, r => loopbackId.Value = Convert.ToUInt32(r.Value)),
+                Label("音轨ID"), loopbackId,
+                Bind("销毁回环音轨", "IRtcEngine.DestroyLoopbackAudioTrack", () => new { trackId = (uint)loopbackId.Value })),
+            Row(Bind("回环发布音量100", "IRtcEngine.AdjustLoopbackAudioPublishVolume", () => new { trackId = (uint)loopbackId.Value, volume = 100 })),
+            Label("Windows仅首个排除项生效；进程ID列表优先于应用名。枚举不等于开始采集/发布；真实回环声音需QA验证。"),
             Row(Bind("获取设备管理器", "IRtcEngine.GetAudioDeviceManager"),
                 Bind("刷新麦克风", "IAudioDeviceManager.EnumerateRecordingDevices", after: r => Devices(recordingDevices, r.Value)),
                 Bind("刷新扬声器", "IAudioDeviceManager.EnumeratePlaybackDevices", after: r => Devices(playbackDevices, r.Value)), devicesStatus),

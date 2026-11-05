@@ -323,6 +323,8 @@ export function processCppConstructor(clazzName: string, fullFilePath: string): 
 
     if (array) {
         for (let e of array) {
+            // Directives can split a member initializer, such as Windows windowTitle.
+            e = e.replace(/^\s*#.*$/gm, "");
             let cppConstructor: CppConstructor = { parameters: [], initializes: [], bodys: [] };
             //Parse parameter list
             let firstPos = e.indexOf("(");

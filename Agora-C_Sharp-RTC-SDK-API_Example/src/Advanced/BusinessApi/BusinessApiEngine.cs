@@ -26,6 +26,7 @@ namespace C_Sharp_API_Example
         private Timer pcmTimer;
         private FileStream pcmFile;
         private readonly HashSet<uint> audioTracks = new HashSet<uint>();
+        private readonly HashSet<uint> loopbackTracks = new HashSet<uint>();
 
         internal BusinessApiEngine(BusinessApiView view) { this.view = view; }
         internal bool Initialized => rtc_engine_ != null;
@@ -90,6 +91,8 @@ namespace C_Sharp_API_Example
                     try { DestroyPlayer(pair.Key); }
                     catch (Exception e) { view.Log("播放器清理异常: " + e.GetType().Name); }
                 }
+                foreach (var id in loopbackTracks.ToArray()) Log("DestroyLoopbackAudioTrack", Engine.DestroyLoopbackAudioTrack(id));
+                loopbackTracks.Clear();
                 foreach (var id in audioTracks.ToArray())
                     Log("DestroyCustomAudioTrack", Engine.DestroyCustomAudioTrack(id));
                 if (frames != null) Log("UnRegisterAudioFrameObserver", Engine.UnRegisterAudioFrameObserver());
@@ -197,6 +200,8 @@ namespace C_Sharp_API_Example
             object result;
             try { result = op.Method.Invoke(target, args); }
             catch (TargetInvocationException e) { throw e.InnerException ?? e; }
+            if (name == "CreateLoopbackAudioTrack" && result is uint loopback && loopback != uint.MaxValue) loopbackTracks.Add(loopback);
+            if (name == "DestroyLoopbackAudioTrack" && result is int released && released >= 0) loopbackTracks.Remove((uint)args[0]);
             if (name == "CreateCustomAudioTrack" && result is uint track && track != uint.MaxValue)
                 audioTracks.Add(track);
             if (name == "DestroyCustomAudioTrack" && result is int destroyed && destroyed >= 0)

@@ -85,6 +85,7 @@ namespace C_Sharp_API_Example
     {
         private readonly Action<string, object> log;
         internal BusinessMusicEvents(Action<string, object> log) { this.log = log; }
+        public override void OnExtResponse(string requestId, string jsonOption, int httpCode, string response) => log(nameof(OnExtResponse), new { requestId, option = BusinessApiJson.DiagnosticInfo(jsonOption), httpCode, response = BusinessApiJson.DiagnosticInfo(response) });
         public override void OnMusicChartsResult(string requestId, MusicChartInfo[] result, MusicContentCenterStateReason reason) => log(nameof(OnMusicChartsResult), new { requestId, result, reason });
         public override void OnMusicCollectionResult(string requestId, MusicCollection result, MusicContentCenterStateReason reason) => log(nameof(OnMusicCollectionResult), new { requestId, result, reason });
         public override void OnLyricResult(string requestId, long songCode, string lyricUrl, MusicContentCenterStateReason reason) => log(nameof(OnLyricResult), new { requestId, songCode, lyricUrl, reason });

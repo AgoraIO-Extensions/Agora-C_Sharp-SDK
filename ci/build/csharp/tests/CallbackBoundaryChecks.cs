@@ -68,6 +68,17 @@ internal static class CallbackBoundaryChecks
     private class Face : IFaceInfoObserver { internal bool Throw; internal string Text; public override bool OnFaceInfo(string text) { Text = text; if (Throw) throw new InvalidOperationException("private-observer-text"); return true; } }
     private class MetadataHandler : IMetadataObserver { internal bool Throw; public override int GetMaxMetadataSize() { if (Throw) throw new InvalidOperationException("private-observer-text"); return 321; } public override bool OnReadyToSendMetadata(ref Metadata metadata, VIDEO_SOURCE_TYPE source) { metadata.size = 1; metadata.buffer = new IntPtr(123); throw new InvalidOperationException("private-observer-text"); } }
     private class Provider : IMediaPlayerCustomDataProvider { internal int Reads, Seeks; public override int OnReadData(IntPtr buffer, int size) { Reads++; if (size > 0) Marshal.WriteByte(buffer, 0x33); throw new InvalidOperationException("private-observer-text"); } public override long OnSeek(long offset, int whence) { Seeks++; throw new InvalidOperationException("private-observer-text"); } }
+    private class ExtMusic : IMusicContentCenterEventHandler
+    {
+        internal string Request, Option, Response; internal int Calls; internal bool Throw;
+        public override void OnMusicChartsResult(string id, MusicChartInfo[] data, MusicContentCenterStateReason reason) { }
+        public override void OnMusicCollectionResult(string id, MusicCollection data, MusicContentCenterStateReason reason) { }
+        public override void OnLyricResult(string id, long code, string url, MusicContentCenterStateReason reason) { }
+        public override void OnSongSimpleInfoResult(string id, long code, string data, MusicContentCenterStateReason reason) { }
+        public override void OnPreLoadEvent(string id, long code, int percent, string url, PreloadState state, MusicContentCenterStateReason reason) { }
+        public override void OnExtResponse(string id, string option, int httpCode, string response)
+        { Calls++; Request = id; Option = option; Response = response; if (Throw) throw new InvalidOperationException("private-observer-text"); }
+    }
     private class AudioFrames : IAudioFrameObserver { }
     private class AudioEncoded : IAudioEncodedFrameObserver { }
     private class Pcm : IAudioPcmFrameSink { }
@@ -124,6 +135,16 @@ internal static class CallbackBoundaryChecks
                     check(packet.GuardIntact, route.Item1 + " boundary/ABI guard");
                 }
             }
+            var ext = new ExtMusic();
+            Invoke("MusicContentCenterEventHandlerNative", "SetMusicContentCenterEventHandler", ext);
+            string extOption = Json(new { vendorId = 2, message = "中文\"请求" });
+            string extResponse = Json(new { title = "告五人", data = "中文\n响应" });
+            string wire = Json(new { requestId = "ext-4538", jsonOption = extOption, httpCode = 200, response = extResponse });
+            const string extEvent = "IMUSICCONTENTCENTEREVENTHANDLER_ONEXTRESPONSE_bd3489b";
+            Dispatch("MusicContentCenterEventHandlerNative", extEvent, wire);
+            check(ext.Request == "ext-4538" && ext.Option == extOption && ext.Response == extResponse, "4.5.3.8 extension response UTF-8/JSON fidelity");
+            ext.Throw = true; Dispatch("MusicContentCenterEventHandlerNative", extEvent, wire); ext.Throw = false;
+            Dispatch("MusicContentCenterEventHandlerNative", extEvent, wire); check(ext.Calls == 3, "extension observer failure recovery");
             const string text = "告五人\"中文";
             var r = Json(new { err = 1, msg = text });
             Dispatch("RtcEngineEventHandlerNative", routes[0].Item2, r); check(rtc.Text == text, "RTC UTF-8 text");

@@ -194,6 +194,14 @@ namespace Agora.Rtc
         public const string IMUSICCONTENTCENTER_GETSONGSIMPLEINFO_d3baeab = "MusicContentCenter_getSongSimpleInfo_d3baeab";
         //IMusicContentCenter::getInternalSongCode(int64_t songCode, char const* jsonOption, int64_t& internalSongCode, );
         public const string IMUSICCONTENTCENTER_GETINTERNALSONGCODE_3a3d1e7 = "MusicContentCenter_getInternalSongCode_3a3d1e7";
+        //IMusicContentCenter::sendExtRequest(agora::util::AString& requestId, char const* jsonOption, );
+        public const string IMUSICCONTENTCENTER_SENDEXTREQUEST_5651f34 = "MusicContentCenter_sendExtRequest_5651f34";
+        //ILoopbackRecordingSourceList::getCount();
+        public const string ILOOPBACKRECORDINGSOURCELIST_GETCOUNT = "LoopbackRecordingSourceList_getCount";
+        //ILoopbackRecordingSourceList::getSourceInfo(unsigned int index, );
+        public const string ILOOPBACKRECORDINGSOURCELIST_GETSOURCEINFO_2626ac7 = "LoopbackRecordingSourceList_getSourceInfo_2626ac7";
+        //ILoopbackRecordingSourceList::release();
+        public const string ILOOPBACKRECORDINGSOURCELIST_RELEASE = "LoopbackRecordingSourceList_release";
         //IVideoDeviceManager::enumerateVideoDevices();
         public const string IVIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES = "VideoDeviceManager_enumerateVideoDevices";
         //IVideoDeviceManager::setDevice(char const[512] deviceIdUTF8, );
@@ -644,6 +652,8 @@ namespace Agora.Rtc
         public const string IRTCENGINE_ENABLECAMERACENTERSTAGE_5039d15 = "RtcEngine_enableCameraCenterStage_5039d15";
         //IRtcEngine::getScreenCaptureSources(agora::rtc::SIZE const& thumbSize, agora::rtc::SIZE const& iconSize, bool const includeScreen, );
         public const string IRTCENGINE_GETSCREENCAPTURESOURCES_f3e02cb = "RtcEngine_getScreenCaptureSources_f3e02cb";
+        //IRtcEngine::getLoopbackRecordingSources(agora::rtc::LoopbackRecordingSourceOptions const& options, );
+        public const string IRTCENGINE_GETLOOPBACKRECORDINGSOURCES_89105d0 = "RtcEngine_getLoopbackRecordingSources_89105d0";
         //IRtcEngine::setAudioSessionOperationRestriction(agora::AUDIO_SESSION_OPERATION_RESTRICTION restriction, );
         public const string IRTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION_c492897 = "RtcEngine_setAudioSessionOperationRestriction_c492897";
         //IRtcEngine::startScreenCaptureByDisplayId(int64_t displayId, agora::rtc::Rectangle const& regionRect, agora::rtc::ScreenCaptureParameters const& captureParams, );
@@ -1176,6 +1186,8 @@ namespace Agora.Rtc
         public const string IMUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT_9ad9c90 = "MusicContentCenterEventHandler_onSongSimpleInfoResult_9ad9c90";
         //IMusicContentCenterEventHandler::onPreLoadEvent(char const* requestId, int64_t songCode, int percent, char const* lyricUrl, agora::rtc::PreloadState state, agora::rtc::MusicContentCenterStateReason reason, );
         public const string IMUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT_20170bc = "MusicContentCenterEventHandler_onPreLoadEvent_20170bc";
+        //IMusicContentCenterEventHandler::onExtResponse(char const* requestId, char const* jsonOption, int httpCode, char const* response, );
+        public const string IMUSICCONTENTCENTEREVENTHANDLER_ONEXTRESPONSE_bd3489b = "MusicContentCenterEventHandler_onExtResponse_bd3489b";
         //IRtcEngineEventHandler::onProxyConnected(char const* channel, agora::rtc::uid_t uid, agora::rtc::PROXY_TYPE proxyType, char const* localProxyIp, int elapsed, );
         public const string IRTCENGINEEVENTHANDLER_ONPROXYCONNECTED_9f89fd0 = "RtcEngineEventHandler_onProxyConnected_9f89fd0";
         //IRtcEngineEventHandler::onError(int err, char const* msg, );

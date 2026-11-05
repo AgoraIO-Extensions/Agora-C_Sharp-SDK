@@ -149,5 +149,33 @@ namespace Agora.Rtc.Ut.Event
             Assert.AreEqual(true, callback.OnPreLoadEventPassed(requestId, songCode, percent, lyricUrl, state, reason));
         }
 
+        [Test]
+        public void Test_IMusicContentCenterEventHandler_OnExtResponse_bd3489b()
+        {
+            ApiParam.@event = AgoraApiType.IMUSICCONTENTCENTEREVENTHANDLER_ONEXTRESPONSE_bd3489b;
+
+            jsonObj.Clear();
+
+            string requestId = ParamsHelper.CreateParam<string>();
+            jsonObj.Add("requestId", requestId);
+
+            string jsonOption = ParamsHelper.CreateParam<string>();
+            jsonObj.Add("jsonOption", jsonOption);
+
+            int httpCode = ParamsHelper.CreateParam<int>();
+            jsonObj.Add("httpCode", httpCode);
+
+            string response = ParamsHelper.CreateParam<string>();
+            jsonObj.Add("response", response);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, callback.OnExtResponsePassed(requestId, jsonOption, httpCode, response));
+        }
+
     }
 }

@@ -70,3 +70,16 @@ Iris 4.5.3.6-build.8（551d0b68）事件数据为UTF-8，data_size为字节数�
 修复仅位于手写MusicContentCenterEventHandlerNative入口：独立C#按原生指针及data_size显式解码UTF-8，再交给原生成分发；Unity原有分发路径保留。坏编码/JSON、缺字段及业务回调异常只输出事件类型/异常类型诊断，不输出响应正文和签名URL，不补造requestId，也不把失败记为成功。
 
 回归通过原生内存结构投递未转义的中文JSON，覆盖7162848780338400及“爱人错过/告五人”、NUL计数兼容、缺requestId、非法UTF-8/JSON、回调异常及下一次恢复；Windows CI在x86/x64均运行同一测试。此前仅以完整转义后的托管JSON测试，未覆盖真实Windows字节解码。实际曲库服务查询仍须使用项目有权访问的歌曲ID和匹配曲库Token，不应把默认1视为有效歌曲；现场闪退与播放效果仍需使用新签名包复测。
+
+## 4.5.3.8 新增接口验收
+
+本 Demo 继续使用原主窗口的六个业务场景，接口目录增加到 128 个类型化重载。
+
+- 曲库页：初始化曲库并注册事件，在“供应商确认的曲库扩展请求 JSON”中填写业务服务提供的请求（顶层包含 vendorId），点击“发送曲库扩展请求”。检查 SendExtRequest 的返回值和输出 requestId，再检查 OnExtResponse 的 requestId、httpCode、选项和响应。返回 0 仅表示请求已提交，不能代替异步业务结果。vendorId 1 为 YJX，2 为 TME；具体 action/参数须使用供应商约定，Demo 不伪造请求模板。
+- 音频设备页：初始化后选择回环源类别 1（音频输出）、2（运行应用）或 3（两者），点击“枚举回环录音源”，在结果中核对应用名、窗口标题及进程 ID 列表。枚举本身不会开始录音。
+- 填入逗号分隔的排除应用名或进程 ID，点击“创建系统回环音轨”，记录返回的音轨 ID。Demo 根据实际数组长度设置计数；Windows 仅首个排除项生效，进程 ID 优先于应用名，应用名包含 .exe。不要把 0–255 设备音量与音轨音量混淆。
+- 使用“回环发布音量100”及“销毁回环音轨”检查返回结果。需要验证发布声音时，须通过频道媒体选项显式发布对应 publishLoopbackAudioTrackIds，枚举/创建成功不代表已经发布。释放引擎时会清理本页创建的音轨。
+
+SDK 新增 GetLoopbackRecordingSources 返回托管快照数组；Iris 已复制并释放原生列表，调用方不应再释放列表指针。LoopbackAudioTrackConfig 增加 excludedAppNames/excludedAppCount、excludedProcessIds/excludedProcessCount；直接使用 SDK 时应保持计数与数组一致。保留原五参数构造函数；OnExtResponse 为可选虚方法，旧的曲库监听器不必新增实现。
+
+旧的 GetMusicCharts、GetMusicCollectionByMusicChartId、SearchMusic、GetLyric、GetSongSimpleInfo 按 4.5.3.8 原生头文件标记为弃用且仅支持 YJX，现有入口仍保留。新版曲库实际鉴权、供应商响应和真实设备回环音效由 QA 验收。曲库中文回调修复及异常边界继续保留。

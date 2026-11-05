@@ -180,8 +180,16 @@ namespace C_Sharp_API_Example
             if (name == "OnLocalAudioStateChanged" || name == "OnAudioDeviceStateChanged" || name == "OnAudioDeviceVolumeChanged") audioStatus.Text = name + " " + json;
             if (name == "OnAudioMixingStateChanged") mixingState.Text = "伴奏状态：" + json;
             if (name == "OnPreLoadEvent") musicProgress.Text = "预加载：" + json;
-            if (name == "OnSongSimpleInfoResult") songInfo.Text = json;
-            if (name == "OnStreamMessage" || name == "OnAudioMetadataReceived") received.Text = json;
+            if (name == "OnExtResponse" || name == "OnSongSimpleInfoResult") songInfo.Text = json;
+            if (name == "OnStreamMessage" || name == "OnAudioMetadataReceived")
+            {
+                var payload = value.GetProperty("payload");
+                received.Text = "正文（UTF-8）：" + Environment.NewLine + payload.GetProperty("utf8").GetString() +
+                    Environment.NewLine + Environment.NewLine + "类型：" + name +
+                    Environment.NewLine + "字节数：" + payload.GetProperty("reportedLength").GetRawText() +
+                    "；十六进制：" + payload.GetProperty("hex").GetString() +
+                    (payload.GetProperty("truncated").GetBoolean() ? Environment.NewLine + "内容过长，展示已截断。" : "");
+            }
         }
         internal void Log(string message)
         {

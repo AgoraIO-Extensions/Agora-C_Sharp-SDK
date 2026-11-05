@@ -29,6 +29,7 @@ namespace C_Sharp_API_Example
             if (string.IsNullOrEmpty(path)) throw new ArgumentException("旧版日志路径接口须填写完整文件路径；留空仅表示初始化时使用SDK默认路径。");
             return path;
         }
+        private readonly TextBox musicExtOptions = Input(600, "供应商确认的曲库扩展请求 JSON（含 vendorId）");
         private bool IsMusicPlayer => playerList.SelectedItem is PlayerChoice choice && choice.Music;
         private sealed class PlayerChoice
         {
@@ -56,6 +57,7 @@ namespace C_Sharp_API_Example
                     Label("歌曲ID"), songCode, Bind("查询歌曲信息", "IMusicContentCenter.GetSongSimpleInfo", () => new { requestId = "", songCode = (long)songCode.Value })),
                 Row(Bind("预加载歌曲", "IMusicContentCenter.Preload", () => new { requestId = "", songCode = (long)songCode.Value }),
                     Bind("查询预加载", "IMusicContentCenter.IsPreloaded", () => new { songCode = (long)songCode.Value }, r => musicProgress.Text = "IsPreloaded实际返回：" + r.Value), musicProgress),
+                Row(musicExtOptions, Bind("发送曲库扩展请求", "IMusicContentCenter.SendExtRequest", () => new { requestId = "", jsonOption = musicExtOptions.Text })),
                 songInfo,
                 Row(Bind("创建曲库播放器", "IMusicContentCenter.CreateMusicPlayer"), Bind("打开这首歌曲", "IMusicPlayer.Open", () => new { songCode = (long)songCode.Value, startPos = (long)startPosition.Value }),
                     musicMode, Bind("应用原唱/伴唱模式", "IMusicPlayer.SetPlayMode", () => new { mode = (MusicPlayMode)musicMode.SelectedItem }),

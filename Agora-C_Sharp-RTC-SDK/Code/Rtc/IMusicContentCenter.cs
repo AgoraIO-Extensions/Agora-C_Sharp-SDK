@@ -46,16 +46,19 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        [Obsolete("This method is deprecated and only supports the YJX music library.")]
         public abstract int GetMusicCharts(ref string requestId);
 
         ///
         /// @ignore
         ///
+        [Obsolete("This method is deprecated and only supports the YJX music library.")]
         public abstract int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartId, int page, int pageSize, string jsonOption = "");
 
         ///
         /// @ignore
         ///
+        [Obsolete("This method is deprecated and only supports the YJX music library.")]
         public abstract int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "");
 
         ///
@@ -87,17 +90,24 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        [Obsolete("This method is deprecated and only supports the YJX music library.")]
         public abstract int GetLyric(ref string requestId, long songCode, int lyricType = 0);
 
         ///
         /// @ignore
         ///
+        [Obsolete("This method is deprecated and only supports the YJX music library.")]
         public abstract int GetSongSimpleInfo(ref string requestId, long songCode);
 
         ///
         /// @ignore
         ///
         public abstract int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SendExtRequest(ref string requestId, string jsonOption);
 
     }
 }

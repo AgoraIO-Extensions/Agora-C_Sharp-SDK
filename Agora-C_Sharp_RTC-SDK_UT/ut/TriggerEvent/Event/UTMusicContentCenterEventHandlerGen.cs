@@ -177,5 +177,39 @@ namespace Agora.Rtc.Ut
 
         /////////////////////////////////
 
+        public bool OnExtResponse_bd3489b_be_trigger = false;
+        public string OnExtResponse_bd3489b_requestId;
+        public string OnExtResponse_bd3489b_jsonOption;
+        public int OnExtResponse_bd3489b_httpCode;
+        public string OnExtResponse_bd3489b_response;
+
+        public override void OnExtResponse(string requestId, string jsonOption, int httpCode, string response)
+        {
+            OnExtResponse_bd3489b_be_trigger = true;
+            OnExtResponse_bd3489b_requestId = requestId;
+            OnExtResponse_bd3489b_jsonOption = jsonOption;
+            OnExtResponse_bd3489b_httpCode = httpCode;
+            OnExtResponse_bd3489b_response = response;
+        }
+
+        public bool OnExtResponsePassed(string requestId, string jsonOption, int httpCode, string response)
+        {
+            if (OnExtResponse_bd3489b_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<string>(OnExtResponse_bd3489b_requestId, requestId) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtResponse_bd3489b_jsonOption, jsonOption) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnExtResponse_bd3489b_httpCode, httpCode) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnExtResponse_bd3489b_response, response) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
     }
 }

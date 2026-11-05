@@ -241,6 +241,14 @@ internal static class BusinessDemoChecks
         audio.Reset(); Check(audio.EarRequested == null, "ear request state survived release");
         events.OnClientRoleChanged(connection, CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE, new ClientRoleOptions());
         Check(callbacks.Last().Contains("OnClientRoleChanged"), "role callback not observable");
+        var oldLoopback = new LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE.LOOPBACK_SYSTEM, 100, "", "", uint.MaxValue);
+        Check(oldLoopback.excludedAppCount == 0 && oldLoopback.excludedProcessCount == 0, "legacy loopback constructor compatibility");
+        Check(new LoopbackRecordingSourceOptions().flags == 3, "loopback source default categories");
+        var loopback = new LoopbackAudioTrackConfig { excludedProcessIds = new uint[] { 1, uint.MaxValue }, excludedProcessCount = 2,
+            excludedAppNames = new[] { "中文.exe" }, excludedAppCount = 1 };
+        var loopbackJson = BusinessApiJson.Result(loopback);
+        Check(loopbackJson.Contains("4294967295") && loopbackJson.Contains("excludedProcessCount"), "loopback uint array serialization");
+        Check(typeof(IMusicContentCenterEventHandler).GetMethod("OnExtResponse").IsVirtual && !typeof(IMusicContentCenterEventHandler).GetMethod("OnExtResponse").IsAbstract, "new callback broke legacy observers");
         CheckMusicCallbackBytes();
         CallbackBoundaryChecks.Run(Check);
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");

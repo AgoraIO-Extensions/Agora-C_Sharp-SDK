@@ -27,6 +27,11 @@ namespace C_Sharp_API_Example
         };
         private static readonly string[][] Requirements = new string[][]
         {
+            new[] { "IMusicContentCenter.SendExtRequest", "发送曲库供应商扩展请求", "4.5.3.8新增" },
+            new[] { "IRtcEngine.GetLoopbackRecordingSources", "枚举回环录音进程", "4.5.3.8新增" },
+            new[] { "IRtcEngine.CreateLoopbackAudioTrack", "创建含排除规则的回环音轨", "4.5.3.8扩展" },
+            new[] { "IRtcEngine.DestroyLoopbackAudioTrack", "销毁回环音轨", "回环资源释放" },
+            new[] { "IRtcEngine.AdjustLoopbackAudioPublishVolume", "调整回环音轨音量", "回环验收" },
             new[] { "IAudioDeviceManager.EnumeratePlaybackDevices", "获取扬声器设备列表", "374、375、437、438、532、541" },
             new[] { "IAudioDeviceManager.EnumerateRecordingDevices", "获取麦克风设备列表", "368、369、431、432、532、540" },
             new[] { "IAudioDeviceManager.FollowSystemPlaybackDevice", "跟随系统默认音频设备", "531" },

@@ -14,6 +14,7 @@ export const methodReturnDefaultValueTable: Record<string, { callback: string, i
     "ulong": { callback: "0", interface: "0", impl: "0", ut: "0" },
     "IVideoEffectObject":{ callback: "null", interface: "null", impl: "null", ut: "null" },
     "MEDIA_PLAYER_STATE": { callback: "MEDIA_PLAYER_STATE.PLAYER_STATE_DO_NOTHING_INTERNAL", interface: "MEDIA_PLAYER_STATE.PLAYER_STATE_DO_NOTHING_INTERNAL", impl: "MEDIA_PLAYER_STATE.PLAYER_STATE_FAILED", ut: "MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE" },
+    "LoopbackRecordingSourceInfo[]": { callback: "null", interface: "null", impl: "null", ut: "0" },
     "ScreenCaptureSourceInfo[]": { callback: "null", interface: "null", impl: "null", ut: "0" },
     "CONNECTION_STATE_TYPE": { callback: "CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED", interface: "CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED", impl: "CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED", ut: "CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED" },
 }

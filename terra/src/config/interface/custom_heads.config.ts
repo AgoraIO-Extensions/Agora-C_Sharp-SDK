@@ -34,6 +34,10 @@ export const customHeads: CustomHead[] = [
         is_hide: true
     },
     {
+        name: "ILoopbackRecordingSourceList",
+        is_hide: true
+    },
+    {
         name: "IScreenCaptureSourceList",
         is_hide: true
     },
@@ -205,6 +209,8 @@ export const customHeads: CustomHead[] = [
     },
     {
         name: "IMusicContentCenterEventHandler",
+        hide_methods: ["onExtResponse"],
+        custom_methods: ["public virtual void OnExtResponse(string requestId, string jsonOption, int httpCode, string response) \n { \n }"],
         is_abstract: true
     },
     {
