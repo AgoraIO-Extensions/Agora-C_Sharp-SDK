@@ -3,6 +3,7 @@
 
 Use Agora RTC SDK with C#! 
 
+- Standalone Windows C# SDK 4.5: [Chinese API documentation](docs/csharp/zh-CN/README.md), including .NET Framework 4.5.2 integration, APIs, callbacks, types, and a source signature index.
 - You can find full API document(Unity) at [Document Center](https://docportal.shengwang.cn/cn/video-call-4.x/API%20Reference/cs_ng/v4.2.0/API/rtc_api_overview_ng.html)
 - You can find full release note(Unity) at [Release Note](https://docportal.shengwang.cn/cn/video-call-4.x/release_cs_ng?platform=Windows)
 
