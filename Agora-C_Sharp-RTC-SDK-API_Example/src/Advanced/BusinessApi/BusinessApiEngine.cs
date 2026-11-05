@@ -91,7 +91,8 @@ namespace C_Sharp_API_Example
                     try { DestroyPlayer(pair.Key); }
                     catch (Exception e) { view.Log("播放器清理异常: " + e.GetType().Name); }
                 }
-                foreach (var id in loopbackTracks.ToArray()) Log("DestroyLoopbackAudioTrack", Engine.DestroyLoopbackAudioTrack(id));
+                try { view.ReleaseLoopback(); }
+                catch (Exception e) { view.Log("回环清理未完成，将由引擎释放回收：" + e.GetType().Name); }
                 loopbackTracks.Clear();
                 foreach (var id in audioTracks.ToArray())
                     Log("DestroyCustomAudioTrack", Engine.DestroyCustomAudioTrack(id));

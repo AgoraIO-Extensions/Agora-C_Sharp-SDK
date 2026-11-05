@@ -15,7 +15,7 @@ namespace C_Sharp_API_Example
         private readonly CheckBox playerMute = new CheckBox { Text = "播放器本地静音", AutoSize = true };
         private readonly Label playerState = Label("播放器尚未打开"), playerProgress = Label("播放位置尚未报告"), mixingState = Label("伴奏尚未开始");
         private readonly NumericUpDown effectId = Number(int.MaxValue, 1), effectGain = Number(100, 100);
-        private readonly CheckBox effectPublish = new CheckBox { Text = "音效发布到远端", AutoSize = true }, loopback = new CheckBox { Text = "采集系统声音", AutoSize = true };
+        private readonly CheckBox effectPublish = new CheckBox { Text = "音效发布到远端", AutoSize = true }, loopback = new CheckBox { Text = "旧系统采集（无排除规则）", AutoSize = true };
         private void PickMedia()
         { using var d = new OpenFileDialog { Filter = "媒体文件|*.*" }; if (d.ShowDialog(this) == DialogResult.OK) mediaPath.Text = d.FileName; }
         private Action<BusinessApiResult> PlayerResult(string title) => r => playerProgress.Text = title + "：" + BusinessApiJson.Result(r.Outputs.Count > 0 ? r.Outputs : r.Value);
@@ -26,6 +26,12 @@ namespace C_Sharp_API_Example
             if (playerList.Items.Count > 0) playerList.SelectedIndex = 0;
             if (leadStart?.PlayerId == id) CancelLead();
             playerState.Text = "播放器已销毁：" + id;
+        }
+        private Button LegacyLoopbackButton()
+        {
+            var button = ActionButton("应用旧系统采集", () => RunLoopback(() => loopbackControl.SetLegacy(loopback.Checked)));
+            bindings.Add(("IRtcEngine.EnableLoopbackRecording", button, () => new { enabled = loopback.Checked, deviceName = "" }));
+            return button;
         }
         private Control PlayerScene() => Page(
             "AudioMixing与MediaPlayer分别演示。先打开音源，观察播放器就绪回调，再播放。播放/暂停/seek/停止各自有按钮；多个播放器用ID区分。",
@@ -54,6 +60,6 @@ namespace C_Sharp_API_Example
                 Bind("播放器发布音量", "IMediaPlayer.AdjustPublishSignalVolume", () => new { volume = (int)playerVolume.Value })),
             Row(Label("音效ID"), effectId, Label("增益"), effectGain, effectPublish,
                 Bind("播放音效", "IRtcEngine.PlayEffect", () => new { soundId = (int)effectId.Value, filePath = mediaPath.Text, loopCount = (int)loops.Value, pitch = 1.0, pan = 0.0, gain = (int)effectGain.Value, publish = effectPublish.Checked, startPos = (int)startPosition.Value })),
-            Row(loopback, Bind("应用系统声音采集", "IRtcEngine.EnableLoopbackRecording", () => new { enabled = loopback.Checked, deviceName = "" })));
+            Row(loopback, LegacyLoopbackButton(), Label("需要排除应用时，改用音频设备页的新回环创建/发布流程。切回旧采集会停止并销毁新音轨。")));
     }
 }

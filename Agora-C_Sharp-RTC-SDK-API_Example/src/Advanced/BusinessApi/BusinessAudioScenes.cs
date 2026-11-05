@@ -91,7 +91,33 @@ namespace C_Sharp_API_Example
             bindings.Add(("IRtcEngine.SetInEarMonitoringVolume", button, () => new { volume = (int)earVolume.Value }));
             return button;
         }
-        private readonly NumericUpDown loopbackFlags = Number(3, 3, 1), loopbackId = Number(uint.MaxValue, 0);
+        private readonly NumericUpDown loopbackFlags = Number(3, 3, 1), loopbackVolume = Number(400, 100);
+        private readonly Label loopbackId = Label("新回环：未创建");
+        private void RunLoopback(Action action)
+        {
+            try { action(); }
+            finally
+            {
+                loopback.Checked = loopbackControl.LegacyEnabled;
+                loopbackId.Text = "旧采集=" + loopbackControl.LegacyEnabled + "；新音轨=" +
+                    (loopbackControl.TrackId?.ToString() ?? "无") + "；发布请求=" + loopbackControl.Published;
+            }
+        }
+        private Control LoopbackControls()
+        {
+            var create = ActionButton("创建回环（关闭旧采集）", () => RunLoopback(() => loopbackControl.Create(LoopbackConfig())));
+            var publish = ActionButton("发布回环音轨", () => RunLoopback(() => loopbackControl.Publish(role.SelectedIndex == 0)));
+            var stop = ActionButton("取消回环发布", () => RunLoopback(loopbackControl.Unpublish));
+            var destroy = ActionButton("销毁回环音轨", () => RunLoopback(loopbackControl.Destroy));
+            var volume = ActionButton("设置回环发布音量", () => RunLoopback(() => loopbackControl.SetVolume((int)loopbackVolume.Value)));
+            bindings.Add(("IRtcEngine.CreateLoopbackAudioTrack", create, () => new { config = LoopbackConfig() }));
+            bindings.Add(("IRtcEngine.EnableLoopbackRecording", create, () => new { enabled = false, deviceName = "" }));
+            bindings.Add(("IRtcEngine.UpdateChannelMediaOptions", publish, () => new { options = BusinessLoopbackControl.Publication(loopbackControl.TrackId ?? 0, true) }));
+            bindings.Add(("IRtcEngine.UpdateChannelMediaOptions", stop, () => new { options = BusinessLoopbackControl.Publication(loopbackControl.TrackId ?? 0, false) }));
+            bindings.Add(("IRtcEngine.DestroyLoopbackAudioTrack", destroy, () => new { trackId = loopbackControl.TrackId ?? 0 }));
+            bindings.Add(("IRtcEngine.AdjustLoopbackAudioPublishVolume", volume, () => new { trackId = loopbackControl.TrackId ?? 0, volume = (int)loopbackVolume.Value }));
+            return Row(excludedNames, excludedPids, create, publish, stop, destroy, Label("音量0–400"), loopbackVolume, volume, loopbackId);
+        }
         private readonly TextBox excludedNames = Input(220, "排除应用名，逗号分隔"), excludedPids = Input(220, "排除进程ID，逗号分隔");
         private LoopbackAudioTrackConfig LoopbackConfig()
         {
@@ -104,15 +130,8 @@ namespace C_Sharp_API_Example
             "先填写主窗口AppId/频道并初始化。选择真实设备或远端UID，分别控制采集、上行和下行。热插拔后刷新设备；不要将设备静音当作停止发布。",
             Row(Label("回环源类别：1音频输出 / 2运行应用 / 3全部"), loopbackFlags,
                 Bind("枚举回环录音源", "IRtcEngine.GetLoopbackRecordingSources", () => new { options = new LoopbackRecordingSourceOptions((uint)loopbackFlags.Value) }, AudioResult("回环源及进程ID"))),
-            Row(excludedNames, excludedPids,
-                Bind("创建系统回环音轨", "IRtcEngine.CreateLoopbackAudioTrack", () => new { config = LoopbackConfig() }, r => loopbackId.Value = Convert.ToUInt32(r.Value)),
-                Label("音轨ID"), loopbackId,
-                Bind("销毁回环音轨", "IRtcEngine.DestroyLoopbackAudioTrack", () => new { trackId = (uint)loopbackId.Value })),
-            Row(Bind("回环发布音量100", "IRtcEngine.AdjustLoopbackAudioPublishVolume", () => new { trackId = (uint)loopbackId.Value, volume = 100 })),
-            Label("Windows仅首个排除项生效；进程ID列表优先于应用名。枚举不等于开始采集/发布；真实回环声音需QA验证。"),
-            Row(Bind("获取设备管理器", "IRtcEngine.GetAudioDeviceManager"),
-                Bind("刷新麦克风", "IAudioDeviceManager.EnumerateRecordingDevices", after: r => Devices(recordingDevices, r.Value)),
-                Bind("刷新扬声器", "IAudioDeviceManager.EnumeratePlaybackDevices", after: r => Devices(playbackDevices, r.Value)), devicesStatus),
+            LoopbackControls(),
+            Label("先入会并切主播，再创建和发布。枚举类别只影响列表；排除项在创建时生效，修改后需重建。Windows仅首项生效，PID优先。旧/新采集互斥。"),
             Row(Label("麦克风"), recordingDevices, Bind("切换麦克风", "IAudioDeviceManager.SetRecordingDevice", () => new { deviceId = DeviceId(recordingDevices) }),
                 Label("设备音量0–255"), recordDeviceVolume, DeviceVolumeButton(true, true), DeviceVolumeButton(true, false)),
             Row(recordMute, Bind("应用麦克风静音", "IAudioDeviceManager.SetRecordingDeviceMute", () => new { mute = recordMute.Checked }),

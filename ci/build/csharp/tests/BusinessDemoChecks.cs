@@ -278,6 +278,7 @@ internal static class BusinessDemoChecks
         Check(typeof(IMusicContentCenterEventHandler).GetMethod("OnExtResponse").IsVirtual && !typeof(IMusicContentCenterEventHandler).GetMethod("OnExtResponse").IsAbstract, "new callback broke legacy observers");
         CheckMusicCallbackBytes();
         CallbackBoundaryChecks.Run(Check);
+        LoopbackChecks.Run(Check);
         Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
     }
 }

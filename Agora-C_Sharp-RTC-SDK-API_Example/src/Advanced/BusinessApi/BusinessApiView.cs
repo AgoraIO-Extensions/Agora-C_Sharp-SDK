@@ -34,6 +34,7 @@ namespace C_Sharp_API_Example
         private readonly System.Windows.Forms.Timer drain = new System.Windows.Forms.Timer { Interval = 100 };
         internal readonly BusinessApiEngine Session;
         private readonly BusinessAudioControl audioControl;
+        private readonly BusinessLoopbackControl loopbackControl;
         private bool shuttingDown;
         private int dropped;
         internal string AppId => readAppId().Trim();
@@ -46,6 +47,7 @@ namespace C_Sharp_API_Example
             readAppId = appId; readChannel = channel; Dock = DockStyle.Fill;
             Session = new BusinessApiEngine(this);
             audioControl = new BusinessAudioControl(Call);
+            loopbackControl = new BusinessLoopbackControl(Call);
             secondChannel.Text = "business-b";
             var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 5, Padding = new Padding(6) };
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
@@ -165,8 +167,9 @@ namespace C_Sharp_API_Example
             if (item == null) { item = new PlayerChoice { Id = id, Music = music }; playerList.Items.Add(item); }
             playerList.SelectedItem = item;
         }
+        internal void ReleaseLoopback() { loopbackControl.Destroy(); }
         internal void SessionReleased()
-        { CancelLead(); audioControl.Reset(); relayConnection = null; playerList.Items.Clear(); recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); state.Text = "已释放；重新初始化后再操作。"; }
+        { loopbackControl.Reset(); loopback.Checked = false; loopbackId.Text = "新回环：未创建"; CancelLead(); audioControl.Reset(); relayConnection = null; playerList.Items.Clear(); recordingDevices.Items.Clear(); playbackDevices.Items.Clear(); state.Text = "已释放；重新初始化后再操作。"; }
         internal void NoteEvent(int epoch, string name, object value)
         { if (pendingEvents.Count < 1000) pendingEvents.Enqueue((epoch, name, BusinessApiJson.Result(value))); }
         private void UpdateEvent(string name, string json)
