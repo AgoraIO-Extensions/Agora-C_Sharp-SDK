@@ -251,5 +251,26 @@ namespace Agora.Rtc
             return result;
         }
 
+        public int SendExtRequest(ref string requestId, string jsonOption)
+        {
+            _param.Clear();
+            _param.Add("jsonOption", jsonOption);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.IMUSICCONTENTCENTER_SENDEXTREQUEST_5651f34,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            if (nRet == 0)
+            {
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
+            }
+
+            return result;
+        }
+
     }
 }

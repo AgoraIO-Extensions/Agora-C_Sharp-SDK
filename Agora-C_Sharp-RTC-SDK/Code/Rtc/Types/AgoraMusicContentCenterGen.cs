@@ -12,6 +12,23 @@ namespace Agora.Rtc
     ///
     /// @ignore
     ///
+    public enum MusicContentCenterVendorId
+    {
+        ///
+        /// @ignore
+        ///
+        kMusicContentCenterVendorIdYjx = 1,
+
+        ///
+        /// @ignore
+        ///
+        kMusicContentCenterVendorIdTme = 2,
+
+    }
+
+    ///
+    /// @ignore
+    ///
     public enum MusicPlayMode
     {
         ///

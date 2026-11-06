@@ -26,9 +26,13 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
             lock (observerLock)
             {
-                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
                 if (metadataObserver == null)
                 {
@@ -57,7 +61,7 @@ namespace Agora.Rtc
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
                     case AgoraApiType.IMETADATAOBSERVER_ONREADYTOSENDMETADATA_cbf4b59:
                         {
-                            var jsonData = AgoraJson.ToObject(data);
+                            var jsonData = RtcCallbackBoundary.Parse(data);
                             Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
                             VIDEO_SOURCE_TYPE source_type = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source_type");
                             bool result = metadataObserver.OnReadyToSendMetadata(ref metadata, source_type);
@@ -73,7 +77,7 @@ namespace Agora.Rtc
 #endif
                     case AgoraApiType.IMETADATAOBSERVER_ONMETADATARECEIVED_cb7661d:
                         {
-                            var jsonData = AgoraJson.ToObject(data);
+                            var jsonData = RtcCallbackBoundary.Parse(data);
                             Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
                             metadataObserver.OnMetadataReceived(metadata);
                         }
@@ -84,6 +88,14 @@ namespace Agora.Rtc
 
                 }
             }
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "MetaDataObserverNative");
+            }
+#endif
         }
 
         private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)

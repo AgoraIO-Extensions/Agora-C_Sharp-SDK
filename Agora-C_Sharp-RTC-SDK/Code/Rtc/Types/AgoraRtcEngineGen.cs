@@ -1788,6 +1788,86 @@ namespace Agora.Rtc
     }
 
     ///
+    /// @ignore
+    ///
+    public enum LOOPBACK_RECORDING_SOURCE_FLAG
+    {
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_RECORDING_SOURCE_FLAG_AUDIO_OUTPUT = 1 << 0,
+
+        ///
+        /// @ignore
+        ///
+        LOOPBACK_RECORDING_SOURCE_FLAG_RUNNING_APPLICATION = 1 << 1,
+
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class LoopbackRecordingSourceOptions
+    {
+        ///
+        /// @ignore
+        ///
+        public uint flags;
+
+        public LoopbackRecordingSourceOptions()
+        {
+            this.flags = 3;
+        }
+
+        public LoopbackRecordingSourceOptions(uint flags)
+        {
+            this.flags = flags;
+        }
+    }
+
+    ///
+    /// @ignore
+    ///
+    public class LoopbackRecordingSourceInfo
+    {
+        ///
+        /// @ignore
+        ///
+        public string appName;
+
+        ///
+        /// @ignore
+        ///
+        public string windowTitle;
+
+        ///
+        /// @ignore
+        ///
+        public uint[] processIds;
+
+        ///
+        /// @ignore
+        ///
+        public uint processCount;
+
+        public LoopbackRecordingSourceInfo()
+        {
+            this.appName = "";
+            this.windowTitle = "";
+            this.processIds = null;
+            this.processCount = 0;
+        }
+
+        public LoopbackRecordingSourceInfo(string appName, string windowTitle, uint[] processIds, uint processCount)
+        {
+            this.appName = appName;
+            this.windowTitle = windowTitle;
+            this.processIds = processIds;
+            this.processCount = processCount;
+        }
+    }
+
+    ///
     /// <summary>
     /// The advanced options for audio.
     /// </summary>

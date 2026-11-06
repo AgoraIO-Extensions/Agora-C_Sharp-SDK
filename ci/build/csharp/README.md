@@ -60,3 +60,25 @@ Use the companion EP-916 change in TOOL/rehoboam. It registers the independent `
 Merge/deploy the framework support and merge the SDK change before enabling live C# execution. Start with `Package_Publish=false` on the actual Windows agent, then inspect the candidate packages and perform Windows runtime smoke testing before a business release. CDN remains an explicitly approved existing release task. NuGet push remains a separate release operation with credentials held outside normal template parameters.
 
 The final signed Demo ZIPs undergo Windows startup smoke checks with shared-runtime environment roots disabled. Both processes must remain running and report their actual shown main form handle, process architecture and package-local .NET 10 runtime directory through the opt-in AGORA_DEMO_STARTUP_REPORT diagnostic. This works on an interactive desktop and on a CI service desktop. This verifies startup only, not login/channel/device QA. Microsoft runtime files retain vendor signatures; CodeSign signs product and bundled third-party binaries.
+
+### Business API Demo checks
+
+The Windows Demo includes Chinese business scenes integrated in the original main window. See
+[`BusinessApi/README.zh-CN.md`](../../../Agora-C_Sharp-RTC-SDK-API_Example/src/Advanced/BusinessApi/README.zh-CN.md)
+for the test procedure and the original Windows API mapping.
+
+Run the managed argument/callback contract checks without Native libraries or an App ID:
+
+```sh
+dotnet run --project ci/build/csharp/tests/BusinessDemoChecks.csproj -c Release
+```
+
+`smoke_demo.ps1` now also opens/renders the real integrated scenes from each packaged x86/x64 Demo,
+checks the typed scene button arguments and the backend overload contracts, and writes `*.business-ui.json` / `*.business-ui.png`.
+This opt-in diagnostic does not initialize Native or make calls. The existing shown-window
+and bundled-runtime checks run afterwards. Real device, audio, network, music authorization
+and two-party chorus acceptance remain separate QA steps.
+
+Standalone RTC callback safety covers all 16 handwritten event bridges through `RtcCallbackBoundary`: strict UTF-8 decoding by native byte length, parse/observer exception containment, and payload-free diagnostics. Frame/analysis failures return false, custom reads return 0, seeks return -1, and metadata failures return 0 or false with empty metadata; void notifications leave results untouched. Unity keeps its original marshalling/dispatch behavior; RTM is outside this change. The 415 offline checks include malformed raw bytes/JSON for every bridge, Chinese text, throwing observers and recovery, typed failure writebacks, NUL/guard bytes, and concurrent handler replacement. The Windows callback CI job runs these checks on both x86 and x64. These checks do not replace real-device QA.
+
+RTC 4.5.3.8 generation selects the matching shared headers. It includes music extension requests/responses, vendor IDs, loopback source snapshots and exclusion arrays. The native source-list owner stays inside Iris; the handwritten adapter returns managed snapshots. The old loopback constructor and existing music observer implementations remain source compatible. Managed shim regressions exercise the actual new API IDs, UTF-8 result decoding, uint process arrays, transport errors and ref request IDs; callback tests exercise extension response routing/recovery. See the Chinese Demo guide for real-service/device QA steps.

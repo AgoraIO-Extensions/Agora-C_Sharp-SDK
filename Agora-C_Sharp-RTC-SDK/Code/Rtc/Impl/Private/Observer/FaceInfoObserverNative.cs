@@ -26,10 +26,14 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
             lock (observerLock)
             {
-                if (faceInfoObserver == null) return;
-                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                if (faceInfoObserver == null) { RtcCallbackBoundary.WriteFailure(param); return; }
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
                 string @event = eventParam.@event;
                 string data = eventParam.data;
@@ -37,14 +41,14 @@ namespace Agora.Rtc
                 LitJson.JsonData jsonData = null;
                 if (data != null)
                 {
-                    jsonData = AgoraJson.ToObject(data);
+                    jsonData = RtcCallbackBoundary.Parse(data);
                 }
 
                 switch (@event)
                 {
                     case AgoraApiType.IFACEINFOOBSERVER_ONFACEINFO_3a2037f:
                         {
-                            if (faceInfoObserver == null) return;
+                            if (faceInfoObserver == null) { RtcCallbackBoundary.WriteFailure(param); return; }
                             string outFaceInfo = (string)AgoraJson.GetData<string>(jsonData, "outFaceInfo");
                             bool result = faceInfoObserver.OnFaceInfo(outFaceInfo);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -59,6 +63,14 @@ namespace Agora.Rtc
                         break;
                 }
             }
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "FaceInfoObserverNative");
+            }
+#endif
         }
     }
 }

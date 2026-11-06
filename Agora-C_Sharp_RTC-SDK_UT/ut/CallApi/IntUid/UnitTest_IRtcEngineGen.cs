@@ -2188,6 +2188,16 @@ namespace Agora.Rtc.Ut
 
 
         [Test]
+        public void Test_GetLoopbackRecordingSources_89105d0()
+        {
+            var options = ParamsHelper.CreateParam<LoopbackRecordingSourceOptions>();
+
+            var nRet = @interface.GetLoopbackRecordingSources(options);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_SetAudioSessionOperationRestriction_c492897()
         {
             var restriction = ParamsHelper.CreateParam<AUDIO_SESSION_OPERATION_RESTRICTION>();

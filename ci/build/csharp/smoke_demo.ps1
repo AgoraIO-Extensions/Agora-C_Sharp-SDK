@@ -20,6 +20,20 @@ try {
         if ($zips.Count -ne 1) { throw "Expected one $arch Demo ZIP" }
         $directory = Join-Path $output $arch
         [IO.Compression.ZipFile]::ExtractToDirectory($zips[0].FullName, $directory)
+        $uiReport = Join-Path $output "$arch.business-ui.json"
+        $uiProcess = Start-Process (Join-Path $directory 'C_Sharp-API_Example.exe') -WorkingDirectory $directory -PassThru `
+            -ArgumentList "--business-api-ui-check `"$uiReport`"" `
+            -RedirectStandardOutput (Join-Path $output "$arch.business-ui.stdout.log") -RedirectStandardError (Join-Path $output "$arch.business-ui.stderr.log")
+        $null = $uiProcess.Handle
+        if (-not $uiProcess.WaitForExit(60000)) {
+            Stop-Process -Id $uiProcess.Id -Force
+            throw "Demo $arch business API UI check timed out"
+        }
+        if ($uiProcess.ExitCode -ne 0 -or -not (Test-Path $uiReport)) { throw "Demo $arch business API UI check failed" }
+        $ui = Get-Content $uiReport -Raw -Encoding UTF8 | ConvertFrom-Json
+        if (-not $ui.passed -or $ui.overloads -lt 100 -or $ui.scene_count -ne 6 -or $ui.standalone_popup -or $ui.generic_argument_editor -or $ui.architecture -ine $arch) {
+            throw "Demo $arch business API UI evidence is invalid"
+        }
         $env:AGORA_DEMO_STARTUP_REPORT = Join-Path $output "$arch.startup.json"
         $process = $null
         try {
@@ -38,7 +52,10 @@ try {
             $results += @{ architecture = $arch; passed = $true; window_title = $report.window_title; runtime = $report.runtime_directory }
             Write-Host "Demo $arch shown main window and bundled .NET 10 runtime verified"
         } finally {
-            if ($process -and -not $process.HasExited) { Stop-Process -Id $process.Id -Force }
+            if ($process -and -not $process.HasExited) {
+                Stop-Process -Id $process.Id -Force
+                if (-not $process.WaitForExit(10000)) { throw "Demo $arch did not finish exiting before cleanup" }
+            }
             if (Test-Path $directory) { Remove-Item $directory -Recurse -Force }
         }
     }

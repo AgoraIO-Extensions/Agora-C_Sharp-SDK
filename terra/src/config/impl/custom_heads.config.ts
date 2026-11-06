@@ -39,6 +39,10 @@ export const customHeads: CustomHead[] = [
         is_hide: true,
     },
     {
+        name: "ILoopbackRecordingSourceList",
+        is_hide: true
+    },
+    {
         name: "IScreenCaptureSourceList",
         is_hide: true
     },
@@ -151,6 +155,7 @@ export const customHeads: CustomHead[] = [
             "registerMediaMetadataObserver",
             "unregisterMediaMetadataObserver",
             "getScreenCaptureSources",
+            "getLoopbackRecordingSources",
             "startDirectCdnStreaming",
             "registerAudioEncodedFrameObserver",
             "registerAudioSpectrumObserver",

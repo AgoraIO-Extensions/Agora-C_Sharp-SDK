@@ -12,11 +12,20 @@ namespace C_Sharp_API_Example
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static int Main(string[] commandLine)
         {
             Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            if (commandLine.Length == 2 && commandLine[0] == "--business-api-ui-check")
+            {
+                try { BusinessApiUiCheck.Run(commandLine[1]); return 0; }
+                catch (Exception error)
+                {
+                    System.IO.File.WriteAllText(commandLine[1], System.Text.Json.JsonSerializer.Serialize(new { passed = false, error = error.ToString() }));
+                    return 1;
+                }
+            }
             var form = new MainForm();
             var startupReport = Environment.GetEnvironmentVariable("AGORA_DEMO_STARTUP_REPORT");
             if (!string.IsNullOrWhiteSpace(startupReport))
@@ -35,6 +44,7 @@ namespace C_Sharp_API_Example
                     }))));
             }
             Application.Run(form);
+            return 0;
         }
     }
 }

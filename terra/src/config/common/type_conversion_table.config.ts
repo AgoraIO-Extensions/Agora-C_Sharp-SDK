@@ -9,6 +9,8 @@ export const typeConversionTable: ConversionTable = {
 
     special_class_param: {
         "AudioTrackIdList.trackIds": "uint[]",
+        "LoopbackAudioTrackConfig.excludedProcessIds": "uint[]",
+        "LoopbackRecordingSourceInfo.processIds": "uint[]",
         //The member buffer defined under ExternalVideoFrame will be defined as byte [] type
         "ExternalVideoFrame.buffer": "byte[]",
         "ExternalVideoFrame.eglContext": "IntPtr",
@@ -40,6 +42,8 @@ export const typeConversionTable: ConversionTable = {
     },
     special_method_param: {
         "AudioTrackIdList.AudioTrackIdList.trackIds": "uint[]",
+        "LoopbackAudioTrackConfig.LoopbackAudioTrackConfig.excludedProcessIds": "uint[]",
+        "LoopbackRecordingSourceInfo.LoopbackRecordingSourceInfo.processIds": "uint[]",
         "IAudioTrackObserver.onAudioTrackVolumeIndication.volumeInfo": "AudioTrackVolumeInfo",
         //The member build defined under IRtcEngine.getVersion will be defined as ref int type
         "IRtcEngine.getVersion.build": "ref int",
@@ -223,6 +227,8 @@ export const typeConversionTable: ConversionTable = {
         "float const*": "float",
         "agora::media::IAudioSpectrumObserver*": "IAudioSpectrumObserver",
         "agora::rtc::IScreenCaptureSourceList*": "ScreenCaptureSourceInfo[]",
+        "agora::rtc::ILoopbackRecordingSourceList*": "LoopbackRecordingSourceInfo[]",
+        "ILoopbackRecordingSourceList*": "LoopbackRecordingSourceInfo[]",
         "agora::media::IAudioFrameObserver*": "IAudioFrameObserver",
         "agora::media::IVideoFrameObserver*": "IVideoFrameObserver",
         "agora::media::IVideoEncodedFrameObserver*": "IVideoEncodedFrameObserver",

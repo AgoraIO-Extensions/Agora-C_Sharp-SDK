@@ -3876,6 +3876,11 @@ namespace Agora.Rtc
         public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
 
         ///
+        /// @ignore
+        ///
+        public abstract LoopbackRecordingSourceInfo[] GetLoopbackRecordingSources(LoopbackRecordingSourceOptions options);
+
+        ///
         /// <summary>
         /// Sets the operational permission of the SDK on the audio session.
         /// 

@@ -1,0 +1,284 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using Agora.Rtc;
+using C_Sharp_API_Example;
+
+internal static class BusinessDemoChecks
+{
+    private static int checks;
+    private static void Check(bool value, string name)
+    { if (!value) throw new InvalidOperationException(name); checks++; }
+    private static void Reject(Action action, string name)
+    { try { action(); } catch (ArgumentException) { checks++; return; } catch (JsonException) { checks++; return; } throw new InvalidOperationException(name); }
+    [StructLayout(LayoutKind.Sequential)]
+    private struct RawMusicEvent
+    {
+        public IntPtr Name, Data;
+        public uint DataSize;
+        public IntPtr Result, Buffer, Length;
+        public uint BufferCount;
+    }
+    private static void CheckMusicCallbackBytes()
+    {
+        var assembly = typeof(IRtcEngine).Assembly;
+        var bridge = assembly.GetType("Agora.Rtc.MusicContentCenterEventHandlerNative", true);
+        var flags = BindingFlags.Static | BindingFlags.NonPublic;
+        var setHandler = bridge.GetMethod("SetMusicContentCenterEventHandler", flags);
+        var dispatch = bridge.GetMethod("OnEvent", flags);
+        int delivered = 0;
+        string observed = null;
+        var handler = new BusinessMusicEvents((name, value) => { delivered++; observed = BusinessApiJson.Result(value); });
+        string info = "{\"name\":\"爱人错过\",\"singer\":\"告五人\",\"duration\":316,\"pitchs\":null}";
+        // Test-only native wire fixture: nlohmann::json::dump emits raw UTF-8 and backslash-escaped quotes.
+        var rawOptions = new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+        string valid = JsonSerializer.Serialize(new { requestId = "utf8-request", songCode = 7162848780338400L, simpleInfo = info, reason = 0 }, rawOptions);
+        Check(Encoding.UTF8.GetByteCount(valid) > valid.Length, "music fixture must contain raw UTF-8 bytes");
+        // Windows CP936 can consume a JSON escape after an odd number of UTF-8 Chinese bytes.
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        string ansiCorrupted = Encoding.GetEncoding(936).GetString(Encoding.UTF8.GetBytes(valid));
+        var parsed = assembly.GetType("Agora.Rtc.AgoraJson", true).GetMethod("ToObject", BindingFlags.Static | BindingFlags.Public).Invoke(null, new object[] { ansiCorrupted });
+        bool missingRequest = false;
+        try { parsed.GetType().GetProperty("Item", new[] { typeof(string) }).GetValue(parsed, new object[] { "requestId" }); }
+        catch (TargetInvocationException error) { missingRequest = error.InnerException is KeyNotFoundException; }
+        Check(missingRequest, "legacy CP936 decoding no longer reproduces the reported requestId failure");
+
+        var originalError = Console.Error;
+        using var errors = new System.IO.StringWriter();
+        Console.SetError(errors);
+        setHandler.Invoke(null, new object[] { handler });
+        void Send(byte[] bytes, bool includesNul = false)
+        {
+            IntPtr name = Marshal.StringToHGlobalAnsi("MusicContentCenterEventHandler_onSongSimpleInfoResult_9ad9c90");
+            IntPtr data = Marshal.AllocHGlobal(bytes.Length + 1);
+            IntPtr header = Marshal.AllocHGlobal(Marshal.SizeOf<RawMusicEvent>());
+            try
+            {
+                Marshal.Copy(bytes, 0, data, bytes.Length); Marshal.WriteByte(data, bytes.Length, 0);
+                var packet = new RawMusicEvent { Name = name, Data = data, DataSize = (uint)(bytes.Length + (includesNul ? 1 : 0)) };
+                Marshal.StructureToPtr(packet, header, false);
+                dispatch.Invoke(null, new object[] { header });
+            }
+            finally { Marshal.FreeHGlobal(header); Marshal.FreeHGlobal(data); Marshal.FreeHGlobal(name); }
+        }
+        try
+        {
+            Send(Encoding.UTF8.GetBytes(valid));
+            Check(delivered == 1 && observed.Contains("爱人错过") && observed.Contains("告五人"), "raw UTF-8 music callback was corrupted");
+            Check(observed.Contains("7162848780338400") && observed.Contains("utf8-request"), "music callback identity changed");
+            Send(Encoding.UTF8.GetBytes(valid), true);
+            Check(delivered == 2, "NUL-inclusive transport size failed");
+            string missing = JsonSerializer.Serialize(new { songCode = 7162848780338400L, simpleInfo = info, reason = 0 }, rawOptions);
+            Send(Encoding.UTF8.GetBytes(missing));
+            Check(delivered == 2, "missing requestId was fabricated or delivered");
+            Send(Encoding.UTF8.GetBytes("{\"requestId\":\"malformed-sensitive-value\""));
+            Send(new byte[] { 0xff });
+            Check(delivered == 2, "malformed/invalid UTF-8 callback delivered");
+            var throwing = new BusinessMusicEvents((name, value) => { throw new InvalidOperationException("sensitive-observer-value"); });
+            setHandler.Invoke(null, new object[] { throwing });
+            Send(Encoding.UTF8.GetBytes(valid));
+            Check(errors.ToString().Contains("InvalidOperationException"), "observer error was not diagnosed");
+            Check(!errors.ToString().Contains("sensitive-"), "rejection diagnostics leaked payload or observer text");
+            setHandler.Invoke(null, new object[] { handler });
+            Send(Encoding.UTF8.GetBytes(valid));
+            Check(delivered == 3, "callback did not recover after rejected event/observer exception");
+            string failure = JsonSerializer.Serialize(new { requestId = "failure-request", songCode = 1L, simpleInfo = "", reason = 3 });
+            Send(Encoding.UTF8.GetBytes(failure));
+            Check(delivered == 4 && observed.Contains("failure-request"), "resource failure callback regressed");
+        }
+        finally { setHandler.Invoke(null, new object[] { null }); Console.SetError(originalError); }
+    }
+    private static void Main()
+    {
+        var operations = BusinessApiOperation.Create();
+        Check(operations.Select(o => o.Api).Distinct().Count() >= 100, "business allowlist incomplete");
+        Check(!operations.Any(o => o.Method.Name == "SetEnableSpeakerphone"), "mobile API leaked into Windows catalog");
+        string sceneDirectory = System.IO.Path.Combine(Environment.CurrentDirectory, "Agora-C_Sharp-RTC-SDK-API_Example", "src", "Advanced", "BusinessApi");
+        foreach (var file in System.IO.Directory.GetFiles(sceneDirectory, "Business*Scenes.cs"))
+        {
+            foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpressions.Regex.Matches(
+                System.IO.File.ReadAllText(file), "\"((?:IRtcEngine(?:Ex)?|IAudioDeviceManager|IMediaPlayer|IMusicPlayer|IMusicContentCenter)\\.\\w+)\""))
+                Check(operations.Any(o => o.Api == match.Groups[1].Value), "unbound scene API: " + match.Groups[1].Value);
+        }
+        var connection = new RtcConnection("offline-test", 1001);
+        foreach (var op in operations)
+        {
+            var text = BusinessApiJson.Template(op, connection, "$token");
+            var args = BusinessApiJson.ReadArguments(op, text);
+            Check(args.Length == op.Method.GetParameters().Length, "argument count " + op);
+            if (op.Api == "IMusicContentCenter.Initialize")
+                Check(op.Method.GetParameters()[0].ParameterType == typeof(MusicContentCenterConfiguration), "wrong Initialize receiver");
+            if (op.Api == "IMediaPlayer.InitEventHandler")
+                Check(op.Method.GetParameters()[0].ParameterType == typeof(IMediaPlayerSourceObserver), "wrong event receiver");
+        }
+        var media = JsonSerializer.Deserialize<ChannelMediaOptions>("{\"publishMicrophoneTrack\":false,\"token\":null,\"audioDelayMs\":15}", BusinessApiJson.Options);
+        Check(media.publishMicrophoneTrack.HasValue() && !media.publishMicrophoneTrack.GetValue(), "explicit false lost");
+        Check(media.token != null && !media.token.HasValue(), "null Optional must stay empty, not null reference");
+        Check(media.audioDelayMs.HasValue() && media.audioDelayMs.GetValue() == 15, "Optional int lost");
+        Reject(() => JsonSerializer.Deserialize<ChannelMediaOptions>("{\"publishMicrophoneTrak\":true}", BusinessApiJson.Options), "unknown SDK field accepted");
+        var metadata = operations.First(o => o.Api == "IRtcEngineEx.SendAudioMetadataEx");
+        string send = "{\"connection\":{\"channelId\":\"test\",\"localUid\":1001},\"metadata\":[0,255,128],\"length\":3}";
+        var sent = BusinessApiJson.ReadArguments(metadata, send);
+        Check(((byte[])sent[1]).SequenceEqual(new byte[] { 0, 255, 128 }), "binary payload changed");
+        Reject(() => BusinessApiJson.ReadArguments(metadata, send.Replace("\"length\":3", "\"length\":4")), "oversized buffer accepted");
+        Reject(() => BusinessApiJson.ReadArguments(metadata, send.Replace("\"length\":3", "\"length\":0")), "zero-length pointer accepted");
+        Reject(() => BusinessApiJson.ReadArguments(metadata, send.Replace("[0,255,128]", "[]")), "empty buffer accepted");
+        Reject(() => BusinessApiJson.ReadArguments(metadata, send.Replace("[0,255,128]", "null")), "null buffer replaced with sample bytes");
+        var tooLong = new Dictionary<string, object> { ["connection"] = connection, ["metadata"] = new byte[256], ["length"] = 256 };
+        Reject(() => BusinessApiJson.ReadArguments(metadata, JsonSerializer.Serialize(tooLong, BusinessApiJson.Options)), "256-byte metadata accepted");
+        var good = new Dictionary<string, object> { ["connection"] = connection, ["metadata"] = new byte[255], ["length"] = 255 };
+        Check(((byte[])BusinessApiJson.ReadArguments(metadata, JsonSerializer.Serialize(good, BusinessApiJson.Options))[1]).Length == 255, "255-byte metadata rejected");
+        Reject(() => BusinessApiJson.ReadArguments(metadata, send.Replace("\"length\":3", "\"length\":3,\"length\":2")), "duplicate arguments accepted");
+        var frame = (AudioFrame)BusinessApiJson.Default(typeof(AudioFrame));
+        BusinessApiJson.ValidateFrame(frame); checks++;
+        frame.RawBuffer = new byte[1]; Reject(() => BusinessApiJson.ValidateFrame(frame), "short PCM buffer accepted");
+        frame = (AudioFrame)BusinessApiJson.Default(typeof(AudioFrame)); frame.buffer = new IntPtr(123);
+        Reject(() => BusinessApiJson.ValidateFrame(frame), "arbitrary native pointer accepted");
+        var callbacks = new List<string>();
+        var events = new BusinessRtcEvents((name, value) => callbacks.Add(name + " " + BusinessApiJson.Result(value)));
+        events.OnAudioMetadataReceived(connection, 2001, new byte[] { 0, 255, 128 }, 3);
+        events.OnStreamMessage(connection, 2001, 1, new byte[] { 0, 255, 128 }, 3, 99);
+        events.OnJoinChannelSuccess(connection, 1);
+        events.OnLeaveChannel(connection, new RtcStats());
+        events.OnTokenPrivilegeWillExpire(connection, "private-test-token");
+        Check(callbacks[0].Contains("00FF80") && callbacks[1].Contains("00FF80"), "receive bytes not observable");
+        Check(callbacks.Any(s => s.Contains("OnJoinChannelSuccess")), "join callback absent");
+        Check(callbacks.Any(s => s.Contains("OnLeaveChannel")), "leave callback absent");
+        Check(callbacks.All(s => !s.Contains("private-test-token")), "token leaked to callback log");
+        Check(!BusinessApiJson.Result(new { token = "private-test-token", appId = "private-app" }).Contains("private-"), "credential fields not redacted");
+        Check(!BusinessApiJson.Result(BusinessApiJson.DiagnosticInfo("{\"url\":\"https://example.invalid/song?token=private-url\",\"token\":\"private-value\"}")).Contains("private-"), "signed URL/token leaked");
+        var lead = new BusinessLeadStart(7, 4, connection);
+        Check(!lead.Joined(7, connection), "lead played before source ready");
+        Check(!lead.Opened(7, 5, true, false), "wrong player advanced lead");
+        Check(lead.Opened(7, 4, true, false), "source ready did not advance lead");
+        Check(!lead.Joined(7, new RtcConnection("other", 1001)), "wrong channel started lead");
+        Check(!lead.Joined(7, new RtcConnection("offline-test", 2002)), "wrong uid started lead");
+        Check(lead.Joined(7, connection), "correct join did not start lead");
+        Check(!lead.Joined(7, connection), "duplicate join replayed play");
+        lead = new BusinessLeadStart(7, 4, connection); lead.Cancel();
+        Check(!lead.Opened(7, 4, true, false) && !lead.Joined(7, connection), "cancelled lead advanced");
+        lead = new BusinessLeadStart(7, 4, connection);
+        Check(!lead.Opened(8, 4, true, false) && !lead.Joined(7, connection), "stale session advanced lead");
+        lead = new BusinessLeadStart(7, 4, connection);
+        Check(!lead.Opened(7, 4, false, true) && !lead.Joined(7, connection), "failed source advanced lead");
+        // QA regression: joined business-b/1100122 must relay to 123, not 123 -> 123.
+        var relay = new BusinessRelayRequest(new RtcConnection("business-b", 1100122), "source-relay", "123", 7777, "target-relay");
+        Check(relay.Connection.channelId == "business-b" && relay.Connection.localUid == 1100122, "relay lost selected Ex connection");
+        Check(relay.Configuration.srcInfo.channelName == "business-b" && relay.Configuration.srcInfo.uid == 0, "relay reused join UID");
+        Check(relay.Configuration.srcInfo.token == "source-relay" && relay.Configuration.destInfos[0].token == "target-relay", "relay credentials mixed");
+        var startRelay = operations.Single(o => o.Api == "IRtcEngineEx.StartOrUpdateChannelMediaRelayEx");
+        var relayArgs = BusinessApiJson.ReadArguments(startRelay, JsonSerializer.Serialize(relay.Arguments, BusinessApiJson.Options));
+        Check(((RtcConnection)relayArgs[1]).localUid == 1100122, "Ex relay serialized wrong source");
+        Check(operations.Any(o => o.Api == "IRtcEngineEx.StopChannelMediaRelayEx"), "Ex relay stop missing");
+        Reject(() => new BusinessRelayRequest(connection, "", connection.channelId, 7777, ""), "same-channel relay accepted");
+        Reject(() => new BusinessRelayRequest(connection, "", " ", 7777, ""), "empty target accepted");
+        var source = new RtcConnection("source-a", 1001);
+        relay = new BusinessRelayRequest(source, "", "target-b", 7777, "");
+        source.channelId = "edited"; source.localUid = 999;
+        Check(relay.Connection.channelId == "source-a" && relay.Connection.localUid == 1001, "editing source mutated captured relay connection");
+        Check(BusinessLogSettings.Levels[0] == LOG_LEVEL.LOG_LEVEL_INFO, "default log level must be INFO");
+        Check(!BusinessLogSettings.Levels.Contains(LOG_LEVEL.LOG_LEVEL_DEBUG) && !BusinessLogSettings.Levels.Contains(LOG_LEVEL.LOG_LEVEL_API_CALL), "internal log levels exposed");
+        var logConfig = BusinessLogSettings.Create("", 2048, LOG_LEVEL.LOG_LEVEL_INFO);
+        Check(logConfig.filePath == "" && logConfig.level == LOG_LEVEL.LOG_LEVEL_INFO, "SDK default log path lost");
+        var logPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "qa-sdk.log");
+        Check(BusinessLogSettings.Create(logPath, 5000, LOG_LEVEL.LOG_LEVEL_WARN).filePath == logPath, "explicit log path changed");
+        Reject(() => BusinessLogSettings.Create(logPath, 2048, LOG_LEVEL.LOG_LEVEL_DEBUG), "QA filter-zero regression accepted");
+        Reject(() => BusinessLogSettings.Create("relative.log", 2048, LOG_LEVEL.LOG_LEVEL_INFO), "relative log path accepted");
+        Reject(() => BusinessLogSettings.Create(System.IO.Path.GetTempPath(), 2048, LOG_LEVEL.LOG_LEVEL_INFO), "directory used as log file");
+        Reject(() => BusinessLogSettings.Create("", 1, LOG_LEVEL.LOG_LEVEL_INFO), "invalid log size accepted");
+        var chinese = System.Text.Encoding.UTF8.GetBytes("回魂中文\n引号\"");
+        events.OnAudioMetadataReceived(connection, 2001, chinese, (ulong)chinese.Length);
+        Check(callbacks.Last().Contains("回魂中文") && !callbacks.Last().Contains("\\u56DE"), "Chinese callback display escaped");
+        Check(callbacks.Last().Contains(Convert.ToHexString(chinese)), "display fix changed payload bytes");
+        string protectedDisplay = BusinessApiJson.Result(new { text = "中文<script>\n\"", token = "secret-value", appId = "secret-app" });
+        using (var displayDoc = JsonDocument.Parse(protectedDisplay))
+            Check(displayDoc.RootElement.GetProperty("text").GetString() == "中文<script>\n\"", "display escaping changed text");
+        Check(!protectedDisplay.Contains("<script>") && !protectedDisplay.Contains("secret-"), "display fix weakened redaction/HTML escaping");
+        const string punctuation = "中文 English: !@#$%^&*()_+-=[]{};:'\"<>,.?/\\|`~\r\n换行\tTAB";
+        var punctuationBytes = System.Text.Encoding.UTF8.GetBytes(punctuation);
+        events.OnStreamMessage(connection, 2002, 7, punctuationBytes, (ulong)punctuationBytes.Length, 0);
+        using (var packet = JsonDocument.Parse(callbacks.Last().Substring(callbacks.Last().IndexOf(' ') + 1)))
+        {
+            string shown = BusinessApiJson.MessageDisplay(packet.RootElement);
+            Check(shown.Contains(punctuation) && shown.Contains(Convert.ToHexString(punctuationBytes)), "stream punctuation displayed as JSON escapes or bytes changed");
+            Check(shown.Contains("2002") && shown.Contains(connection.channelId), "message display lost sender/connection");
+        }
+        events.OnAudioMetadataReceived(connection, 2002, punctuationBytes, (ulong)punctuationBytes.Length);
+        using (var packet = JsonDocument.Parse(callbacks.Last().Substring(callbacks.Last().IndexOf(' ') + 1)))
+            Check(BusinessApiJson.MessageDisplay(packet.RootElement).Contains(punctuation), "metadata punctuation display escaped");
+        var calls = new List<string>();
+        string activeRecording = "mic-current", activePlayback = "speaker-current";
+        bool failSet = false, failEar = false;
+        int selectedEarFilter = 0;
+        CONNECTION_STATE_TYPE fakeState = CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
+        var audio = new BusinessAudioControl((api, args) =>
+        {
+            calls.Add(api);
+            var input = JsonSerializer.SerializeToElement(args, BusinessApiJson.Options);
+            if (api == "IRtcEngine.EnableInEarMonitoring") { selectedEarFilter = input.GetProperty("includeAudioFilters").GetInt32(); if (failEar) throw new InvalidOperationException("native ear failure"); }
+            if (failSet && api.EndsWith("DeviceVolume") && api.Contains(".Set")) throw new InvalidOperationException("native failure");
+            if (api == "IRtcEngine.GetConnectionState") return new BusinessApiResult(fakeState);
+            if (api == "IAudioDeviceManager.SetRecordingDevice") activeRecording = input.GetProperty("deviceId").GetString();
+            if (api == "IAudioDeviceManager.SetPlaybackDevice") activePlayback = input.GetProperty("deviceId").GetString();
+            if (api == "IAudioDeviceManager.GetRecordingDevice") return new BusinessApiResult(0, new Dictionary<string, object> { ["deviceId"] = activeRecording });
+            if (api == "IAudioDeviceManager.GetPlaybackDevice") return new BusinessApiResult(0, new Dictionary<string, object> { ["deviceId"] = activePlayback });
+            if (api.EndsWith("DeviceVolume") && api.Contains(".Get")) return new BusinessApiResult(0, new Dictionary<string, object> { ["volume"] = 66 });
+            return new BusinessApiResult(0);
+        });
+        var roleOptions = new ChannelMediaOptions(); roleOptions.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE); roleOptions.publishMicrophoneTrack.SetValue(false);
+        audio.ApplyRole(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE, roleOptions);
+        Check(calls.SequenceEqual(new[] { "IRtcEngine.GetConnectionState", "IRtcEngine.SetClientRole", "IRtcEngine.UpdateChannelMediaOptions" }), "in-channel role did not update SDK and publish options");
+        calls.Clear(); fakeState = CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED;
+        audio.ApplyRole(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, new ChannelMediaOptions());
+        Check(!calls.Contains("IRtcEngine.UpdateChannelMediaOptions"), "pre-join role attempted live media update");
+        calls.Clear();
+        var measured = audio.SetVolume(true, "mic-selected", 67);
+        Check(activeRecording == "mic-selected" && measured.Volume == 66 && measured.DeviceId == "mic-selected", "volume must target selected device and return actual readback");
+        Check(calls.SequenceEqual(new[] { "IAudioDeviceManager.SetRecordingDevice", "IAudioDeviceManager.SetRecordingDeviceVolume", "IAudioDeviceManager.GetRecordingDevice", "IAudioDeviceManager.GetRecordingDeviceVolume" }), "recording volume call sequence wrong");
+        calls.Clear(); audio.SetVolume(false, "speaker-selected", 67);
+        Check(activePlayback == "speaker-selected" && !calls.Any(c => c.Contains("Recording")), "playback control used microphone API");
+        calls.Clear(); failSet = true;
+        try { audio.SetVolume(true, "mic-selected", 67); throw new Exception("native failure swallowed"); } catch (InvalidOperationException) { checks++; }
+        Check(!calls.Any(c => c.Contains(".Get")), "readback executed after rejected setter");
+        failSet = false; calls.Clear();
+        try { audio.SetEarVolume(100); throw new Exception("ear prerequisite ignored"); } catch (InvalidOperationException) { checks++; }
+        Check(calls.Count == 0, "ear volume called before enable");
+        audio.ApplyEar(true, 400, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE);
+        Check(calls.SequenceEqual(new[] { "IRtcEngine.EnableAudio", "IRtcEngine.EnableLocalAudio", "IRtcEngine.EnableInEarMonitoring", "IRtcEngine.SetInEarMonitoringVolume" }), "ear enable/capture/volume sequence wrong");
+        Check(audio.EarRequested == true, "ear request state absent");
+        Check(selectedEarFilter == (int)EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE && selectedEarFilter == 1, "ear NONE filter incorrectly encoded as zero");
+        calls.Clear(); audio.ApplyEar(false, 100, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE); Check(calls.SequenceEqual(new[] { "IRtcEngine.EnableInEarMonitoring" }) && audio.EarRequested == false, "ear disable restarted audio/volume");
+        Reject(() => audio.ApplyEar(true, 100, (EAR_MONITORING_FILTER_TYPE)0), "zero ear filter accepted");
+        audio.Reset(); calls.Clear(); failEar = true;
+        try { audio.ApplyEar(true, 100, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_NONE); throw new Exception("ear native error swallowed"); } catch (InvalidOperationException) { checks++; }
+        Check(audio.EarRequested == null && !calls.Contains("IRtcEngine.SetInEarMonitoringVolume"), "failed ear enable advanced state/volume");
+        failEar = false; audio.ApplyEar(true, 100, EAR_MONITORING_FILTER_TYPE.EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS);
+        Check(selectedEarFilter == 2, "selected ear filter ignored");
+        foreach (EAR_MONITORING_FILTER_TYPE filter in Enum.GetValues(typeof(EAR_MONITORING_FILTER_TYPE)))
+        {
+            audio.ApplyEar(true, 100, filter);
+            Check(selectedEarFilter == (int)filter, "ear selection was replaced: " + filter);
+        }
+        Reject(() => audio.SetEarVolume(401), "ear upper limit accepted");
+        Reject(() => audio.SetVolume(true, "mic", 256), "device volume upper limit accepted");
+        audio.Reset(); Check(audio.EarRequested == null, "ear request state survived release");
+        events.OnClientRoleChanged(connection, CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER, CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE, new ClientRoleOptions());
+        Check(callbacks.Last().Contains("OnClientRoleChanged"), "role callback not observable");
+        var oldLoopback = new LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE.LOOPBACK_SYSTEM, 100, "", "", uint.MaxValue);
+        Check(oldLoopback.excludedAppCount == 0 && oldLoopback.excludedProcessCount == 0, "legacy loopback constructor compatibility");
+        Check(new LoopbackRecordingSourceOptions().flags == 3, "loopback source default categories");
+        var loopback = new LoopbackAudioTrackConfig { excludedProcessIds = new uint[] { 1, uint.MaxValue }, excludedProcessCount = 2,
+            excludedAppNames = new[] { "中文.exe" }, excludedAppCount = 1 };
+        var loopbackJson = BusinessApiJson.Result(loopback);
+        Check(loopbackJson.Contains("4294967295") && loopbackJson.Contains("excludedProcessCount"), "loopback uint array serialization");
+        Check(typeof(IMusicContentCenterEventHandler).GetMethod("OnExtResponse").IsVirtual && !typeof(IMusicContentCenterEventHandler).GetMethod("OnExtResponse").IsAbstract, "new callback broke legacy observers");
+        CheckMusicCallbackBytes();
+        CallbackBoundaryChecks.Run(Check);
+        LoopbackChecks.Run(Check);
+        Console.WriteLine($"PASS: {checks} offline checks; {operations.Count} typed overloads. No native SDK calls or network operations.");
+    }
+}

@@ -2,6 +2,15 @@ import { CustomHead } from "../../type_definition";
 
 export const customHeads: CustomHead[] = [
     {
+        name: "LoopbackAudioTrackConfig",
+        custom_members: [
+            `public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)
+        : this(loopbackType, volume, deviceName, appName, processId, null, 0, null, 0)
+    {
+    }`
+        ]
+    },
+    {
         name: "ExternalVideoFrame",
         custom_members: [
             `public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, long fenceObject, float[] matrix, byte[] metadataBuffer, int metadataSize, byte[] alphaBuffer, bool fillAlphaBuffer, ALPHA_STITCH_MODE alphaStitchMode, IntPtr d3d11Texture2d, int textureSliceIndex, Hdr10MetadataInfo hdr10MetadataInfo, ColorSpace colorSpace)

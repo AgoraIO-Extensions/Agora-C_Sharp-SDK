@@ -33,6 +33,10 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             lock (observerLock)
             {
@@ -45,7 +49,7 @@ namespace Agora.Rtc
                     return;
 #endif
 
-                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
                 string @event = eventParam.@event;
                 string data = eventParam.data;
@@ -53,7 +57,7 @@ namespace Agora.Rtc
                 LitJson.JsonData jsonData = null;
                 if (data != null)
                 {
-                    jsonData = AgoraJson.ToObject(data);
+                    jsonData = RtcCallbackBoundary.Parse(data);
                 }
 
                 switch (@event)
@@ -65,6 +69,14 @@ namespace Agora.Rtc
                         }
                 }
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            }
+#endif
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "MusicContentCenterEventHandlerNative");
             }
 #endif
         }

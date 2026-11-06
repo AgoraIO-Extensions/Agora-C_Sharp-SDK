@@ -16,6 +16,13 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        public virtual void OnExtResponse(string requestId, string jsonOption, int httpCode, string response)
+        {
+        }
+
+        ///
+        /// @ignore
+        ///
         public abstract void OnMusicChartsResult(string requestId, MusicChartInfo[] result, MusicContentCenterStateReason reason);
 
         ///

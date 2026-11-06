@@ -39,9 +39,13 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            try
+            {
+#endif
             lock (observerLock)
             {
-                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
                 if (audioFrameObserver == null)
                 {
@@ -66,7 +70,7 @@ namespace Agora.Rtc
                     Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
                 }
 
-                LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
 
                 switch (@event)
                 {
@@ -154,6 +158,14 @@ namespace Agora.Rtc
                         break;
                 }
             }
+
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
+            }
+            catch (Exception error)
+            {
+                RtcCallbackBoundary.HandleException(param, error, "AudioFrameObserverNative");
+            }
+#endif
         }
 
         private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)

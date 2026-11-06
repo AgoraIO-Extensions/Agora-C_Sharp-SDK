@@ -179,5 +179,17 @@ namespace Agora.Rtc.Ut
         }
 
 
+        [Test]
+        public void Test_SendExtRequest_5651f34()
+        {
+            var requestId = ParamsHelper.CreateParam<string>();
+
+            var jsonOption = ParamsHelper.CreateParam<string>();
+
+            var nRet = @interface.SendExtRequest(ref requestId, jsonOption);
+            Assert.AreEqual(0, nRet);
+        }
+
+
     }
 }

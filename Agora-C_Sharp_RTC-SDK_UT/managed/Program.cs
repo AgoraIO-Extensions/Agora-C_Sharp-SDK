@@ -10,6 +10,7 @@ class Program
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     delegate int IntGetter();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] delegate IntPtr StringGetter();
     class Observer : IAudioTrackObserver
     {
         public int Calls;
@@ -97,6 +98,21 @@ class Program
         var api = Activator.CreateInstance(apiField.FieldType);
         apiField.FieldType.GetMethod("AllocResult", fields).Invoke(api, null);
         apiField.SetValue(impl, api);
+        var sources = impl.GetLoopbackRecordingSources(new LoopbackRecordingSourceOptions());
+        Check(sources.Length == 1 && sources[0].appName == "中文播放器" && sources[0].windowTitle == "测试", "native UTF-8 loopback source result");
+        Check(sources[0].processCount == 2 && sources[0].processIds[1] == uint.MaxValue, "native unsigned process IDs");
+        Check(impl.GetLoopbackRecordingSources(new LoopbackRecordingSourceOptions(0)).Length == 0, "loopback transport failure result");
+        bool nullRejected = false; try { impl.GetLoopbackRecordingSources(null); } catch (ArgumentNullException) { nullRejected = true; }
+        Check(nullRejected, "null loopback options reached transport");
+        var music = (MusicContentCenterImpl)RuntimeHelpers.GetUninitializedObject(typeof(MusicContentCenterImpl));
+        typeof(MusicContentCenterImpl).GetField("_disposed", fields).SetValue(music, true);
+        typeof(MusicContentCenterImpl).GetField("_param", fields).SetValue(music, new Dictionary<string, object>());
+        typeof(MusicContentCenterImpl).GetField("_apiParam", fields).SetValue(music, api);
+        string extId = ""; const string extOption = "{\"vendorId\":2,\"message\":\"中文请求\"}";
+        Check(music.SendExtRequest(ref extId, extOption) == 0 && extId == "ext-4538", "native extension API ID/ref result");
+        var lastData = Marshal.GetDelegateForFunctionPointer<StringGetter>(NativeLibrary.GetExport(shim, "TestLastData"));
+        string wire = Marshal.PtrToStringUTF8(lastData());
+        Check((string)JsonMapper.ToObject(wire)["jsonOption"] == extOption, "extension JSON option was not preserved");
         Check(impl.RegisterAudioTrackObserver(7, observer) == 0, "first track registration");
         Check(impl.RegisterAudioTrackObserver(8, observer) == 0, "same observer on two tracks");
         Check(impl.RegisterAudioTrackObserver(7, observer) == -(int)ERROR_CODE_TYPE.ERR_ALREADY_IN_USE, "duplicate same track registration");

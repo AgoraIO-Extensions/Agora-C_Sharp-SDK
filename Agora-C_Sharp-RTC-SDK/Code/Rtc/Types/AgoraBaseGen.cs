@@ -7821,6 +7821,11 @@ namespace Agora.Rtc
     ///
     public class LoopbackAudioTrackConfig
     {
+        public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)
+        : this(loopbackType, volume, deviceName, appName, processId, null, 0, null, 0)
+        {
+        }
+
         ///
         /// @ignore
         ///
@@ -7846,6 +7851,26 @@ namespace Agora.Rtc
         ///
         public uint processId;
 
+        ///
+        /// @ignore
+        ///
+        public string[] excludedAppNames;
+
+        ///
+        /// @ignore
+        ///
+        public uint excludedAppCount;
+
+        ///
+        /// @ignore
+        ///
+        public uint[] excludedProcessIds;
+
+        ///
+        /// @ignore
+        ///
+        public uint excludedProcessCount;
+
         public LoopbackAudioTrackConfig()
         {
             this.loopbackType = LOOPBACK_AUDIO_TRACK_TYPE.LOOPBACK_SYSTEM;
@@ -7853,15 +7878,23 @@ namespace Agora.Rtc
             this.deviceName = "";
             this.appName = "";
             this.processId = uint.MaxValue;
+            this.excludedAppNames = null;
+            this.excludedAppCount = 0;
+            this.excludedProcessIds = null;
+            this.excludedProcessCount = 0;
         }
 
-        public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)
+        public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId, string[] excludedAppNames, uint excludedAppCount, uint[] excludedProcessIds, uint excludedProcessCount)
         {
             this.loopbackType = loopbackType;
             this.volume = volume;
             this.deviceName = deviceName;
             this.appName = appName;
             this.processId = processId;
+            this.excludedAppNames = excludedAppNames;
+            this.excludedAppCount = excludedAppCount;
+            this.excludedProcessIds = excludedProcessIds;
+            this.excludedProcessCount = excludedProcessCount;
         }
     }
 

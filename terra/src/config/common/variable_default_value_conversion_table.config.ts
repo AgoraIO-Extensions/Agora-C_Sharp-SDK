@@ -8,6 +8,10 @@ import { ConversionTable } from "../../type_definition";
 export const variableDefaultValueConversionTable: ConversionTable = {
     special_class_param: {},
     special_method_param: {
+        "LoopbackRecordingSourceOptions.LoopbackRecordingSourceOptions.flags:LOOPBACK_RECORDING_SOURCE_FLAG_AUDIO_OUTPUT|LOOPBACK_RECORDING_SOURCE_FLAG_RUNNING_APPLICATION": "3",
+        "LoopbackAudioTrackConfig.LoopbackAudioTrackConfig.excludedAppNames:NULL": "null",
+        "LoopbackAudioTrackConfig.LoopbackAudioTrackConfig.excludedProcessIds:NULL": "null",
+        "LoopbackRecordingSourceInfo.LoopbackRecordingSourceInfo.processIds:NULL": "null",
         "IRtcEngine.enableLoopbackRecording.deviceName:__null": "\"\"",
         "IRtcEngine.enableLoopbackRecording.deviceName:NULL": "\"\"",
         "IMediaEngine.setExternalVideoSource.sourceType:VIDEO_FRAME": "@remove",
