@@ -39,23 +39,15 @@ def doPublish(buildVariables) {
     if (!params.Package_Publish) {
         return
     }
-    (shortVersion, releaseVersion) = buildUtils.getBranchVersion()
-    def archiveInfos = [
-        [
-          "type": "ARTIFACTORY",
-          "archivePattern": "*.zip",
-          "serverPath": "Unity_SDK_Build/${shortVersion}/${buildVariables.buildDate}/${env.platform}",
-          "serverRepo": "CSDC_repo" // ATTENTIONS: Update the artifactoryRepo if needed.
-        ]
-    ]
-    archiveUrls = archive.archiveFiles(archiveInfos) ?: []
-    archiveUrls = archiveUrls as Set
-    if (archiveUrls) {
-        def content = archiveUrls.join("\n")
-        writeFile(file: 'package_urls', text: content, encoding: "utf-8")
+    if (!fileExists('package_urls')) {
+        error('Unity packaging did not produce a completed package_urls manifest')
     }
-    archiveArtifacts(artifacts: "package_urls", allowEmptyArchive:true)
-    sh "rm -rf *.zip || true"
+    archiveUrls = readFile(file: 'package_urls', encoding: 'utf-8').readLines()
+    if (!archiveUrls || archiveUrls.any { !(it ==~ /https:\/\/[^\/\s]+\/\S+/) }) {
+        error('Unity package_urls must contain successful HTTPS upload URLs only')
+    }
+    archiveUrls = archiveUrls as Set
+    archiveArtifacts(artifacts: 'package_urls')
 }
 
 pipelineLoad(this, "Unity_SDK_Build", "build", "mac", "mac && unity")
