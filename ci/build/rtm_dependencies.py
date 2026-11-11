@@ -3,7 +3,7 @@ import argparse
 import json
 import re
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 PLATFORMS = {"iOS": "IOS", "Android": "ANDROID", "Mac": "MAC", "macOS": "MAC", "Windows": "WIN"}
 CONFIG = Path(__file__).with_name("rtm_dependencies.json")
@@ -19,6 +19,15 @@ def validate_url(url, platform, iris):
     name = parsed.path.rsplit("/", 1)[-1]
     if "rtm" not in name.lower() or "dcg" in name.lower():
         raise ValueError("RTC or unidentified artifact supplied to RTM")
+    # Official RTM distribution names differ from their Native SDK archive roots.
+    official_native = {
+        "ANDROID": r"Agora_RTM_JAVA_SDK_for_Android_v\d+\.\d+\.\d+\.zip",
+        "WIN": r"Agora_RTM_C\+\+_SDK_for_Windows_v\d+\.\d+\.\d+\.zip",
+        "IOS": r"Agora_RTM_OC_SDK_v\d+\.\d+\.\d+\.zip",
+        "MAC": r"Agora_RTM_OC_SDK_v\d+\.\d+\.\d+\.zip",
+    }
+    if not iris and re.fullmatch(official_native[platform], unquote(name)):
+        return url
     filename_platform = "Mac" if platform == "MAC" else {"IOS": "iOS", "ANDROID": "Android", "WIN": "Windows"}[platform]
     aliases = {"MAC": ("Mac", "macOS"), "WIN": ("Windows", "windows")}.get(platform, (filename_platform,))
     if not any(f"_{alias}_" in name for alias in aliases):

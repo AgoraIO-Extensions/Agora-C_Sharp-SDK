@@ -28,6 +28,19 @@ Mac. Ambiguous or incomplete results fail before PR creation. API changes need
 handwritten binding review; a successful managed compile is not native API or
 runtime acceptance.
 
+The Unity RTM 2.3.1 manifest now pairs the official Agora Native RTM 2.3.1
+distribution with IrisBuild #289 (2026-11-11), the same Iris release used by
+RN RTM. Android uses the JAVA SDK ZIP, Windows the C++ SDK ZIP, and iOS/macOS
+share the OC SDK ZIP, whose archive contains both device and desktop slices.
+These public filenames differ from their `Agora_Native_SDK_for_*_MINI_RTM`
+archive roots; the dependency validator accepts the platform-specific official
+names as well as historical preview names. Iris still requires Standalone
+on Android/iOS/Windows and the Unity bundle on macOS.
+
+Tracking: [ASS-3117](https://jira.agoralab.co/browse/ASS-3117) /
+[CSD-80440](https://jira.agoralab.co/browse/CSD-80440). The old dev.4 Job #670
+and its testing history do not certify a package built with these new URLs.
+
 After review and merge, sync the exact SDK/Quickstart branches to the CI mirror,
 then run packaging with RTC=false, RTM=true, SDK_VERSION set to the wrapper
 version and the reviewed branches. Pure RTM packaging requires the manifest;

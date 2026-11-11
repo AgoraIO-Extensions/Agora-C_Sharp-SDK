@@ -1,6 +1,6 @@
 import unittest
 
-from rtm_dependencies import from_results
+from rtm_dependencies import from_results, validate_url
 
 
 class RtmDependenciesTest(unittest.TestCase):
@@ -37,6 +37,29 @@ class RtmDependenciesTest(unittest.TestCase):
         values[0]["cdn"][0] = values[0]["cdn"][0].replace("_Android_", "_iOS_")
         with self.assertRaises(ValueError):
             from_results(values)
+
+    def test_official_native_names_and_unity_iris_selection(self):
+        values = self.inputs()
+        native = {
+            "Android": "Agora_RTM_JAVA_SDK_for_Android_v2.3.1.zip",
+            "Windows": "Agora_RTM_C%2B%2B_SDK_for_Windows_v2.3.1.zip",
+            "iOS": "Agora_RTM_OC_SDK_v2.3.1.zip",
+            "Mac": "Agora_RTM_OC_SDK_v2.3.1.zip",
+        }
+        for item in values:
+            item["cdn"] = ["https://download.agora.io/rtm2/release/" + native[item["platform"]]]
+            item["iris_cdn"][0] = item["iris_cdn"][0].replace("2.3.1-dev.4", "2.3.1")
+        selected = from_results(values)
+        self.assertEqual(len(selected), 8)
+        self.assertEqual(selected["NATIVE_IOS_URL"], selected["NATIVE_MAC_URL"])
+        with self.assertRaises(ValueError):
+            validate_url(selected["NATIVE_ANDROID_URL"], "IOS", False)
+        with self.assertRaises(ValueError):
+            validate_url(selected["NATIVE_IOS_URL"], "ANDROID", False)
+        with self.assertRaises(ValueError):
+            validate_url(selected["NATIVE_WIN_URL"] + "?token=private", "WIN", False)
+        with self.assertRaises(ValueError):
+            validate_url(selected["NATIVE_IOS_URL"], "IOS", True)
 
 
 if __name__ == "__main__":

@@ -1,10 +1,10 @@
 {
-  "IRIS_ANDROID_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_Android_Video_Standalone_16K_20261022_0648_341181.zip",
-  "IRIS_IOS_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_iOS_Video_Standalone_20261022_0648_331027.zip",
-  "IRIS_MAC_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_Mac_Video_Unity_20261022_0648_321000.zip",
-  "IRIS_WIN_URL": "https://download.agora.io/sdk/release/iris_2.3.1-dev.4_RTM_Windows_Video_Standalone_20261022_0648_311090.zip",
-  "NATIVE_ANDROID_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_Android_Preview_2.3.1-dev.4_Video_20261022_034607.zip",
-  "NATIVE_IOS_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_iOS_Preview_2.3.1-dev.4_Video_20261022_034607.zip",
-  "NATIVE_MAC_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_macOS_Preview_2.3.1-dev.4_Video_20261022_034607.zip",
-  "NATIVE_WIN_URL": "https://download.shengwang.cn/sdk/release/ShengwangRtmEngine_windows_Preview_2.3.1-dev.4_Video_20261022_034607.zip"
+  "NATIVE_ANDROID_URL": "https://download.agora.io/rtm2/release/Agora_RTM_JAVA_SDK_for_Android_v2.3.1.zip",
+  "NATIVE_IOS_URL": "https://download.agora.io/rtm2/release/Agora_RTM_OC_SDK_v2.3.1.zip",
+  "NATIVE_MAC_URL": "https://download.agora.io/rtm2/release/Agora_RTM_OC_SDK_v2.3.1.zip",
+  "NATIVE_WIN_URL": "https://download.agora.io/rtm2/release/Agora_RTM_C%2B%2B_SDK_for_Windows_v2.3.1.zip",
+  "IRIS_ANDROID_URL": "https://download.agora.io/sdk/release/iris_2.3.1_RTM_Android_Video_Standalone_16K_20261111_0209_341193.zip",
+  "IRIS_IOS_URL": "https://download.agora.io/sdk/release/iris_2.3.1_RTM_iOS_Video_Standalone_20261111_0209_331039.zip",
+  "IRIS_MAC_URL": "https://download.agora.io/sdk/release/iris_2.3.1_RTM_Mac_Video_Unity_20261111_0209_321012.zip",
+  "IRIS_WIN_URL": "https://download.agora.io/sdk/release/iris_2.3.1_RTM_Windows_Video_Standalone_20261111_0209_311102.zip"
 }
