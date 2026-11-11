@@ -71,6 +71,26 @@
 
 set -ex
 
+# Publish the completed URL manifest outside tempDir for the Jenkins wrapper.
+UNITY_PACKAGE_URLS="${WORKSPACE:?}/package_urls"
+UNITY_PACKAGE_URLS_PENDING="${UNITY_PACKAGE_URLS}.pending"
+rm -f "$UNITY_PACKAGE_URLS" "$UNITY_PACKAGE_URLS_PENDING"
+
+upload_unity_package() {
+    local package_path="$1"
+    local package_url
+    if ! package_url=$(python3 "${WORKSPACE}/artifactory_utils.py" --action=upload_file --file="$package_path" --project); then
+        echo "Unity package upload failed: $package_path" >&2
+        return 1
+    fi
+    if [[ ! "$package_url" =~ ^https://[^/[:space:]]+/[^[:space:]]+$ ]]; then
+        echo "Unity package upload did not return a single HTTPS URL" >&2
+        return 1
+    fi
+    printf '%s\n' "$package_url" >> "$UNITY_PACKAGE_URLS_PENDING" || return 1
+    printf '%s\n' "$package_url"
+}
+
 ###############################################
 # Resolve IRIS platform URLs from env or file #
 ###############################################
@@ -679,7 +699,7 @@ if [ "$VISIONOS_URL" != "" -a "$SPLIT_VISIONOS" == "true" ]; then
     fi
     7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME-VisionOS.unitypackage"
 
-    download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+    download_file=$(upload_unity_package "./$ZIP_FILE")
     payload1='{
             "msgtype": "text",
             "text": {
@@ -704,7 +724,7 @@ else
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
-download_file=$(python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project)
+download_file=$(upload_unity_package "./$ZIP_FILE")
 { set +x; } 2>/dev/null
 
 notify_content="Unity SDK Download URL:
@@ -739,5 +759,6 @@ curl -k -X POST -H "Content-Type: application/json; charset=UTF-8" \
     -d "$payload1" \
     "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=$robot_key"
 
+mv "$UNITY_PACKAGE_URLS_PENDING" "$UNITY_PACKAGE_URLS"
 cd ..
 rm -rf ./tempDir
