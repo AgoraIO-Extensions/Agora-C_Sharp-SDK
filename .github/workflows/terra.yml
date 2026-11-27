@@ -47,10 +47,12 @@ jobs:
           if git ls-remote --heads origin "$TARGET_BRANCH" | grep -q "refs/heads/$TARGET_BRANCH"; then
             echo "Branch '$TARGET_BRANCH' exists. Checking out..."
             git checkout "$TARGET_BRANCH"
+            # Preserve the approved source revision and its existing API adaptations.
+            git merge --ff-only "${{ github.sha }}"
           else
             echo "Branch '$TARGET_BRANCH' does not exist. Creating..."
             # Create from main if not exists
-            git checkout -b "$TARGET_BRANCH" "origin/$ORIGINAL_BRANCH"
+            git checkout -b "$TARGET_BRANCH" "${{ github.sha }}"
             git push origin "$TARGET_BRANCH"
           fi
 
