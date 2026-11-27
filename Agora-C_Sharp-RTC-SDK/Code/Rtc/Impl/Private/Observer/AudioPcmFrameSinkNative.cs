@@ -40,54 +40,54 @@ namespace Agora.Rtc
             try
             {
 #endif
-            lock (observerLock)
-            {
-                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
-
-                var data = eventParam.data;
-
-                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
-                int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
-                if (mediaPlayerAudioFrameObserverDic.ContainsKey(playerId) == false)
+                lock (observerLock)
                 {
-                    CreateDefaultReturn(ref eventParam, param);
-                    return;
+                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+
+                    var data = eventParam.data;
+
+                    LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
+                    int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
+                    if (mediaPlayerAudioFrameObserverDic.ContainsKey(playerId) == false)
+                    {
+                        CreateDefaultReturn(ref eventParam, param);
+                        return;
+                    }
+
+                    var audioFrameObserver = mediaPlayerAudioFrameObserverDic[playerId];
+                    var @event = eventParam.@event;
+                    var buffer = eventParam.buffer;
+                    var length = eventParam.length;
+                    var buffer_count = eventParam.buffer_count;
+
+                    IntPtr[] bufferArray = null;
+                    int[] lengthArray = null;
+
+                    if (buffer_count > 0)
+                    {
+                        bufferArray = new IntPtr[buffer_count];
+                        Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
+                        lengthArray = new int[buffer_count];
+                        Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
+                    }
+
+                    switch (@event)
+                    {
+                        case AgoraApiType.IAUDIOPCMFRAMESINK_ONFRAME_95f515a:
+                            {
+                                AudioPcmFrame frame = AgoraJson.JsonToStruct<AudioPcmFrame>(jsonData, "frame");
+                                IntPtr data_ = bufferArray[0];
+                                int dataLength = lengthArray[0];
+                                frame.data_ = new Int16[dataLength];
+                                Marshal.Copy(data_, frame.data_, 0, dataLength);
+                                audioFrameObserver.OnFrame(frame);
+                            }
+                            break;
+                        default:
+                            AgoraLog.LogError("unexpected event: " + @event);
+                            break;
+                    }
                 }
-
-                var audioFrameObserver = mediaPlayerAudioFrameObserverDic[playerId];
-                var @event = eventParam.@event;
-                var buffer = eventParam.buffer;
-                var length = eventParam.length;
-                var buffer_count = eventParam.buffer_count;
-
-                IntPtr[] bufferArray = null;
-                int[] lengthArray = null;
-
-                if (buffer_count > 0)
-                {
-                    bufferArray = new IntPtr[buffer_count];
-                    Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
-                    lengthArray = new int[buffer_count];
-                    Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
-                }
-
-                switch (@event)
-                {
-                    case AgoraApiType.IAUDIOPCMFRAMESINK_ONFRAME_95f515a:
-                        {
-                            AudioPcmFrame frame = AgoraJson.JsonToStruct<AudioPcmFrame>(jsonData, "frame");
-                            IntPtr data_ = bufferArray[0];
-                            int dataLength = lengthArray[0];
-                            frame.data_ = new Int16[dataLength];
-                            Marshal.Copy(data_, frame.data_, 0, dataLength);
-                            audioFrameObserver.OnFrame(frame);
-                        }
-                        break;
-                    default:
-                        AgoraLog.LogError("unexpected event: " + @event);
-                        break;
-                }
-            }
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
             }

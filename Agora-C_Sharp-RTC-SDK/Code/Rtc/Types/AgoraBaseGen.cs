@@ -6550,6 +6550,11 @@ namespace Agora.Rtc
         ///
         CONNECTION_CHANGED_INCONSISTENT_APPID = 24,
 
+        ///
+        /// @ignore
+        ///
+        CONNECTION_CHANGED_PCU_EXCEEDED = 25,
+
     }
 
     ///

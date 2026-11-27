@@ -39,38 +39,38 @@ namespace Agora.Rtc
             {
 #endif
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-            lock (observerLock)
-            {
+                lock (observerLock)
+                {
 #endif
-                if (EventHandler == null)
-                    return;
+                    if (EventHandler == null)
+                        return;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 if (CallbackObject == null || CallbackObject._CallbackQueue == null)
                     return;
 #endif
 
-                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
 
-                string @event = eventParam.@event;
-                string data = eventParam.data;
+                    string @event = eventParam.@event;
+                    string data = eventParam.data;
 
-                LitJson.JsonData jsonData = null;
-                if (data != null)
-                {
-                    jsonData = RtcCallbackBoundary.Parse(data);
-                }
+                    LitJson.JsonData jsonData = null;
+                    if (data != null)
+                    {
+                        jsonData = RtcCallbackBoundary.Parse(data);
+                    }
 
-                switch (@event)
-                {
-                    default:
-                        {
-                            OnEventGen(ref eventParam, jsonData, @event);
-                            break;
-                        }
-                }
+                    switch (@event)
+                    {
+                        default:
+                            {
+                                OnEventGen(ref eventParam, jsonData, @event);
+                                break;
+                            }
+                    }
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-            }
+                }
 #endif
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)

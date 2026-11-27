@@ -1429,12 +1429,17 @@ namespace Agora.Rtc
         ///
         public VideoFormat format;
 
+        ///
+        /// @ignore
+        ///
+        public Optional<bool> allowAutoMacroSwitching = new Optional<bool>();
+
         public CameraCapturerConfiguration()
         {
             this.format = new VideoFormat(0, 0, 0);
         }
 
-        public CameraCapturerConfiguration(Optional<CAMERA_DIRECTION> cameraDirection, Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType, Optional<string> deviceId, Optional<string> cameraId, Optional<bool> followEncodeDimensionRatio, VideoFormat format)
+        public CameraCapturerConfiguration(Optional<CAMERA_DIRECTION> cameraDirection, Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType, Optional<string> deviceId, Optional<string> cameraId, Optional<bool> followEncodeDimensionRatio, VideoFormat format, Optional<bool> allowAutoMacroSwitching)
         {
             this.cameraDirection = cameraDirection;
             this.cameraFocalLengthType = cameraFocalLengthType;
@@ -1442,6 +1447,7 @@ namespace Agora.Rtc
             this.cameraId = cameraId;
             this.followEncodeDimensionRatio = followEncodeDimensionRatio;
             this.format = format;
+            this.allowAutoMacroSwitching = allowAutoMacroSwitching;
         }
 
         ///
@@ -1483,6 +1489,12 @@ namespace Agora.Rtc
 
             writer.WritePropertyName("format");
             JsonMapper.WriteValue(this.format, writer, false, 0);
+
+            if (this.allowAutoMacroSwitching.HasValue())
+            {
+                writer.WritePropertyName("allowAutoMacroSwitching");
+                writer.Write(this.allowAutoMacroSwitching.GetValue());
+            }
 
             writer.WriteObjectEnd();
         }
