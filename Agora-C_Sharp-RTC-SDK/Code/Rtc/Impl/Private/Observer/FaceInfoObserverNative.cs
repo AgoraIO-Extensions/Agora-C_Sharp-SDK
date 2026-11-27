@@ -30,39 +30,39 @@ namespace Agora.Rtc
             try
             {
 #endif
-                lock (observerLock)
+            lock (observerLock)
+            {
+                if (faceInfoObserver == null) { RtcCallbackBoundary.WriteFailure(param); return; }
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+
+                string @event = eventParam.@event;
+                string data = eventParam.data;
+
+                LitJson.JsonData jsonData = null;
+                if (data != null)
                 {
-                    if (faceInfoObserver == null) { RtcCallbackBoundary.WriteFailure(param); return; }
-                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
-
-                    string @event = eventParam.@event;
-                    string data = eventParam.data;
-
-                    LitJson.JsonData jsonData = null;
-                    if (data != null)
-                    {
-                        jsonData = RtcCallbackBoundary.Parse(data);
-                    }
-
-                    switch (@event)
-                    {
-                        case AgoraApiType.IFACEINFOOBSERVER_ONFACEINFO_3a2037f:
-                            {
-                                if (faceInfoObserver == null) { RtcCallbackBoundary.WriteFailure(param); return; }
-                                string outFaceInfo = (string)AgoraJson.GetData<string>(jsonData, "outFaceInfo");
-                                bool result = faceInfoObserver.OnFaceInfo(outFaceInfo);
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+                    jsonData = RtcCallbackBoundary.Parse(data);
                 }
+
+                switch (@event)
+                {
+                    case AgoraApiType.IFACEINFOOBSERVER_ONFACEINFO_3a2037f:
+                        {
+                            if (faceInfoObserver == null) { RtcCallbackBoundary.WriteFailure(param); return; }
+                            string outFaceInfo = (string)AgoraJson.GetData<string>(jsonData, "outFaceInfo");
+                            bool result = faceInfoObserver.OnFaceInfo(outFaceInfo);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
             }

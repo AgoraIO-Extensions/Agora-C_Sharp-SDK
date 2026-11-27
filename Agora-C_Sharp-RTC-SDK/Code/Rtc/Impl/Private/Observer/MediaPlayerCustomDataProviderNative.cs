@@ -40,58 +40,58 @@ namespace Agora.Rtc
             try
             {
 #endif
-                lock (observerLock)
+            lock (observerLock)
+            {
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+
+                var data = eventParam.data;
+
+                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
+                int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
+                if (mediaPlayerCustomDataProviderDic.ContainsKey(playerId) == false)
                 {
-                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
-
-                    var data = eventParam.data;
-
-                    LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
-                    int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
-                    if (mediaPlayerCustomDataProviderDic.ContainsKey(playerId) == false)
-                    {
-                        CreateDefaultReturn(ref eventParam, param);
-                        return;
-                    }
-
-                    var customDataProvider = mediaPlayerCustomDataProviderDic[playerId];
-                    var @event = eventParam.@event;
-
-                    switch (@event)
-                    {
-                        case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA_6e75338:
-                            {
-                                IntPtr buffer0 = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "buffer");
-                                int bufferSize = (int)AgoraJson.GetData<int>(jsonData, "bufferSize");
-                                int result = customDataProvider.OnReadData(buffer0, bufferSize);
-
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                            }
-                            break;
-                        case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK_624d569:
-                            {
-                                Int64 offset = (Int64)AgoraJson.GetData<Int64>(jsonData, "offset");
-                                int whence = (int)AgoraJson.GetData<int>(jsonData, "whence");
-                                Int64 result = customDataProvider.OnSeek(offset, whence);
-
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                            }
-                            break;
-                        default:
-                            AgoraLog.LogError("unexpected event: " + @event);
-                            break;
-                    }
+                    CreateDefaultReturn(ref eventParam, param);
+                    return;
                 }
+
+                var customDataProvider = mediaPlayerCustomDataProviderDic[playerId];
+                var @event = eventParam.@event;
+
+                switch (@event)
+                {
+                    case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA_6e75338:
+                        {
+                            IntPtr buffer0 = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "buffer");
+                            int bufferSize = (int)AgoraJson.GetData<int>(jsonData, "bufferSize");
+                            int result = customDataProvider.OnReadData(buffer0, bufferSize);
+
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK_624d569:
+                        {
+                            Int64 offset = (Int64)AgoraJson.GetData<Int64>(jsonData, "offset");
+                            int whence = (int)AgoraJson.GetData<int>(jsonData, "whence");
+                            Int64 result = customDataProvider.OnSeek(offset, whence);
+
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    default:
+                        AgoraLog.LogError("unexpected event: " + @event);
+                        break;
+                }
+            }
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
             }
@@ -120,7 +120,7 @@ namespace Agora.Rtc
                     break;
                 case AgoraApiType.IMEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK_624d569:
                     {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                        #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                         Int64 result = 0;
 #else
                         Int64 result = -1;

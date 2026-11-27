@@ -31,6 +31,7 @@ class Program
 
     static void Main()
     {
+        CameraConfigurationChecks.Run();
         var shimPath = Environment.GetEnvironmentVariable("AGORA_TEST_SHIM_PATH");
         Check(!string.IsNullOrEmpty(shimPath), "set AGORA_TEST_SHIM_PATH to the test-only Iris transport");
         var shim = NativeLibrary.Load(shimPath);

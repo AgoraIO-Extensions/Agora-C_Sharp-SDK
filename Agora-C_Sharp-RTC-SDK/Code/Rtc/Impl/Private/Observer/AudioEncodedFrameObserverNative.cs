@@ -29,35 +29,35 @@ namespace Agora.Rtc
             try
             {
 #endif
-                lock (observerLock)
+            lock (observerLock)
+            {
+
+                if (audioEncodedFrameObserver == null) return;
+
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+                var @event = eventParam.@event;
+                var data = eventParam.data;
+
+                EncodedAudioFrameInfo audioEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedAudioFrameInfo>(data, "audioEncodedFrameInfo");
+                IntPtr frameBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "frameBuffer");
+                int frameLength = (int)AgoraJson.GetData<int>(data, "length");
+                switch (@event)
                 {
-
-                    if (audioEncodedFrameObserver == null) return;
-
-                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
-                    var @event = eventParam.@event;
-                    var data = eventParam.data;
-
-                    EncodedAudioFrameInfo audioEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedAudioFrameInfo>(data, "audioEncodedFrameInfo");
-                    IntPtr frameBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "frameBuffer");
-                    int frameLength = (int)AgoraJson.GetData<int>(data, "length");
-                    switch (@event)
-                    {
-                        case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME_d930ddc:
-                            audioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
-                            break;
-                        case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME_d930ddc:
-                            audioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
-                            break;
-                        case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME_d930ddc:
-                            audioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
-                            break;
-                        default:
-                            AgoraLog.LogError("unexpected event name :" + @event);
-                            break;
-                    }
-
+                    case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME_d930ddc:
+                        audioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
+                        break;
+                    case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME_d930ddc:
+                        audioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
+                        break;
+                    case AgoraApiType.IAUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME_d930ddc:
+                        audioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
+                        break;
+                    default:
+                        AgoraLog.LogError("unexpected event name :" + @event);
+                        break;
                 }
+
+            }
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
             }

@@ -81,65 +81,65 @@ namespace Agora.Rtc
             {
 #endif
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-                lock (observerLock)
-                {
+            lock (observerLock)
+            {
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
-                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
-                    var @event = eventParam.@event;
-                    var data = eventParam.data;
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+                var @event = eventParam.@event;
+                var data = eventParam.data;
 
-                    LitJson.JsonData jsonData = null;
-                    if (data != null)
-                    {
-                        jsonData = RtcCallbackBoundary.Parse(data);
-                    }
-
-                    string nativeHandle = (string)AgoraJson.GetData<string>(jsonData, "nativeHandle");
-                    switch (@event)
-                    {
-                        case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED_c38849f:
-                            {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            CallbackObject._CallbackQueue.EnQueue(() =>
-                            {
-#endif
-                                if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
-                                ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderStateChanged(
-                                    (string)AgoraJson.GetData<string>(jsonData, "channelId"),
-                                    (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
-                                    (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
-                                    (RecorderReasonCode)AgoraJson.GetData<int>(jsonData, "reason")
-                                );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            });
-#endif
-                                break;
-                            }
-
-                        case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED_64fa74a:
-                            {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            CallbackObject._CallbackQueue.EnQueue(() =>
-                            {
-#endif
-                                if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
-                                ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderInfoUpdated(
-                                    (string)AgoraJson.GetData<string>(jsonData, "channelId"),
-                                    (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
-                                    AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
-                                );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
-                            });
-#endif
-                                break;
-                            }
-                    }
-#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                LitJson.JsonData jsonData = null;
+                if (data != null)
+                {
+                    jsonData = RtcCallbackBoundary.Parse(data);
                 }
+
+                string nativeHandle = (string)AgoraJson.GetData<string>(jsonData, "nativeHandle");
+                switch (@event)
+                {
+                    case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED_c38849f:
+                        {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                            CallbackObject._CallbackQueue.EnQueue(() =>
+                            {
+#endif
+                            if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                            ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderStateChanged(
+                                (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                                (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                                (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
+                                (RecorderReasonCode)AgoraJson.GetData<int>(jsonData, "reason")
+                            );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                            });
+#endif
+                            break;
+                        }
+
+                    case AgoraApiType.IMEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED_64fa74a:
+                        {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                            CallbackObject._CallbackQueue.EnQueue(() =>
+                            {
+#endif
+                            if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                            ((IMediaRecorderObserver)mediaRecorderObserverDic[nativeHandle]).OnRecorderInfoUpdated(
+                                (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                                (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                                AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
+                            );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
+                            });
+#endif
+                            break;
+                        }
+                }
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            }
 #endif
 
 

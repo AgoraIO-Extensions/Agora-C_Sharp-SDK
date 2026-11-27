@@ -39,13 +39,8 @@ namespace Agora.Rtc
             else if (count != 0) throw new ArgumentException("Missing callback data.");
             return new IrisRtcCEventParam
             {
-                @event = Marshal.PtrToStringAnsi(raw.name),
-                data = data,
-                data_size = raw.dataSize,
-                result = raw.result,
-                buffer = raw.buffer,
-                length = raw.length,
-                buffer_count = raw.bufferCount
+                @event = Marshal.PtrToStringAnsi(raw.name), data = data, data_size = raw.dataSize,
+                result = raw.result, buffer = raw.buffer, length = raw.length, buffer_count = raw.bufferCount
             };
 #endif
         }

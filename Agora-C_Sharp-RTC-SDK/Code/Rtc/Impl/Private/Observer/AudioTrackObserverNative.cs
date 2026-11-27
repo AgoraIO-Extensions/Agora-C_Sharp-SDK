@@ -51,32 +51,32 @@ namespace Agora.Rtc
             try
             {
 #endif
-                lock (observerLock)
-                {
-                    if (observers.Count == 0) return;
+            lock (observerLock)
+            {
+                if (observers.Count == 0) return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
-                    var eventParam = RtcCallbackBoundary.ReadEvent(param);
-                    var jsonData = RtcCallbackBoundary.Parse(eventParam.data);
-                    if (eventParam.@event != AgoraApiType.IAUDIOTRACKOBSERVER_ONAUDIOTRACKVOLUMEINDICATION_9bd73f7)
-                    {
-                        AgoraLog.LogWarning("unknown audio track event: " + eventParam.@event);
-                        return;
-                    }
-                    var observer = GetAudioTrackObserver(jsonData);
-                    if (observer == null) return;
-                    var trackId = (uint)AgoraJson.GetData<uint>(jsonData, "trackId");
-                    var volumeInfo = (AudioTrackVolumeInfo)AgoraJson.JsonToStruct<AudioTrackVolumeInfo>(jsonData, "volumeInfo");
+                var eventParam = RtcCallbackBoundary.ReadEvent(param);
+                var jsonData = RtcCallbackBoundary.Parse(eventParam.data);
+                if (eventParam.@event != AgoraApiType.IAUDIOTRACKOBSERVER_ONAUDIOTRACKVOLUMEINDICATION_9bd73f7)
+                {
+                    AgoraLog.LogWarning("unknown audio track event: " + eventParam.@event);
+                    return;
+                }
+                var observer = GetAudioTrackObserver(jsonData);
+                if (observer == null) return;
+                var trackId = (uint)AgoraJson.GetData<uint>(jsonData, "trackId");
+                var volumeInfo = (AudioTrackVolumeInfo)AgoraJson.JsonToStruct<AudioTrackVolumeInfo>(jsonData, "volumeInfo");
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
-                    if (!ReferenceEquals(observer, GetAudioTrackObserver(jsonData))) return;
-                    observer.OnAudioTrackVolumeIndication(trackId, volumeInfo);
+                if (!ReferenceEquals(observer, GetAudioTrackObserver(jsonData))) return;
+                observer.OnAudioTrackVolumeIndication(trackId, volumeInfo);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                 });
 #endif
-                }
+            }
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
             }

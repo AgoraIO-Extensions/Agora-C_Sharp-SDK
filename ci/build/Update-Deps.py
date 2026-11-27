@@ -126,11 +126,14 @@ for item in data:
         deps[mode][f"IRIS_{platform.upper()}"] = iris_cdn
 
 
-# deps["audio"]["NATIVE_MACOS"],  deps["audio"]["NATIVE_WINDOWS"] will use Native_SDK_Video
-if deps["audio"]["NATIVE_MACOS"] == "" and deps["video"]["NATIVE_MACOS"] != "":
-    deps["audio"]["NATIVE_MACOS"] = deps["video"]["NATIVE_MACOS"]
-if deps["audio"]["NATIVE_WINDOWS"] == "" and deps["video"]["NATIVE_WINDOWS"] != "":
-    deps["audio"]["NATIVE_WINDOWS"] = deps["video"]["NATIVE_WINDOWS"]
+# Reuse desktop FULL for Audio only when an Audio Iris artifact was selected.
+# A Video-only update must preserve the unselected Audio section.
+for platform in ("MACOS", "WINDOWS"):
+    native_key = f"NATIVE_{platform}"
+    iris_key = f"IRIS_{platform}"
+    if (not deps["audio"][native_key] and deps["audio"][iris_key]
+            and deps["video"][native_key]):
+        deps["audio"][native_key] = deps["video"][native_key]
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))

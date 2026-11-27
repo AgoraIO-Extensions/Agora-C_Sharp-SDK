@@ -66,8 +66,8 @@ namespace Agora.Rtc
             {
 #endif
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-                lock (observerLock)
-                {
+            lock (observerLock)
+            {
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
@@ -75,44 +75,44 @@ namespace Agora.Rtc
                     return;
 #endif
 
-                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
-                    var @event = eventParam.@event;
-                    var data = eventParam.data;
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+                var @event = eventParam.@event;
+                var data = eventParam.data;
 
-                    var jsonData = RtcCallbackBoundary.Parse(data);
-                    int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
-                    switch (@event)
-                    {
-                        case AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONMETADATA_469a01b:
+                var jsonData = RtcCallbackBoundary.Parse(data);
+                int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
+                switch (@event)
+                {
+                    case AgoraApiType.IMEDIAPLAYERSOURCEOBSERVER_ONMETADATA_469a01b:
+                        {
+                            var byteLength = (int)AgoraJson.GetData<int>(jsonData, "length");
+                            var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
+                            var byteData = new byte[byteLength];
+                            if (byteLength != 0)
                             {
-                                var byteLength = (int)AgoraJson.GetData<int>(jsonData, "length");
-                                var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
-                                var byteData = new byte[byteLength];
-                                if (byteLength != 0)
-                                {
-                                    Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
-                                }
+                                Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
+                            }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                             CallbackObject._CallbackQueue.EnQueue(() =>
                                                                   {
 #endif
-                                if (!mediaPlayerSourceObserverDic.ContainsKey(playerId))
-                                    return;
-                                mediaPlayerSourceObserverDic[playerId].OnMetaData(byteData, byteLength);
+                            if (!mediaPlayerSourceObserverDic.ContainsKey(playerId))
+                                return;
+                            mediaPlayerSourceObserverDic[playerId].OnMetaData(byteData, byteLength);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS
                                                                   });
 #endif
-                                break;
-                            }
+                            break;
+                        }
 
-                        default:
-                            {
-                                OnEventGen(ref eventParam, jsonData, @event);
-                                break;
-                            }
-                    }
-#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+                    default:
+                        {
+                            OnEventGen(ref eventParam, jsonData, @event);
+                            break;
+                        }
                 }
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+            }
 #endif
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)

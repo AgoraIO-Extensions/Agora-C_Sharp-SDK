@@ -1378,6 +1378,11 @@ namespace Agora.Rtc
     ///
     public class CameraCapturerConfiguration : IOptionalJsonParse
     {
+        public CameraCapturerConfiguration(Optional<CAMERA_DIRECTION> cameraDirection, Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType, Optional<string> deviceId, Optional<string> cameraId, Optional<bool> followEncodeDimensionRatio, VideoFormat format)
+        : this(cameraDirection, cameraFocalLengthType, deviceId, cameraId, followEncodeDimensionRatio, format, new Optional<bool>())
+        {
+        }
+
         ///
         /// <summary>
         /// (Optional) The camera direction. See CAMERA_DIRECTION. This parameter is for Android and iOS only.

@@ -198,109 +198,109 @@ namespace Agora.Rtc
             try
             {
 #endif
-                lock (observerLock)
+            lock (observerLock)
+            {
+                IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
+
+                if (videoFrameObserver == null)
                 {
-                    IrisRtcCEventParam eventParam = RtcCallbackBoundary.ReadEvent(param);
-
-                    if (videoFrameObserver == null)
-                    {
-                        CreateDefaultReturn(ref eventParam, param);
-                        return;
-                    }
-
-                    var @event = eventParam.@event;
-                    var data = eventParam.data;
-
-                    switch (@event)
-                    {
-                        case AgoraApiType.IVIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME_1673590:
-                            {
-                                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
-                                IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-                                VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
-                                VideoFrame videoFrame1 = GetVideoFrame("", 0);
-                                ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
-                                bool result = videoFrameObserver.OnCaptureVideoFrame(sourceType, videoFrame1);
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                                break;
-                            }
-
-                        case AgoraApiType.IVIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME_1673590:
-                            {
-                                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
-                                IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-                                VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
-                                VideoFrame videoFrame1 = GetVideoFrame("", 1);
-                                ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
-                                bool result = videoFrameObserver.OnPreEncodeVideoFrame(sourceType, videoFrame1);
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                                break;
-                            }
-
-                        case AgoraApiType.IVIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME_e648e2c:
-                            {
-                                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
-                                IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-                                int mediaPlayerId = (int)AgoraJson.GetData<int>(jsonData, "mediaPlayerId");
-                                VideoFrame videoFrame1 = GetVideoFrame("", 2);
-                                ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
-                                bool result = videoFrameObserver.OnMediaPlayerVideoFrame(videoFrame1, mediaPlayerId);
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                                break;
-                            }
-                        case AgoraApiType.IVIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME_27754d8:
-                            {
-                                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
-                                IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-
-                                VideoFrame videoFrame1 = GetVideoFrame("", 4);
-                                ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
-                                bool result = videoFrameObserver.OnTranscodedVideoFrame(videoFrame1);
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                                break;
-                            }
-                        case AgoraApiType.IVIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME_43dcf82:
-                            {
-                                LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
-                                IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-                                string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                                uint remoteUid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
-                                VideoFrame videoFrame1 = GetVideoFrame("", 3);
-                                ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
-                                bool result = ((IVideoFrameObserver)videoFrameObserver).OnRenderVideoFrame(channelId, remoteUid, videoFrame1);
-                                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                                p.Add("result", result);
-                                string json = AgoraJson.ToJson(p);
-                                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                                IntPtr resultPtr = eventParam.result;
-                                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                                break;
-                            }
-                        default:
-                            AgoraLog.LogError("unexpected event: " + @event);
-                            break;
-                    }
+                    CreateDefaultReturn(ref eventParam, param);
+                    return;
                 }
+
+                var @event = eventParam.@event;
+                var data = eventParam.data;
+
+                switch (@event)
+                {
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME_1673590:
+                        {
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
+                            IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
+                            VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
+                            VideoFrame videoFrame1 = GetVideoFrame("", 0);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
+                            bool result = videoFrameObserver.OnCaptureVideoFrame(sourceType, videoFrame1);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                            break;
+                        }
+
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME_1673590:
+                        {
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
+                            IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
+                            VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
+                            VideoFrame videoFrame1 = GetVideoFrame("", 1);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
+                            bool result = videoFrameObserver.OnPreEncodeVideoFrame(sourceType, videoFrame1);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                            break;
+                        }
+
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME_e648e2c:
+                        {
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
+                            IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
+                            int mediaPlayerId = (int)AgoraJson.GetData<int>(jsonData, "mediaPlayerId");
+                            VideoFrame videoFrame1 = GetVideoFrame("", 2);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
+                            bool result = videoFrameObserver.OnMediaPlayerVideoFrame(videoFrame1, mediaPlayerId);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                            break;
+                        }
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME_27754d8:
+                        {
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
+                            IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
+
+                            VideoFrame videoFrame1 = GetVideoFrame("", 4);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
+                            bool result = videoFrameObserver.OnTranscodedVideoFrame(videoFrame1);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                            break;
+                        }
+                    case AgoraApiType.IVIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME_43dcf82:
+                        {
+                            LitJson.JsonData jsonData = RtcCallbackBoundary.Parse(data);
+                            IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            uint remoteUid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
+                            VideoFrame videoFrame1 = GetVideoFrame("", 3);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
+                            bool result = ((IVideoFrameObserver)videoFrameObserver).OnRenderVideoFrame(channelId, remoteUid, videoFrame1);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                            break;
+                        }
+                    default:
+                        AgoraLog.LogError("unexpected event: " + @event);
+                        break;
+                }
+            }
 
 #if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_VISIONOS)
             }
