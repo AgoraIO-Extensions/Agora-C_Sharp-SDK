@@ -2,6 +2,15 @@ import { CustomHead } from "../../type_definition";
 
 export const customHeads: CustomHead[] = [
     {
+        name: "CameraCapturerConfiguration",
+        custom_members: [
+            `public CameraCapturerConfiguration(Optional<CAMERA_DIRECTION> cameraDirection, Optional<CAMERA_FOCAL_LENGTH_TYPE> cameraFocalLengthType, Optional<string> deviceId, Optional<string> cameraId, Optional<bool> followEncodeDimensionRatio, VideoFormat format)
+        : this(cameraDirection, cameraFocalLengthType, deviceId, cameraId, followEncodeDimensionRatio, format, new Optional<bool>())
+    {
+    }`
+        ]
+    },
+    {
         name: "LoopbackAudioTrackConfig",
         custom_members: [
             `public LoopbackAudioTrackConfig(LOOPBACK_AUDIO_TRACK_TYPE loopbackType, int volume, string deviceName, string appName, uint processId)

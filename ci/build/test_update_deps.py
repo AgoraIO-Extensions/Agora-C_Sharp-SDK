@@ -64,5 +64,28 @@ class DependencyModeTests(unittest.TestCase):
             self.assertIn('>>>' + mode + '\r\nNATIVE_WINDOWS=' + native, config)
 
 
+    def test_video_only_preserves_audio_section(self):
+        for platform in ('Windows', 'macOS'):
+            for profile in ('FULL', 'FAV'):
+                with self.subTest(platform=platform, profile=profile):
+                    result, config, _, before = self.run_updater(profile, ('Video',), platform=platform)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(config.split('>>>audio')[1], before.split('>>>audio')[1])
+
+    def test_audio_only_preserves_video_section(self):
+        for platform in ('Windows', 'macOS'):
+            with self.subTest(platform=platform):
+                result, config, _, before = self.run_updater('VOICE', ('Audio',), platform=platform)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(config.split('>>>audio')[0], before.split('>>>audio')[0])
+
+    def test_explicit_audio_selection_retains_desktop_full_fallback(self):
+        for platform in ('Windows', 'macOS'):
+            with self.subTest(platform=platform):
+                result, config, native, _ = self.run_updater('FULL', ('Video', 'Audio'), platform=platform)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('NATIVE_' + platform.upper() + '=' + native, config.split('>>>audio')[1])
+
+
 if __name__ == '__main__':
     unittest.main()
